@@ -28,8 +28,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // WIDGETS
     private RelativeLayout mMemoLock, mCardLock, mLoginLock, mGalleryLock;
 
-    ///TEST GIT HUB
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
