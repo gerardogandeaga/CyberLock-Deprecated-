@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Set Pin Activity-->
+    <string name="new_pin">Please input a new pin</string>
+    <string name="confirm_pin">Please confirm pin</string>
+</resources>

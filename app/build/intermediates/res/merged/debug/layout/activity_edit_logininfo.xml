@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/Content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent">
+
+        <RelativeLayout
+            android:id="@+id/Actions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btnCancel"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:fontFamily="sans-serif-smallcaps"
+                android:text="Cancel"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/btnSave"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/btnCancel"
+                android:layout_toStartOf="@+id/btnCancel"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:fontFamily="sans-serif-smallcaps"
+                android:text="Save"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"/>
+        </RelativeLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:id="@+id/Data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/appbar"
+        android:background="@color/gray_light">
+
+        <LinearLayout
+            android:id="@+id/layoutHigherData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <EditText
+                android:id="@+id/etTag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/appbar"
+                android:layout_margin="0dp"
+                android:background="@color/gray_dark"
+                android:ems="10"
+                android:fontFamily="monospace"
+                android:hint="Label..."
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvLastUpdated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/linearLayout"
+                android:background="@color/gray"
+                android:fontFamily="monospace"
+                android:padding="5dp"
+                android:text="Last Updated: N/A"
+                android:textSize="12sp"/>
+
+            <LinearLayout
+                android:id="@+id/layoutMainData"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/etTag"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/gray_dark_curved"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <EditText
+                    android:id="@+id/etUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/etEmail"
+                    android:layout_alignBottom="@+id/etEmail"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="10dp"
+                    android:ems="10"
+                    android:fontFamily="monospace"
+                    android:hint="URL"
+                    android:inputType="textPersonName"
+                    android:textAlignment="center"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/etUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/etTag"
+                    android:layout_alignStart="@+id/etTag"
+                    android:layout_below="@+id/etEmail"
+                    android:layout_margin="10dp"
+                    android:ems="10"
+                    android:fontFamily="monospace"
+                    android:hint="Username"
+                    android:inputType="text"
+                    android:textAlignment="center"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="10dp"
+                    android:ems="10"
+                    android:fontFamily="monospace"
+                    android:hint="Email"
+                    android:inputType="textWebEmailAddress"
+                    android:textAlignment="center"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/etUsername"
+                    android:layout_alignBottom="@+id/etUsername"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="10dp"
+                    android:ems="10"
+                    android:fontFamily="monospace"
+                    android:hint="Password"
+                    android:inputType="textVisiblePassword"
+                    android:textAlignment="center"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutSecurity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <EditText
+                    android:id="@+id/etQuestion1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray"
+                    android:ems="10"
+                    android:fontFamily="monospace"
+                    android:hint="Seurity Question"
+                    android:inputType="text"
+                    android:padding="5dp"
+                    android:textSize="12sp"/>
+
+                <EditText
+                    android:id="@+id/etAnswer1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray_dark"
+                    android:ems="10"
+                    android:fontFamily="monospace"
+                    android:hint="Answer"
+                    android:inputType="text"
+                    android:padding="5dp"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/etQuestion2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/gray"
+                    android:ems="10"
+                    android:fontFamily="monospace"
+                    android:hint="Security question"
+                    android:inputType="text"
+                    android:padding="5dp"
+                    android:textSize="12sp"/>
+
+                <EditText
+                    android:id="@+id/etAnswer2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray_dark"
+                    android:ems="10"
+                    android:fontFamily="monospace"
+                    android:hint="Answer"
+                    android:inputType="text"
+                    android:padding="5dp"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/LowerData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="10dp"
+                android:layout_weight="0.62"
+                android:background="@color/gray"
+                android:padding="5dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/relativeLayout">
+
+                    <ImageView
+                        android:id="@+id/imgImage"
+                        android:layout_width="128dp"
+                        android:layout_height="128dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="2dp"
+                        android:background="@color/gray_darker"
+                        android:cropToPadding="true"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/ic_graphic_none"/>
+
+                    <Button
+                        android:id="@+id/btnUploadImage"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imgImage"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:text="Upload An Image"
+                        android:textAllCaps="false"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignRight="@+id/imgImage"
+                        android:layout_alignEnd="@+id/imgImage"/>
+                </RelativeLayout>
+
+                <ScrollView
+                    android:id="@+id/TextData"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/relativeLayout"
+                    android:layout_toRightOf="@+id/relativeLayout">
+
+                    <RelativeLayout
+                        android:id="@+id/layoutAnchor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/etNotes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/gray"
+                            android:ems="10"
+                            android:fontFamily="monospace"
+                            android:hint="Notes..."
+                            android:inputType="textMultiLine"
+                            android:padding="10dp"
+                            android:layout_alignParentTop="true"
+                            />
+                    </RelativeLayout>
+                </ScrollView>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

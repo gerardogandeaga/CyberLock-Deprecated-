@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimaryDark">#0a2d45</color> <!-- notification bar -->
+    <color name="colorPrimary">#303030</color> <!-- top bar -->
+    <color name="colorAccent">#0c3551</color> <!-- background -->
+
+    <!-- App Colour Themes -->
+    <color name="gray_lighter">#e1e1e1</color>
+    <color name="gray_light">#d9d9d9</color>
+    <color name="gray">#b4b4b4</color>
+    <color name="gray_dark">#8f8f8f</color>
+    <color name="gray_darker">#3b3b3b</color>
+
+    <color name="gray_layout">#5d5d5d</color>
+
+    <color name="orange">#ff8800</color>
+    <color name="oldblue">#027ba2</color>
+
+    <color name="blue_light">#19b1c1</color>
+    <color name="blue">#0b324c</color>
+    <color name="blue_dark">#09202d</color>
+
+</resources>

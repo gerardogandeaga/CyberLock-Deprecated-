@@ -1,0 +1,39 @@
+<resources>
+
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_about">About</string>
+    <string name="action_contribute">Contribute</string>
+
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- Cyber Lock Content Arrays -->
+    <string-array name="cardtype_array">
+        <item>None</item>
+        <item>Visa</item>
+        <item>Master Card</item>
+        <item>American Express</item>
+        <item>Discover</item>
+        <item>Other</item>
+    </string-array>
+
+    <!-- Cyber Lock Settings Arrays -->
+    <string-array name="autologoutdelay_array">
+        <item>Immediate</item>
+        <item>5 Seconds</item>
+        <item>10 Seconds</item>
+        <item>30 Seconds</item>
+        <item>1 Minute</item>
+        <item>5 Minutes</item>
+        <item>10 Minutes</item>
+        <item>30 Minutes</item>
+        <item>1 Hour</item>
+    </string-array>
+
+    <string-array name="encryptionALGO_array">
+        <item>AES - 256</item>
+        <item>Blowfish - 256</item>
+        <item>RC4 – 256</item>
+        <item>Triple DES - 168</item>
+    </string-array>
+</resources>

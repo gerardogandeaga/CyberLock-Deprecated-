@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_action_settings"
+        android:label="@string/action_settings"
+        android:orderInCategory="100"
+        android:title="Settings"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_about"
+        android:icon="@drawable/ic_action_about"
+        android:label="@string/action_about"
+        android:orderInCategory="100"
+        android:title="About"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_contribute"
+        android:icon="@drawable/ic_action_contribute"
+        android:label="@string/action_contribute"
+        android:orderInCategory="100"
+        android:title="Contribute!"
+        app:showAsAction="ifRoom"/>
+</menu>

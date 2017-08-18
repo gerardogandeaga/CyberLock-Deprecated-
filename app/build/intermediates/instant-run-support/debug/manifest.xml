@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gerardogandeaga.cyberlock"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="25" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <meta-data
+        android:name="android.support.VERSION"
+        android:value="25.3.1" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Cyber Lock"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Login.SetPasscodeActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+        </activity>
+        <activity
+            android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Contribute" />
+        <activity android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.About" />
+        <activity android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptBook.PrivateMemo.MainMemoActivity" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptBook.PaymentInfo.MainPaymentInfoActivity" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptBook.LoginInfo.MainLoginInfoActivity" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptBook.PhotoGallery.MainPhotoGallery" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptBook.PhotoGallery.CustomPhotoGalleryActivity" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptBook.PrivateMemo.MemoEditActivity" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptBook.PaymentInfo.PaymentInfoEditActivity" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptBook.LoginInfo.LoginInfoEditActivity" />
+
+        <provider
+            android:name="com.android.tools.fd.runtime.InstantRunContentProvider"
+            android:authorities="com.gerardogandeaga.cyberlock.com.android.tools.fd.runtime.InstantRunContentProvider"
+            android:multiprocess="true" />
+    </application>
+
+</manifest>
