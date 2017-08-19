@@ -14,10 +14,9 @@ import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Contribute;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings;
-import com.gerardogandeaga.cyberlock.EncryptBook.LoginInfo.MainLoginInfoActivity;
-import com.gerardogandeaga.cyberlock.EncryptBook.PaymentInfo.MainPaymentInfoActivity;
-import com.gerardogandeaga.cyberlock.EncryptBook.PhotoGallery.MainPhotoGallery;
-import com.gerardogandeaga.cyberlock.EncryptBook.PrivateMemo.MainMemoActivity;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.MainLoginInfoActivity;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.PaymentInfo.MainPaymentInfoActivity;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MainMemoActivity;
 import com.gerardogandeaga.cyberlock.R;
 
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.Memo: ACTIVITY_INTENT = new Intent(this, MainMemoActivity.class); finish(); startActivity(ACTIVITY_INTENT); break;
             case R.id.Payment: ACTIVITY_INTENT = new Intent(this, MainPaymentInfoActivity.class); finish(); startActivity(ACTIVITY_INTENT); break;
             case R.id.Login: ACTIVITY_INTENT = new Intent(this, MainLoginInfoActivity.class); finish(); startActivity(ACTIVITY_INTENT); break;
-            case R.id.Gallery: ACTIVITY_INTENT = new Intent(this, MainPhotoGallery.class); finish(); startActivity(ACTIVITY_INTENT); break;
+//            case R.id.Gallery: ACTIVITY_INTENT = new Intent(this, MainPhotoGallery.class); finish(); startActivity(ACTIVITY_INTENT); break;
         }
     }
 
@@ -106,8 +105,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings)
         {
-
-
             return true;
         }
 

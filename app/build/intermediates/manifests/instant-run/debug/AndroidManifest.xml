@@ -46,14 +46,15 @@
         <activity android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Contribute" />
         <activity android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.About" />
         <activity android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings" />
-        <activity android:name="com.gerardogandeaga.cyberlock.EncryptBook.PrivateMemo.MainMemoActivity" />
-        <activity android:name="com.gerardogandeaga.cyberlock.EncryptBook.PaymentInfo.MainPaymentInfoActivity" />
-        <activity android:name="com.gerardogandeaga.cyberlock.EncryptBook.LoginInfo.MainLoginInfoActivity" />
-        <activity android:name="com.gerardogandeaga.cyberlock.EncryptBook.PhotoGallery.MainPhotoGallery" />
-        <activity android:name="com.gerardogandeaga.cyberlock.EncryptBook.PhotoGallery.CustomPhotoGalleryActivity" />
-        <activity android:name="com.gerardogandeaga.cyberlock.EncryptBook.PrivateMemo.MemoEditActivity" />
-        <activity android:name="com.gerardogandeaga.cyberlock.EncryptBook.PaymentInfo.PaymentInfoEditActivity" />
-        <activity android:name="com.gerardogandeaga.cyberlock.EncryptBook.LoginInfo.LoginInfoEditActivity" />
+        <activity android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings_ResetPin" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MainMemoActivity" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.PaymentInfo.MainPaymentInfoActivity" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.MainLoginInfoActivity" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.PhotoGallery.MainPhotoGallery" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.PhotoGallery.CustomPhotoGalleryActivity" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MemoEditActivity" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.PaymentInfo.PaymentInfoEditActivity" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.LoginInfoEditActivity" />
 
         <provider
             android:name="com.android.tools.fd.runtime.InstantRunContentProvider"

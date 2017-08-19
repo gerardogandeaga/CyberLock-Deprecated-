@@ -13,12 +13,12 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
-import com.gerardogandeaga.cyberlock.EncryptBook.LoginInfo.LoginInfo;
-import com.gerardogandeaga.cyberlock.EncryptBook.LoginInfo.LoginInfoEditActivity;
-import com.gerardogandeaga.cyberlock.EncryptBook.PaymentInfo.PaymentInfo;
-import com.gerardogandeaga.cyberlock.EncryptBook.PaymentInfo.PaymentInfoEditActivity;
-import com.gerardogandeaga.cyberlock.EncryptBook.PrivateMemo.Memo;
-import com.gerardogandeaga.cyberlock.EncryptBook.PrivateMemo.MemoEditActivity;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.LoginInfo;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.LoginInfoEditActivity;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.PaymentInfo.PaymentInfo;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.PaymentInfo.PaymentInfoEditActivity;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.Memo;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MemoEditActivity;
 import com.gerardogandeaga.cyberlock.Encryption.AESKeyHandler;
 import com.gerardogandeaga.cyberlock.Encryption.SHA256PinHash;
 import com.gerardogandeaga.cyberlock.R;

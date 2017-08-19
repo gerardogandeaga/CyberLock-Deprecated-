@@ -21,7 +21,6 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".Activitys.Activities.Login.LoginActivity"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -40,21 +39,18 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme">
         </activity>
-
         <activity android:name=".Activitys.Activities.Menus.Contribute"/>
         <activity android:name=".Activitys.Activities.Menus.About"/>
         <activity android:name=".Activitys.Activities.Menus.Settings"/>
-
-        <activity android:name=".EncryptBook.PrivateMemo.MainMemoActivity"/>
-        <activity android:name=".EncryptBook.PaymentInfo.MainPaymentInfoActivity"/>
-        <activity android:name=".EncryptBook.LoginInfo.MainLoginInfoActivity"/>
-        <activity android:name=".EncryptBook.PhotoGallery.MainPhotoGallery"/>
-        <activity android:name=".EncryptBook.PhotoGallery.CustomPhotoGalleryActivity"/>
-
-        <activity android:name=".EncryptBook.PrivateMemo.MemoEditActivity"/>
-        <activity android:name=".EncryptBook.PaymentInfo.PaymentInfoEditActivity"/>
-        <activity android:name=".EncryptBook.LoginInfo.LoginInfoEditActivity"/>
-
+        <activity android:name=".Activitys.Activities.Menus.Settings_ResetPin"/>
+        <activity android:name=".EncryptionFeatures.PrivateMemo.MainMemoActivity"/>
+        <activity android:name=".EncryptionFeatures.PaymentInfo.MainPaymentInfoActivity"/>
+        <activity android:name=".EncryptionFeatures.LoginInfo.MainLoginInfoActivity"/>
+        <activity android:name=".EncryptionFeatures.PhotoGallery.MainPhotoGallery"/>
+        <activity android:name=".EncryptionFeatures.PhotoGallery.CustomPhotoGalleryActivity"/>
+        <activity android:name=".EncryptionFeatures.PrivateMemo.MemoEditActivity"/>
+        <activity android:name=".EncryptionFeatures.PaymentInfo.PaymentInfoEditActivity"/>
+        <activity android:name=".EncryptionFeatures.LoginInfo.LoginInfoEditActivity"/>
     </application>
 
 </manifest>

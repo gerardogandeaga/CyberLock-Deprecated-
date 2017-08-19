@@ -1,12 +1,16 @@
 package com.gerardogandeaga.cyberlock.Activitys.Activities.Menus;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
@@ -18,14 +22,20 @@ import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutPro
 
 public class Settings extends AppCompatActivity
 {
-    static Spinner spAutoLogoutDelay, spEncryptionMethod;
+    // DATA
+    private SharedPreferences mSharedPreferences;
+    public static final String KEY = "KEY", PIN = "PIN";
+    public static final int flags = Base64.DEFAULT;
+
+    // WIDGETS
+    private TextView mTvChangePassword, mTextView;
+    Spinner spAutoLogoutDelay, spEncryptionMethod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
         ACTIVITY_INTENT = null;
 
         // ACTION BAR TITLE AND BACK BUTTON
@@ -46,7 +56,47 @@ public class Settings extends AppCompatActivity
         final ArrayAdapter<CharSequence> adapterEncryptionMethod = ArrayAdapter.createFromResource(this, R.array.encryptionALGO_array, android.R.layout.simple_spinner_dropdown_item);
         adapterEncryptionMethod.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spEncryptionMethod.setAdapter(adapterEncryptionMethod);
+
+        mTvChangePassword = (TextView) findViewById(R.id.tvChangePassword);
+        mTextView = (TextView) findViewById(R.id.tvEncryptionMethod);
+
+        mTvChangePassword.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                resetPassword();
+            }
+        });
+
+        mTextView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                scrambleKey();
+            }
+        });
     }
+
+
+    private void resetPassword()
+    {
+        ACTIVITY_INTENT = new Intent(this, Settings_ResetPin.class);
+        finish();
+        startActivity(ACTIVITY_INTENT);
+    }
+
+    private void scrambleKey()
+    {
+        Settings_ScrambleKey settings_scrambleKey = new Settings_ScrambleKey(this);
+        settings_scrambleKey.ScrambleKey();
+    }
+
+
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) // ACTION BAR BACK BUTTON RESPONSE
