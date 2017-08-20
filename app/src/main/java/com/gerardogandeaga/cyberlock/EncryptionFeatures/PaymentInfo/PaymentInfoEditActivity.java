@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,10 +31,11 @@ public class PaymentInfoEditActivity extends AppCompatActivity
 {
     // DATA
     private PaymentInfo mPaymentInfo;
+    private String mCardType;
     // WIDGETS
     private EditText mEtTag, mEtCardName, mEtCardNumber, mEtCardExpire, mEtCardSecCode, mEtNotes, mEtQuestion1, mEtQuestion2, mEtAnswer1, mEtAnswer2;
     private TextView mTvDate;
-    private String mCardType;
+    private Spinner mSpCardSelect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,6 +43,12 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_paymentinfo);
         ACTIVITY_INTENT = null;
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Card Edit");
 
         this.mEtTag = (EditText) findViewById(R.id.etTag);
         this.mEtCardName = (EditText) findViewById(R.id.etCardName);
@@ -53,59 +62,12 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         this.mEtNotes = (EditText) findViewById(R.id.etNotes);
         this.mTvDate = (TextView) findViewById(R.id.tvLastUpdated);
 
-        Button btnSave = (Button) findViewById(R.id.btnSave);
-        Button btnCancel = (Button) findViewById(R.id.btnCancel);
+        this.mSpCardSelect = (Spinner) findViewById(R.id.spCardSelect);
 
-        Spinner spCardSelect = (Spinner) findViewById(R.id.spCardSelect);
 
-        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.cardtype_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spCardSelect.setAdapter(adapter);
 
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null)
-        {
-            mPaymentInfo = (PaymentInfo) bundle.get("PAYMENTINFO");
-            if (mPaymentInfo != null)
-            {
-                try
-                {
-                    String ENCDEC_KEY = (AESKeyHandler.DECRYPTKEY(this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("KEY", null),
-                                                                  this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("TEMP_PIN", null)));
-
-                    if (!mPaymentInfo.getCardName().matches("")) { this.mEtCardName.setText(AESContent.decryptContent(mPaymentInfo.getCardName(), ENCDEC_KEY)); } // DECRYPT
-                    if (!mPaymentInfo.getCardNumber().matches("")) { this.mEtCardNumber.setText(AESContent.decryptContent(mPaymentInfo.getCardNumber(), ENCDEC_KEY)); } // DECRYPT
-                    if (!mPaymentInfo.getCardExpire().matches("")) { this.mEtCardExpire.setText(AESContent.decryptContent(mPaymentInfo.getCardExpire(), ENCDEC_KEY)); } // DECRYPT
-                    if (!mPaymentInfo.getCardSecCode().matches("")) { this.mEtCardSecCode.setText(AESContent.decryptContent(mPaymentInfo.getCardSecCode(), ENCDEC_KEY)); } // DECRYPT
-                    if (!mPaymentInfo.getQuestion1().matches("")) { this.mEtQuestion1.setText(AESContent.decryptContent(mPaymentInfo.getQuestion1(), ENCDEC_KEY));}
-                    if (!mPaymentInfo.getQuestion2().matches("")) { this.mEtQuestion2.setText(AESContent.decryptContent(mPaymentInfo.getQuestion2(), ENCDEC_KEY));}
-                    if (!mPaymentInfo.getAnswer1().matches("")) { this.mEtAnswer1.setText(AESContent.decryptContent(mPaymentInfo.getAnswer1(), ENCDEC_KEY));}
-                    if (!mPaymentInfo.getAnswer2().matches("")) { this.mEtAnswer2.setText(AESContent.decryptContent(mPaymentInfo.getAnswer2(), ENCDEC_KEY));}
-                    if (!mPaymentInfo.getNotes().matches("")) { this.mEtNotes.setText(AESContent.decryptContent(mPaymentInfo.getNotes(), ENCDEC_KEY)); } // DECRYPT
-
-                    // SET LABEL AND CARD TYPE
-                    if (!mPaymentInfo.getLabel().matches("")) { this.mEtTag.setText(mPaymentInfo.getLabel()); }
-                    if (!mPaymentInfo.getCardType().matches("")) {
-                        int spinnerPosition = adapter.getPosition(mPaymentInfo.getCardType());
-                        spCardSelect.setSelection(spinnerPosition);
-                    }
-
-                    if (!mPaymentInfo.getDate().matches("")) {
-                        this.mTvDate.setText("Last Updated: " + mPaymentInfo.getDate());
-                    } else {
-                        this.mTvDate.setText("Last Updated: ---");
-                    }
-
-                    ENCDEC_KEY = null;
-                    System.gc();
-
-                } catch (Exception e)
-                {
-                    e.printStackTrace();
-                    Toast.makeText(this, "Error: could not set one or more text fields", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
+        onInstantCreate(bundle);
 
 
         mEtCardNumber.addTextChangedListener(new TextWatcher()
@@ -161,7 +123,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
             }
         });
 
-        spCardSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        mSpCardSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -175,24 +137,80 @@ public class PaymentInfoEditActivity extends AppCompatActivity
             {
             }
         });
+    }
 
-        btnSave.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                onSave();
-            }
-        });
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
 
-        btnCancel.setOnClickListener(new View.OnClickListener()
+        switch (id)
         {
-            @Override
-            public void onClick(View v)
+            case (R.id.action_save): onSave(); return true;
+            case (R.id.action_cancel): onCancel(); return true;
+            case android.R.id.home: onBackPressed(); return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        return true;
+    }
+
+    private void onInstantCreate(Bundle bundle)
+    {
+        if (bundle != null)
+        {
+            final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.cardtype_array, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            mSpCardSelect.setAdapter(adapter);
+
+            mPaymentInfo = (PaymentInfo) bundle.get("PAYMENTINFO");
+            if (mPaymentInfo != null)
             {
-                onCancelClicked();
+                try
+                {
+                    String ENCDEC_KEY = (AESKeyHandler.DECRYPTKEY(this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("KEY", null),
+                            this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("TEMP_PIN", null)));
+
+                    if (!mPaymentInfo.getCardName().matches("")) { this.mEtCardName.setText(AESContent.decryptContent(mPaymentInfo.getCardName(), ENCDEC_KEY)); } // DECRYPT
+                    if (!mPaymentInfo.getCardNumber().matches("")) { this.mEtCardNumber.setText(AESContent.decryptContent(mPaymentInfo.getCardNumber(), ENCDEC_KEY)); } // DECRYPT
+                    if (!mPaymentInfo.getCardExpire().matches("")) { this.mEtCardExpire.setText(AESContent.decryptContent(mPaymentInfo.getCardExpire(), ENCDEC_KEY)); } // DECRYPT
+                    if (!mPaymentInfo.getCardSecCode().matches("")) { this.mEtCardSecCode.setText(AESContent.decryptContent(mPaymentInfo.getCardSecCode(), ENCDEC_KEY)); } // DECRYPT
+                    if (!mPaymentInfo.getQuestion1().matches("")) { this.mEtQuestion1.setText(AESContent.decryptContent(mPaymentInfo.getQuestion1(), ENCDEC_KEY));}
+                    if (!mPaymentInfo.getQuestion2().matches("")) { this.mEtQuestion2.setText(AESContent.decryptContent(mPaymentInfo.getQuestion2(), ENCDEC_KEY));}
+                    if (!mPaymentInfo.getAnswer1().matches("")) { this.mEtAnswer1.setText(AESContent.decryptContent(mPaymentInfo.getAnswer1(), ENCDEC_KEY));}
+                    if (!mPaymentInfo.getAnswer2().matches("")) { this.mEtAnswer2.setText(AESContent.decryptContent(mPaymentInfo.getAnswer2(), ENCDEC_KEY));}
+                    if (!mPaymentInfo.getNotes().matches("")) { this.mEtNotes.setText(AESContent.decryptContent(mPaymentInfo.getNotes(), ENCDEC_KEY)); } // DECRYPT
+
+                    // SET LABEL AND CARD TYPE
+                    if (!mPaymentInfo.getLabel().matches("")) { this.mEtTag.setText(mPaymentInfo.getLabel()); }
+                    if (!mPaymentInfo.getCardType().matches("")) {
+                        int spinnerPosition = adapter.getPosition(mPaymentInfo.getCardType());
+                        mSpCardSelect.setSelection(spinnerPosition);
+                    }
+
+                    if (!mPaymentInfo.getDate().matches("")) {
+                        this.mTvDate.setText("Last Updated: " + mPaymentInfo.getDate());
+                    } else {
+                        this.mTvDate.setText("Last Updated: ---");
+                    }
+
+                    ENCDEC_KEY = null;
+                    System.gc();
+
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Error: could not set one or more text fields", Toast.LENGTH_SHORT).show();
+                }
             }
-        });
+        }
     }
 
     public void onSave()
@@ -274,7 +292,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         }
     }
 
-    public void onCancelClicked()
+    public void onCancel()
     {
         onBackPressed();
     }

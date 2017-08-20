@@ -25,9 +25,9 @@ public class AESContent
             if (!dataToEncrypt.matches("")) // CHECK IS THERE IS ACTULA CONTENT TO ENCRYPT
             {
                 System.out.println("encryptContent: ENCRYPT STARTING...");
-                byte[] mEncryptedPassword = Base64.decode(symmetricKey, flags); // GENERATE KEY
+                byte[] encryptedPassword = Base64.decode(symmetricKey, flags); // GENERATE KEY
 
-                SecretKeySpec secretKeySpec = new SecretKeySpec(mEncryptedPassword, ALGO);
+                SecretKeySpec secretKeySpec = new SecretKeySpec(encryptedPassword, ALGO);
                 Cipher cipher = Cipher.getInstance(CipherALGO);
                 cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec); // START CIPHER AND SET IT TO ENCRYPT MODE
 
@@ -64,9 +64,9 @@ public class AESContent
             byte[] ivByteVal = Arrays.copyOfRange(encryptedCombinedBytes, 0, 16); // "BREAK" BYTES TO GET IV BYTES ONLY
             byte[] encryptedTextByteVal = Arrays.copyOfRange(encryptedCombinedBytes, 16, encryptedCombinedBytes.length); // "BREAK" BYTES TO GET CIPHER TEXT BYTES ONLY
 
-            byte[] mEncryptedPassword = Base64.decode(symmetricKey, flags);
+            byte[] encryptedPassword = Base64.decode(symmetricKey, flags);
 
-            SecretKeySpec secretKeySpec = new SecretKeySpec(mEncryptedPassword, ALGO);
+            SecretKeySpec secretKeySpec = new SecretKeySpec(encryptedPassword, ALGO);
             Cipher cipher = Cipher.getInstance(CipherALGO);
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, new IvParameterSpec(ivByteVal)); // START CIPHER AND SET IT TO ENCYPT MODE
 

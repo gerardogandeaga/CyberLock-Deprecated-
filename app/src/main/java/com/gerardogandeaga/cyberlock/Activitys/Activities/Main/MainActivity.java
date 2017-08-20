@@ -101,22 +101,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
 
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
-        {
-            return true;
-        }
-
-        if (id == R.id.action_contribute)
-        {
-            ACTIVITY_INTENT = new Intent(this, Contribute.class);
-            finish();
-            this.startActivity(ACTIVITY_INTENT);
-
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

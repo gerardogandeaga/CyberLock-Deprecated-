@@ -74,11 +74,13 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:orientation="horizontal"
+                android:paddingBottom="5dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp">
+                android:paddingRight="20dp"
+                android:paddingTop="5dp">
 
                 <LinearLayout
-                    android:id="@+id/autosave"
+                    android:id="@+id/autoSave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -124,8 +126,10 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:orientation="vertical"
+                android:paddingBottom="5dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp">
+                android:paddingRight="20dp"
+                android:paddingTop="5dp">
 
                 <TextView
                     android:id="@+id/tvAutoLogoutDelay"
@@ -191,14 +195,51 @@
                 android:textStyle="bold"/>
 
             <LinearLayout
-                android:id="@+id/EncryptionMethod"
+                android:id="@+id/ScrambleKey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:orientation="vertical"
+                android:paddingBottom="5dp"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp">
+                android:paddingRight="20dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/tvScrambleKey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="monospace"
+                    android:text="Scramble Encryption Key"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tvScrambleKeyDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="monospace"
+                    android:text="Changes encryption key, size is determined by algorithm selected."
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/EncryptionMethod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:orientation="vertical"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp">
 
                 <TextView
                     android:id="@+id/tvEncryptionMethod"
@@ -215,6 +256,36 @@
                     android:id="@+id/spEncryptionMethod"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+
+                <android.support.percent.PercentRelativeLayout
+                    android:id="@+id/Test"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvTestOriginal"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/light_edit_text_background"
+                        android:padding="5dp"
+                        android:text="Hello World!"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_widthPercent="50%"/>
+
+                    <TextView
+                        android:id="@+id/tvTestEncrypted"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_weight="0.12"
+                        android:background="@drawable/light_edit_text_background"
+                        android:padding="5dp"
+                        android:text="Encrypted Text"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_widthPercent="50%"/>
+                </android.support.percent.PercentRelativeLayout>
 
             </LinearLayout>
 

@@ -9,6 +9,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,6 +51,12 @@ public class LoginInfoEditActivity extends AppCompatActivity
         setContentView(R.layout.activity_edit_logininfo);
         ACTIVITY_INTENT = null;
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Login Edit");
+
         this.mEtTag = (EditText) findViewById(R.id.etTag);
         this.mEtUrl = (EditText) findViewById(R.id.etUrl);
         this.mEtUsername = (EditText) findViewById(R.id.etUsername);
@@ -61,11 +70,46 @@ public class LoginInfoEditActivity extends AppCompatActivity
         this.mTvDate = (TextView) findViewById(R.id.tvLastUpdated);
         this.mImgImage = (ImageView) findViewById(R.id.imgImage);
 
-        Button btnSave = (Button) findViewById(R.id.btnSave);
-        Button btnCancel = (Button) findViewById(R.id.btnCancel);
         Button btnUploadImage = (Button) findViewById(R.id.btnUploadImage);
 
         Bundle bundle = getIntent().getExtras();
+        onInstantCreate(bundle);
+
+        btnUploadImage.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                openGallery();
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        switch (id)
+        {
+            case (R.id.action_save): onSave(); return true;
+            case (R.id.action_cancel): onCancel(); return true;
+            case android.R.id.home: onBackPressed(); return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        return true;
+    }
+
+    private void onInstantCreate(Bundle bundle)
+    {
         if (bundle != null)
         {
             mLoginInfo = (LoginInfo) bundle.get("LOGININFO");
@@ -104,33 +148,6 @@ public class LoginInfoEditActivity extends AppCompatActivity
                 }
             }
         }
-
-        btnUploadImage.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                openGallery();
-            }
-        });
-
-        btnSave.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                onSave();
-            }
-        });
-
-        btnCancel.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                onCancelClicked();
-            }
-        });
     }
 
     // IMAGE PROCESSING TO VISUALS IN THE MAIN ACTIVITY LOGIN //
@@ -263,7 +280,7 @@ public class LoginInfoEditActivity extends AppCompatActivity
         }
     }
 
-    public void onCancelClicked()
+    public void onCancel()
     {
         onBackPressed();
     }

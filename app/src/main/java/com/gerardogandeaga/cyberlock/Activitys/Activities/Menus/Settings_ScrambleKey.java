@@ -1,7 +1,10 @@
 package com.gerardogandeaga.cyberlock.Activitys.Activities.Menus;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.Base64;
 import android.widget.Toast;
 
@@ -16,7 +19,7 @@ import com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MemoDatabase
 
 import java.util.List;
 
-public class Settings_ScrambleKey
+public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
 {
     // DATA
     private SharedPreferences mSharedPreferences;
@@ -29,22 +32,46 @@ public class Settings_ScrambleKey
     private List<Memo> mMemos;
     private List<PaymentInfo> mPaymentInfos;
     private List<LoginInfo> mLoginInfos;
-
+    
     private Context mContext;
+
+    // WIDGETS
+    private ProgressDialog mProgressDialog;
 
     public Settings_ScrambleKey(Context context)
     {
         mContext = context;
-    }
 
-    public void ScrambleKey()
-    {
         mSharedPreferences = mContext.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE);
 
         this.mMemoDatabaseAccess = MemoDatabaseAccess.getInstance(mContext);
         this.mPaymentInfoDatabaseAccess = PaymentInfoDatabaseAccess.getInstance(mContext);
         this.mLoginInfoDatabaseAccess = LoginInfoDatabaseAccess.getInstance(mContext);
+    }
 
+    private void progressBar()
+    {
+        mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog.setTitle("Scrambling Key...");
+        mProgressDialog.setMessage("Loading Data...");
+        mProgressDialog.setProgressStyle(mProgressDialog.STYLE_SPINNER);
+        mProgressDialog.show();
+    }
+
+    // ASYNC TASKS
+    @Override
+    protected void onPreExecute()
+    {
+        super.onPreExecute();
+
+        progressBar();
+
+        System.out.println("Scramble Key: onPreExecute");
+    }
+
+    @Override
+    protected Void doInBackground(Void... params)
+    {
         try
         {
             String current_ENC_DEC_KEY = AESKeyHandler.DECRYPTKEY(mSharedPreferences.getString(KEY, null), mSharedPreferences.getString(TEMP_PIN, null));
@@ -166,12 +193,43 @@ public class Settings_ScrambleKey
             this.mLoginInfoDatabaseAccess.close();
 
             mSharedPreferences.edit().putString(KEY, AESKeyHandler.ENCRYPTKEY(new_ENC_DEC_KEY, mSharedPreferences.getString(TEMP_PIN, null))).apply();
-            Toast.makeText(mContext, "Key Scramble Successful!", Toast.LENGTH_SHORT).show();
+
+            new Handler(mContext.getMainLooper()).post(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    Toast.makeText(mContext, "Key Scrambled Successfully", Toast.LENGTH_SHORT).show();
+                }
+            });
 
         } catch (Exception e)
         {
             e.printStackTrace();
-            Toast.makeText(mContext, "Something Went Wrong...", Toast.LENGTH_SHORT).show();
+
+            System.out.println("Something Went Wrong...");
+
+            new Handler(mContext.getMainLooper()).post(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    Toast.makeText(mContext, "Something Went Wrong...", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
+
+        System.out.println("Scramble Key: doInBackground");
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid)
+    {
+        super.onPostExecute(aVoid);
+
+        mProgressDialog.dismiss();
+
+        System.out.println("Scramble Key: onPostExecute");
     }
 }

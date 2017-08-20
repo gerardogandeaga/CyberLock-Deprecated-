@@ -27,7 +27,7 @@ public class SetPasscodeActivity extends AppCompatActivity implements  View.OnCl
     // STORED PIN
     private static String mPin = "", mPinFirst = "", mPinSecond = "";
     private static final int flags = Base64.DEFAULT;
-    private static final String PIN = "PIN", KEY = "KEY";
+    private static final String PIN = "PIN", KEY = "KEY", AUTOSAVE = "AUTOSAVE"; // ENTRY INFORMATION
     private SharedPreferences mSharedPreferences;
     // PIN ARRAY VARIABLES
     private static boolean mArrayFull = false;
@@ -174,6 +174,9 @@ public class SetPasscodeActivity extends AppCompatActivity implements  View.OnCl
                 mPinFirst = null;
                 mPinSecond = null;
 
+                // SETTINGS FEATURES
+                mSharedPreferences.edit().putBoolean(AUTOSAVE, false).apply();
+
                 Intent i = new Intent(SetPasscodeActivity.this, LoginActivity.class);
                 SetPasscodeActivity.this.startActivity(i);
 
@@ -189,6 +192,7 @@ public class SetPasscodeActivity extends AppCompatActivity implements  View.OnCl
         }
     }
 
+    // PIN KEYBOARD AND REGISTRATION
     public void incrementIndexNumber()
     {
         String s;
@@ -241,4 +245,5 @@ public class SetPasscodeActivity extends AppCompatActivity implements  View.OnCl
         mArray = new String[mArray.length];
         mIndex = -1;
     }
+    // -----------------------------
 }

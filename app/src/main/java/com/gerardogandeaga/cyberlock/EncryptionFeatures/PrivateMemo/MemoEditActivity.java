@@ -4,8 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -33,12 +34,44 @@ public class MemoEditActivity extends AppCompatActivity
         setContentView(R.layout.activity_edit_memo);
         ACTIVITY_INTENT = null;
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Memo Edit");
+
         this.mEtMemo = (EditText) findViewById(R.id.etText);
         this.mEtTag = (EditText) findViewById(R.id.etMemoTitle);
-        Button btnSave = (Button) findViewById(R.id.btnSave);
-        Button btnCancel = (Button) findViewById(R.id.btnCancel);
 
         Bundle bundle = getIntent().getExtras();
+        onInstantCreate(bundle);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        switch (id)
+        {
+            case (R.id.action_save): onSave(); return true;
+            case (R.id.action_cancel): onCancel(); return true;
+            case android.R.id.home: onBackPressed(); return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        return true;
+    }
+
+    private void onInstantCreate(Bundle bundle)
+    {
         if (bundle != null)
         {
             mMemo = (Memo) bundle.get("MEMO");
@@ -47,7 +80,7 @@ public class MemoEditActivity extends AppCompatActivity
                 try
                 {
                     String ENCDEC_KEY = (AESKeyHandler.DECRYPTKEY(this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("KEY", null),
-                                                                  this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("TEMP_PIN", null)));
+                            this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("TEMP_PIN", null)));
 
                     if (!mMemo.getLabel().matches("")) { this.mEtTag.setText(mMemo.getLabel()); } // SET LABEL
                     if (!mMemo.getText().matches("")) { this.mEtMemo.setText(AESContent.decryptContent(mMemo.getText(), ENCDEC_KEY)); } // PULLED DECRYPTED VALUES (STRING)
@@ -60,24 +93,6 @@ public class MemoEditActivity extends AppCompatActivity
                 }
             }
         }
-
-        btnSave.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                onSave();
-            }
-        });
-
-        btnCancel.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                onCancelClicked();
-            }
-        });
     }
 
     public void onSave()
@@ -140,7 +155,7 @@ public class MemoEditActivity extends AppCompatActivity
         }
     }
 
-    public void onCancelClicked()
+    public void onCancel()
     {
         onBackPressed();
     }

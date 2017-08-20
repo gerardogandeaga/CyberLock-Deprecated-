@@ -16,6 +16,10 @@
         "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\drawable-xxhdpi\\ic_action_share.png"
     },
     {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_action_trash.png",
+        "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\drawable-xxhdpi\\ic_action_trash.png"
+    },
+    {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_action_contribute.png",
         "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\drawable-xxhdpi\\ic_action_contribute.png"
     },
@@ -32,12 +36,20 @@
         "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\drawable-xxhdpi\\ic_graphic_login.png"
     },
     {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_action_save.png",
+        "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\drawable-xxhdpi\\ic_action_save.png"
+    },
+    {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_action_backspace.png",
         "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\drawable-xxhdpi\\ic_action_backspace.png"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_action_memolock.png",
         "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\drawable-xxhdpi\\ic_action_memolock.png"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_action_cancel.png",
+        "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\drawable-xxhdpi\\ic_action_cancel.png"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi\\ic_graphic_none.png",

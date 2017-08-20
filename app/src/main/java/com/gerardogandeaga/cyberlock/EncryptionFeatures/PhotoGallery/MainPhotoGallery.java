@@ -239,7 +239,7 @@ public class MainPhotoGallery extends AppCompatActivity
         }.execute();
     }
 
-    public void progressBar()
+    private void progressBar()
     {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMax(100);
