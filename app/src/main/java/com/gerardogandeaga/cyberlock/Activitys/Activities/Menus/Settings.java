@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -29,8 +30,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
 {
     // DATA
     private SharedPreferences mSharedPreferences;
-    public static final String KEY = "KEY", PIN = "PIN", AUTOSAVE = "AUTOSAVE";
-    public static final int flags = Base64.DEFAULT;
+    private static final String KEY = "KEY", PIN = "PIN", AUTOSAVE = "AUTOSAVE";
+    private static final int flags = Base64.DEFAULT;
+    private String mAutoLogoutDelay;
 
     private Context mContext = this;
 
@@ -71,10 +73,25 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         this.mAutoSave = (LinearLayout) findViewById(R.id.AutoSave);
         this.mScrambleKey = (LinearLayout) findViewById(R.id.ScrambleKey);
 
-
         this.mAutoSave.setOnClickListener(this);
         this.mTvChangePassword.setOnClickListener(this);
         this.mScrambleKey.setOnClickListener(this);
+
+        // TODO AUTO LOGOUT DELAY REGISTRATION
+        this.mSpAutoLogoutDelay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                Object object = parent.getItemAtPosition(position);
+                if (object != null) { mAutoLogoutDelay = object.toString(); }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
     }
 
     @Override

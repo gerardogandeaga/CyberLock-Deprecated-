@@ -20,14 +20,15 @@
     <!-- Cyber Lock Settings Arrays -->
     <string-array name="autologoutdelay_array">
         <item>Immediate</item>
-        <item>5 Seconds</item>
-        <item>10 Seconds</item>
+        <item>15 Seconds</item>
         <item>30 Seconds</item>
         <item>1 Minute</item>
         <item>5 Minutes</item>
         <item>10 Minutes</item>
         <item>30 Minutes</item>
         <item>1 Hour</item>
+        <item>2 Hours</item>
+        <item>Never</item>
     </string-array>
 
     <string-array name="encryptionALGO_array">

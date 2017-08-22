@@ -256,36 +256,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
-                <android.support.percent.PercentRelativeLayout
-                    android:id="@+id/Test"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvTestOriginal"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/light_edit_text_background"
-                        android:padding="5dp"
-                        android:text="Hello World!"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:layout_widthPercent="50%"/>
-
-                    <TextView
-                        android:id="@+id/tvTestEncrypted"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_weight="0.12"
-                        android:background="@drawable/light_edit_text_background"
-                        android:padding="5dp"
-                        android:text="Encrypted Text"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:layout_widthPercent="50%"/>
-                </android.support.percent.PercentRelativeLayout>
-
             </LinearLayout>
 
             <LinearLayout
@@ -297,70 +267,6 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
                 android:background="@android:color/black"
-                android:orientation="horizontal">
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/Storage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:fontFamily="monospace"
-                android:text="Storage"
-                android:textAllCaps="true"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
-
-            <LinearLayout
-                android:id="@+id/storage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:orientation="vertical"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
-
-                <LinearLayout
-                    android:id="@+id/Options"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:orientation="vertical">
-
-                    <RadioButton
-                        android:id="@+id/rbInternalStorage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:checked="false"
-                        android:fontFamily="monospace"
-                        android:text="Internal Storage"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp"/>
-
-                    <RadioButton
-                        android:id="@+id/rbExternalStorage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="monospace"
-                        android:text="External Storage"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/SEPERATOR4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorAccent"
                 android:orientation="horizontal">
             </LinearLayout>
 
