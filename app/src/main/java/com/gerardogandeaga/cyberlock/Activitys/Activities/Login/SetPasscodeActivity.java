@@ -1,9 +1,12 @@
 package com.gerardogandeaga.cyberlock.Activitys.Activities.Login;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
@@ -37,6 +40,10 @@ public class SetPasscodeActivity extends AppCompatActivity implements  View.OnCl
     private TextView mTextView;
     private Button mBtn0, mBtn1, mBtn2, mBtn3, mBtn4, mBtn5, mBtn6, mBtn7, mBtn8, mBtn9;
     private RadioButton mInput1, mInput2, mInput3, mInput4;
+    private ProgressDialog mProgressDialog;
+
+    private Handler mHandler;
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -92,9 +99,12 @@ public class SetPasscodeActivity extends AppCompatActivity implements  View.OnCl
             btnBackspace.setOnClickListener(this);
 
             this.mTextView.setText(R.string.new_pin);
+
+            mHandler = new Handler();
         }
     }
 
+    // PIN KEYBOARD AND REGISTRATION
     @Override
     public void onClick(View v)
     {
@@ -138,61 +148,11 @@ public class SetPasscodeActivity extends AppCompatActivity implements  View.OnCl
 
             System.out.println("pin 1 " + mPinFirst);
             System.out.println("pin 2 " + mPinSecond);
-            onPinsCompleted();
+
+            onPinCompleted();
         }
     }
 
-    private void onPinsCompleted()
-    {
-        final String pinFirst = mPinFirst;
-        final String pinSecond = mPinSecond;
-
-        mPinFirst = "";
-        mPinSecond = "";
-
-        if ((pinFirst.matches(pinSecond)) && (!pinFirst.matches("") || (!pinSecond.matches(""))))
-        {
-            final String passwordHash; // GENERATE THE HASH PIN
-            try
-            {
-                passwordHash = AESKeyHandler.ENCRYPTKEY(SHA256PinHash.hashFunction(pinFirst, SHA256PinHash.generateSalt()), pinFirst);
-
-                mSharedPreferences.edit().putString(PIN, passwordHash).apply(); // ADD HASHED PIN TO STORE
-                System.out.println("HASHED PIN :" + passwordHash);
-
-                byte[] KEY_Byte = AESKeyHandler.AES_MEMO_BYTE_KEY_GENERATE(); // GENERATE A NEW BYTE ARRAY AS A SYMMETRIC KEY
-                byte[] ENC_DEC_KEY_ByteVal = AESKeyHandler.AES_MEMO_KEY_GENERATE(KEY_Byte);
-
-                System.out.println("REGISTED KEY VAL :" + Base64.encodeToString(ENC_DEC_KEY_ByteVal, flags));
-                System.out.println("REGISTED KEY SIZE :" + ENC_DEC_KEY_ByteVal.length);
-
-                String ENC_DEC_KEY_StringVal = AESKeyHandler.ENCRYPTKEY(Base64.encodeToString(ENC_DEC_KEY_ByteVal, flags), pinFirst); // ENCRYPT BYTES TO STRING
-
-                mSharedPreferences.edit().putString(KEY, ENC_DEC_KEY_StringVal).apply(); // STORE THE KEY IN THE KEY STORE
-                System.out.println("REGISTER ENCRYPTED KEY VAL :" + ENC_DEC_KEY_StringVal);
-
-                mPinFirst = null;
-                mPinSecond = null;
-
-                // SETTINGS FEATURES
-                mSharedPreferences.edit().putBoolean(AUTOSAVE, false).apply();
-
-                Intent i = new Intent(SetPasscodeActivity.this, LoginActivity.class);
-                SetPasscodeActivity.this.startActivity(i);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        } else
-        {
-            Toast.makeText(this, "Please try again", Toast.LENGTH_SHORT).show();
-            mTextView.setText(R.string.new_pin);
-        }
-    }
-
-    // PIN KEYBOARD AND REGISTRATION
     public void incrementIndexNumber()
     {
         String s;
@@ -246,4 +206,110 @@ public class SetPasscodeActivity extends AppCompatActivity implements  View.OnCl
         mIndex = -1;
     }
     // -----------------------------
+
+    private void progressBar()
+    {
+        mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog.setMessage("Registering...");
+        mProgressDialog.setProgressStyle(mProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
+
+    private void onPinCompleted() // ASYNC TASK
+    {
+        new AsyncTask<Void, Void, Void>()
+        {
+            @Override
+            protected void onPreExecute()
+            {
+                super.onPreExecute();
+
+                progressBar();
+            }
+
+            @Override
+            protected Void doInBackground(Void... params)
+            {
+
+                final String pinFirst = mPinFirst;
+                final String pinSecond = mPinSecond;
+
+                mPinFirst = "";
+                mPinSecond = "";
+
+                if ((pinFirst.matches(pinSecond)) && (!pinFirst.matches("") || (!pinSecond.matches(""))))
+                {
+                    final String passwordHash; // GENERATE THE HASH PIN
+                    try
+                    {
+                        passwordHash = AESKeyHandler.ENCRYPTKEY(SHA256PinHash.hashFunction(pinFirst, SHA256PinHash.generateSalt()), pinFirst);
+
+                        mSharedPreferences.edit().putString(PIN, passwordHash).apply(); // ADD HASHED PIN TO STORE
+                        System.out.println("HASHED PIN :" + passwordHash);
+
+                        byte[] KEY_Byte = AESKeyHandler.AES_MEMO_BYTE_KEY_GENERATE(); // GENERATE A NEW BYTE ARRAY AS A SYMMETRIC KEY
+                        byte[] ENC_DEC_KEY_ByteVal = AESKeyHandler.AES_MEMO_KEY_GENERATE(KEY_Byte);
+
+                        System.out.println("REGISTED KEY VAL :" + Base64.encodeToString(ENC_DEC_KEY_ByteVal, flags));
+                        System.out.println("REGISTED KEY SIZE :" + ENC_DEC_KEY_ByteVal.length);
+
+                        String ENC_DEC_KEY_StringVal = AESKeyHandler.ENCRYPTKEY(Base64.encodeToString(ENC_DEC_KEY_ByteVal, flags), pinFirst); // ENCRYPT BYTES TO STRING
+
+                        mSharedPreferences.edit().putString(KEY, ENC_DEC_KEY_StringVal).apply(); // STORE THE KEY IN THE KEY STORE
+                        System.out.println("REGISTER ENCRYPTED KEY VAL :" + ENC_DEC_KEY_StringVal);
+
+                        mPinFirst = null;
+                        mPinSecond = null;
+
+                        // SETTINGS FEATURES
+                        mSharedPreferences.edit().putBoolean(AUTOSAVE, false).apply();
+
+                        Intent i = new Intent(SetPasscodeActivity.this, LoginActivity.class);
+                        SetPasscodeActivity.this.startActivity(i);
+
+                    } catch (Exception e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, "Something Went Wrong...", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(mContext, "Please Try Again", Toast.LENGTH_SHORT).show();
+                            mTextView.setText("Please input a new pin");
+                        }
+                    });
+                    }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid)
+            {
+                super.onPostExecute(aVoid);
+
+                clear();
+                mProgressDialog.dismiss();
+            }
+        }.execute();
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+
+        if (mSharedPreferences.getString(PIN, null) != null || mSharedPreferences.getString(KEY, null) != null)
+        {
+            LogoutProtocol.ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
+            this.finish();
+            this.startActivity(LogoutProtocol.ACTIVITY_INTENT);
+        }
+    }
 }

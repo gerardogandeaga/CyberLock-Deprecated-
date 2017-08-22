@@ -9,15 +9,20 @@ public class LogoutProtocol
     public static Intent ACTIVITY_INTENT;
     public static boolean APP_LOGGED_IN;
 
-    private static SharedPreferences sharedPreferences;
+    private static SharedPreferences mSharedPreferences;
     private static final String NAME = "com.gerardogandeaga.cyberlock";
     private static final String TEMP_PIN = "TEMP_PIN";
 
-    public void logoutExecute(Context context)
+    public void logoutExecuteAutosaveOff(Context context)
     {
-        sharedPreferences = context.getSharedPreferences(NAME, context.MODE_PRIVATE);
-        sharedPreferences.edit().remove(TEMP_PIN).apply();
+        mSharedPreferences = context.getSharedPreferences(NAME, context.MODE_PRIVATE);
+        mSharedPreferences.edit().remove(TEMP_PIN).apply();
 
+        APP_LOGGED_IN = false;
+    }
+
+    public void logoutExecuteAutosaveOn(Context context)
+    {
         APP_LOGGED_IN = false;
     }
 }

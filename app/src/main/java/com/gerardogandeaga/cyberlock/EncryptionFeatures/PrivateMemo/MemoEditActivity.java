@@ -24,6 +24,7 @@ public class MemoEditActivity extends AppCompatActivity
 {
     // DATA
     private Memo mMemo;
+    public static final String DIRECTORY = "com.gerardogandeaga.cyberlock";
     // WIDGETS
     private EditText mEtMemo, mEtTag;
 
@@ -100,8 +101,8 @@ public class MemoEditActivity extends AppCompatActivity
         MemoDatabaseAccess memoDatabaseAccess = MemoDatabaseAccess.getInstance(this);
         memoDatabaseAccess.open();
 
-        String ENCDEC_KEY = (AESKeyHandler.DECRYPTKEY(this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("KEY", null),
-                                                      this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("TEMP_PIN", null)));
+        String ENCDEC_KEY = (AESKeyHandler.DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString("KEY", null),
+                                                      this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString("TEMP_PIN", null)));
 
         if ((!mEtTag.getText().toString().matches("")) || (!mEtMemo.getText().toString().matches("")))
         {
@@ -168,11 +169,18 @@ public class MemoEditActivity extends AppCompatActivity
 
         if (!APP_LOGGED_IN)
         {
-//            onSave();
+            if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean("AUTOSAVE", false))
+            {
+                onSave();
 
-            ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
-            ACTIVITY_INTENT.putExtra("lastActivity", "MEMO_EDIT");
-            ACTIVITY_INTENT.putExtra("lastDatabase", mMemo);
+                this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().remove("TEMP_PIN").apply();
+            } else
+            {
+                ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
+                ACTIVITY_INTENT.putExtra("lastActivity", "MEMO_EDIT");
+                ACTIVITY_INTENT.putExtra("lastDatabase", mMemo);
+            }
+
             this.finish(); // CLEAN UP AND END
             this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
         }
@@ -199,7 +207,14 @@ public class MemoEditActivity extends AppCompatActivity
         {
             if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             {
-                new LogoutProtocol().logoutExecute(this);
+                if (!this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean("AUTOSAVE", false))
+                {
+                    new LogoutProtocol().logoutExecuteAutosaveOff(this);
+                }
+                else
+                {
+                    new LogoutProtocol().logoutExecuteAutosaveOn(this);
+                }
             }
         }
     }

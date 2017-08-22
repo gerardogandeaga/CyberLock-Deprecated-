@@ -32,6 +32,7 @@ import java.io.InputStream;
 
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MemoEditActivity.DIRECTORY;
 
 public class LoginInfoEditActivity extends AppCompatActivity
 {
@@ -151,7 +152,7 @@ public class LoginInfoEditActivity extends AppCompatActivity
     }
 
     // IMAGE PROCESSING TO VISUALS IN THE MAIN ACTIVITY LOGIN //
-    public byte[] saveImageToDataBase()
+    private byte[] saveImageToDataBase()
     {
         Bitmap bitmap = ((BitmapDrawable) mImgImage.getDrawable()).getBitmap();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -160,7 +161,7 @@ public class LoginInfoEditActivity extends AppCompatActivity
         return outputStream.toByteArray();
     }
 
-    public void openGallery()
+    private void openGallery()
     {
         ACTIVITY_INTENT = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(ACTIVITY_INTENT, PICK_IMAGE);
@@ -191,7 +192,7 @@ public class LoginInfoEditActivity extends AppCompatActivity
         }
     }
 
-    public Drawable scaleImage(InputStream inputStream)
+    private Drawable scaleImage(InputStream inputStream)
     {
         Bitmap bitmap = new BitmapDrawable(inputStream).getBitmap();
         int num = (int) (bitmap.getHeight() * (1024.0 / bitmap.getWidth()));
@@ -201,7 +202,7 @@ public class LoginInfoEditActivity extends AppCompatActivity
     }
     // ------------------------------------------------------ //
 
-    public void onSave()
+    private void onSave()
     {
         LoginInfoDatabaseAccess loginInfoDatabaseAccess = LoginInfoDatabaseAccess.getInstance(this);
         loginInfoDatabaseAccess.open();
@@ -293,9 +294,18 @@ public class LoginInfoEditActivity extends AppCompatActivity
 
         if (!APP_LOGGED_IN)
         {
-            ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
-            ACTIVITY_INTENT.putExtra("lastActivity", "LOGININFO_EDIT");
-            ACTIVITY_INTENT.putExtra("lastDatabase", mLoginInfo);
+            if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean("AUTOSAVE", false))
+            {
+                onSave();
+
+                this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().remove("TEMP_PIN").apply();
+            } else
+            {
+                ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
+                ACTIVITY_INTENT.putExtra("lastActivity", "LOGININFO_EDIT");
+                ACTIVITY_INTENT.putExtra("lastDatabase", mLoginInfo);
+            }
+
             this.finish(); // CLEAN UP AND END
             this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
         }
@@ -322,7 +332,14 @@ public class LoginInfoEditActivity extends AppCompatActivity
         { // HOME AND TABS AND SCREEN OFF
             if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             {
-                new LogoutProtocol().logoutExecute(this);
+                if (!this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getBoolean("AUTOSAVE", false))
+                {
+                    new LogoutProtocol().logoutExecuteAutosaveOff(this);
+                }
+                else
+                {
+                    new LogoutProtocol().logoutExecuteAutosaveOn(this);
+                }
             }
         }
     }

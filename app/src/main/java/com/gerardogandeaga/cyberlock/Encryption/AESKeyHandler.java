@@ -16,7 +16,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class AESKeyHandler
 {
     private static final int flags = Base64.DEFAULT;
-    private static final int iterations = 2000, keylength = 256;
+    private static final int iterations = 10000, keylength = 256;
     private static final String ALGO = "AES", KeyALGO = "PBKDF2WithHmacSHA1", CipherALGO = "AES/CBC/PKCS5Padding";
 
     // THESE FUCNTIONS GENERATE A ONE TIME RANDOM BYTE PASSWORD TO THE KEY GENERATOR (2ND FUNCTION)

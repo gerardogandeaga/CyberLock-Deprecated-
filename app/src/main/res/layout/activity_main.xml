@@ -31,35 +31,17 @@
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/Actions"
         android:layout_below="@+id/appbar"
         android:background="@color/blue_dark">
-
-        <LinearLayout
-            android:id="@+id/VerticalLine"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@+id/Memo"
-            android:layout_toLeftOf="@+id/Payment"
-            android:layout_toRightOf="@+id/Memo"
-            android:background="@color/colorAccent"
-            android:orientation="vertical">
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/HorizontalLine"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/Memo"
-            android:background="@color/colorAccent"
-            android:orientation="horizontal">
-        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/Memo"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="@android:color/transparent"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
             android:paddingBottom="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
@@ -93,10 +75,10 @@
                         android:id="@+id/tvMemo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/imgMemoIcon"
-                        android:layout_margin="10dp"
                         android:fontFamily="monospace"
                         android:text="Memo Lock"
                         android:textAlignment="center"
@@ -117,7 +99,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@+id/Memo"
-            android:background="@android:color/transparent"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="20dp"
@@ -149,10 +132,9 @@
                         android:id="@+id/tvCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
+                        android:layout_alignParentBottom="true"
                         android:layout_below="@+id/imgMemoIcon"
-                        android:layout_margin="10dp"
+                        android:layout_centerHorizontal="true"
                         android:fontFamily="monospace"
                         android:text="Card Lock"
                         android:textAlignment="center"
@@ -173,7 +155,8 @@
             android:layout_below="@+id/Memo"
             android:layout_toLeftOf="@+id/Payment"
             android:layout_toStartOf="@+id/Payment"
-            android:background="@android:color/transparent"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
             android:paddingBottom="20dp"
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
@@ -205,10 +188,10 @@
                         android:id="@+id/tvLogin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/imgMemoIcon"
-                        android:layout_margin="10dp"
                         android:fontFamily="monospace"
                         android:text="Login Lock"
                         android:textAlignment="center"
@@ -229,7 +212,8 @@
             android:layout_alignTop="@+id/Login"
             android:layout_toEndOf="@+id/Memo"
             android:layout_toRightOf="@+id/Memo"
-            android:background="@android:color/transparent"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
             android:paddingBottom="20dp"
             android:paddingLeft="10dp"
             android:paddingRight="20dp"
@@ -261,10 +245,10 @@
                         android:id="@+id/tvGallery"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/imgMemoIcon"
-                        android:layout_margin="10dp"
                         android:fontFamily="monospace"
                         android:text="Photo Lock"
                         android:textAlignment="center"
@@ -275,6 +259,39 @@
             </RelativeLayout>
         </RelativeLayout>
     </android.support.percent.PercentRelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/Actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <ImageButton
+            android:id="@+id/btnRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:padding="5dp"
+            app:srcCompat="@drawable/ic_action_rate"/>
+
+        <ImageButton
+            android:id="@+id/btnShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:padding="5dp"
+            app:srcCompat="@drawable/ic_action_share"/>
+
+    </LinearLayout>
 
 
 </android.support.percent.PercentRelativeLayout>

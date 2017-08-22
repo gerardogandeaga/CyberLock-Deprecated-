@@ -123,7 +123,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
         alertDialog.setTitle("Scramble Encryption Key");
-        alertDialog.setMessage("Scrambling key will result in ALL your content be momentarily decrypted and re-encrypted with the new key and selected algorithm, please wait for the full process to be completed. Please do not exit or close the app or it may result in data loss.");
+        alertDialog.setMessage("On selecting Scramble, ALL your content will be momentarily decrypted and re-encrypted with the new key and selected algorithm. " +
+                               "Please wait for the process to be completed and response message to be successful. Once the process has started you will not be able to " +
+                               "cancel it. Additionally and most importantly, do not exit or close the application during the process as it may result in data loss.");
 
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
         {
@@ -195,7 +197,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         {
             if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             {
-                new LogoutProtocol().logoutExecute(this);
+                new LogoutProtocol().logoutExecuteAutosaveOff(this);
             }
         }
     }

@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onBackPressed();
         if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
         {
-            new LogoutProtocol().logoutExecute(this);
+            new LogoutProtocol().logoutExecuteAutosaveOff(this);
         }
     }
 
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (!this.isFinishing()) { // HOME AND TABS AND SCREEN OFF
             if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             {
-                new LogoutProtocol().logoutExecute(this);
+                new LogoutProtocol().logoutExecuteAutosaveOff(this);
             }
         }
         // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------

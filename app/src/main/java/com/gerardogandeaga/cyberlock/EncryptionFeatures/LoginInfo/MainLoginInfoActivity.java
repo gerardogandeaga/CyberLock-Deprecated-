@@ -204,7 +204,7 @@ public class MainLoginInfoActivity extends AppCompatActivity
         if (!this.isFinishing()) { // HOME AND TABS AND SCREEN OFF
             if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             {
-                new LogoutProtocol().logoutExecute(this);
+                new LogoutProtocol().logoutExecuteAutosaveOff(this);
             }
         }
         // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------

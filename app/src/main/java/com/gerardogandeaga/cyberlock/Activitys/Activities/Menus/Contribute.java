@@ -81,7 +81,7 @@ public class Contribute extends AppCompatActivity
         {
             if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             {
-                new LogoutProtocol().logoutExecute(this);
+                new LogoutProtocol().logoutExecuteAutosaveOff(this);
             }
         }
     }

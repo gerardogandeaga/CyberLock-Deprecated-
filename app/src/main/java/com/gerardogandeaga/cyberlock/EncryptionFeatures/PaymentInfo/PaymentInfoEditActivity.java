@@ -26,12 +26,14 @@ import com.gerardogandeaga.cyberlock.R;
 
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MemoEditActivity.DIRECTORY;
 
 public class PaymentInfoEditActivity extends AppCompatActivity
 {
     // DATA
     private PaymentInfo mPaymentInfo;
     private String mCardType;
+    private ArrayAdapter<CharSequence> mAdapter;
     // WIDGETS
     private EditText mEtTag, mEtCardName, mEtCardNumber, mEtCardExpire, mEtCardSecCode, mEtNotes, mEtQuestion1, mEtQuestion2, mEtAnswer1, mEtAnswer2;
     private TextView mTvDate;
@@ -64,11 +66,12 @@ public class PaymentInfoEditActivity extends AppCompatActivity
 
         this.mSpCardSelect = (Spinner) findViewById(R.id.spCardSelect);
 
-
+        mAdapter = ArrayAdapter.createFromResource(this, R.array.cardtype_array, android.R.layout.simple_spinner_item);
+        mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpCardSelect.setAdapter(mAdapter);
 
         Bundle bundle = getIntent().getExtras();
         onInstantCreate(bundle);
-
 
         mEtCardNumber.addTextChangedListener(new TextWatcher()
         {
@@ -166,10 +169,6 @@ public class PaymentInfoEditActivity extends AppCompatActivity
     {
         if (bundle != null)
         {
-            final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.cardtype_array, android.R.layout.simple_spinner_item);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            mSpCardSelect.setAdapter(adapter);
-
             mPaymentInfo = (PaymentInfo) bundle.get("PAYMENTINFO");
             if (mPaymentInfo != null)
             {
@@ -191,7 +190,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
                     // SET LABEL AND CARD TYPE
                     if (!mPaymentInfo.getLabel().matches("")) { this.mEtTag.setText(mPaymentInfo.getLabel()); }
                     if (!mPaymentInfo.getCardType().matches("")) {
-                        int spinnerPosition = adapter.getPosition(mPaymentInfo.getCardType());
+                        int spinnerPosition = mAdapter.getPosition(mPaymentInfo.getCardType());
                         mSpCardSelect.setSelection(spinnerPosition);
                     }
 
@@ -305,11 +304,18 @@ public class PaymentInfoEditActivity extends AppCompatActivity
 
         if (!APP_LOGGED_IN)
         {
-//            onSave(); // TODO AUTO SAVE ON LOGOUT? SAVE THE THE TEMP PIN TO ENCRYPT, ERROR CONCERNING PIN BEING DELETED BEFORE ENCRYPTION CAN BEGIN.
+            if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean("AUTOSAVE", false))
+            {
+                onSave();
 
-            ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
-            ACTIVITY_INTENT.putExtra("lastActivity", "PAYMENTINFO_EDIT");
-            ACTIVITY_INTENT.putExtra("lastDatabase", mPaymentInfo);
+                this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().remove("TEMP_PIN").apply();
+            } else
+            {
+                ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
+                ACTIVITY_INTENT.putExtra("lastActivity", "PAYMENTINFO_EDIT");
+                ACTIVITY_INTENT.putExtra("lastDatabase", mPaymentInfo);
+            }
+
             this.finish(); // CLEAN UP AND END
             this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
         }
@@ -337,7 +343,14 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         { // HOME AND TABS AND SCREEN OFF
             if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             {
-                new LogoutProtocol().logoutExecute(this);
+                if (!this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getBoolean("AUTOSAVE", false))
+                {
+                    new LogoutProtocol().logoutExecuteAutosaveOff(this);
+                }
+                else
+                {
+                    new LogoutProtocol().logoutExecuteAutosaveOn(this);
+                }
             }
         }
     }
