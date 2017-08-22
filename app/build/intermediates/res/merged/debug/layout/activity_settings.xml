@@ -61,10 +61,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:fontFamily="monospace"
-                android:text="Security"
+                android:text="General"
                 android:textAllCaps="true"
                 android:textColor="@android:color/black"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textStyle="bold"/>
 
             <LinearLayout
@@ -190,7 +190,7 @@
                 android:text="Encryption"
                 android:textAllCaps="true"
                 android:textColor="@android:color/black"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textStyle="bold"/>
 
             <LinearLayout

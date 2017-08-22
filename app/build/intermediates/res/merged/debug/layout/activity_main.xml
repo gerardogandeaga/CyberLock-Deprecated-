@@ -29,163 +29,156 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/Items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/appbar"
-        android:layout_above="@+id/Actions">
+        android:layout_above="@+id/Actions"
+        android:layout_below="@+id/appbar">
 
-        <android.support.percent.PercentRelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/Actions"
-            android:layout_below="@+id/appbar"
-            >
+        <RelativeLayout
+            android:id="@+id/Memo"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/blue_dark"
+            android:clickable="true"
+            app:layout_heightPercent="25%"
+            app:layout_widthPercent="50%">
 
-            <RelativeLayout
-                android:id="@+id/Memo"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:background="@color/blue_dark"
-                android:clickable="true"
-                app:layout_heightPercent="25%"
-                app:layout_widthPercent="50%">
+            <ImageView
+                android:id="@+id/imgMemoIcon"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:layout_alignParentBottom="true"
+                android:padding="15dp"
+                app:srcCompat="@drawable/ic_action_memolock"/>
 
-                <ImageView
-                    android:id="@+id/imgMemoIcon"
-                    android:layout_width="128dp"
-                    android:layout_height="128dp"
-                    android:layout_alignParentBottom="true"
-                    android:padding="15dp"
-                    app:srcCompat="@drawable/ic_action_memolock"/>
-
-                <TextView
-                    android:id="@+id/tvMemo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/imgMemoIcon"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:text="Memo Lock"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="24sp"
-                    android:textStyle="bold"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/Payment"
+            <TextView
+                android:id="@+id/tvMemo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_below="@+id/Memo"
-                android:layout_marginTop="1dp"
-                android:background="@color/blue_dark"
-                android:clickable="true"
-                app:layout_heightPercent="25%"
-                app:layout_widthPercent="100%">
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/imgMemoIcon"
+                android:fontFamily="sans-serif-smallcaps"
+                android:text="Memo Lock"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
 
-                <ImageView
-                    android:id="@+id/imgCardIcon"
-                    android:layout_width="128dp"
-                    android:layout_height="128dp"
-                    android:padding="15dp"
-                    app:srcCompat="@drawable/ic_action_cardlock"/>
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tvCard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/imgCardIcon"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:text="Card Lock"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="24sp"
-                    android:textStyle="bold"/>
+        <RelativeLayout
+            android:id="@+id/Payment"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/Memo"
+            android:layout_marginTop="1dp"
+            android:background="@color/blue_dark"
+            android:clickable="true"
+            app:layout_heightPercent="25%"
+            app:layout_widthPercent="100%">
 
-            </RelativeLayout>
+            <ImageView
+                android:id="@+id/imgCardIcon"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:padding="15dp"
+                app:srcCompat="@drawable/ic_action_cardlock"/>
 
-            <RelativeLayout
-                android:id="@+id/Login"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/Payment"
-                android:layout_marginTop="1dp"
-                android:background="@color/blue_dark"
-                android:clickable="true"
-                app:layout_heightPercent="25%"
-                app:layout_widthPercent="100%">
+            <TextView
+                android:id="@+id/tvCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/imgCardIcon"
+                android:fontFamily="sans-serif-smallcaps"
+                android:text="Card Lock"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
 
-                <ImageView
-                    android:id="@+id/imgLoginIcon"
-                    android:layout_width="128dp"
-                    android:layout_height="128dp"
-                    android:padding="15dp"
-                    app:srcCompat="@drawable/ic_action_loginlock"/>
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tvLogin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/imgLoginIcon"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:text="Login Lock"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="24sp"
-                    android:textStyle="bold"/>
+        <RelativeLayout
+            android:id="@+id/Login"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/Payment"
+            android:layout_marginTop="1dp"
+            android:background="@color/blue_dark"
+            android:clickable="true"
+            app:layout_heightPercent="25%"
+            app:layout_widthPercent="100%">
 
-            </RelativeLayout>
+            <ImageView
+                android:id="@+id/imgLoginIcon"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:padding="15dp"
+                app:srcCompat="@drawable/ic_action_loginlock"/>
 
-            <RelativeLayout
-                android:id="@+id/Gallery"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/Login"
-                android:layout_marginTop="1dp"
-                android:background="@color/blue_dark"
-                android:clickable="true"
-                app:layout_heightPercent="25%"
-                app:layout_widthPercent="100%">
+            <TextView
+                android:id="@+id/tvLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/imgLoginIcon"
+                android:fontFamily="sans-serif-smallcaps"
+                android:text="Login Lock"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
 
-                <ImageView
-                    android:id="@+id/imgPhotoIcon"
-                    android:layout_width="128dp"
-                    android:layout_height="128dp"
-                    android:padding="15dp"
-                    app:srcCompat="@drawable/ic_action_gallerylock"/>
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tvGallery"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/imgPhotoIcon"
-                    android:layout_toRightOf="@+id/imgPhotoIcon"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:text="Photo Lock"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="24sp"
-                    android:textStyle="bold"/>
+        <RelativeLayout
+            android:id="@+id/Gallery"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/Login"
+            android:layout_marginTop="1dp"
+            android:background="@color/blue_dark"
+            android:clickable="true"
+            app:layout_heightPercent="25%"
+            app:layout_widthPercent="100%">
 
-            </RelativeLayout>
-        </android.support.percent.PercentRelativeLayout>
-    </ScrollView>
+            <ImageView
+                android:id="@+id/imgPhotoIcon"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:padding="15dp"
+                app:srcCompat="@drawable/ic_action_gallerylock"/>
+
+            <TextView
+                android:id="@+id/tvGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imgPhotoIcon"
+                android:layout_toRightOf="@+id/imgPhotoIcon"
+                android:fontFamily="sans-serif-smallcaps"
+                android:text="Photo Lock"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+        </RelativeLayout>
+    </android.support.percent.PercentRelativeLayout>
 
     <LinearLayout
         android:id="@+id/Actions"
