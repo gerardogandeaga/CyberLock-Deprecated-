@@ -32,6 +32,8 @@ import java.io.InputStream;
 
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
+import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
 import static com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MemoEditActivity.DIRECTORY;
 
 public class LoginInfoEditActivity extends AppCompatActivity
@@ -292,22 +294,32 @@ public class LoginInfoEditActivity extends AppCompatActivity
     {
         super.onStart();
 
-        if (!APP_LOGGED_IN)
+        if (mCountDownIsFinished)
         {
-            if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean("AUTOSAVE", false))
+            if (!APP_LOGGED_IN)
             {
-                onSave();
+                if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean("AUTOSAVE", false))
+                {
+                    onSave();
 
-                this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().remove("TEMP_PIN").apply();
-            } else
-            {
-                ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
-                ACTIVITY_INTENT.putExtra("lastActivity", "LOGININFO_EDIT");
-                ACTIVITY_INTENT.putExtra("lastDatabase", mLoginInfo);
+                    this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().remove("TEMP_PIN").apply();
+                } else
+                {
+                    ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
+                    ACTIVITY_INTENT.putExtra("lastActivity", "LOGININFO_EDIT");
+                    ACTIVITY_INTENT.putExtra("lastDatabase", mLoginInfo);
+                }
+
+                this.finish(); // CLEAN UP AND END
+                this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
             }
-
-            this.finish(); // CLEAN UP AND END
-            this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
+        } else
+        {
+            if (mCountDownTimer != null)
+            {
+                System.out.println("Cancel Called!");
+                mCountDownTimer.cancel();
+            }
         }
     }
 

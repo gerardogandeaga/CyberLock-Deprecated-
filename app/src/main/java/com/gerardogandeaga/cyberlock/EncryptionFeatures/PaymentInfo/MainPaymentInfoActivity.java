@@ -18,13 +18,14 @@ import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.R;
 
 import java.util.List;
 
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
+import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
 
 public class MainPaymentInfoActivity extends AppCompatActivity
 {
@@ -196,11 +197,22 @@ public class MainPaymentInfoActivity extends AppCompatActivity
     public void onBackPressed()
     {
         super.onBackPressed();
-        if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
+
+        if (mCountDownIsFinished)
         {
-            ACTIVITY_INTENT = new Intent(this, MainActivity.class);
-            finish();
-            this.startActivity(ACTIVITY_INTENT);
+            if (!APP_LOGGED_IN)
+            {
+                ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
+                this.finish(); // CLEAN UP AND END
+                this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
+            }
+        } else
+        {
+            if (mCountDownTimer != null)
+            {
+                System.out.println("Cancel Called!");
+                mCountDownTimer.cancel();
+            }
         }
     }
 
@@ -209,13 +221,13 @@ public class MainPaymentInfoActivity extends AppCompatActivity
     {
         super.onPause();
 
-        if (!this.isFinishing()) { // HOME AND TABS AND SCREEN OFF
+        if (!this.isFinishing())
+        {
             if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             {
                 new LogoutProtocol().logoutExecuteAutosaveOff(this);
             }
         }
-        // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     }
     // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }

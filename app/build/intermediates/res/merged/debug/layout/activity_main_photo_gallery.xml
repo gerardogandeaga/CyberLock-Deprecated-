@@ -47,9 +47,9 @@
         android:clickable="true"
         android:fadingEdge="none"
         android:tint="@android:color/black"
-        app:backgroundTint="@color/gray_lighter"
+        app:backgroundTint="@color/grayE1"
         app:elevation="0dp"
         app:fabSize="normal"
-        app:rippleColor="@color/blue_light"
+        app:rippleColor="@color/blueC1"
         app:srcCompat="@drawable/edit"/>
 </RelativeLayout>

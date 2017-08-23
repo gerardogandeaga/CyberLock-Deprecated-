@@ -4,7 +4,7 @@
                 android:id="@+id/Content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/gray_lighter"
+                android:background="@color/grayE1"
                 android:orientation="vertical"
     >
 
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:background="@color/gray_dark"
+                android:background="@color/gray8F"
                 android:fontFamily="monospace"
                 android:inputType="text"
                 android:padding="2dp"
@@ -66,7 +66,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tvTitle"
-                android:background="@color/gray"
+                android:background="@color/grayB4"
                 android:fontFamily="monospace"
                 android:padding="2dp"
                 android:text="date"

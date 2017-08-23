@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,14 +25,18 @@ import com.gerardogandeaga.cyberlock.R;
 
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
+import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
 
 public class Settings extends AppCompatActivity implements View.OnClickListener
 {
     // DATA
     private SharedPreferences mSharedPreferences;
-    public static final String DIRECTORY = "com.gerardogandeaga.cyberlock";
-    private static final String KEY = "KEY", PIN = "PIN", AUTOSAVE = "AUTOSAVE", DELAY = "DELAY";
+    private static final String DIRECTORY = "com.gerardogandeaga.cyberlock";
+    private static final String KEY = "KEY", PIN = "PIN", AUTOSAVE = "AUTOSAVE", DELAY_KEY = "DELAY_KEY", DELAY_TIME = "DELAY_TIME";
     private static final int flags = Base64.DEFAULT;
+
+    private ArrayAdapter<CharSequence> mAdapterAutoLogoutDelay;
     private String mAutoLogoutDelay;
 
     private Context mContext = this;
@@ -62,9 +64,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
 
         // SPINNER DATA
         this.mSpAutoLogoutDelay = (Spinner) findViewById(R.id.spAutoLogoutDelay);
-        final ArrayAdapter<CharSequence> adapterAutoLogoutDelay = ArrayAdapter.createFromResource(this, R.array.autologoutdelay_array, android.R.layout.simple_spinner_dropdown_item);
-        adapterAutoLogoutDelay.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.mSpAutoLogoutDelay.setAdapter(adapterAutoLogoutDelay);
+        mAdapterAutoLogoutDelay = ArrayAdapter.createFromResource(this, R.array.autologoutdelay_array, android.R.layout.simple_spinner_dropdown_item);
+        mAdapterAutoLogoutDelay.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.mSpAutoLogoutDelay.setAdapter(mAdapterAutoLogoutDelay);
         // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         this.mSpEncryptionMethod = (Spinner) findViewById(R.id.spEncryptionMethod);
         final ArrayAdapter<CharSequence> adapterEncryptionMethod = ArrayAdapter.createFromResource(this, R.array.encryptionALGO_array, android.R.layout.simple_spinner_dropdown_item);
@@ -80,7 +82,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         this.mTvChangePassword.setOnClickListener(this);
         this.mScrambleKey.setOnClickListener(this);
 
-        // TODO AUTO LOGOUT DELAY REGISTRATION
+        savedStates();
+
+        // TODO AUTO LOGOUT DELAY_TIME REGISTRATION
         this.mSpAutoLogoutDelay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
@@ -90,19 +94,23 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
                 if (object != null)
                 {
                     mAutoLogoutDelay = object.toString();
+                    long time = 0;
                     switch (mAutoLogoutDelay)
                     {
-                        case "Immediate": getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().putInt(DELAY, 0);
-                        case "15 Seconds": getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().putInt(DELAY, 15000);
-                        case "30 Seconds": getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().putInt(DELAY, 30000);
-                        case "1 Minute": getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().putInt(DELAY, 60000);
-                        case "5 Minutes": getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().putInt(DELAY, 300000);
-                        case "10 Minutes": getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().putInt(DELAY, 600000);
-                        case "30 Minutes": getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().putInt(DELAY, 1800000);
-                        case "1 Hour": getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().putInt(DELAY, 3600000);
-                        case "2 Hours": getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().putInt(DELAY, 7200000);
-                        case "Never": ;
+                        case "Immediate": time = 0; break;
+                        case "15 Seconds": time = 15000; break;
+                        case "30 Seconds": time = 30000; break;
+                        case "1 Minute": time = 60000; break;
+                        case "5 Minutes": time = 300000; break;
+                        case "10 Minutes": time = 600000; break;
+                        case "30 Minutes": time = 1800000; break;
+                        case "1 Hour": time = 3600000; break;
+                        case "2 Hours": time = 7200000; break;
+                        case "Never": ; break;
                     }
+
+                    System.out.println("Time = " + time);
+                    getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().putString(DELAY_KEY, mAutoLogoutDelay).putLong(DELAY_TIME, time).apply();
                 }
             }
 
@@ -111,6 +119,12 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
             {
             }
         });
+    }
+
+    private void savedStates()
+    {
+        int delaySpinnerPosition = mAdapterAutoLogoutDelay.getPosition(getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(DELAY_KEY, "Immediate"));
+        mSpAutoLogoutDelay.setSelection(delaySpinnerPosition);
     }
 
     @Override
@@ -204,11 +218,21 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
     {
         super.onStart();
 
-        if (!APP_LOGGED_IN)
+        if (mCountDownIsFinished)
         {
-            ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
-            this.finish(); // CLEAN UP AND END
-            this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
+            if (!APP_LOGGED_IN)
+            {
+                ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
+                this.finish(); // CLEAN UP AND END
+                this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
+            }
+        } else
+        {
+            if (mCountDownTimer != null)
+            {
+                System.out.println("Cancel Called!");
+                mCountDownTimer.cancel();
+            }
         }
     }
 
@@ -233,20 +257,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         {
             if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             {
-                new AsyncTask<Void,Void, Void>()
-                {
-                    @Override
-                    protected Void doInBackground(Void... params)
-                    {
-                        new CountDownTimer(getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getInt(DELAY, 0), 1000)
-                        {
-
-                        }
-
-                        new LogoutProtocol().logoutExecuteAutosaveOff(mContext);
-                        return null;
-                    }
-                }.execute();
+                new LogoutProtocol().logoutExecuteAutosaveOff(mContext);
             }
         }
     }
@@ -254,8 +265,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
     @Override
     public void finish() // BACK BUTTON CACHES ACTIVITY ACTUAL START ---> MAIN ACTIVITY
     {
-        super.finish();
-
         Intent i = new Intent(this, MainActivity.class);
         this.startActivity(i);
     }

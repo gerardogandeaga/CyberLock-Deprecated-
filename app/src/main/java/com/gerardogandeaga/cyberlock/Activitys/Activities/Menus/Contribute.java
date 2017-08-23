@@ -13,6 +13,8 @@ import com.gerardogandeaga.cyberlock.R;
 
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
+import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
 
 public class Contribute extends AppCompatActivity
 {
@@ -52,11 +54,21 @@ public class Contribute extends AppCompatActivity
     {
         super.onStart();
 
-        if (!APP_LOGGED_IN)
+        if (mCountDownIsFinished)
         {
-            ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
-            this.finish(); // CLEAN UP AND END
-            this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
+            if (!APP_LOGGED_IN)
+            {
+                ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
+                this.finish(); // CLEAN UP AND END
+                this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
+            }
+        } else
+        {
+            if (mCountDownTimer != null)
+            {
+                System.out.println("Cancel Called!");
+                mCountDownTimer.cancel();
+            }
         }
     }
 

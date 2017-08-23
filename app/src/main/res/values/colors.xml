@@ -5,19 +5,22 @@
     <color name="colorAccent">#0c3551</color> <!-- background -->
 
     <!-- App Colour Themes -->
-    <color name="gray_lighter">#e1e1e1</color>
-    <color name="gray_light">#d9d9d9</color>
-    <color name="gray">#b4b4b4</color>
-    <color name="gray_dark">#8f8f8f</color>
-    <color name="gray_darker">#3b3b3b</color>
+    <color name="grayE1">#e1e1e1</color>
+    <color name="grayD9">#d9d9d9</color>
+    <color name="grayB4">#b4b4b4</color>
+    <color name="gray8F">#8f8f8f</color>
+    <color name="gray5D">#5d5d5d</color>
+    <color name="gray3B">#3b3b3b</color>
 
-    <color name="gray_layout">#5d5d5d</color>
+    <color name="blueC1">#19b1c1</color>
+    <color name="blueA2">#027ba2</color>
+    <color name="blue4C">#0b324c</color>
+    <color name="blue2D">#09202d</color>
 
-    <color name="orange">#ff8800</color>
-    <color name="oldblue">#027ba2</color>
+    <color name="orange00">#ff8800</color>
 
-    <color name="blue_light">#19b1c1</color>
-    <color name="blue">#0b324c</color>
-    <color name="blue_dark">#09202d</color>
+    <!-- Basic Colours -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 
 </resources>

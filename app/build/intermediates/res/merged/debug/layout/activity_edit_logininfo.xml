@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/appbar"
-        android:background="@color/gray_light">
+        android:background="@color/grayD9">
 
         <LinearLayout
             android:id="@+id/layoutHigherData"
@@ -49,7 +49,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/appbar"
                 android:layout_margin="0dp"
-                android:background="@color/gray_dark"
+                android:background="@color/gray8F"
                 android:ems="10"
                 android:fontFamily="monospace"
                 android:hint="Label..."
@@ -65,7 +65,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/linearLayout"
-                android:background="@color/gray"
+                android:background="@color/grayB4"
                 android:fontFamily="monospace"
                 android:padding="5dp"
                 android:text="Last Updated: N/A"
@@ -158,7 +158,7 @@
                     android:id="@+id/etQuestion1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/gray"
+                    android:background="@color/grayB4"
                     android:ems="10"
                     android:fontFamily="monospace"
                     android:hint="Seurity Question"
@@ -170,7 +170,7 @@
                     android:id="@+id/etAnswer1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/gray_dark"
+                    android:background="@color/gray8F"
                     android:ems="10"
                     android:fontFamily="monospace"
                     android:hint="Answer"
@@ -183,7 +183,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:background="@color/gray"
+                    android:background="@color/grayB4"
                     android:ems="10"
                     android:fontFamily="monospace"
                     android:hint="Security question"
@@ -195,7 +195,7 @@
                     android:id="@+id/etAnswer2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/gray_dark"
+                    android:background="@color/gray8F"
                     android:ems="10"
                     android:fontFamily="monospace"
                     android:hint="Answer"
@@ -213,7 +213,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_margin="10dp"
                 android:layout_weight="0.62"
-                android:background="@color/gray"
+                android:background="@color/grayB4"
                 android:padding="5dp">
 
                 <RelativeLayout
@@ -229,7 +229,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginRight="2dp"
-                        android:background="@color/gray_darker"
+                        android:background="@color/gray3B"
                         android:cropToPadding="true"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/ic_graphic_none"/>
@@ -266,7 +266,7 @@
                             android:id="@+id/etNotes"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/gray"
+                            android:background="@color/grayB4"
                             android:ems="10"
                             android:fontFamily="monospace"
                             android:hint="Notes..."

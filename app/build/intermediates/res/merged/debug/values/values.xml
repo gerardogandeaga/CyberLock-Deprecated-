@@ -134,9 +134,11 @@
     <color name="background_floating_material_light">@android:color/white</color>
     <color name="background_material_dark">@color/material_grey_850</color>
     <color name="background_material_light">@color/material_grey_50</color>
-    <color name="blue">#0b324c</color>
-    <color name="blue_dark">#09202d</color>
-    <color name="blue_light">#19b1c1</color>
+    <color name="black">#000000</color>
+    <color name="blue2D">#09202d</color>
+    <color name="blue4C">#0b324c</color>
+    <color name="blueA2">#027ba2</color>
+    <color name="blueC1">#19b1c1</color>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
     <color name="bright_foreground_disabled_material_light">#80000000</color>
     <color name="bright_foreground_inverse_material_dark">@color/bright_foreground_material_light</color>
@@ -165,12 +167,12 @@
     <color name="dim_foreground_material_light">#ff323232</color>
     <color name="foreground_material_dark">@android:color/white</color>
     <color name="foreground_material_light">@android:color/black</color>
-    <color name="gray">#b4b4b4</color>
-    <color name="gray_dark">#8f8f8f</color>
-    <color name="gray_darker">#3b3b3b</color>
-    <color name="gray_layout">#5d5d5d</color>
-    <color name="gray_light">#d9d9d9</color>
-    <color name="gray_lighter">#e1e1e1</color>
+    <color name="gray3B">#3b3b3b</color>
+    <color name="gray5D">#5d5d5d</color>
+    <color name="gray8F">#8f8f8f</color>
+    <color name="grayB4">#b4b4b4</color>
+    <color name="grayD9">#d9d9d9</color>
+    <color name="grayE1">#e1e1e1</color>
     <color name="highlighted_text_material_dark">#6680cbc4</color>
     <color name="highlighted_text_material_light">#66009688</color>
     <color name="material_blue_grey_800">#ff37474f</color>
@@ -188,8 +190,7 @@
     <color name="notification_action_color_filter">#ffffffff</color>
     <color name="notification_icon_bg_color">#ff9e9e9e</color>
     <color name="notification_material_background_media_default_color">#ff424242</color>
-    <color name="oldblue">#027ba2</color>
-    <color name="orange">#ff8800</color>
+    <color name="orange00">#ff8800</color>
     <color name="primary_dark_material_dark">@android:color/black</color>
     <color name="primary_dark_material_light">@color/material_grey_600</color>
     <color name="primary_material_dark">@color/material_grey_900</color>
@@ -208,6 +209,7 @@
     <color name="switch_thumb_disabled_material_light">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
+    <color name="white">#FFFFFF</color>
     <declare-styleable name="ActionBar"><attr name="navigationMode">
             
             <enum name="normal" value="0"/>
@@ -744,9 +746,11 @@
     </style>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/blueC1</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="colorControlHighlight">@color/ripple_material_light</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
