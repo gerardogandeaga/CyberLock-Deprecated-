@@ -47,12 +47,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:background="@drawable/clickable_button"
+            android:background="@drawable/clickable_background_main"
             android:clickable="true">
 
             <TextView
@@ -88,12 +84,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/Memo"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:background="@drawable/clickable_button"
+            android:background="@drawable/clickable_background_main"
             android:clickable="true">
 
             <ImageView
@@ -129,12 +121,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/Payment"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:background="@drawable/clickable_button"
+            android:background="@drawable/clickable_background_main"
             android:clickable="true">
 
             <TextView
@@ -170,12 +158,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/Login"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:background="@drawable/clickable_button"
+            android:background="@drawable/clickable_background_main"
             android:clickable="true">
 
             <ImageView

@@ -1,5 +1,7 @@
 package com.gerardogandeaga.cyberlock.Encryption;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.util.Base64;
 
@@ -17,16 +19,29 @@ public class AESKeyHandler
 {
     private static final int flags = Base64.DEFAULT;
     private static final int iterations = 10000, keylength = 256;
-    private static final String ALGO = "AES", KeyALGO = "PBKDF2WithHmacSHA1", CipherALGO = "AES/CBC/PKCS5Padding";
+    private static final String KeyALGO = "PBKDF2WithHmacSHA1";
+    private static String ALGO, CipherALGO;
 
-    // THESE FUCNTIONS GENERATE A ONE TIME RANDOM BYTE PASSWORD TO THE KEY GENERATOR (2ND FUNCTION)
-    public static byte[] AES_MEMO_BYTE_KEY_GENERATE()
+    private SharedPreferences mSharedPreferences;
+    private String DIRECTORY = "com.gerardogandeaga.cyberlock";
+    private static final String ENCRYPTION_ALGO = "ALGO", CIPHER_ALGO = "CIPHER";
+
+    public AESKeyHandler(Context context)
     {
-        SecureRandom r = new SecureRandom();
-        byte[] AES_MEMO_KEY = new byte[32];
-        r.nextBytes(AES_MEMO_KEY);
 
-        return AES_MEMO_KEY;
+        mSharedPreferences = context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
+        ALGO = mSharedPreferences.getString(ENCRYPTION_ALGO, "AES");
+        CipherALGO = mSharedPreferences.getString(CIPHER_ALGO, "AES/CBC/PKCS5Padding");
+    }
+
+    // THESE FUNCTIONS GENERATE A ONE TIME RANDOM BYTE PASSWORD TO THE KEY GENERATOR (2ND FUNCTION)
+    public static byte[] BYTE_KEY_GENERATE()
+    {
+        SecureRandom random = new SecureRandom();
+        byte[] KEY = new byte[32];
+        random.nextBytes(KEY);
+
+        return KEY;
     }
 
     @Nullable

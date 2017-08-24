@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (mSharedPreferences.getString(PIN, null) == null || mSharedPreferences.getString(KEY, null) == null)
         {
-            LogoutProtocol.ACTIVITY_INTENT = new Intent(this, SetPasscodeActivity.class);
+            LogoutProtocol.ACTIVITY_INTENT = new Intent(this, RegistrationActivity.class);
             this.finish();
             this.startActivity(LogoutProtocol.ACTIVITY_INTENT);
         }

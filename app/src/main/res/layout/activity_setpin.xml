@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Login.SetPasscodeActivity"
+    tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Login.RegistrationActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp">
 

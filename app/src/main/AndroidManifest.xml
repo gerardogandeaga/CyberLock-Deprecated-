@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activitys.Activities.Login.SetPasscodeActivity"
+            android:name=".Activitys.Activities.Login.RegistrationActivity"
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
         <activity

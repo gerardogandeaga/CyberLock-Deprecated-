@@ -6,6 +6,7 @@
     android:id="@+id/Content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue2D"
     android:orientation="vertical"
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings">
 
@@ -51,7 +52,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="20dp"
-                android:background="@android:color/black"
+                android:background="@color/white"
                 android:orientation="horizontal">
             </LinearLayout>
 
@@ -63,7 +64,7 @@
                 android:fontFamily="monospace"
                 android:text="General"
                 android:textAllCaps="true"
-                android:textColor="@android:color/black"
+                android:textColor="@color/white"
                 android:textSize="22sp"
                 android:textStyle="bold"/>
 
@@ -71,13 +72,13 @@
                 android:id="@+id/AutoSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
+                android:background="@drawable/clickable_background_main"
                 android:clickable="true"
                 android:orientation="horizontal"
-                android:paddingBottom="5dp"
+                android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:paddingTop="5dp">
+                android:paddingTop="10dp">
 
                 <LinearLayout
                     android:id="@+id/autoSave"
@@ -94,7 +95,7 @@
                         android:layout_weight="1"
                         android:fontFamily="monospace"
                         android:text="Auto Save"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"/>
 
@@ -105,8 +106,9 @@
                         android:layout_weight="1"
                         android:fontFamily="monospace"
                         android:text="Automatically save notes without needing to select the save button"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp"/>
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="italic"/>
 
                 </LinearLayout>
 
@@ -114,7 +116,8 @@
                     android:id="@+id/cbAutoSave"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    app:buttonTint="@color/white"/>
 
             </LinearLayout>
 
@@ -122,13 +125,13 @@
                 android:id="@+id/AutoLogoutDelay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
+                android:background="@drawable/clickable_background_main"
                 android:clickable="true"
                 android:orientation="vertical"
-                android:paddingBottom="5dp"
+                android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:paddingTop="5dp">
+                android:paddingTop="10dp">
 
                 <TextView
                     android:id="@+id/tvAutoLogoutDelay"
@@ -137,7 +140,7 @@
                     android:layout_marginTop="5dp"
                     android:fontFamily="monospace"
                     android:text="Auto Logout Delay"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
 
@@ -148,24 +151,32 @@
                     android:layout_weight="1"
                     android:fontFamily="monospace"
                     android:text="Select how long it takes for the application to automatically logout"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp"/>
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="italic"/>
 
                 <Spinner
                     android:id="@+id/spAutoLogoutDelay"
+                    style="@style/Platform.Widget.AppCompat.Spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:popupBackground="@color/white"
+                    android:spinnerMode="dialog"/>
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tvChangePassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
+                android:background="@drawable/clickable_background_main"
                 android:fontFamily="monospace"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
                 android:text="Change Password"
-                android:textColor="@android:color/black"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
 
@@ -177,7 +188,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
-                android:background="@android:color/black"
+                android:background="@color/white"
                 android:orientation="horizontal">
             </LinearLayout>
 
@@ -189,7 +200,7 @@
                 android:fontFamily="monospace"
                 android:text="Encryption"
                 android:textAllCaps="true"
-                android:textColor="@android:color/black"
+                android:textColor="@color/white"
                 android:textSize="22sp"
                 android:textStyle="bold"/>
 
@@ -197,13 +208,13 @@
                 android:id="@+id/ScrambleKey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
+                android:background="@drawable/clickable_background_main"
                 android:clickable="true"
                 android:orientation="vertical"
-                android:paddingBottom="5dp"
+                android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:paddingTop="5dp">
+                android:paddingTop="10dp">
 
                 <TextView
                     android:id="@+id/tvScrambleKey"
@@ -213,7 +224,7 @@
                     android:fontFamily="monospace"
                     android:text="Scramble Encryption Key"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
 
@@ -223,9 +234,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="monospace"
-                    android:text="Changes encryption key, size is determined by algorithm selected."
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp"/>
+                    android:text="Changes encryption key. Size is determined by algorithm selected."
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="italic"/>
 
             </LinearLayout>
 
@@ -233,12 +245,13 @@
                 android:id="@+id/EncryptionMethod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/clickable_background_main"
                 android:clickable="false"
                 android:orientation="vertical"
-                android:paddingBottom="5dp"
+                android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:paddingTop="5dp">
+                android:paddingTop="10dp">
 
                 <TextView
                     android:id="@+id/tvEncryptionMethod"
@@ -247,14 +260,18 @@
                     android:layout_marginTop="5dp"
                     android:fontFamily="monospace"
                     android:text="Encryption Method"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
 
                 <Spinner
                     android:id="@+id/spEncryptionMethod"
+                    style="@style/Platform.Widget.AppCompat.Spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:popupBackground="@color/white"
+                    android:spinnerMode="dialog"/>
 
             </LinearLayout>
 
@@ -266,7 +283,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
-                android:background="@android:color/black"
+                android:background="@color/white"
                 android:orientation="horizontal">
             </LinearLayout>
 

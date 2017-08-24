@@ -34,7 +34,9 @@
     <string-array name="encryptionALGO_array">
         <item>AES - 256</item>
         <item>Blowfish - 256</item>
+        <!-- Rest of the encryption features
         <item>RC4 – 256</item>
         <item>Triple DES - 168</item>
+        -->
     </string-array>
 </resources>

@@ -63,13 +63,15 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         getSupportActionBar().setTitle("Settings");
 
         // SPINNER DATA
+        // LOGOUT DELAY
         this.mSpAutoLogoutDelay = (Spinner) findViewById(R.id.spAutoLogoutDelay);
-        mAdapterAutoLogoutDelay = ArrayAdapter.createFromResource(this, R.array.autologoutdelay_array, android.R.layout.simple_spinner_dropdown_item);
+        mAdapterAutoLogoutDelay = ArrayAdapter.createFromResource(this, R.array.autologoutdelay_array, R.layout.spinner_item);
         mAdapterAutoLogoutDelay.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.mSpAutoLogoutDelay.setAdapter(mAdapterAutoLogoutDelay);
         // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // ENCRYPTION METHOD
         this.mSpEncryptionMethod = (Spinner) findViewById(R.id.spEncryptionMethod);
-        final ArrayAdapter<CharSequence> adapterEncryptionMethod = ArrayAdapter.createFromResource(this, R.array.encryptionALGO_array, android.R.layout.simple_spinner_dropdown_item);
+        final ArrayAdapter<CharSequence> adapterEncryptionMethod = ArrayAdapter.createFromResource(this, R.array.encryptionALGO_array, R.layout.spinner_item);
         adapterEncryptionMethod.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.mSpEncryptionMethod.setAdapter(adapterEncryptionMethod);
 

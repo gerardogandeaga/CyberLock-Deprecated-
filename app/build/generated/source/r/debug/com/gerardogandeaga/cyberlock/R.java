@@ -32,6 +32,11 @@ public final class R {
     public static final class array {
         public static final int autologoutdelay_array=0x7f0d0000;
         public static final int cardtype_array=0x7f0d0001;
+        /**  Rest of the encryption features
+        <item>RC4 – 256</item>
+        <item>Triple DES - 168</item>
+        
+         */
         public static final int encryptionALGO_array=0x7f0d0002;
     }
     public static final class attr {
@@ -3208,7 +3213,7 @@ containing a value of this type.
         public static final int avd_show_password_1=0x7f020083;
         public static final int avd_show_password_2=0x7f020084;
         public static final int avd_show_password_3=0x7f020085;
-        public static final int clickable_button=0x7f020056;
+        public static final int clickable_background_main=0x7f020056;
         public static final int creditcard=0x7f020057;
         public static final int design_bottom_navigation_item_background=0x7f020058;
         public static final int design_fab_background=0x7f020059;
@@ -3647,7 +3652,8 @@ containing a value of this type.
         public static final int select_dialog_item_material=0x7f04004b;
         public static final int select_dialog_multichoice_material=0x7f04004c;
         public static final int select_dialog_singlechoice_material=0x7f04004d;
-        public static final int support_simple_spinner_dropdown_item=0x7f04004e;
+        public static final int spinner_item=0x7f04004e;
+        public static final int support_simple_spinner_dropdown_item=0x7f04004f;
     }
     public static final class menu {
         public static final int menu_edit=0x7f0f0000;

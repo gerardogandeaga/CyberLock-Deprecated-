@@ -79,7 +79,7 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
             System.out.println("Current Key = " + current_ENC_DEC_KEY);
 
 
-            byte[] KEY_Byte = AESKeyHandler.AES_MEMO_BYTE_KEY_GENERATE(); // GENERATE A NEW BYTE ARRAY AS A SYMMETRIC KEY
+            byte[] KEY_Byte = AESKeyHandler.BYTE_KEY_GENERATE(); // GENERATE A NEW BYTE ARRAY AS A SYMMETRIC KEY
             byte[] ENC_DEC_KEY_ByteVal = AESKeyHandler.AES_MEMO_KEY_GENERATE(KEY_Byte);
 
             System.out.println("REGISTED KEY VAL :" + Base64.encodeToString(ENC_DEC_KEY_ByteVal, flags));

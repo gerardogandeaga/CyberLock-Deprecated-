@@ -737,7 +737,7 @@ int drawable avd_show_password 0x7f020055
 int drawable avd_show_password_1 0x7f020083
 int drawable avd_show_password_2 0x7f020084
 int drawable avd_show_password_3 0x7f020085
-int drawable clickable_button 0x7f020056
+int drawable clickable_background_main 0x7f020056
 int drawable creditcard 0x7f020057
 int drawable design_bottom_navigation_item_background 0x7f020058
 int drawable design_fab_background 0x7f020059
@@ -1170,7 +1170,8 @@ int layout notification_template_part_time 0x7f04004a
 int layout select_dialog_item_material 0x7f04004b
 int layout select_dialog_multichoice_material 0x7f04004c
 int layout select_dialog_singlechoice_material 0x7f04004d
-int layout support_simple_spinner_dropdown_item 0x7f04004e
+int layout spinner_item 0x7f04004e
+int layout support_simple_spinner_dropdown_item 0x7f04004f
 int menu menu_edit 0x7f0f0000
 int menu menu_main 0x7f0f0001
 int mipmap ic_launcher 0x7f030000
