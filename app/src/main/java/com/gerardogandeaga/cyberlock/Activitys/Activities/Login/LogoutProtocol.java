@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 
+import static com.gerardogandeaga.cyberlock.Supports.Globals.DELAY_TIME;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
+
 public class LogoutProtocol
 {
     // APP STATE
@@ -12,14 +16,11 @@ public class LogoutProtocol
     public static Intent ACTIVITY_INTENT;
 
     // LOGOUT DELAY
-    private static final String DELAY_TIME = "DELAY_TIME";
     public static CountDownTimer mCountDownTimer;
     public static boolean mCountDownIsFinished = false;
 
     // SHARED PREFERENCES
-    private static SharedPreferences mSharedPreferences;
-    private static final String DIRECTORY = "com.gerardogandeaga.cyberlock";
-    private static final String TEMP_PIN = "TEMP_PIN";
+    private SharedPreferences mSharedPreferences;
 
     public void logoutExecuteAutosaveOff(final Context context)
     {

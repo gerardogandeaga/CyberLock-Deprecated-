@@ -1,7 +1,9 @@
 package com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +38,9 @@ public class MainMemoActivity extends AppCompatActivity
     // WIDGETS
     private ListView mListView;
     private FloatingActionButton mFabAdd;
+    private ProgressDialog mProgressDialog;
+
+    private Context mContext = this;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -68,9 +73,7 @@ public class MainMemoActivity extends AppCompatActivity
         this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-            }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {  }
         });
     }
 
@@ -103,11 +106,36 @@ public class MainMemoActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
     }
 
-    public void onEditClicked(Memo memo) // EDIT MEMO
+    public void onEditClicked(final Memo memo) // EDIT MEMO -> ASYNC TASK
     {
-        ACTIVITY_INTENT = new Intent(this, MemoEditActivity.class);
-        ACTIVITY_INTENT.putExtra("MEMO", memo);
-        startActivity(ACTIVITY_INTENT);
+        new AsyncTask<Void, Void, Void>()
+        {
+            @Override
+            protected void onPreExecute()
+            {
+                super.onPreExecute();
+
+                progressBar();
+            }
+
+            @Override
+            protected Void doInBackground(Void... params)
+            {
+                ACTIVITY_INTENT = new Intent(mContext, MemoEditActivity.class);
+                ACTIVITY_INTENT.putExtra("MEMO", memo);
+                startActivity(ACTIVITY_INTENT);
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid)
+            {
+                super.onPostExecute(aVoid);
+
+                mProgressDialog.dismiss();
+            }
+        }.execute();
     }
 
     private class MemoAdapter extends ArrayAdapter<Memo>
@@ -157,7 +185,6 @@ public class MainMemoActivity extends AppCompatActivity
         }
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) // ACTION BAR BACK BUTTON RESPONSE
     {
@@ -169,6 +196,15 @@ public class MainMemoActivity extends AppCompatActivity
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void progressBar()
+    {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Loading...");
+        mProgressDialog.setProgressStyle(mProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
     }
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"

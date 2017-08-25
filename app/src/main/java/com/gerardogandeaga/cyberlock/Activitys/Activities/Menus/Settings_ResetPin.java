@@ -22,6 +22,7 @@ import static com.gerardogandeaga.cyberlock.R.id.input1;
 import static com.gerardogandeaga.cyberlock.R.id.input2;
 import static com.gerardogandeaga.cyberlock.R.id.input3;
 import static com.gerardogandeaga.cyberlock.R.id.input4;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 
 public class Settings_ResetPin extends AppCompatActivity implements View.OnClickListener
 {
@@ -46,10 +47,9 @@ public class Settings_ResetPin extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_setpin);
         ACTIVITY_INTENT = null;
 
-        mSharedPreferences = getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE);
+        mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
 
-
-            mTextView = (TextView) findViewById(R.id.tvInstructions);
+        mTextView = (TextView) findViewById(R.id.tvInstructions);
 
         this.mBtn0 = (Button) findViewById(R.id.btn0);
         this.mBtn1 = (Button) findViewById(R.id.btn1);
@@ -148,7 +148,7 @@ public class Settings_ResetPin extends AppCompatActivity implements View.OnClick
             final String passwordHash; // GENERATE THE HASH PIN
             try
             {
-                passwordHash = AESKeyHandler.ENCRYPTKEY(SHA256PinHash.hashFunction(pinFirst, SHA256PinHash.generateSalt()), pinFirst);
+                passwordHash = new AESKeyHandler(this).ENCRYPTKEY(SHA256PinHash.hashFunction(pinFirst, SHA256PinHash.generateSalt()), pinFirst);
 
                 mSharedPreferences.edit().putString(PIN, passwordHash).apply(); // ADD HASHED PIN TO STORE
                 System.out.println("HASHED PIN :" + passwordHash);

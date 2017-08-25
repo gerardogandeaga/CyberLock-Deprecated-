@@ -1,7 +1,9 @@
 package com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +39,9 @@ public class MainLoginInfoActivity extends AppCompatActivity
     // WIDGETS
     private ListView mListView;
     private FloatingActionButton mFabAdd;
+    private ProgressDialog mProgressDialog;
+
+    private Context mContext = this;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -104,11 +109,37 @@ public class MainLoginInfoActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
     }
 
-    private void onEditClicked(LoginInfo loginInfo) // EDIT PAYMENT INFO
+    private void onEditClicked(final LoginInfo loginInfo) // EDIT PAYMENT INFO -> ASYNC TASK
     {
-        ACTIVITY_INTENT = new Intent(this, LoginInfoEditActivity.class);
-        ACTIVITY_INTENT.putExtra("LOGININFO", loginInfo);
-        startActivity(ACTIVITY_INTENT);
+        new AsyncTask<Void, Void, Void>()
+        {
+            @Override
+            protected void onPreExecute()
+            {
+                super.onPreExecute();
+
+                progressBar();
+            }
+
+            @Override
+            protected Void doInBackground(Void... params)
+            {
+
+                ACTIVITY_INTENT = new Intent(mContext, LoginInfoEditActivity.class);
+                ACTIVITY_INTENT.putExtra("LOGININFO", loginInfo);
+                startActivity(ACTIVITY_INTENT);
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid)
+            {
+                super.onPostExecute(aVoid);
+
+                mProgressDialog.dismiss();
+            }
+        }.execute();
     }
 
     private class loginInfoAdapter extends ArrayAdapter<LoginInfo>
@@ -172,6 +203,14 @@ public class MainLoginInfoActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    private void progressBar()
+    {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Loading...");
+        mProgressDialog.setProgressStyle(mProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
     @Override
     public void onStart()

@@ -27,13 +27,15 @@ import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutPro
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.DELAY_TIME;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.LOGOUT_DELAY;
 
 public class Settings extends AppCompatActivity implements View.OnClickListener
 {
     // DATA
     private SharedPreferences mSharedPreferences;
-    private static final String DIRECTORY = "com.gerardogandeaga.cyberlock";
-    private static final String KEY = "KEY", PIN = "PIN", AUTOSAVE = "AUTOSAVE", DELAY_KEY = "DELAY_KEY", DELAY_TIME = "DELAY_TIME";
     private static final int flags = Base64.DEFAULT;
 
     private ArrayAdapter<CharSequence> mAdapterAutoLogoutDelay;
@@ -86,7 +88,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
 
         savedStates();
 
-        // TODO AUTO LOGOUT DELAY_TIME REGISTRATION
         this.mSpAutoLogoutDelay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
@@ -112,7 +113,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
                     }
 
                     System.out.println("Time = " + time);
-                    getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().putString(DELAY_KEY, mAutoLogoutDelay).putLong(DELAY_TIME, time).apply();
+                    getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().putString(LOGOUT_DELAY, mAutoLogoutDelay).putLong(DELAY_TIME, time).apply();
                 }
             }
 
@@ -125,7 +126,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
 
     private void savedStates()
     {
-        int delaySpinnerPosition = mAdapterAutoLogoutDelay.getPosition(getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(DELAY_KEY, "Immediate"));
+        int delaySpinnerPosition = mAdapterAutoLogoutDelay.getPosition(getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(LOGOUT_DELAY, "Immediate"));
         mSpAutoLogoutDelay.setSelection(delaySpinnerPosition);
     }
 

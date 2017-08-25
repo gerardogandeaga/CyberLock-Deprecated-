@@ -31,13 +31,16 @@ import static com.gerardogandeaga.cyberlock.R.id.input1;
 import static com.gerardogandeaga.cyberlock.R.id.input2;
 import static com.gerardogandeaga.cyberlock.R.id.input3;
 import static com.gerardogandeaga.cyberlock.R.id.input4;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.PIN;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener
 {
     // STORED PIN
     private static String mPin = "";
-    private static final int FLAGS = Base64.DEFAULT;
-    private static final String PIN = "PIN", KEY = "KEY", TEMP_PIN = "TEMP_PIN";
     private SharedPreferences mSharedPreferences;
     // INTENT
     private Intent mIntent;
@@ -60,13 +63,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         LogoutProtocol.ACTIVITY_INTENT = null;
 
-        mSharedPreferences = getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE);
+        mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
 
         mIntent = getIntent();
         mLastActivity = getIntent().getStringExtra("lastActivity");
         mIntent.removeExtra("lastActivity"); // REMOVE LAST ACTIVITY INFO
 
-        if (mSharedPreferences.getString(PIN, null) == null || mSharedPreferences.getString(KEY, null) == null)
+        if (mSharedPreferences.getString(PIN, null) == null || mSharedPreferences.getString(CRYPT_KEY, null) == null)
         {
             LogoutProtocol.ACTIVITY_INTENT = new Intent(this, RegistrationActivity.class);
             this.finish();
@@ -262,7 +265,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             {
                 try // TRY LOGIN MECHANICS
                 {
-                    final String decryptedPulledPin = AESKeyHandler.DECRYPTKEY(mSharedPreferences.getString(PIN, null), mPin);
+                    final String decryptedPulledPin = new AESKeyHandler(mContext).DECRYPTKEY(mSharedPreferences.getString(PIN, null), mPin);
                     final String loginPinHash = SHA256PinHash.hashFunction(mPin, Arrays.copyOfRange(Base64.decode(decryptedPulledPin, FLAGS), 0, 128));
 
                     System.out.println("LOGIN INPUT: " + loginPinHash);

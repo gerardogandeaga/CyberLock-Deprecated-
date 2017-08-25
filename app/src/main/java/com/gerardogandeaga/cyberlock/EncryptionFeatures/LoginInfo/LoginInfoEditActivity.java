@@ -34,7 +34,10 @@ import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutPro
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
-import static com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MemoEditActivity.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
 public class LoginInfoEditActivity extends AppCompatActivity
 {
@@ -120,19 +123,20 @@ public class LoginInfoEditActivity extends AppCompatActivity
             {
                 try
                 {
-                    String ENCDEC_KEY = (AESKeyHandler.DECRYPTKEY(this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("KEY", null),
-                            this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("TEMP_PIN", null)));
+                    String ENCDEC_KEY = (new AESKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
+                            this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
 
+                    AESContent content = new AESContent(this);
                     // DECRYPT CONTENT
-                    if (!mLoginInfo.getUrl().matches("")) { this.mEtUrl.setText(AESContent.decryptContent(mLoginInfo.getUrl(), ENCDEC_KEY)); }
-                    if (!mLoginInfo.getUsername().matches("")) { this.mEtUsername.setText(AESContent.decryptContent(mLoginInfo.getUsername(), ENCDEC_KEY)); }
-                    if (!mLoginInfo.getEmail().matches("")) { this.mEtEmail.setText(AESContent.decryptContent(mLoginInfo.getEmail(), ENCDEC_KEY));}
-                    if (!mLoginInfo.getPassword().matches("")) { this.mEtPassword.setText(AESContent.decryptContent(mLoginInfo.getPassword(), ENCDEC_KEY)); }
-                    if (!mLoginInfo.getQuestion1().matches("")) { this.mEtQuestion1.setText(AESContent.decryptContent(mLoginInfo.getQuestion1(), ENCDEC_KEY));}
-                    if (!mLoginInfo.getQuestion2().matches("")) { this.mEtQuestion2.setText(AESContent.decryptContent(mLoginInfo.getQuestion2(), ENCDEC_KEY));}
-                    if (!mLoginInfo.getAnswer1().matches("")) { this.mEtAnswer1.setText(AESContent.decryptContent(mLoginInfo.getAnswer1(), ENCDEC_KEY));}
-                    if (!mLoginInfo.getAnswer2().matches("")) { this.mEtAnswer2.setText(AESContent.decryptContent(mLoginInfo.getAnswer2(), ENCDEC_KEY));}
-                    if (!mLoginInfo.getNotes().matches("")) { this.mEtNotes.setText(AESContent.decryptContent(mLoginInfo.getNotes(), ENCDEC_KEY)); }
+                    if (!mLoginInfo.getUrl().matches("")) { this.mEtUrl.setText(content.decryptContent(mLoginInfo.getUrl(), ENCDEC_KEY)); }
+                    if (!mLoginInfo.getUsername().matches("")) { this.mEtUsername.setText(content.decryptContent(mLoginInfo.getUsername(), ENCDEC_KEY)); }
+                    if (!mLoginInfo.getEmail().matches("")) { this.mEtEmail.setText(content.decryptContent(mLoginInfo.getEmail(), ENCDEC_KEY));}
+                    if (!mLoginInfo.getPassword().matches("")) { this.mEtPassword.setText(content.decryptContent(mLoginInfo.getPassword(), ENCDEC_KEY)); }
+                    if (!mLoginInfo.getQuestion1().matches("")) { this.mEtQuestion1.setText(content.decryptContent(mLoginInfo.getQuestion1(), ENCDEC_KEY));}
+                    if (!mLoginInfo.getQuestion2().matches("")) { this.mEtQuestion2.setText(content.decryptContent(mLoginInfo.getQuestion2(), ENCDEC_KEY));}
+                    if (!mLoginInfo.getAnswer1().matches("")) { this.mEtAnswer1.setText(content.decryptContent(mLoginInfo.getAnswer1(), ENCDEC_KEY));}
+                    if (!mLoginInfo.getAnswer2().matches("")) { this.mEtAnswer2.setText(content.decryptContent(mLoginInfo.getAnswer2(), ENCDEC_KEY));}
+                    if (!mLoginInfo.getNotes().matches("")) { this.mEtNotes.setText(content.decryptContent(mLoginInfo.getNotes(), ENCDEC_KEY)); }
 
                     if (!mLoginInfo.getLabel().matches("")) { this.mEtTag.setText(mLoginInfo.getLabel()); }
                     if(mLoginInfo.getImage() != null) { this.mImgImage.setImageDrawable(mLoginInfo.setImageButton(mLoginInfo)); }
@@ -209,26 +213,28 @@ public class LoginInfoEditActivity extends AppCompatActivity
         LoginInfoDatabaseAccess loginInfoDatabaseAccess = LoginInfoDatabaseAccess.getInstance(this);
         loginInfoDatabaseAccess.open();
 
-        String ENCDEC_KEY = (AESKeyHandler.DECRYPTKEY(this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("KEY", null),
-                this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("TEMP_PIN", null)));
+        String ENCDEC_KEY = (new AESKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
+                this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
 
         if ((!mEtTag.getText().toString().matches("")) || (!mEtUrl.getText().toString().matches("")) || (!mEtUsername.getText().toString().matches("")) || (!mEtEmail.getText().toString().matches("")) || (!mEtPassword.getText().toString().matches("")) || (!mEtNotes.getText().toString().matches("")) || (!mEtQuestion1.getText().toString().matches("")) || (!mEtQuestion2.getText().toString().matches("")) || (!mEtAnswer1.getText().toString().matches("")) || (!mEtAnswer2.getText().toString().matches("")))
         {
+            AESContent content = new AESContent(this);
+
             if (mLoginInfo == null) // WHEN SAVING A NEW UNKNOWN LOGIN INFO
             {
                 // ADD NEW LOGIN INFO
                 LoginInfo temp = new LoginInfo();
 
                 // SET INFO
-                temp.setUrl(AESContent.encryptContent(mEtUrl.getText().toString(), ENCDEC_KEY)); // SET URL
-                temp.setUsername(AESContent.encryptContent(mEtUsername.getText().toString(), ENCDEC_KEY)); // SET USERNAME
-                temp.setEmail(AESContent.encryptContent(mEtEmail.getText().toString(), ENCDEC_KEY)); // SET EMAIL
-                temp.setPassword(AESContent.encryptContent(mEtPassword.getText().toString(), ENCDEC_KEY)); // SET PASSWORD
-                temp.setQuestion1(AESContent.encryptContent(mEtQuestion1.getText().toString(), ENCDEC_KEY)); // SET QUESTION
-                temp.setQuestion2(AESContent.encryptContent(mEtQuestion2.getText().toString(), ENCDEC_KEY)); // SET QUESTION
-                temp.setAnswer1(AESContent.encryptContent(mEtAnswer1.getText().toString(), ENCDEC_KEY)); // SET ANSWER
-                temp.setAnswer2(AESContent.encryptContent(mEtAnswer2.getText().toString(), ENCDEC_KEY)); // SET ANSWER
-                temp.setNotes(AESContent.encryptContent(mEtNotes.getText().toString(), ENCDEC_KEY)); // SET NOTES
+                temp.setUrl(content.encryptContent(mEtUrl.getText().toString(), ENCDEC_KEY)); // SET URL
+                temp.setUsername(content.encryptContent(mEtUsername.getText().toString(), ENCDEC_KEY)); // SET USERNAME
+                temp.setEmail(content.encryptContent(mEtEmail.getText().toString(), ENCDEC_KEY)); // SET EMAIL
+                temp.setPassword(content.encryptContent(mEtPassword.getText().toString(), ENCDEC_KEY)); // SET PASSWORD
+                temp.setQuestion1(content.encryptContent(mEtQuestion1.getText().toString(), ENCDEC_KEY)); // SET QUESTION
+                temp.setQuestion2(content.encryptContent(mEtQuestion2.getText().toString(), ENCDEC_KEY)); // SET QUESTION
+                temp.setAnswer1(content.encryptContent(mEtAnswer1.getText().toString(), ENCDEC_KEY)); // SET ANSWER
+                temp.setAnswer2(content.encryptContent(mEtAnswer2.getText().toString(), ENCDEC_KEY)); // SET ANSWER
+                temp.setNotes(content.encryptContent(mEtNotes.getText().toString(), ENCDEC_KEY)); // SET NOTES
                 if (!mEtTag.getText().toString().matches(""))
                 {
                     temp.setLabel(mEtTag.getText().toString());
@@ -244,15 +250,15 @@ public class LoginInfoEditActivity extends AppCompatActivity
             {
                 // UPDATE THE LOGIN INFO
                 // SET INFO
-                mLoginInfo.setUrl(AESContent.encryptContent(mEtUrl.getText().toString(), ENCDEC_KEY)); // SET URL
-                mLoginInfo.setUsername(AESContent.encryptContent(mEtUsername.getText().toString(), ENCDEC_KEY)); // SET USERNAME
-                mLoginInfo.setEmail(AESContent.encryptContent(mEtEmail.getText().toString(), ENCDEC_KEY)); // SET EMAIL
-                mLoginInfo.setPassword(AESContent.encryptContent(mEtPassword.getText().toString(), ENCDEC_KEY)); // SET PASSWORD
-                mLoginInfo.setQuestion1(AESContent.encryptContent(mEtQuestion1.getText().toString(), ENCDEC_KEY)); // SET QUESTION
-                mLoginInfo.setQuestion2(AESContent.encryptContent(mEtQuestion2.getText().toString(), ENCDEC_KEY)); // SET QUESTION
-                mLoginInfo.setAnswer1(AESContent.encryptContent(mEtAnswer1.getText().toString(), ENCDEC_KEY)); // SET ANSWER
-                mLoginInfo.setAnswer2(AESContent.encryptContent(mEtAnswer2.getText().toString(), ENCDEC_KEY)); // SET ANSWER
-                mLoginInfo.setNotes(AESContent.encryptContent(mEtNotes.getText().toString(), ENCDEC_KEY)); // SET NOTES
+                mLoginInfo.setUrl(content.encryptContent(mEtUrl.getText().toString(), ENCDEC_KEY)); // SET URL
+                mLoginInfo.setUsername(content.encryptContent(mEtUsername.getText().toString(), ENCDEC_KEY)); // SET USERNAME
+                mLoginInfo.setEmail(content.encryptContent(mEtEmail.getText().toString(), ENCDEC_KEY)); // SET EMAIL
+                mLoginInfo.setPassword(content.encryptContent(mEtPassword.getText().toString(), ENCDEC_KEY)); // SET PASSWORD
+                mLoginInfo.setQuestion1(content.encryptContent(mEtQuestion1.getText().toString(), ENCDEC_KEY)); // SET QUESTION
+                mLoginInfo.setQuestion2(content.encryptContent(mEtQuestion2.getText().toString(), ENCDEC_KEY)); // SET QUESTION
+                mLoginInfo.setAnswer1(content.encryptContent(mEtAnswer1.getText().toString(), ENCDEC_KEY)); // SET ANSWER
+                mLoginInfo.setAnswer2(content.encryptContent(mEtAnswer2.getText().toString(), ENCDEC_KEY)); // SET ANSWER
+                mLoginInfo.setNotes(content.encryptContent(mEtNotes.getText().toString(), ENCDEC_KEY)); // SET NOTES
                 if (!mEtTag.getText().toString().matches(""))
                 {
                     mLoginInfo.setLabel(mEtTag.getText().toString());
@@ -298,11 +304,11 @@ public class LoginInfoEditActivity extends AppCompatActivity
         {
             if (!APP_LOGGED_IN)
             {
-                if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean("AUTOSAVE", false))
+                if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false))
                 {
                     onSave();
 
-                    this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().remove("TEMP_PIN").apply();
+                    this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().remove(TEMP_PIN).apply();
                 } else
                 {
                     ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
@@ -344,7 +350,7 @@ public class LoginInfoEditActivity extends AppCompatActivity
         { // HOME AND TABS AND SCREEN OFF
             if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             {
-                if (!this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getBoolean("AUTOSAVE", false))
+                if (!this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false))
                 {
                     new LogoutProtocol().logoutExecuteAutosaveOff(this);
                 }

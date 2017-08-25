@@ -19,11 +19,14 @@ import com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MemoDatabase
 
 import java.util.List;
 
+import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
+
 public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
 {
     // DATA
     private SharedPreferences mSharedPreferences;
-    private static final String KEY = "KEY", TEMP_PIN = "TEMP_PIN";
     private static final int flags = Base64.DEFAULT;
 
     private MemoDatabaseAccess mMemoDatabaseAccess;
@@ -42,7 +45,7 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
     {
         mContext = context;
 
-        mSharedPreferences = mContext.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE);
+        mSharedPreferences = mContext.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
 
         this.mMemoDatabaseAccess = MemoDatabaseAccess.getInstance(mContext);
         this.mPaymentInfoDatabaseAccess = PaymentInfoDatabaseAccess.getInstance(mContext);
@@ -75,19 +78,22 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
     {
         try
         {
-            String current_ENC_DEC_KEY = AESKeyHandler.DECRYPTKEY(mSharedPreferences.getString(KEY, null), mSharedPreferences.getString(TEMP_PIN, null));
+            AESKeyHandler keyHandler = new AESKeyHandler(mContext);
+            AESContent content = new AESContent(mContext);
+
+            String current_ENC_DEC_KEY = keyHandler.DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), mSharedPreferences.getString(TEMP_PIN, null));
             System.out.println("Current Key = " + current_ENC_DEC_KEY);
 
 
-            byte[] KEY_Byte = AESKeyHandler.BYTE_KEY_GENERATE(); // GENERATE A NEW BYTE ARRAY AS A SYMMETRIC KEY
-            byte[] ENC_DEC_KEY_ByteVal = AESKeyHandler.AES_MEMO_KEY_GENERATE(KEY_Byte);
+            byte[] KEY_Byte = keyHandler.BYTE_KEY_GENERATE(); // GENERATE A NEW BYTE ARRAY AS A SYMMETRIC KEY
+            byte[] ENC_DEC_KEY_ByteVal = keyHandler.KEY_GENERATE(KEY_Byte);
 
             System.out.println("REGISTED KEY VAL :" + Base64.encodeToString(ENC_DEC_KEY_ByteVal, flags));
             System.out.println("REGISTED KEY SIZE :" + ENC_DEC_KEY_ByteVal.length);
 
             String new_ENC_DEC_KEY = Base64.encodeToString(ENC_DEC_KEY_ByteVal, flags);
 
-            mSharedPreferences.edit().remove(KEY).apply();
+            mSharedPreferences.edit().remove(CRYPT_KEY).apply();
 
             // GO THROUGH ALL DATABASES
             this.mMemoDatabaseAccess.open();
@@ -97,9 +103,9 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
                 final Memo memo = mMemos.get(i);
                 String text = null;
 
-                if (memo.getText() != null) text = AESContent.decryptContent((memo.getText()), current_ENC_DEC_KEY);
+                if (memo.getText() != null) text = content.decryptContent((memo.getText()), current_ENC_DEC_KEY);
 
-                if (text != null) memo.setText(AESContent.encryptContent(text, new_ENC_DEC_KEY));
+                if (text != null) memo.setText(content.encryptContent(text, new_ENC_DEC_KEY));
 
                 mMemoDatabaseAccess.update(memo);
 
@@ -116,25 +122,25 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
                 final PaymentInfo paymentInfo = mPaymentInfos.get(i);
                 String cardName = null, cardNumber = null, expiryDate = null, secCode = null, question1 = null, question2 = null, answer1 = null, answer2 = null, notes = null;
 
-                if (paymentInfo.getCardName() != null) cardName = AESContent.decryptContent((paymentInfo.getCardName()), current_ENC_DEC_KEY);
-                if (paymentInfo.getCardNumber() != null) cardNumber = AESContent.decryptContent((paymentInfo.getCardNumber()), current_ENC_DEC_KEY);
-                if (paymentInfo.getCardExpire() != null) expiryDate = AESContent.decryptContent((paymentInfo.getCardExpire()), current_ENC_DEC_KEY);
-                if (paymentInfo.getCardSecCode() != null) secCode = AESContent.decryptContent((paymentInfo.getCardSecCode()), current_ENC_DEC_KEY);
-                if (paymentInfo.getQuestion1() != null) question1 = AESContent.decryptContent((paymentInfo.getQuestion1()), current_ENC_DEC_KEY);
-                if (paymentInfo.getQuestion2() != null) question2 = AESContent.decryptContent((paymentInfo.getQuestion2()), current_ENC_DEC_KEY);
-                if (paymentInfo.getAnswer1() != null) answer1 = AESContent.decryptContent((paymentInfo.getAnswer1()), current_ENC_DEC_KEY);
-                if (paymentInfo.getAnswer2() != null) answer2 = AESContent.decryptContent((paymentInfo.getAnswer2()), current_ENC_DEC_KEY);
-                if (paymentInfo.getNotes() != null) notes = AESContent.decryptContent((paymentInfo.getNotes()), current_ENC_DEC_KEY);
+                if (paymentInfo.getCardName() != null) cardName = content.decryptContent((paymentInfo.getCardName()), current_ENC_DEC_KEY);
+                if (paymentInfo.getCardNumber() != null) cardNumber = content.decryptContent((paymentInfo.getCardNumber()), current_ENC_DEC_KEY);
+                if (paymentInfo.getCardExpire() != null) expiryDate = content.decryptContent((paymentInfo.getCardExpire()), current_ENC_DEC_KEY);
+                if (paymentInfo.getCardSecCode() != null) secCode = content.decryptContent((paymentInfo.getCardSecCode()), current_ENC_DEC_KEY);
+                if (paymentInfo.getQuestion1() != null) question1 = content.decryptContent((paymentInfo.getQuestion1()), current_ENC_DEC_KEY);
+                if (paymentInfo.getQuestion2() != null) question2 = content.decryptContent((paymentInfo.getQuestion2()), current_ENC_DEC_KEY);
+                if (paymentInfo.getAnswer1() != null) answer1 = content.decryptContent((paymentInfo.getAnswer1()), current_ENC_DEC_KEY);
+                if (paymentInfo.getAnswer2() != null) answer2 = content.decryptContent((paymentInfo.getAnswer2()), current_ENC_DEC_KEY);
+                if (paymentInfo.getNotes() != null) notes = content.decryptContent((paymentInfo.getNotes()), current_ENC_DEC_KEY);
 
-                if (cardName != null) paymentInfo.setCardName(AESContent.encryptContent(cardName, new_ENC_DEC_KEY));
-                if (cardNumber != null) paymentInfo.setCardNumber(AESContent.encryptContent(cardNumber, new_ENC_DEC_KEY));
-                if (expiryDate != null) paymentInfo.setCardExpire(AESContent.encryptContent(expiryDate, new_ENC_DEC_KEY));
-                if (secCode != null) paymentInfo.setCardSecCode(AESContent.encryptContent(secCode, new_ENC_DEC_KEY));
-                if (question1 != null) paymentInfo.setQuestion1(AESContent.encryptContent(question1, new_ENC_DEC_KEY));
-                if (question2 != null) paymentInfo.setQuestion2(AESContent.encryptContent(question2, new_ENC_DEC_KEY));
-                if (answer1 != null) paymentInfo.setAnswer1(AESContent.encryptContent(answer1, new_ENC_DEC_KEY));
-                if (answer2 != null) paymentInfo.setAnswer2(AESContent.encryptContent(answer2, new_ENC_DEC_KEY));
-                if (notes != null) paymentInfo.setNotes(AESContent.encryptContent(notes, new_ENC_DEC_KEY));
+                if (cardName != null) paymentInfo.setCardName(content.encryptContent(cardName, new_ENC_DEC_KEY));
+                if (cardNumber != null) paymentInfo.setCardNumber(content.encryptContent(cardNumber, new_ENC_DEC_KEY));
+                if (expiryDate != null) paymentInfo.setCardExpire(content.encryptContent(expiryDate, new_ENC_DEC_KEY));
+                if (secCode != null) paymentInfo.setCardSecCode(content.encryptContent(secCode, new_ENC_DEC_KEY));
+                if (question1 != null) paymentInfo.setQuestion1(content.encryptContent(question1, new_ENC_DEC_KEY));
+                if (question2 != null) paymentInfo.setQuestion2(content.encryptContent(question2, new_ENC_DEC_KEY));
+                if (answer1 != null) paymentInfo.setAnswer1(content.encryptContent(answer1, new_ENC_DEC_KEY));
+                if (answer2 != null) paymentInfo.setAnswer2(content.encryptContent(answer2, new_ENC_DEC_KEY));
+                if (notes != null) paymentInfo.setNotes(content.encryptContent(notes, new_ENC_DEC_KEY));
 
                 cardName = null;
                 cardNumber = null;
@@ -158,25 +164,25 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
                 final LoginInfo loginInfo = mLoginInfos.get(i);
                 String url = null, username = null, email = null, password = null, question1 = null, question2 = null, answer1 = null, answer2 = null, notes = null;
 
-                if (loginInfo.getUrl() != null) url = AESContent.decryptContent((loginInfo.getUrl()), current_ENC_DEC_KEY);
-                if (loginInfo.getUsername() != null) username = AESContent.decryptContent((loginInfo.getUsername()), current_ENC_DEC_KEY);
-                if (loginInfo.getEmail() != null) email = AESContent.decryptContent((loginInfo.getEmail()), current_ENC_DEC_KEY);
-                if (loginInfo.getPassword() != null) password = AESContent.decryptContent((loginInfo.getPassword()), current_ENC_DEC_KEY);
-                if (loginInfo.getQuestion1() != null) question1 = AESContent.decryptContent((loginInfo.getQuestion1()), current_ENC_DEC_KEY);
-                if (loginInfo.getQuestion2() != null) question2 = AESContent.decryptContent((loginInfo.getQuestion2()), current_ENC_DEC_KEY);
-                if (loginInfo.getAnswer1() != null) answer1 = AESContent.decryptContent((loginInfo.getAnswer1()), current_ENC_DEC_KEY);
-                if (loginInfo.getAnswer2() != null) answer2 = AESContent.decryptContent((loginInfo.getAnswer2()), current_ENC_DEC_KEY);
-                if (loginInfo.getNotes() != null) notes = AESContent.decryptContent((loginInfo.getNotes()), current_ENC_DEC_KEY);
+                if (loginInfo.getUrl() != null) url = content.decryptContent((loginInfo.getUrl()), current_ENC_DEC_KEY);
+                if (loginInfo.getUsername() != null) username = content.decryptContent((loginInfo.getUsername()), current_ENC_DEC_KEY);
+                if (loginInfo.getEmail() != null) email = content.decryptContent((loginInfo.getEmail()), current_ENC_DEC_KEY);
+                if (loginInfo.getPassword() != null) password = content.decryptContent((loginInfo.getPassword()), current_ENC_DEC_KEY);
+                if (loginInfo.getQuestion1() != null) question1 = content.decryptContent((loginInfo.getQuestion1()), current_ENC_DEC_KEY);
+                if (loginInfo.getQuestion2() != null) question2 = content.decryptContent((loginInfo.getQuestion2()), current_ENC_DEC_KEY);
+                if (loginInfo.getAnswer1() != null) answer1 = content.decryptContent((loginInfo.getAnswer1()), current_ENC_DEC_KEY);
+                if (loginInfo.getAnswer2() != null) answer2 = content.decryptContent((loginInfo.getAnswer2()), current_ENC_DEC_KEY);
+                if (loginInfo.getNotes() != null) notes = content.decryptContent((loginInfo.getNotes()), current_ENC_DEC_KEY);
 
-                if (url != null) loginInfo.setUrl(AESContent.encryptContent(url, new_ENC_DEC_KEY));
-                if (username != null) loginInfo.setUsername(AESContent.encryptContent(username, new_ENC_DEC_KEY));
-                if (email != null) loginInfo.setEmail(AESContent.encryptContent(email, new_ENC_DEC_KEY));
-                if (password != null) loginInfo.setPassword(AESContent.encryptContent(password, new_ENC_DEC_KEY));
-                if (question1 != null) loginInfo.setQuestion1(AESContent.encryptContent(question1, new_ENC_DEC_KEY));
-                if (question2 != null) loginInfo.setQuestion2(AESContent.encryptContent(question2, new_ENC_DEC_KEY));
-                if (answer1 != null) loginInfo.setAnswer1(AESContent.encryptContent(answer1, new_ENC_DEC_KEY));
-                if (answer2 != null) loginInfo.setAnswer2(AESContent.encryptContent(answer2, new_ENC_DEC_KEY));
-                if (notes != null) loginInfo.setNotes(AESContent.encryptContent(notes, new_ENC_DEC_KEY));
+                if (url != null) loginInfo.setUrl(content.encryptContent(url, new_ENC_DEC_KEY));
+                if (username != null) loginInfo.setUsername(content.encryptContent(username, new_ENC_DEC_KEY));
+                if (email != null) loginInfo.setEmail(content.encryptContent(email, new_ENC_DEC_KEY));
+                if (password != null) loginInfo.setPassword(content.encryptContent(password, new_ENC_DEC_KEY));
+                if (question1 != null) loginInfo.setQuestion1(content.encryptContent(question1, new_ENC_DEC_KEY));
+                if (question2 != null) loginInfo.setQuestion2(content.encryptContent(question2, new_ENC_DEC_KEY));
+                if (answer1 != null) loginInfo.setAnswer1(content.encryptContent(answer1, new_ENC_DEC_KEY));
+                if (answer2 != null) loginInfo.setAnswer2(content.encryptContent(answer2, new_ENC_DEC_KEY));
+                if (notes != null) loginInfo.setNotes(content.encryptContent(notes, new_ENC_DEC_KEY));
 
                 url = null;
                 username = null;
@@ -193,7 +199,7 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
             }
             this.mLoginInfoDatabaseAccess.close();
 
-            mSharedPreferences.edit().putString(KEY, AESKeyHandler.ENCRYPTKEY(new_ENC_DEC_KEY, mSharedPreferences.getString(TEMP_PIN, null))).apply();
+            mSharedPreferences.edit().putString(CRYPT_KEY, keyHandler.ENCRYPTKEY(new_ENC_DEC_KEY, mSharedPreferences.getString(TEMP_PIN, null))).apply();
 
             new Handler(mContext.getMainLooper()).post(new Runnable()
             {

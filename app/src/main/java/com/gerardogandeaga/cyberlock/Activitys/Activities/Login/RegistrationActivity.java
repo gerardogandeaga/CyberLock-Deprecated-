@@ -23,17 +23,20 @@ import static com.gerardogandeaga.cyberlock.R.id.input1;
 import static com.gerardogandeaga.cyberlock.R.id.input2;
 import static com.gerardogandeaga.cyberlock.R.id.input3;
 import static com.gerardogandeaga.cyberlock.R.id.input4;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.CIPHER_ALGO;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.PIN;
 
 public class RegistrationActivity extends AppCompatActivity implements  View.OnClickListener
 {
     // STORED PIN
     private static String mPin = "", mPinFirst = "", mPinSecond = "";
-    private static final int flags = Base64.DEFAULT;
 
     private SharedPreferences mSharedPreferences;
-    private static final String DIRECTORY = "com.gerardogandeaga.cyberlock";
-    private static final String PIN = "PIN",  AUTOSAVE = "AUTOSAVE"; // ENTRY INFORMATION
-    private static final String KEY = "KEY", ENCRYPTION_ALGO = "ALGO", CIPHER_ALGO = "CIPHER"; // ENCRYPTION INFORMATION
     // PIN ARRAY VARIABLES
     private static boolean mArrayFull = false;
     private static int mIndex = -1;
@@ -55,7 +58,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
 
         mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
 
-        if (mSharedPreferences.getString(PIN, null) != null || mSharedPreferences.getString(KEY, null) != null)
+        if (mSharedPreferences.getString(PIN, null) != null || mSharedPreferences.getString(CRYPT_KEY, null) != null)
         {
             LogoutProtocol.ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
             this.finish();
@@ -243,8 +246,8 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
                     try
                     {
                         // INITIAL ENCRYPTION ALGORITHM
-                        mSharedPreferences.edit().putString(ENCRYPTION_ALGO, "AES").apply();
-                        mSharedPreferences.edit().putString(CIPHER_ALGO, "AES/CBC/PKCS5Padding").apply();
+                        mSharedPreferences.edit().putString(ENCRYPTION_ALGO, "Blowfish").apply();
+                        mSharedPreferences.edit().putString(CIPHER_ALGO, "Blowfish/CBC/PKCS5Padding").apply();
 
                         AESKeyHandler keyHandler = new AESKeyHandler(mContext); // START THE KEY HANDLER
 
@@ -255,14 +258,14 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
                         System.out.println("HASHED PIN :" + passwordHash);
 
                         byte[] KEY_Byte = keyHandler.BYTE_KEY_GENERATE(); // GENERATE A NEW BYTE ARRAY AS A SYMMETRIC KEY
-                        byte[] ENC_DEC_KEY_ByteVal = keyHandler.AES_MEMO_KEY_GENERATE(KEY_Byte);
+                        byte[] ENC_DEC_KEY_ByteVal = keyHandler.KEY_GENERATE(KEY_Byte);
 
-                        System.out.println("REGISTED KEY VAL :" + Base64.encodeToString(ENC_DEC_KEY_ByteVal, flags));
+                        System.out.println("REGISTED KEY VAL :" + Base64.encodeToString(ENC_DEC_KEY_ByteVal, FLAGS));
                         System.out.println("REGISTED KEY SIZE :" + ENC_DEC_KEY_ByteVal.length);
 
-                        String ENC_DEC_KEY_StringVal = keyHandler.ENCRYPTKEY(Base64.encodeToString(ENC_DEC_KEY_ByteVal, flags), pinFirst); // ENCRYPT BYTES TO STRING
+                        String ENC_DEC_KEY_StringVal = keyHandler.ENCRYPTKEY(Base64.encodeToString(ENC_DEC_KEY_ByteVal, FLAGS), pinFirst); // ENCRYPT BYTES TO STRING
 
-                        mSharedPreferences.edit().putString(KEY, ENC_DEC_KEY_StringVal).apply(); // STORE THE KEY IN THE KEY STORE
+                        mSharedPreferences.edit().putString(CRYPT_KEY, ENC_DEC_KEY_StringVal).apply(); // STORE THE KEY IN THE KEY STORE
                         System.out.println("REGISTER ENCRYPTED KEY VAL :" + ENC_DEC_KEY_StringVal);
 
                         mPinFirst = null;
@@ -316,7 +319,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
     {
         super.onStart();
 
-        if (mSharedPreferences.getString(PIN, null) != null || mSharedPreferences.getString(KEY, null) != null)
+        if (mSharedPreferences.getString(PIN, null) != null || mSharedPreferences.getString(CRYPT_KEY, null) != null)
         {
             LogoutProtocol.ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
             this.finish();

@@ -21,12 +21,15 @@ import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutPro
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
 public class MemoEditActivity extends AppCompatActivity
 {
     // DATA
     private Memo mMemo;
-    public static final String DIRECTORY = "com.gerardogandeaga.cyberlock";
     // WIDGETS
     private EditText mEtMemo, mEtTag;
 
@@ -82,11 +85,13 @@ public class MemoEditActivity extends AppCompatActivity
             {
                 try
                 {
-                    String ENCDEC_KEY = (AESKeyHandler.DECRYPTKEY(this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("KEY", null),
-                            this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("TEMP_PIN", null)));
+                    String ENCDEC_KEY = (new AESKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
+                            this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
+
+                    AESContent content = new AESContent(this);
 
                     if (!mMemo.getLabel().matches("")) { this.mEtTag.setText(mMemo.getLabel()); } // SET LABEL
-                    if (!mMemo.getText().matches("")) { this.mEtMemo.setText(AESContent.decryptContent(mMemo.getText(), ENCDEC_KEY)); } // PULLED DECRYPTED VALUES (STRING)
+                    if (!mMemo.getText().matches("")) { this.mEtMemo.setText(content.decryptContent(mMemo.getText(), ENCDEC_KEY)); } // PULLED DECRYPTED VALUES (STRING)
 
                     ENCDEC_KEY = null;
                     System.gc();
@@ -103,17 +108,19 @@ public class MemoEditActivity extends AppCompatActivity
         MemoDatabaseAccess memoDatabaseAccess = MemoDatabaseAccess.getInstance(this);
         memoDatabaseAccess.open();
 
-        String ENCDEC_KEY = (AESKeyHandler.DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString("KEY", null),
-                                                      this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString("TEMP_PIN", null)));
+        String ENCDEC_KEY = (new AESKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
+                                                      this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
 
         if ((!mEtTag.getText().toString().matches("")) || (!mEtMemo.getText().toString().matches("")))
         {
+            AESContent content = new AESContent(this);
+
             if (mMemo == null) // WHEN SAVING A NEW UNKNOWN MEMO
             {
                 // ADD NEW MEMO
                 Memo temp = new Memo();
 
-                temp.setText(AESContent.encryptContent(mEtMemo.getText().toString(), ENCDEC_KEY)); // SET TEXT
+                temp.setText(content.encryptContent(mEtMemo.getText().toString(), ENCDEC_KEY)); // SET TEXT
                 if (!mEtTag.getText().toString().matches(""))
                 {
                     temp.setLabel(mEtTag.getText().toString());
@@ -128,7 +135,7 @@ public class MemoEditActivity extends AppCompatActivity
             {
                 // UPDATE THE MEMO
                 // SET TEXT
-                mMemo.setText(AESContent.encryptContent(mEtMemo.getText().toString(), ENCDEC_KEY)); // SET TEXT
+                mMemo.setText(content.encryptContent(mEtMemo.getText().toString(), ENCDEC_KEY)); // SET TEXT
                 if (!mEtTag.getText().toString().matches(""))
                 {
                     mMemo.setLabel(mEtTag.getText().toString());
@@ -173,11 +180,11 @@ public class MemoEditActivity extends AppCompatActivity
         {
             if (!APP_LOGGED_IN)
             {
-                if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean("AUTOSAVE", false))
+                if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false))
                 {
                     onSave();
 
-                    this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().remove("TEMP_PIN").apply();
+                    this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().remove(TEMP_PIN).apply();
                 } else
                 {
                     ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
@@ -219,7 +226,7 @@ public class MemoEditActivity extends AppCompatActivity
         {
             if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             {
-                if (!this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean("AUTOSAVE", false))
+                if (!this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false))
                 {
                     new LogoutProtocol().logoutExecuteAutosaveOff(this);
                 }

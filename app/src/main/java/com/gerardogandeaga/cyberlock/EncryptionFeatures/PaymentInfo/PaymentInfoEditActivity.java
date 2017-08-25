@@ -28,7 +28,10 @@ import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutPro
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
-import static com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MemoEditActivity.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
 public class PaymentInfoEditActivity extends AppCompatActivity
 {
@@ -176,18 +179,20 @@ public class PaymentInfoEditActivity extends AppCompatActivity
             {
                 try
                 {
-                    String ENCDEC_KEY = (AESKeyHandler.DECRYPTKEY(this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("KEY", null),
-                            this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("TEMP_PIN", null)));
+                    String ENCDEC_KEY = (new AESKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
+                                        this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
 
-                    if (!mPaymentInfo.getCardName().matches("")) { this.mEtCardName.setText(AESContent.decryptContent(mPaymentInfo.getCardName(), ENCDEC_KEY)); } // DECRYPT
-                    if (!mPaymentInfo.getCardNumber().matches("")) { this.mEtCardNumber.setText(AESContent.decryptContent(mPaymentInfo.getCardNumber(), ENCDEC_KEY)); } // DECRYPT
-                    if (!mPaymentInfo.getCardExpire().matches("")) { this.mEtCardExpire.setText(AESContent.decryptContent(mPaymentInfo.getCardExpire(), ENCDEC_KEY)); } // DECRYPT
-                    if (!mPaymentInfo.getCardSecCode().matches("")) { this.mEtCardSecCode.setText(AESContent.decryptContent(mPaymentInfo.getCardSecCode(), ENCDEC_KEY)); } // DECRYPT
-                    if (!mPaymentInfo.getQuestion1().matches("")) { this.mEtQuestion1.setText(AESContent.decryptContent(mPaymentInfo.getQuestion1(), ENCDEC_KEY));}
-                    if (!mPaymentInfo.getQuestion2().matches("")) { this.mEtQuestion2.setText(AESContent.decryptContent(mPaymentInfo.getQuestion2(), ENCDEC_KEY));}
-                    if (!mPaymentInfo.getAnswer1().matches("")) { this.mEtAnswer1.setText(AESContent.decryptContent(mPaymentInfo.getAnswer1(), ENCDEC_KEY));}
-                    if (!mPaymentInfo.getAnswer2().matches("")) { this.mEtAnswer2.setText(AESContent.decryptContent(mPaymentInfo.getAnswer2(), ENCDEC_KEY));}
-                    if (!mPaymentInfo.getNotes().matches("")) { this.mEtNotes.setText(AESContent.decryptContent(mPaymentInfo.getNotes(), ENCDEC_KEY)); } // DECRYPT
+                    AESContent content = new AESContent(this);
+
+                    if (!mPaymentInfo.getCardName().matches("")) { this.mEtCardName.setText(content.decryptContent(mPaymentInfo.getCardName(), ENCDEC_KEY)); } // DECRYPT
+                    if (!mPaymentInfo.getCardNumber().matches("")) { this.mEtCardNumber.setText(content.decryptContent(mPaymentInfo.getCardNumber(), ENCDEC_KEY)); } // DECRYPT
+                    if (!mPaymentInfo.getCardExpire().matches("")) { this.mEtCardExpire.setText(content.decryptContent(mPaymentInfo.getCardExpire(), ENCDEC_KEY)); } // DECRYPT
+                    if (!mPaymentInfo.getCardSecCode().matches("")) { this.mEtCardSecCode.setText(content.decryptContent(mPaymentInfo.getCardSecCode(), ENCDEC_KEY)); } // DECRYPT
+                    if (!mPaymentInfo.getQuestion1().matches("")) { this.mEtQuestion1.setText(content.decryptContent(mPaymentInfo.getQuestion1(), ENCDEC_KEY));}
+                    if (!mPaymentInfo.getQuestion2().matches("")) { this.mEtQuestion2.setText(content.decryptContent(mPaymentInfo.getQuestion2(), ENCDEC_KEY));}
+                    if (!mPaymentInfo.getAnswer1().matches("")) { this.mEtAnswer1.setText(content.decryptContent(mPaymentInfo.getAnswer1(), ENCDEC_KEY));}
+                    if (!mPaymentInfo.getAnswer2().matches("")) { this.mEtAnswer2.setText(content.decryptContent(mPaymentInfo.getAnswer2(), ENCDEC_KEY));}
+                    if (!mPaymentInfo.getNotes().matches("")) { this.mEtNotes.setText(content.decryptContent(mPaymentInfo.getNotes(), ENCDEC_KEY)); } // DECRYPT
 
                     // SET LABEL AND CARD TYPE
                     if (!mPaymentInfo.getLabel().matches("")) { this.mEtTag.setText(mPaymentInfo.getLabel()); }
@@ -219,26 +224,28 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         PaymentInfoDatabaseAccess paymentInfoDatabaseAccess = PaymentInfoDatabaseAccess.getInstance(this);
         paymentInfoDatabaseAccess.open();
 
-        String ENCDEC_KEY = (AESKeyHandler.DECRYPTKEY(this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("KEY", null),
-                                                      this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getString("TEMP_PIN", null)));
+        String ENCDEC_KEY = (new AESKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
+                                                      this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
 
         if ((!mEtTag.getText().toString().matches("")) || (!mEtCardName.getText().toString().matches("")) || (!mEtCardNumber.getText().toString().matches("")) || (!mEtCardExpire.getText().toString().matches("")) || (!mEtCardSecCode.getText().toString().matches("")) || (!mEtNotes.getText().toString().matches("")) || (!mEtQuestion1.getText().toString().matches("")) || (!mEtQuestion2.getText().toString().matches("")) || (!mEtAnswer1.getText().toString().matches("")) || (!mEtAnswer2.getText().toString().matches("")))
         {
+            AESContent content = new AESContent(this);
+
             if (mPaymentInfo == null) // WHEN SAVING A NEW UNKNOWN MEMO
             {
                 // ADD NEW PAYMENT INFO
                 PaymentInfo temp = new PaymentInfo();
 
                 // SET INFO
-                temp.setCardName(AESContent.encryptContent(mEtCardName.getText().toString(), ENCDEC_KEY)); // SET NAME
-                temp.setCardNumber(AESContent.encryptContent(mEtCardNumber.getText().toString(), ENCDEC_KEY)); // SET NUMBER
-                temp.setCardExpire(AESContent.encryptContent(mEtCardExpire.getText().toString(), ENCDEC_KEY)); // SET EXPIRE
-                temp.setCardSecCode(AESContent.encryptContent(mEtCardSecCode.getText().toString(), ENCDEC_KEY)); // SET SEC CODE
-                temp.setQuestion1(AESContent.encryptContent(mEtQuestion1.getText().toString(), ENCDEC_KEY)); // SET QUESTION
-                temp.setQuestion2(AESContent.encryptContent(mEtQuestion2.getText().toString(), ENCDEC_KEY)); // SET QUESTION
-                temp.setAnswer1(AESContent.encryptContent(mEtAnswer1.getText().toString(), ENCDEC_KEY)); // SET ANSWER
-                temp.setAnswer2(AESContent.encryptContent(mEtAnswer2.getText().toString(), ENCDEC_KEY)); // SET ANSWER
-                temp.setNotes(AESContent.encryptContent(mEtNotes.getText().toString(), ENCDEC_KEY)); // SET NOTES
+                temp.setCardName(content.encryptContent(mEtCardName.getText().toString(), ENCDEC_KEY)); // SET NAME
+                temp.setCardNumber(content.encryptContent(mEtCardNumber.getText().toString(), ENCDEC_KEY)); // SET NUMBER
+                temp.setCardExpire(content.encryptContent(mEtCardExpire.getText().toString(), ENCDEC_KEY)); // SET EXPIRE
+                temp.setCardSecCode(content.encryptContent(mEtCardSecCode.getText().toString(), ENCDEC_KEY)); // SET SEC CODE
+                temp.setQuestion1(content.encryptContent(mEtQuestion1.getText().toString(), ENCDEC_KEY)); // SET QUESTION
+                temp.setQuestion2(content.encryptContent(mEtQuestion2.getText().toString(), ENCDEC_KEY)); // SET QUESTION
+                temp.setAnswer1(content.encryptContent(mEtAnswer1.getText().toString(), ENCDEC_KEY)); // SET ANSWER
+                temp.setAnswer2(content.encryptContent(mEtAnswer2.getText().toString(), ENCDEC_KEY)); // SET ANSWER
+                temp.setNotes(content.encryptContent(mEtNotes.getText().toString(), ENCDEC_KEY)); // SET NOTES
                 if (!mEtTag.getText().toString().matches(""))
                 {
                     temp.setLabel(mEtTag.getText().toString());
@@ -254,15 +261,15 @@ public class PaymentInfoEditActivity extends AppCompatActivity
             {
                 // UPDATE THE PAYMENT INFO
                 // SET INFO
-                mPaymentInfo.setCardName(AESContent.encryptContent(mEtCardName.getText().toString(), ENCDEC_KEY)); // SET NAME
-                mPaymentInfo.setCardNumber(AESContent.encryptContent(mEtCardNumber.getText().toString(), ENCDEC_KEY)); // SET NUMBER
-                mPaymentInfo.setCardExpire(AESContent.encryptContent(mEtCardExpire.getText().toString(), ENCDEC_KEY)); // SET EXPIRE
-                mPaymentInfo.setCardSecCode(AESContent.encryptContent(mEtCardSecCode.getText().toString(), ENCDEC_KEY)); // SET SEC CODE
-                mPaymentInfo.setQuestion1(AESContent.encryptContent(mEtQuestion1.getText().toString(), ENCDEC_KEY)); // SET QUESTION
-                mPaymentInfo.setQuestion2(AESContent.encryptContent(mEtQuestion2.getText().toString(), ENCDEC_KEY)); // SET QUESTION
-                mPaymentInfo.setAnswer1(AESContent.encryptContent(mEtAnswer1.getText().toString(), ENCDEC_KEY)); // SET ANSWER
-                mPaymentInfo.setAnswer2(AESContent.encryptContent(mEtAnswer2.getText().toString(), ENCDEC_KEY)); // SET ANSWER
-                mPaymentInfo.setNotes(AESContent.encryptContent(mEtNotes.getText().toString(), ENCDEC_KEY)); // SET NOTES
+                mPaymentInfo.setCardName(content.encryptContent(mEtCardName.getText().toString(), ENCDEC_KEY)); // SET NAME
+                mPaymentInfo.setCardNumber(content.encryptContent(mEtCardNumber.getText().toString(), ENCDEC_KEY)); // SET NUMBER
+                mPaymentInfo.setCardExpire(content.encryptContent(mEtCardExpire.getText().toString(), ENCDEC_KEY)); // SET EXPIRE
+                mPaymentInfo.setCardSecCode(content.encryptContent(mEtCardSecCode.getText().toString(), ENCDEC_KEY)); // SET SEC CODE
+                mPaymentInfo.setQuestion1(content.encryptContent(mEtQuestion1.getText().toString(), ENCDEC_KEY)); // SET QUESTION
+                mPaymentInfo.setQuestion2(content.encryptContent(mEtQuestion2.getText().toString(), ENCDEC_KEY)); // SET QUESTION
+                mPaymentInfo.setAnswer1(content.encryptContent(mEtAnswer1.getText().toString(), ENCDEC_KEY)); // SET ANSWER
+                mPaymentInfo.setAnswer2(content.encryptContent(mEtAnswer2.getText().toString(), ENCDEC_KEY)); // SET ANSWER
+                mPaymentInfo.setNotes(content.encryptContent(mEtNotes.getText().toString(), ENCDEC_KEY)); // SET NOTES
                 if (!mEtTag.getText().toString().matches(""))
                 {
                     mPaymentInfo.setLabel(mEtTag.getText().toString());
@@ -308,11 +315,11 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         {
             if (!APP_LOGGED_IN)
             {
-                if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean("AUTOSAVE", false))
+                if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false))
                 {
                     onSave();
 
-                    this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().remove("TEMP_PIN").apply();
+                    this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().remove(TEMP_PIN).apply();
                 } else
                 {
                     ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
@@ -354,7 +361,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         { // HOME AND TABS AND SCREEN OFF
             if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             {
-                if (!this.getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE).getBoolean("AUTOSAVE", false))
+                if (!this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false))
                 {
                     new LogoutProtocol().logoutExecuteAutosaveOff(this);
                 }
