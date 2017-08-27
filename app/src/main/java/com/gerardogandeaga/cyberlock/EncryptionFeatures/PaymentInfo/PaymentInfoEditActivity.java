@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.Encryption.AESContent;
 import com.gerardogandeaga.cyberlock.Encryption.AESKeyHandler;
 import com.gerardogandeaga.cyberlock.R;
@@ -154,7 +153,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
 
         switch (id)
         {
-            case (R.id.action_save): onSave(); return true;
+            case (R.id.action_save): onSave(); onBackPressed(); return true;
             case (R.id.action_cancel): onCancel(); return true;
             case android.R.id.home: onBackPressed(); return true;
         }
@@ -287,7 +286,6 @@ public class PaymentInfoEditActivity extends AppCompatActivity
             System.gc(); // GARBAGE COLLECT TO TERMINATE -KEY- VARIABLE
 
             paymentInfoDatabaseAccess.close();
-            onBackPressed();
         } else
         {
             Toast.makeText(this, "Nothing to save", Toast.LENGTH_SHORT).show();
@@ -296,13 +294,14 @@ public class PaymentInfoEditActivity extends AppCompatActivity
             System.gc(); // GARBAGE COLLECT TO TERMINATE -KEY- VARIABLE
 
             paymentInfoDatabaseAccess.close();
-            onBackPressed();
         }
     }
 
     public void onCancel()
     {
-        onBackPressed();
+        ACTIVITY_INTENT = new Intent(this, MainPaymentInfoActivity.class);
+        finish();
+        this.startActivity(ACTIVITY_INTENT);
     }
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
@@ -346,6 +345,8 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         super.onBackPressed();
         if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
         {
+            if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) { onSave(); }
+
             ACTIVITY_INTENT = new Intent(this, MainPaymentInfoActivity.class);
             finish();
             this.startActivity(ACTIVITY_INTENT);
@@ -371,15 +372,6 @@ public class PaymentInfoEditActivity extends AppCompatActivity
                 }
             }
         }
-    }
-
-    @Override
-    public void finish() // BACK BUTTON CACHES ACTIVITY ACTUAL START ---> MAIN ACTIVITY
-    {
-        super.finish();
-
-        Intent i = new Intent(this, MainActivity.class);
-        this.startActivity(i);
     }
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }

@@ -246,8 +246,8 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
                     try
                     {
                         // INITIAL ENCRYPTION ALGORITHM
-                        mSharedPreferences.edit().putString(ENCRYPTION_ALGO, "Blowfish").apply();
-                        mSharedPreferences.edit().putString(CIPHER_ALGO, "Blowfish/CBC/PKCS5Padding").apply();
+                        mSharedPreferences.edit().putString(ENCRYPTION_ALGO, "AES").apply();
+                        mSharedPreferences.edit().putString(CIPHER_ALGO, "AES/CBC/PKCS5Padding").apply();
 
                         AESKeyHandler keyHandler = new AESKeyHandler(mContext); // START THE KEY HANDLER
 

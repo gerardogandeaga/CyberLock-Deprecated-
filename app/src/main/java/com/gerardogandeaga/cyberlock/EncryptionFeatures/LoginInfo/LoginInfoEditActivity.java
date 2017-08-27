@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.Encryption.AESContent;
 import com.gerardogandeaga.cyberlock.Encryption.AESKeyHandler;
 import com.gerardogandeaga.cyberlock.R;
@@ -98,7 +97,7 @@ public class LoginInfoEditActivity extends AppCompatActivity
 
         switch (id)
         {
-            case (R.id.action_save): onSave(); return true;
+            case (R.id.action_save): onSave(); onBackPressed(); return true;
             case (R.id.action_cancel): onCancel(); return true;
             case android.R.id.home: onBackPressed(); return true;
         }
@@ -276,7 +275,6 @@ public class LoginInfoEditActivity extends AppCompatActivity
             System.gc(); // GARBAGE COLLECT TO TERMINATE -KEY- VARIABLE
 
             loginInfoDatabaseAccess.close();
-            onBackPressed();
         } else
         {
             Toast.makeText(this, "Nothing to save", Toast.LENGTH_SHORT).show();
@@ -285,7 +283,6 @@ public class LoginInfoEditActivity extends AppCompatActivity
             System.gc(); // GARBAGE COLLECT TO TERMINATE -KEY- VARIABLE
 
             loginInfoDatabaseAccess.close();
-            onBackPressed();
         }
     }
 
@@ -335,6 +332,8 @@ public class LoginInfoEditActivity extends AppCompatActivity
         super.onBackPressed();
         if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
         {
+            if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) { onSave(); }
+
             ACTIVITY_INTENT = new Intent(this, MainLoginInfoActivity.class);
             finish();
             this.startActivity(ACTIVITY_INTENT);
@@ -360,15 +359,6 @@ public class LoginInfoEditActivity extends AppCompatActivity
                 }
             }
         }
-    }
-
-    @Override
-    public void finish() // BACK BUTTON CACHES ACTIVITY ACTUAL START ---> MAIN ACTIVITY
-    {
-        super.finish();
-
-        Intent i = new Intent(this, MainActivity.class);
-        this.startActivity(i);
     }
     // --------------------------------------------------------------------------------------------------------------------------------------------------------------------- //
 }

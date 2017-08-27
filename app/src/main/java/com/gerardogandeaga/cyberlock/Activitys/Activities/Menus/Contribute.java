@@ -23,9 +23,13 @@ public class Contribute extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contribute);
-
         ACTIVITY_INTENT = null;
 
+        setupLayout();
+    }
+
+    private void setupLayout()
+    {
         // ACTION BAR TITLE AND BACK BUTTON
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -81,6 +85,7 @@ public class Contribute extends AppCompatActivity
             ACTIVITY_INTENT = new Intent(this, MainActivity.class);
             this.finish();
             this.startActivity(ACTIVITY_INTENT);
+            overridePendingTransition(R.anim.anim_push_upin, R.anim.anim_push_upin);
         }
     }
 
@@ -96,15 +101,6 @@ public class Contribute extends AppCompatActivity
                 new LogoutProtocol().logoutExecuteAutosaveOff(this);
             }
         }
-    }
-
-    @Override
-    public void finish() // BACK BUTTON CACHES ACTIVITY ACTUAL START ---> MAIN ACTIVITY
-    {
-        super.finish();
-
-        Intent i = new Intent(this, MainActivity.class);
-        this.startActivity(i);
     }
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }

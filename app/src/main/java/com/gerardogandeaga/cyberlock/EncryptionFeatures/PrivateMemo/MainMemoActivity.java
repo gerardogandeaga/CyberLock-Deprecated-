@@ -49,6 +49,11 @@ public class MainMemoActivity extends AppCompatActivity
         setContentView(R.layout.activity_main_memo);
         ACTIVITY_INTENT = null; // START ACTIVITY WITH EMPTY INTENT
 
+        setuplayout();
+    }
+
+    private void setuplayout()
+    {
         this.mMemoDatabaseAccess = MemoDatabaseAccess.getInstance(this);
 
         // ACTION BAR TITLE AND BACK BUTTON
@@ -240,6 +245,7 @@ public class MainMemoActivity extends AppCompatActivity
             ACTIVITY_INTENT = new Intent(this, MainActivity.class);
             finish();
             this.startActivity(ACTIVITY_INTENT);
+            overridePendingTransition(R.anim.anim_slide_inleft, R.anim.anim_slide_outright);
         }
     }
 

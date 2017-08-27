@@ -12,10 +12,16 @@
     <color name="gray5D">#5d5d5d</color>
     <color name="gray3B">#3b3b3b</color>
 
+
     <color name="blueC1">#19b1c1</color>
     <color name="blueA2">#027ba2</color>
     <color name="blue4C">#0b324c</color>
-    <color name="blue2D">#09202d</color>
+    <color name="blue2D">#FF282E39</color>
+
+    <!--<color name="blueC1">#19b1c1</color>-->
+    <!--<color name="blueA2">#027ba2</color>-->
+    <!--<color name="blue4C">#0b324c</color>-->
+    <!--<color name="blue2D">#09202d</color>-->
 
     <color name="orange00">#ff8800</color>
 

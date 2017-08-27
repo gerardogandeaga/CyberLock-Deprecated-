@@ -36,6 +36,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ACTIVITY_INTENT = null; // START ACTIVITY WITH EMPTY INTENT
 
+        setupLayout();
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.Memo:
+                ACTIVITY_INTENT = new Intent(this, MainMemoActivity.class);
+                finish();
+                this.startActivity(ACTIVITY_INTENT);
+                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
+
+                break;
+            case R.id.Payment:
+                ACTIVITY_INTENT = new Intent(this, MainPaymentInfoActivity.class);
+                finish();
+                startActivity(ACTIVITY_INTENT);
+                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
+
+                break;
+            case R.id.Login:
+                ACTIVITY_INTENT = new Intent(this, MainLoginInfoActivity.class);
+                finish();
+                startActivity(ACTIVITY_INTENT);
+                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
+
+                break;
+//            case R.id.Gallery: ACTIVITY_INTENT = new Intent(this, MainPhotoGallery.class); finish(); startActivity(ACTIVITY_INTENT); break;
+        }
+    }
+
+    private void setupLayout()
+    {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Cyber Lock");
@@ -49,18 +84,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.mCardLock.setOnClickListener(this);
         this.mLoginLock.setOnClickListener(this);
         this.mGalleryLock.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v)
-    {
-        switch (v.getId())
-        {
-            case R.id.Memo: ACTIVITY_INTENT = new Intent(this, MainMemoActivity.class); finish(); startActivity(ACTIVITY_INTENT); break;
-            case R.id.Payment: ACTIVITY_INTENT = new Intent(this, MainPaymentInfoActivity.class); finish(); startActivity(ACTIVITY_INTENT); break;
-            case R.id.Login: ACTIVITY_INTENT = new Intent(this, MainLoginInfoActivity.class); finish(); startActivity(ACTIVITY_INTENT); break;
-//            case R.id.Gallery: ACTIVITY_INTENT = new Intent(this, MainPhotoGallery.class); finish(); startActivity(ACTIVITY_INTENT); break;
-        }
     }
 
     @Override
@@ -84,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ACTIVITY_INTENT = new Intent(this, Settings.class);
                 finish();
                 this.startActivity(ACTIVITY_INTENT);
+                overridePendingTransition(R.anim.anim_push_downin, R.anim.anim_push_downout);
 
                 return true;
 
@@ -99,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ACTIVITY_INTENT = new Intent(this, Contribute.class);
                 finish();
                 this.startActivity(ACTIVITY_INTENT);
+                overridePendingTransition(R.anim.anim_push_downin, R.anim.anim_push_downout);
 
                 break;
         }

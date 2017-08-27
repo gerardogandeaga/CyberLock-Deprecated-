@@ -56,6 +56,13 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.activity_settings);
         ACTIVITY_INTENT = null;
 
+        setupLayout();
+    }
+
+    private void setupLayout()
+    {
+        this.mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
+
         // ACTION BAR TITLE AND BACK BUTTON
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -85,6 +92,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         this.mAutoSave.setOnClickListener(this);
         this.mTvChangePassword.setOnClickListener(this);
         this.mScrambleKey.setOnClickListener(this);
+
+        this.mCbAutoSave.setChecked(false);
 
         savedStates();
 
@@ -126,6 +135,19 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
 
     private void savedStates()
     {
+        // CHECK BOXES
+        final boolean autoSave = mSharedPreferences.getBoolean(AUTOSAVE, false);
+
+        if (!autoSave)
+        {
+            mCbAutoSave.setChecked(false);
+        } else {
+            mCbAutoSave.setChecked(true);
+        }
+
+        System.out.println(autoSave);
+
+        // SPINNERS
         int delaySpinnerPosition = mAdapterAutoLogoutDelay.getPosition(getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(LOGOUT_DELAY, "Immediate"));
         mSpAutoLogoutDelay.setSelection(delaySpinnerPosition);
     }
@@ -143,7 +165,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
 
     private void onAutoSave()
     {
-        mSharedPreferences = getSharedPreferences("com.gerardogandeaga.cyberlock", Context.MODE_PRIVATE);
         final boolean autoSave = mSharedPreferences.getBoolean(AUTOSAVE, false);
 
         if (!autoSave)
@@ -151,16 +172,15 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
             if (!mCbAutoSave.isChecked())
             {
                 mSharedPreferences.edit().putBoolean(AUTOSAVE, true).apply();
-                mCbAutoSave.toggle();
+                mCbAutoSave.setChecked(true);
             }
         } else {
             if (mCbAutoSave.isChecked())
             {
                 mSharedPreferences.edit().putBoolean(AUTOSAVE, false).apply();
-                mCbAutoSave.toggle();
+                mCbAutoSave.setChecked(false);
             }
         }
-        mSharedPreferences = null;
     }
 
     private void onResetPassword()
@@ -248,6 +268,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
             ACTIVITY_INTENT = new Intent(this, MainActivity.class);
             this.finish();
             this.startActivity(ACTIVITY_INTENT);
+            overridePendingTransition(R.anim.anim_push_upin, R.anim.anim_push_upin);
         }
     }
 

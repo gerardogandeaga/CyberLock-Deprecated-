@@ -50,6 +50,11 @@ public class MainLoginInfoActivity extends AppCompatActivity
         setContentView(R.layout.activity_main_logininfo);
         ACTIVITY_INTENT = null; // START ACTIVITY WITH EMPTY INTENT
 
+        setupLayout();
+    }
+
+    private void setupLayout()
+    {
         this.mLoginInfoDatabaseAccess = LoginInfoDatabaseAccess.getInstance(this);
 
         // ACTION BAR TITLE AND BACK BUTTON
@@ -239,11 +244,13 @@ public class MainLoginInfoActivity extends AppCompatActivity
     public void onBackPressed()
     {
         super.onBackPressed();
+
         if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
         {
             ACTIVITY_INTENT = new Intent(this, MainActivity.class);
             finish();
             this.startActivity(ACTIVITY_INTENT);
+            overridePendingTransition(R.anim.anim_slide_inleft, R.anim.anim_slide_outright);
         }
     }
 
