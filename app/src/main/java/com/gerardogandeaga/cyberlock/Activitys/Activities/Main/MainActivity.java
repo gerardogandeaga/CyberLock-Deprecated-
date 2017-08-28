@@ -3,6 +3,9 @@ package com.gerardogandeaga.cyberlock.Activitys.Activities.Main;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -28,6 +31,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 {
     // WIDGETS
     private RelativeLayout mMemoLock, mCardLock, mLoginLock, mGalleryLock;
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
+
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,14 +58,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
 
                 break;
-            case R.id.Payment:
+            case R.id.PaymentInfo:
                 ACTIVITY_INTENT = new Intent(this, MainPaymentInfoActivity.class);
                 finish();
                 startActivity(ACTIVITY_INTENT);
                 overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
 
                 break;
-            case R.id.Login:
+            case R.id.LoginInfo:
                 ACTIVITY_INTENT = new Intent(this, MainLoginInfoActivity.class);
                 finish();
                 startActivity(ACTIVITY_INTENT);
@@ -71,19 +78,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupLayout()
     {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.Content);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+
+        mNavigationView = (NavigationView) findViewById(R.id.NavigationContent);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Cyber Lock");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.mMemoLock = (RelativeLayout) findViewById(R.id.Memo);
-        this.mCardLock = (RelativeLayout) findViewById(R.id.Payment);
-        this.mLoginLock = (RelativeLayout) findViewById(R.id.Login);
+        this.mCardLock = (RelativeLayout) findViewById(R.id.PaymentInfo);
+        this.mLoginLock = (RelativeLayout) findViewById(R.id.LoginInfo);
         this.mGalleryLock = (RelativeLayout) findViewById(R.id.Gallery);
+
+        calculateDrawerSize();
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
 
         this.mMemoLock.setOnClickListener(this);
         this.mCardLock.setOnClickListener(this);
         this.mLoginLock.setOnClickListener(this);
         this.mGalleryLock.setOnClickListener(this);
+    }
+
+    private void calculateDrawerSize()
+    {
+        int small = 500, medium = 700, large = 900;
+
+        float widthOffSet = .5f * (getResources().getDisplayMetrics().widthPixels);
+
+        float desnisty = this.getResources().getDisplayMetrics().density;
+
+        float width = (getResources().getDisplayMetrics().widthPixels) - widthOffSet;
+        DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) mNavigationView.getLayoutParams();
+        params.width = (int) ((small / desnisty) + .5f);
+        mNavigationView.setLayoutParams(params);
     }
 
     @Override
@@ -100,6 +131,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int id = item.getItemId();
 
         Dialog dialog = new Dialog(this);
+
+        if (mDrawerToggle.onOptionsItemSelected(item)) return true;
 
         switch (id)
         {

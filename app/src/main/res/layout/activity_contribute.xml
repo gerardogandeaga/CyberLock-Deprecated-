@@ -22,6 +22,7 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay">
         </android.support.v7.widget.Toolbar>
+
     </android.support.design.widget.AppBarLayout>
 
     <ScrollView
@@ -124,9 +125,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@color/colorAccent"
+        android:background="@color/blue4C_2D"
         android:orientation="horizontal"
-        android:padding="5dp">
+        >
 
         <ImageButton
             android:id="@+id/btnDonate"
@@ -135,7 +136,7 @@
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
-            android:padding="5dp"
+            android:padding="10dp"
             app:srcCompat="@drawable/ic_action_donate"/>
 
         <ImageButton
@@ -145,7 +146,7 @@
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
-            android:padding="5dp"
+            android:padding="10dp"
             app:srcCompat="@drawable/ic_action_rate"/>
 
         <ImageButton
@@ -155,7 +156,7 @@
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
-            android:padding="5dp"
+            android:padding="10dp"
             app:srcCompat="@drawable/ic_action_share"/>
 
     </LinearLayout>

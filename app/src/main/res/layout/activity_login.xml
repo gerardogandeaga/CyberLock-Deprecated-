@@ -6,7 +6,7 @@
     android:id="@+id/Content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@color/blue4C_2D"
     android:orientation="vertical"
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity">
 
@@ -78,7 +78,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@color/blue2D"
+        android:background="@color/blue2D_3D"
         app:layout_heightPercent="40%"
         app:layout_widthPercent="100%">
 
