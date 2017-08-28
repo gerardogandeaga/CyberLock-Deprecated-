@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:2:1-56:12
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:2:1-65:12
 	package
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:3:11-50
 		INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml
@@ -17,22 +17,22 @@ ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\ap
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:2:11-69
 uses-sdk
 ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:7:5-9:40
-MERGED from [com.android.support:design:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\8f068698c269430246fd181d5bd4bb1b881036bd\output\AndroidManifest.xml:21:5-23:62
-MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\6dee21546b247bb44281e9c4d94a345d000f5124\output\AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\52daf510e1de68851d4298bcfb89e23134de6cb2\output\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\ad4b76f393d104f6f880b7242118de6d52b6e512\output\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\b97cdc2cef6b202990f02a662a123c6ecbc5968a\output\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:transition:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\92d7200f76bc3aa818c492c01647cf1b6eba04cf\output\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-v4:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\c490f7a2132be3151ff0fefedd61aad0d3bf0274\output\AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\1321493bce6f0bb98aa96d5791adc44c56f6da0f\output\AndroidManifest.xml:21:5-23:60
-MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\3b341bc36e3342e3e02d7c971ea07fb1fabe6056\output\AndroidManifest.xml:21:5-23:63
-MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\7a12b70499fb339bbca754ba76016785461977f8\output\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\7278306117694ff4f770a5fb0696387b90067c51\output\AndroidManifest.xml:21:5-23:61
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\gerardogandeaga\.android\build-cache\0c3d3b608aaff2e6c49dfed22196f0fcd92137fc\output\AndroidManifest.xml:5:5-7:41
-MERGED from [com.android.support:percent:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\b9e5aed67f588657308089bb9ef95ab0481d113d\output\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-compat:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\f6cad38cef03a1160d98165e44b30a81261b7665\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:design:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\30b12bb4b79fe3620757c33a87a0ce9da32423b8\output\AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\b38af9b20c79f97d34056b985b67afebf4df0431\output\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\b7a0d1ad79d7f52080daad2422d639e8876f8ec2\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\90ea404eb743ed4bddeeff386975615249a329a0\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\0fad6510486669e69059b50032f62eed6ca9638a\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:transition:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\af6843b7f7dc553690a2bb048a3e4cb254c8d83b\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\66bbbecc72944432aa8cbebe874da976c73b9aaf\output\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\7174bc4350b7c19950abd71847b5b125083d2613\output\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\8c50b003c154dd74532579a2bf66559bfb1f9a15\output\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\8f609e5edde0e82a703de3f9c2450e237c6f4be1\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\c29e963478c50b7550d643421c13dcd84597e6af\output\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\gerardogandeaga\.android\build-cache\5f9c386b46b035f16d2026ff4fa5d89e58a53c2f\output\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:percent:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\f91a6bd88afff77dcd448c273997e746175f79b4\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\6e36e7f74c9217d0567a13a5f238e5cb7e160a0a\output\AndroidManifest.xml:21:5-23:58
 	tools:overrideLibrary
-		ADDED from [com.android.support:design:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\8f068698c269430246fd181d5bd4bb1b881036bd\output\AndroidManifest.xml:23:9-59
+		ADDED from [com.android.support:design:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\30b12bb4b79fe3620757c33a87a0ce9da32423b8\output\AndroidManifest.xml:23:9-59
 	android:targetSdkVersion
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:9:9-38
 		INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml
@@ -62,20 +62,20 @@ ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\ap
 	android:name
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:15:22-65
 application
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:17:5-54:19
-MERGED from [com.android.support:design:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\8f068698c269430246fd181d5bd4bb1b881036bd\output\AndroidManifest.xml:29:5-20
-MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\6dee21546b247bb44281e9c4d94a345d000f5124\output\AndroidManifest.xml:29:5-20
-MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\52daf510e1de68851d4298bcfb89e23134de6cb2\output\AndroidManifest.xml:26:5-20
-MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\ad4b76f393d104f6f880b7242118de6d52b6e512\output\AndroidManifest.xml:26:5-20
-MERGED from [com.android.support:transition:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\92d7200f76bc3aa818c492c01647cf1b6eba04cf\output\AndroidManifest.xml:26:5-20
-MERGED from [com.android.support:support-v4:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\c490f7a2132be3151ff0fefedd61aad0d3bf0274\output\AndroidManifest.xml:29:5-20
-MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\1321493bce6f0bb98aa96d5791adc44c56f6da0f\output\AndroidManifest.xml:29:5-20
-MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\3b341bc36e3342e3e02d7c971ea07fb1fabe6056\output\AndroidManifest.xml:29:5-20
-MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\7a12b70499fb339bbca754ba76016785461977f8\output\AndroidManifest.xml:29:5-20
-MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\7278306117694ff4f770a5fb0696387b90067c51\output\AndroidManifest.xml:29:5-20
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\gerardogandeaga\.android\build-cache\0c3d3b608aaff2e6c49dfed22196f0fcd92137fc\output\AndroidManifest.xml:9:5-20
-MERGED from [com.android.support:percent:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\b9e5aed67f588657308089bb9ef95ab0481d113d\output\AndroidManifest.xml:26:5-20
-MERGED from [com.android.support:support-compat:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\f6cad38cef03a1160d98165e44b30a81261b7665\output\AndroidManifest.xml:29:5-20
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:17:5-63:19
+MERGED from [com.android.support:design:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\30b12bb4b79fe3620757c33a87a0ce9da32423b8\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\b38af9b20c79f97d34056b985b67afebf4df0431\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\b7a0d1ad79d7f52080daad2422d639e8876f8ec2\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\90ea404eb743ed4bddeeff386975615249a329a0\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:transition:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\af6843b7f7dc553690a2bb048a3e4cb254c8d83b\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\66bbbecc72944432aa8cbebe874da976c73b9aaf\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\7174bc4350b7c19950abd71847b5b125083d2613\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\8c50b003c154dd74532579a2bf66559bfb1f9a15\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\8f609e5edde0e82a703de3f9c2450e237c6f4be1\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\c29e963478c50b7550d643421c13dcd84597e6af\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\gerardogandeaga\.android\build-cache\5f9c386b46b035f16d2026ff4fa5d89e58a53c2f\output\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:percent:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\f91a6bd88afff77dcd448c273997e746175f79b4\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\6e36e7f74c9217d0567a13a5f238e5cb7e160a0a\output\AndroidManifest.xml:29:5-20
 	android:label
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:20:9-35
 	android:supportsRtl
@@ -104,83 +104,89 @@ category#android.intent.category.LAUNCHER
 ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:30:17-76
 	android:name
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:30:27-74
-activity#com.gerardogandeaga.cyberlock.Activitys.Activities.Login.SetPasscodeActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:33:9-36:20
+activity#com.gerardogandeaga.cyberlock.TestActivity
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:33:9-41:20
 	android:windowSoftInputMode
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:35:13-67
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:34:13-75
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:34:13-41
+activity#com.gerardogandeaga.cyberlock.Activitys.Activities.Login.RegistrationActivity
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:42:9-45:20
+	android:windowSoftInputMode
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:44:13-67
+	android:name
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:43:13-76
 activity#com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:37:9-41:20
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:46:9-50:20
 	android:label
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:39:13-56
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:48:13-56
 	android:theme
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:40:13-44
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:49:13-44
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:38:13-67
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:47:13-67
 activity#com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Contribute
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:42:9-74
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:51:9-74
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:42:19-72
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:51:19-72
 activity#com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.About
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:43:9-69
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:52:9-69
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:43:19-67
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:52:19-67
 activity#com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:44:9-72
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:53:9-72
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:44:19-70
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:53:19-70
 activity#com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings_ResetPin
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:45:9-81
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:54:9-81
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:45:19-79
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:54:19-79
 activity#com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MainMemoActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:46:9-84
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:55:9-84
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:46:19-82
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:55:19-82
 activity#com.gerardogandeaga.cyberlock.EncryptionFeatures.PaymentInfo.MainPaymentInfoActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:47:9-91
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:56:9-91
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:47:19-89
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:56:19-89
 activity#com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.MainLoginInfoActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:48:9-87
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:57:9-87
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:48:19-85
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:57:19-85
 activity#com.gerardogandeaga.cyberlock.EncryptionFeatures.PhotoGallery.MainPhotoGallery
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:49:9-85
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:58:9-85
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:49:19-83
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:58:19-83
 activity#com.gerardogandeaga.cyberlock.EncryptionFeatures.PhotoGallery.CustomPhotoGalleryActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:50:9-95
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:59:9-95
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:50:19-93
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:59:19-93
 activity#com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MemoEditActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:51:9-84
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:60:9-84
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:51:19-82
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:60:19-82
 activity#com.gerardogandeaga.cyberlock.EncryptionFeatures.PaymentInfo.PaymentInfoEditActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:52:9-91
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:61:9-91
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:52:19-89
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:61:19-89
 activity#com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.LoginInfoEditActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:53:9-87
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:62:9-87
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:53:19-85
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:62:19-85
 meta-data#android.support.VERSION
-ADDED from [com.android.support:design:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\8f068698c269430246fd181d5bd4bb1b881036bd\output\AndroidManifest.xml:25:5-27:34
-MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\6dee21546b247bb44281e9c4d94a345d000f5124\output\AndroidManifest.xml:25:5-27:34
-MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\52daf510e1de68851d4298bcfb89e23134de6cb2\output\AndroidManifest.xml:22:5-24:34
-MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\ad4b76f393d104f6f880b7242118de6d52b6e512\output\AndroidManifest.xml:22:5-24:34
-MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\b97cdc2cef6b202990f02a662a123c6ecbc5968a\output\AndroidManifest.xml:22:5-24:34
-MERGED from [com.android.support:transition:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\92d7200f76bc3aa818c492c01647cf1b6eba04cf\output\AndroidManifest.xml:22:5-24:34
-MERGED from [com.android.support:support-v4:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\c490f7a2132be3151ff0fefedd61aad0d3bf0274\output\AndroidManifest.xml:25:5-27:34
-MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\1321493bce6f0bb98aa96d5791adc44c56f6da0f\output\AndroidManifest.xml:25:5-27:34
-MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\3b341bc36e3342e3e02d7c971ea07fb1fabe6056\output\AndroidManifest.xml:25:5-27:34
-MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\7a12b70499fb339bbca754ba76016785461977f8\output\AndroidManifest.xml:25:5-27:34
-MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\7278306117694ff4f770a5fb0696387b90067c51\output\AndroidManifest.xml:25:5-27:34
-MERGED from [com.android.support:percent:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\b9e5aed67f588657308089bb9ef95ab0481d113d\output\AndroidManifest.xml:22:5-24:34
-MERGED from [com.android.support:support-compat:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\f6cad38cef03a1160d98165e44b30a81261b7665\output\AndroidManifest.xml:25:5-27:34
+ADDED from [com.android.support:design:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\30b12bb4b79fe3620757c33a87a0ce9da32423b8\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\b38af9b20c79f97d34056b985b67afebf4df0431\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\b7a0d1ad79d7f52080daad2422d639e8876f8ec2\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\90ea404eb743ed4bddeeff386975615249a329a0\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\0fad6510486669e69059b50032f62eed6ca9638a\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:transition:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\af6843b7f7dc553690a2bb048a3e4cb254c8d83b\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\66bbbecc72944432aa8cbebe874da976c73b9aaf\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\7174bc4350b7c19950abd71847b5b125083d2613\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\8c50b003c154dd74532579a2bf66559bfb1f9a15\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\8f609e5edde0e82a703de3f9c2450e237c6f4be1\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\c29e963478c50b7550d643421c13dcd84597e6af\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:percent:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\f91a6bd88afff77dcd448c273997e746175f79b4\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\6e36e7f74c9217d0567a13a5f238e5cb7e160a0a\output\AndroidManifest.xml:25:5-27:34
 	android:value
-		ADDED from [com.android.support:design:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\8f068698c269430246fd181d5bd4bb1b881036bd\output\AndroidManifest.xml:27:9-31
+		ADDED from [com.android.support:design:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\30b12bb4b79fe3620757c33a87a0ce9da32423b8\output\AndroidManifest.xml:27:9-31
 	android:name
-		ADDED from [com.android.support:design:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\8f068698c269430246fd181d5bd4bb1b881036bd\output\AndroidManifest.xml:26:9-47
+		ADDED from [com.android.support:design:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\30b12bb4b79fe3620757c33a87a0ce9da32423b8\output\AndroidManifest.xml:26:9-47

@@ -35,7 +35,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Login.SetPasscodeActivity"
+            android:name="com.gerardogandeaga.cyberlock.TestActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Login.RegistrationActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" >
         </activity>
         <activity

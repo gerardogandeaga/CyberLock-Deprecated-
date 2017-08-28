@@ -9,7 +9,7 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent">
+        android:background="@color/blue4C_2D">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -24,7 +24,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_weight="1"
-                android:background="@color/colorAccent"
+                android:background="@color/blue4C_2D"
                 android:fontFamily="sans-serif-smallcaps"
                 android:text="Cancel"
                 android:textAllCaps="false"
@@ -39,7 +39,7 @@
                 android:layout_toLeftOf="@+id/btnCancel"
                 android:layout_toStartOf="@+id/btnCancel"
                 android:layout_weight="1"
-                android:background="@color/colorAccent"
+                android:background="@color/blue4C_2D"
                 android:fontFamily="sans-serif-smallcaps"
                 android:text="Save"
                 android:textAllCaps="false"

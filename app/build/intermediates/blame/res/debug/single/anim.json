@@ -1,66 +1,98 @@
 [
     {
-        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_out.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\8f068698c269430246fd181d5bd4bb1b881036bd\\output\\res\\anim\\design_fab_out.xml"
-    },
-    {
-        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_out.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\8f068698c269430246fd181d5bd4bb1b881036bd\\output\\res\\anim\\design_snackbar_out.xml"
-    },
-    {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_bottom.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\6dee21546b247bb44281e9c4d94a345d000f5124\\output\\res\\anim\\abc_slide_in_bottom.xml"
-    },
-    {
-        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_bottom.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\6dee21546b247bb44281e9c4d94a345d000f5124\\output\\res\\anim\\abc_slide_out_bottom.xml"
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\anim\\abc_slide_in_bottom.xml"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_bottom_sheet_slide_out.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\8f068698c269430246fd181d5bd4bb1b881036bd\\output\\res\\anim\\design_bottom_sheet_slide_out.xml"
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\30b12bb4b79fe3620757c33a87a0ce9da32423b8\\output\\res\\anim\\design_bottom_sheet_slide_out.xml"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_enter.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\6dee21546b247bb44281e9c4d94a345d000f5124\\output\\res\\anim\\abc_popup_enter.xml"
-    },
-    {
-        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\6dee21546b247bb44281e9c4d94a345d000f5124\\output\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
-    },
-    {
-        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_top.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\6dee21546b247bb44281e9c4d94a345d000f5124\\output\\res\\anim\\abc_slide_out_top.xml"
-    },
-    {
-        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_in.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\6dee21546b247bb44281e9c4d94a345d000f5124\\output\\res\\anim\\abc_fade_in.xml"
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\anim\\abc_popup_enter.xml"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_in.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\8f068698c269430246fd181d5bd4bb1b881036bd\\output\\res\\anim\\design_fab_in.xml"
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\30b12bb4b79fe3620757c33a87a0ce9da32423b8\\output\\res\\anim\\design_fab_in.xml"
     },
     {
-        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_in.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\8f068698c269430246fd181d5bd4bb1b881036bd\\output\\res\\anim\\design_snackbar_in.xml"
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\anim_slide_outright.xml",
+        "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\anim\\anim_slide_outright.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\anim_push_upin.xml",
+        "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\anim\\anim_push_upin.xml"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_out.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\6dee21546b247bb44281e9c4d94a345d000f5124\\output\\res\\anim\\abc_fade_out.xml"
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\anim\\abc_fade_out.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\anim_push_downout.xml",
+        "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\anim\\anim_push_downout.xml"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_bottom_sheet_slide_in.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\8f068698c269430246fd181d5bd4bb1b881036bd\\output\\res\\anim\\design_bottom_sheet_slide_in.xml"
-    },
-    {
-        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\6dee21546b247bb44281e9c4d94a345d000f5124\\output\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
-    },
-    {
-        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_top.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\6dee21546b247bb44281e9c4d94a345d000f5124\\output\\res\\anim\\abc_slide_in_top.xml"
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\30b12bb4b79fe3620757c33a87a0ce9da32423b8\\output\\res\\anim\\design_bottom_sheet_slide_in.xml"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_exit.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\6dee21546b247bb44281e9c4d94a345d000f5124\\output\\res\\anim\\abc_popup_exit.xml"
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\anim\\abc_popup_exit.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_fab_out.xml",
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\30b12bb4b79fe3620757c33a87a0ce9da32423b8\\output\\res\\anim\\design_fab_out.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\anim_slide_inright.xml",
+        "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\anim\\anim_slide_inright.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_out.xml",
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\30b12bb4b79fe3620757c33a87a0ce9da32423b8\\output\\res\\anim\\design_snackbar_out.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\anim_push_upout.xml",
+        "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\anim\\anim_push_upout.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\anim_slide_outleft.xml",
+        "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\anim\\anim_slide_outleft.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_bottom.xml",
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\anim\\abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_top.xml",
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\anim\\abc_slide_out_top.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\anim_slide_inleft.xml",
+        "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\anim\\anim_slide_inleft.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\anim_push_downin.xml",
+        "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\anim\\anim_push_downin.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_in.xml",
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\anim\\abc_fade_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\design_snackbar_in.xml",
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\30b12bb4b79fe3620757c33a87a0ce9da32423b8\\output\\res\\anim\\design_snackbar_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_top.xml",
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\anim\\abc_slide_in_top.xml"
     }
 ]
