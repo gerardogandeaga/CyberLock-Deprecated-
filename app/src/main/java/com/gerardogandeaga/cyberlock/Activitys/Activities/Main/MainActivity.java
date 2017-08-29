@@ -2,12 +2,15 @@ package com.gerardogandeaga.cyberlock.Activitys.Activities.Main;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -105,15 +108,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void calculateDrawerSize()
     {
-        int small = 500, medium = 700, large = 900;
-
         float widthOffSet = .5f * (getResources().getDisplayMetrics().widthPixels);
 
-        float desnisty = this.getResources().getDisplayMetrics().density;
+        Resources resources = getResources();
+        DisplayMetrics metrics = new DisplayMetrics();
 
-        float width = (getResources().getDisplayMetrics().widthPixels) - widthOffSet;
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;
+
+        float screenWidth = width / resources.getDisplayMetrics().density;
+        float navWidth = screenWidth - 56;
+
+        navWidth = Math.min(navWidth, 320);
+
+        int newWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, navWidth, resources.getDisplayMetrics());
+
         DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) mNavigationView.getLayoutParams();
-        params.width = (int) ((small / desnisty) + .5f);
+        params.width = (newWidth);
         mNavigationView.setLayoutParams(params);
     }
 

@@ -50,15 +50,60 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     ------------------------------------------------------------------------------------------------
+    <!-- PARAGRAPHS -->
+    <!-- CONTRIBUTE -->
+    <string name="MessageToUserTitle">Message To User</string>
+    <string name="MessageToUser">
+        Hello user, Welcome to Cyber Lock! To begin, privacy and security is very important to me,
+        with the increasing attacks on privacy and security, I decided to create an application for
+        mobile device to store data as of now locally but most importantly securely. This is my personal,
+        private ongoing encryption application project. This is my take on trying to make mobile
+        application software and security more noticeably intertwined. I spend many hours researching,
+        designing and developing. I very much hope to continue my project and bring constant updates
+        to upgrade and improve Cyber Lock. I plan on implementing many other features and options to
+        give you, the user, more control over how you keep your data safe. Furthermore, I am constantly
+        experimenting with visuals to provide cleaner looks and overall greater practicality. I believe
+        in simplicity, power, reliability, but greatest of all, an uncompromising balance of security
+        and privacy!
+    </string>
+    <string name="Sincerely">Sincerely,</string>
+    <string name="Signature">GG.</string>
+    <string name="ContributeMethods">Contribute ( Donate, Rate/Review, Share )</string>
+    <!-- ABOUT -->
+    <string name="CyberLocksTechTitle">Cyber Lock\'s Technology</string>
+    <string name="CyberLocksTech">
+        Cyber Lock is a mobile application designed to secure and privatize your personal information.
+        Cyber Lock is equipped to utilize four different symmetric Encryption Algorithms; AES, Blowfish,
+        RC4 and Triple DES. Pins are protected using a salted SHA-256 algorithm, a powerful one-way
+        hash function that cannot be decrypted.
+    </string>
+    <string name="AES">AES</string>
+    <string name="AESInfo">
+        Advanced Encryption Standard (AES) is a newer and stronger encryption standard, which uses
+        the Rijndael algorithm. This algorithm was developed by Joan Daemen and Vincent Rijmen of
+        Belgium. AES has a block size of 128 and is able to use 128, 192, and 256-bit keys for
+        powerful encryption.
+    </string>
+    <string name="Blowfish">Blowfish</string>
+    <string name="BlowfishInfo">Blowfish is a symmetric block cipher, designed by Bruce Schneier.
+        Blowfish has a 64-bit block size and a variable key length from 32 up to 448 bits.
+    </string>
+    <string name="SHA256">SHA-256</string>
+    <string name="SHA256Info">
+        SHA-256 (Secure Hash Algorithm), a cryptographic function which takes an input and spits
+        out an alphanumeric string. SHA-256 generates an almost-unique, fixed 256-bit hash. A hash
+        is a one way function “encryptor” which cannot be decrypted. SHA-256 is currently one of
+        the strongest functions available.
+    </string>
+    ------------------------------------------------------------------------------------------------
     <!-- UPDATE FEED -->
     <string name="UpdateTitle">Update Board</string>
     <!-- Version 1.1-->
-    <string name="V1.1.0">V - 1.1.0</string>
+    <string name="V1.1.0">V - 1.1.0 ( Release! )</string>
     <string name="Update_V1.1.0">
         Welcome to Cyber Lock! Initial release comes outfitted with a memo,
         card info, login credential and playground encryptor. Content Algorithms
         currently supported are AES-256 and Blowfish-448 bit.
     </string>
     ------------------------------------------------------------------------------------------------
-
 </resources>

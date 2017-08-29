@@ -7,12 +7,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:theme="@style/AppTheme.AppBarOverlay"
-    tools:context=".Activitys.Activities.Main.MainActivity">
+    tools:context=".TestActivity">
 
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/blue2D_3D">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
@@ -25,9 +25,11 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorAccent"
+                android:layout_weight="1"
+                android:background="@color/blue4C_2D"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
+
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
@@ -49,9 +51,9 @@
         <LinearLayout
             android:id="@+id/Anchor"
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="5dp"
             android:layout_below="@+id/percentRelativeLayout"
-            android:background="@color/blue4C_2D"
+            android:background="@color/blue2D_3D"
             android:orientation="horizontal">
         </LinearLayout>
 
@@ -61,8 +63,7 @@
             android:layout_above="@+id/Actions"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/Anchor"
-            android:background="@color/blue2D_3D">
+            android:layout_below="@+id/Anchor">
 
             <LinearLayout
                 android:id="@+id/linearLayout3"
@@ -95,7 +96,6 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentStart="true"
-                        android:fontFamily="serif-monospace"
                         android:paddingBottom="10dp"
                         android:text="Memo Lock"
                         android:textAlignment="center"
@@ -130,7 +130,6 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentStart="true"
-                        android:fontFamily="serif-monospace"
                         android:paddingBottom="10dp"
                         android:text="Card Lock"
                         android:textAlignment="center"
@@ -174,7 +173,6 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentStart="true"
-                        android:fontFamily="serif-monospace"
                         android:paddingBottom="10dp"
                         android:text="Login Lock"
                         android:textAlignment="center"
@@ -193,15 +191,15 @@
                     android:clickable="true">
 
                     <ImageView
-                        android:id="@+id/imgPlayground"
+                        android:id="@+id/imgGallery"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_above="@+id/tvGallery"
                         android:padding="15dp"
-                        app:srcCompat="@drawable/ic_action_playground"
-                        android:layout_above="@+id/tvPlayground"/>
+                        app:srcCompat="@drawable/ic_action_gallerylock"/>
 
                     <TextView
-                        android:id="@+id/tvPlayground"
+                        android:id="@+id/tvGallery"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
@@ -209,9 +207,8 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentStart="true"
-                        android:fontFamily="serif-monospace"
                         android:paddingBottom="10dp"
-                        android:text="Playground"
+                        android:text="Gallery Lock"
                         android:textAlignment="center"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
@@ -257,18 +254,9 @@
     </android.support.percent.PercentRelativeLayout>
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/NavigationContent"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/grayD9">
-
-        <include
-            layout="@layout/drawer_update_feed"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-
+        android:layout_gravity="start">
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>
