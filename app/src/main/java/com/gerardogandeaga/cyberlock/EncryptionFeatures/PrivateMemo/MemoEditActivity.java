@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.Encryption.AESContent;
-import com.gerardogandeaga.cyberlock.Encryption.AESKeyHandler;
+import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
+import com.gerardogandeaga.cyberlock.Encryption.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.R;
 
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
@@ -84,10 +84,10 @@ public class MemoEditActivity extends AppCompatActivity
             {
                 try
                 {
-                    String ENCDEC_KEY = (new AESKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
+                    String ENCDEC_KEY = (new CryptKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
                             this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
 
-                    AESContent content = new AESContent(this);
+                    CryptContent content = new CryptContent(this);
 
                     if (!mMemo.getLabel().matches("")) { this.mEtTag.setText(mMemo.getLabel()); } // SET LABEL
                     if (!mMemo.getText().matches("")) { this.mEtMemo.setText(content.decryptContent(mMemo.getText(), ENCDEC_KEY)); } // PULLED DECRYPTED VALUES (STRING)
@@ -107,12 +107,12 @@ public class MemoEditActivity extends AppCompatActivity
         MemoDatabaseAccess memoDatabaseAccess = MemoDatabaseAccess.getInstance(this);
         memoDatabaseAccess.open();
 
-        String ENCDEC_KEY = (new AESKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
+        String ENCDEC_KEY = (new CryptKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
                                                       this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
 
         if ((!mEtTag.getText().toString().matches("")) || (!mEtMemo.getText().toString().matches("")))
         {
-            AESContent content = new AESContent(this);
+            CryptContent content = new CryptContent(this);
 
             if (mMemo == null) // WHEN SAVING A NEW UNKNOWN MEMO
             {

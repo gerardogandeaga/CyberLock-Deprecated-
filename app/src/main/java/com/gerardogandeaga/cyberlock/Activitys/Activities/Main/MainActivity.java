@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setupLayout()
     {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.Content);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.Open, R.string.Close);
 
         mNavigationView = (NavigationView) findViewById(R.id.NavigationContent);
 
@@ -108,8 +108,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void calculateDrawerSize()
     {
-        float widthOffSet = .5f * (getResources().getDisplayMetrics().widthPixels);
-
         Resources resources = getResources();
         DisplayMetrics metrics = new DisplayMetrics();
 

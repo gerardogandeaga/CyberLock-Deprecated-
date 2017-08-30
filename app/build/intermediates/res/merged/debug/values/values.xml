@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="http://schemas.android.com/tools">
-    <string-array name="autologoutdelay_array">
+    <string-array name="AutoLogoutDelay_array">
         <item>Immediate</item>
         <item>15 Seconds</item>
         <item>30 Seconds</item>
@@ -12,7 +12,7 @@
         <item>2 Hours</item>
         <item>Never</item>
     </string-array>
-    <string-array name="cardtype_array">
+    <string-array name="CardType_array">
         <item>None</item>
         <item>Visa</item>
         <item>Master Card</item>
@@ -20,9 +20,9 @@
         <item>Discover</item>
         <item>Other</item>
     </string-array>
-    <string-array name="encryptionALGO_array">
+    <string-array name="CryptALGO_array">
         <item>AES - 256</item>
-        <item>Blowfish - 256</item>
+        <item>Blowfish - 448</item>
         <!-- Rest of the encryption features
         <item>RC4 – 256</item>
         <item>Triple DES - 168</item>
@@ -689,13 +689,77 @@
     <integer name="hide_password_duration">320</integer>
     <integer name="show_password_duration">200</integer>
     <integer name="status_bar_notification_info_maxnum">999</integer>
+    <string name="AES">AES</string>
+    <string name="AESInfo">
+        Advanced Encryption Standard (AES) is a newer and stronger encryption standard, which uses
+        the Rijndael algorithm. This algorithm was developed by Joan Daemen and Vincent Rijmen of
+        Belgium. AES has a block size of 128 and is able to use 128, 192, and 256-bit keys for
+        powerful encryption.
+    </string>
+    <string name="Action_About">About</string>
+    <string name="Action_Contribute">Contribute</string>
+    <string name="Action_Settings">Settings</string>
+    <string name="AlertDialog_EncryptionMethodChange">
+        On pressing continue you content will be momentarily decrypted and re-encrypted using the
+        new encryption algorithm. Please wait for the process to be completed and response message
+        to be successful. Once the process has started you will not be able to cancel it.
+        Additionally and most importantly, do not exit or close the application during the process
+        as it may result in data loss.
+    </string>
+    <string name="AlertDialog_ScrambleKey">
+        On selecting Scramble, ALL your content will be momentarily decrypted and re-encrypted with
+        the new key and selected algorithm. Please wait for the process to be completed and response
+        message to be successful. Once the process has started you will not be able to cancel it.
+        Additionally and most importantly, do not exit or close the application during the process
+        as it may result in data loss.
+    </string>
+    <string name="Blowfish">Blowfish</string>
+    <string name="BlowfishInfo">Blowfish is a symmetric block cipher, designed by Bruce Schneier.
+        Blowfish has a 64-bit block size and a variable key length from 32 up to 448 bits.
+    </string>
+    <string name="Close">Close</string>
+    <string name="ConfirmPin">Please confirm pin</string>
+    <string name="ContributeMethods">Contribute ( Donate, Rate/Review, Share )</string>
+    <string name="CyberLocksTech">
+        Cyber Lock is a mobile application designed to secure and privatize your personal information.
+        Cyber Lock is equipped to utilize four different symmetric Encryption Algorithms; AES, Blowfish,
+        RC4 and Triple DES. Pins are protected using a salted SHA-256 algorithm, a powerful one-way
+        hash function that cannot be decrypted.
+    </string>
+    <string name="CyberLocksTechTitle">Cyber Lock\'s Technology</string>
+    <string name="MessageToUser">
+        Hello user, Welcome to Cyber Lock! To begin, privacy and security is very important to me,
+        with the increasing attacks on privacy and security, I decided to create an application for
+        mobile device to store data as of now locally but most importantly securely. This is my personal,
+        private ongoing encryption application project. This is my take on trying to make mobile
+        application software and security more noticeably intertwined. I spend many hours researching,
+        designing and developing. I very much hope to continue my project and bring constant updates
+        to upgrade and improve Cyber Lock. I plan on implementing many other features and options to
+        give you, the user, more control over how you keep your data safe. Furthermore, I am constantly
+        experimenting with visuals to provide cleaner looks and overall greater practicality. I believe
+        in simplicity, power, reliability, but greatest of all, an uncompromising balance of security
+        and privacy!
+    </string>
+    <string name="MessageToUserTitle">Message To User</string>
+    <string name="NewPin">Please input a new pin</string>
+    <string name="Open">Open</string>
+    <string name="SHA256">SHA-256</string>
+    <string name="SHA256Info">
+        SHA-256 (Secure Hash Algorithm), a cryptographic function which takes an input and spits
+        out an alphanumeric string. SHA-256 generates an almost-unique, fixed 256-bit hash. A hash
+        is a one way function “encryptor” which cannot be decrypted. SHA-256 is currently one of
+        the strongest functions available.
+    </string>
+    <string name="Signature">GG.</string>
+    <string name="Sincerely">Sincerely,</string>
+    <string name="TitleActivityMain">MainActivity</string>
     <string name="UpdateTitle">Update Board</string>
     <string name="Update_V1.1.0">
         Welcome to Cyber Lock! Initial release comes outfitted with a memo,
         card info, login credential and playground encryptor. Content Algorithms
         currently supported are AES-256 and Blowfish-448 bit.
     </string>
-    <string name="V1.1.0">V - 1.1.0</string>
+    <string name="V1.1.0">V - 1.1.0 ( Release! )</string>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_home_description_format">%1$s, %2$s</string>
     <string name="abc_action_bar_home_subtitle_description_format">%1$s, %2$s, %3$s</string>
@@ -727,16 +791,9 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <string name="action_about">About</string>
-    <string name="action_contribute">Contribute</string>
-    <string name="action_settings">Settings</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="bottom_sheet_behavior" translatable="false">android.support.design.widget.BottomSheetBehavior</string>
     <string name="character_counter_pattern" translatable="false">%1$d / %2$d</string>
-    <string name="close">Close</string>
-    <string name="confirm_pin">Please confirm pin</string>
-    <string name="new_pin">Please input a new pin</string>
-    <string name="open">Open</string>
     <string name="password_toggle_content_description">Toggle password visibility</string>
     <string name="path_password_eye" translatable="false">M12,4.5C7,4.5 2.73,7.61 1,12c1.73,4.39 6,7.5 11,7.5s9.27,-3.11 11,-7.5c-1.73,-4.39 -6,-7.5 -11,-7.5zM12,17c-2.76,0 -5,-2.24 -5,-5s2.24,-5 5,-5 5,2.24 5,5 -2.24,5 -5,5zM12,9c-1.66,0 -3,1.34 -3,3s1.34,3 3,3 3,-1.34 3,-3 -1.34,-3 -3,-3z</string>
     <string name="path_password_eye_mask_strike_through" translatable="false">M2,4.27 L19.73,22 L22.27,19.46 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
@@ -744,7 +801,6 @@
     <string name="path_password_strike_through" translatable="false">M3.27,4.27 L19.74,20.74</string>
     <string name="search_menu_title">Search</string>
     <string name="status_bar_notification_info_overflow">999+</string>
-    <string name="title_activity_main">MainActivity</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
     <style name="Animation.AppCompat.Dialog" parent="Base.Animation.AppCompat.Dialog"/>
@@ -753,7 +809,7 @@
         <item name="android:windowEnterAnimation">@anim/design_bottom_sheet_slide_in</item>
         <item name="android:windowExitAnimation">@anim/design_bottom_sheet_slide_out</item>
     </style>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/blue2D_3D</item>
@@ -763,8 +819,8 @@
         
         
 
-        
-        
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
 
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>

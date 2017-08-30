@@ -95,6 +95,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentStart="true"
+                        android:fontFamily="serif-monospace"
                         android:paddingBottom="10dp"
                         android:text="Memo Lock"
                         android:textAlignment="center"
@@ -129,6 +130,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentStart="true"
+                        android:fontFamily="serif-monospace"
                         android:paddingBottom="10dp"
                         android:text="Card Lock"
                         android:textAlignment="center"
@@ -172,6 +174,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentStart="true"
+                        android:fontFamily="serif-monospace"
                         android:paddingBottom="10dp"
                         android:text="Login Lock"
                         android:textAlignment="center"
@@ -190,15 +193,15 @@
                     android:clickable="true">
 
                     <ImageView
-                        android:id="@+id/imgGallery"
+                        android:id="@+id/imgPlayground"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_above="@+id/tvGallery"
                         android:padding="15dp"
-                        app:srcCompat="@drawable/ic_action_gallerylock"/>
+                        app:srcCompat="@drawable/ic_action_playground"
+                        android:layout_above="@+id/tvPlayground"/>
 
                     <TextView
-                        android:id="@+id/tvGallery"
+                        android:id="@+id/tvPlayground"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
@@ -206,8 +209,9 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentStart="true"
+                        android:fontFamily="serif-monospace"
                         android:paddingBottom="10dp"
-                        android:text="Gallery Lock"
+                        android:text="Playground"
                         android:textAlignment="center"
                         android:textAllCaps="false"
                         android:textColor="@color/white"

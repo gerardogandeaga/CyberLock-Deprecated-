@@ -30,6 +30,7 @@ import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutPro
 import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DELAY_TIME;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.LOGOUT_DELAY;
 
 public class Settings extends AppCompatActivity implements View.OnClickListener
@@ -38,16 +39,19 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
     private SharedPreferences mSharedPreferences;
     private static final int flags = Base64.DEFAULT;
 
+    // SPINNERS
     private ArrayAdapter<CharSequence> mAdapterAutoLogoutDelay;
     private String mAutoLogoutDelay;
-
-    private Context mContext = this;
+    private ArrayAdapter<CharSequence> mAdapterEncryptionMethod;
+    private String mOldEncryptionMethod;
 
     // WIDGETS
     private TextView mTvChangePassword;
     private LinearLayout mAutoSave, mScrambleKey;
     private CheckBox mCbAutoSave;
     private Spinner mSpAutoLogoutDelay, mSpEncryptionMethod;
+
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -74,15 +78,15 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         // SPINNER DATA
         // LOGOUT DELAY
         this.mSpAutoLogoutDelay = (Spinner) findViewById(R.id.spAutoLogoutDelay);
-        mAdapterAutoLogoutDelay = ArrayAdapter.createFromResource(this, R.array.autologoutdelay_array, R.layout.spinner_item);
+        mAdapterAutoLogoutDelay = ArrayAdapter.createFromResource(this, R.array.AutoLogoutDelay_array, R.layout.spinner_item);
         mAdapterAutoLogoutDelay.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.mSpAutoLogoutDelay.setAdapter(mAdapterAutoLogoutDelay);
         // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // ENCRYPTION METHOD
         this.mSpEncryptionMethod = (Spinner) findViewById(R.id.spEncryptionMethod);
-        final ArrayAdapter<CharSequence> adapterEncryptionMethod = ArrayAdapter.createFromResource(this, R.array.encryptionALGO_array, R.layout.spinner_item);
-        adapterEncryptionMethod.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.mSpEncryptionMethod.setAdapter(adapterEncryptionMethod);
+        mAdapterEncryptionMethod = ArrayAdapter.createFromResource(this, R.array.CryptALGO_array, R.layout.spinner_item);
+        mAdapterEncryptionMethod.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.mSpEncryptionMethod.setAdapter(mAdapterEncryptionMethod);
 
         this.mTvChangePassword = (TextView) findViewById(R.id.tvChangePassword);
         this.mCbAutoSave = (CheckBox) findViewById(R.id.cbAutoSave);
@@ -122,7 +126,36 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
                     }
 
                     System.out.println("Time = " + time);
-                    getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().putString(LOGOUT_DELAY, mAutoLogoutDelay).putLong(DELAY_TIME, time).apply();
+                    mSharedPreferences.edit().putString(LOGOUT_DELAY, mAutoLogoutDelay).putLong(DELAY_TIME, time).apply();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
+
+        this.mSpEncryptionMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                Object object = parent.getItemAtPosition(position);
+                if (object != null)
+                {
+                    String algorithm = object.toString();
+                    if (algorithm.matches("AES - 256"))
+                    {
+                        String newAlgorithm = "AES";
+                        if (!mSharedPreferences.getString(ENCRYPTION_ALGO, "AES").matches(newAlgorithm)) { onEncrptionMethodChange(newAlgorithm); }
+                    }
+                    else
+                    if (algorithm.matches("Blowfish - 448"))
+                    {
+                        String newAlgorithm = "Blowfish";
+                        if (!mSharedPreferences.getString(ENCRYPTION_ALGO, "AES").matches(newAlgorithm)) { onEncrptionMethodChange(newAlgorithm); }
+                    }
                 }
             }
 
@@ -148,8 +181,25 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         System.out.println(autoSave);
 
         // SPINNERS
-        int delaySpinnerPosition = mAdapterAutoLogoutDelay.getPosition(getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(LOGOUT_DELAY, "Immediate"));
+        // LOGOUT DELAY
+        int delaySpinnerPosition = mAdapterAutoLogoutDelay.getPosition(mSharedPreferences.getString(LOGOUT_DELAY, "Immediate"));
         mSpAutoLogoutDelay.setSelection(delaySpinnerPosition);
+
+        // ENCRYPTION METHOD
+        int algoSpinnerPosition;
+        switch (mSharedPreferences.getString(ENCRYPTION_ALGO, "AES"))
+        {
+            case "AES":
+                algoSpinnerPosition = mAdapterEncryptionMethod.getPosition("AES - 256");
+                mSpEncryptionMethod.setSelection(algoSpinnerPosition);
+                mOldEncryptionMethod = mSpEncryptionMethod.getItemAtPosition(algoSpinnerPosition).toString();
+                break;
+            case "Blowfish":
+                algoSpinnerPosition = mAdapterEncryptionMethod.getPosition("Blowfish - 448");
+                mSpEncryptionMethod.setSelection(algoSpinnerPosition);
+                mOldEncryptionMethod = mSpEncryptionMethod.getItemAtPosition(algoSpinnerPosition).toString();
+                break;
+        }
     }
 
     @Override
@@ -196,9 +246,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
         alertDialog.setTitle("Scramble Encryption Key");
-        alertDialog.setMessage("On selecting Scramble, ALL your content will be momentarily decrypted and re-encrypted with the new key and selected algorithm. " +
-                               "Please wait for the process to be completed and response message to be successful. Once the process has started you will not be able to " +
-                               "cancel it. Additionally and most importantly, do not exit or close the application during the process as it may result in data loss.");
+        alertDialog.setMessage(R.string.AlertDialog_ScrambleKey);
+        alertDialog.setCancelable(false);
 
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
         {
@@ -219,7 +268,37 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
             }
         });
         alertDialog.show();
+    }
 
+    private void onEncrptionMethodChange(final String algorithm)
+    {
+        // DIALOG BUILDER
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+        alertDialog.setTitle("Encryption Method");
+        alertDialog.setMessage(R.string.AlertDialog_EncryptionMethodChange);
+        alertDialog.setCancelable(false);
+
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                mSpEncryptionMethod.setSelection(mAdapterEncryptionMethod.getPosition(mOldEncryptionMethod));
+                dialog.dismiss();
+            }
+        });
+        alertDialog.setPositiveButton("Continue", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+
+                new Settings_EncryptionMethodChange(mContext, algorithm).execute();
+            }
+        });
+        alertDialog.show();
     }
 
     @Override

@@ -1,7 +1,7 @@
-#Mon Aug 28 15:23:49 PDT 2017
+#Tue Aug 29 23:43:20 PDT 2017
 base.0=C\:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_979d60ce147125c5a8218b5483d8f04f06c11ca2
-renamed.1=classes2.dex
-renamed.0=classes.dex
+renamed.1=classes.dex
+renamed.0=classes2.dex
 file.1=C\:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_646248d7cfd9ac62d06db6d2ed63a241e227ebd4\\classes.dex
 base.1=C\:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_646248d7cfd9ac62d06db6d2ed63a241e227ebd4
 file.0=C\:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_979d60ce147125c5a8218b5483d8f04f06c11ca2\\classes.dex

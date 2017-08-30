@@ -15,7 +15,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
-import com.gerardogandeaga.cyberlock.Encryption.AESKeyHandler;
+import com.gerardogandeaga.cyberlock.Encryption.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.Encryption.SHA256PinHash;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.LoginInfo;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.LoginInfoEditActivity;
@@ -265,7 +265,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             {
                 try // TRY LOGIN MECHANICS
                 {
-                    final String decryptedPulledPin = new AESKeyHandler(mContext).DECRYPTKEY(mSharedPreferences.getString(PIN, null), mPin);
+                    final String decryptedPulledPin = new CryptKeyHandler(mContext).DECRYPTKEY(mSharedPreferences.getString(PIN, null), mPin);
                     final String loginPinHash = SHA256PinHash.hashFunction(mPin, Arrays.copyOfRange(Base64.decode(decryptedPulledPin, FLAGS), 0, 128));
 
                     System.out.println("LOGIN INPUT: " + loginPinHash);
@@ -315,7 +315,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         }.execute();
     }
-
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
     @Override

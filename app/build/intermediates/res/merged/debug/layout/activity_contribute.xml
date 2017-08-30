@@ -43,12 +43,8 @@
                 android:id="@+id/tvMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentStart="true"
                 android:fontFamily="monospace"
-                android:text="Message to user"
+                android:text="@string/MessageToUserTitle"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
@@ -58,13 +54,9 @@
                 android:id="@+id/tvContributeText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentStart="true"
                 android:fontFamily="monospace"
                 android:padding="10dp"
-                android:text="Hello user, Welcome to Cyber Lock! To begin, privacy and security is very important to me, with the increasing attacks on privacy and security, I decided to create an application for mobile device to store data as of now locally but most importantly securely. This is my personal, private ongoing encryption application project. This is my take on trying to make mobile application software and security more noticeably intertwined. I spend many hours researching, designing and developing. I very much hope to continue my project and bring constant updates to upgrade and improve Cyber Lock. I plan on implementing many other features and options to give you, the user, more control over how you keep your data safe. Furthermore, I am constantly experimenting with visuals to provide cleaner looks and overall greater practicality. I believe in simplicity, power, reliability, but greatest of all, an uncompromising balance of security and privacy!"
+                android:text="@string/MessageToUser"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"/>
 
@@ -72,13 +64,9 @@
                 android:id="@+id/tvSincerely"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentStart="true"
                 android:fontFamily="monospace"
                 android:padding="10dp"
-                android:text="Sincerely,"
+                android:text="@string/Sincerely"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"/>
 
@@ -86,13 +74,9 @@
                 android:id="@+id/tvGG"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentStart="true"
                 android:fontFamily="monospace"
                 android:padding="10dp"
-                android:text="GG."
+                android:text="@string/Signature"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
@@ -112,7 +96,7 @@
         android:background="@color/gray3B"
         android:fontFamily="monospace"
         android:padding="10dp"
-        android:text="Contribute ( Donate, Rate/Review, Share )"
+        android:text="@string/ContributeMethods"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="12sp"
@@ -126,15 +110,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="@color/blue4C_2D"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/btnDonate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
+            android:background="@drawable/clickable_background_main"
             android:clickable="true"
             android:padding="10dp"
             app:srcCompat="@drawable/ic_action_donate"/>
@@ -144,7 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
+            android:background="@drawable/clickable_background_main"
             android:clickable="true"
             android:padding="10dp"
             app:srcCompat="@drawable/ic_action_rate"/>
@@ -154,7 +137,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackground"
+            android:background="@drawable/clickable_background_main"
             android:clickable="true"
             android:padding="10dp"
             app:srcCompat="@drawable/ic_action_share"/>

@@ -40,12 +40,12 @@
         "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\layout\\layout_list_item_memo.xml"
     },
     {
-        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_tab_icon.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\30b12bb4b79fe3620757c33a87a0ce9da32423b8\\output\\res\\layout\\design_layout_tab_icon.xml"
-    },
-    {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_separator.xml",
         "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\30b12bb4b79fe3620757c33a87a0ce9da32423b8\\output\\res\\layout\\design_navigation_item_separator.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_tab_icon.xml",
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\30b12bb4b79fe3620757c33a87a0ce9da32423b8\\output\\res\\layout\\design_layout_tab_icon.xml"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_title_material.xml",
@@ -180,12 +180,12 @@
         "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\layout\\abc_screen_simple.xml"
     },
     {
-        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_close_item_material.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\layout\\abc_action_mode_close_item_material.xml"
-    },
-    {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout\\drawer_update_feed.xml",
         "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\layout\\drawer_update_feed.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_close_item_material.xml",
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\layout\\abc_action_mode_close_item_material.xml"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_menu_item_action_area.xml",
@@ -200,12 +200,12 @@
         "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\layout\\activity_login.xml"
     },
     {
-        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media_custom.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\layout\\notification_template_media_custom.xml"
-    },
-    {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item.xml",
         "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\30b12bb4b79fe3620757c33a87a0ce9da32423b8\\output\\res\\layout\\design_navigation_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media_custom.xml",
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\layout\\notification_template_media_custom.xml"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_main_memo.xml",

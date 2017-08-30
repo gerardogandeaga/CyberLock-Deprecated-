@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:2:1-65:12
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:2:1-56:12
 	package
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:3:11-50
 		INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml
@@ -62,7 +62,7 @@ ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\ap
 	android:name
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:15:22-65
 application
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:17:5-63:19
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:17:5-54:19
 MERGED from [com.android.support:design:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\30b12bb4b79fe3620757c33a87a0ce9da32423b8\output\AndroidManifest.xml:29:5-20
 MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\b38af9b20c79f97d34056b985b67afebf4df0431\output\AndroidManifest.xml:29:5-20
 MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\b7a0d1ad79d7f52080daad2422d639e8876f8ec2\output\AndroidManifest.xml:26:5-20
@@ -104,74 +104,68 @@ category#android.intent.category.LAUNCHER
 ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:30:17-76
 	android:name
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:30:27-74
-activity#com.gerardogandeaga.cyberlock.TestActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:33:9-41:20
+activity#com.gerardogandeaga.cyberlock.Activitys.Activities.Login.RegistrationActivity
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:33:9-36:20
 	android:windowSoftInputMode
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:35:13-67
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:34:13-41
-activity#com.gerardogandeaga.cyberlock.Activitys.Activities.Login.RegistrationActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:42:9-45:20
-	android:windowSoftInputMode
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:44:13-67
-	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:43:13-76
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:34:13-76
 activity#com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:46:9-50:20
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:37:9-41:20
 	android:label
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:48:13-56
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:39:13-54
 	android:theme
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:49:13-44
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:40:13-44
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:47:13-67
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:38:13-67
 activity#com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Contribute
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:51:9-74
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:42:9-74
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:51:19-72
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:42:19-72
 activity#com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.About
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:52:9-69
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:43:9-69
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:52:19-67
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:43:19-67
 activity#com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:53:9-72
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:44:9-72
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:53:19-70
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:44:19-70
 activity#com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings_ResetPin
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:54:9-81
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:45:9-81
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:54:19-79
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:45:19-79
 activity#com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MainMemoActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:55:9-84
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:46:9-84
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:55:19-82
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:46:19-82
 activity#com.gerardogandeaga.cyberlock.EncryptionFeatures.PaymentInfo.MainPaymentInfoActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:56:9-91
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:47:9-91
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:56:19-89
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:47:19-89
 activity#com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.MainLoginInfoActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:57:9-87
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:48:9-87
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:57:19-85
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:48:19-85
 activity#com.gerardogandeaga.cyberlock.EncryptionFeatures.PhotoGallery.MainPhotoGallery
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:58:9-85
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:49:9-85
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:58:19-83
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:49:19-83
 activity#com.gerardogandeaga.cyberlock.EncryptionFeatures.PhotoGallery.CustomPhotoGalleryActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:59:9-95
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:50:9-95
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:59:19-93
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:50:19-93
 activity#com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MemoEditActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:60:9-84
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:51:9-84
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:60:19-82
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:51:19-82
 activity#com.gerardogandeaga.cyberlock.EncryptionFeatures.PaymentInfo.PaymentInfoEditActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:61:9-91
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:52:9-91
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:61:19-89
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:52:19-89
 activity#com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.LoginInfoEditActivity
-ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:62:9-87
+ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:53:9-87
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:62:19-85
+		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:53:19-85
 meta-data#android.support.VERSION
 ADDED from [com.android.support:design:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\30b12bb4b79fe3620757c33a87a0ce9da32423b8\output\AndroidManifest.xml:25:5-27:34
 MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\gerardogandeaga\.android\build-cache\b38af9b20c79f97d34056b985b67afebf4df0431\output\AndroidManifest.xml:25:5-27:34

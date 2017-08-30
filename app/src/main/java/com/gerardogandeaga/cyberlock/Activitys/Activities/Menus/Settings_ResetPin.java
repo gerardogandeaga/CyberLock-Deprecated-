@@ -13,7 +13,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gerardogandeaga.cyberlock.Encryption.AESKeyHandler;
+import com.gerardogandeaga.cyberlock.Encryption.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.Encryption.SHA256PinHash;
 import com.gerardogandeaga.cyberlock.R;
 
@@ -23,6 +23,7 @@ import static com.gerardogandeaga.cyberlock.R.id.input2;
 import static com.gerardogandeaga.cyberlock.R.id.input3;
 import static com.gerardogandeaga.cyberlock.R.id.input4;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
 public class Settings_ResetPin extends AppCompatActivity implements View.OnClickListener
 {
@@ -85,7 +86,7 @@ public class Settings_ResetPin extends AppCompatActivity implements View.OnClick
         this.mBtn9.setOnClickListener(this);
         btnBackspace.setOnClickListener(this);
 
-        this.mTextView.setText(R.string.new_pin);
+        this.mTextView.setText(R.string.NewPin);
     }
 
     @Override
@@ -123,7 +124,7 @@ public class Settings_ResetPin extends AppCompatActivity implements View.OnClick
     {
         if (mPinFirst.matches("") && mPinSecond.matches("")) {
             mPinFirst = mPin;
-            mTextView.setText(R.string.confirm_pin);
+            mTextView.setText(R.string.ConfirmPin);
             clear();
         } else if (!mPinFirst.matches("") && mPinSecond.matches("")) {
             mPinSecond = mPin;
@@ -148,10 +149,11 @@ public class Settings_ResetPin extends AppCompatActivity implements View.OnClick
             final String passwordHash; // GENERATE THE HASH PIN
             try
             {
-                passwordHash = new AESKeyHandler(this).ENCRYPTKEY(SHA256PinHash.hashFunction(pinFirst, SHA256PinHash.generateSalt()), pinFirst);
+                passwordHash = new CryptKeyHandler(this).ENCRYPTKEY(SHA256PinHash.hashFunction(pinFirst, SHA256PinHash.generateSalt()), pinFirst);
 
                 mSharedPreferences.edit().putString(PIN, passwordHash).apply(); // ADD HASHED PIN TO STORE
                 System.out.println("HASHED PIN :" + passwordHash);
+                mSharedPreferences.edit().putString(TEMP_PIN, pinFirst).apply();
 
                 ACTIVITY_INTENT = new Intent(Settings_ResetPin.this, Settings.class);
                 Toast.makeText(this, "Pin Successfully Reset", Toast.LENGTH_SHORT).show();
@@ -167,7 +169,7 @@ public class Settings_ResetPin extends AppCompatActivity implements View.OnClick
         } else
         {
             Toast.makeText(this, "Please Try Again", Toast.LENGTH_SHORT).show();
-            mTextView.setText(R.string.new_pin);
+            mTextView.setText(R.string.NewPin);
         }
     }
 

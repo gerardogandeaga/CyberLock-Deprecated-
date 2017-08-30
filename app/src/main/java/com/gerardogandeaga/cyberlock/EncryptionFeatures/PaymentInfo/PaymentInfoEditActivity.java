@@ -19,8 +19,8 @@ import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.Encryption.AESContent;
-import com.gerardogandeaga.cyberlock.Encryption.AESKeyHandler;
+import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
+import com.gerardogandeaga.cyberlock.Encryption.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.R;
 
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
@@ -70,7 +70,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
 
         this.mSpCardSelect = (Spinner) findViewById(R.id.spCardSelect);
 
-        mAdapter = ArrayAdapter.createFromResource(this, R.array.cardtype_array, android.R.layout.simple_spinner_item);
+        mAdapter = ArrayAdapter.createFromResource(this, R.array.CardType_array, android.R.layout.simple_spinner_item);
         mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpCardSelect.setAdapter(mAdapter);
 
@@ -178,10 +178,10 @@ public class PaymentInfoEditActivity extends AppCompatActivity
             {
                 try
                 {
-                    String ENCDEC_KEY = (new AESKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
+                    String ENCDEC_KEY = (new CryptKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
                                         this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
 
-                    AESContent content = new AESContent(this);
+                    CryptContent content = new CryptContent(this);
 
                     if (!mPaymentInfo.getCardName().matches("")) { this.mEtCardName.setText(content.decryptContent(mPaymentInfo.getCardName(), ENCDEC_KEY)); } // DECRYPT
                     if (!mPaymentInfo.getCardNumber().matches("")) { this.mEtCardNumber.setText(content.decryptContent(mPaymentInfo.getCardNumber(), ENCDEC_KEY)); } // DECRYPT
@@ -223,12 +223,12 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         PaymentInfoDatabaseAccess paymentInfoDatabaseAccess = PaymentInfoDatabaseAccess.getInstance(this);
         paymentInfoDatabaseAccess.open();
 
-        String ENCDEC_KEY = (new AESKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
+        String ENCDEC_KEY = (new CryptKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
                                                       this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
 
         if ((!mEtTag.getText().toString().matches("")) || (!mEtCardName.getText().toString().matches("")) || (!mEtCardNumber.getText().toString().matches("")) || (!mEtCardExpire.getText().toString().matches("")) || (!mEtCardSecCode.getText().toString().matches("")) || (!mEtNotes.getText().toString().matches("")) || (!mEtQuestion1.getText().toString().matches("")) || (!mEtQuestion2.getText().toString().matches("")) || (!mEtAnswer1.getText().toString().matches("")) || (!mEtAnswer2.getText().toString().matches("")))
         {
-            AESContent content = new AESContent(this);
+            CryptContent content = new CryptContent(this);
 
             if (mPaymentInfo == null) // WHEN SAVING A NEW UNKNOWN MEMO
             {

@@ -15,7 +15,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gerardogandeaga.cyberlock.Encryption.AESKeyHandler;
+import com.gerardogandeaga.cyberlock.Encryption.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.Encryption.SHA256PinHash;
 import com.gerardogandeaga.cyberlock.R;
 
@@ -102,7 +102,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
             this.mBtn9.setOnClickListener(this);
             btnBackspace.setOnClickListener(this);
 
-            this.mTextView.setText(R.string.new_pin);
+            this.mTextView.setText(R.string.NewPin);
         }
     }
 
@@ -142,7 +142,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
     {
         if (mPinFirst.matches("") && mPinSecond.matches("")) {
             mPinFirst = mPin;
-            mTextView.setText(R.string.confirm_pin);
+            mTextView.setText(R.string.ConfirmPin);
             clear();
         } else if (!mPinFirst.matches("") && mPinSecond.matches("")) {
             mPinSecond = mPin;
@@ -249,7 +249,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
                         mSharedPreferences.edit().putString(ENCRYPTION_ALGO, "AES").apply();
                         mSharedPreferences.edit().putString(CIPHER_ALGO, "AES/CBC/PKCS5Padding").apply();
 
-                        AESKeyHandler keyHandler = new AESKeyHandler(mContext); // START THE KEY HANDLER
+                        CryptKeyHandler keyHandler = new CryptKeyHandler(mContext); // START THE KEY HANDLER
 
                         // PIN AND ENCRYPTION PROCESSES
                         passwordHash = keyHandler.ENCRYPTKEY(SHA256PinHash.hashFunction(pinFirst, SHA256PinHash.generateSalt()), pinFirst);

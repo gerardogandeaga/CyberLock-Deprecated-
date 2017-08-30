@@ -21,8 +21,8 @@ import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.Encryption.AESContent;
-import com.gerardogandeaga.cyberlock.Encryption.AESKeyHandler;
+import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
+import com.gerardogandeaga.cyberlock.Encryption.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.R;
 
 import java.io.ByteArrayOutputStream;
@@ -122,10 +122,10 @@ public class LoginInfoEditActivity extends AppCompatActivity
             {
                 try
                 {
-                    String ENCDEC_KEY = (new AESKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
+                    String ENCDEC_KEY = (new CryptKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
                             this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
 
-                    AESContent content = new AESContent(this);
+                    CryptContent content = new CryptContent(this);
                     // DECRYPT CONTENT
                     if (!mLoginInfo.getUrl().matches("")) { this.mEtUrl.setText(content.decryptContent(mLoginInfo.getUrl(), ENCDEC_KEY)); }
                     if (!mLoginInfo.getUsername().matches("")) { this.mEtUsername.setText(content.decryptContent(mLoginInfo.getUsername(), ENCDEC_KEY)); }
@@ -212,12 +212,12 @@ public class LoginInfoEditActivity extends AppCompatActivity
         LoginInfoDatabaseAccess loginInfoDatabaseAccess = LoginInfoDatabaseAccess.getInstance(this);
         loginInfoDatabaseAccess.open();
 
-        String ENCDEC_KEY = (new AESKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
+        String ENCDEC_KEY = (new CryptKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
                 this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
 
         if ((!mEtTag.getText().toString().matches("")) || (!mEtUrl.getText().toString().matches("")) || (!mEtUsername.getText().toString().matches("")) || (!mEtEmail.getText().toString().matches("")) || (!mEtPassword.getText().toString().matches("")) || (!mEtNotes.getText().toString().matches("")) || (!mEtQuestion1.getText().toString().matches("")) || (!mEtQuestion2.getText().toString().matches("")) || (!mEtAnswer1.getText().toString().matches("")) || (!mEtAnswer2.getText().toString().matches("")))
         {
-            AESContent content = new AESContent(this);
+            CryptContent content = new CryptContent(this);
 
             if (mLoginInfo == null) // WHEN SAVING A NEW UNKNOWN LOGIN INFO
             {
