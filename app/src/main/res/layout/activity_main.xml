@@ -84,7 +84,8 @@
                         android:layout_height="wrap_content"
                         android:layout_above="@+id/tvMemo"
                         android:padding="15dp"
-                        app:srcCompat="@drawable/ic_action_memolock"/>
+                        app:srcCompat="@drawable/ic_action_memolock"
+                        android:layout_alignParentTop="true"/>
 
                     <TextView
                         android:id="@+id/tvMemo"
@@ -119,7 +120,8 @@
                         android:layout_height="wrap_content"
                         android:layout_above="@+id/tvPaymentInfo"
                         android:padding="15dp"
-                        app:srcCompat="@drawable/ic_action_cardlock"/>
+                        app:srcCompat="@drawable/ic_action_cardlock"
+                        android:layout_alignParentTop="true"/>
 
                     <TextView
                         android:id="@+id/tvPaymentInfo"
@@ -163,7 +165,8 @@
                         android:layout_height="wrap_content"
                         android:layout_above="@+id/tvLoginInfo"
                         android:padding="15dp"
-                        app:srcCompat="@drawable/ic_action_loginlock"/>
+                        app:srcCompat="@drawable/ic_action_loginlock"
+                        android:layout_alignParentTop="true"/>
 
                     <TextView
                         android:id="@+id/tvLoginInfo"
@@ -185,7 +188,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/Gallery"
+                    android:id="@+id/Playground"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

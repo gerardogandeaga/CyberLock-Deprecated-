@@ -22,6 +22,7 @@ import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Contribute;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.MainLoginInfoActivity;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.PaymentInfo.MainPaymentInfoActivity;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.Playground.MainPlaygroundActivity;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MainMemoActivity;
 import com.gerardogandeaga.cyberlock.R;
 
@@ -75,7 +76,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
 
                 break;
-//            case R.id.Gallery: ACTIVITY_INTENT = new Intent(this, MainPhotoGallery.class); finish(); startActivity(ACTIVITY_INTENT); break;
+            case R.id.Playground:
+                ACTIVITY_INTENT = new Intent(this, MainPlaygroundActivity.class);
+                finish();
+                startActivity(ACTIVITY_INTENT);
+                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
         }
     }
 

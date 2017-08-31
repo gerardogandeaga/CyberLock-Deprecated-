@@ -51,6 +51,8 @@
         <activity android:name=".EncryptionFeatures.PrivateMemo.MemoEditActivity"/>
         <activity android:name=".EncryptionFeatures.PaymentInfo.PaymentInfoEditActivity"/>
         <activity android:name=".EncryptionFeatures.LoginInfo.LoginInfoEditActivity"/>
+        <activity android:name=".EncryptionFeatures.Playground.MainPlaygroundActivity">
+        </activity>
     </application>
 
 </manifest>

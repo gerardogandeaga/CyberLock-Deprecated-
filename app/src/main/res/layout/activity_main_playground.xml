@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/Content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grayD9"
+    tools:context="com.gerardogandeaga.cyberlock.EncryptionFeatures.Playground.MainPlaygroundActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar"/>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/include">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            app:layout_heightPercent="50%"
+            android:id="@+id/DataEncrypt">
+
+            <TextView
+                android:id="@+id/tvEncrypt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:background="@color/gray8F"
+                android:fontFamily="monospace"
+                android:padding="5dp"
+                android:text="Text Encryptor"
+                android:textAlignment="center"
+                android:textSize="20dp"/>
+
+            <LinearLayout
+                android:id="@+id/SEPERATOR1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/etEncryptPassword"
+                android:background="@color/gray5D"
+                android:orientation="horizontal"/>
+
+            <EditText
+                android:id="@+id/etEncryptPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvEncrypt"
+                android:background="@color/grayB4"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="text"
+                android:padding="5dp"/>
+
+            <EditText
+                android:id="@+id/etEncryptText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/SEPERATOR1"
+                android:background="@color/grayB4"
+                android:fontFamily="sans-serif"
+                android:hint="Input"
+                android:inputType="textMultiLine"
+                android:gravity="top|left"
+                android:padding="5dp"
+                android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/DataDecrypt"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/DataEncrypt"
+            app:layout_heightPercent="50%">
+
+            <TextView
+                android:id="@+id/tvDecrypt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/gray8F"
+                android:fontFamily="monospace"
+                android:padding="5dp"
+                android:text="Text Decryptor"
+                android:textAlignment="center"
+                android:textSize="20dp"/>
+
+            <LinearLayout
+                android:id="@+id/SEPERATOR2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/etDecryptPassword"
+                android:background="@color/gray5D"
+                android:orientation="horizontal"/>
+
+            <EditText
+                android:id="@+id/etDecryptPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvDecrypt"
+                android:background="@color/grayB4"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="text"
+                android:padding="5dp"/>
+
+            <EditText
+                android:id="@+id/etDecryptText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/SEPERATOR2"
+                android:background="@color/grayB4"
+                android:fontFamily="sans-serif"
+                android:gravity="top|left"
+                android:hint="Input"
+                android:inputType="textMultiLine"
+                android:padding="5dp"/>
+
+        </RelativeLayout>
+
+    </android.support.percent.PercentRelativeLayout>
+
+
+</RelativeLayout>

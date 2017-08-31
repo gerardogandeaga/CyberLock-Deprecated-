@@ -207,7 +207,6 @@ public class Settings_EncryptionMethodChange extends AsyncTask<Void, Void, Void>
                 answer1 = null;
                 answer2 = null;
 
-                // TODO NEW KEY HANDLER WITH NEW ALGO!
                 mLoginInfoDatabaseAccess.update(loginInfo);
 
                 System.out.println("done login info");

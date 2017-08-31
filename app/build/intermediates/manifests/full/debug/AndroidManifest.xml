@@ -55,6 +55,8 @@
         <activity android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MemoEditActivity" />
         <activity android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.PaymentInfo.PaymentInfoEditActivity" />
         <activity android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.LoginInfoEditActivity" />
+        <activity android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.Playground.MainPlaygroundActivity" >
+        </activity>
     </application>
 
 </manifest>
