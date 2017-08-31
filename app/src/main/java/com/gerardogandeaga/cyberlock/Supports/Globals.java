@@ -17,8 +17,10 @@ public class Globals
     public static final String LOGOUT_DELAY = "LOGOUT_DELAY";
     public static final String DELAY_TIME = "DELAY_TIME";
 
-    public static final String ENCRYPTION_ALGO = "ALGO";
-    public static final String CIPHER_ALGO = "CIPHER";
+    public static final String ENCRYPTION_ALGO = "ENCRYPTION_ALGO";
+    public static final String CIPHER_ALGO = "CIPHER_ALGO";
+
+    public static final String PLAYGROUIND_ALGO = "PLAYGROUND_ALGO";
     // ------------------
 
     // ENCRYPTION

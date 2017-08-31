@@ -1,26 +1,26 @@
 [
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media_narrow.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\6dee21546b247bb44281e9c4d94a345d000f5124\\output\\res\\layout-v11\\notification_template_big_media_narrow.xml"
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\layout-v11\\notification_template_big_media_narrow.xml"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_media_action.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\6dee21546b247bb44281e9c4d94a345d000f5124\\output\\res\\layout-v11\\notification_media_action.xml"
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\layout-v11\\notification_media_action.xml"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media_custom.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\6dee21546b247bb44281e9c4d94a345d000f5124\\output\\res\\layout-v11\\notification_template_big_media_custom.xml"
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\layout-v11\\notification_template_big_media_custom.xml"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\6dee21546b247bb44281e9c4d94a345d000f5124\\output\\res\\layout-v11\\notification_template_big_media.xml"
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\layout-v11\\notification_template_big_media.xml"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media_narrow_custom.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\6dee21546b247bb44281e9c4d94a345d000f5124\\output\\res\\layout-v11\\notification_template_big_media_narrow_custom.xml"
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\layout-v11\\notification_template_big_media_narrow_custom.xml"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_media_cancel_action.xml",
-        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\6dee21546b247bb44281e9c4d94a345d000f5124\\output\\res\\layout-v11\\notification_media_cancel_action.xml"
+        "source": "C:\\Users\\gerardogandeaga\\.android\\build-cache\\b38af9b20c79f97d34056b985b67afebf4df0431\\output\\res\\layout-v11\\notification_media_cancel_action.xml"
     }
 ]

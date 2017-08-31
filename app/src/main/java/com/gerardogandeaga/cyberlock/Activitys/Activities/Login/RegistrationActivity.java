@@ -30,6 +30,7 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.PIN;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.PLAYGROUIND_ALGO;
 
 public class RegistrationActivity extends AppCompatActivity implements  View.OnClickListener
 {
@@ -138,7 +139,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
         if (mArray[3] != null) { mInput4.setChecked(true); } else { mInput4.setChecked(false); }
     }
 
-    public void storePins()
+    private void storePins()
     {
         if (mPinFirst.matches("") && mPinSecond.matches("")) {
             mPinFirst = mPin;
@@ -155,7 +156,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
         }
     }
 
-    public void incrementIndexNumber()
+    private void incrementIndexNumber()
     {
         String s;
         for (int i = 0; i < mArray.length; i++)
@@ -169,7 +170,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
         }
     }
 
-    public void addToArray(Button b)
+    private void addToArray(Button b)
     {
         mArray[mIndex] = b.getText().toString();
 
@@ -192,7 +193,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
         }
     }
 
-    public void deleteFromArray()
+    private void deleteFromArray()
     {
         if (mIndex != -1)
         {
@@ -201,11 +202,18 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
         }
     }
 
-    public void clear()
+    private void clear()
     {
         mPin = "";
         mArray = new String[mArray.length];
         mIndex = -1;
+    }
+
+    private void setUpSharedPreferences()
+    {
+        mSharedPreferences.edit().putString(ENCRYPTION_ALGO, "AES").apply();
+        mSharedPreferences.edit().putString(CIPHER_ALGO, "AES/CBC/PKCS5Padding").apply();
+        mSharedPreferences.edit().putString(PLAYGROUIND_ALGO, "AES - 256").apply();
     }
     // -----------------------------
 
@@ -246,8 +254,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
                     try
                     {
                         // INITIAL ENCRYPTION ALGORITHM
-                        mSharedPreferences.edit().putString(ENCRYPTION_ALGO, "AES").apply();
-                        mSharedPreferences.edit().putString(CIPHER_ALGO, "AES/CBC/PKCS5Padding").apply();
+                        setUpSharedPreferences();
 
                         CryptKeyHandler keyHandler = new CryptKeyHandler(mContext); // START THE KEY HANDLER
 

@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.util.Base64;
 
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.Playground.MainPlaygroundActivity;
+
 import java.util.Arrays;
 
 import javax.crypto.Cipher;
@@ -15,6 +17,7 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.CIPHER_ALGO;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.PLAYGROUIND_ALGO;
 
 public class CryptContent
 {
@@ -27,13 +30,35 @@ public class CryptContent
     public CryptContent(Context context)
     {
         mSharedPreferences = context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-        ALGO = mSharedPreferences.getString(ENCRYPTION_ALGO, "AES");
-        CipherALGO = mSharedPreferences.getString(CIPHER_ALGO, "AES/CBC/PKCS5Padding");
-
-        switch (ALGO)
+        if (context.getClass() != MainPlaygroundActivity.class)
         {
-            case "AES": IVLencgth = 16; break;
-            case "Blowfish": IVLencgth = 8; break;
+            ALGO = mSharedPreferences.getString(ENCRYPTION_ALGO, "AES");
+            CipherALGO = mSharedPreferences.getString(CIPHER_ALGO, "AES/CBC/PKCS5Padding");
+
+            switch (ALGO)
+            {
+                case "AES":
+                    IVLencgth = 16;
+                    break;
+                case "Blowfish":
+                    IVLencgth = 8;
+                    break;
+            }
+        } else
+        {
+            switch (mSharedPreferences.getString(PLAYGROUIND_ALGO, "AES - 256"))
+            {
+                case "AES = 256":
+                    ALGO = "AES";
+                    CipherALGO = "AES/CBC/PKCS5Padding";
+                    IVLencgth = 16;
+                    break;
+                case "Blowfish = 448":
+                    ALGO = "Blowfish";
+                    CipherALGO = "Blowfish/CBC/PKCS5Padding";
+                    IVLencgth = 16;
+                    break;
+            }
         }
     }
 

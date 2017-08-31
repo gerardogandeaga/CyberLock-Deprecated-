@@ -98,7 +98,7 @@
             <EditText
                 android:id="@+id/etText"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/grayD9"
                 android:gravity="top|left"
                 android:inputType="text|textMultiLine"

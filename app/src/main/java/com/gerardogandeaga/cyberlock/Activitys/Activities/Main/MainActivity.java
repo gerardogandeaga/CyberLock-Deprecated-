@@ -34,7 +34,7 @@ import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutPro
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
     // WIDGETS
-    private RelativeLayout mMemoLock, mCardLock, mLoginLock, mGalleryLock;
+    private RelativeLayout mMemoLock, mCardLock, mLoginLock, mPlayground;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
 
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.mMemoLock = (RelativeLayout) findViewById(R.id.Memo);
         this.mCardLock = (RelativeLayout) findViewById(R.id.PaymentInfo);
         this.mLoginLock = (RelativeLayout) findViewById(R.id.LoginInfo);
-        this.mGalleryLock = (RelativeLayout) findViewById(R.id.Gallery);
+        this.mPlayground = (RelativeLayout) findViewById(R.id.Playground);
 
         calculateDrawerSize();
         mDrawerLayout.addDrawerListener(mDrawerToggle);
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.mMemoLock.setOnClickListener(this);
         this.mCardLock.setOnClickListener(this);
         this.mLoginLock.setOnClickListener(this);
-        this.mGalleryLock.setOnClickListener(this);
+        this.mPlayground.setOnClickListener(this);
     }
 
     private void calculateDrawerSize()

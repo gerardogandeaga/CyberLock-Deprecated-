@@ -49,10 +49,10 @@ public class MainMemoActivity extends AppCompatActivity
         setContentView(R.layout.activity_main_memo);
         ACTIVITY_INTENT = null; // START ACTIVITY WITH EMPTY INTENT
 
-        setuplayout();
+        setupLayout();
     }
 
-    private void setuplayout()
+    private void setupLayout()
     {
         this.mMemoDatabaseAccess = MemoDatabaseAccess.getInstance(this);
 

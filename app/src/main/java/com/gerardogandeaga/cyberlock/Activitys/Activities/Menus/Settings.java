@@ -219,17 +219,11 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
 
         if (!autoSave)
         {
-            if (!mCbAutoSave.isChecked())
-            {
-                mSharedPreferences.edit().putBoolean(AUTOSAVE, true).apply();
-                mCbAutoSave.setChecked(true);
-            }
+            mSharedPreferences.edit().putBoolean(AUTOSAVE, true).apply();
+            mCbAutoSave.setChecked(true);
         } else {
-            if (mCbAutoSave.isChecked())
-            {
-                mSharedPreferences.edit().putBoolean(AUTOSAVE, false).apply();
-                mCbAutoSave.setChecked(false);
-            }
+            mSharedPreferences.edit().putBoolean(AUTOSAVE, false).apply();
+            mCbAutoSave.setChecked(false);
         }
     }
 
