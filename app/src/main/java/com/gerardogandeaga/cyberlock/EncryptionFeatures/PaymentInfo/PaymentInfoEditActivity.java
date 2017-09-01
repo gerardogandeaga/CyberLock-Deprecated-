@@ -161,63 +161,6 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_edit, menu);
-        return true;
-    }
-
-    private void onInstantCreate(Bundle bundle)
-    {
-        if (bundle != null)
-        {
-            mPaymentInfo = (PaymentInfo) bundle.get("PAYMENTINFO");
-            if (mPaymentInfo != null)
-            {
-                try
-                {
-                    String ENCDEC_KEY = (new CryptKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
-                                        this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
-
-                    CryptContent content = new CryptContent(this);
-
-                    if (!mPaymentInfo.getCardName().matches("")) { this.mEtCardName.setText(content.decryptContent(mPaymentInfo.getCardName(), ENCDEC_KEY)); } // DECRYPT
-                    if (!mPaymentInfo.getCardNumber().matches("")) { this.mEtCardNumber.setText(content.decryptContent(mPaymentInfo.getCardNumber(), ENCDEC_KEY)); } // DECRYPT
-                    if (!mPaymentInfo.getCardExpire().matches("")) { this.mEtCardExpire.setText(content.decryptContent(mPaymentInfo.getCardExpire(), ENCDEC_KEY)); } // DECRYPT
-                    if (!mPaymentInfo.getCardSecCode().matches("")) { this.mEtCardSecCode.setText(content.decryptContent(mPaymentInfo.getCardSecCode(), ENCDEC_KEY)); } // DECRYPT
-                    if (!mPaymentInfo.getQuestion1().matches("")) { this.mEtQuestion1.setText(content.decryptContent(mPaymentInfo.getQuestion1(), ENCDEC_KEY));}
-                    if (!mPaymentInfo.getQuestion2().matches("")) { this.mEtQuestion2.setText(content.decryptContent(mPaymentInfo.getQuestion2(), ENCDEC_KEY));}
-                    if (!mPaymentInfo.getAnswer1().matches("")) { this.mEtAnswer1.setText(content.decryptContent(mPaymentInfo.getAnswer1(), ENCDEC_KEY));}
-                    if (!mPaymentInfo.getAnswer2().matches("")) { this.mEtAnswer2.setText(content.decryptContent(mPaymentInfo.getAnswer2(), ENCDEC_KEY));}
-                    if (!mPaymentInfo.getNotes().matches("")) { this.mEtNotes.setText(content.decryptContent(mPaymentInfo.getNotes(), ENCDEC_KEY)); } // DECRYPT
-
-                    // SET LABEL AND CARD TYPE
-                    if (!mPaymentInfo.getLabel().matches("")) { this.mEtTag.setText(mPaymentInfo.getLabel()); }
-                    if (!mPaymentInfo.getCardType().matches("")) {
-                        int spinnerPosition = mAdapter.getPosition(mPaymentInfo.getCardType());
-                        mSpCardSelect.setSelection(spinnerPosition);
-                    }
-
-                    if (!mPaymentInfo.getDate().matches("")) {
-                        this.mTvDate.setText("Last Updated: " + mPaymentInfo.getDate());
-                    } else {
-                        this.mTvDate.setText("Last Updated: ---");
-                    }
-
-                    ENCDEC_KEY = null;
-                    System.gc();
-
-                } catch (Exception e)
-                {
-                    e.printStackTrace();
-                    Toast.makeText(this, "Error: could not set one or more text fields", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
-
     public void onSave()
     {
         PaymentInfoDatabaseAccess paymentInfoDatabaseAccess = PaymentInfoDatabaseAccess.getInstance(this);
@@ -297,12 +240,70 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         }
     }
 
-    public void onCancel()
+    private void onCancel()
     {
         ACTIVITY_INTENT = new Intent(this, MainPaymentInfoActivity.class);
         finish();
         this.startActivity(ACTIVITY_INTENT);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        return true;
+    }
+
+    private void onInstantCreate(Bundle bundle)
+    {
+        if (bundle != null)
+        {
+            mPaymentInfo = (PaymentInfo) bundle.get("PAYMENTINFO");
+            if (mPaymentInfo != null)
+            {
+                try
+                {
+                    String ENCDEC_KEY = (new CryptKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
+                            this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
+
+                    CryptContent content = new CryptContent(this);
+
+                    if (!mPaymentInfo.getCardName().matches("")) { this.mEtCardName.setText(content.decryptContent(mPaymentInfo.getCardName(), ENCDEC_KEY)); } // DECRYPT
+                    if (!mPaymentInfo.getCardNumber().matches("")) { this.mEtCardNumber.setText(content.decryptContent(mPaymentInfo.getCardNumber(), ENCDEC_KEY)); } // DECRYPT
+                    if (!mPaymentInfo.getCardExpire().matches("")) { this.mEtCardExpire.setText(content.decryptContent(mPaymentInfo.getCardExpire(), ENCDEC_KEY)); } // DECRYPT
+                    if (!mPaymentInfo.getCardSecCode().matches("")) { this.mEtCardSecCode.setText(content.decryptContent(mPaymentInfo.getCardSecCode(), ENCDEC_KEY)); } // DECRYPT
+                    if (!mPaymentInfo.getQuestion1().matches("")) { this.mEtQuestion1.setText(content.decryptContent(mPaymentInfo.getQuestion1(), ENCDEC_KEY));}
+                    if (!mPaymentInfo.getQuestion2().matches("")) { this.mEtQuestion2.setText(content.decryptContent(mPaymentInfo.getQuestion2(), ENCDEC_KEY));}
+                    if (!mPaymentInfo.getAnswer1().matches("")) { this.mEtAnswer1.setText(content.decryptContent(mPaymentInfo.getAnswer1(), ENCDEC_KEY));}
+                    if (!mPaymentInfo.getAnswer2().matches("")) { this.mEtAnswer2.setText(content.decryptContent(mPaymentInfo.getAnswer2(), ENCDEC_KEY));}
+                    if (!mPaymentInfo.getNotes().matches("")) { this.mEtNotes.setText(content.decryptContent(mPaymentInfo.getNotes(), ENCDEC_KEY)); } // DECRYPT
+
+                    // SET LABEL AND CARD TYPE
+                    if (!mPaymentInfo.getLabel().matches("")) { this.mEtTag.setText(mPaymentInfo.getLabel()); }
+                    if (!mPaymentInfo.getCardType().matches("")) {
+                        int spinnerPosition = mAdapter.getPosition(mPaymentInfo.getCardType());
+                        mSpCardSelect.setSelection(spinnerPosition);
+                    }
+
+                    if (!mPaymentInfo.getDate().matches("")) {
+                        this.mTvDate.setText("Last Updated: " + mPaymentInfo.getDate());
+                    } else {
+                        this.mTvDate.setText("Last Updated: ---");
+                    }
+
+                    ENCDEC_KEY = null;
+                    System.gc();
+
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Error: could not set one or more text fields", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
     @Override
@@ -328,6 +329,8 @@ public class PaymentInfoEditActivity extends AppCompatActivity
 
                 this.finish(); // CLEAN UP AND END
                 this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
+
+                System.gc();
             }
         } else
         {

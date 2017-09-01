@@ -1,5 +1,6 @@
 package com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class MemoEditActivity extends AppCompatActivity
     private Memo mMemo;
     // WIDGETS
     private EditText mEtMemo, mEtTag;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,7 +51,7 @@ public class MemoEditActivity extends AppCompatActivity
         this.mEtTag = (EditText) findViewById(R.id.etMemoTitle);
 
         Bundle bundle = getIntent().getExtras();
-        onInstantCreate(bundle);
+        setupActivity(bundle);
     }
 
     @Override
@@ -59,47 +61,19 @@ public class MemoEditActivity extends AppCompatActivity
 
         switch (id)
         {
-            case (R.id.action_save): onSave(); onBackPressed(); return true;
-            case (R.id.action_cancel): onCancel(); return true;
-            case android.R.id.home: onBackPressed(); return true;
+            case (R.id.action_save):
+                Toast.makeText(this, "Encrypting...", Toast.LENGTH_SHORT).show();
+                onSave();
+                onBackPressed();
+                return true;
+            case (R.id.action_cancel):
+                onCancel();
+                return true;
+            case android.R.id.home:
+                onBackPressed(); return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_edit, menu);
-        return true;
-    }
-
-    private void onInstantCreate(Bundle bundle)
-    {
-        if (bundle != null)
-        {
-            mMemo = (Memo) bundle.get("MEMO");
-            if (mMemo != null)
-            {
-                try
-                {
-                    String ENCDEC_KEY = (new CryptKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
-                            this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
-
-                    CryptContent content = new CryptContent(this);
-
-                    if (!mMemo.getLabel().matches("")) { this.mEtTag.setText(mMemo.getLabel()); } // SET LABEL
-                    if (!mMemo.getText().matches("")) { this.mEtMemo.setText(content.decryptContent(mMemo.getText(), ENCDEC_KEY)); } // PULLED DECRYPTED VALUES (STRING)
-
-                    ENCDEC_KEY = null;
-                    System.gc();
-                } catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     public void onSave()
@@ -162,11 +136,46 @@ public class MemoEditActivity extends AppCompatActivity
         }
     }
 
-    public void onCancel()
+    private void onCancel()
     {
         ACTIVITY_INTENT = new Intent(this, MainMemoActivity.class);
         this.finish();
         this.startActivity(ACTIVITY_INTENT);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        return true;
+    }
+
+    private void setupActivity(Bundle bundle)
+    {
+        if (bundle != null)
+        {
+            mMemo = (Memo) bundle.get("MEMO");
+            if (mMemo != null)
+            {
+                try
+                {
+                    String ENCDEC_KEY = (new CryptKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
+                            this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
+
+                    CryptContent content = new CryptContent(this);
+
+                    if (!mMemo.getLabel().matches("")) { this.mEtTag.setText(mMemo.getLabel()); } // SET LABEL
+                    if (!mMemo.getText().matches("")) { this.mEtMemo.setText(content.decryptContent(mMemo.getText(), ENCDEC_KEY)); } // PULLED DECRYPTED VALUES (STRING)
+
+                    ENCDEC_KEY = null;
+                    System.gc();
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
@@ -193,6 +202,8 @@ public class MemoEditActivity extends AppCompatActivity
 
                 this.finish(); // CLEAN UP AND END
                 this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
+
+                System.gc();
             }
         } else
         {

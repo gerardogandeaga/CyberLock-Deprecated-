@@ -23,6 +23,7 @@ import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
 import com.gerardogandeaga.cyberlock.Encryption.CryptKeyHandler;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MainMemoActivity;
 import com.gerardogandeaga.cyberlock.R;
 
 import java.io.ByteArrayOutputStream;
@@ -78,7 +79,7 @@ public class LoginInfoEditActivity extends AppCompatActivity
         Button btnUploadImage = (Button) findViewById(R.id.btnUploadImage);
 
         Bundle bundle = getIntent().getExtras();
-        onInstantCreate(bundle);
+        setupActivity(bundle);
 
         btnUploadImage.setOnClickListener(new View.OnClickListener()
         {
@@ -97,63 +98,20 @@ public class LoginInfoEditActivity extends AppCompatActivity
 
         switch (id)
         {
-            case (R.id.action_save): onSave(); onBackPressed(); return true;
-            case (R.id.action_cancel): onCancel(); return true;
-            case android.R.id.home: onBackPressed(); return true;
+            case (R.id.action_save):
+                Toast.makeText(this, "Encrypting...", Toast.LENGTH_SHORT).show();
+                onSave();
+                onBackPressed();
+                return true;
+            case (R.id.action_cancel):
+                onCancel();
+                return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_edit, menu);
-        return true;
-    }
-
-    private void onInstantCreate(Bundle bundle)
-    {
-        if (bundle != null)
-        {
-            mLoginInfo = (LoginInfo) bundle.get("LOGININFO");
-            if (mLoginInfo != null)
-            {
-                try
-                {
-                    String ENCDEC_KEY = (new CryptKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
-                            this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
-
-                    CryptContent content = new CryptContent(this);
-                    // DECRYPT CONTENT
-                    if (!mLoginInfo.getUrl().matches("")) { this.mEtUrl.setText(content.decryptContent(mLoginInfo.getUrl(), ENCDEC_KEY)); }
-                    if (!mLoginInfo.getUsername().matches("")) { this.mEtUsername.setText(content.decryptContent(mLoginInfo.getUsername(), ENCDEC_KEY)); }
-                    if (!mLoginInfo.getEmail().matches("")) { this.mEtEmail.setText(content.decryptContent(mLoginInfo.getEmail(), ENCDEC_KEY));}
-                    if (!mLoginInfo.getPassword().matches("")) { this.mEtPassword.setText(content.decryptContent(mLoginInfo.getPassword(), ENCDEC_KEY)); }
-                    if (!mLoginInfo.getQuestion1().matches("")) { this.mEtQuestion1.setText(content.decryptContent(mLoginInfo.getQuestion1(), ENCDEC_KEY));}
-                    if (!mLoginInfo.getQuestion2().matches("")) { this.mEtQuestion2.setText(content.decryptContent(mLoginInfo.getQuestion2(), ENCDEC_KEY));}
-                    if (!mLoginInfo.getAnswer1().matches("")) { this.mEtAnswer1.setText(content.decryptContent(mLoginInfo.getAnswer1(), ENCDEC_KEY));}
-                    if (!mLoginInfo.getAnswer2().matches("")) { this.mEtAnswer2.setText(content.decryptContent(mLoginInfo.getAnswer2(), ENCDEC_KEY));}
-                    if (!mLoginInfo.getNotes().matches("")) { this.mEtNotes.setText(content.decryptContent(mLoginInfo.getNotes(), ENCDEC_KEY)); }
-
-                    if (!mLoginInfo.getLabel().matches("")) { this.mEtTag.setText(mLoginInfo.getLabel()); }
-                    if(mLoginInfo.getImage() != null) { this.mImgImage.setImageDrawable(mLoginInfo.setImageButton(mLoginInfo)); }
-                    if (!mLoginInfo.getDate().matches("")) {
-                        this.mTvDate.setText("Last Updated: " + mLoginInfo.getDate());
-                    } else {
-                        this.mTvDate.setText("Last Updated: ---");
-                    }
-
-                    ENCDEC_KEY = null;
-                    System.gc();
-                } catch (Exception e)
-                {
-                    e.printStackTrace();
-                    Toast.makeText(this, "Error: could not set one or more text fields", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
     }
 
     // IMAGE PROCESSING TO VISUALS IN THE MAIN ACTIVITY LOGIN //
@@ -286,9 +244,62 @@ public class LoginInfoEditActivity extends AppCompatActivity
         }
     }
 
-    public void onCancel()
+    private void onCancel()
     {
-        onBackPressed();
+        ACTIVITY_INTENT = new Intent(this, MainMemoActivity.class);
+        this.finish();
+        this.startActivity(ACTIVITY_INTENT);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        return true;
+    }
+
+    private void setupActivity(Bundle bundle)
+    {
+        if (bundle != null)
+        {
+            mLoginInfo = (LoginInfo) bundle.get("LOGININFO");
+            if (mLoginInfo != null)
+            {
+                try
+                {
+                    String ENCDEC_KEY = (new CryptKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
+                            this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
+
+                    CryptContent content = new CryptContent(this);
+                    // DECRYPT CONTENT
+                    if (!mLoginInfo.getUrl().matches("")) { this.mEtUrl.setText(content.decryptContent(mLoginInfo.getUrl(), ENCDEC_KEY)); }
+                    if (!mLoginInfo.getUsername().matches("")) { this.mEtUsername.setText(content.decryptContent(mLoginInfo.getUsername(), ENCDEC_KEY)); }
+                    if (!mLoginInfo.getEmail().matches("")) { this.mEtEmail.setText(content.decryptContent(mLoginInfo.getEmail(), ENCDEC_KEY));}
+                    if (!mLoginInfo.getPassword().matches("")) { this.mEtPassword.setText(content.decryptContent(mLoginInfo.getPassword(), ENCDEC_KEY)); }
+                    if (!mLoginInfo.getQuestion1().matches("")) { this.mEtQuestion1.setText(content.decryptContent(mLoginInfo.getQuestion1(), ENCDEC_KEY));}
+                    if (!mLoginInfo.getQuestion2().matches("")) { this.mEtQuestion2.setText(content.decryptContent(mLoginInfo.getQuestion2(), ENCDEC_KEY));}
+                    if (!mLoginInfo.getAnswer1().matches("")) { this.mEtAnswer1.setText(content.decryptContent(mLoginInfo.getAnswer1(), ENCDEC_KEY));}
+                    if (!mLoginInfo.getAnswer2().matches("")) { this.mEtAnswer2.setText(content.decryptContent(mLoginInfo.getAnswer2(), ENCDEC_KEY));}
+                    if (!mLoginInfo.getNotes().matches("")) { this.mEtNotes.setText(content.decryptContent(mLoginInfo.getNotes(), ENCDEC_KEY)); }
+
+                    if (!mLoginInfo.getLabel().matches("")) { this.mEtTag.setText(mLoginInfo.getLabel()); }
+                    if(mLoginInfo.getImage() != null) { this.mImgImage.setImageDrawable(mLoginInfo.setImageButton(mLoginInfo)); }
+                    if (!mLoginInfo.getDate().matches("")) {
+                        this.mTvDate.setText("Last Updated: " + mLoginInfo.getDate());
+                    } else {
+                        this.mTvDate.setText("Last Updated: ---");
+                    }
+
+                    ENCDEC_KEY = null;
+                    System.gc();
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Error: could not set one or more text fields", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE" //
@@ -315,6 +326,8 @@ public class LoginInfoEditActivity extends AppCompatActivity
 
                 this.finish(); // CLEAN UP AND END
                 this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
+
+                System.gc();
             }
         } else
         {

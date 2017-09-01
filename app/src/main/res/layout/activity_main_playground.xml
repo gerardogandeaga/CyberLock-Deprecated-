@@ -23,8 +23,9 @@
         android:background="@color/gray8F"
         android:fontFamily="monospace"
         android:padding="5dp"
-        android:text="Text Encryptor"
+        android:text="{ Text Encryption }"
         android:textAlignment="center"
+        android:textAllCaps="true"
         android:textSize="20dp"
         android:textStyle="bold"/>
 
@@ -32,9 +33,8 @@
         android:id="@+id/Data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_heightPercent="50%"
-        android:padding="10dp"
-        android:layout_below="@+id/tvCrypt">
+        android:layout_below="@+id/tvCrypt"
+        app:layout_heightPercent="50%">
 
         <EditText
             android:id="@+id/etCryptPassword"
@@ -44,12 +44,13 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/tvCrypt"
             android:background="@color/grayB4"
             android:ems="10"
             android:hint="Key ( Password )"
             android:inputType="text"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <LinearLayout
             android:id="@+id/SEPERATOR1"
@@ -75,7 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/grayB4"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="monospace"
                     android:gravity="top|left"
                     android:hint="Plain Text Input"
                     android:inputType="textMultiLine"
@@ -97,17 +98,15 @@
                 android:fillViewport="true"
                 app:layout_heightPercent="50%">
 
-                <EditText
-                    android:id="@+id/etCryptTextOutput"
+                <TextView
+                    android:id="@+id/tvCryptTextOutput"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@color/grayB4"
-                    android:fontFamily="sans-serif"
-                    android:gravity="top|left"
-                    android:hint="Encrypted Output"
-                    android:inputType="textMultiLine"
+                    android:fontFamily="monospace"
                     android:padding="5dp"
-                    android:singleLine="false"/>
+                    android:text="Encrypted Output"
+                    android:textSize="18sp"/>
             </ScrollView>
 
         </android.support.percent.PercentRelativeLayout>

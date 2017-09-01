@@ -5,60 +5,38 @@ import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.util.Base64;
 
-import com.gerardogandeaga.cyberlock.EncryptionFeatures.Playground.MainPlaygroundActivity;
-
 import java.util.Arrays;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import static com.gerardogandeaga.cyberlock.Supports.Globals.CIPHER_ALGO;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.PLAYGROUIND_ALGO;
 
 public class CryptContent
 {
     // DATA
     private static String ALGO, CipherALGO;
-    private int IVLencgth;
+    private int IVLength;
     // STORED SETTINGS
     private SharedPreferences mSharedPreferences;
 
     public CryptContent(Context context)
     {
         mSharedPreferences = context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-        if (context.getClass() != MainPlaygroundActivity.class)
-        {
-            ALGO = mSharedPreferences.getString(ENCRYPTION_ALGO, "AES");
-            CipherALGO = mSharedPreferences.getString(CIPHER_ALGO, "AES/CBC/PKCS5Padding");
+        ALGO = mSharedPreferences.getString(ENCRYPTION_ALGO, "AES");
+        CipherALGO = ALGO + "/CBC/PKCS5Padding";
 
-            switch (ALGO)
-            {
-                case "AES":
-                    IVLencgth = 16;
-                    break;
-                case "Blowfish":
-                    IVLencgth = 8;
-                    break;
-            }
-        } else
+        switch (ALGO)
         {
-            switch (mSharedPreferences.getString(PLAYGROUIND_ALGO, "AES - 256"))
-            {
-                case "AES = 256":
-                    ALGO = "AES";
-                    CipherALGO = "AES/CBC/PKCS5Padding";
-                    IVLencgth = 16;
-                    break;
-                case "Blowfish = 448":
-                    ALGO = "Blowfish";
-                    CipherALGO = "Blowfish/CBC/PKCS5Padding";
-                    IVLencgth = 16;
-                    break;
-            }
+            case "AES":
+                IVLength = 16;
+                break;
+            case "Blowfish":
+                IVLength = 8;
+                break;
         }
     }
 
@@ -77,7 +55,7 @@ public class CryptContent
                 Cipher cipher = Cipher.getInstance(CipherALGO);
                 cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec); // START CIPHER AND SET IT TO ENCRYPT MODE
 
-                byte[] ivByteVal = Arrays.copyOfRange(cipher.getIV(), 0, IVLencgth); // GET IV OF CIPHER -> LENGTH DICTATED BY ALGORITHM
+                byte[] ivByteVal = Arrays.copyOfRange(cipher.getIV(), 0, IVLength); // GET IV OF CIPHER -> LENGTH DICTATED BY ALGORITHM
 
                 byte[] encryptedTextByteVal = cipher.doFinal(dataToEncrypt.getBytes()); // ENCRYPT TEXT
 
@@ -87,7 +65,8 @@ public class CryptContent
 
                 System.out.println("encryptContent: ENCRYPT DONE...");
                 return Base64.encodeToString(combinedByteVal, FLAGS);
-            } else {
+            } else
+            {
                 return ""; // RETURN NOTHING
             }
         } catch (Exception e)
@@ -108,8 +87,8 @@ public class CryptContent
             System.out.println("decryptContent: DECRYPT STARTING...");
             byte[] encryptedCombinedBytes = Base64.decode(dataToDecrypt, FLAGS);
 
-            byte[] ivByteVal = Arrays.copyOfRange(encryptedCombinedBytes, 0, IVLencgth); // "BREAK" BYTES TO GET IV BYTES ONLY
-            byte[] encryptedTextByteVal = Arrays.copyOfRange(encryptedCombinedBytes, IVLencgth, encryptedCombinedBytes.length); // "BREAK" BYTES TO GET CIPHER TEXT BYTES ONLY
+            byte[] ivByteVal = Arrays.copyOfRange(encryptedCombinedBytes, 0, IVLength); // "BREAK" BYTES TO GET IV BYTES ONLY
+            byte[] encryptedTextByteVal = Arrays.copyOfRange(encryptedCombinedBytes, IVLength, encryptedCombinedBytes.length); // "BREAK" BYTES TO GET CIPHER TEXT BYTES ONLY
 
             byte[] encryptedPassword = Base64.decode(symmetricKey, FLAGS);
 

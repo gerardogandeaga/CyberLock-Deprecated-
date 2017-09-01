@@ -2,12 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group>
+    <item
+        android:id="@+id/acCryptAction"
+        android:icon="@drawable/ic_action_crypt"
+        app:showAsAction="always"
+        android:title="Encrypt"/>
+
+    <item
+        android:id="@+id/acClipboardAction"
+        android:icon="@drawable/ic_action_clipboard"
+        app:showAsAction="always"
+        android:title="Copy Output"/>
+
+    <group
+        android:checkableBehavior="single">
+
         <item
-            android:id="@+id/EncryptText"
+            android:id="@+id/EncryptMode"
             android:title="Encryption Mode"/>
         <item
-            android:id="@+id/DecryptText"
+            android:id="@+id/DecryptMode"
             android:title="Decryption Mode"/>
 
     </group>
@@ -21,10 +35,10 @@
                 android:checkableBehavior="single">
 
                 <item
-                    android:id="@+id/action_AES256"
+                    android:id="@+id/acAES256"
                     android:title="AES - 256"/>
                 <item
-                    android:id="@+id/action_Blowfish448"
+                    android:id="@+id/acBlowfish448"
                     android:title="Blowfish - 448"/>
             </group>
         </menu>

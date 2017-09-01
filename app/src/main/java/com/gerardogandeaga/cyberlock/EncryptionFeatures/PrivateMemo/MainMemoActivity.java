@@ -52,36 +52,6 @@ public class MainMemoActivity extends AppCompatActivity
         setupLayout();
     }
 
-    private void setupLayout()
-    {
-        this.mMemoDatabaseAccess = MemoDatabaseAccess.getInstance(this);
-
-        // ACTION BAR TITLE AND BACK BUTTON
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Memo Lock");
-
-        this.mListView = (ListView) findViewById(R.id.listView);
-        this.mFabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
-
-        this.mFabAdd.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                onAddClicked();
-            }
-        });
-        this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {  }
-        });
-    }
-
     @Override
     public void onResume() // FIRE UP THE DATABASE
     {
@@ -143,6 +113,19 @@ public class MainMemoActivity extends AppCompatActivity
         }.execute();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) // ACTION BAR BACK BUTTON RESPONSE
+    {
+        switch (item.getItemId())
+        {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private class MemoAdapter extends ArrayAdapter<Memo>
     {
         private MemoAdapter(Context context, List<Memo> objects)
@@ -190,19 +173,6 @@ public class MainMemoActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) // ACTION BAR BACK BUTTON RESPONSE
-    {
-        switch (item.getItemId())
-        {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void progressBar()
     {
         mProgressDialog = new ProgressDialog(this);
@@ -210,6 +180,36 @@ public class MainMemoActivity extends AppCompatActivity
         mProgressDialog.setProgressStyle(mProgressDialog.STYLE_SPINNER);
         mProgressDialog.setCancelable(false);
         mProgressDialog.show();
+    }
+
+    private void setupLayout()
+    {
+        this.mMemoDatabaseAccess = MemoDatabaseAccess.getInstance(this);
+
+        // ACTION BAR TITLE AND BACK BUTTON
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Memo Lock");
+
+        this.mListView = (ListView) findViewById(R.id.listView);
+        this.mFabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
+
+        this.mFabAdd.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                onAddClicked();
+            }
+        });
+        this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {  }
+        });
     }
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
@@ -225,6 +225,8 @@ public class MainMemoActivity extends AppCompatActivity
                 ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
                 this.finish(); // CLEAN UP AND END
                 this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
+
+                System.gc();
             }
         } else
         {

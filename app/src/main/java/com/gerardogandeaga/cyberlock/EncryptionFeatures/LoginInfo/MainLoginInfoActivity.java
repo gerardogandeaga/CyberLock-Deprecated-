@@ -229,6 +229,8 @@ public class MainLoginInfoActivity extends AppCompatActivity
                 ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
                 this.finish(); // CLEAN UP AND END
                 this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
+
+                System.gc();
             }
         } else
         {

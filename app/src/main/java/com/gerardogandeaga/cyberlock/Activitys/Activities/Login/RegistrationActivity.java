@@ -24,13 +24,11 @@ import static com.gerardogandeaga.cyberlock.R.id.input2;
 import static com.gerardogandeaga.cyberlock.R.id.input3;
 import static com.gerardogandeaga.cyberlock.R.id.input4;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.CIPHER_ALGO;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.PIN;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.PLAYGROUIND_ALGO;
 
 public class RegistrationActivity extends AppCompatActivity implements  View.OnClickListener
 {
@@ -212,8 +210,6 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
     private void setUpSharedPreferences()
     {
         mSharedPreferences.edit().putString(ENCRYPTION_ALGO, "AES").apply();
-        mSharedPreferences.edit().putString(CIPHER_ALGO, "AES/CBC/PKCS5Padding").apply();
-        mSharedPreferences.edit().putString(PLAYGROUIND_ALGO, "AES - 256").apply();
     }
     // -----------------------------
 

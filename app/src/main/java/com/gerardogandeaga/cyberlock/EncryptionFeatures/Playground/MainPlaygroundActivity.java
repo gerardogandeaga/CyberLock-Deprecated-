@@ -1,5 +1,7 @@
 package com.gerardogandeaga.cyberlock.EncryptionFeatures.Playground;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,10 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
+import com.gerardogandeaga.cyberlock.Encryption.CryptPlayground;
 import com.gerardogandeaga.cyberlock.R;
 
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
@@ -31,8 +35,13 @@ public class MainPlaygroundActivity extends AppCompatActivity
     private String ALGO;
 
     // WIDGETS
-    private TextView mTvCrypt;
-    private EditText mEtCryptPassword, mEtCryptTextInput, mEtCryptTextOutput;
+    private TextView mTvCrypt, mTvCryptTextOutput;
+    private EditText mEtCryptPassword, mEtCryptTextInput;
+    private Menu mMenu;
+    private MenuItem
+            mImCrypt,                        // OPERATION
+            mImEncryptMode, mImDecryptMode,  // MODE
+            mImAES256, mImBlowfish448;       // ALGORITHM
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -44,45 +53,38 @@ public class MainPlaygroundActivity extends AppCompatActivity
         setupActivity();
     }
 
-    private void setupActivity()
-    {
-        mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-
-        // ACTION BAR TITLE AND BACK BUTTON
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Playground");
-
-        mTvCrypt = (TextView) findViewById(R.id.tvCrypt);
-
-        mEtCryptPassword = (EditText) findViewById(R.id.etCryptPassword);
-        mEtCryptTextInput = (EditText) findViewById(R.id.etCryptTextInput);
-        mEtCryptTextOutput = (EditText) findViewById(R.id.etCryptTextOutput);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) // ACTION BAR BACK BUTTON RESPONSE
     {
         switch (item.getItemId())
         {
+            // ACTIONS BUTTONS
+            case R.id.acCryptAction:
+                onCryptButton();
+                break;
+            case R.id.acClipboardAction:
+                copyOutput();
+                break;
+
             // CRYPT MODES
-            case R.id.EncryptText:
+            case R.id.EncryptMode:
                 CryptState = 0;
                 switchCryptMode();
                 break;
-            case R.id.DecryptText:
+            case R.id.DecryptMode:
                 CryptState = 1;
                 switchCryptMode();
                 break;
             // ALGO METHODS
-            case R.id.action_AES256:
+            case R.id.acAES256:
                 mSharedPreferences.edit().putString(PLAYGROUIND_ALGO, "AES - 256").apply();
+                mImAES256.setChecked(true);
+                Toast.makeText(this, "Algorithm Set to AES", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.action_Blowfish448:
+            case R.id.acBlowfish448:
                 mSharedPreferences.edit().putString(PLAYGROUIND_ALGO, "Blowfish - 448").apply();
+                mImBlowfish448.setChecked(true);
+                Toast.makeText(this, "Algorithm Set to Blowfish", Toast.LENGTH_SHORT).show();
                 break;
 
             // Respond to the action bar's Up/Home button
@@ -95,21 +97,119 @@ public class MainPlaygroundActivity extends AppCompatActivity
 
     private void switchCryptMode()
     {
-        if (CryptState == 0)
+        if (CryptState == 0) // ENCRYPT MODE
         {
-            mTvCrypt.setText("TEXT ENCRYPTOR");
+            mTvCrypt.setText("{ TEXT ENCRYPTION }");
+            mEtCryptTextInput.getText().clear();
+
             mEtCryptTextInput.setHint("Plain Text Input");
-            mEtCryptTextOutput.setHint("Encrypted Output");
-        } else if (CryptState == 1)
+            mTvCryptTextOutput.setText("Encrypted Output");
+
+            mImCrypt.setTitle("Encrypt");
+            mImEncryptMode.setChecked(true);
+        } else if (CryptState == 1) // DECRYPT MODE
         {
-            mTvCrypt.setText("TEXT DECRYPTOR");
+            mTvCrypt.setText("{ TEXT DECRYPTION }");
+            mEtCryptTextInput.getText().clear();
+
             mEtCryptTextInput.setHint("Encrypted Text Input");
-            mEtCryptTextOutput.setHint("Decrypted Output");
+            mTvCryptTextOutput.setText("Decrypted Output");
+
+            mImCrypt.setTitle("Decrypt");
+            mImDecryptMode.setChecked(true);
         }
     }
 
     private void onCryptButton()
     {
+        if (CryptState == 0)
+        {
+            if (!mEtCryptPassword.getText().toString().matches(""))
+            {
+                String key = mEtCryptPassword.getText().toString();
+                CryptPlayground playgroundCrypt = new CryptPlayground(this);
+
+                if (!mEtCryptTextInput.getText().toString().matches(""))
+                {
+                    String plainText = mEtCryptTextInput.getText().toString();
+                    try {
+                        String encryptedText = playgroundCrypt.encrypt(plainText, key);
+
+                        mTvCryptTextOutput.setText(encryptedText);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(this, "Something Went Wrong...", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(this, "Please Input Text", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "Please Input A Password", Toast.LENGTH_SHORT).show();
+            }
+        } else
+        if (CryptState == 1)
+        {
+            if (!mEtCryptPassword.getText().toString().matches(""))
+            {
+                String key = mEtCryptPassword.getText().toString();
+                CryptPlayground playgroundCrypt = new CryptPlayground(this);
+
+                if (!mEtCryptTextInput.getText().toString().matches(""))
+                {
+                    String plainText = mEtCryptTextInput.getText().toString();
+                    try {
+                        String decryptedText = playgroundCrypt.decrypt(plainText, key);
+
+                        mTvCryptTextOutput.setText(decryptedText);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(this, "Please Input Encrypted Text", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "Please Input A Valid Password", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void copyOutput()
+    {
+        if (!mTvCryptTextOutput.getText().toString().matches(""))
+        {
+            String clippedText = mTvCryptTextOutput.getText().toString();
+
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("", clippedText);
+            clipboard.setPrimaryClip(clip);
+
+            Toast.makeText(this, "Output Copied To Clipboard", Toast.LENGTH_SHORT).show();
+        } else
+        {
+            Toast.makeText(this, "Nothing To Copy", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // CREATE INSTANCES
+    private void setupActivity()
+    {
+        mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
+        mSharedPreferences.edit().putString(PLAYGROUIND_ALGO, "AES - 256").apply();
+
+        // ACTION BAR TITLE AND BACK BUTTON
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Playground");
+
+        mTvCrypt = (TextView) findViewById(R.id.tvCrypt);
+        mTvCryptTextOutput = (TextView) findViewById(R.id.tvCryptTextOutput);
+
+        mEtCryptPassword = (EditText) findViewById(R.id.etCryptPassword);
+        mEtCryptTextInput = (EditText) findViewById(R.id.etCryptTextInput);
     }
 
     @Override
@@ -117,8 +217,20 @@ public class MainPlaygroundActivity extends AppCompatActivity
     {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_playground, menu);
+        mMenu = menu;
+
+        mImCrypt = mMenu.findItem(R.id.acCryptAction);
+        mImEncryptMode = mMenu.findItem(R.id.EncryptMode);
+        mImDecryptMode = mMenu.findItem(R.id.DecryptMode);
+        mImAES256 = mMenu.findItem(R.id.acAES256);
+        mImBlowfish448 = mMenu.findItem(R.id.acBlowfish448);
+
+        mImEncryptMode.setChecked(true);
+        mImAES256.setChecked(true);
+
         return true;
     }
+    // ----------------
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
     @Override
@@ -133,6 +245,8 @@ public class MainPlaygroundActivity extends AppCompatActivity
                 ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
                 this.finish(); // CLEAN UP AND END
                 this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
+
+                System.gc();
             }
         } else
         {

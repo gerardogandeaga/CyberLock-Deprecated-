@@ -16,62 +16,44 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.PLAYGROUIND_ALGO;
 
-public class CryptKeyHandler
+public class CryptPlayground
 {
-    private static final int iterations = 10000;
+    private static final int iterations = 5000;
     private static int keylength, byteKeyLength;
     private static final String KeyALGO = "PBKDF2WithHmacSHA1";
     private static String ALGO, CipherALGO;
-    private int IVLencgth;
+    private int IVLength;
 
     private SharedPreferences mSharedPreferences;
 
-    public CryptKeyHandler(Context context)
+    public CryptPlayground(Context context)
     {
         mSharedPreferences = context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-        ALGO = mSharedPreferences.getString(ENCRYPTION_ALGO, "AES");
-        CipherALGO = ALGO + "/CBC/PKCS5Padding";
 
-        switch (ALGO)
+        switch (mSharedPreferences.getString(PLAYGROUIND_ALGO, "AES - 256"))
         {
-            case "AES":
-                IVLencgth = 16;
-                byteKeyLength = 32;
+            case "AES - 256":
+                ALGO = "AES";
+                CipherALGO = ALGO + "/CBC/PKCS5Padding";
                 keylength = 256;
+                IVLength = 16;
                 break;
-            case "Blowfish":
-                IVLencgth = 8;
-                byteKeyLength = 56;
+            case "Blowfish - 448":
+                ALGO = "Blowfish";
+                CipherALGO = ALGO + "/CBC/PKCS5Padding";
                 keylength = 448;
+                IVLength = 16;
                 break;
         }
     }
 
     // THESE FUNCTIONS GENERATE A ONE TIME RANDOM BYTE PASSWORD TO THE KEY GENERATOR (2ND FUNCTION)
-    public byte[] BYTE_KEY_GENERATE()
-    {
-        SecureRandom random = new SecureRandom();
-        byte[] KEY = new byte[byteKeyLength];
-        random.nextBytes(KEY);
-
-        /*  FUTURE KEY GENERATE REFACTOR
-
-        cryptKeyByteVal = KEY_GENERATE(KEY);
-        cryptKeyStringVal = Base64.encodeToString(cryptKeyByteVal, FLAGS);
-
-        return cryptKeyStringVal;
-
-        **Change return to String**
-         */
-
-        return KEY;
-    }
 
     @Nullable
-    public byte[] KEY_GENERATE(byte[] password)
+    public byte[] keyGenerate(byte[] password)
 //            throws NoSuchAlgorithmException, InvalidKeySpecException
     {
         try
@@ -108,7 +90,7 @@ public class CryptKeyHandler
     }
 
     @Nullable
-    public String ENCRYPTKEY(String dataToEncrypt, String key)
+    public String encrypt(String dataToEncrypt, String key)
 //            throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidParameterSpecException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException
     {
         try
@@ -121,7 +103,7 @@ public class CryptKeyHandler
             Cipher cipher = Cipher.getInstance(CipherALGO);
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec); // START CIPHER AND SET IT TO ENCRYPT MODE
 
-            byte[] ivByteVal = Arrays.copyOfRange(cipher.getIV(), 0, IVLencgth); // GET IV OF CIPHER
+            byte[] ivByteVal = Arrays.copyOfRange(cipher.getIV(), 0, IVLength); // GET IV OF CIPHER
             byte[] encryptedTextByteVal = cipher.doFinal(dataToEncrypt.getBytes()); // ENCRYPT TEXT
 
             byte[] combinedByteVal = new byte[saltByteVal.length + ivByteVal.length + encryptedTextByteVal.length]; // COMBINE THE BYTES
@@ -139,16 +121,16 @@ public class CryptKeyHandler
     }
 
     @Nullable
-    public String DECRYPTKEY(String dataToDecrypt, String key)
+    public String decrypt(String dataToDecrypt, String key)
 //            throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException
     {
         try
         {
             byte[] encryptedCombinedBytes = Base64.decode(dataToDecrypt, FLAGS);
 
-            byte[] ivByteVal = Arrays.copyOfRange(encryptedCombinedBytes, 0, IVLencgth); // "BREAK" BYTES TO GET IV BYTES ONLY
-            byte[] saltByteVal = Arrays.copyOfRange(encryptedCombinedBytes, IVLencgth, IVLencgth + 16); // "BREAK" BYTES TO GET SALT BYTES ONLY
-            byte[] encryptedTextByteVal = Arrays.copyOfRange(encryptedCombinedBytes, IVLencgth + 16, encryptedCombinedBytes.length); // "BREAK" BYTES TO GET CIPHER TEXT BYTES ONLY
+            byte[] ivByteVal = Arrays.copyOfRange(encryptedCombinedBytes, 0, IVLength); // "BREAK" BYTES TO GET IV BYTES ONLY
+            byte[] saltByteVal = Arrays.copyOfRange(encryptedCombinedBytes, IVLength, IVLength + 16); // "BREAK" BYTES TO GET SALT BYTES ONLY
+            byte[] encryptedTextByteVal = Arrays.copyOfRange(encryptedCombinedBytes, IVLength + 16, encryptedCombinedBytes.length); // "BREAK" BYTES TO GET CIPHER TEXT BYTES ONLY
 
             byte[] encryptedPassword = getSymmetricKey(key, saltByteVal, iterations, keylength);
 
