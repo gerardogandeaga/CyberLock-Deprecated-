@@ -34,6 +34,7 @@ import static com.gerardogandeaga.cyberlock.R.id.input4;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.PIN;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
@@ -268,12 +269,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     final String decryptedPulledPin = new CryptKeyHandler(mContext).DECRYPTKEY(mSharedPreferences.getString(PIN, null), mPin);
                     final String loginPinHash = SHA256PinHash.hashFunction(mPin, Arrays.copyOfRange(Base64.decode(decryptedPulledPin, FLAGS), 0, 128));
 
-                    System.out.println("LOGIN INPUT: " + loginPinHash);
-                    System.out.println("CACHED HASH: " + decryptedPulledPin);
+//                    System.out.println("LOGIN INPUT: " + loginPinHash);
+//                    System.out.println("CACHED HASH: " + decryptedPulledPin);
 
-                    if (decryptedPulledPin.equals(loginPinHash)) /// TEST PERIODICALLY INPUTED PIN AGAINST CACHED PIN
+                    if (decryptedPulledPin.equals(loginPinHash)) /// TEST PERIODICALLY INPUTTED PIN AGAINST CACHED PIN
                     {
                         mSharedPreferences.edit().putString(TEMP_PIN, mPin).apply();
+                        MASTER_KEY = new CryptKeyHandler(mContext).DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), mPin);
+                        System.out.println("MASTER KEY: " + MASTER_KEY);
 
                         LogoutProtocol.APP_LOGGED_IN = true; // APP LOGGED IN
 

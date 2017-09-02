@@ -1,5 +1,7 @@
 package com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo;
 
+import android.content.Context;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -18,7 +20,6 @@ public class Memo implements Serializable
     {
         this.date = new Date();
     }
-
     public Memo(long time, String label, String text)
     {
         this.date = new Date(time);
@@ -35,7 +36,6 @@ public class Memo implements Serializable
     {
         return this.label;
     }
-
     public void setLabel(String label)
     {
         this.label = label;
@@ -45,7 +45,6 @@ public class Memo implements Serializable
     {
         return date.getTime();
     }
-
     public void setTime(long time)
     {
         this.date = new Date(time);
@@ -55,17 +54,29 @@ public class Memo implements Serializable
     {
         return this.text;
     }
-
     public void setText(String text)
     {
         this.text = text;
+    }
+
+    public String getShortText(Context context, String text)
+    {
+
+        float widthSp = (context.getResources().getDisplayMetrics().widthPixels / (12 * context.getResources().getDisplayMetrics().scaledDensity));
+        int finalWidth = (int) widthSp;
+
+        String temp = text.replaceAll("\n", " ");
+        if (temp.length() > finalWidth) {
+            return temp.substring(0, finalWidth) + "...";
+        } else {
+            return temp;
+        }
     }
 
     public void setFullDisplayed(boolean fullDisplayed)
     {
         this.fullDisplayed = fullDisplayed;
     }
-
     public boolean isFullDisplayed()
     {
         return this.fullDisplayed;

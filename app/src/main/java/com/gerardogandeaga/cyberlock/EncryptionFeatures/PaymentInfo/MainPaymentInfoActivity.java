@@ -20,14 +20,15 @@ import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
+import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
+import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
 import com.gerardogandeaga.cyberlock.R;
 
 import java.util.List;
 
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 
 public class MainPaymentInfoActivity extends AppCompatActivity
 {
@@ -156,7 +157,7 @@ public class MainPaymentInfoActivity extends AppCompatActivity
                 convertView = getLayoutInflater().inflate(R.layout.layout_list_item_paymentinfo, parent, false);
             }
 
-            TextView tvLabel = (TextView) convertView.findViewById(R.id.tvTitle);
+            TextView tvLabel = (TextView) convertView.findViewById(R.id.tvLabel);
             TextView tvDate = (TextView) convertView.findViewById(R.id.tvDate);
             ImageView imgDelete = (ImageView) convertView.findViewById(R.id.imgDelete);
             ImageView imgCard = (ImageView) convertView.findViewById(R.id.imgCard);
@@ -165,8 +166,16 @@ public class MainPaymentInfoActivity extends AppCompatActivity
             final PaymentInfo paymentInfo = mPaymentInfos.get(position);
             paymentInfo.setFullDisplayed(false);
 
-            tvDate.setText("Updated:" + paymentInfo.getDate());
-            tvLabel.setText(paymentInfo.getLabel());
+            CryptContent content = new CryptContent(mContext);
+
+            String label = content.decryptContent(paymentInfo.getLabel(), MASTER_KEY);
+            String date = paymentInfo.getDate();
+
+            tvLabel.setText(label);
+            tvDate.setText(date);
+
+            label = null;
+            date = null;
 
             String cardType = paymentInfo.getCardType();
             switch (cardType)
@@ -241,24 +250,12 @@ public class MainPaymentInfoActivity extends AppCompatActivity
     public void onBackPressed()
     {
         super.onBackPressed();
-
-        if (mCountDownIsFinished)
+        if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
         {
-            if (!APP_LOGGED_IN)
-            {
-                ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
-                this.finish(); // CLEAN UP AND END
-                this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
-
-                System.gc();
-            }
-        } else
-        {
-            if (mCountDownTimer != null)
-            {
-                System.out.println("Cancel Called!");
-                mCountDownTimer.cancel();
-            }
+            ACTIVITY_INTENT = new Intent(this, MainActivity.class);
+            finish();
+            this.startActivity(ACTIVITY_INTENT);
+            overridePendingTransition(R.anim.anim_slide_inleft, R.anim.anim_slide_outright);
         }
     }
 

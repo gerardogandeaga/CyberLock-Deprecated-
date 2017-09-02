@@ -5,7 +5,7 @@
                 android:id="@+id/Content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/grayD9"
+                android:background="@drawable/clickable_background_listitem"
                 android:clickable="true"
                 android:orientation="vertical"
     >
@@ -26,11 +26,12 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/imgDelete"
         android:layout_toRightOf="@+id/imgDelete"
+        android:clickable="false"
         android:orientation="vertical"
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/tvLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -41,8 +42,22 @@
             android:fontFamily="monospace"
             android:padding="2dp"
             android:text="Label..."
-            android:textAlignment="textStart"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvMemo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/btnEdit"
+            android:layout_toLeftOf="@+id/tvDate"
+            android:layout_toRightOf="@+id/btnEdit"
+            android:background="@color/gray8F"
+            android:fontFamily="monospace"
+            android:padding="2dp"
+            android:text="Memo..."
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/tvDate"
@@ -50,14 +65,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/tvTitle"
+            android:layout_below="@+id/tvLabel"
             android:background="@color/grayB4"
             android:fontFamily="monospace"
             android:gravity="top|center_horizontal"
             android:padding="2dp"
             android:paddingRight="0dp"
             android:text="date"
-            android:textAlignment="viewStart"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="14sp"/>
     </LinearLayout>

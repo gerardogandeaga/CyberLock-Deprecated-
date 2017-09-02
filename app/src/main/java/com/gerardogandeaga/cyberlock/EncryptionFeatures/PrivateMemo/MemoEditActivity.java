@@ -1,6 +1,5 @@
 package com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,12 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
-import com.gerardogandeaga.cyberlock.Encryption.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.R;
 
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
@@ -22,17 +21,18 @@ import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutPro
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
 public class MemoEditActivity extends AppCompatActivity
 {
     // DATA
+    private CryptContent mContent;
     private Memo mMemo;
     // WIDGETS
     private EditText mEtMemo, mEtTag;
-    private ProgressDialog mProgressDialog;
+    private TextView mTvDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,6 +49,7 @@ public class MemoEditActivity extends AppCompatActivity
 
         this.mEtMemo = (EditText) findViewById(R.id.etText);
         this.mEtTag = (EditText) findViewById(R.id.etMemoTitle);
+        this.mTvDate = (TextView) findViewById(R.id.tvLastUpdated);
 
         Bundle bundle = getIntent().getExtras();
         setupActivity(bundle);
@@ -81,26 +82,15 @@ public class MemoEditActivity extends AppCompatActivity
         MemoDatabaseAccess memoDatabaseAccess = MemoDatabaseAccess.getInstance(this);
         memoDatabaseAccess.open();
 
-        String ENCDEC_KEY = (new CryptKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
-                                                      this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
-
         if ((!mEtTag.getText().toString().matches("")) || (!mEtMemo.getText().toString().matches("")))
         {
-            CryptContent content = new CryptContent(this);
-
             if (mMemo == null) // WHEN SAVING A NEW UNKNOWN MEMO
             {
                 // ADD NEW MEMO
                 Memo temp = new Memo();
 
-                temp.setText(content.encryptContent(mEtMemo.getText().toString(), ENCDEC_KEY)); // SET TEXT
-                if (!mEtTag.getText().toString().matches(""))
-                {
-                    temp.setLabel(mEtTag.getText().toString());
-                } else
-                {
-                    temp.setLabel("");
-                } // SET TAG
+                temp.setText(mContent.encryptContent(mEtMemo.getText().toString(), MASTER_KEY)); // SET TEXT
+                temp.setLabel(mContent.encryptContent(mEtTag.getText().toString(), MASTER_KEY)); // SET TAG
 
                 // SAVE NEW DATA TABLE
                 memoDatabaseAccess.save(temp);
@@ -108,29 +98,17 @@ public class MemoEditActivity extends AppCompatActivity
             {
                 // UPDATE THE MEMO
                 // SET TEXT
-                mMemo.setText(content.encryptContent(mEtMemo.getText().toString(), ENCDEC_KEY)); // SET TEXT
-                if (!mEtTag.getText().toString().matches(""))
-                {
-                    mMemo.setLabel(mEtTag.getText().toString());
-                } else
-                {
-                    mMemo.setLabel("");
-                } // SET TAG
+                mMemo.setText(mContent.encryptContent(mEtMemo.getText().toString(), MASTER_KEY)); // SET TEXT
+                mMemo.setLabel(mContent.encryptContent(mEtTag.getText().toString(), MASTER_KEY)); // SET TAG
 
                 // UPDATE DATA TABLE
                 memoDatabaseAccess.update(mMemo);
             }
 
-            ENCDEC_KEY = null;
-            System.gc(); // GARBAGE COLLECT TO TERMINATE -KEY- VARIABLE
-
             memoDatabaseAccess.close();
         } else
         {
             Toast.makeText(this, "Nothing to save", Toast.LENGTH_SHORT).show();
-
-            ENCDEC_KEY = null;
-            System.gc(); // GARBAGE COLLECT TO TERMINATE -KEY- VARIABLE
 
             memoDatabaseAccess.close();
         }
@@ -153,6 +131,7 @@ public class MemoEditActivity extends AppCompatActivity
 
     private void setupActivity(Bundle bundle)
     {
+        mContent = new CryptContent(this);
         if (bundle != null)
         {
             mMemo = (Memo) bundle.get("MEMO");
@@ -160,16 +139,18 @@ public class MemoEditActivity extends AppCompatActivity
             {
                 try
                 {
-                    String ENCDEC_KEY = (new CryptKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
-                            this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
+                    String label = mContent.decryptContent(mMemo.getLabel(), MASTER_KEY);
+                    String memo = mContent.decryptContent(mMemo.getText(), MASTER_KEY);
 
-                    CryptContent content = new CryptContent(this);
+                    if (label != null) this.mEtTag.setText(label);
+                    if (memo != null) this.mEtMemo.setText(memo);
 
-                    if (!mMemo.getLabel().matches("")) { this.mEtTag.setText(mMemo.getLabel()); } // SET LABEL
-                    if (!mMemo.getText().matches("")) { this.mEtMemo.setText(content.decryptContent(mMemo.getText(), ENCDEC_KEY)); } // PULLED DECRYPTED VALUES (STRING)
+                    if (!mMemo.getDate().matches("")) {
+                        this.mTvDate.setText("Last Updated: " + mMemo.getDate());
+                    } else {
+                        this.mTvDate.setText("Last Updated: ---");
+                    }
 
-                    ENCDEC_KEY = null;
-                    System.gc();
                 } catch (Exception e)
                 {
                     e.printStackTrace();

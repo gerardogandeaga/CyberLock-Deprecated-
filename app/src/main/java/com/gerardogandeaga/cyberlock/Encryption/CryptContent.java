@@ -73,9 +73,9 @@ public class CryptContent
         {
             System.out.println("encryptContent: ENCRYPT FAILED!...");
             e.printStackTrace();
-        }
 
-        return null;
+            return dataToEncrypt;
+        }
     }
 
     @Nullable
@@ -104,8 +104,8 @@ public class CryptContent
         {
             System.out.println("decryptContent: DECRYPT FAILED...");
             e.printStackTrace();
-        }
 
-        return null;
+            return dataToDecrypt;
+        }
     }
 }

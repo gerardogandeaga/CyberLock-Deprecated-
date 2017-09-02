@@ -50,11 +50,6 @@ public class LoginInfoDatabaseAccess
         values.put("email", loginInfo.getEmail());
         values.put("password", loginInfo.getPassword());
         values.put("notes", loginInfo.getNotes());
-        values.put("image", loginInfo.getImage());
-        values.put("question1", loginInfo.getQuestion1());
-        values.put("question2", loginInfo.getQuestion2());
-        values.put("answer1", loginInfo.getAnswer1());
-        values.put("answer2", loginInfo.getAnswer2());
 
         database.insert(LoginInfoDatabaseOpenHelper.TABLE, null, values);
     }
@@ -69,11 +64,6 @@ public class LoginInfoDatabaseAccess
         values.put("email", loginInfo.getEmail());
         values.put("password", loginInfo.getPassword());
         values.put("notes", loginInfo.getNotes());
-        values.put("image", loginInfo.getImage());
-        values.put("question1", loginInfo.getQuestion1());
-        values.put("question2", loginInfo.getQuestion2());
-        values.put("answer1", loginInfo.getAnswer1());
-        values.put("answer2", loginInfo.getAnswer2());
 
         String date = Long.toString(loginInfo.getTime());
         database.update(LoginInfoDatabaseOpenHelper.TABLE, values, "date = ?", new String[]{date});
@@ -99,13 +89,8 @@ public class LoginInfoDatabaseAccess
             String email = cursor.getString(4);
             String password = cursor.getString(5);
             String notes = cursor.getString(6);
-            byte[] image = cursor.getBlob(7);
-            String question1 = cursor.getString(8);
-            String question2 = cursor.getString(9);
-            String answer1 = cursor.getString(10);
-            String answer2 = cursor.getString(11);
 
-            loginInfos.add(new LoginInfo(time, tag,url, username, email, password, notes, image, question1, question2, answer1, answer2));
+            loginInfos.add(new LoginInfo(time, tag,url, username, email, password, notes));
             cursor.moveToNext();
         }
         cursor.close();

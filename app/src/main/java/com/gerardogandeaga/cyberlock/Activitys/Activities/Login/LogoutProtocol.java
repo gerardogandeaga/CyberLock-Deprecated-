@@ -8,6 +8,7 @@ import android.os.CountDownTimer;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DELAY_TIME;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 
 public class LogoutProtocol
 {
@@ -41,9 +42,8 @@ public class LogoutProtocol
                 mSharedPreferences = context.getSharedPreferences(DIRECTORY, context.MODE_PRIVATE);
                 mSharedPreferences.edit().remove(TEMP_PIN).apply();
 
+                MASTER_KEY = null;
                 APP_LOGGED_IN = false;
-
-                System.out.println("Timer Done!");
             }
         }.start();
     }
@@ -56,7 +56,6 @@ public class LogoutProtocol
             public void onTick(long millisUntilFinished)
             {
                 mCountDownIsFinished = false;
-                System.out.println("Tick");
             }
 
             @Override
@@ -64,8 +63,8 @@ public class LogoutProtocol
             {
                 mCountDownIsFinished = true;
 
+                MASTER_KEY = null;
                 APP_LOGGED_IN = false;
-                System.out.println("Timer Done!");
             }
         }.start();
     }
@@ -75,6 +74,7 @@ public class LogoutProtocol
         mSharedPreferences = context.getSharedPreferences(DIRECTORY, context.MODE_PRIVATE);
         mSharedPreferences.edit().remove(TEMP_PIN).apply();
 
+        MASTER_KEY = null;
         APP_LOGGED_IN = false;
     }
 }

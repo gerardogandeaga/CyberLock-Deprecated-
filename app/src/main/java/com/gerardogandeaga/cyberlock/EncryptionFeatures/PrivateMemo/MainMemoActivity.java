@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
+import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
 import com.gerardogandeaga.cyberlock.R;
 
 import java.util.List;
@@ -29,6 +30,7 @@ import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutPro
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 
 public class MainMemoActivity extends AppCompatActivity
 {
@@ -51,6 +53,8 @@ public class MainMemoActivity extends AppCompatActivity
 
         setupLayout();
     }
+
+    // TODO SET CONTENT TO VARIABLES, DECRYPT AND SET WIDGETS; ALL IN THE ADAPTER
 
     @Override
     public void onResume() // FIRE UP THE DATABASE
@@ -89,8 +93,6 @@ public class MainMemoActivity extends AppCompatActivity
             protected void onPreExecute()
             {
                 super.onPreExecute();
-
-                progressBar();
             }
 
             @Override
@@ -107,8 +109,6 @@ public class MainMemoActivity extends AppCompatActivity
             protected void onPostExecute(Void aVoid)
             {
                 super.onPostExecute(aVoid);
-
-                mProgressDialog.dismiss();
             }
         }.execute();
     }
@@ -141,22 +141,49 @@ public class MainMemoActivity extends AppCompatActivity
                 convertView = getLayoutInflater().inflate(R.layout.layout_list_item_memo, parent, false);
             }
 
-            TextView tvDate = (TextView) convertView.findViewById(R.id.tvDate);
-            TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
-            ImageView imgDelete = (ImageView) convertView.findViewById(R.id.imgDelete);
-            RelativeLayout reContent = (RelativeLayout) convertView.findViewById(R.id.Content);
+            final RelativeLayout Content = (RelativeLayout) convertView.findViewById(R.id.Content);
+            final TextView tvLabel = (TextView) convertView.findViewById(R.id.tvLabel);
+            final TextView tvMemo = (TextView) convertView.findViewById(R.id.tvMemo);
+            final TextView tvDate = (TextView) convertView.findViewById(R.id.tvDate);
+            final ImageView imgDelete = (ImageView) convertView.findViewById(R.id.imgDelete);
 
             final Memo memo = mMemos.get(position);
             memo.setFullDisplayed(false);
-            tvDate.setText(memo.getDate());
-            tvTitle.setText(memo.getLabel());
 
-            reContent.setOnClickListener(new View.OnClickListener()
+            CryptContent content = new CryptContent(mContext);
+
+            String label = content.decryptContent(memo.getLabel(), MASTER_KEY);
+            final String text = content.decryptContent(memo.getText(), MASTER_KEY);
+
+            String date = memo.getDate();
+
+            tvLabel.setText(label);
+            tvMemo.setText(memo.getShortText(mContext, text));
+            tvDate.setText(date);
+
+            Content.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
                     onEditClicked(memo);
+                }
+            });
+
+            Content.setOnLongClickListener(new View.OnLongClickListener()
+            {
+                @Override
+                public boolean onLongClick(View v)
+                {
+                    if (memo.isFullDisplayed()) {
+                        tvMemo.setText(memo.getShortText(mContext, text));
+                        memo.setFullDisplayed(false);
+                    } else {
+                        tvMemo.setText(text);
+                        memo.setFullDisplayed(true);
+                    }
+
+                    return false;
                 }
             });
 
@@ -171,15 +198,6 @@ public class MainMemoActivity extends AppCompatActivity
 
             return convertView;
         }
-    }
-
-    private void progressBar()
-    {
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setMessage("Loading...");
-        mProgressDialog.setProgressStyle(mProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
     }
 
     private void setupLayout()

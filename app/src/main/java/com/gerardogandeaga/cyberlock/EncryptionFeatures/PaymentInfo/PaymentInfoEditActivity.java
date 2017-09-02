@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
-import com.gerardogandeaga.cyberlock.Encryption.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.R;
 
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
@@ -28,18 +27,19 @@ import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutPro
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
 public class PaymentInfoEditActivity extends AppCompatActivity
 {
     // DATA
+    private CryptContent mContent;
     private PaymentInfo mPaymentInfo;
     private String mCardType;
     private ArrayAdapter<CharSequence> mAdapter;
     // WIDGETS
-    private EditText mEtTag, mEtCardName, mEtCardNumber, mEtCardExpire, mEtCardSecCode, mEtNotes, mEtQuestion1, mEtQuestion2, mEtAnswer1, mEtAnswer2;
+    private EditText mEtLabel, mEtCardName, mEtCardNumber, mEtCardExpire, mEtCardSecCode, mEtNotes, mEtQuestion1, mEtQuestion2, mEtAnswer1, mEtAnswer2;
     private TextView mTvDate;
     private Spinner mSpCardSelect;
 
@@ -56,7 +56,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Card Edit");
 
-        this.mEtTag = (EditText) findViewById(R.id.etTag);
+        this.mEtLabel = (EditText) findViewById(R.id.etTag);
         this.mEtCardName = (EditText) findViewById(R.id.etCardName);
         this.mEtCardNumber = (EditText) findViewById(R.id.etCardNumber);
         this.mEtCardExpire = (EditText) findViewById(R.id.etCardExpire);
@@ -75,7 +75,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         mSpCardSelect.setAdapter(mAdapter);
 
         Bundle bundle = getIntent().getExtras();
-        onInstantCreate(bundle);
+        setupActivity(bundle);
 
         mEtCardNumber.addTextChangedListener(new TextWatcher()
         {
@@ -166,12 +166,8 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         PaymentInfoDatabaseAccess paymentInfoDatabaseAccess = PaymentInfoDatabaseAccess.getInstance(this);
         paymentInfoDatabaseAccess.open();
 
-        String ENCDEC_KEY = (new CryptKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
-                                                      this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
-
-        if ((!mEtTag.getText().toString().matches("")) || (!mEtCardName.getText().toString().matches("")) || (!mEtCardNumber.getText().toString().matches("")) || (!mEtCardExpire.getText().toString().matches("")) || (!mEtCardSecCode.getText().toString().matches("")) || (!mEtNotes.getText().toString().matches("")) || (!mEtQuestion1.getText().toString().matches("")) || (!mEtQuestion2.getText().toString().matches("")) || (!mEtAnswer1.getText().toString().matches("")) || (!mEtAnswer2.getText().toString().matches("")))
+        if ((!mEtLabel.getText().toString().matches("")) || (!mEtCardName.getText().toString().matches("")) || (!mEtCardNumber.getText().toString().matches("")) || (!mEtCardExpire.getText().toString().matches("")) || (!mEtCardSecCode.getText().toString().matches("")) || (!mEtNotes.getText().toString().matches("")) || (!mEtQuestion1.getText().toString().matches("")) || (!mEtQuestion2.getText().toString().matches("")) || (!mEtAnswer1.getText().toString().matches("")) || (!mEtAnswer2.getText().toString().matches("")))
         {
-            CryptContent content = new CryptContent(this);
 
             if (mPaymentInfo == null) // WHEN SAVING A NEW UNKNOWN MEMO
             {
@@ -179,18 +175,18 @@ public class PaymentInfoEditActivity extends AppCompatActivity
                 PaymentInfo temp = new PaymentInfo();
 
                 // SET INFO
-                temp.setCardName(content.encryptContent(mEtCardName.getText().toString(), ENCDEC_KEY)); // SET NAME
-                temp.setCardNumber(content.encryptContent(mEtCardNumber.getText().toString(), ENCDEC_KEY)); // SET NUMBER
-                temp.setCardExpire(content.encryptContent(mEtCardExpire.getText().toString(), ENCDEC_KEY)); // SET EXPIRE
-                temp.setCardSecCode(content.encryptContent(mEtCardSecCode.getText().toString(), ENCDEC_KEY)); // SET SEC CODE
-                temp.setQuestion1(content.encryptContent(mEtQuestion1.getText().toString(), ENCDEC_KEY)); // SET QUESTION
-                temp.setQuestion2(content.encryptContent(mEtQuestion2.getText().toString(), ENCDEC_KEY)); // SET QUESTION
-                temp.setAnswer1(content.encryptContent(mEtAnswer1.getText().toString(), ENCDEC_KEY)); // SET ANSWER
-                temp.setAnswer2(content.encryptContent(mEtAnswer2.getText().toString(), ENCDEC_KEY)); // SET ANSWER
-                temp.setNotes(content.encryptContent(mEtNotes.getText().toString(), ENCDEC_KEY)); // SET NOTES
-                if (!mEtTag.getText().toString().matches(""))
+                temp.setCardName(mContent.encryptContent(mEtCardName.getText().toString(), MASTER_KEY)); // SET NAME
+                temp.setCardNumber(mContent.encryptContent(mEtCardNumber.getText().toString(), MASTER_KEY)); // SET NUMBER
+                temp.setCardExpire(mContent.encryptContent(mEtCardExpire.getText().toString(), MASTER_KEY)); // SET EXPIRE
+                temp.setCardSecCode(mContent.encryptContent(mEtCardSecCode.getText().toString(), MASTER_KEY)); // SET SEC CODE
+                temp.setQuestion1(mContent.encryptContent(mEtQuestion1.getText().toString(), MASTER_KEY)); // SET QUESTION
+                temp.setQuestion2(mContent.encryptContent(mEtQuestion2.getText().toString(), MASTER_KEY)); // SET QUESTION
+                temp.setAnswer1(mContent.encryptContent(mEtAnswer1.getText().toString(), MASTER_KEY)); // SET ANSWER
+                temp.setAnswer2(mContent.encryptContent(mEtAnswer2.getText().toString(), MASTER_KEY)); // SET ANSWER
+                temp.setNotes(mContent.encryptContent(mEtNotes.getText().toString(), MASTER_KEY)); // SET NOTES
+                if (!mEtLabel.getText().toString().matches(""))
                 {
-                    temp.setLabel(mEtTag.getText().toString());
+                    temp.setLabel(mEtLabel.getText().toString());
                 } else
                 {
                     temp.setLabel("");
@@ -203,18 +199,18 @@ public class PaymentInfoEditActivity extends AppCompatActivity
             {
                 // UPDATE THE PAYMENT INFO
                 // SET INFO
-                mPaymentInfo.setCardName(content.encryptContent(mEtCardName.getText().toString(), ENCDEC_KEY)); // SET NAME
-                mPaymentInfo.setCardNumber(content.encryptContent(mEtCardNumber.getText().toString(), ENCDEC_KEY)); // SET NUMBER
-                mPaymentInfo.setCardExpire(content.encryptContent(mEtCardExpire.getText().toString(), ENCDEC_KEY)); // SET EXPIRE
-                mPaymentInfo.setCardSecCode(content.encryptContent(mEtCardSecCode.getText().toString(), ENCDEC_KEY)); // SET SEC CODE
-                mPaymentInfo.setQuestion1(content.encryptContent(mEtQuestion1.getText().toString(), ENCDEC_KEY)); // SET QUESTION
-                mPaymentInfo.setQuestion2(content.encryptContent(mEtQuestion2.getText().toString(), ENCDEC_KEY)); // SET QUESTION
-                mPaymentInfo.setAnswer1(content.encryptContent(mEtAnswer1.getText().toString(), ENCDEC_KEY)); // SET ANSWER
-                mPaymentInfo.setAnswer2(content.encryptContent(mEtAnswer2.getText().toString(), ENCDEC_KEY)); // SET ANSWER
-                mPaymentInfo.setNotes(content.encryptContent(mEtNotes.getText().toString(), ENCDEC_KEY)); // SET NOTES
-                if (!mEtTag.getText().toString().matches(""))
+                mPaymentInfo.setCardName(mContent.encryptContent(mEtCardName.getText().toString(), MASTER_KEY)); // SET NAME
+                mPaymentInfo.setCardNumber(mContent.encryptContent(mEtCardNumber.getText().toString(), MASTER_KEY)); // SET NUMBER
+                mPaymentInfo.setCardExpire(mContent.encryptContent(mEtCardExpire.getText().toString(), MASTER_KEY)); // SET EXPIRE
+                mPaymentInfo.setCardSecCode(mContent.encryptContent(mEtCardSecCode.getText().toString(), MASTER_KEY)); // SET SEC CODE
+                mPaymentInfo.setQuestion1(mContent.encryptContent(mEtQuestion1.getText().toString(), MASTER_KEY)); // SET QUESTION
+                mPaymentInfo.setQuestion2(mContent.encryptContent(mEtQuestion2.getText().toString(), MASTER_KEY)); // SET QUESTION
+                mPaymentInfo.setAnswer1(mContent.encryptContent(mEtAnswer1.getText().toString(), MASTER_KEY)); // SET ANSWER
+                mPaymentInfo.setAnswer2(mContent.encryptContent(mEtAnswer2.getText().toString(), MASTER_KEY)); // SET ANSWER
+                mPaymentInfo.setNotes(mContent.encryptContent(mEtNotes.getText().toString(), MASTER_KEY)); // SET NOTES
+                if (!mEtLabel.getText().toString().matches(""))
                 {
-                    mPaymentInfo.setLabel(mEtTag.getText().toString());
+                    mPaymentInfo.setLabel(mEtLabel.getText().toString());
                 } else
                 {
                     mPaymentInfo.setLabel("");
@@ -225,16 +221,10 @@ public class PaymentInfoEditActivity extends AppCompatActivity
                 paymentInfoDatabaseAccess.update(mPaymentInfo);
             }
 
-            ENCDEC_KEY = null;
-            System.gc(); // GARBAGE COLLECT TO TERMINATE -KEY- VARIABLE
-
             paymentInfoDatabaseAccess.close();
         } else
         {
             Toast.makeText(this, "Nothing to save", Toast.LENGTH_SHORT).show();
-
-            ENCDEC_KEY = null;
-            System.gc(); // GARBAGE COLLECT TO TERMINATE -KEY- VARIABLE
 
             paymentInfoDatabaseAccess.close();
         }
@@ -255,8 +245,9 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         return true;
     }
 
-    private void onInstantCreate(Bundle bundle)
+    private void setupActivity(Bundle bundle)
     {
+        mContent = new CryptContent(this);
         if (bundle != null)
         {
             mPaymentInfo = (PaymentInfo) bundle.get("PAYMENTINFO");
@@ -264,23 +255,29 @@ public class PaymentInfoEditActivity extends AppCompatActivity
             {
                 try
                 {
-                    String ENCDEC_KEY = (new CryptKeyHandler(this).DECRYPTKEY(this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(CRYPT_KEY, null),
-                            this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(TEMP_PIN, null)));
+                    String label = mContent.decryptContent(mPaymentInfo.getLabel(), MASTER_KEY);
+                    String cardName = mContent.decryptContent(mPaymentInfo.getCardName(), MASTER_KEY);
+                    String cardNumber = mContent.decryptContent(mPaymentInfo.getCardNumber(), MASTER_KEY);
+                    String cardExpire = mContent.decryptContent(mPaymentInfo.getCardExpire(), MASTER_KEY);
+                    String cardSecCode = mContent.decryptContent(mPaymentInfo.getCardSecCode(), MASTER_KEY);
+                    String question1 = mContent.decryptContent(mPaymentInfo.getQuestion1(), MASTER_KEY);
+                    String question2 = mContent.decryptContent(mPaymentInfo.getQuestion2(), MASTER_KEY);
+                    String answer1 = mContent.decryptContent(mPaymentInfo.getAnswer1(), MASTER_KEY);
+                    String answer2 = mContent.decryptContent(mPaymentInfo.getAnswer2(), MASTER_KEY);
+                    String notes = mContent.decryptContent(mPaymentInfo.getNotes(), MASTER_KEY);
 
-                    CryptContent content = new CryptContent(this);
-
-                    if (!mPaymentInfo.getCardName().matches("")) { this.mEtCardName.setText(content.decryptContent(mPaymentInfo.getCardName(), ENCDEC_KEY)); } // DECRYPT
-                    if (!mPaymentInfo.getCardNumber().matches("")) { this.mEtCardNumber.setText(content.decryptContent(mPaymentInfo.getCardNumber(), ENCDEC_KEY)); } // DECRYPT
-                    if (!mPaymentInfo.getCardExpire().matches("")) { this.mEtCardExpire.setText(content.decryptContent(mPaymentInfo.getCardExpire(), ENCDEC_KEY)); } // DECRYPT
-                    if (!mPaymentInfo.getCardSecCode().matches("")) { this.mEtCardSecCode.setText(content.decryptContent(mPaymentInfo.getCardSecCode(), ENCDEC_KEY)); } // DECRYPT
-                    if (!mPaymentInfo.getQuestion1().matches("")) { this.mEtQuestion1.setText(content.decryptContent(mPaymentInfo.getQuestion1(), ENCDEC_KEY));}
-                    if (!mPaymentInfo.getQuestion2().matches("")) { this.mEtQuestion2.setText(content.decryptContent(mPaymentInfo.getQuestion2(), ENCDEC_KEY));}
-                    if (!mPaymentInfo.getAnswer1().matches("")) { this.mEtAnswer1.setText(content.decryptContent(mPaymentInfo.getAnswer1(), ENCDEC_KEY));}
-                    if (!mPaymentInfo.getAnswer2().matches("")) { this.mEtAnswer2.setText(content.decryptContent(mPaymentInfo.getAnswer2(), ENCDEC_KEY));}
-                    if (!mPaymentInfo.getNotes().matches("")) { this.mEtNotes.setText(content.decryptContent(mPaymentInfo.getNotes(), ENCDEC_KEY)); } // DECRYPT
+                    if (label != null) mEtLabel.setText(label);
+                    if (cardName != null) mEtCardName.setText(cardName);
+                    if (cardNumber != null) mEtCardNumber.setText(cardNumber);
+                    if (cardExpire != null) mEtCardExpire.setText(cardExpire);
+                    if (cardSecCode != null) mEtCardSecCode.setText(cardSecCode);
+                    if (question1 != null) mEtQuestion1.setText(question1);
+                    if (question2 != null) mEtQuestion2.setText(question2);
+                    if (answer1 != null) mEtAnswer1.setText(answer1);
+                    if (answer2 != null) mEtAnswer2.setText(answer2);
+                    if (notes != null) mEtNotes.setText(notes);
 
                     // SET LABEL AND CARD TYPE
-                    if (!mPaymentInfo.getLabel().matches("")) { this.mEtTag.setText(mPaymentInfo.getLabel()); }
                     if (!mPaymentInfo.getCardType().matches("")) {
                         int spinnerPosition = mAdapter.getPosition(mPaymentInfo.getCardType());
                         mSpCardSelect.setSelection(spinnerPosition);
@@ -291,9 +288,6 @@ public class PaymentInfoEditActivity extends AppCompatActivity
                     } else {
                         this.mTvDate.setText("Last Updated: ---");
                     }
-
-                    ENCDEC_KEY = null;
-                    System.gc();
 
                 } catch (Exception e)
                 {

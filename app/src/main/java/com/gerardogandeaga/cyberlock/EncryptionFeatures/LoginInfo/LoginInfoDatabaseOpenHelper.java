@@ -15,7 +15,7 @@ class LoginInfoDatabaseOpenHelper extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        db.execSQL("CREATE TABLE logininfo(date INTEGER PRIMARY KEY, tag TEXT, url TEXT, username TEXT, email TEXT, password TEXT, notes TEXT, image KEY_IMAGE, question1 TEXT, question2 TEXT, answer1 TEXT, answer2 TEXT);");
+        db.execSQL("CREATE TABLE logininfo(date INTEGER PRIMARY KEY, tag TEXT, url TEXT, username TEXT, email TEXT, password TEXT, notes TEXT);");
     }
 
     @Override

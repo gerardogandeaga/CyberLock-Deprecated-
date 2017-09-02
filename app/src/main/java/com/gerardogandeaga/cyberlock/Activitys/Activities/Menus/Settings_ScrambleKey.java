@@ -168,20 +168,12 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
                 if (loginInfo.getUsername() != null) username = content.decryptContent((loginInfo.getUsername()), current_ENC_DEC_KEY);
                 if (loginInfo.getEmail() != null) email = content.decryptContent((loginInfo.getEmail()), current_ENC_DEC_KEY);
                 if (loginInfo.getPassword() != null) password = content.decryptContent((loginInfo.getPassword()), current_ENC_DEC_KEY);
-                if (loginInfo.getQuestion1() != null) question1 = content.decryptContent((loginInfo.getQuestion1()), current_ENC_DEC_KEY);
-                if (loginInfo.getQuestion2() != null) question2 = content.decryptContent((loginInfo.getQuestion2()), current_ENC_DEC_KEY);
-                if (loginInfo.getAnswer1() != null) answer1 = content.decryptContent((loginInfo.getAnswer1()), current_ENC_DEC_KEY);
-                if (loginInfo.getAnswer2() != null) answer2 = content.decryptContent((loginInfo.getAnswer2()), current_ENC_DEC_KEY);
                 if (loginInfo.getNotes() != null) notes = content.decryptContent((loginInfo.getNotes()), current_ENC_DEC_KEY);
 
                 if (url != null) loginInfo.setUrl(content.encryptContent(url, new_ENC_DEC_KEY));
                 if (username != null) loginInfo.setUsername(content.encryptContent(username, new_ENC_DEC_KEY));
                 if (email != null) loginInfo.setEmail(content.encryptContent(email, new_ENC_DEC_KEY));
                 if (password != null) loginInfo.setPassword(content.encryptContent(password, new_ENC_DEC_KEY));
-                if (question1 != null) loginInfo.setQuestion1(content.encryptContent(question1, new_ENC_DEC_KEY));
-                if (question2 != null) loginInfo.setQuestion2(content.encryptContent(question2, new_ENC_DEC_KEY));
-                if (answer1 != null) loginInfo.setAnswer1(content.encryptContent(answer1, new_ENC_DEC_KEY));
-                if (answer2 != null) loginInfo.setAnswer2(content.encryptContent(answer2, new_ENC_DEC_KEY));
                 if (notes != null) loginInfo.setNotes(content.encryptContent(notes, new_ENC_DEC_KEY));
 
                 url = null;

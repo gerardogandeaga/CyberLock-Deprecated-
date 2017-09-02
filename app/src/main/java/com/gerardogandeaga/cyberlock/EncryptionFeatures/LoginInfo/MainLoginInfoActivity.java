@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
+import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
 import com.gerardogandeaga.cyberlock.R;
 
 import java.util.List;
@@ -29,7 +30,7 @@ import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutPro
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
-import static com.gerardogandeaga.cyberlock.R.id.tvTitle;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 
 public class MainLoginInfoActivity extends AppCompatActivity
 {
@@ -160,18 +161,24 @@ public class MainLoginInfoActivity extends AppCompatActivity
                 convertView = getLayoutInflater().inflate(R.layout.layout_list_item_logininfo, parent, false);
             }
 
-            TextView tvLabel = (TextView) convertView.findViewById(tvTitle);
+            TextView tvLabel = (TextView) convertView.findViewById(R.id.tvLabel);
             TextView tvDate = (TextView) convertView.findViewById(R.id.tvDate);
             ImageView imgDelete = (ImageView) convertView.findViewById(R.id.imgDelete);
-            ImageView imgSite = (ImageView) convertView.findViewById(R.id.imgSite);
             RelativeLayout reContent = (RelativeLayout) convertView.findViewById(R.id.Content);
 
             final LoginInfo loginInfo = mLoginInfos.get(position);
             loginInfo.setFullDisplayed(false);
 
-            tvDate.setText("Updated:" + loginInfo.getDate());
-            tvLabel.setText(loginInfo.getLabel());
-            imgSite.setImageDrawable(loginInfo.setImageButton(loginInfo));
+            CryptContent content = new CryptContent(mContext);
+
+            String label = content.decryptContent(loginInfo.getLabel(), MASTER_KEY);
+            String date = loginInfo.getDate();
+
+            tvLabel.setText(label);
+            tvDate.setText(date);
+
+            label = null;
+            date = null;
 
             reContent.setOnClickListener(new View.OnClickListener()
             {

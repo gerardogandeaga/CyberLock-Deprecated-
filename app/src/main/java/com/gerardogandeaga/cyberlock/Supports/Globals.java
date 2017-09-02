@@ -24,6 +24,7 @@ public class Globals
     // ------------------
 
     // ENCRYPTION
+    public static String MASTER_KEY;
     public static final int FLAGS = Base64.DEFAULT;
     // ----------
 
