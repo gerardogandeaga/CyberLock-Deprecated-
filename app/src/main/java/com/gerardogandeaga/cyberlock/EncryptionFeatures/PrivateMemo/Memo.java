@@ -61,7 +61,6 @@ public class Memo implements Serializable
 
     public String getShortText(Context context, String text)
     {
-
         float widthSp = (context.getResources().getDisplayMetrics().widthPixels / (12 * context.getResources().getDisplayMetrics().scaledDensity));
         int finalWidth = (int) widthSp;
 

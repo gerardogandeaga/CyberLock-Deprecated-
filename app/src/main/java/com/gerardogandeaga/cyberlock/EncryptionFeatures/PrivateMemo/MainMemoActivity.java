@@ -1,6 +1,5 @@
 package com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -40,7 +39,6 @@ public class MainMemoActivity extends AppCompatActivity
     // WIDGETS
     private ListView mListView;
     private FloatingActionButton mFabAdd;
-    private ProgressDialog mProgressDialog;
 
     private Context mContext = this;
 
@@ -53,8 +51,6 @@ public class MainMemoActivity extends AppCompatActivity
 
         setupLayout();
     }
-
-    // TODO SET CONTENT TO VARIABLES, DECRYPT AND SET WIDGETS; ALL IN THE ADAPTER
 
     @Override
     public void onResume() // FIRE UP THE DATABASE

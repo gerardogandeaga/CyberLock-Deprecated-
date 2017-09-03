@@ -238,12 +238,12 @@ public class MainPaymentInfoActivity extends AppCompatActivity
     {
         super.onStart();
 
-        if (!APP_LOGGED_IN)
-        {
-            ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
-            this.finish(); // CLEAN UP AND END
-            this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
-        }
+            if (!APP_LOGGED_IN)
+            {
+                ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
+                this.finish(); // CLEAN UP AND END
+                this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
+            }
     }
 
     @Override
@@ -264,13 +264,14 @@ public class MainPaymentInfoActivity extends AppCompatActivity
     {
         super.onPause();
 
-        if (!this.isFinishing())
-        {
-            if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
+            if (!this.isFinishing())
             {
-                new LogoutProtocol().logoutExecuteAutosaveOff(this);
+                if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
+                {
+                    new LogoutProtocol().logoutExecuteAutosaveOff(this);
+                }
             }
-        }
+
     }
     // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }
