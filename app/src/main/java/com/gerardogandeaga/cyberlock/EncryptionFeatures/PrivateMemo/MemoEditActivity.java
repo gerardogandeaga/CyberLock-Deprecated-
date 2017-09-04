@@ -77,7 +77,7 @@ public class MemoEditActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void onSave()
+    private void onSave()
     {
         MemoDatabaseAccess memoDatabaseAccess = MemoDatabaseAccess.getInstance(this);
         memoDatabaseAccess.open();
@@ -169,17 +169,11 @@ public class MemoEditActivity extends AppCompatActivity
         {
             if (!APP_LOGGED_IN)
             {
-                if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false))
-                {
-                    onSave();
+                if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) { onSave(); MASTER_KEY = null; TEMP_PIN = null; }
 
-                    this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().remove(TEMP_PIN).apply();
-                } else
-                {
-                    ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
-                    ACTIVITY_INTENT.putExtra("lastActivity", "MEMO_EDIT");
-                    ACTIVITY_INTENT.putExtra("lastDatabase", mMemo);
-                }
+                ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
+                ACTIVITY_INTENT.putExtra("lastActivity", "MEMO_EDIT");
+                ACTIVITY_INTENT.putExtra("lastDatabase", mMemo);
 
                 this.finish(); // CLEAN UP AND END
                 this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY

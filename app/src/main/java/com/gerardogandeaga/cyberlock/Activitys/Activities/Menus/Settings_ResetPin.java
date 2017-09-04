@@ -153,7 +153,7 @@ public class Settings_ResetPin extends AppCompatActivity implements View.OnClick
 
                 mSharedPreferences.edit().putString(PIN, passwordHash).apply(); // ADD HASHED PIN TO STORE
                 System.out.println("HASHED PIN :" + passwordHash);
-                mSharedPreferences.edit().putString(TEMP_PIN, pinFirst).apply();
+                TEMP_PIN = pinFirst;
 
                 ACTIVITY_INTENT = new Intent(Settings_ResetPin.this, Settings.class);
                 Toast.makeText(this, "Pin Successfully Reset", Toast.LENGTH_SHORT).show();

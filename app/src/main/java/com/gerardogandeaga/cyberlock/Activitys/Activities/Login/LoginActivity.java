@@ -204,7 +204,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     {
         mProgressDialog = new ProgressDialog(mContext);
         mProgressDialog.setMessage("Verifying...");
-        mProgressDialog.setProgressStyle(mProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setCancelable(false);
         mProgressDialog.show();
     }
@@ -274,7 +274,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     if (decryptedPulledPin.equals(loginPinHash)) /// TEST PERIODICALLY INPUTTED PIN AGAINST CACHED PIN
                     {
-                        mSharedPreferences.edit().putString(TEMP_PIN, mPin).apply();
+                        TEMP_PIN = mPin;
                         MASTER_KEY = new CryptKeyHandler(mContext).DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), mPin);
                         System.out.println("MASTER KEY: " + MASTER_KEY);
 

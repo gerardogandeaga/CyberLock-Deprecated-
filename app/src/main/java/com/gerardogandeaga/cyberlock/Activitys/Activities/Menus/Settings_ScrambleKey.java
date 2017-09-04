@@ -57,7 +57,7 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
         mProgressDialog = new ProgressDialog(mContext);
         mProgressDialog.setTitle("Scrambling Key...");
         mProgressDialog.setMessage("Loading Data...");
-        mProgressDialog.setProgressStyle(mProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setCancelable(false);
         mProgressDialog.show();
     }
@@ -81,7 +81,7 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
             CryptKeyHandler keyHandler = new CryptKeyHandler(mContext);
             CryptContent content = new CryptContent(mContext);
 
-            String current_ENC_DEC_KEY = keyHandler.DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), mSharedPreferences.getString(TEMP_PIN, null));
+            String current_ENC_DEC_KEY = keyHandler.DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN);
             System.out.println("Current Key = " + current_ENC_DEC_KEY);
 
 

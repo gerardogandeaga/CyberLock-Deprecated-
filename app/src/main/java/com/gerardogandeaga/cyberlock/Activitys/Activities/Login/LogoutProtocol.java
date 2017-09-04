@@ -28,18 +28,14 @@ public class LogoutProtocol
         mCountDownTimer = new CountDownTimer(context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getLong(DELAY_TIME, 0), 1000)
         {
             @Override
-            public void onTick(long millisUntilFinished)
-            {
-                mCountDownIsFinished = false;
-                System.out.println("Tick");
-            }
+            public void onTick(long millisUntilFinished) { mCountDownIsFinished = false; }
 
             @Override
             public void onFinish()
             {
                 mCountDownIsFinished = true;
 
-                mSharedPreferences = context.getSharedPreferences(DIRECTORY, context.MODE_PRIVATE);
+                mSharedPreferences = context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
                 mSharedPreferences.edit().remove(TEMP_PIN).apply();
 
                 MASTER_KEY = null;
@@ -63,7 +59,6 @@ public class LogoutProtocol
             {
                 mCountDownIsFinished = true;
 
-                MASTER_KEY = null;
                 APP_LOGGED_IN = false;
             }
         }.start();
@@ -71,7 +66,7 @@ public class LogoutProtocol
 
     public void logoutImmediate(final Context context)
     {
-        mSharedPreferences = context.getSharedPreferences(DIRECTORY, context.MODE_PRIVATE);
+        mSharedPreferences = context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
         mSharedPreferences.edit().remove(TEMP_PIN).apply();
 
         MASTER_KEY = null;

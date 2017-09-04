@@ -8,7 +8,6 @@ public class Globals
     public static final String DIRECTORY = "com.gerardogandeaga.cyberlock";
 
     public static final String PIN = "PIN";
-    public static final String TEMP_PIN = "TEMP_PIN";
 
     public static final String CRYPT_KEY = "CRYPT_KEY";
 
@@ -24,6 +23,7 @@ public class Globals
     // ------------------
 
     // ENCRYPTION
+    public static String TEMP_PIN;
     public static String MASTER_KEY;
     public static final int FLAGS = Base64.DEFAULT;
     // ----------
