@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\ic_action_clipboard.png",
+        "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_clipboard.png"
+    },
+    {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\ic_action_trash.png",
         "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_trash.png"
     },
@@ -30,6 +34,10 @@
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\ic_action_cancel.png",
         "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_cancel.png"
+    },
+    {
+        "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\ic_action_crypt.png",
+        "source": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_crypt.png"
     },
     {
         "merged": "C:\\Users\\gerardogandeaga\\Documents\\AndroidStudioProjects\\CyberLock\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\ic_action_settings.png",

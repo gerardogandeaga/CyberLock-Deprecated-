@@ -54,6 +54,7 @@
                 android:fontFamily="monospace"
                 android:hint="Label..."
                 android:inputType="textPersonName"
+                android:maxLines="1"
                 android:padding="10dp"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
@@ -68,7 +69,7 @@
                 android:background="@color/grayB4"
                 android:fontFamily="monospace"
                 android:padding="5dp"
-                android:text="Last Updated: N/A"
+                android:text="Last Updated: -- --"
                 android:textSize="12sp"/>
 
             <LinearLayout
@@ -76,9 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/etTag"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_margin="20dp"
                 android:background="@drawable/gray_dark_curved"
                 android:orientation="vertical"
                 android:padding="5dp">
@@ -95,7 +94,7 @@
                     android:ems="10"
                     android:fontFamily="monospace"
                     android:hint="URL"
-                    android:inputType="textPersonName"
+                    android:inputType="text"
                     android:textAlignment="center"
                     android:textSize="16sp"/>
 
@@ -147,137 +146,26 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/layoutSecurity"
+            <ScrollView
+                android:id="@+id/TextData"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <EditText
-                    android:id="@+id/etQuestion1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/grayB4"
-                    android:ems="10"
-                    android:fontFamily="monospace"
-                    android:hint="Seurity Question"
-                    android:inputType="text"
-                    android:padding="5dp"
-                    android:textSize="12sp"/>
-
-                <EditText
-                    android:id="@+id/etAnswer1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/gray8F"
-                    android:ems="10"
-                    android:fontFamily="monospace"
-                    android:hint="Answer"
-                    android:inputType="text"
-                    android:padding="5dp"
-                    android:textSize="16sp"/>
-
-                <EditText
-                    android:id="@+id/etQuestion2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/grayB4"
-                    android:ems="10"
-                    android:fontFamily="monospace"
-                    android:hint="Security question"
-                    android:inputType="text"
-                    android:padding="5dp"
-                    android:textSize="12sp"/>
-
-                <EditText
-                    android:id="@+id/etAnswer2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/gray8F"
-                    android:ems="10"
-                    android:fontFamily="monospace"
-                    android:hint="Answer"
-                    android:inputType="text"
-                    android:padding="5dp"
-                    android:textSize="16sp"/>
-            </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/LowerData"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_margin="10dp"
-                android:layout_weight="0.62"
-                android:background="@color/grayB4"
-                android:padding="5dp">
+                android:layout_margin="10dp">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/relativeLayout">
-
-                    <ImageView
-                        android:id="@+id/imgImage"
-                        android:layout_width="128dp"
-                        android:layout_height="128dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginRight="2dp"
-                        android:background="@color/gray3B"
-                        android:cropToPadding="true"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/ic_graphic_none"/>
-
-                    <Button
-                        android:id="@+id/btnUploadImage"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/imgImage"
-                        android:fontFamily="sans-serif-smallcaps"
-                        android:text="Upload An Image"
-                        android:textAllCaps="false"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignRight="@+id/imgImage"
-                        android:layout_alignEnd="@+id/imgImage"/>
-                </RelativeLayout>
-
-                <ScrollView
-                    android:id="@+id/TextData"
+                <EditText
+                    android:id="@+id/etNotes"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/relativeLayout"
-                    android:layout_toRightOf="@+id/relativeLayout">
-
-                    <RelativeLayout
-                        android:id="@+id/layoutAnchor"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <EditText
-                            android:id="@+id/etNotes"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/grayB4"
-                            android:ems="10"
-                            android:fontFamily="monospace"
-                            android:hint="Notes..."
-                            android:inputType="textMultiLine"
-                            android:padding="10dp"
-                            android:layout_alignParentTop="true"
-                            />
-                    </RelativeLayout>
-                </ScrollView>
-
-            </RelativeLayout>
+                    android:background="@color/grayB4"
+                    android:ems="10"
+                    android:fontFamily="monospace"
+                    android:hint="Notes..."
+                    android:inputType="textMultiLine"
+                    android:padding="10dp"
+                    />
+            </ScrollView>
 
         </LinearLayout>
     </ScrollView>

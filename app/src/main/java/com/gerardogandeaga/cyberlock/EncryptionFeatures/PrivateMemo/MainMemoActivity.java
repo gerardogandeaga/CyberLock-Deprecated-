@@ -2,7 +2,6 @@ package com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -67,7 +67,8 @@ public class MainMemoActivity extends AppCompatActivity
     public void onAddClicked() // START NEW MEMO
     {
         ACTIVITY_INTENT = new Intent(this, MemoEditActivity.class);
-        startActivity(ACTIVITY_INTENT);
+        finish();
+        this.startActivity(ACTIVITY_INTENT);
     }
 
     public void onDeleteClicked(Memo memo) // DELETE DATABASE "COMPONENT"
@@ -83,30 +84,10 @@ public class MainMemoActivity extends AppCompatActivity
 
     public void onEditClicked(final Memo memo) // EDIT MEMO -> ASYNC TASK
     {
-        new AsyncTask<Void, Void, Void>()
-        {
-            @Override
-            protected void onPreExecute()
-            {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected Void doInBackground(Void... params)
-            {
-                ACTIVITY_INTENT = new Intent(mContext, MemoEditActivity.class);
-                ACTIVITY_INTENT.putExtra("MEMO", memo);
-                startActivity(ACTIVITY_INTENT);
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid)
-            {
-                super.onPostExecute(aVoid);
-            }
-        }.execute();
+        ACTIVITY_INTENT = new Intent(mContext, MemoEditActivity.class);
+        ACTIVITY_INTENT.putExtra("MEMO", memo);
+        finish();
+        this.startActivity(ACTIVITY_INTENT);
     }
 
     @Override
@@ -132,10 +113,15 @@ public class MainMemoActivity extends AppCompatActivity
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            if (convertView == null)
-            {
-                convertView = getLayoutInflater().inflate(R.layout.layout_list_item_memo, parent, false);
-            }
+            if (convertView == null) { convertView = getLayoutInflater().inflate(R.layout.layout_list_item_memo, parent, false); }
+
+            final Memo memo = mMemos.get(position);
+            memo.setFullDisplayed(false);
+            CryptContent content = new CryptContent(mContext);
+
+            final String label = content.decryptContent(memo.getLabel(), MASTER_KEY);
+            final String text = content.decryptContent(memo.getText(), MASTER_KEY);
+            final String date = memo.getDate();
 
             final RelativeLayout Content = (RelativeLayout) convertView.findViewById(R.id.Content);
             final TextView tvLabel = (TextView) convertView.findViewById(R.id.tvLabel);
@@ -143,18 +129,10 @@ public class MainMemoActivity extends AppCompatActivity
             final TextView tvDate = (TextView) convertView.findViewById(R.id.tvDate);
             final ImageView imgDelete = (ImageView) convertView.findViewById(R.id.imgDelete);
 
-            final Memo memo = mMemos.get(position);
-            memo.setFullDisplayed(false);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, 0);
 
-            CryptContent content = new CryptContent(mContext);
-
-            String label = content.decryptContent(memo.getLabel(), MASTER_KEY);
-            final String text = content.decryptContent(memo.getText(), MASTER_KEY);
-
-            String date = memo.getDate();
-
-            tvLabel.setText(label);
-            tvMemo.setText(memo.getShortText(mContext, text));
+            if (label != null) { tvLabel.setText(label); }                           else { tvLabel.setLayoutParams(params); }
+            if (text != null) { tvMemo.setText(memo.getShortText(mContext, text)); } else { tvMemo.setLayoutParams(params); }
             tvDate.setText(date);
 
             Content.setOnClickListener(new View.OnClickListener()
@@ -165,24 +143,22 @@ public class MainMemoActivity extends AppCompatActivity
                     onEditClicked(memo);
                 }
             });
-
             Content.setOnLongClickListener(new View.OnLongClickListener()
             {
                 @Override
                 public boolean onLongClick(View v)
                 {
                     if (memo.isFullDisplayed()) {
-                        tvMemo.setText(memo.getShortText(mContext, text));
+                        if (text != null) { tvMemo.setText(memo.getShortText(mContext, text)); }
                         memo.setFullDisplayed(false);
                     } else {
                         tvMemo.setText(text);
-                        memo.setFullDisplayed(true);
+                        if (text != null) { memo.setFullDisplayed(true); }
                     }
 
                     return false;
                 }
             });
-
             imgDelete.setOnClickListener(new View.OnClickListener()
             {
                 @Override

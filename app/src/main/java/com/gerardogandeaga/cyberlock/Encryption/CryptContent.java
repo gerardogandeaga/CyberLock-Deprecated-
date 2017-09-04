@@ -44,6 +44,10 @@ public class CryptContent
     public String encryptContent(String dataToEncrypt, String symmetricKey)
 //            throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidParameterSpecException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException
     {
+        if (dataToEncrypt == null || dataToEncrypt.matches("")) {
+            return null;
+        }
+
         try
         {
             if (!dataToEncrypt.matches("")) // CHECK IS THERE IS ACTULA CONTENT TO ENCRYPT
@@ -82,6 +86,10 @@ public class CryptContent
     public String decryptContent(String dataToDecrypt, String symmetricKey)
 //            throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException
     {
+        if (dataToDecrypt == null || dataToDecrypt.matches("")) {
+            return null;
+        }
+
         try
         {
             System.out.println("decryptContent: DECRYPT STARTING...");

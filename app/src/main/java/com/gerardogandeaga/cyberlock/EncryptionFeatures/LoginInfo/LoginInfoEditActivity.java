@@ -232,19 +232,22 @@ public class LoginInfoEditActivity extends AppCompatActivity
                 {
                     String label = mContent.decryptContent(mLoginInfo.getLabel(), MASTER_KEY);
                     String url = mContent.decryptContent(mLoginInfo.getUrl(), MASTER_KEY);
+                    String username = mContent.decryptContent(mLoginInfo.getUsername(), MASTER_KEY);
                     String email = mContent.decryptContent(mLoginInfo.getEmail(), MASTER_KEY);
                     String password = mContent.decryptContent(mLoginInfo.getPassword(), MASTER_KEY);
                     String notes = mContent.decryptContent(mLoginInfo.getNotes(), MASTER_KEY);
+                    String date = mLoginInfo.getDate();
 
                     // DECRYPT CONTENT
                     if (label != null) mEtLabel.setText(label);
                     if (url != null) mEtUrl.setText(url);
+                    if (username != null) mEtUsername.setText(username);
                     if (email != null) mEtEmail.setText(email);
                     if (password != null) mEtPassword.setText(password);
-                    if (notes != null) mEtLabel.setText(notes);
+                    if (notes != null) mEtNotes.setText(notes);
 
                     if (!mLoginInfo.getDate().matches("")) {
-                        this.mTvDate.setText("Last Updated: " + mLoginInfo.getDate());
+                        this.mTvDate.setText("Last Updated: " + date);
                     } else {
                         this.mTvDate.setText("Last Updated: ---");
                     }

@@ -58,6 +58,7 @@
                     android:fontFamily="monospace"
                     android:hint="Label..."
                     android:inputType="none"
+                    android:maxLines="1"
                     android:padding="10dp"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
@@ -75,7 +76,7 @@
             android:background="@color/grayB4"
             android:fontFamily="monospace"
             android:padding="5dp"
-            android:text="Last Updated: N/A"
+            android:text="Last Updated: -- --"
             android:textSize="12sp"/>
 
         <LinearLayout
