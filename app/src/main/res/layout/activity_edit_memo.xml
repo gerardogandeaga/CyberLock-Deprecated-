@@ -32,7 +32,7 @@
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/appbar"
         android:background="@color/grayD9"
-        tools:context="com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MemoEditActivity">
+        tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.MemoEditActivity">
 
         <LinearLayout
             android:id="@+id/linearLayout"

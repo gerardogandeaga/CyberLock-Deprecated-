@@ -117,7 +117,7 @@
     <!-- Version 1.1-->
     <string name="V1.1.0">V - 1.1.0 ( Release! )</string>
     <string name="Update_V1.1.0">
-        Welcome to Cyber Lock! Initial release comes outfitted with a memo,
+        Welcome to Cyber Lock! Initial release comes outfitted with a data,
         card info, login credential and playground encryptor. Content Algorithms
         currently supported are AES-256 and Blowfish-448 bit.
     </string>

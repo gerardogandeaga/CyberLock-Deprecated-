@@ -21,11 +21,11 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
 
 public class CryptKeyHandler
 {
-    private static final int iterations = 10000;
-    private static int keylength, byteKeyLength;
-    private static final String KeyALGO = "PBKDF2WithHmacSHA1";
-    private static String ALGO, CipherALGO;
-    private int IVLencgth;
+    private final int iterations = 10000;
+    private int keylength, byteKeyLength;
+    private final String KeyALGO = "PBKDF2WithHmacSHA1";
+    private String ALGO, CipherALGO;
+    private int IVLength;
 
     private SharedPreferences mSharedPreferences;
 
@@ -38,12 +38,12 @@ public class CryptKeyHandler
         switch (ALGO)
         {
             case "AES":
-                IVLencgth = 16;
+                IVLength = 16;
                 byteKeyLength = 32;
                 keylength = 256;
                 break;
             case "Blowfish":
-                IVLencgth = 8;
+                IVLength = 8;
                 byteKeyLength = 56;
                 keylength = 448;
                 break;
@@ -121,10 +121,10 @@ public class CryptKeyHandler
             Cipher cipher = Cipher.getInstance(CipherALGO);
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec); // START CIPHER AND SET IT TO ENCRYPT MODE
 
-            byte[] ivByteVal = Arrays.copyOfRange(cipher.getIV(), 0, IVLencgth); // GET IV OF CIPHER
+            byte[] ivByteVal = Arrays.copyOfRange(cipher.getIV(), 0, IVLength); // GET IV OF CIPHER
             byte[] encryptedTextByteVal = cipher.doFinal(dataToEncrypt.getBytes()); // ENCRYPT TEXT
 
-            byte[] combinedByteVal = new byte[saltByteVal.length + ivByteVal.length + encryptedTextByteVal.length]; // COMBINE THE BYTES
+            byte[] combinedByteVal = new byte[ivByteVal.length + saltByteVal.length + encryptedTextByteVal.length]; // COMBINE THE BYTES
             System.arraycopy(ivByteVal, 0, combinedByteVal, 0, ivByteVal.length); // POSITIONING THE IV BYTES
             System.arraycopy(saltByteVal, 0, combinedByteVal, ivByteVal.length, saltByteVal.length); // POSITIONING THE IV BYTES
             System.arraycopy(encryptedTextByteVal, 0, combinedByteVal, ivByteVal.length + saltByteVal.length, encryptedTextByteVal.length); // IMPLEMENTING INTO CIPHER
@@ -146,9 +146,9 @@ public class CryptKeyHandler
         {
             byte[] encryptedCombinedBytes = Base64.decode(dataToDecrypt, FLAGS);
 
-            byte[] ivByteVal = Arrays.copyOfRange(encryptedCombinedBytes, 0, IVLencgth); // "BREAK" BYTES TO GET IV BYTES ONLY
-            byte[] saltByteVal = Arrays.copyOfRange(encryptedCombinedBytes, IVLencgth, IVLencgth + 16); // "BREAK" BYTES TO GET SALT BYTES ONLY
-            byte[] encryptedTextByteVal = Arrays.copyOfRange(encryptedCombinedBytes, IVLencgth + 16, encryptedCombinedBytes.length); // "BREAK" BYTES TO GET CIPHER TEXT BYTES ONLY
+            byte[] ivByteVal = Arrays.copyOfRange(encryptedCombinedBytes, 0, IVLength); // "BREAK" BYTES TO GET IV BYTES ONLY
+            byte[] saltByteVal = Arrays.copyOfRange(encryptedCombinedBytes, IVLength, IVLength + 16); // "BREAK" BYTES TO GET SALT BYTES ONLY
+            byte[] encryptedTextByteVal = Arrays.copyOfRange(encryptedCombinedBytes, IVLength + 16, encryptedCombinedBytes.length); // "BREAK" BYTES TO GET CIPHER TEXT BYTES ONLY
 
             byte[] encryptedPassword = getSymmetricKey(key, saltByteVal, iterations, keylength);
 

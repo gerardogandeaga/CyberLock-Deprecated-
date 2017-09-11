@@ -36,12 +36,6 @@
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
-        <activity
-            android:name=".Activitys.Activities.Main.MainActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/TitleActivityMain"
-            android:theme="@style/AppTheme">
-        </activity>
         <!-- MAIN ACTIVITIES -->
         <activity
             android:name=".Activitys.Activities.Menus.Contribute"
@@ -56,25 +50,19 @@
             android:name=".Activitys.Activities.Menus.Settings_ResetPin"
             android:configChanges="orientation|screenSize"/>
         <activity
-            android:name=".EncryptionFeatures.PrivateMemo.MainMemoActivity"
+            android:name=".Activitys.Activities.Main.MainActivity"
             android:configChanges="orientation|screenSize"/>
         <activity
-            android:name=".EncryptionFeatures.PaymentInfo.MainPaymentInfoActivity"
+            android:name=".Activitys.Activities.Edits.MemoEditActivity"
             android:configChanges="orientation|screenSize"/>
         <activity
-            android:name=".EncryptionFeatures.LoginInfo.MainLoginInfoActivity"
+            android:name=".Activitys.Activities.Edits.PaymentInfoEditActivity"
             android:configChanges="orientation|screenSize"/>
         <activity
-            android:name=".EncryptionFeatures.PrivateMemo.MemoEditActivity"
+            android:name=".Activitys.Activities.Edits.LoginInfoEditActivity"
             android:configChanges="orientation|screenSize"/>
         <activity
-            android:name=".EncryptionFeatures.PaymentInfo.PaymentInfoEditActivity"
-            android:configChanges="orientation|screenSize"/>
-        <activity
-            android:name=".EncryptionFeatures.LoginInfo.LoginInfoEditActivity"
-            android:configChanges="orientation|screenSize"/>
-        <activity
-            android:name=".EncryptionFeatures.Playground.MainPlaygroundActivity"
+            android:name=".Activitys.Activities.Main.MainPlaygroundActivity"
             android:configChanges="orientation|screenSize">
         </activity>
     </application>

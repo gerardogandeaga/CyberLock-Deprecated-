@@ -1,12 +1,15 @@
 package com.gerardogandeaga.cyberlock.Activitys.Activities.Menus;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -22,7 +25,9 @@ import static com.gerardogandeaga.cyberlock.R.id.input1;
 import static com.gerardogandeaga.cyberlock.R.id.input2;
 import static com.gerardogandeaga.cyberlock.R.id.input3;
 import static com.gerardogandeaga.cyberlock.R.id.input4;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
 public class Settings_ResetPin extends AppCompatActivity implements View.OnClickListener
@@ -40,6 +45,9 @@ public class Settings_ResetPin extends AppCompatActivity implements View.OnClick
     private TextView mTextView;
     private Button mBtn0, mBtn1, mBtn2, mBtn3, mBtn4, mBtn5, mBtn6, mBtn7, mBtn8, mBtn9;
     private RadioButton mInput1, mInput2, mInput3, mInput4;
+    private ProgressDialog mProgressDialog;
+
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -47,6 +55,10 @@ public class Settings_ResetPin extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setpin);
         ACTIVITY_INTENT = null;
+
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }
 
         mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
 
@@ -138,39 +150,97 @@ public class Settings_ResetPin extends AppCompatActivity implements View.OnClick
 
     private void onPinsCompleted()
     {
-        final String pinFirst = mPinFirst;
-        final String pinSecond = mPinSecond;
-
-        mPinFirst = "";
-        mPinSecond = "";
-
-        if ((pinFirst.matches(pinSecond)) && (!pinFirst.matches("") || (!pinSecond.matches(""))))
+        new AsyncTask<Void, Void, Void>()
         {
-            final String passwordHash; // GENERATE THE HASH PIN
-            try
+            @Override
+            protected void onPreExecute()
             {
-                passwordHash = new CryptKeyHandler(this).ENCRYPTKEY(SHA256PinHash.hashFunction(pinFirst, SHA256PinHash.generateSalt()), pinFirst);
+                super.onPreExecute();
 
-                mSharedPreferences.edit().putString(PIN, passwordHash).apply(); // ADD HASHED PIN TO STORE
-                System.out.println("HASHED PIN :" + passwordHash);
-                TEMP_PIN = pinFirst;
-
-                ACTIVITY_INTENT = new Intent(Settings_ResetPin.this, Settings.class);
-                Toast.makeText(this, "Pin Successfully Reset", Toast.LENGTH_SHORT).show();
-                Settings_ResetPin.this.startActivity(ACTIVITY_INTENT);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-
-                ACTIVITY_INTENT = new Intent(Settings_ResetPin.this, Settings.class);
-                Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                Settings_ResetPin.this.startActivity(ACTIVITY_INTENT);
+                progressBar();
             }
-        } else
-        {
-            Toast.makeText(this, "Please Try Again", Toast.LENGTH_SHORT).show();
-            mTextView.setText(R.string.NewPin);
-        }
+
+            @Override
+            protected Void doInBackground(Void... params)
+            {
+                final String pinFirst = mPinFirst;
+                final String pinSecond = mPinSecond;
+
+                mPinFirst = "";
+                mPinSecond = "";
+
+                if ((pinFirst.matches(pinSecond)) && (!pinFirst.matches("") || (!pinSecond.matches(""))))
+                {
+                    final String pinHash; // GENERATE THE HASH PIN
+                    try
+                    {
+                        CryptKeyHandler cryptKeyHandler = new CryptKeyHandler(mContext);
+                        pinHash = cryptKeyHandler.ENCRYPTKEY(SHA256PinHash.hashFunction(pinFirst, SHA256PinHash.generateSalt()), pinFirst);
+
+                        mSharedPreferences.edit().putString(PIN, pinHash).apply(); // ADD HASHED PIN TO STORE
+                        System.out.println("HASHED PIN :" + pinHash);
+                        mSharedPreferences.edit().putString(CRYPT_KEY,
+                                        cryptKeyHandler.ENCRYPTKEY(
+                                        cryptKeyHandler.DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN), pinFirst))
+                                        .apply();
+                        TEMP_PIN = pinFirst;
+                        MASTER_KEY = cryptKeyHandler.DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN);
+
+                        mProgressDialog.dismiss();
+
+                        ACTIVITY_INTENT = new Intent(mContext, Settings.class);
+                        runOnUiThread(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                Toast.makeText(mContext, "Pin Successfully Reset", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        mContext.startActivity(ACTIVITY_INTENT);
+
+                    } catch (Exception e)
+                    {
+                        e.printStackTrace();
+
+                        mProgressDialog.dismiss();
+
+                        ACTIVITY_INTENT = new Intent(mContext, Settings.class);
+                        runOnUiThread(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        mContext.startActivity(ACTIVITY_INTENT);
+                    }
+                } else
+                {
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            Toast.makeText(mContext, "Please Try Again", Toast.LENGTH_SHORT).show();
+                            mTextView.setText(R.string.NewPin);
+                        }
+                    });
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid)
+            {
+                super.onPostExecute(aVoid);
+
+                clear();
+                mProgressDialog.dismiss();
+            }
+        }.execute();
     }
 
     public void incrementIndexNumber()
@@ -225,4 +295,14 @@ public class Settings_ResetPin extends AppCompatActivity implements View.OnClick
         mArray = new String[mArray.length];
         mIndex = -1;
     }
+
+    private void progressBar()
+    {
+        mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog.setMessage("Verifying...");
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
+
 }

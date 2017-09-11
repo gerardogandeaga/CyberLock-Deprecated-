@@ -9,20 +9,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.LoginInfoEditActivity;
+import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.MemoEditActivity;
+import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.PaymentInfoEditActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.Encryption.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.Encryption.SHA256PinHash;
-import com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.LoginInfo;
-import com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.LoginInfoEditActivity;
-import com.gerardogandeaga.cyberlock.EncryptionFeatures.PaymentInfo.PaymentInfo;
-import com.gerardogandeaga.cyberlock.EncryptionFeatures.PaymentInfo.PaymentInfoEditActivity;
-import com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.Memo;
-import com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MemoEditActivity;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.Data;
 import com.gerardogandeaga.cyberlock.R;
 
 import java.util.Arrays;
@@ -64,6 +63,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         LogoutProtocol.ACTIVITY_INTENT = null;
 
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }
+
         mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
 
         mIntent = getIntent();
@@ -75,6 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             LogoutProtocol.ACTIVITY_INTENT = new Intent(this, RegistrationActivity.class);
             this.finish();
             this.startActivity(LogoutProtocol.ACTIVITY_INTENT);
+            System.out.println("CALLED!");
         }
         else // CREATE ALL THE WIDGETS
         {
@@ -221,17 +225,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             {
                 case ("MEMO_EDIT"):
                     i = new Intent(LoginActivity.this, MemoEditActivity.class);
-                    i.putExtra("MEMO", (Memo) bundle.get("lastDatabase"));
+                    i.putExtra("MEMO", (Data) bundle.get("lastDatabase"));
                     break;
 
                 case ("PAYMENTINFO_EDIT"):
                     i = new Intent(LoginActivity.this, PaymentInfoEditActivity.class);
-                    i.putExtra("PAYMENTINFO", (PaymentInfo) bundle.get("lastDatabase"));
+                    i.putExtra("PAYMENTINFO", (Data) bundle.get("lastDatabase"));
                     break;
 
                 case ("LOGININFO_EDIT"):
                     i = new Intent(LoginActivity.this, LoginInfoEditActivity.class);
-                    i.putExtra("LOGININFO", (LoginInfo) bundle.get("lastDatabase"));
+                    i.putExtra("LOGININFO", (Data) bundle.get("lastDatabase"));
                     break;
 
                 default:
@@ -269,8 +273,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     final String decryptedPulledPin = new CryptKeyHandler(mContext).DECRYPTKEY(mSharedPreferences.getString(PIN, null), mPin);
                     final String loginPinHash = SHA256PinHash.hashFunction(mPin, Arrays.copyOfRange(Base64.decode(decryptedPulledPin, FLAGS), 0, 128));
 
-//                    System.out.println("LOGIN INPUT: " + loginPinHash);
-//                    System.out.println("CACHED HASH: " + decryptedPulledPin);
+                    System.out.println("LOGIN INPUT: " + loginPinHash);
+                    System.out.println("CACHED HASH: " + decryptedPulledPin);
 
                     if (decryptedPulledPin.equals(loginPinHash)) /// TEST PERIODICALLY INPUTTED PIN AGAINST CACHED PIN
                     {
@@ -300,7 +304,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(mContext, "Something Went Wrong...", Toast.LENGTH_SHORT).show(); // SOMETHING WENT WRONG WITH DATA COMPARISONS
+                            Toast.makeText(mContext, "Please Try Again", Toast.LENGTH_SHORT).show(); // SOMETHING WENT WRONG WITH DATA COMPARISONS
                         }
                     });
                 }

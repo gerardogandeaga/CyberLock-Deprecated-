@@ -35,9 +35,7 @@ public class LogoutProtocol
             {
                 mCountDownIsFinished = true;
 
-                mSharedPreferences = context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-                mSharedPreferences.edit().remove(TEMP_PIN).apply();
-
+                TEMP_PIN = null;
                 MASTER_KEY = null;
                 APP_LOGGED_IN = false;
             }
@@ -66,9 +64,8 @@ public class LogoutProtocol
 
     public void logoutImmediate(final Context context)
     {
-        mSharedPreferences = context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-        mSharedPreferences.edit().remove(TEMP_PIN).apply();
 
+        TEMP_PIN = null;
         MASTER_KEY = null;
         APP_LOGGED_IN = false;
     }

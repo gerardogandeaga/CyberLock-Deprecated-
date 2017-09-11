@@ -1,4 +1,4 @@
-package com.gerardogandeaga.cyberlock.EncryptionFeatures.PaymentInfo;
+package com.gerardogandeaga.cyberlock.Activitys.Activities.Edits;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -19,8 +20,14 @@ import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
+import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.Data;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.R;
+
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
@@ -34,14 +41,24 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 public class PaymentInfoEditActivity extends AppCompatActivity
 {
     // DATA
-    private CryptContent mContent;
-    private PaymentInfo mPaymentInfo;
+    private CryptContent mCryptContent;
+    private Data mData;
     private String mCardType;
     private ArrayAdapter<CharSequence> mAdapter;
     // WIDGETS
-    private EditText mEtLabel, mEtCardName, mEtCardNumber, mEtCardExpire, mEtCardSecCode, mEtNotes, mEtQuestion1, mEtQuestion2, mEtAnswer1, mEtAnswer2;
     private TextView mTvDate;
     private Spinner mSpCardSelect;
+    private EditText
+            mEtLabel,
+            mEtCardName,
+            mEtCardNumber,
+            mEtCardExpire,
+            mEtCardSecCode,
+            mEtNotes,
+            mEtQuestion1,
+            mEtQuestion2,
+            mEtAnswer1,
+            mEtAnswer2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -49,6 +66,10 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_paymentinfo);
         ACTIVITY_INTENT = null;
+
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -153,9 +174,16 @@ public class PaymentInfoEditActivity extends AppCompatActivity
 
         switch (id)
         {
-            case (R.id.action_save): onSave(); onBackPressed(); return true;
-            case (R.id.action_cancel): onCancel(); return true;
-            case android.R.id.home: onBackPressed(); return true;
+            case (R.id.action_save):
+                onSave();
+                onBackPressed();
+                return true;
+            case (R.id.action_cancel):
+                onCancel();
+                return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -163,77 +191,55 @@ public class PaymentInfoEditActivity extends AppCompatActivity
 
     public void onSave()
     {
-        PaymentInfoDatabaseAccess paymentInfoDatabaseAccess = PaymentInfoDatabaseAccess.getInstance(this);
-        paymentInfoDatabaseAccess.open();
+        MasterDatabaseAccess masterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
+        masterDatabaseAccess.open();
 
         if ((!mEtLabel.getText().toString().matches("")) || (!mEtCardName.getText().toString().matches("")) || (!mEtCardNumber.getText().toString().matches("")) || (!mEtCardExpire.getText().toString().matches("")) || (!mEtCardSecCode.getText().toString().matches("")) || (!mEtNotes.getText().toString().matches("")) || (!mEtQuestion1.getText().toString().matches("")) || (!mEtQuestion2.getText().toString().matches("")) || (!mEtAnswer1.getText().toString().matches("")) || (!mEtAnswer2.getText().toString().matches("")))
         {
+            final String cardName = mEtCardName.getText().toString();
+            final String cardNumber = mEtCardNumber.getText().toString();
+            final String cardType = mCardType;
+            final String cardExpire = mEtCardExpire.getText().toString();
+            final String cardSecCode = mEtCardSecCode.getText().toString();
+            final String question1 = mEtQuestion1.getText().toString();
+            final String question2 = mEtQuestion2.getText().toString();
+            final String answer1 = mEtAnswer1.getText().toString();
+            final String answer2 = mEtAnswer2.getText().toString();
+            final String notes = mEtNotes.getText().toString();
 
-            if (mPaymentInfo == null) // WHEN SAVING A NEW UNKNOWN MEMO
+            final String format = "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s";
+            final String tmpString = String.format(format,
+                    cardName, cardNumber, cardType, cardExpire, cardSecCode, question1, question2, answer1, answer2, notes);
+
+            if (mData == null)
             {
-                // ADD NEW PAYMENT INFO
-                PaymentInfo temp = new PaymentInfo();
 
-                // SET INFO
-                temp.setCardName(mContent.encryptContent(mEtCardName.getText().toString(), MASTER_KEY)); // SET NAME
-                temp.setCardNumber(mContent.encryptContent(mEtCardNumber.getText().toString(), MASTER_KEY)); // SET NUMBER
-                temp.setCardExpire(mContent.encryptContent(mEtCardExpire.getText().toString(), MASTER_KEY)); // SET EXPIRE
-                temp.setCardSecCode(mContent.encryptContent(mEtCardSecCode.getText().toString(), MASTER_KEY)); // SET SEC CODE
-                temp.setQuestion1(mContent.encryptContent(mEtQuestion1.getText().toString(), MASTER_KEY)); // SET QUESTION
-                temp.setQuestion2(mContent.encryptContent(mEtQuestion2.getText().toString(), MASTER_KEY)); // SET QUESTION
-                temp.setAnswer1(mContent.encryptContent(mEtAnswer1.getText().toString(), MASTER_KEY)); // SET ANSWER
-                temp.setAnswer2(mContent.encryptContent(mEtAnswer2.getText().toString(), MASTER_KEY)); // SET ANSWER
-                temp.setNotes(mContent.encryptContent(mEtNotes.getText().toString(), MASTER_KEY)); // SET NOTES
-                if (!mEtLabel.getText().toString().matches(""))
-                {
-                    temp.setLabel(mEtLabel.getText().toString());
-                } else
-                {
-                    temp.setLabel("");
-                } // SET TAG
-                temp.setCardType(mCardType); // SET CARD TYPE
+                Data tmp = new Data();
 
-                // SAVE NEW DATA TABLE
-                paymentInfoDatabaseAccess.save(temp);
-            } else
-            {
-                // UPDATE THE PAYMENT INFO
-                // SET INFO
-                mPaymentInfo.setCardName(mContent.encryptContent(mEtCardName.getText().toString(), MASTER_KEY)); // SET NAME
-                mPaymentInfo.setCardNumber(mContent.encryptContent(mEtCardNumber.getText().toString(), MASTER_KEY)); // SET NUMBER
-                mPaymentInfo.setCardExpire(mContent.encryptContent(mEtCardExpire.getText().toString(), MASTER_KEY)); // SET EXPIRE
-                mPaymentInfo.setCardSecCode(mContent.encryptContent(mEtCardSecCode.getText().toString(), MASTER_KEY)); // SET SEC CODE
-                mPaymentInfo.setQuestion1(mContent.encryptContent(mEtQuestion1.getText().toString(), MASTER_KEY)); // SET QUESTION
-                mPaymentInfo.setQuestion2(mContent.encryptContent(mEtQuestion2.getText().toString(), MASTER_KEY)); // SET QUESTION
-                mPaymentInfo.setAnswer1(mContent.encryptContent(mEtAnswer1.getText().toString(), MASTER_KEY)); // SET ANSWER
-                mPaymentInfo.setAnswer2(mContent.encryptContent(mEtAnswer2.getText().toString(), MASTER_KEY)); // SET ANSWER
-                mPaymentInfo.setNotes(mContent.encryptContent(mEtNotes.getText().toString(), MASTER_KEY)); // SET NOTES
-                if (!mEtLabel.getText().toString().matches(""))
-                {
-                    mPaymentInfo.setLabel(mEtLabel.getText().toString());
-                } else
-                {
-                    mPaymentInfo.setLabel("");
-                } // SET LABEL AND CARD TYPE
-                mPaymentInfo.setCardType(mCardType);
+                tmp.setType("TYPE_PAYMENTINFO");
+                tmp.setLabel(mCryptContent.encryptContent(mEtLabel.getText().toString(), MASTER_KEY));
+                tmp.setContent(mCryptContent.encryptContent(tmpString, MASTER_KEY));
 
-                // UPDATE DATA TABLE
-                paymentInfoDatabaseAccess.update(mPaymentInfo);
+                masterDatabaseAccess.save(tmp);
+            } else {
+
+                mData.setLabel(mCryptContent.encryptContent(mEtLabel.getText().toString(), MASTER_KEY));
+                mData.setContent(mCryptContent.encryptContent(tmpString, MASTER_KEY));
+
+                masterDatabaseAccess.update(mData);
             }
+            masterDatabaseAccess.close();
+        } else {
 
-            paymentInfoDatabaseAccess.close();
-        } else
-        {
+            masterDatabaseAccess.close();
             Toast.makeText(this, "Nothing to save", Toast.LENGTH_SHORT).show();
-
-            paymentInfoDatabaseAccess.close();
         }
     }
 
     private void onCancel()
     {
-        ACTIVITY_INTENT = new Intent(this, MainPaymentInfoActivity.class);
-        finish();
+        ACTIVITY_INTENT = new Intent(this, MainActivity.class);
+        this.finish();
         this.startActivity(ACTIVITY_INTENT);
     }
 
@@ -247,58 +253,84 @@ public class PaymentInfoEditActivity extends AppCompatActivity
 
     private void setupActivity(Bundle bundle)
     {
-        mContent = new CryptContent(this);
+        mCryptContent = new CryptContent(this);
         if (bundle != null)
         {
-            mPaymentInfo = (PaymentInfo) bundle.get("PAYMENTINFO");
-            if (mPaymentInfo != null)
+            mData = (Data) bundle.get("DATA");
+
+            // LOAD THE ACTIVITY WITH SAVED CONTENT
+            if (mData != null)
             {
                 try
                 {
-                    String label = mContent.decryptContent(mPaymentInfo.getLabel(), MASTER_KEY);
-                    String cardName = mContent.decryptContent(mPaymentInfo.getCardName(), MASTER_KEY);
-                    String cardNumber = mContent.decryptContent(mPaymentInfo.getCardNumber(), MASTER_KEY);
-                    String cardExpire = mContent.decryptContent(mPaymentInfo.getCardExpire(), MASTER_KEY);
-                    String cardSecCode = mContent.decryptContent(mPaymentInfo.getCardSecCode(), MASTER_KEY);
-                    String question1 = mContent.decryptContent(mPaymentInfo.getQuestion1(), MASTER_KEY);
-                    String question2 = mContent.decryptContent(mPaymentInfo.getQuestion2(), MASTER_KEY);
-                    String answer1 = mContent.decryptContent(mPaymentInfo.getAnswer1(), MASTER_KEY);
-                    String answer2 = mContent.decryptContent(mPaymentInfo.getAnswer2(), MASTER_KEY);
-                    String notes = mContent.decryptContent(mPaymentInfo.getNotes(), MASTER_KEY);
+                    String label = mCryptContent.decryptContent(mData.getLabel(), MASTER_KEY);
+                    mEtLabel.setText(label);
 
-                    if (label != null) mEtLabel.setText(label);
-                    if (cardName != null) mEtCardName.setText(cardName);
-                    if (cardNumber != null) mEtCardNumber.setText(cardNumber);
-                    if (cardExpire != null) mEtCardExpire.setText(cardExpire);
-                    if (cardSecCode != null) mEtCardSecCode.setText(cardSecCode);
-                    if (question1 != null) mEtQuestion1.setText(question1);
-                    if (question2 != null) mEtQuestion2.setText(question2);
-                    if (answer1 != null) mEtAnswer1.setText(answer1);
-                    if (answer2 != null) mEtAnswer2.setText(answer2);
-                    if (notes != null) mEtNotes.setText(notes);
+                    String cardName;
+                    String cardNumber;
+                    String cardType;
+                    String cardExpire;
+                    String cardSecCode;
+                    String question1;
+                    String question2;
+                    String answer1;
+                    String answer2;
+                    String notes;
 
-                    // SET LABEL AND CARD TYPE
-                    if (!mPaymentInfo.getCardType().matches("")) {
-                        int spinnerPosition = mAdapter.getPosition(mPaymentInfo.getCardType());
+                    final String content = mCryptContent.decryptContent(mData.getContent(), MASTER_KEY);
+                    if (content != null)
+                    {
+                        Scanner scanner = new Scanner(content);
+
+                        cardName = scanner.nextLine();
+                        cardNumber = scanner.nextLine();
+                        cardType = scanner.nextLine();
+                        cardExpire = scanner.nextLine();
+                        cardSecCode = scanner.nextLine();
+                        question1 = scanner.nextLine();
+                        question2 = scanner.nextLine();
+                        answer1 = scanner.nextLine();
+                        answer2 = scanner.nextLine();
+                        try
+                        {
+                            notes = scanner.nextLine();
+                            while (scanner.hasNextLine())
+                            {
+                                notes += "\n";
+                                notes += scanner.hasNextLine();
+                            }
+                            mEtNotes.setText(notes);
+                        } catch (NoSuchElementException e) {
+                            e.printStackTrace();
+                        }
+                        scanner.close();
+
+                        mEtCardName.setText(cardName);
+                        mEtCardNumber.setText(cardNumber);
+                        mEtCardExpire.setText(cardExpire);
+                        mEtCardSecCode.setText(cardSecCode);
+                        mEtQuestion1.setText(question1);
+                        mEtQuestion2.setText(question2);
+                        mEtAnswer1.setText(answer1);
+                        mEtAnswer2.setText(answer2);
+
+                        int spinnerPosition = mAdapter.getPosition(cardType);
                         mSpCardSelect.setSelection(spinnerPosition);
                     }
 
-                    if (!mPaymentInfo.getDate().matches("")) {
-                        this.mTvDate.setText("Last Updated: " + mPaymentInfo.getDate());
+                    if (!mData.getDate().matches("")) {
+                        mTvDate.setText("Last Updated: " + mData.getDate());
                     } else {
-                        this.mTvDate.setText("Last Updated: ---");
+                        mTvDate.setText("Last Updated: ---");
                     }
 
-                } catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(this, "Error: could not set one or more text fields", Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
-
-
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
     @Override
     protected void onStart()
@@ -313,7 +345,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
 
                 ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
                 ACTIVITY_INTENT.putExtra("lastActivity", "PAYMENTINFO_EDIT");
-                ACTIVITY_INTENT.putExtra("lastDatabase", mPaymentInfo);
+                ACTIVITY_INTENT.putExtra("lastDatabase", mData);
 
                 this.finish(); // CLEAN UP AND END
                 this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
@@ -338,7 +370,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         {
             if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) { onSave(); }
 
-            ACTIVITY_INTENT = new Intent(this, MainPaymentInfoActivity.class);
+            ACTIVITY_INTENT = new Intent(this, MainActivity.class);
             finish();
             this.startActivity(ACTIVITY_INTENT);
         }

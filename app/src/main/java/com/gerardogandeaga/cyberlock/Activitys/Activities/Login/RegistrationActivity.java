@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -54,6 +55,10 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setpin);
         LogoutProtocol.ACTIVITY_INTENT = null;
+
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }
 
         mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
 
@@ -246,7 +251,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
 
                 if ((pinFirst.matches(pinSecond)) && (!pinFirst.matches("") || (!pinSecond.matches(""))))
                 {
-                    final String passwordHash; // GENERATE THE HASH PIN
+                    final String passwordHashAndEcnrypted; // GENERATE THE HASH PIN
                     try
                     {
                         // INITIAL ENCRYPTION ALGORITHM
@@ -255,10 +260,11 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
                         CryptKeyHandler keyHandler = new CryptKeyHandler(mContext); // START THE KEY HANDLER
 
                         // PIN AND ENCRYPTION PROCESSES
-                        passwordHash = keyHandler.ENCRYPTKEY(SHA256PinHash.hashFunction(pinFirst, SHA256PinHash.generateSalt()), pinFirst);
+                        String pinHash = SHA256PinHash.hashFunction(pinFirst, SHA256PinHash.generateSalt());
+                        passwordHashAndEcnrypted = keyHandler.ENCRYPTKEY(pinHash, pinFirst);
 
-                        mSharedPreferences.edit().putString(PIN, passwordHash).apply(); // ADD HASHED PIN TO STORE
-                        System.out.println("HASHED PIN :" + passwordHash);
+                        mSharedPreferences.edit().putString(PIN, passwordHashAndEcnrypted).apply(); // ADD HASHED PIN TO STORE
+                        System.out.println("HASHED PIN :" + passwordHashAndEcnrypted);
 
                         byte[] KEY_Byte = keyHandler.BYTE_KEY_GENERATE(); // GENERATE A NEW BYTE ARRAY AS A SYMMETRIC KEY
                         byte[] ENC_DEC_KEY_ByteVal = keyHandler.KEY_GENERATE(KEY_Byte);

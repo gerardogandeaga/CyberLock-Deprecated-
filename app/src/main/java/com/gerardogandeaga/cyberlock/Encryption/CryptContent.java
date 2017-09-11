@@ -18,7 +18,7 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
 public class CryptContent
 {
     // DATA
-    private static String ALGO, CipherALGO;
+    private String ALGO, CipherALGO;
     private int IVLength;
     // STORED SETTINGS
     private SharedPreferences mSharedPreferences;
@@ -29,6 +29,7 @@ public class CryptContent
         ALGO = mSharedPreferences.getString(ENCRYPTION_ALGO, "AES");
         CipherALGO = ALGO + "/CBC/PKCS5Padding";
 
+        System.out.println("CREATE ALGO " + ALGO);
         switch (ALGO)
         {
             case "AES":
@@ -92,6 +93,7 @@ public class CryptContent
 
         try
         {
+            System.out.println("ENCRYPTION ALGO " + ALGO);
             System.out.println("decryptContent: DECRYPT STARTING...");
             byte[] encryptedCombinedBytes = Base64.decode(dataToDecrypt, FLAGS);
 

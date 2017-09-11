@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grayD9"
-    tools:context="com.gerardogandeaga.cyberlock.EncryptionFeatures.Playground.MainPlaygroundActivity">
+    tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainPlaygroundActivity">
 
     <include
         android:id="@+id/include"

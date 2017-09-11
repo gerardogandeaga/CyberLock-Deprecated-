@@ -78,7 +78,7 @@
                 android:layout_height="match_parent"
                 android:layout_below="@+id/etTag"
                 android:layout_margin="20dp"
-                android:background="@drawable/gray_dark_curved"
+                android:background="@drawable/xml_gray_dark_curved"
                 android:orientation="vertical"
                 android:padding="5dp">
 
@@ -124,7 +124,7 @@
                     android:ems="10"
                     android:fontFamily="monospace"
                     android:hint="Email"
-                    android:inputType="textWebEmailAddress"
+                    android:inputType="text"
                     android:textAlignment="center"
                     android:textSize="16sp"/>
 
@@ -140,7 +140,7 @@
                     android:ems="10"
                     android:fontFamily="monospace"
                     android:hint="Password"
-                    android:inputType="textVisiblePassword"
+                    android:inputType="text"
                     android:textAlignment="center"
                     android:textSize="16sp"/>
 

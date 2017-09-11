@@ -1,4 +1,4 @@
-package com.gerardogandeaga.cyberlock.EncryptionFeatures.Playground;
+package com.gerardogandeaga.cyberlock.Activitys.Activities.Main;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -10,13 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.Encryption.CryptPlayground;
 import com.gerardogandeaga.cyberlock.R;
 
@@ -49,6 +49,10 @@ public class MainPlaygroundActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_playground);
         ACTIVITY_INTENT = null; // START ACTIVITY WITH EMPTY INTENT\
+
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }
 
         setupActivity();
     }

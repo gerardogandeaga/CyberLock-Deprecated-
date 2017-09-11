@@ -9,7 +9,7 @@
 
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
-        app:layout_heightPercent="30%"
+        app:layout_heightPercent="25%"
         android:id="@+id/percentRelativeLayout2">
 
         <ImageView
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/navigation_wallpaper"
+            app:srcCompat="@drawable/wallpaper_drawer"
             android:layout_alignParentBottom="true"/>
 
         <TextView

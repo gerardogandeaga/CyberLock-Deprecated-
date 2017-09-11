@@ -1,4 +1,4 @@
-package com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo;
+package com.gerardogandeaga.cyberlock.Activitys.Activities.Edits;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,14 +7,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
+import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.Data;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.R;
+
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
@@ -28,12 +35,17 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 public class LoginInfoEditActivity extends AppCompatActivity
 {
     // DATA
-    private CryptContent mContent;
-    private LoginInfo mLoginInfo;
+    private CryptContent mCryptContent;
+    private Data mData;
     // WIDGETS
-    private EditText mEtLabel, mEtUrl, mEtUsername, mEtEmail, mEtPassword, mEtNotes;
     private TextView mTvDate;
-
+    private EditText
+            mEtLabel,
+            mEtUrl,
+            mEtUsername,
+            mEtEmail,
+            mEtPassword,
+            mEtNotes;
 //    private static final int PICK_IMAGE = 100;
 
     @Override
@@ -42,6 +54,10 @@ public class LoginInfoEditActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_logininfo);
         ACTIVITY_INTENT = null;
+
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,7 +94,6 @@ public class LoginInfoEditActivity extends AppCompatActivity
         switch (id)
         {
             case (R.id.action_save):
-                Toast.makeText(this, "Encrypting...", Toast.LENGTH_SHORT).show();
                 onSave();
                 onBackPressed();
                 return true;
@@ -147,67 +162,50 @@ public class LoginInfoEditActivity extends AppCompatActivity
 
     private void onSave()
     {
-        LoginInfoDatabaseAccess loginInfoDatabaseAccess = LoginInfoDatabaseAccess.getInstance(this);
-        loginInfoDatabaseAccess.open();
+        MasterDatabaseAccess masterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
+        masterDatabaseAccess.open();
 
         if ((!mEtLabel.getText().toString().matches("")) || (!mEtUrl.getText().toString().matches("")) || (!mEtUsername.getText().toString().matches("")) || (!mEtEmail.getText().toString().matches("")) || (!mEtPassword.getText().toString().matches("")) || (!mEtNotes.getText().toString().matches("")))
         {
-            if (mLoginInfo == null) // WHEN SAVING A NEW UNKNOWN LOGIN INFO
+            final String url = mEtUrl.getText().toString();
+            final String username = mEtUsername.getText().toString();
+            final String email = mEtEmail.getText().toString();
+            final String password = mEtPassword.getText().toString();
+            final String notes = mEtNotes.getText().toString();
+
+            final String format = "%s\n%s\n%s\n%s\n%s";
+            final String tmpString = String.format(format,
+                    url, username, email, password, notes);
+
+            if (mData == null)
             {
-                // ADD NEW LOGIN INFO
-                LoginInfo temp = new LoginInfo();
 
-                // SET INFO
-                temp.setUrl(mContent.encryptContent(mEtUrl.getText().toString(), MASTER_KEY)); // SET URL
-                temp.setUsername(mContent.encryptContent(mEtUsername.getText().toString(), MASTER_KEY)); // SET USERNAME
-                temp.setEmail(mContent.encryptContent(mEtEmail.getText().toString(), MASTER_KEY)); // SET EMAIL
-                temp.setPassword(mContent.encryptContent(mEtPassword.getText().toString(), MASTER_KEY)); // SET PASSWORD
-                temp.setNotes(mContent.encryptContent(mEtNotes.getText().toString(), MASTER_KEY)); // SET NOTES
-                if (!mEtLabel.getText().toString().matches(""))
-                {
-                    temp.setLabel(mEtLabel.getText().toString());
-                } else
-                {
-                    temp.setLabel("");
-                } // SET TAG
-//                temp.setImage(saveImageToDataBase()); // SET IMAGE
+                Data tmp = new Data();
 
-                // SAVE NEW DATA TABLE
-                loginInfoDatabaseAccess.save(temp);
-            } else
-            {
-                // UPDATE THE LOGIN INFO
-                // SET INFO
-                mLoginInfo.setUrl(mContent.encryptContent(mEtUrl.getText().toString(), MASTER_KEY)); // SET URL
-                mLoginInfo.setUsername(mContent.encryptContent(mEtUsername.getText().toString(), MASTER_KEY)); // SET USERNAME
-                mLoginInfo.setEmail(mContent.encryptContent(mEtEmail.getText().toString(), MASTER_KEY)); // SET EMAIL
-                mLoginInfo.setPassword(mContent.encryptContent(mEtPassword.getText().toString(), MASTER_KEY)); // SET PASSWORD
-                mLoginInfo.setNotes(mContent.encryptContent(mEtNotes.getText().toString(), MASTER_KEY)); // SET NOTES
-                if (!mEtLabel.getText().toString().matches(""))
-                {
-                    mLoginInfo.setLabel(mEtLabel.getText().toString());
-                } else
-                {
-                    mLoginInfo.setLabel("");
-                } // SET TAG
-//                mLoginInfo.setImage(saveImageToDataBase()); // SET IMAGE
+                tmp.setType("TYPE_LOGININFO");
+                tmp.setLabel(mCryptContent.encryptContent(mEtLabel.getText().toString(), MASTER_KEY));
+                tmp.setContent(mCryptContent.encryptContent(tmpString, MASTER_KEY));
 
-                // UPDATE DATA TABLE
-                loginInfoDatabaseAccess.update(mLoginInfo);
+                masterDatabaseAccess.save(tmp);
+            } else {
+
+                mData.setLabel(mCryptContent.encryptContent(mEtLabel.getText().toString(), MASTER_KEY));
+                mData.setContent(mCryptContent.encryptContent(tmpString, MASTER_KEY));
+
+                masterDatabaseAccess.update(mData);
             }
 
-            loginInfoDatabaseAccess.close();
-        } else
-        {
-            Toast.makeText(this, "Nothing to save", Toast.LENGTH_SHORT).show();
+            masterDatabaseAccess.close();
+        } else {
 
-            loginInfoDatabaseAccess.close();
+            masterDatabaseAccess.close();
+            Toast.makeText(this, "Nothing to save", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void onCancel()
     {
-        ACTIVITY_INTENT = new Intent(this, MainLoginInfoActivity.class);
+        ACTIVITY_INTENT = new Intent(this, MainActivity.class);
         this.finish();
         this.startActivity(ACTIVITY_INTENT);
     }
@@ -222,37 +220,58 @@ public class LoginInfoEditActivity extends AppCompatActivity
 
     private void setupActivity(Bundle bundle)
     {
-        mContent = new CryptContent(this);
+        mCryptContent = new CryptContent(this);
         if (bundle != null)
         {
-            mLoginInfo = (LoginInfo) bundle.get("LOGININFO");
-            if (mLoginInfo != null)
+            mData = (Data) bundle.get("DATA");
+            if (mData != null)
             {
                 try
                 {
-                    String label = mContent.decryptContent(mLoginInfo.getLabel(), MASTER_KEY);
-                    String url = mContent.decryptContent(mLoginInfo.getUrl(), MASTER_KEY);
-                    String username = mContent.decryptContent(mLoginInfo.getUsername(), MASTER_KEY);
-                    String email = mContent.decryptContent(mLoginInfo.getEmail(), MASTER_KEY);
-                    String password = mContent.decryptContent(mLoginInfo.getPassword(), MASTER_KEY);
-                    String notes = mContent.decryptContent(mLoginInfo.getNotes(), MASTER_KEY);
-                    String date = mLoginInfo.getDate();
+                    String label = mCryptContent.decryptContent(mData.getLabel(), MASTER_KEY);
+                    mEtLabel.setText(label);
 
-                    // DECRYPT CONTENT
-                    if (label != null) mEtLabel.setText(label);
-                    if (url != null) mEtUrl.setText(url);
-                    if (username != null) mEtUsername.setText(username);
-                    if (email != null) mEtEmail.setText(email);
-                    if (password != null) mEtPassword.setText(password);
-                    if (notes != null) mEtNotes.setText(notes);
+                    String url;
+                    String username;
+                    String email;
+                    String password;
+                    String notes;
 
-                    if (!mLoginInfo.getDate().matches("")) {
-                        this.mTvDate.setText("Last Updated: " + date);
+                    final String content = mCryptContent.decryptContent(mData.getContent(), MASTER_KEY);
+                    if (content != null)
+                    {
+                        Scanner scanner = new Scanner(content);
+
+                        url = scanner.nextLine();
+                        username = scanner.nextLine();
+                        email = scanner.nextLine();
+                        password = scanner.nextLine();
+                        try
+                        {
+                            notes = scanner.nextLine();
+                            while (scanner.hasNextLine())
+                            {
+                                notes += "\n";
+                                notes += scanner.hasNextLine();
+                            }
+                            mEtNotes.setText(notes);
+                        } catch (NoSuchElementException e) {
+                            e.printStackTrace();
+                        }
+                        scanner.close();
+
+                        mEtUrl.setText(url);
+                        mEtUsername.setText(username);
+                        mEtEmail.setText(email);
+                        mEtPassword.setText(password);
+                    }
+
+                    if (!mData.getDate().matches("")) {
+                        this.mTvDate.setText("Last Updated: " + mData.getDate());
                     } else {
                         this.mTvDate.setText("Last Updated: ---");
                     }
 
-                    System.gc();
                 } catch (Exception e)
                 {
                     e.printStackTrace();
@@ -261,7 +280,6 @@ public class LoginInfoEditActivity extends AppCompatActivity
             }
         }
     }
-
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE" //
     @Override
     protected void onStart()
@@ -276,7 +294,7 @@ public class LoginInfoEditActivity extends AppCompatActivity
 
                 ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
                 ACTIVITY_INTENT.putExtra("lastActivity", "LOGININFO_EDIT");
-                ACTIVITY_INTENT.putExtra("lastDatabase", mLoginInfo);
+                ACTIVITY_INTENT.putExtra("lastDatabase", mData);
 
                 this.finish(); // CLEAN UP AND END
                 this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
@@ -301,7 +319,7 @@ public class LoginInfoEditActivity extends AppCompatActivity
         {
             if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) { onSave(); }
 
-            ACTIVITY_INTENT = new Intent(this, MainLoginInfoActivity.class);
+            ACTIVITY_INTENT = new Intent(this, MainActivity.class);
             finish();
             this.startActivity(ACTIVITY_INTENT);
         }
