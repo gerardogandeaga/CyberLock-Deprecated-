@@ -25,6 +25,7 @@ import static com.gerardogandeaga.cyberlock.R.id.input2;
 import static com.gerardogandeaga.cyberlock.R.id.input3;
 import static com.gerardogandeaga.cyberlock.R.id.input4;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.COMPLEXPASSCODE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
@@ -38,12 +39,12 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
 
     private SharedPreferences mSharedPreferences;
     // PIN ARRAY VARIABLES
-    private static boolean mArrayFull = false;
+    private static boolean mIsArrayFull = false;
     private static int mIndex = -1;
     private static String[] mArray = new String[4];
     // WIDGETS
-    private TextView mTextView;
-    private Button mBtn0, mBtn1, mBtn2, mBtn3, mBtn4, mBtn5, mBtn6, mBtn7, mBtn8, mBtn9;
+    private TextView mTextDisplay;
+    private Button m0, m1, m2, m3, m4, m5, m6, m7, m8, m9;
     private RadioButton mInput1, mInput2, mInput3, mInput4;
     private ProgressDialog mProgressDialog;
 
@@ -70,18 +71,18 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
         }
         else
         {
-            mTextView = (TextView) findViewById(R.id.tvInstructions);
+            mTextDisplay = (TextView) findViewById(R.id.tvInstructions);
 
-            this.mBtn0 = (Button) findViewById(R.id.btn0);
-            this.mBtn1 = (Button) findViewById(R.id.btn1);
-            this.mBtn2 = (Button) findViewById(R.id.btn2);
-            this.mBtn3 = (Button) findViewById(R.id.btn3);
-            this.mBtn4 = (Button) findViewById(R.id.btn4);
-            this.mBtn5 = (Button) findViewById(R.id.btn5);
-            this.mBtn6 = (Button) findViewById(R.id.btn6);
-            this.mBtn7 = (Button) findViewById(R.id.btn7);
-            this.mBtn8 = (Button) findViewById(R.id.btn8);
-            this.mBtn9 = (Button) findViewById(R.id.btn9);
+            this.m0 = (Button) findViewById(R.id.btn0);
+            this.m1 = (Button) findViewById(R.id.btn1);
+            this.m2 = (Button) findViewById(R.id.btn2);
+            this.m3 = (Button) findViewById(R.id.btn3);
+            this.m4 = (Button) findViewById(R.id.btn4);
+            this.m5 = (Button) findViewById(R.id.btn5);
+            this.m6 = (Button) findViewById(R.id.btn6);
+            this.m7 = (Button) findViewById(R.id.btn7);
+            this.m8 = (Button) findViewById(R.id.btn8);
+            this.m9 = (Button) findViewById(R.id.btn9);
             ImageButton btnBackspace = (ImageButton) findViewById(R.id.btnBackspace);
 
             this.mInput1 = (RadioButton) findViewById(input1);
@@ -94,19 +95,19 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
             this.mInput3.setClickable(false);
             this.mInput4.setClickable(false);
 
-            this.mBtn0.setOnClickListener(this);
-            this.mBtn1.setOnClickListener(this);
-            this.mBtn2.setOnClickListener(this);
-            this.mBtn3.setOnClickListener(this);
-            this.mBtn4.setOnClickListener(this);
-            this.mBtn5.setOnClickListener(this);
-            this.mBtn6.setOnClickListener(this);
-            this.mBtn7.setOnClickListener(this);
-            this.mBtn8.setOnClickListener(this);
-            this.mBtn9.setOnClickListener(this);
+            this.m0.setOnClickListener(this);
+            this.m1.setOnClickListener(this);
+            this.m2.setOnClickListener(this);
+            this.m3.setOnClickListener(this);
+            this.m4.setOnClickListener(this);
+            this.m5.setOnClickListener(this);
+            this.m6.setOnClickListener(this);
+            this.m7.setOnClickListener(this);
+            this.m8.setOnClickListener(this);
+            this.m9.setOnClickListener(this);
             btnBackspace.setOnClickListener(this);
 
-            this.mTextView.setText(R.string.NewPin);
+            this.mTextDisplay.setText(R.string.NewPin);
         }
     }
 
@@ -119,16 +120,16 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
             incrementIndexNumber();
             switch (v.getId())
             {
-                case R.id.btn0: addToArray(mBtn0); break;
-                case R.id.btn1: addToArray(mBtn1); break;
-                case R.id.btn2: addToArray(mBtn2); break;
-                case R.id.btn3: addToArray(mBtn3); break;
-                case R.id.btn4: addToArray(mBtn4); break;
-                case R.id.btn5: addToArray(mBtn5); break;
-                case R.id.btn6: addToArray(mBtn6); break;
-                case R.id.btn7: addToArray(mBtn7); break;
-                case R.id.btn8: addToArray(mBtn8); break;
-                case R.id.btn9: addToArray(mBtn9); break;
+                case R.id.btn0: addToArray(m0); break;
+                case R.id.btn1: addToArray(m1); break;
+                case R.id.btn2: addToArray(m2); break;
+                case R.id.btn3: addToArray(m3); break;
+                case R.id.btn4: addToArray(m4); break;
+                case R.id.btn5: addToArray(m5); break;
+                case R.id.btn6: addToArray(m6); break;
+                case R.id.btn7: addToArray(m7); break;
+                case R.id.btn8: addToArray(m8); break;
+                case R.id.btn9: addToArray(m9); break;
             }
         } else {
             deleteFromArray();
@@ -146,7 +147,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
     {
         if (mPinFirst.matches("") && mPinSecond.matches("")) {
             mPinFirst = mPin;
-            mTextView.setText(R.string.ConfirmPin);
+            mTextDisplay.setText(R.string.ConfirmPin);
             clear();
         } else if (!mPinFirst.matches("") && mPinSecond.matches("")) {
             mPinSecond = mPin;
@@ -186,9 +187,9 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
 
         if (s != null)
         {
-            mArrayFull = true;
+            mIsArrayFull = true;
 
-            if (mArrayFull)
+            if (mIsArrayFull)
             {
                 for (int i = 0; i < mArray.length; i++) { mPin = mPin + mArray[i]; }
                 System.out.println(mPin);
@@ -215,6 +216,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
     private void setUpSharedPreferences()
     {
         mSharedPreferences.edit().putString(ENCRYPTION_ALGO, "AES").apply();
+        mSharedPreferences.edit().putBoolean(COMPLEXPASSCODE, false).apply();
     }
     // -----------------------------
 
@@ -222,7 +224,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
     {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage("Registering...");
-        mProgressDialog.setProgressStyle(mProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setCancelable(false);
         mProgressDialog.show();
     }
@@ -304,7 +306,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
                         @Override
                         public void run() {
                             Toast.makeText(mContext, "Please Try Again", Toast.LENGTH_SHORT).show();
-                            mTextView.setText("Please input a new pin");
+                            mTextDisplay.setText("Please input a new pin");
                         }
                     });
                     }

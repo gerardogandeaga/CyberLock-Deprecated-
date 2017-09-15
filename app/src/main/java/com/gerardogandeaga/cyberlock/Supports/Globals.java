@@ -13,6 +13,8 @@ public class Globals
 
     public static final String AUTOSAVE = "AUTO";
 
+    public static final String COMPLEXPASSCODE = "COMPLEXPASSCODE";
+
     public static final String LOGOUT_DELAY = "LOGOUT_DELAY";
     public static final String DELAY_TIME = "DELAY_TIME";
 

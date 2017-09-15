@@ -8,15 +8,16 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
+
 public class SHA256PinHash
 {
-    private static final int flags = Base64.DEFAULT;
 
     @NonNull
     public static String hashFunction(String text, byte[] salt) throws NoSuchAlgorithmException, UnsupportedEncodingException, NegativeArraySizeException
     {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] textBytes = Base64.decode(text, flags);
+        byte[] textBytes = text.getBytes("UTF-8");
         digest.reset();
         digest.update(salt);
         digest.update(textBytes, 0, textBytes.length);
@@ -26,7 +27,7 @@ public class SHA256PinHash
         System.arraycopy(salt, 0, combinedByteVal, 0, salt.length);
         System.arraycopy(pinHash, 0, combinedByteVal, salt.length, pinHash.length);
 
-        return Base64.encodeToString(combinedByteVal, flags);
+        return Base64.encodeToString(combinedByteVal, FLAGS);
     }
 
     public static byte[] generateSalt() {

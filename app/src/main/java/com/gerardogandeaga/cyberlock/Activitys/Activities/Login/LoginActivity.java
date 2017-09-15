@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.LoginInfoEditActivity;
@@ -26,10 +27,12 @@ import com.gerardogandeaga.cyberlock.R;
 
 import java.util.Arrays;
 
+import static com.gerardogandeaga.cyberlock.R.id.btnBackspace;
 import static com.gerardogandeaga.cyberlock.R.id.input1;
 import static com.gerardogandeaga.cyberlock.R.id.input2;
 import static com.gerardogandeaga.cyberlock.R.id.input3;
 import static com.gerardogandeaga.cyberlock.R.id.input4;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.COMPLEXPASSCODE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
@@ -39,18 +42,27 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener
 {
-    // STORED PIN
-    private static String mPin = "";
     private SharedPreferences mSharedPreferences;
+    private boolean mComplexCode;
     // INTENT
     private Intent mIntent;
     private String mLastActivity;
-    // PIN ARRAY VARIABLES
-    private static boolean mArrayFull = false;
+    // SIMPLE PIN ARRAY VARIABLES
+    private static boolean mIsArrayFull = false;
     private static int mIndex = -1;
     private static String[] mArray = new String[4];
+    private static String mPin = "";
+    // COMPLEX PASSCODE VARIABLES
+    private static String passcodeString = "";
+    private static String passcodeMark = "";
     // WIDGETS
-    private Button mBtn0, mBtn1, mBtn2, mBtn3, mBtn4, mBtn5, mBtn6, mBtn7, mBtn8, mBtn9;
+    // COMPLEX WIDGETS
+    private Button mQ,mW,mE,mR,mT,mY,mU,mI,mO,mP,mA,mS,mD,mF,mG,mH,mJ,mK,mL,mZ,mX,mC,mV,mB,mN,mM;
+    private Button mSLASH, mDOT, mCOMMA;
+    private ImageButton mSPACE;
+    private TextView mTvPasscodeDisplay;
+    //SIMPLES DIGIT WIDGETS
+    private Button m0, m1, m2, m3, m4, m5, m6, m7, m8, m9;
     private RadioButton mInput1, mInput2, mInput3, mInput4;
     private ProgressDialog mProgressDialog;
 
@@ -60,83 +72,37 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
+        mComplexCode = mSharedPreferences.getBoolean(COMPLEXPASSCODE, false);
+        System.out.println(mComplexCode);
+
         LogoutProtocol.ACTIVITY_INTENT = null;
 
         if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         }
 
-        mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-
-        mIntent = getIntent();
-        mLastActivity = getIntent().getStringExtra("lastActivity");
-        mIntent.removeExtra("lastActivity"); // REMOVE LAST ACTIVITY INFO
-
-        if (mSharedPreferences.getString(PIN, null) == null || mSharedPreferences.getString(CRYPT_KEY, null) == null)
-        {
-            LogoutProtocol.ACTIVITY_INTENT = new Intent(this, RegistrationActivity.class);
-            this.finish();
-            this.startActivity(LogoutProtocol.ACTIVITY_INTENT);
-            System.out.println("CALLED!");
-        }
-        else // CREATE ALL THE WIDGETS
-        {
-            this.mBtn0 = (Button) findViewById(R.id.btn0);
-            this.mBtn1 = (Button) findViewById(R.id.btn1);
-            this.mBtn2 = (Button) findViewById(R.id.btn2);
-            this.mBtn3 = (Button) findViewById(R.id.btn3);
-            this.mBtn4 = (Button) findViewById(R.id.btn4);
-            this.mBtn5 = (Button) findViewById(R.id.btn5);
-            this.mBtn6 = (Button) findViewById(R.id.btn6);
-            this.mBtn7 = (Button) findViewById(R.id.btn7);
-            this.mBtn8 = (Button) findViewById(R.id.btn8);
-            this.mBtn9 = (Button) findViewById(R.id.btn9);
-            ImageButton btnBackspace = (ImageButton) findViewById(R.id.btnBackspace);
-
-            this.mInput1 = (RadioButton) findViewById(input1);
-            this.mInput2 = (RadioButton) findViewById(input2);
-            this.mInput3 = (RadioButton) findViewById(input3);
-            this.mInput4 = (RadioButton) findViewById(input4);
-
-            this.mInput1.setClickable(false);
-            this.mInput2.setClickable(false);
-            this.mInput3.setClickable(false);
-            this.mInput4.setClickable(false);
-
-            this.mBtn0.setOnClickListener(this);
-            this.mBtn1.setOnClickListener(this);
-            this.mBtn2.setOnClickListener(this);
-            this.mBtn3.setOnClickListener(this);
-            this.mBtn4.setOnClickListener(this);
-            this.mBtn5.setOnClickListener(this);
-            this.mBtn6.setOnClickListener(this);
-            this.mBtn7.setOnClickListener(this);
-            this.mBtn8.setOnClickListener(this);
-            this.mBtn9.setOnClickListener(this);
-            btnBackspace.setOnClickListener(this);
-        }
+        setupLayout();
     }
 
-    // PIN KEYBOARD AND REGISTRATION
-    @Override
-    public void onClick(View v)
+    // SIMPLE DIGIT KEY REGISTRATION
+    private void onClickDigit(View v)
     {
-        if (v.getId() != R.id.btnBackspace)
+        if (v.getId() != btnBackspace)
         {
             incrementIndexNumber();
             switch (v.getId())
             {
-                case R.id.btn0: addToArray(mBtn0); break;
-                case R.id.btn1: addToArray(mBtn1); break;
-                case R.id.btn2: addToArray(mBtn2); break;
-                case R.id.btn3: addToArray(mBtn3); break;
-                case R.id.btn4: addToArray(mBtn4); break;
-                case R.id.btn5: addToArray(mBtn5); break;
-                case R.id.btn6: addToArray(mBtn6); break;
-                case R.id.btn7: addToArray(mBtn7); break;
-                case R.id.btn8: addToArray(mBtn8); break;
-                case R.id.btn9: addToArray(mBtn9); break;
+                case R.id.btn0: addToArray(m0); break;
+                case R.id.btn1: addToArray(m1); break;
+                case R.id.btn2: addToArray(m2); break;
+                case R.id.btn3: addToArray(m3); break;
+                case R.id.btn4: addToArray(m4); break;
+                case R.id.btn5: addToArray(m5); break;
+                case R.id.btn6: addToArray(m6); break;
+                case R.id.btn7: addToArray(m7); break;
+                case R.id.btn8: addToArray(m8); break;
+                case R.id.btn9: addToArray(m9); break;
             }
         } else {
             deleteFromArray();
@@ -177,9 +143,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (s != null)
         {
-            mArrayFull = true;
+            mIsArrayFull = true;
 
-            if (mArrayFull)
+            if (mIsArrayFull)
             {
                 for (int i = 0; i < mArray.length; i++) { mPin = mPin + mArray[i]; }
                 System.out.println(mPin);
@@ -204,6 +170,92 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
     // -----------------------------
 
+    // COMPLEX KEYBOARD REGISTRATION
+    private void onClickComplex(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.btn0: addToPasscodeString("0"); break;
+            case R.id.btn1: addToPasscodeString("1"); break;
+            case R.id.btn2: addToPasscodeString("2"); break;
+            case R.id.btn3: addToPasscodeString("3"); break;
+            case R.id.btn4: addToPasscodeString("4"); break;
+            case R.id.btn5: addToPasscodeString("5"); break;
+            case R.id.btn6: addToPasscodeString("6"); break;
+            case R.id.btn7: addToPasscodeString("7"); break;
+            case R.id.btn8: addToPasscodeString("8"); break;
+            case R.id.btn9: addToPasscodeString("9"); break;
+
+            case R.id.btnQ: addToPasscodeString("Q"); break;
+            case R.id.btnW: addToPasscodeString("W"); break;
+            case R.id.btnE: addToPasscodeString("E"); break;
+            case R.id.btnR: addToPasscodeString("R"); break;
+            case R.id.btnT: addToPasscodeString("T"); break;
+            case R.id.btnY: addToPasscodeString("Y"); break;
+            case R.id.btnU: addToPasscodeString("U"); break;
+            case R.id.btnI: addToPasscodeString("I"); break;
+            case R.id.btnO: addToPasscodeString("O"); break;
+            case R.id.btnP: addToPasscodeString("P"); break;
+            case R.id.btnA: addToPasscodeString("A"); break;
+            case R.id.btnS: addToPasscodeString("S"); break;
+            case R.id.btnD: addToPasscodeString("D"); break;
+            case R.id.btnF: addToPasscodeString("F"); break;
+            case R.id.btnG: addToPasscodeString("G"); break;
+            case R.id.btnH: addToPasscodeString("H"); break;
+            case R.id.btnJ: addToPasscodeString("J"); break;
+            case R.id.btnK: addToPasscodeString("K"); break;
+            case R.id.btnL: addToPasscodeString("L"); break;
+            case R.id.btnZ: addToPasscodeString("Z"); break;
+            case R.id.btnX: addToPasscodeString("X"); break;
+            case R.id.btnC: addToPasscodeString("C"); break;
+            case R.id.btnV: addToPasscodeString("V"); break;
+            case R.id.btnB: addToPasscodeString("B"); break;
+            case R.id.btnN: addToPasscodeString("N"); break;
+            case R.id.btnM: addToPasscodeString("M"); break;
+
+            case R.id.btnDOT: addToPasscodeString("."); break;
+            case R.id.btnCOMMA: addToPasscodeString(","); break;
+            case R.id.btnSLASH: addToPasscodeString("/"); break;
+            case R.id.btnSPACEBAR: addToPasscodeString(" "); break;
+            case R.id.btnBackspace: addToPasscodeString("DEL"); break;
+        }
+    }
+
+    public String addToPasscodeString(String s)
+    {
+        if (!s.matches("DEL"))
+        {
+            passcodeString = passcodeString + s;
+
+            passcodeMark = passcodeMark + "*";
+        } else
+        {
+            if (passcodeString.length() != 0)
+            {
+                passcodeString = passcodeString.substring(0, passcodeString.length() - 1);
+
+                passcodeMark = passcodeMark.substring(0, passcodeMark.length() - 1);
+            }
+        }
+
+        mTvPasscodeDisplay.setText(passcodeMark);
+
+        return passcodeString;
+    }
+    // -----------------------------
+
+    @Override
+    public void onClick(View v)
+    {
+        if (!mComplexCode)
+        {
+            onClickDigit(v);
+        } else
+        {
+            onClickComplex(v);
+        }
+    }
+
     private void progressBar()
     {
         mProgressDialog = new ProgressDialog(mContext);
@@ -218,6 +270,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Intent i;
         Bundle bundle = mIntent.getExtras();
         mIntent.removeExtra("lastDatabase");
+        clear();
 
         if (mLastActivity != null)
         {
@@ -288,18 +341,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         mPin = null;
                         System.gc();
-                    } else
-                    {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(mContext, "Wrong code, please retry", Toast.LENGTH_SHORT).show(); // DISPLAY THE REJECT MESSAGE
-                            }
-                        });
                     }
                 } catch (Exception e)
                 {
                     e.printStackTrace();
+                    clear();
 
                     runOnUiThread(new Runnable() {
                         @Override
@@ -321,6 +367,150 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 mProgressDialog.dismiss();
             }
         }.execute();
+    }
+
+    private void setupLayout()
+    {
+
+        mIntent = getIntent();
+        mLastActivity = getIntent().getStringExtra("lastActivity");
+        mIntent.removeExtra("lastActivity"); // REMOVE LAST ACTIVITY INFO
+
+        if (mSharedPreferences.getString(PIN, null) == null || mSharedPreferences.getString(CRYPT_KEY, null) == null)
+        {
+            LogoutProtocol.ACTIVITY_INTENT = new Intent(this, RegistrationActivity.class);
+            this.finish();
+            this.startActivity(LogoutProtocol.ACTIVITY_INTENT);
+            System.out.println("CALLED!");
+        }
+        else if (!mComplexCode) // CREATE ALL THE WIDGETS
+        {
+            setContentView(R.layout.activity_loginpin);
+
+            this.m0 = (Button) findViewById(R.id.btn0);
+            this.m1 = (Button) findViewById(R.id.btn1);
+            this.m2 = (Button) findViewById(R.id.btn2);
+            this.m3 = (Button) findViewById(R.id.btn3);
+            this.m4 = (Button) findViewById(R.id.btn4);
+            this.m5 = (Button) findViewById(R.id.btn5);
+            this.m6 = (Button) findViewById(R.id.btn6);
+            this.m7 = (Button) findViewById(R.id.btn7);
+            this.m8 = (Button) findViewById(R.id.btn8);
+            this.m9 = (Button) findViewById(R.id.btn9);
+            ImageButton btnBackspace = (ImageButton) findViewById(R.id.btnBackspace);
+
+            this.mInput1 = (RadioButton) findViewById(input1);
+            this.mInput2 = (RadioButton) findViewById(input2);
+            this.mInput3 = (RadioButton) findViewById(input3);
+            this.mInput4 = (RadioButton) findViewById(input4);
+
+            this.mInput1.setClickable(false);
+            this.mInput2.setClickable(false);
+            this.mInput3.setClickable(false);
+            this.mInput4.setClickable(false);
+
+            this.m0.setOnClickListener(this);
+            this.m1.setOnClickListener(this);
+            this.m2.setOnClickListener(this);
+            this.m3.setOnClickListener(this);
+            this.m4.setOnClickListener(this);
+            this.m5.setOnClickListener(this);
+            this.m6.setOnClickListener(this);
+            this.m7.setOnClickListener(this);
+            this.m8.setOnClickListener(this);
+            this.m9.setOnClickListener(this);
+            btnBackspace.setOnClickListener(this);
+        }
+        else
+        {
+            setContentView(R.layout.activity_loginpasscode);
+
+            this.mTvPasscodeDisplay = (TextView) findViewById(R.id.tvPasscode);
+
+            this.m0 = (Button) findViewById(R.id.btn0);
+            this.m1 = (Button) findViewById(R.id.btn1);
+            this.m2 = (Button) findViewById(R.id.btn2);
+            this.m3 = (Button) findViewById(R.id.btn3);
+            this.m4 = (Button) findViewById(R.id.btn4);
+            this.m5 = (Button) findViewById(R.id.btn5);
+            this.m6 = (Button) findViewById(R.id.btn6);
+            this.m7 = (Button) findViewById(R.id.btn7);
+            this.m8 = (Button) findViewById(R.id.btn8);
+            this.m9 = (Button) findViewById(R.id.btn9);
+            this.mQ = (Button) findViewById(R.id.btnQ);
+            this.mW = (Button) findViewById(R.id.btnW);
+            this.mE = (Button) findViewById(R.id.btnE);
+            this.mR = (Button) findViewById(R.id.btnR);
+            this.mT = (Button) findViewById(R.id.btnT);
+            this.mY = (Button) findViewById(R.id.btnY);
+            this.mU = (Button) findViewById(R.id.btnU);
+            this.mI = (Button) findViewById(R.id.btnI);
+            this.mO = (Button) findViewById(R.id.btnO);
+            this.mP = (Button) findViewById(R.id.btnP);
+            this.mA = (Button) findViewById(R.id.btnA);
+            this.mS = (Button) findViewById(R.id.btnS);
+            this.mD = (Button) findViewById(R.id.btnD);
+            this.mF = (Button) findViewById(R.id.btnF);
+            this.mG = (Button) findViewById(R.id.btnG);
+            this.mH = (Button) findViewById(R.id.btnH);
+            this.mJ = (Button) findViewById(R.id.btnJ);
+            this.mK = (Button) findViewById(R.id.btnK);
+            this.mL = (Button) findViewById(R.id.btnL);
+            this.mZ = (Button) findViewById(R.id.btnZ);
+            this.mX = (Button) findViewById(R.id.btnX);
+            this.mC = (Button) findViewById(R.id.btnC);
+            this.mV = (Button) findViewById(R.id.btnV);
+            this.mB = (Button) findViewById(R.id.btnB);
+            this.mN = (Button) findViewById(R.id.btnN);
+            this.mM = (Button) findViewById(R.id.btnM);
+            this.mDOT = (Button) findViewById(R.id.btnDOT);
+            this.mSLASH = (Button) findViewById(R.id.btnSLASH);
+            this.mCOMMA = (Button) findViewById(R.id.btnCOMMA);
+            this.mSPACE = (ImageButton) findViewById(R.id.btnSPACEBAR);
+            ImageButton btnBackspace = (ImageButton) findViewById(R.id.btnBackspace);
+
+            this.m0.setOnClickListener(this);
+            this.m1.setOnClickListener(this);
+            this.m2.setOnClickListener(this);
+            this.m3.setOnClickListener(this);
+            this.m4.setOnClickListener(this);
+            this.m5.setOnClickListener(this);
+            this.m6.setOnClickListener(this);
+            this.m7.setOnClickListener(this);
+            this.m8.setOnClickListener(this);
+            this.m9.setOnClickListener(this);
+            this.mQ.setOnClickListener(this);
+            this.mW.setOnClickListener(this);
+            this.mE.setOnClickListener(this);
+            this.mR.setOnClickListener(this);
+            this.mT.setOnClickListener(this);
+            this.mY.setOnClickListener(this);
+            this.mU.setOnClickListener(this);
+            this.mI.setOnClickListener(this);
+            this.mO.setOnClickListener(this);
+            this.mP.setOnClickListener(this);
+            this.mA.setOnClickListener(this);
+            this.mS.setOnClickListener(this);
+            this.mD.setOnClickListener(this);
+            this.mF.setOnClickListener(this);
+            this.mG.setOnClickListener(this);
+            this.mH.setOnClickListener(this);
+            this.mJ.setOnClickListener(this);
+            this.mK.setOnClickListener(this);
+            this.mL.setOnClickListener(this);
+            this.mZ.setOnClickListener(this);
+            this.mX.setOnClickListener(this);
+            this.mC.setOnClickListener(this);
+            this.mV.setOnClickListener(this);
+            this.mB.setOnClickListener(this);
+            this.mN.setOnClickListener(this);
+            this.mM.setOnClickListener(this);
+            this.mDOT.setOnClickListener(this);
+            this.mSLASH.setOnClickListener(this);
+            this.mCOMMA.setOnClickListener(this);
+            this.mSPACE.setOnClickListener(this);
+            btnBackspace.setOnClickListener(this);
+        }
     }
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"

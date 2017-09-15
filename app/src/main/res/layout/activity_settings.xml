@@ -57,7 +57,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/Security"
+                android:id="@+id/General"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -71,7 +71,7 @@
             <LinearLayout
                 android:id="@+id/AutoSave"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/clickable_background_main"
                 android:clickable="true"
                 android:orientation="horizontal"
@@ -179,6 +179,59 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
+
+            <LinearLayout
+                android:id="@+id/ComplexPasscode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clickable_background_main"
+                android:clickable="true"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp">
+
+                <LinearLayout
+                    android:id="@+id/complexPasscode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvComplexPasscode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:fontFamily="monospace"
+                        android:text="Complex Passcode"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tvComplexPasscodeDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="monospace"
+                        android:text="Change pin into a longer more complex passcode"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="italic"/>
+
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/cbComplexPasscode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="16sp"
+                    app:buttonTint="@color/white"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/SEPERATOR2"

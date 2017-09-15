@@ -50,6 +50,9 @@
             android:name=".Activitys.Activities.Menus.Settings_ResetPin"
             android:configChanges="orientation|screenSize"/>
         <activity
+            android:name=".Activitys.Activities.Menus.Settings_ComplexPasscode"
+            android:configChanges="orientation|screenSize"/>
+        <activity
             android:name=".Activitys.Activities.Main.MainActivity"
             android:configChanges="orientation|screenSize"/>
         <activity
@@ -63,8 +66,7 @@
             android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".Activitys.Activities.Main.MainPlaygroundActivity"
-            android:configChanges="orientation|screenSize">
-        </activity>
+            android:configChanges="orientation|screenSize"/>
     </application>
 
 </manifest>

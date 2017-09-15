@@ -29,6 +29,7 @@ import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutPro
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
 import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.COMPLEXPASSCODE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DELAY_TIME;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
@@ -48,8 +49,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
 
     // WIDGETS
     private TextView mTvChangePassword;
-    private LinearLayout mAutoSave, mScrambleKey;
-    private CheckBox mCbAutoSave;
+    private LinearLayout mAutoSave, mComplexPasscode,mScrambleKey;
+    private CheckBox mCbAutoSave, mCbComplexPasscode;
     private Spinner mSpAutoLogoutDelay, mSpEncryptionMethod;
 
     private Context mContext = this;
@@ -93,16 +94,23 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         mAdapterEncryptionMethod.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.mSpEncryptionMethod.setAdapter(mAdapterEncryptionMethod);
 
-        this.mTvChangePassword = (TextView) findViewById(R.id.tvChangePassword);
         this.mCbAutoSave = (CheckBox) findViewById(R.id.cbAutoSave);
         this.mAutoSave = (LinearLayout) findViewById(R.id.AutoSave);
         this.mScrambleKey = (LinearLayout) findViewById(R.id.ScrambleKey);
 
+        this.mTvChangePassword = (TextView) findViewById(R.id.tvChangePassword);
+
+        this.mCbComplexPasscode = (CheckBox) findViewById(R.id.cbComplexPasscode);
+        this.mComplexPasscode = (LinearLayout) findViewById(R.id.ComplexPasscode);
+
         this.mAutoSave.setOnClickListener(this);
         this.mTvChangePassword.setOnClickListener(this);
+        this.mComplexPasscode.setOnClickListener(this);
         this.mScrambleKey.setOnClickListener(this);
 
         this.mCbAutoSave.setChecked(false);
+
+        this.mCbComplexPasscode.setChecked(false);
 
         savedStates();
 
@@ -127,7 +135,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
                         case "30 Minutes": time = 1800000; break;
                         case "1 Hour": time = 3600000; break;
                         case "2 Hours": time = 7200000; break;
-                        case "Never": ; break;
+                        case "Never":
+                            break;
                     }
 
                     System.out.println("Time = " + time);
@@ -214,6 +223,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         {
             case R.id.AutoSave: onAutoSave(); break;
             case R.id.tvChangePassword: onResetPassword(); break;
+            case R.id.ComplexPasscode: onComplexPassword(); break;
             case R.id.ScrambleKey: onScrambleKey(); break;
         }
     }
@@ -237,6 +247,76 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         ACTIVITY_INTENT = new Intent(this, Settings_ResetPin.class);
         finish();
         startActivity(ACTIVITY_INTENT);
+    }
+
+    private void onComplexPassword()
+    {
+        final boolean complexPassword = mSharedPreferences.getBoolean(COMPLEXPASSCODE, false);
+
+        if (!complexPassword)
+        {
+            mSharedPreferences.edit().putBoolean(COMPLEXPASSCODE, true);
+            mCbComplexPasscode.setChecked(true);
+
+            // DIALOG BUILDER
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+            alertDialog.setTitle("Switch to complex passcode");
+            alertDialog.setMessage("Switching to a complex passcode requires a password reset.");
+            alertDialog.setCancelable(false);
+
+            alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    dialog.dismiss();
+                }
+            });
+            alertDialog.setPositiveButton("Continue", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    dialog.dismiss();
+
+                    ACTIVITY_INTENT = new Intent(mContext, Settings_ComplexPasscode.class);
+                    startActivity(ACTIVITY_INTENT);
+                }
+            });
+            alertDialog.show();
+        } else {
+            mSharedPreferences.edit().putBoolean(COMPLEXPASSCODE, false);
+            mCbComplexPasscode.setChecked(false);
+
+            // DIALOG BUILDER
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+            alertDialog.setTitle("Switch to short pin");
+            alertDialog.setMessage("Switching to a simple pin requires a password reset.");
+            alertDialog.setCancelable(false);
+
+            alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    dialog.dismiss();
+                }
+            });
+            alertDialog.setPositiveButton("Continue", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    dialog.dismiss();
+
+                    ACTIVITY_INTENT = new Intent(mContext, Settings_ComplexPasscode.class);
+                    startActivity(ACTIVITY_INTENT);
+                }
+            });
+            alertDialog.show();
+        }
     }
 
     private void onScrambleKey()
