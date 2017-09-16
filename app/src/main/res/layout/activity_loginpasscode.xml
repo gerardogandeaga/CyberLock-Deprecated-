@@ -27,31 +27,45 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="30dp"
             android:fontFamily="sans-serif-smallcaps"
-            android:text="Login"
             android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold"/>
 
         <LinearLayout
             android:id="@+id/Inputs"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:orientation="horizontal"
+            android:paddingLeft="60dp"
+            android:paddingRight="30dp">
 
             <TextView
                 android:id="@+id/tvPasscode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.34"
                 android:maxLines="1"
                 android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textColor="@color/white"
                 android:textSize="48sp"
                 android:textStyle="bold"/>
+
+            <ImageButton
+                android:id="@+id/btnCLEAR"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignTop="@+id/Inputs"
+                android:layout_toEndOf="@+id/Inputs"
+                android:layout_toRightOf="@+id/Inputs"
+                android:background="@drawable/clickable_background_main"
+                android:src="@drawable/ic_action_clear"/>
 
         </LinearLayout>
     </android.support.percent.PercentRelativeLayout>
@@ -74,14 +88,14 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btnLoginRegister"
+                android:id="@+id/btnLOGINREGISTER"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_weight="1"
                 android:background="@drawable/clickable_background_main"
-                android:text="LOGIN"
+                android:text="ENTER"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
@@ -702,7 +716,7 @@
                     android:textStyle="bold"/>
 
                 <ImageButton
-                    android:id="@+id/btnBackspace"
+                    android:id="@+id/btnBACKSPACE"
                     style="@android:style/Widget.DeviceDefault.ImageButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

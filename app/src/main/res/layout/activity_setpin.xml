@@ -294,7 +294,7 @@
                 android:textStyle="bold"/>
 
             <ImageButton
-                android:id="@+id/btnBackspace"
+                android:id="@+id/btnBACKSPACE"
                 style="@android:style/Widget.DeviceDefault.ImageButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

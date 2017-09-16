@@ -27,7 +27,7 @@ import com.gerardogandeaga.cyberlock.R;
 
 import java.util.Arrays;
 
-import static com.gerardogandeaga.cyberlock.R.id.btnBackspace;
+import static com.gerardogandeaga.cyberlock.R.id.btnBACKSPACE;
 import static com.gerardogandeaga.cyberlock.R.id.input1;
 import static com.gerardogandeaga.cyberlock.R.id.input2;
 import static com.gerardogandeaga.cyberlock.R.id.input3;
@@ -43,7 +43,7 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener
 {
     private SharedPreferences mSharedPreferences;
-    private boolean mComplexCode;
+    private boolean mIsComplexCode;
     // INTENT
     private Intent mIntent;
     private String mLastActivity;
@@ -53,13 +53,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static String[] mArray = new String[4];
     private static String mPin = "";
     // COMPLEX PASSCODE VARIABLES
-    private static String passcodeString = "";
-    private static String passcodeMark = "";
+    private static String mPasscodeString = "";
+    private static String mPasscodeMark = "";
     // WIDGETS
     // COMPLEX WIDGETS
     private Button mQ,mW,mE,mR,mT,mY,mU,mI,mO,mP,mA,mS,mD,mF,mG,mH,mJ,mK,mL,mZ,mX,mC,mV,mB,mN,mM;
     private Button mSLASH, mDOT, mCOMMA;
-    private ImageButton mSPACE;
+    private Button mBtnLOGINREGISTER;
+    private ImageButton mSPACEBAR;
+    private ImageButton mBtnCLEAR;
     private TextView mTvPasscodeDisplay;
     //SIMPLES DIGIT WIDGETS
     private Button m0, m1, m2, m3, m4, m5, m6, m7, m8, m9;
@@ -73,8 +75,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     {
         super.onCreate(savedInstanceState);
         mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-        mComplexCode = mSharedPreferences.getBoolean(COMPLEXPASSCODE, false);
-        System.out.println(mComplexCode);
+        mIsComplexCode = mSharedPreferences.getBoolean(COMPLEXPASSCODE, false);
+        System.out.println(mIsComplexCode);
 
         LogoutProtocol.ACTIVITY_INTENT = null;
 
@@ -88,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     // SIMPLE DIGIT KEY REGISTRATION
     private void onClickDigit(View v)
     {
-        if (v.getId() != btnBackspace)
+        if (v.getId() != btnBACKSPACE)
         {
             incrementIndexNumber();
             switch (v.getId())
@@ -217,7 +219,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btnCOMMA: addToPasscodeString(","); break;
             case R.id.btnSLASH: addToPasscodeString("/"); break;
             case R.id.btnSPACEBAR: addToPasscodeString(" "); break;
-            case R.id.btnBackspace: addToPasscodeString("DEL"); break;
+            case R.id.btnBACKSPACE: addToPasscodeString("DEL"); break;
+
+            case R.id.btnLOGINREGISTER: onPinCompleted(); break;
+            case R.id.btnCLEAR:
+                mPasscodeString = "";
+                mPasscodeMark = "";
+                mTvPasscodeDisplay.setText("");
+                break;
         }
     }
 
@@ -225,29 +234,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     {
         if (!s.matches("DEL"))
         {
-            passcodeString = passcodeString + s;
+            mPasscodeString = mPasscodeString + s;
 
-            passcodeMark = passcodeMark + "*";
+            mPasscodeMark = mPasscodeMark + "*";
         } else
         {
-            if (passcodeString.length() != 0)
+            if (mPasscodeString.length() != 0)
             {
-                passcodeString = passcodeString.substring(0, passcodeString.length() - 1);
+                mPasscodeString = mPasscodeString.substring(0, mPasscodeString.length() - 1);
 
-                passcodeMark = passcodeMark.substring(0, passcodeMark.length() - 1);
+                mPasscodeMark = mPasscodeMark.substring(0, mPasscodeMark.length() - 1);
             }
         }
 
-        mTvPasscodeDisplay.setText(passcodeMark);
+        mTvPasscodeDisplay.setText(mPasscodeMark);
 
-        return passcodeString;
+        return mPasscodeString;
     }
     // -----------------------------
 
     @Override
     public void onClick(View v)
     {
-        if (!mComplexCode)
+        if (!mIsComplexCode)
         {
             onClickDigit(v);
         } else
@@ -323,8 +332,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             {
                 try // TRY LOGIN MECHANICS
                 {
-                    final String decryptedPulledPin = new CryptKeyHandler(mContext).DECRYPTKEY(mSharedPreferences.getString(PIN, null), mPin);
-                    final String loginPinHash = SHA256PinHash.hashFunction(mPin, Arrays.copyOfRange(Base64.decode(decryptedPulledPin, FLAGS), 0, 128));
+                    final String decryptedPulledPin;
+                    if (mIsComplexCode)
+                    {
+                        mPin = mPasscodeString;
+                    }
+                        decryptedPulledPin = new CryptKeyHandler(mContext)
+                                .DECRYPTKEY(mSharedPreferences.getString(PIN, null), mPin);
+
+                    final String loginPinHash = SHA256PinHash
+                            .hashFunction(mPin, Arrays.copyOfRange(Base64.decode(decryptedPulledPin, FLAGS), 0, 128));
 
                     System.out.println("LOGIN INPUT: " + loginPinHash);
                     System.out.println("CACHED HASH: " + decryptedPulledPin);
@@ -335,11 +352,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         MASTER_KEY = new CryptKeyHandler(mContext).DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), mPin);
                         System.out.println("MASTER KEY: " + MASTER_KEY);
 
-                        LogoutProtocol.APP_LOGGED_IN = true; // APP LOGGED IN
+                        runOnUiThread(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                if (!mIsComplexCode)
+                                {
+                                    mInput1.setChecked(false);
+                                    mInput2.setChecked(false);
+                                    mInput3.setChecked(false);
+                                    mInput4.setChecked(false);
+                                } else {
+                                    mTvPasscodeDisplay.setText("");
+                                }
+                            }
+                        });
 
+                        mPin = "";
+                        mPasscodeString = "";
+                        mPasscodeMark = "";
+
+                        LogoutProtocol.APP_LOGGED_IN = true; // APP LOGGED IN
                         loginIntent();
 
-                        mPin = null;
                         System.gc();
                     }
                 } catch (Exception e)
@@ -347,9 +383,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     e.printStackTrace();
                     clear();
 
-                    runOnUiThread(new Runnable() {
+                    mPasscodeString = "";
+                    mPasscodeMark = "";
+
+                    runOnUiThread(new Runnable()
+                    {
                         @Override
-                        public void run() {
+                        public void run()
+                        {
+                            mTvPasscodeDisplay.setText("");
                             Toast.makeText(mContext, "Please Try Again", Toast.LENGTH_SHORT).show(); // SOMETHING WENT WRONG WITH DATA COMPARISONS
                         }
                     });
@@ -383,7 +425,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             this.startActivity(LogoutProtocol.ACTIVITY_INTENT);
             System.out.println("CALLED!");
         }
-        else if (!mComplexCode) // CREATE ALL THE WIDGETS
+        else if (!mIsComplexCode) // CREATE ALL THE WIDGETS
         {
             setContentView(R.layout.activity_loginpin);
 
@@ -397,7 +439,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             this.m7 = (Button) findViewById(R.id.btn7);
             this.m8 = (Button) findViewById(R.id.btn8);
             this.m9 = (Button) findViewById(R.id.btn9);
-            ImageButton btnBackspace = (ImageButton) findViewById(R.id.btnBackspace);
+            ImageButton btnBackspace = (ImageButton) findViewById(R.id.btnBACKSPACE);
 
             this.mInput1 = (RadioButton) findViewById(input1);
             this.mInput2 = (RadioButton) findViewById(input2);
@@ -466,8 +508,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             this.mDOT = (Button) findViewById(R.id.btnDOT);
             this.mSLASH = (Button) findViewById(R.id.btnSLASH);
             this.mCOMMA = (Button) findViewById(R.id.btnCOMMA);
-            this.mSPACE = (ImageButton) findViewById(R.id.btnSPACEBAR);
-            ImageButton btnBackspace = (ImageButton) findViewById(R.id.btnBackspace);
+            this.mSPACEBAR = (ImageButton) findViewById(R.id.btnSPACEBAR);
+            ImageButton btnBackspace = (ImageButton) findViewById(R.id.btnBACKSPACE);
+
+            this.mBtnLOGINREGISTER = (Button) findViewById(R.id.btnLOGINREGISTER);
+            this.mBtnCLEAR = (ImageButton) findViewById(R.id.btnCLEAR);
 
             this.m0.setOnClickListener(this);
             this.m1.setOnClickListener(this);
@@ -508,8 +553,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             this.mDOT.setOnClickListener(this);
             this.mSLASH.setOnClickListener(this);
             this.mCOMMA.setOnClickListener(this);
-            this.mSPACE.setOnClickListener(this);
+            this.mSPACEBAR.setOnClickListener(this);
             btnBackspace.setOnClickListener(this);
+
+            this.mBtnLOGINREGISTER.setOnClickListener(this);
+            this.mBtnCLEAR.setOnClickListener(this);
         }
     }
 

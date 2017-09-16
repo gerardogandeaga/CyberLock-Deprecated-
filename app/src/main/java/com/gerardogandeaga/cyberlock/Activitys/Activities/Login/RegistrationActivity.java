@@ -83,7 +83,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
             this.m7 = (Button) findViewById(R.id.btn7);
             this.m8 = (Button) findViewById(R.id.btn8);
             this.m9 = (Button) findViewById(R.id.btn9);
-            ImageButton btnBackspace = (ImageButton) findViewById(R.id.btnBackspace);
+            ImageButton btnBackspace = (ImageButton) findViewById(R.id.btnBACKSPACE);
 
             this.mInput1 = (RadioButton) findViewById(input1);
             this.mInput2 = (RadioButton) findViewById(input2);
@@ -115,7 +115,7 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
     @Override
     public void onClick(View v)
     {
-        if (v.getId() != R.id.btnBackspace)
+        if (v.getId() != R.id.btnBACKSPACE)
         {
             incrementIndexNumber();
             switch (v.getId())

@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity
             mBtnNewLoginInfo;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
-//    private ActionBarDrawerToggle mDrawerToggle;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     private Context mContext = this;
 
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         Dialog dialog = new Dialog(this);
 
-//        if (mDrawerToggle.onOptionsItemSelected(item)) return true;
+        if (mDrawerToggle.onOptionsItemSelected(item)) return true;
 
         switch (item.getItemId())
         {
@@ -246,30 +247,6 @@ public class MainActivity extends AppCompatActivity
                     System.out.println(TYPE);
                 }
             });
-//            Content.setOnLongClickListener(new View.OnLongClickListener()
-//            {
-//                @Override
-//                public boolean onLongClick(View v)
-//                {
-//                    if (data.isFullDisplayed()) {
-//                        if (content != null) { tvMemo.setText(data.getShortText(mContext, content)); }
-//                        data.setFullDisplayed(false);
-//                    } else {
-//                        tvMemo.setText(content);
-//                        if (content != null) { data.setFullDisplayed(true); }
-//                    }
-//
-//                    return false;
-//                }
-//            });
-//            imgDelete.setOnClickListener(new View.OnClickListener()
-//            {
-//                @Override
-//                public void onClick(View v)
-//                {
-//                    onDeleteClicked(data);
-//                }
-//            });
 
             return convertView;
         }
@@ -449,12 +426,12 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        getSupportActionBar().setHomeButtonEnabled(true);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Cyber Lock");
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("{ Cyber Lock }");
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.Content);
-//        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.Open, R.string.Close);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.Open, R.string.Close);
         mNavigationView = (NavigationView) findViewById(R.id.NavigationContent);
 
         this.mListView = (ListView) findViewById(R.id.listView);
@@ -463,8 +440,8 @@ public class MainActivity extends AppCompatActivity
         this.mBtnNewLoginInfo = (ImageButton) findViewById(R.id.btnNewLoginInfo);
 
         calculateDrawerSize();
-//        mDrawerLayout.addDrawerListener(mDrawerToggle);
-//        mDrawerToggle.syncState();
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
 
         this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {

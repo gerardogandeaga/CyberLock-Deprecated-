@@ -12,9 +12,9 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
 
 public class SHA256PinHash
 {
-
     @NonNull
-    public static String hashFunction(String text, byte[] salt) throws NoSuchAlgorithmException, UnsupportedEncodingException, NegativeArraySizeException
+    public static String hashFunction(String text, byte[] salt)
+            throws NoSuchAlgorithmException, UnsupportedEncodingException, NegativeArraySizeException
     {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] textBytes = text.getBytes("UTF-8");
@@ -30,7 +30,8 @@ public class SHA256PinHash
         return Base64.encodeToString(combinedByteVal, FLAGS);
     }
 
-    public static byte[] generateSalt() {
+    public static byte[] generateSalt()
+    {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[128];
         random.nextBytes(salt);
@@ -41,7 +42,8 @@ public class SHA256PinHash
     // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     @NonNull
     @Deprecated
-    public static String hashFunction(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException, NegativeArraySizeException // <-------------- DEPRECATED HASH FUNCTION WITHOUT SALT
+    public static String hashFunction(String text)
+            throws NoSuchAlgorithmException, UnsupportedEncodingException, NegativeArraySizeException // <-------------- DEPRECATED HASH FUNCTION WITHOUT SALT
     {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         byte[] textBytes = text.getBytes("iso-8859-1");

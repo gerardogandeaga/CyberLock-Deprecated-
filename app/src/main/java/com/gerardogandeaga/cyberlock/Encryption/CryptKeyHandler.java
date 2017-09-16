@@ -5,11 +5,18 @@ import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.util.Base64;
 
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Arrays;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
@@ -21,13 +28,13 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
 
 public class CryptKeyHandler
 {
+    private SharedPreferences mSharedPreferences;
+
     private final int iterations = 10000;
     private int keylength, byteKeyLength;
     private final String KeyALGO = "PBKDF2WithHmacSHA1";
     private String ALGO, CipherALGO;
     private int IVLength;
-
-    private SharedPreferences mSharedPreferences;
 
     public CryptKeyHandler(Context context)
     {
@@ -80,7 +87,7 @@ public class CryptKeyHandler
             SecretKeyFactory mSecretKeyFactory = SecretKeyFactory.getInstance(KeyALGO);
 
             return mSecretKeyFactory.generateSecret(mKeySpec).getEncoded();
-        } catch (Exception e)
+        } catch (InvalidKeySpecException | NoSuchAlgorithmException e)
         {
             e.printStackTrace();
         }
@@ -99,8 +106,7 @@ public class CryptKeyHandler
             SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(KeyALGO);
 
             return secretKeyFactory.generateSecret(keySpec).getEncoded();
-        } catch (Exception e)
-        {
+        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
@@ -130,7 +136,9 @@ public class CryptKeyHandler
             System.arraycopy(encryptedTextByteVal, 0, combinedByteVal, ivByteVal.length + saltByteVal.length, encryptedTextByteVal.length); // IMPLEMENTING INTO CIPHER
 
             return Base64.encodeToString(combinedByteVal, FLAGS);
-        } catch (Exception e)
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException |
+                BadPaddingException | InvalidKeyException |
+                IllegalBlockSizeException e)
         {
             e.printStackTrace();
         }
@@ -159,7 +167,9 @@ public class CryptKeyHandler
             byte[] decryptedTextByteVal = cipher.doFinal(encryptedTextByteVal); // DECRYPT TEXT
 
             return new String(decryptedTextByteVal);
-        } catch (Exception e)
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException |
+                InvalidKeyException | InvalidAlgorithmParameterException |
+                IllegalBlockSizeException | BadPaddingException e)
         {
             e.printStackTrace();
         }

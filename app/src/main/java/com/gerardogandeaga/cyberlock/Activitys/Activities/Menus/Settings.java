@@ -8,16 +8,14 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
@@ -39,17 +37,15 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
 {
     // DATA
     private SharedPreferences mSharedPreferences;
-    private static final int flags = Base64.DEFAULT;
-
     // SPINNERS
     private ArrayAdapter<CharSequence> mAdapterAutoLogoutDelay;
     private String mAutoLogoutDelay;
     private ArrayAdapter<CharSequence> mAdapterEncryptionMethod;
     private String mOldEncryptionMethod;
-
+    private boolean mIsAutoSave;
+    private boolean mIsComplexCode;
     // WIDGETS
-    private TextView mTvChangePassword;
-    private LinearLayout mAutoSave, mComplexPasscode,mScrambleKey;
+    private RelativeLayout mAutoSave, mChangePasscode, mComplexPasscode,mScrambleKey;
     private CheckBox mCbAutoSave, mCbComplexPasscode;
     private Spinner mSpAutoLogoutDelay, mSpEncryptionMethod;
 
@@ -72,6 +68,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
     private void setupLayout()
     {
         this.mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
+        this.mIsAutoSave = mSharedPreferences.getBoolean(AUTOSAVE, false);
+        this.mIsComplexCode = mSharedPreferences.getBoolean(COMPLEXPASSCODE, false);
 
         // ACTION BAR TITLE AND BACK BUTTON
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -95,21 +93,22 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         this.mSpEncryptionMethod.setAdapter(mAdapterEncryptionMethod);
 
         this.mCbAutoSave = (CheckBox) findViewById(R.id.cbAutoSave);
-        this.mAutoSave = (LinearLayout) findViewById(R.id.AutoSave);
-        this.mScrambleKey = (LinearLayout) findViewById(R.id.ScrambleKey);
-
-        this.mTvChangePassword = (TextView) findViewById(R.id.tvChangePassword);
+        this.mAutoSave = (RelativeLayout) findViewById(R.id.AutoSave);
+        this.mChangePasscode = (RelativeLayout) findViewById(R.id.ChangePasscode);
+        this.mScrambleKey = (RelativeLayout) findViewById(R.id.ScrambleKey);
 
         this.mCbComplexPasscode = (CheckBox) findViewById(R.id.cbComplexPasscode);
-        this.mComplexPasscode = (LinearLayout) findViewById(R.id.ComplexPasscode);
+        this.mComplexPasscode = (RelativeLayout) findViewById(R.id.ComplexPasscode);
 
         this.mAutoSave.setOnClickListener(this);
-        this.mTvChangePassword.setOnClickListener(this);
+        this.mChangePasscode.setOnClickListener(this);
         this.mComplexPasscode.setOnClickListener(this);
         this.mScrambleKey.setOnClickListener(this);
 
+        this.mCbAutoSave.setClickable(false);
         this.mCbAutoSave.setChecked(false);
 
+        this.mCbComplexPasscode.setClickable(false);
         this.mCbComplexPasscode.setChecked(false);
 
         savedStates();
@@ -162,13 +161,13 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
                     if (algorithm.matches("AES - 256"))
                     {
                         String newAlgorithm = "AES";
-                        if (!mSharedPreferences.getString(ENCRYPTION_ALGO, "AES").matches(newAlgorithm)) { onEncrptionMethodChange(newAlgorithm); }
+                        if (!mSharedPreferences.getString(ENCRYPTION_ALGO, "AES").matches(newAlgorithm)) { onEncryptionMethodChange(newAlgorithm); }
                     }
                     else
                     if (algorithm.matches("Blowfish - 448"))
                     {
                         String newAlgorithm = "Blowfish";
-                        if (!mSharedPreferences.getString(ENCRYPTION_ALGO, "AES").matches(newAlgorithm)) { onEncrptionMethodChange(newAlgorithm); }
+                        if (!mSharedPreferences.getString(ENCRYPTION_ALGO, "AES").matches(newAlgorithm)) { onEncryptionMethodChange(newAlgorithm); }
                     }
                 }
             }
@@ -183,16 +182,19 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
     private void savedStates()
     {
         // CHECK BOXES
-        final boolean autoSave = mSharedPreferences.getBoolean(AUTOSAVE, false);
-
-        if (!autoSave)
+        if (!mIsAutoSave)
         {
             mCbAutoSave.setChecked(false);
         } else {
             mCbAutoSave.setChecked(true);
         }
 
-        System.out.println(autoSave);
+        if (!mIsComplexCode)
+        {
+            mCbComplexPasscode.setChecked(false);
+        } else {
+            mCbComplexPasscode.setChecked(true);
+        }
 
         // SPINNERS
         // LOGOUT DELAY
@@ -222,7 +224,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         switch (v.getId())
         {
             case R.id.AutoSave: onAutoSave(); break;
-            case R.id.tvChangePassword: onResetPassword(); break;
+            case R.id.ChangePasscode: onResetPassword(); break;
             case R.id.ComplexPasscode: onComplexPassword(); break;
             case R.id.ScrambleKey: onScrambleKey(); break;
         }
@@ -244,24 +246,28 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
 
     private void onResetPassword()
     {
-        ACTIVITY_INTENT = new Intent(this, Settings_ResetPin.class);
-        finish();
-        startActivity(ACTIVITY_INTENT);
+        if (!mIsComplexCode)
+        {
+            ACTIVITY_INTENT = new Intent(this, Settings_ResetShortPasscode.class);
+            finish();
+            startActivity(ACTIVITY_INTENT);
+        }
+        else
+        {
+            ACTIVITY_INTENT = new Intent(this, Settings_ResetComplexPasscode.class);
+            finish();
+            startActivity(ACTIVITY_INTENT);
+        }
     }
 
     private void onComplexPassword()
     {
-        final boolean complexPassword = mSharedPreferences.getBoolean(COMPLEXPASSCODE, false);
-
-        if (!complexPassword)
+        if (!mIsComplexCode)
         {
-            mSharedPreferences.edit().putBoolean(COMPLEXPASSCODE, true);
-            mCbComplexPasscode.setChecked(true);
-
             // DIALOG BUILDER
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
-            alertDialog.setTitle("Switch to complex passcode");
+            alertDialog.setTitle("Switch To Complex Passcode");
             alertDialog.setMessage("Switching to a complex passcode requires a password reset.");
             alertDialog.setCancelable(false);
 
@@ -280,20 +286,18 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
                 {
                     dialog.dismiss();
 
-                    ACTIVITY_INTENT = new Intent(mContext, Settings_ComplexPasscode.class);
+                    ACTIVITY_INTENT = new Intent(mContext, Settings_ResetComplexPasscode.class);
+                    finish();
                     startActivity(ACTIVITY_INTENT);
                 }
             });
             alertDialog.show();
         } else {
-            mSharedPreferences.edit().putBoolean(COMPLEXPASSCODE, false);
-            mCbComplexPasscode.setChecked(false);
-
             // DIALOG BUILDER
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
-            alertDialog.setTitle("Switch to short pin");
-            alertDialog.setMessage("Switching to a simple pin requires a password reset.");
+            alertDialog.setTitle("Switch To Short Passcode");
+            alertDialog.setMessage("Switching to a simple passcode requires a password reset.");
             alertDialog.setCancelable(false);
 
             alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
@@ -311,7 +315,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
                 {
                     dialog.dismiss();
 
-                    ACTIVITY_INTENT = new Intent(mContext, Settings_ComplexPasscode.class);
+                    ACTIVITY_INTENT = new Intent(mContext, Settings_ResetComplexPasscode.class);
                     startActivity(ACTIVITY_INTENT);
                 }
             });
@@ -349,7 +353,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         alertDialog.show();
     }
 
-    private void onEncrptionMethodChange(final String algorithm)
+    private void onEncryptionMethodChange(final String algorithm)
     {
         // DIALOG BUILDER
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);

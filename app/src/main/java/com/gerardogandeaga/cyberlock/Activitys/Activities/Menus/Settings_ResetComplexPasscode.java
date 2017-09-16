@@ -26,12 +26,12 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.PIN;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 
-public class Settings_ComplexPasscode extends AppCompatActivity implements View.OnClickListener
+public class Settings_ResetComplexPasscode extends AppCompatActivity implements View.OnClickListener
 {
     private SharedPreferences mSharedPreferences;
     // COMPLEX PASSCODE VARIABLES
-    private static String passcodeString = "";
-    private static String passcodeMark = "";
+    private static String mPasscodeString = "";
+    private static String mPasscodeMark = "";
     private static String mCode1 = "";
     private static String mCode2 = "";
     // WIDGETS
@@ -42,7 +42,8 @@ public class Settings_ComplexPasscode extends AppCompatActivity implements View.
     private Button m0, m1, m2, m3, m4, m5, m6, m7, m8, m9;
     private Button mSLASH, mDOT, mCOMMA;
     private Button mBtnLoginRegister;
-    private ImageButton mSPACE;
+    private ImageButton mSPACEBAR;
+    private ImageButton mBtnCLEAR;
     private ProgressDialog mProgressDialog;
 
     private Context mContext = this;
@@ -52,22 +53,20 @@ public class Settings_ComplexPasscode extends AppCompatActivity implements View.
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loginpasscode);
-        mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-
         ACTIVITY_INTENT = null;
+        mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB)
         {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         }
 
+
         setupLayout();
     }
 
     private void setupLayout()
     {
-        this.mBtnLoginRegister = (Button) findViewById(R.id.btnLoginRegister);
-
         this.mTvPasscodeDisplay = (TextView) findViewById(R.id.tvPasscode);
         this.mTvTextDisplay = (TextView) findViewById(R.id.tvLogin);
         mTvTextDisplay.setText("Please Register New Passcode");
@@ -111,8 +110,11 @@ public class Settings_ComplexPasscode extends AppCompatActivity implements View.
         this.mDOT = (Button) findViewById(R.id.btnDOT);
         this.mSLASH = (Button) findViewById(R.id.btnSLASH);
         this.mCOMMA = (Button) findViewById(R.id.btnCOMMA);
-        this.mSPACE = (ImageButton) findViewById(R.id.btnSPACEBAR);
-        ImageButton btnBackspace = (ImageButton) findViewById(R.id.btnBackspace);
+        this.mSPACEBAR = (ImageButton) findViewById(R.id.btnSPACEBAR);
+        ImageButton btnBackspace = (ImageButton) findViewById(R.id.btnBACKSPACE);
+
+        this.mBtnLoginRegister = (Button) findViewById(R.id.btnLOGINREGISTER);
+        this.mBtnCLEAR = (ImageButton) findViewById(R.id.btnCLEAR);
 
         this.m0.setOnClickListener(this);
         this.m1.setOnClickListener(this);
@@ -153,8 +155,10 @@ public class Settings_ComplexPasscode extends AppCompatActivity implements View.
         this.mDOT.setOnClickListener(this);
         this.mSLASH.setOnClickListener(this);
         this.mCOMMA.setOnClickListener(this);
-        this.mSPACE.setOnClickListener(this);
+        this.mSPACEBAR.setOnClickListener(this);
         btnBackspace.setOnClickListener(this);
+
+        this.mBtnCLEAR.setOnClickListener(this);
 
         this.mBtnLoginRegister.setOnClickListener(new View.OnClickListener()
         {
@@ -164,9 +168,9 @@ public class Settings_ComplexPasscode extends AppCompatActivity implements View.
 
                 if (!mCode1.matches("") && mCode2.matches(""))
                 {
-                    mCode2 = passcodeString;
-                    passcodeString = "";
-                    passcodeMark = "";
+                    mCode2 = mPasscodeString;
+                    mPasscodeString = "";
+                    mPasscodeMark = "";
                     mTvPasscodeDisplay.setText("");
                     System.out.println(mCode2);
 
@@ -186,9 +190,9 @@ public class Settings_ComplexPasscode extends AppCompatActivity implements View.
 
                 if (mCode1.matches("") && mCode2.matches(""))
                 {
-                    mCode1 = passcodeString;
-                    passcodeString = "";
-                    passcodeMark = "";
+                    mCode1 = mPasscodeString;
+                    mPasscodeString = "";
+                    mPasscodeMark = "";
                     mTvPasscodeDisplay.setText("");
                     mTvTextDisplay.setText("Please Confirm Passcode");
                     System.out.println(mCode1);
@@ -202,130 +206,53 @@ public class Settings_ComplexPasscode extends AppCompatActivity implements View.
     {
         switch (v.getId())
         {
-            case R.id.btn0:
-                addToPasscodeString("0");
-                break;
-            case R.id.btn1:
-                addToPasscodeString("1");
-                break;
-            case R.id.btn2:
-                addToPasscodeString("2");
-                break;
-            case R.id.btn3:
-                addToPasscodeString("3");
-                break;
-            case R.id.btn4:
-                addToPasscodeString("4");
-                break;
-            case R.id.btn5:
-                addToPasscodeString("5");
-                break;
-            case R.id.btn6:
-                addToPasscodeString("6");
-                break;
-            case R.id.btn7:
-                addToPasscodeString("7");
-                break;
-            case R.id.btn8:
-                addToPasscodeString("8");
-                break;
-            case R.id.btn9:
-                addToPasscodeString("9");
-                break;
+            case R.id.btn0:addToPasscodeString("0");break;
+            case R.id.btn1:addToPasscodeString("1");break;
+            case R.id.btn2:addToPasscodeString("2");break;
+            case R.id.btn3:addToPasscodeString("3");break;
+            case R.id.btn4:addToPasscodeString("4");break;
+            case R.id.btn5:addToPasscodeString("5");break;
+            case R.id.btn6:addToPasscodeString("6");break;
+            case R.id.btn7:addToPasscodeString("7");break;
+            case R.id.btn8:addToPasscodeString("8");break;
+            case R.id.btn9:addToPasscodeString("9");break;
 
-            case R.id.btnQ:
-                addToPasscodeString("Q");
-                break;
-            case R.id.btnW:
-                addToPasscodeString("W");
-                break;
-            case R.id.btnE:
-                addToPasscodeString("E");
-                break;
-            case R.id.btnR:
-                addToPasscodeString("R");
-                break;
-            case R.id.btnT:
-                addToPasscodeString("T");
-                break;
-            case R.id.btnY:
-                addToPasscodeString("Y");
-                break;
-            case R.id.btnU:
-                addToPasscodeString("U");
-                break;
-            case R.id.btnI:
-                addToPasscodeString("I");
-                break;
-            case R.id.btnO:
-                addToPasscodeString("O");
-                break;
-            case R.id.btnP:
-                addToPasscodeString("P");
-                break;
-            case R.id.btnA:
-                addToPasscodeString("A");
-                break;
-            case R.id.btnS:
-                addToPasscodeString("S");
-                break;
-            case R.id.btnD:
-                addToPasscodeString("D");
-                break;
-            case R.id.btnF:
-                addToPasscodeString("F");
-                break;
-            case R.id.btnG:
-                addToPasscodeString("G");
-                break;
-            case R.id.btnH:
-                addToPasscodeString("H");
-                break;
-            case R.id.btnJ:
-                addToPasscodeString("J");
-                break;
-            case R.id.btnK:
-                addToPasscodeString("K");
-                break;
-            case R.id.btnL:
-                addToPasscodeString("L");
-                break;
-            case R.id.btnZ:
-                addToPasscodeString("Z");
-                break;
-            case R.id.btnX:
-                addToPasscodeString("X");
-                break;
-            case R.id.btnC:
-                addToPasscodeString("C");
-                break;
-            case R.id.btnV:
-                addToPasscodeString("V");
-                break;
-            case R.id.btnB:
-                addToPasscodeString("B");
-                break;
-            case R.id.btnN:
-                addToPasscodeString("N");
-                break;
-            case R.id.btnM:
-                addToPasscodeString("M");
-                break;
+            case R.id.btnQ:addToPasscodeString("Q");break;
+            case R.id.btnW:addToPasscodeString("W");break;
+            case R.id.btnR:addToPasscodeString("R");break;
+            case R.id.btnT:addToPasscodeString("T");break;
+            case R.id.btnY:addToPasscodeString("Y");break;
+            case R.id.btnU:addToPasscodeString("U");break;
+            case R.id.btnI:addToPasscodeString("I");break;
+            case R.id.btnO:addToPasscodeString("O");break;
+            case R.id.btnP:addToPasscodeString("P");break;
+            case R.id.btnA:addToPasscodeString("A");break;
+            case R.id.btnS:addToPasscodeString("S");break;
+            case R.id.btnD:addToPasscodeString("D");break;
+            case R.id.btnF:addToPasscodeString("F");break;
+            case R.id.btnG:addToPasscodeString("G");break;
+            case R.id.btnH:addToPasscodeString("H");break;
+            case R.id.btnJ:addToPasscodeString("J");break;
+            case R.id.btnK:addToPasscodeString("K");break;
+            case R.id.btnL:addToPasscodeString("L");break;
+            case R.id.btnZ:addToPasscodeString("Z");break;
+            case R.id.btnX:addToPasscodeString("X");break;
+            case R.id.btnC:addToPasscodeString("C");break;
+            case R.id.btnV:addToPasscodeString("V");break;
+            case R.id.btnB:addToPasscodeString("B");break;
+            case R.id.btnN:addToPasscodeString("N");break;
+            case R.id.btnM:addToPasscodeString("M");break;
 
-            case R.id.btnDOT:
-                addToPasscodeString(".");
-                break;
-            case R.id.btnCOMMA:
-                addToPasscodeString(",");
-                break;
-            case R.id.btnSLASH:
-                addToPasscodeString("/");
-                break;
-            case R.id.btnSPACEBAR:
-                addToPasscodeString(" ");
-                break;
-            case R.id.btnBackspace:
-                addToPasscodeString("DEL");
+            case R.id.btnDOT:addToPasscodeString(".");break;
+            case R.id.btnCOMMA:addToPasscodeString(",");break;
+            case R.id.btnSLASH:addToPasscodeString("/");break;
+            case R.id.btnSPACEBAR:addToPasscodeString(" ");break;
+            case R.id.btnBACKSPACE:addToPasscodeString("DEL"); break;
+
+            case R.id.btnCLEAR:
+                mPasscodeString = "";
+                mPasscodeMark = "";
+                mTvPasscodeDisplay.setText("");
                 break;
         }
     }
@@ -334,22 +261,22 @@ public class Settings_ComplexPasscode extends AppCompatActivity implements View.
     {
         if (!s.matches("DEL"))
         {
-            passcodeString = passcodeString + s;
+            mPasscodeString = mPasscodeString + s;
 
-            passcodeMark = passcodeMark + "*";
+            mPasscodeMark = mPasscodeMark + "*";
         } else
         {
-            if (passcodeString.length() != 0)
+            if (mPasscodeString.length() != 0)
             {
-                passcodeString = passcodeString.substring(0, passcodeString.length() - 1);
+                mPasscodeString = mPasscodeString.substring(0, mPasscodeString.length() - 1);
 
-                passcodeMark = passcodeMark.substring(0, passcodeMark.length() - 1);
+                mPasscodeMark = mPasscodeMark.substring(0, mPasscodeMark.length() - 1);
             }
         }
 
-        mTvPasscodeDisplay.setText(passcodeMark);
+        mTvPasscodeDisplay.setText(mPasscodeMark);
 
-        return passcodeString;
+        return mPasscodeString;
     }
 
     private void onPinsCompleted()
@@ -376,13 +303,15 @@ public class Settings_ComplexPasscode extends AppCompatActivity implements View.
                 try
                 {
                     CryptKeyHandler cryptKeyHandler = new CryptKeyHandler(mContext);
-                    pinHash = cryptKeyHandler.ENCRYPTKEY(SHA256PinHash.hashFunction(codeFirst, SHA256PinHash.generateSalt()), codeFirst);
+                    pinHash = cryptKeyHandler
+                            .ENCRYPTKEY(SHA256PinHash.hashFunction(codeFirst, SHA256PinHash.generateSalt()), codeFirst);
 
                     mSharedPreferences.edit().putString(PIN, pinHash).apply(); // ADD HASHED PIN TO STORE
                     System.out.println("HASHED PIN :" + pinHash);
                     mSharedPreferences.edit().putString(CRYPT_KEY,
                                     cryptKeyHandler.ENCRYPTKEY(
-                                    cryptKeyHandler.DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN), codeFirst))
+                                    cryptKeyHandler.DECRYPTKEY(
+                                            mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN), codeFirst))
                                     .apply();
                     TEMP_PIN = codeFirst;
                     MASTER_KEY = cryptKeyHandler.DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN);
@@ -406,12 +335,18 @@ public class Settings_ComplexPasscode extends AppCompatActivity implements View.
 
                     mProgressDialog.dismiss();
 
+                    mSharedPreferences.edit().putBoolean(COMPLEXPASSCODE, true).apply();
                     ACTIVITY_INTENT = new Intent(mContext, Settings.class);
+
+                    mPasscodeString = "";
+                    mPasscodeMark = "";
+
                     runOnUiThread(new Runnable()
                     {
                         @Override
                         public void run()
                         {
+                            mTvPasscodeDisplay.setText("");
                             Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();
                         }
                     });

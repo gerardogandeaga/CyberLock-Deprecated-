@@ -47,10 +47,10 @@
             android:name=".Activitys.Activities.Menus.Settings"
             android:configChanges="orientation|screenSize"/>
         <activity
-            android:name=".Activitys.Activities.Menus.Settings_ResetPin"
+            android:name=".Activitys.Activities.Menus.Settings_ResetShortPasscode"
             android:configChanges="orientation|screenSize"/>
         <activity
-            android:name=".Activitys.Activities.Menus.Settings_ComplexPasscode"
+            android:name=".Activitys.Activities.Menus.Settings_ResetComplexPasscode"
             android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".Activitys.Activities.Main.MainActivity"

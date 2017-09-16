@@ -25,18 +25,19 @@ import static com.gerardogandeaga.cyberlock.R.id.input1;
 import static com.gerardogandeaga.cyberlock.R.id.input2;
 import static com.gerardogandeaga.cyberlock.R.id.input3;
 import static com.gerardogandeaga.cyberlock.R.id.input4;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.COMPLEXPASSCODE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
-public class Settings_ResetPin extends AppCompatActivity implements View.OnClickListener
+public class Settings_ResetShortPasscode extends AppCompatActivity implements View.OnClickListener
 {
+    private SharedPreferences mSharedPreferences;
     // STORED PIN
     private static String mPin = "", mPinFirst = "", mPinSecond = "";
     private static final int flags = Base64.DEFAULT;
     private static final String PIN = "PIN", KEY = "KEY";
-    private SharedPreferences mSharedPreferences;
     // PIN ARRAY VARIABLES
     private static boolean mArrayFull = false;
     private static int mIndex = -1;
@@ -55,12 +56,12 @@ public class Settings_ResetPin extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setpin);
         ACTIVITY_INTENT = null;
+        mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
 
         if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         }
 
-        mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
 
         mTextView = (TextView) findViewById(R.id.tvInstructions);
 
@@ -74,7 +75,7 @@ public class Settings_ResetPin extends AppCompatActivity implements View.OnClick
         this.mBtn7 = (Button) findViewById(R.id.btn7);
         this.mBtn8 = (Button) findViewById(R.id.btn8);
         this.mBtn9 = (Button) findViewById(R.id.btn9);
-        ImageButton btnBackspace = (ImageButton) findViewById(R.id.btnBackspace);
+        ImageButton btnBackspace = (ImageButton) findViewById(R.id.btnBACKSPACE);
 
         this.mInput1 = (RadioButton) findViewById(input1);
         this.mInput2 = (RadioButton) findViewById(input2);
@@ -104,7 +105,7 @@ public class Settings_ResetPin extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v)
     {
-        if (v.getId() != R.id.btnBackspace)
+        if (v.getId() != R.id.btnBACKSPACE)
         {
             incrementIndexNumber();
             switch (v.getId())
@@ -205,6 +206,7 @@ public class Settings_ResetPin extends AppCompatActivity implements View.OnClick
 
                         mProgressDialog.dismiss();
 
+                        mSharedPreferences.edit().putBoolean(COMPLEXPASSCODE, false).apply();
                         ACTIVITY_INTENT = new Intent(mContext, Settings.class);
                         runOnUiThread(new Runnable()
                         {
