@@ -1,6 +1,9 @@
 package com.gerardogandeaga.cyberlock.Supports;
 
+import android.content.Context;
 import android.util.Base64;
+
+import com.gerardogandeaga.cyberlock.R;
 
 public class Globals
 {
@@ -31,5 +34,34 @@ public class Globals
     // ----------
 
     // APP STATES
+    public static final String SCHEME = "SCHEME";
+    public static void COLORSCHEME(Context context)
+    {
+        String colourString = context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(SCHEME, "SCHEME_BLUE");
+
+        switch (colourString) {
+            case "SCHEME_BLUE":
+                context.getTheme().applyStyle(R.style.DefaultTheme, true);
+                break;
+            case "SCHEME_RED":
+                context.getTheme().applyStyle(R.style.OverlaySchemeColorRed, true);
+                break;
+            case "SCHEME_GREEN":
+                context.getTheme().applyStyle(R.style.OverlaySchemeColorGreen, true);
+                break;
+            case "SCHEME_YELLOW":
+                context.getTheme().applyStyle(R.style.OverlaySchemeColorYellow, true);
+                break;
+            case "SCHEME_PURPLE":
+                context.getTheme().applyStyle(R.style.OverlaySchemeColorPurple, true);
+                break;
+            case "SCHEME_GRAY":
+                context.getTheme().applyStyle(R.style.OverlaySchemeColorGray, true);
+                break;
+            default:
+                context.getTheme().applyStyle(R.style.DefaultTheme, true);
+                break;
+        }
+    }
     // ----------
 }

@@ -37,12 +37,12 @@
     <LinearLayout
         android:id="@+id/Anchor"
         android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@color/blue4C_2D"
-        android:orientation="horizontal"
-        android:layout_below="@+id/percentRelativeLayout2"
+        android:layout_height="5dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/percentRelativeLayout2"
+        android:background="?attr/colorPrimaryDark"
+        android:orientation="horizontal">
     </LinearLayout>
 
     <TextView

@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -19,8 +18,9 @@ import android.widget.Toast;
 import com.gerardogandeaga.cyberlock.Encryption.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.Encryption.SHA256PinHash;
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.Supports.Globals;
 
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.R.id.input1;
 import static com.gerardogandeaga.cyberlock.R.id.input2;
 import static com.gerardogandeaga.cyberlock.R.id.input3;
@@ -29,41 +29,45 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.COMPLEXPASSCODE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.PIN;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
 public class Settings_ResetShortPasscode extends AppCompatActivity implements View.OnClickListener
 {
+    private Context mContext = this;
     private SharedPreferences mSharedPreferences;
+
+    // DATA VARIABLES
     // STORED PIN
     private static String mPin = "", mPinFirst = "", mPinSecond = "";
-    private static final int flags = Base64.DEFAULT;
-    private static final String PIN = "PIN", KEY = "KEY";
     // PIN ARRAY VARIABLES
-    private static boolean mArrayFull = false;
+    private static boolean mIsArrayFull = false;
     private static int mIndex = -1;
     private static String[] mArray = new String[4];
+
     // WIDGETS
-    private TextView mTextView;
     private Button mBtn0, mBtn1, mBtn2, mBtn3, mBtn4, mBtn5, mBtn6, mBtn7, mBtn8, mBtn9;
-    private RadioButton mInput1, mInput2, mInput3, mInput4;
     private ProgressDialog mProgressDialog;
+    private RadioButton mInput1, mInput2, mInput3, mInput4;
+    private TextView mTextDisplay;
 
-    private Context mContext = this;
 
+    // INITIAL ON CREATE METHODS
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
+        Globals.COLORSCHEME(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setpin);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+
+        setupLayout();
+    }
+    private void setupLayout() {
+        setContentView(R.layout.activity_loginpin);
         ACTIVITY_INTENT = null;
+
         mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        }
-
-
-        mTextView = (TextView) findViewById(R.id.tvInstructions);
+        //
+        mTextDisplay = (TextView) findViewById(R.id.tvTextDisplay);
 
         this.mBtn0 = (Button) findViewById(R.id.btn0);
         this.mBtn1 = (Button) findViewById(R.id.btn1);
@@ -99,71 +103,164 @@ public class Settings_ResetShortPasscode extends AppCompatActivity implements Vi
         this.mBtn9.setOnClickListener(this);
         btnBackspace.setOnClickListener(this);
 
-        this.mTextView.setText(R.string.NewPin);
+        this.mTextDisplay.setText(R.string.NewPin);
     }
+    private void progressBar() {
+        mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog.setMessage("Verifying...");
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
+    // -------------------------
 
+    // ON CLICK
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
         if (v.getId() != R.id.btnBACKSPACE)
-        {
-            incrementIndexNumber();
-            switch (v.getId())
             {
-                case R.id.btn0: addToArray(mBtn0); break;
-                case R.id.btn1: addToArray(mBtn1); break;
-                case R.id.btn2: addToArray(mBtn2); break;
-                case R.id.btn3: addToArray(mBtn3); break;
-                case R.id.btn4: addToArray(mBtn4); break;
-                case R.id.btn5: addToArray(mBtn5); break;
-                case R.id.btn6: addToArray(mBtn6); break;
-                case R.id.btn7: addToArray(mBtn7); break;
-                case R.id.btn8: addToArray(mBtn8); break;
-                case R.id.btn9: addToArray(mBtn9); break;
+                incrementIndexNumber();
+                switch (v.getId())
+                    {
+                        case R.id.btn0:
+                            addToArray(mBtn0);
+                            break;
+                        case R.id.btn1:
+                            addToArray(mBtn1);
+                            break;
+                        case R.id.btn2:
+                            addToArray(mBtn2);
+                            break;
+                        case R.id.btn3:
+                            addToArray(mBtn3);
+                            break;
+                        case R.id.btn4:
+                            addToArray(mBtn4);
+                            break;
+                        case R.id.btn5:
+                            addToArray(mBtn5);
+                            break;
+                        case R.id.btn6:
+                            addToArray(mBtn6);
+                            break;
+                        case R.id.btn7:
+                            addToArray(mBtn7);
+                            break;
+                        case R.id.btn8:
+                            addToArray(mBtn8);
+                            break;
+                        case R.id.btn9:
+                            addToArray(mBtn9);
+                            break;
+                    }
+            } else
+            {
+                deleteFromArray();
             }
-        } else {
-            deleteFromArray();
-        }
 
-        if (mPin.length() == 4) { storePins(); }
+        if (mPin.length() == 4)
+            {
+                storePins();
+            }
 
-        if (mArray[0] != null) { mInput1.setChecked(true); } else { mInput1.setChecked(false); }
-        if (mArray[1] != null) { mInput2.setChecked(true); } else { mInput2.setChecked(false); }
-        if (mArray[2] != null) { mInput3.setChecked(true); } else { mInput3.setChecked(false); }
-        if (mArray[3] != null) { mInput4.setChecked(true); } else { mInput4.setChecked(false); }
+        if (mArray[0] != null)
+            {
+                mInput1.setChecked(true);
+            } else
+            {
+                mInput1.setChecked(false);
+            }
+        if (mArray[1] != null)
+            {
+                mInput2.setChecked(true);
+            } else
+            {
+                mInput2.setChecked(false);
+            }
+        if (mArray[2] != null)
+            {
+                mInput3.setChecked(true);
+            } else
+            {
+                mInput3.setChecked(false);
+            }
+        if (mArray[3] != null)
+            {
+                mInput4.setChecked(true);
+            } else
+            {
+                mInput4.setChecked(false);
+            }
     }
+    // --------
 
-    public void storePins()
-    {
-        if (mPinFirst.matches("") && mPinSecond.matches("")) {
-            mPinFirst = mPin;
-            mTextView.setText(R.string.ConfirmPin);
-            clear();
-        } else if (!mPinFirst.matches("") && mPinSecond.matches("")) {
-            mPinSecond = mPin;
-            clear();
+    // KEYBOARD REGISTRATION
+    public void addToArray(Button b) {
+        mArray[mIndex] = b.getText().toString();
 
-            System.out.println("pin 1 " + mPinFirst);
-            System.out.println("pin 2 " + mPinSecond);
-            onPinsCompleted();
-        }
+        String s = null;
+        for (int i = 0; i < mArray.length; i++)
+            {
+                s = mArray[i];
+                if (s == null)
+                    {
+                        break;
+                    }
+            }
+
+        if (s != null)
+            {
+                mIsArrayFull = true;
+
+                if (mIsArrayFull)
+                    {
+                        for (int i = 0; i < mArray.length; i++)
+                            {
+                                mPin = mPin + mArray[i];
+                            }
+                        System.out.println(mPin);
+                    }
+            }
     }
+    public void incrementIndexNumber() {
+        String s;
+        for (int i = 0; i < mArray.length; i++)
+            {
+                s = mArray[i];
+                if (s == null)
+                    {
+                        mIndex++;
+                        break;
+                    }
+            }
+    }
+    public void deleteFromArray() {
+        if (mIndex != -1)
+            {
+                mArray[mIndex] = null;
+                mIndex--;
+            }
+    }
+    public void clear() {
+        mPin = "";
+        mArray = new String[mArray.length];
+        mIndex = -1;
+    }
+    // ---------------------
 
-    private void onPinsCompleted()
-    {
+    // PIN REGISTRATION
+    private void onPinsCompleted() {
         new AsyncTask<Void, Void, Void>()
         {
             @Override
-            protected void onPreExecute()
-            {
+            protected void onPreExecute() {
                 super.onPreExecute();
 
                 progressBar();
             }
 
             @Override
-            protected Void doInBackground(Void... params)
-            {
+            protected Void doInBackground(Void... params) {
                 final String pinFirst = mPinFirst;
                 final String pinSecond = mPinSecond;
 
@@ -171,72 +268,68 @@ public class Settings_ResetShortPasscode extends AppCompatActivity implements Vi
                 mPinSecond = "";
 
                 if ((pinFirst.matches(pinSecond)) && (!pinFirst.matches("") || (!pinSecond.matches(""))))
-                {
-                    final String pinHash; // GENERATE THE HASH PIN
-                    try
                     {
-                        CryptKeyHandler cryptKeyHandler = new CryptKeyHandler(mContext);
-                        pinHash = cryptKeyHandler.ENCRYPTKEY(SHA256PinHash.hashFunction(pinFirst, SHA256PinHash.generateSalt()), pinFirst);
+                        final String pinHash; // GENERATE THE HASH PIN
+                        try
+                            {
+                                CryptKeyHandler cryptKeyHandler = new CryptKeyHandler(mContext);
+                                pinHash = cryptKeyHandler.ENCRYPTKEY(SHA256PinHash.hashFunction(pinFirst, SHA256PinHash.generateSalt()), pinFirst);
 
-                        mSharedPreferences.edit().putString(PIN, pinHash).apply(); // ADD HASHED PIN TO STORE
-                        System.out.println("HASHED PIN :" + pinHash);
-                        mSharedPreferences.edit().putString(CRYPT_KEY,
+                                mSharedPreferences.edit().putString(PIN, pinHash).apply(); // ADD HASHED PIN TO STORE
+                                System.out.println("HASHED PIN :" + pinHash);
+                                mSharedPreferences.edit().putString(CRYPT_KEY,
                                         cryptKeyHandler.ENCRYPTKEY(
-                                        cryptKeyHandler.DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN), pinFirst))
+                                                cryptKeyHandler.DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN), pinFirst))
                                         .apply();
-                        TEMP_PIN = pinFirst;
-                        MASTER_KEY = cryptKeyHandler.DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN);
+                                TEMP_PIN = pinFirst;
+                                MASTER_KEY = cryptKeyHandler.DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN);
 
-                        mProgressDialog.dismiss();
+                                mProgressDialog.dismiss();
 
-                        ACTIVITY_INTENT = new Intent(mContext, Settings.class);
-                        runOnUiThread(new Runnable()
-                        {
-                            @Override
-                            public void run()
+                                ACTIVITY_INTENT = new Intent(mContext, Settings.class);
+                                runOnUiThread(new Runnable()
+                                {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(mContext, "Pin Successfully Reset", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                mContext.startActivity(ACTIVITY_INTENT);
+
+                            } catch (Exception e)
                             {
-                                Toast.makeText(mContext, "Pin Successfully Reset", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        mContext.startActivity(ACTIVITY_INTENT);
+                                e.printStackTrace();
 
-                    } catch (Exception e)
+                                mProgressDialog.dismiss();
+
+                                mSharedPreferences.edit().putBoolean(COMPLEXPASSCODE, false).apply();
+                                ACTIVITY_INTENT = new Intent(mContext, Settings.class);
+                                runOnUiThread(new Runnable()
+                                {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                mContext.startActivity(ACTIVITY_INTENT);
+                            }
+                    } else
                     {
-                        e.printStackTrace();
-
-                        mProgressDialog.dismiss();
-
-                        mSharedPreferences.edit().putBoolean(COMPLEXPASSCODE, false).apply();
-                        ACTIVITY_INTENT = new Intent(mContext, Settings.class);
                         runOnUiThread(new Runnable()
                         {
                             @Override
-                            public void run()
-                            {
-                                Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                            public void run() {
+                                Toast.makeText(mContext, "Please Try Again", Toast.LENGTH_SHORT).show();
+                                mTextDisplay.setText(R.string.NewPin);
                             }
                         });
-                        mContext.startActivity(ACTIVITY_INTENT);
                     }
-                } else
-                {
-                    runOnUiThread(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            Toast.makeText(mContext, "Please Try Again", Toast.LENGTH_SHORT).show();
-                            mTextView.setText(R.string.NewPin);
-                        }
-                    });
-                }
 
                 return null;
             }
 
             @Override
-            protected void onPostExecute(Void aVoid)
-            {
+            protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
 
                 clear();
@@ -244,67 +337,21 @@ public class Settings_ResetShortPasscode extends AppCompatActivity implements Vi
             }
         }.execute();
     }
-
-    public void incrementIndexNumber()
-    {
-        String s;
-        for (int i = 0; i < mArray.length; i++)
-        {
-            s = mArray[i];
-            if (s == null)
+    public void storePins() {
+        if (mPinFirst.matches("") && mPinSecond.matches(""))
             {
-                mIndex++;
-                break;
-            }
-        }
-    }
-
-    public void addToArray(Button b)
-    {
-        mArray[mIndex] = b.getText().toString();
-
-        String s = null;
-        for (int i = 0; i < mArray.length; i++)
-        {
-            s = mArray[i];
-            if (s == null) { break; }
-        }
-
-        if (s != null)
-        {
-            mArrayFull = true;
-
-            if (mArrayFull)
+                mPinFirst = mPin;
+                mTextDisplay.setText(R.string.ConfirmPin);
+                clear();
+            } else if (!mPinFirst.matches("") && mPinSecond.matches(""))
             {
-                for (int i = 0; i < mArray.length; i++) { mPin = mPin + mArray[i]; }
-                System.out.println(mPin);
+                mPinSecond = mPin;
+                clear();
+
+                System.out.println("pin 1 " + mPinFirst);
+                System.out.println("pin 2 " + mPinSecond);
+                onPinsCompleted();
             }
-        }
     }
-
-    public void deleteFromArray()
-    {
-        if (mIndex != -1)
-        {
-            mArray[mIndex] = null;
-            mIndex--;
-        }
-    }
-
-    public void clear()
-    {
-        mPin = "";
-        mArray = new String[mArray.length];
-        mIndex = -1;
-    }
-
-    private void progressBar()
-    {
-        mProgressDialog = new ProgressDialog(mContext);
-        mProgressDialog.setMessage("Verifying...");
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
-    }
-
+    // ----------------
 }

@@ -31,98 +31,59 @@ import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.LoginInfoEditAct
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.MemoEditActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.PaymentInfoEditActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
+import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Contribute;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings;
 import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.Data;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.Supports.Globals;
 
 import java.util.List;
 import java.util.Scanner;
 
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownIsFinished;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTimer;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 
 public class MainActivity extends AppCompatActivity
 {
-    // DATA
+    private Context mContext = this;
+
+    // DATA VARIABLES
     private MasterDatabaseAccess mMasterDatabaseAccess;
     private List<Data> mDatas;
+
     // WIDGETS
-    private ListView mListView;
+    private ActionBarDrawerToggle mDrawerToggle;
     private ImageButton
             mBtnNewMemo,
             mBtnNewPaymentInfo,
             mBtnNewLoginInfo;
-    private DrawerLayout mDrawerLayout;
+    private ListView mListView;
     private NavigationView mNavigationView;
-    private ActionBarDrawerToggle mDrawerToggle;
 
-    private Context mContext = this;
-
+    // INITIAL ON CREATE METHODS
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
+        Globals.COLORSCHEME(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_list);
-        ACTIVITY_INTENT = null;
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        }
 
         setupLayout();
     }
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        int id = item.getItemId();
-        Dialog dialog = new Dialog(this);
-
-        if (mDrawerToggle.onOptionsItemSelected(item)) return true;
-
-        switch (item.getItemId())
-        {
-            case (R.id.action_settings):
-                ACTIVITY_INTENT = new Intent(this, Settings.class);
-                this.finish();
-                this.startActivity(ACTIVITY_INTENT);
-                overridePendingTransition(R.anim.anim_push_downin, R.anim.anim_push_downout);
-                return true;
-
-            case (R.id.action_about):
-                dialog.setContentView(R.layout.activity_about);
-                dialog.setTitle("About Cyber Lock");
-                dialog.show();
-                return true;
-
-
-            case (R.id.action_contribute):
-                ACTIVITY_INTENT = new Intent(this, Contribute.class);
-                this.finish();
-                this.startActivity(ACTIVITY_INTENT);
-                overridePendingTransition(R.anim.anim_push_downin, R.anim.anim_push_downout);
-                return true;
-
-            case (R.id.action_playground):
-                ACTIVITY_INTENT = new Intent(this, MainPlaygroundActivity.class);
-                this.finish();
-                this.startActivity(ACTIVITY_INTENT);
-                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
-
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
 
         this.mMasterDatabaseAccess.open();
@@ -131,72 +92,112 @@ public class MainActivity extends AppCompatActivity
         DataAdapter adapter = new DataAdapter(this, mDatas);
         this.mListView.setAdapter(adapter);
     }
+    private void setupLayout() {
+        setContentView(R.layout.activity_main);
+        ACTIVITY_INTENT = null;
+        // GET WIDGETS
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.Content);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        this.mBtnNewMemo = (ImageButton) findViewById(R.id.btnNewMemo);
+        this.mBtnNewPaymentInfo = (ImageButton) findViewById(R.id.btnNewPaymentInfo);
+        this.mBtnNewLoginInfo = (ImageButton) findViewById(R.id.btnNewLoginInfo);
+        this.mNavigationView = (NavigationView) findViewById(R.id.NavigationContent);
+        this.mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
+        this.mListView = (ListView) findViewById(R.id.listView);
+        // GET DATA
+        this.mMasterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
+        // SET WIDGETS
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("{ Cyber Lock }");
 
-    public void onAddClicked(String TYPE)
-    {
-        switch (TYPE)
+        this.mBtnNewMemo.setOnClickListener(new View.OnClickListener()
         {
-            case "TYPE_MEMO":
-                ACTIVITY_INTENT = new Intent(this, MemoEditActivity.class);
-                break;
-            case "TYPE_PAYMENTINFO":
-                ACTIVITY_INTENT = new Intent(this, PaymentInfoEditActivity.class);
-                break;
-            case "TYPE_LOGININFO":
-                ACTIVITY_INTENT = new Intent(this, LoginInfoEditActivity.class);
-                break;
-        }
-        this.finish();
-        this.startActivity(ACTIVITY_INTENT);
-    }
-
-    public void onDeleteClicked(Data data)
-    {
-        this.mMasterDatabaseAccess.open();
-        this.mMasterDatabaseAccess.delete(data);
-        this.mMasterDatabaseAccess.close();
-
-        ArrayAdapter<Data> adapter = (ArrayAdapter<Data>) mListView.getAdapter();
-        adapter.remove(data);
-        adapter.notifyDataSetChanged();
-    }
-
-    public void onEditClicked(final String TYPE, final Data data)
-    {
-        switch (TYPE)
+            @Override
+            public void onClick(View v) {
+                onAddClicked("TYPE_MEMO");
+            }
+        });
+        this.mBtnNewPaymentInfo.setOnClickListener(new View.OnClickListener()
         {
-            case "TYPE_MEMO":
-                ACTIVITY_INTENT = new Intent(mContext, MemoEditActivity.class);
-                ACTIVITY_INTENT.putExtra("DATA", data);
-                this.finish();
-                this.startActivity(ACTIVITY_INTENT);
-                break;
-            case "TYPE_PAYMENTINFO":
-                ACTIVITY_INTENT = new Intent(mContext, PaymentInfoEditActivity.class);
-                ACTIVITY_INTENT.putExtra("DATA", data);
-                this.finish();
-                this.startActivity(ACTIVITY_INTENT);
-                break;
-            case "TYPE_LOGININFO":
-                ACTIVITY_INTENT = new Intent(mContext, LoginInfoEditActivity.class);
-                ACTIVITY_INTENT.putExtra("DATA", data);
-                this.finish();
-                this.startActivity(ACTIVITY_INTENT);
-                break;
-        }
-    }
+            @Override
+            public void onClick(View v) {
+                onAddClicked("TYPE_PAYMENTINFO");
+            }
+        });
+        this.mBtnNewLoginInfo.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                onAddClicked("TYPE_LOGININFO");
+            }
+        });
+        this.mBtnNewMemo.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(mContext, "New Memo", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        this.mBtnNewPaymentInfo.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(mContext, "New Payment Information", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        this.mBtnNewLoginInfo.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(mContext, "New Login Credentials", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            }
+        });
 
+        calculateDrawerSize();
+        drawerLayout.addDrawerListener(mDrawerToggle);
+        this.mDrawerToggle.syncState();
+    } // LAYOUT SET UP
+    private void calculateDrawerSize() {
+        Resources resources = getResources();
+        DisplayMetrics metrics = new DisplayMetrics();
+
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;
+
+        float screenWidth = width / resources.getDisplayMetrics().density;
+        float navWidth = screenWidth - 56;
+
+        navWidth = Math.min(navWidth, 320);
+
+        int newWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, navWidth, resources.getDisplayMetrics());
+
+        DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) mNavigationView.getLayoutParams();
+        params.width = (newWidth);
+        mNavigationView.setLayoutParams(params);
+    }
     private class DataAdapter extends ArrayAdapter<Data>
     {
-        private DataAdapter(Context context, List<Data> objects)
-        {
+        private DataAdapter(Context context, List<Data> objects) {
             super(context, 0, objects);
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)
-        {
-            if (convertView == null) { convertView = getLayoutInflater().inflate(R.layout.list_item, parent, false); }
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null)
+                {
+                    convertView = getLayoutInflater().inflate(R.layout.list_item, parent, false);
+                }
 
             final Data data = mDatas.get(position);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, 0);
@@ -214,35 +215,34 @@ public class MainActivity extends AppCompatActivity
             final String TYPE = data.getType();
 
             switch (TYPE)
-            {
-                case "TYPE_MEMO":
-                    PaymentInfoListLayout.setLayoutParams(params);
-                    LoginInfoListLayout.setLayoutParams(params);
+                {
+                    case "TYPE_MEMO":
+                        PaymentInfoListLayout.setLayoutParams(params);
+                        LoginInfoListLayout.setLayoutParams(params);
 
-                    memoFunctions(data, cryptContent, convertView, params, Content);
-                    break;
+                        memoFunctions(data, cryptContent, convertView, params, Content);
+                        break;
 
-                case "TYPE_PAYMENTINFO":
-                    MemoListLayout.setLayoutParams(params);
-                    LoginInfoListLayout.setLayoutParams(params);
+                    case "TYPE_PAYMENTINFO":
+                        MemoListLayout.setLayoutParams(params);
+                        LoginInfoListLayout.setLayoutParams(params);
 
-                    paymentInfoFunctions(data, cryptContent, convertView, params);
-                    break;
+                        paymentInfoFunctions(data, cryptContent, convertView, params);
+                        break;
 
-                case "TYPE_LOGININFO":
-                    MemoListLayout.setLayoutParams(params);
-                    PaymentInfoListLayout.setLayoutParams(params);
+                    case "TYPE_LOGININFO":
+                        MemoListLayout.setLayoutParams(params);
+                        PaymentInfoListLayout.setLayoutParams(params);
 
-                    loginInfoFunctions(data, cryptContent, convertView, Content);
-                    break;
-            }
+                        loginInfoFunctions(data, cryptContent, convertView, Content);
+                        break;
+                }
 
 
             Content.setOnClickListener(new View.OnClickListener()
             {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     onEditClicked(TYPE, data);
                     System.out.println(TYPE);
                 }
@@ -251,9 +251,10 @@ public class MainActivity extends AppCompatActivity
             return convertView;
         }
     }
+    // -------------------------
 
-    private void memoFunctions(final Data data, CryptContent cryptContent, View convertView, LinearLayout.LayoutParams params, LinearLayout layoutContent)
-    {
+    // FUNCTIONS FOR THE DATA ADAPTER
+    private void memoFunctions(final Data data, CryptContent cryptContent, View convertView, LinearLayout.LayoutParams params, LinearLayout layoutContent) {
         data.setFullDisplayed(false);
 
         final String date = data.getDate();
@@ -266,42 +267,53 @@ public class MainActivity extends AppCompatActivity
 
         memo = scanner.nextLine();
         while (scanner.hasNextLine())
-        {
-            memo += "\n";
-            memo += scanner.nextLine();
-        }
+            {
+                memo += "\n";
+                memo += scanner.nextLine();
+            }
         scanner.close();
 
         final TextView tvDate = (TextView) convertView.findViewById(R.id.tvMemoDate);
         final TextView tvLabel = (TextView) convertView.findViewById(R.id.tvMemoLabel);
         final TextView tvMemo = (TextView) convertView.findViewById(R.id.tvMemo);
 
-        if (label != null) { tvLabel.setText(label); }                           else { tvLabel.setLayoutParams(params); }
-        if (memo != null) { tvMemo.setText(data.getShortText(mContext, memo)); } else { tvMemo.setLayoutParams(params); }
+        if (label != null)
+            {
+                tvLabel.setText(label);
+            } else
+            {
+                tvLabel.setLayoutParams(params);
+            }
+        if (memo != null)
+            {
+                tvMemo.setText(data.getShortText(mContext, memo));
+            } else
+            {
+                tvMemo.setLayoutParams(params);
+            }
         tvDate.setText(date);
 
         final String finalMemo = memo;
         layoutContent.setOnLongClickListener(new View.OnLongClickListener()
         {
             @Override
-            public boolean onLongClick(View v)
-            {
+            public boolean onLongClick(View v) {
                 if (data.isFullDisplayed())
-                {
-                    if (finalMemo != null) tvMemo.setText(data.getShortText(mContext, finalMemo));
-                    data.setFullDisplayed(false);
-                } else {
-                    if (finalMemo != null) tvMemo.setText(finalMemo);
-                    data.setFullDisplayed(true);
-                }
+                    {
+                        if (finalMemo != null)
+                            tvMemo.setText(data.getShortText(mContext, finalMemo));
+                        data.setFullDisplayed(false);
+                    } else
+                    {
+                        if (finalMemo != null) tvMemo.setText(finalMemo);
+                        data.setFullDisplayed(true);
+                    }
 
                 return false;
             }
         });
     }
-
-    private void paymentInfoFunctions(Data data, CryptContent cryptContent, View convertView, LinearLayout.LayoutParams params)
-    {
+    private void paymentInfoFunctions(Data data, CryptContent cryptContent, View convertView, LinearLayout.LayoutParams params) {
         data.setFullDisplayed(false);
 
         final String date = data.getDate();
@@ -328,38 +340,68 @@ public class MainActivity extends AppCompatActivity
         final TextView tvCardNumber = (TextView) convertView.findViewById(R.id.tvCardNumber);
         final ImageView imgCard = (ImageView) convertView.findViewById(R.id.imgCard);
 
-        if (label != null) { tvLabel.setText(label); }               else { tvLabel.setLayoutParams(params); }
-        if (!cardName.matches("")) { tvCardName.setText(cardName); } else { tvCardName.setLayoutParams(params); }
-        if (!cardNumber.matches(""))
-        { // ***** ASTRIX ALGORITHM
-            if (cardNumber.length() < 5) {
-                tempNumber = cardNumber.substring(0, cardNumber.length());
-            } else {
-                int i = 0;
-                while (i < cardNumber.length() - 5) {
-                    tempNumber = tempNumber + "*";
-                    i++;
-                }
-                tempNumber = tempNumber + cardNumber.substring(cardNumber.length() - 4, cardNumber.length());
+        if (label != null)
+            {
+                tvLabel.setText(label);
+            } else
+            {
+                tvLabel.setLayoutParams(params);
             }
-            tvCardNumber.setText(tempNumber);
-        }                                                        else { tvCardNumber.setLayoutParams(params); }
+        if (!cardName.matches(""))
+            {
+                tvCardName.setText(cardName);
+            } else
+            {
+                tvCardName.setLayoutParams(params);
+            }
+        if (!cardNumber.matches(""))
+            { // ***** ASTRIX ALGORITHM
+                if (cardNumber.length() < 5)
+                    {
+                        tempNumber = cardNumber.substring(0, cardNumber.length());
+                    } else
+                    {
+                        int i = 0;
+                        while (i < cardNumber.length() - 5)
+                            {
+                                tempNumber = tempNumber + "*";
+                                i++;
+                            }
+                        tempNumber = tempNumber + cardNumber.substring(cardNumber.length() - 4, cardNumber.length());
+                    }
+                tvCardNumber.setText(tempNumber);
+            } else
+            {
+                tvCardNumber.setLayoutParams(params);
+            }
         tvDate.setText(date);
 
         switch (cardType)
-        {
-            case ("None"): imgCard.setImageResource(R.drawable.card_default); break;
-            case ("Visa"): imgCard.setImageResource(R.drawable.card_visa); break;
-            case ("Master Card"): imgCard.setImageResource(R.drawable.card_mastercard); break;
-            case ("American Express"): imgCard.setImageResource(R.drawable.card_americanexpress); break;
-            case ("Discover"): imgCard.setImageResource(R.drawable.card_discover); break;
-            case ("Other"): imgCard.setImageResource(R.drawable.card_default); break;
-            default: imgCard.setImageResource(R.drawable.card_default); break;
-        }
+            {
+                case ("None"):
+                    imgCard.setImageResource(R.drawable.card_default);
+                    break;
+                case ("Visa"):
+                    imgCard.setImageResource(R.drawable.card_visa);
+                    break;
+                case ("Master Card"):
+                    imgCard.setImageResource(R.drawable.card_mastercard);
+                    break;
+                case ("American Express"):
+                    imgCard.setImageResource(R.drawable.card_americanexpress);
+                    break;
+                case ("Discover"):
+                    imgCard.setImageResource(R.drawable.card_discover);
+                    break;
+                case ("Other"):
+                    imgCard.setImageResource(R.drawable.card_default);
+                    break;
+                default:
+                    imgCard.setImageResource(R.drawable.card_default);
+                    break;
+            }
     }
-
-    private void loginInfoFunctions(final Data data, CryptContent cryptContent, View convertView, LinearLayout layoutContent)
-    {
+    private void loginInfoFunctions(final Data data, CryptContent cryptContent, View convertView, LinearLayout layoutContent) {
         data.setFullDisplayed(false);
 
         final String date = data.getDate();
@@ -388,190 +430,200 @@ public class MainActivity extends AppCompatActivity
         final LinearLayout.LayoutParams hideParams = new LinearLayout.LayoutParams(0, 0);
         final LinearLayout.LayoutParams displayParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        if (!label.matches("")) { tvLabel.setText(label); }                                                                 else { tvLabel.setLayoutParams(hideParams); }
-        if (!url.matches("")) { tvUrl.setText("Url: " + url); }                                                             else { tvUrl.setLayoutParams(hideParams); }
-        if (!username.matches("")) { tvUsername.setText("Username: " + username); tvUsername.setLayoutParams(hideParams); } else { tvUsername.setLayoutParams(hideParams); }
-        if (!email.matches("")) { tvEmail.setText("Email: " + email); tvEmail.setLayoutParams(hideParams); }                else { tvEmail.setLayoutParams(hideParams); }
-        if (!password.matches("")) { tvPassword.setText("Password: " + password); tvPassword.setLayoutParams(hideParams); } else { tvPassword.setLayoutParams(hideParams); }
+        if (!label.matches(""))
+            {
+                tvLabel.setText(label);
+            } else
+            {
+                tvLabel.setLayoutParams(hideParams);
+            }
+        if (!url.matches(""))
+            {
+                tvUrl.setText("Url: " + url);
+            } else
+            {
+                tvUrl.setLayoutParams(hideParams);
+            }
+        if (!username.matches(""))
+            {
+                tvUsername.setText("Username: " + username);
+                tvUsername.setLayoutParams(hideParams);
+            } else
+            {
+                tvUsername.setLayoutParams(hideParams);
+            }
+        if (!email.matches(""))
+            {
+                tvEmail.setText("Email: " + email);
+                tvEmail.setLayoutParams(hideParams);
+            } else
+            {
+                tvEmail.setLayoutParams(hideParams);
+            }
+        if (!password.matches(""))
+            {
+                tvPassword.setText("Password: " + password);
+                tvPassword.setLayoutParams(hideParams);
+            } else
+            {
+                tvPassword.setLayoutParams(hideParams);
+            }
         tvDate.setText(date);
 
         layoutContent.setOnLongClickListener(new View.OnLongClickListener()
         {
             @Override
-            public boolean onLongClick(View v)
-            {
+            public boolean onLongClick(View v) {
                 if (data.isFullDisplayed())
-                {
-                    tvUsername.setLayoutParams(hideParams);
-                    tvEmail.setLayoutParams(hideParams);
-                    tvPassword.setLayoutParams(hideParams);
-                    data.setFullDisplayed(false);
-                } else {
-                    tvUsername.setLayoutParams(displayParams);
-                    tvEmail.setLayoutParams(displayParams);
-                    tvPassword.setLayoutParams(displayParams);
-                    data.setFullDisplayed(true);
-                }
+                    {
+                        tvUsername.setLayoutParams(hideParams);
+                        tvEmail.setLayoutParams(hideParams);
+                        tvPassword.setLayoutParams(hideParams);
+                        data.setFullDisplayed(false);
+                    } else
+                    {
+                        tvUsername.setLayoutParams(displayParams);
+                        tvEmail.setLayoutParams(displayParams);
+                        tvPassword.setLayoutParams(displayParams);
+                        data.setFullDisplayed(true);
+                    }
 
                 return false;
             }
         });
     }
+    // ------------------------------
 
-    private void setupLayout()
-    {
-        this.mMasterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
-
-        // ACTION BAR TITLE AND BACK BUTTON
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("{ Cyber Lock }");
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.Content);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.Open, R.string.Close);
-        mNavigationView = (NavigationView) findViewById(R.id.NavigationContent);
-
-        this.mListView = (ListView) findViewById(R.id.listView);
-        this.mBtnNewMemo = (ImageButton) findViewById(R.id.btnNewMemo);
-        this.mBtnNewPaymentInfo = (ImageButton) findViewById(R.id.btnNewPaymentInfo);
-        this.mBtnNewLoginInfo = (ImageButton) findViewById(R.id.btnNewLoginInfo);
-
-        calculateDrawerSize();
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();
-
-        this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {  }
-        });
-
-        this.mBtnNewMemo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                onAddClicked("TYPE_MEMO");
-            }
-        });
-        this.mBtnNewPaymentInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                onAddClicked("TYPE_PAYMENTINFO");
-            }
-        });
-        this.mBtnNewLoginInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                onAddClicked("TYPE_LOGININFO");
-            }
-        });
-
-        this.mBtnNewMemo.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v)
-            {
-                Toast.makeText(mContext, "New Memo", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-        this.mBtnNewPaymentInfo.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v)
-            {
-                Toast.makeText(mContext, "New Payment Information", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-        this.mBtnNewLoginInfo.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v)
-            {
-                Toast.makeText(mContext, "New Login Credentials", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-
-    }
-
-    private void calculateDrawerSize()
-    {
-        Resources resources = getResources();
-        DisplayMetrics metrics = new DisplayMetrics();
-
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int width = metrics.widthPixels;
-
-        float screenWidth = width / resources.getDisplayMetrics().density;
-        float navWidth = screenWidth - 56;
-
-        navWidth = Math.min(navWidth, 320);
-
-        int newWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, navWidth, resources.getDisplayMetrics());
-
-        DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) mNavigationView.getLayoutParams();
-        params.width = (newWidth);
-        mNavigationView.setLayoutParams(params);
-    }
-
+    // ON ACTION CLICKS
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        Dialog dialog = new Dialog(this);
+
+        if (mDrawerToggle.onOptionsItemSelected(item)) return true;
+
+        switch (item.getItemId())
+            {
+                case (R.id.action_settings):
+                    ACTIVITY_INTENT = new Intent(this, Settings.class);
+                    this.finish();
+                    this.startActivity(ACTIVITY_INTENT);
+                    overridePendingTransition(R.anim.anim_push_downin, R.anim.anim_push_downout);
+                    return true;
+
+                case (R.id.action_about):
+                    dialog.setContentView(R.layout.activity_about);
+                    dialog.setTitle("About Cyber Lock");
+                    dialog.show();
+                    return true;
+
+
+                case (R.id.action_contribute):
+                    ACTIVITY_INTENT = new Intent(this, Contribute.class);
+                    this.finish();
+                    this.startActivity(ACTIVITY_INTENT);
+                    overridePendingTransition(R.anim.anim_push_downin, R.anim.anim_push_downout);
+                    return true;
+
+                case (R.id.action_playground):
+                    ACTIVITY_INTENT = new Intent(this, MainPlaygroundActivity.class);
+                    this.finish();
+                    this.startActivity(ACTIVITY_INTENT);
+                    overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
+                    return true;
+            }
+        return super.onOptionsItemSelected(item);
     }
+    public void onAddClicked(String TYPE) {
+        switch (TYPE)
+            {
+                case "TYPE_MEMO":
+                    ACTIVITY_INTENT = new Intent(this, MemoEditActivity.class);
+                    break;
+                case "TYPE_PAYMENTINFO":
+                    ACTIVITY_INTENT = new Intent(this, PaymentInfoEditActivity.class);
+                    break;
+                case "TYPE_LOGININFO":
+                    ACTIVITY_INTENT = new Intent(this, LoginInfoEditActivity.class);
+                    break;
+            }
+        this.finish();
+        this.startActivity(ACTIVITY_INTENT);
+    }
+    public void onEditClicked(final String TYPE, final Data data) {
+        switch (TYPE)
+            {
+                case "TYPE_MEMO":
+                    ACTIVITY_INTENT = new Intent(mContext, MemoEditActivity.class);
+                    ACTIVITY_INTENT.putExtra("DATA", data);
+                    this.finish();
+                    this.startActivity(ACTIVITY_INTENT);
+                    break;
+                case "TYPE_PAYMENTINFO":
+                    ACTIVITY_INTENT = new Intent(mContext, PaymentInfoEditActivity.class);
+                    ACTIVITY_INTENT.putExtra("DATA", data);
+                    this.finish();
+                    this.startActivity(ACTIVITY_INTENT);
+                    break;
+                case "TYPE_LOGININFO":
+                    ACTIVITY_INTENT = new Intent(mContext, LoginInfoEditActivity.class);
+                    ACTIVITY_INTENT.putExtra("DATA", data);
+                    this.finish();
+                    this.startActivity(ACTIVITY_INTENT);
+                    break;
+            }
+    }
+    public void onDeleteClicked(Data data) {
+        this.mMasterDatabaseAccess.open();
+        this.mMasterDatabaseAccess.delete(data);
+        this.mMasterDatabaseAccess.close();
+
+        ArrayAdapter<Data> adapter = (ArrayAdapter<Data>) mListView.getAdapter();
+        adapter.remove(data);
+        adapter.notifyDataSetChanged();
+    }
+    // ----------------
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
     @Override
-    public void onStart()
-    {
+    public void onStart() {
         super.onStart();
 
         if (mCountDownIsFinished)
-        {
-            if (!APP_LOGGED_IN)
             {
-                ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
-                this.finish(); // CLEAN UP AND END
-                this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
-            }
-        } else
-        {
-            if (mCountDownTimer != null)
+                if (!APP_LOGGED_IN)
+                    {
+                        ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
+                        this.finish(); // CLEAN UP AND END
+                        this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
+                    }
+            } else
             {
-                System.out.println("Cancel Called!");
-                mCountDownTimer.cancel();
-
+                if (mCountDownTimer != null)
+                    {
+                        mCountDownTimer.cancel();
+                    }
             }
-        }
     }
-
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         super.onBackPressed();
         if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
-        {
-            new LogoutProtocol().logoutImmediate(this);
-        }
+            {
+                new LogoutProtocol().logoutImmediate(this);
+            }
     }
-
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
 
-        if (!this.isFinishing()) { // HOME AND TABS AND SCREEN OFF
-            if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
+        if (!this.isFinishing()) // HOME AND TABS AND SCREEN OFF
             {
-                new LogoutProtocol().logoutExecuteAutosaveOff(this);
+                if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
+                    {
+                        new LogoutProtocol().logoutExecuteAutosaveOff(mContext);
+                    }
             }
-        }
-        // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     }
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }

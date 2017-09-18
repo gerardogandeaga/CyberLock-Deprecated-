@@ -8,104 +8,97 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
+import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.Supports.Globals;
 
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownIsFinished;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTimer;
 
 public class Contribute extends AppCompatActivity
 {
+    // INITIAL ON CREATE METHODS
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
+        Globals.COLORSCHEME(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contribute);
-        ACTIVITY_INTENT = null;
-
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        }
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
         setupLayout();
     }
-
-    private void setupLayout()
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
     {
+        switch (item.getItemId())
+            {
+                // Respond to the action bar's Up/Home button
+                case android.R.id.home:
+                    onBackPressed();
+                    return true;
+            }
+        return super.onOptionsItemSelected(item);
+    }
+    private void setupLayout() {
+        setContentView(R.layout.activity_contribute);
+        ACTIVITY_INTENT = null;
         // ACTION BAR TITLE AND BACK BUTTON
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+        setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Contribute");
     }
+    // -------------------------
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) // ACTION BAR BACK BUTTON RESPONSE
-    {
-        switch (item.getItemId())
-        {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
 
         if (mCountDownIsFinished)
-        {
-            if (!APP_LOGGED_IN)
             {
-                ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
-                this.finish(); // CLEAN UP AND END
-                this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
-            }
-        } else
-        {
-            if (mCountDownTimer != null)
+                if (!APP_LOGGED_IN)
+                    {
+                        ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
+                        this.finish(); // CLEAN UP AND END
+                        this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
+                    }
+            } else
             {
-                System.out.println("Cancel Called!");
-                mCountDownTimer.cancel();
+                if (mCountDownTimer != null)
+                    {
+                        System.out.println("Cancel Called!");
+                        mCountDownTimer.cancel();
+                    }
             }
-        }
     }
-
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         super.onBackPressed();
         if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
-        {
-            ACTIVITY_INTENT = new Intent(this, MainActivity.class);
-            this.finish();
-            this.startActivity(ACTIVITY_INTENT);
-            overridePendingTransition(R.anim.anim_push_upin, R.anim.anim_push_upin);
-        }
+            {
+                ACTIVITY_INTENT = new Intent(this, MainActivity.class);
+                this.finish();
+                this.startActivity(ACTIVITY_INTENT);
+                overridePendingTransition(R.anim.anim_push_upin, R.anim.anim_push_upin);
+            }
     }
-
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
 
         if (!this.isFinishing()) // HOME AND TABS AND SCREEN OFF
-        {
-            if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             {
-                new LogoutProtocol().logoutExecuteAutosaveOff(this);
+                if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
+                    {
+                        new LogoutProtocol().logoutExecuteAutosaveOff(this);
+                    }
             }
-        }
     }
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }

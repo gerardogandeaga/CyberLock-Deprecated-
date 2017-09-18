@@ -6,26 +6,13 @@
     android:id="@+id/Content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue2D_3D"
+    android:background="?attr/colorPrimaryDark"
     android:orientation="vertical"
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="?attr/colorAccent"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar"/>
 
     <ScrollView
         android:id="@+id/ScrollData"
@@ -33,7 +20,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/appbar"
+        android:layout_below="@+id/include"
         android:padding="0dp">
 
         <LinearLayout
@@ -393,6 +380,201 @@
                         android:spinnerMode="dialog"/>
 
                 </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ColourScheme"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imgColourScheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    app:srcCompat="@drawable/ic_graphic_colourscheme"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/imgColourScheme"
+                    android:layout_toRightOf="@+id/imgColourScheme"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/tvColourScheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:fontFamily="monospace"
+                        android:text="Colour Scheme"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+
+                    <LinearLayout
+                        android:id="@+id/ColorScheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/imgColourScheme"
+                        android:layout_toRightOf="@+id/imgColourScheme">
+
+                        <RelativeLayout
+                            android:id="@+id/Blue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/imgBlue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/scheme_blue"/>
+
+                            <CheckBox
+                                android:id="@+id/cbBlue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
+                                android:checked="false"
+                                app:buttonTint="@color/white"/>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/Red"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/imgRed"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/scheme_red"/>
+
+                            <CheckBox
+                                android:id="@+id/cbRed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignEnd="@+id/imgRed"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignRight="@+id/imgRed"
+                                android:checked="false"
+                                app:buttonTint="@color/white"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/Green"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/imgGreen"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/scheme_green"/>
+
+                            <CheckBox
+                                android:id="@+id/cbGreen"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
+                                android:checked="false"
+                                app:buttonTint="@color/white"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/Yellow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/imgYellow"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/scheme_yellow"/>
+
+                            <CheckBox
+                                android:id="@+id/cbYellow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
+                                android:checked="false"
+                                app:buttonTint="@color/white"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/Purple"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/imgPurple"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/scheme_purple"/>
+
+                            <CheckBox
+                                android:id="@+id/cbPurple"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
+                                android:checked="false"
+                                app:buttonTint="@color/white"/>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/Gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:id="@+id/imgGray"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/scheme_gray"/>
+
+                            <CheckBox
+                                android:id="@+id/cbGray"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
+                                android:checked="false"
+                                app:buttonTint="@color/white"/>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
             </RelativeLayout>
 
         </LinearLayout>

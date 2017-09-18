@@ -16,14 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
+import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Encryption.CryptPlayground;
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.Supports.Globals;
 
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownIsFinished;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTimer;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.PLAYGROUIND_ALGO;
 
@@ -46,9 +47,10 @@ public class MainPlaygroundActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        Globals.COLORSCHEME(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_playground);
-        ACTIVITY_INTENT = null; // START ACTIVITY WITH EMPTY INTENT\
+        ACTIVITY_INTENT = null;
 
         if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
@@ -207,7 +209,9 @@ public class MainPlaygroundActivity extends AppCompatActivity
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Playground");
+        getSupportActionBar().setIcon(R.drawable.ic_action_crypt);
+        getSupportActionBar().setTitle("  Playground");
+        getSupportActionBar().setSubtitle("   Encryption Testing Interface");
 
         mTvCrypt = (TextView) findViewById(R.id.tvCrypt);
         mTvCryptTextOutput = (TextView) findViewById(R.id.tvCryptTextOutput);

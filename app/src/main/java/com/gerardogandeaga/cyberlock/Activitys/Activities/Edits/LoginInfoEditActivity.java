@@ -13,20 +13,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
+import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.Data;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.Supports.Globals;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownIsFinished;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTimer;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
@@ -34,11 +35,11 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
 public class LoginInfoEditActivity extends AppCompatActivity
 {
-    // DATA
+    // DATA VARIABLES
     private CryptContent mCryptContent;
     private Data mData;
+
     // WIDGETS
-    private TextView mTvDate;
     private EditText
             mEtLabel,
             mEtUrl,
@@ -46,24 +47,36 @@ public class LoginInfoEditActivity extends AppCompatActivity
             mEtEmail,
             mEtPassword,
             mEtNotes;
+    private TextView mTvDate;
 //    private static final int PICK_IMAGE = 100;
 
+    // INITIAL ON CREATE METHODS
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
+        Globals.COLORSCHEME(this);
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+
+        setupLayout();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        return true;
+    }
+    private void setupLayout() {
         setContentView(R.layout.activity_edit_logininfo);
         ACTIVITY_INTENT = null;
-
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        }
-
+        //
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Login Edit");
+        getSupportActionBar().setIcon(R.drawable.ic_action_loginlock);
+        getSupportActionBar().setTitle("  Login Edit");
+        getSupportActionBar().setSubtitle("   Credential Encryption");
+//        getSupportActionBar().setTitle("");
 
         this.mEtLabel = (EditText) findViewById(R.id.etTag);
         this.mEtUrl = (EditText) findViewById(R.id.etUrl);
@@ -75,7 +88,6 @@ public class LoginInfoEditActivity extends AppCompatActivity
 
         Bundle bundle = getIntent().getExtras();
         setupActivity(bundle);
-
 //        btnUploadImage.setOnClickListener(new View.OnClickListener()
 //        {
 //            @Override
@@ -85,14 +97,68 @@ public class LoginInfoEditActivity extends AppCompatActivity
 //            }
 //        });
     }
+    private void setupActivity(Bundle bundle) {
+        mCryptContent = new CryptContent(this);
+        if (bundle != null) {
+            mData = (Data) bundle.get("DATA");
+            if (mData != null) {
+                try {
+                    String label = mCryptContent.decryptContent(mData.getLabel(), MASTER_KEY);
+                    mEtLabel.setText(label);
 
+                    String url;
+                    String username;
+                    String email;
+                    String password;
+                    String notes;
+
+                    final String content = mCryptContent.decryptContent(mData.getContent(), MASTER_KEY);
+                    if (content != null) {
+                        Scanner scanner = new Scanner(content);
+
+                        url = scanner.nextLine();
+                        username = scanner.nextLine();
+                        email = scanner.nextLine();
+                        password = scanner.nextLine();
+                        try {
+                            notes = scanner.nextLine();
+                            while (scanner.hasNextLine()) {
+                                notes += "\n";
+                                notes += scanner.hasNextLine();
+                            }
+                            mEtNotes.setText(notes);
+                        } catch (NoSuchElementException e) {
+                            e.printStackTrace();
+                        }
+                        scanner.close();
+
+                        mEtUrl.setText(url);
+                        mEtUsername.setText(username);
+                        mEtEmail.setText(email);
+                        mEtPassword.setText(password);
+                    }
+
+                    if (!mData.getDate().matches("")) {
+                        this.mTvDate.setText("Last Updated: " + mData.getDate());
+                    } else {
+                        this.mTvDate.setText("Last Updated: ---");
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Error: could not set one or more text fields", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+    // -------------------------
+
+    // ON CLICK
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        switch (id)
-        {
+        switch (id) {
             case (R.id.action_save):
                 onSave();
                 onBackPressed();
@@ -107,6 +173,55 @@ public class LoginInfoEditActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+    // --------
+
+    // ACTIVITY ACTIONS
+    private void onSave() {
+        MasterDatabaseAccess masterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
+        masterDatabaseAccess.open();
+
+        if ((!mEtLabel.getText().toString().matches("")) || (!mEtUrl.getText().toString().matches("")) || (!mEtUsername.getText().toString().matches("")) || (!mEtEmail.getText().toString().matches("")) || (!mEtPassword.getText().toString().matches("")) || (!mEtNotes.getText().toString().matches(""))) {
+            final String url = mEtUrl.getText().toString();
+            final String username = mEtUsername.getText().toString();
+            final String email = mEtEmail.getText().toString();
+            final String password = mEtPassword.getText().toString();
+            final String notes = mEtNotes.getText().toString();
+
+            final String format = "%s\n%s\n%s\n%s\n%s";
+            final String tmpString = String.format(format,
+                    url, username, email, password, notes);
+
+            if (mData == null) {
+
+                Data tmp = new Data();
+
+                tmp.setType("TYPE_LOGININFO");
+                tmp.setLabel(mCryptContent.encryptContent(mEtLabel.getText().toString(), MASTER_KEY));
+                tmp.setContent(mCryptContent.encryptContent(tmpString, MASTER_KEY));
+
+                masterDatabaseAccess.save(tmp);
+            } else {
+
+                mData.setLabel(mCryptContent.encryptContent(mEtLabel.getText().toString(), MASTER_KEY));
+                mData.setContent(mCryptContent.encryptContent(tmpString, MASTER_KEY));
+
+                masterDatabaseAccess.update(mData);
+            }
+
+            masterDatabaseAccess.close();
+        } else {
+
+            masterDatabaseAccess.close();
+            Toast.makeText(this, "Nothing to save", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void onCancel() {
+        ACTIVITY_INTENT = new Intent(this, MainActivity.class);
+        this.finish();
+        this.startActivity(ACTIVITY_INTENT);
+    }
+    // ----------------
+
 
     // TODO IMAGE FEATURE
     // IMAGE PROCESSING TO VISUALS IN THE MAIN ACTIVITY LOGIN //
@@ -159,138 +274,18 @@ public class LoginInfoEditActivity extends AppCompatActivity
 //        return new BitmapDrawable(bitmapScaled);
 //    }
     // ------------------------------------------------------ // /
-
-    private void onSave()
-    {
-        MasterDatabaseAccess masterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
-        masterDatabaseAccess.open();
-
-        if ((!mEtLabel.getText().toString().matches("")) || (!mEtUrl.getText().toString().matches("")) || (!mEtUsername.getText().toString().matches("")) || (!mEtEmail.getText().toString().matches("")) || (!mEtPassword.getText().toString().matches("")) || (!mEtNotes.getText().toString().matches("")))
-        {
-            final String url = mEtUrl.getText().toString();
-            final String username = mEtUsername.getText().toString();
-            final String email = mEtEmail.getText().toString();
-            final String password = mEtPassword.getText().toString();
-            final String notes = mEtNotes.getText().toString();
-
-            final String format = "%s\n%s\n%s\n%s\n%s";
-            final String tmpString = String.format(format,
-                    url, username, email, password, notes);
-
-            if (mData == null)
-            {
-
-                Data tmp = new Data();
-
-                tmp.setType("TYPE_LOGININFO");
-                tmp.setLabel(mCryptContent.encryptContent(mEtLabel.getText().toString(), MASTER_KEY));
-                tmp.setContent(mCryptContent.encryptContent(tmpString, MASTER_KEY));
-
-                masterDatabaseAccess.save(tmp);
-            } else {
-
-                mData.setLabel(mCryptContent.encryptContent(mEtLabel.getText().toString(), MASTER_KEY));
-                mData.setContent(mCryptContent.encryptContent(tmpString, MASTER_KEY));
-
-                masterDatabaseAccess.update(mData);
-            }
-
-            masterDatabaseAccess.close();
-        } else {
-
-            masterDatabaseAccess.close();
-            Toast.makeText(this, "Nothing to save", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void onCancel()
-    {
-        ACTIVITY_INTENT = new Intent(this, MainActivity.class);
-        this.finish();
-        this.startActivity(ACTIVITY_INTENT);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_edit, menu);
-        return true;
-    }
-
-    private void setupActivity(Bundle bundle)
-    {
-        mCryptContent = new CryptContent(this);
-        if (bundle != null)
-        {
-            mData = (Data) bundle.get("DATA");
-            if (mData != null)
-            {
-                try
-                {
-                    String label = mCryptContent.decryptContent(mData.getLabel(), MASTER_KEY);
-                    mEtLabel.setText(label);
-
-                    String url;
-                    String username;
-                    String email;
-                    String password;
-                    String notes;
-
-                    final String content = mCryptContent.decryptContent(mData.getContent(), MASTER_KEY);
-                    if (content != null)
-                    {
-                        Scanner scanner = new Scanner(content);
-
-                        url = scanner.nextLine();
-                        username = scanner.nextLine();
-                        email = scanner.nextLine();
-                        password = scanner.nextLine();
-                        try
-                        {
-                            notes = scanner.nextLine();
-                            while (scanner.hasNextLine())
-                            {
-                                notes += "\n";
-                                notes += scanner.hasNextLine();
-                            }
-                            mEtNotes.setText(notes);
-                        } catch (NoSuchElementException e) {
-                            e.printStackTrace();
-                        }
-                        scanner.close();
-
-                        mEtUrl.setText(url);
-                        mEtUsername.setText(username);
-                        mEtEmail.setText(email);
-                        mEtPassword.setText(password);
-                    }
-
-                    if (!mData.getDate().matches("")) {
-                        this.mTvDate.setText("Last Updated: " + mData.getDate());
-                    } else {
-                        this.mTvDate.setText("Last Updated: ---");
-                    }
-
-                } catch (Exception e)
-                {
-                    e.printStackTrace();
-                    Toast.makeText(this, "Error: could not set one or more text fields", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE" //
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
 
-        if (mCountDownIsFinished)
-        {
-            if (!APP_LOGGED_IN)
-            {
-                if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) { onSave();MASTER_KEY = null; TEMP_PIN = null; }
+        if (mCountDownIsFinished) {
+            if (!APP_LOGGED_IN) {
+                if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) {
+                    onSave();
+                    MASTER_KEY = null;
+                    TEMP_PIN = null;
+                }
 
                 ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
                 ACTIVITY_INTENT.putExtra("lastActivity", "LOGININFO_EDIT");
@@ -301,45 +296,37 @@ public class LoginInfoEditActivity extends AppCompatActivity
 
                 System.gc();
             }
-        } else
-        {
-            if (mCountDownTimer != null)
-            {
+        } else {
+            if (mCountDownTimer != null) {
                 System.out.println("Cancel Called!");
                 mCountDownTimer.cancel();
             }
         }
     }
-
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         super.onBackPressed();
         if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
         {
-            if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) { onSave(); }
+            if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) {
+                onSave();
+            }
 
             ACTIVITY_INTENT = new Intent(this, MainActivity.class);
             finish();
             this.startActivity(ACTIVITY_INTENT);
         }
     }
-
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
 
-        if (!this.isFinishing())
-        { // HOME AND TABS AND SCREEN OFF
+        if (!this.isFinishing()) { // HOME AND TABS AND SCREEN OFF
             if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             {
-                if (!this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false))
-                {
+                if (!this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) {
                     new LogoutProtocol().logoutExecuteAutosaveOff(this);
-                }
-                else
-                {
+                } else {
                     new LogoutProtocol().logoutExecuteAutosaveOn(this);
                 }
             }

@@ -17,27 +17,28 @@ import android.widget.Toast;
 import com.gerardogandeaga.cyberlock.Encryption.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.Encryption.SHA256PinHash;
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.Supports.Globals;
 
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.COMPLEXPASSCODE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.PIN;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 
 public class Settings_ResetComplexPasscode extends AppCompatActivity implements View.OnClickListener
 {
+    private Context mContext = this;
     private SharedPreferences mSharedPreferences;
-    // COMPLEX PASSCODE VARIABLES
+
+    // DATA VARIABLES
     private static String mPasscodeString = "";
     private static String mPasscodeMark = "";
     private static String mCode1 = "";
     private static String mCode2 = "";
+
     // WIDGETS
-    // COMPLEX WIDGETS
-    private TextView mTvTextDisplay;
-    private TextView mTvPasscodeDisplay;
     private Button mQ, mW, mE, mR, mT, mY, mU, mI, mO, mP, mA, mS, mD, mF, mG, mH, mJ, mK, mL, mZ, mX, mC, mV, mB, mN, mM;
     private Button m0, m1, m2, m3, m4, m5, m6, m7, m8, m9;
     private Button mSLASH, mDOT, mCOMMA;
@@ -45,30 +46,26 @@ public class Settings_ResetComplexPasscode extends AppCompatActivity implements 
     private ImageButton mSPACEBAR;
     private ImageButton mBtnCLEAR;
     private ProgressDialog mProgressDialog;
+    private TextView mTvTextDisplay;
+    private TextView mTvPasscodeDisplay;
 
-    private Context mContext = this;
-
+    // INITIAL ON CREATE METHODS
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
+        Globals.COLORSCHEME(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loginpasscode);
-        ACTIVITY_INTENT = null;
-        mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB)
-        {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        }
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
         setupLayout();
     }
+    private void setupLayout() {
+        setContentView(R.layout.activity_loginpasscode);
+        ACTIVITY_INTENT = null;
 
-    private void setupLayout()
-    {
+        mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
+        //
         this.mTvPasscodeDisplay = (TextView) findViewById(R.id.tvPasscode);
-        this.mTvTextDisplay = (TextView) findViewById(R.id.tvLogin);
+        this.mTvTextDisplay = (TextView) findViewById(R.id.tvTextDisplay);
         mTvTextDisplay.setText("Please Register New Passcode");
 
         this.m0 = (Button) findViewById(R.id.btn0);
@@ -163,137 +160,224 @@ public class Settings_ResetComplexPasscode extends AppCompatActivity implements 
         this.mBtnLoginRegister.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
 
                 if (!mCode1.matches("") && mCode2.matches(""))
-                {
-                    mCode2 = mPasscodeString;
-                    mPasscodeString = "";
-                    mPasscodeMark = "";
-                    mTvPasscodeDisplay.setText("");
-                    System.out.println(mCode2);
-
-                    System.out.println("CODE 1: " + mCode1);
-                    System.out.println("CODE 2: " + mCode2);
-                    if (mCode1.matches(mCode2))
                     {
-                        onPinsCompleted();
+                        mCode2 = mPasscodeString;
+                        mPasscodeString = "";
+                        mPasscodeMark = "";
+                        mTvPasscodeDisplay.setText("");
+                        System.out.println(mCode2);
 
-                    } else
-                    {
-                        Toast.makeText(mContext, "Please Try Again", Toast.LENGTH_SHORT).show();
+                        System.out.println("CODE 1: " + mCode1);
+                        System.out.println("CODE 2: " + mCode2);
+                        if (mCode1.matches(mCode2))
+                            {
+                                onPinsCompleted();
 
-                        mTvTextDisplay.setText("Please Register New Passcode");
+                            } else
+                            {
+                                Toast.makeText(mContext, "Please Try Again", Toast.LENGTH_SHORT).show();
+
+                                mTvTextDisplay.setText("Please Register New Passcode");
+                            }
                     }
-                }
 
                 if (mCode1.matches("") && mCode2.matches(""))
-                {
-                    mCode1 = mPasscodeString;
-                    mPasscodeString = "";
-                    mPasscodeMark = "";
-                    mTvPasscodeDisplay.setText("");
-                    mTvTextDisplay.setText("Please Confirm Passcode");
-                    System.out.println(mCode1);
-                }
+                    {
+                        mCode1 = mPasscodeString;
+                        mPasscodeString = "";
+                        mPasscodeMark = "";
+                        mTvPasscodeDisplay.setText("");
+                        mTvTextDisplay.setText("Please Confirm Passcode");
+                        System.out.println(mCode1);
+                    }
             }
         });
     }
-
-    @Override
-    public void onClick(View v)
-    {
-        switch (v.getId())
-        {
-            case R.id.btn0:addToPasscodeString("0");break;
-            case R.id.btn1:addToPasscodeString("1");break;
-            case R.id.btn2:addToPasscodeString("2");break;
-            case R.id.btn3:addToPasscodeString("3");break;
-            case R.id.btn4:addToPasscodeString("4");break;
-            case R.id.btn5:addToPasscodeString("5");break;
-            case R.id.btn6:addToPasscodeString("6");break;
-            case R.id.btn7:addToPasscodeString("7");break;
-            case R.id.btn8:addToPasscodeString("8");break;
-            case R.id.btn9:addToPasscodeString("9");break;
-
-            case R.id.btnQ:addToPasscodeString("Q");break;
-            case R.id.btnW:addToPasscodeString("W");break;
-            case R.id.btnR:addToPasscodeString("R");break;
-            case R.id.btnT:addToPasscodeString("T");break;
-            case R.id.btnY:addToPasscodeString("Y");break;
-            case R.id.btnU:addToPasscodeString("U");break;
-            case R.id.btnI:addToPasscodeString("I");break;
-            case R.id.btnO:addToPasscodeString("O");break;
-            case R.id.btnP:addToPasscodeString("P");break;
-            case R.id.btnA:addToPasscodeString("A");break;
-            case R.id.btnS:addToPasscodeString("S");break;
-            case R.id.btnD:addToPasscodeString("D");break;
-            case R.id.btnF:addToPasscodeString("F");break;
-            case R.id.btnG:addToPasscodeString("G");break;
-            case R.id.btnH:addToPasscodeString("H");break;
-            case R.id.btnJ:addToPasscodeString("J");break;
-            case R.id.btnK:addToPasscodeString("K");break;
-            case R.id.btnL:addToPasscodeString("L");break;
-            case R.id.btnZ:addToPasscodeString("Z");break;
-            case R.id.btnX:addToPasscodeString("X");break;
-            case R.id.btnC:addToPasscodeString("C");break;
-            case R.id.btnV:addToPasscodeString("V");break;
-            case R.id.btnB:addToPasscodeString("B");break;
-            case R.id.btnN:addToPasscodeString("N");break;
-            case R.id.btnM:addToPasscodeString("M");break;
-
-            case R.id.btnDOT:addToPasscodeString(".");break;
-            case R.id.btnCOMMA:addToPasscodeString(",");break;
-            case R.id.btnSLASH:addToPasscodeString("/");break;
-            case R.id.btnSPACEBAR:addToPasscodeString(" ");break;
-            case R.id.btnBACKSPACE:addToPasscodeString("DEL"); break;
-
-            case R.id.btnCLEAR:
-                mPasscodeString = "";
-                mPasscodeMark = "";
-                mTvPasscodeDisplay.setText("");
-                break;
-        }
+    private void progressBar() {
+        mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog.setMessage("Verifying...");
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
     }
+    // -------------------------
 
-    public String addToPasscodeString(String s)
-    {
-        if (!s.matches("DEL"))
-        {
-            mPasscodeString = mPasscodeString + s;
-
-            mPasscodeMark = mPasscodeMark + "*";
-        } else
-        {
-            if (mPasscodeString.length() != 0)
+    // ON CLICK
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
             {
-                mPasscodeString = mPasscodeString.substring(0, mPasscodeString.length() - 1);
+                case R.id.btn0:
+                    addToPasscodeString("0");
+                    break;
+                case R.id.btn1:
+                    addToPasscodeString("1");
+                    break;
+                case R.id.btn2:
+                    addToPasscodeString("2");
+                    break;
+                case R.id.btn3:
+                    addToPasscodeString("3");
+                    break;
+                case R.id.btn4:
+                    addToPasscodeString("4");
+                    break;
+                case R.id.btn5:
+                    addToPasscodeString("5");
+                    break;
+                case R.id.btn6:
+                    addToPasscodeString("6");
+                    break;
+                case R.id.btn7:
+                    addToPasscodeString("7");
+                    break;
+                case R.id.btn8:
+                    addToPasscodeString("8");
+                    break;
+                case R.id.btn9:
+                    addToPasscodeString("9");
+                    break;
 
-                mPasscodeMark = mPasscodeMark.substring(0, mPasscodeMark.length() - 1);
+                case R.id.btnQ:
+                    addToPasscodeString("Q");
+                    break;
+                case R.id.btnW:
+                    addToPasscodeString("W");
+                    break;
+                case R.id.btnR:
+                    addToPasscodeString("R");
+                    break;
+                case R.id.btnT:
+                    addToPasscodeString("T");
+                    break;
+                case R.id.btnY:
+                    addToPasscodeString("Y");
+                    break;
+                case R.id.btnU:
+                    addToPasscodeString("U");
+                    break;
+                case R.id.btnI:
+                    addToPasscodeString("I");
+                    break;
+                case R.id.btnO:
+                    addToPasscodeString("O");
+                    break;
+                case R.id.btnP:
+                    addToPasscodeString("P");
+                    break;
+                case R.id.btnA:
+                    addToPasscodeString("A");
+                    break;
+                case R.id.btnS:
+                    addToPasscodeString("S");
+                    break;
+                case R.id.btnD:
+                    addToPasscodeString("D");
+                    break;
+                case R.id.btnF:
+                    addToPasscodeString("F");
+                    break;
+                case R.id.btnG:
+                    addToPasscodeString("G");
+                    break;
+                case R.id.btnH:
+                    addToPasscodeString("H");
+                    break;
+                case R.id.btnJ:
+                    addToPasscodeString("J");
+                    break;
+                case R.id.btnK:
+                    addToPasscodeString("K");
+                    break;
+                case R.id.btnL:
+                    addToPasscodeString("L");
+                    break;
+                case R.id.btnZ:
+                    addToPasscodeString("Z");
+                    break;
+                case R.id.btnX:
+                    addToPasscodeString("X");
+                    break;
+                case R.id.btnC:
+                    addToPasscodeString("C");
+                    break;
+                case R.id.btnV:
+                    addToPasscodeString("V");
+                    break;
+                case R.id.btnB:
+                    addToPasscodeString("B");
+                    break;
+                case R.id.btnN:
+                    addToPasscodeString("N");
+                    break;
+                case R.id.btnM:
+                    addToPasscodeString("M");
+                    break;
+
+                case R.id.btnDOT:
+                    addToPasscodeString(".");
+                    break;
+                case R.id.btnCOMMA:
+                    addToPasscodeString(",");
+                    break;
+                case R.id.btnSLASH:
+                    addToPasscodeString("/");
+                    break;
+                case R.id.btnSPACEBAR:
+                    addToPasscodeString(" ");
+                    break;
+                case R.id.btnBACKSPACE:
+                    addToPasscodeString("DEL");
+                    break;
+
+                case R.id.btnCLEAR:
+                    mPasscodeString = "";
+                    mPasscodeMark = "";
+                    mTvPasscodeDisplay.setText("");
+                    break;
             }
-        }
+    }
+    // --------
+
+    // KEYBOARD REGISTRATION
+    public String addToPasscodeString(String s) {
+        if (!s.matches("DEL"))
+            {
+                mPasscodeString = mPasscodeString + s;
+
+                mPasscodeMark = mPasscodeMark + "*";
+            } else
+            {
+                if (mPasscodeString.length() != 0)
+                    {
+                        mPasscodeString = mPasscodeString.substring(0, mPasscodeString.length() - 1);
+
+                        mPasscodeMark = mPasscodeMark.substring(0, mPasscodeMark.length() - 1);
+                    }
+            }
 
         mTvPasscodeDisplay.setText(mPasscodeMark);
 
         return mPasscodeString;
     }
+    // ---------------------
 
-    private void onPinsCompleted()
-    {
+    // PIN REGISTRATION
+    private void onPinsCompleted() {
         new AsyncTask<Void, Void, Void>()
         {
             @Override
-            protected void onPreExecute()
-            {
+            protected void onPreExecute() {
                 super.onPreExecute();
 
                 progressBar();
             }
 
             @Override
-            protected Void doInBackground(Void... params)
-            {
+            protected Void doInBackground(Void... params) {
                 final String codeFirst = mCode1;
 
                 mCode1 = "";
@@ -301,63 +385,60 @@ public class Settings_ResetComplexPasscode extends AppCompatActivity implements 
 
                 final String pinHash; // GENERATE THE HASH PIN
                 try
-                {
-                    CryptKeyHandler cryptKeyHandler = new CryptKeyHandler(mContext);
-                    pinHash = cryptKeyHandler
-                            .ENCRYPTKEY(SHA256PinHash.hashFunction(codeFirst, SHA256PinHash.generateSalt()), codeFirst);
-
-                    mSharedPreferences.edit().putString(PIN, pinHash).apply(); // ADD HASHED PIN TO STORE
-                    System.out.println("HASHED PIN :" + pinHash);
-                    mSharedPreferences.edit().putString(CRYPT_KEY,
-                                    cryptKeyHandler.ENCRYPTKEY(
-                                    cryptKeyHandler.DECRYPTKEY(
-                                            mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN), codeFirst))
-                                    .apply();
-                    TEMP_PIN = codeFirst;
-                    MASTER_KEY = cryptKeyHandler.DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN);
-
-                    mProgressDialog.dismiss();
-
-                    ACTIVITY_INTENT = new Intent(mContext, Settings.class);
-                    runOnUiThread(new Runnable()
                     {
-                        @Override
-                        public void run()
+                        CryptKeyHandler cryptKeyHandler = new CryptKeyHandler(mContext);
+                        pinHash = cryptKeyHandler
+                                .ENCRYPTKEY(SHA256PinHash.hashFunction(codeFirst, SHA256PinHash.generateSalt()), codeFirst);
+
+                        mSharedPreferences.edit().putString(PIN, pinHash).apply(); // ADD HASHED PIN TO STORE
+                        System.out.println("HASHED PIN :" + pinHash);
+                        mSharedPreferences.edit().putString(CRYPT_KEY,
+                                cryptKeyHandler.ENCRYPTKEY(
+                                        cryptKeyHandler.DECRYPTKEY(
+                                                mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN), codeFirst))
+                                .apply();
+                        TEMP_PIN = codeFirst;
+                        MASTER_KEY = cryptKeyHandler.DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN);
+
+                        mProgressDialog.dismiss();
+
+                        ACTIVITY_INTENT = new Intent(mContext, Settings.class);
+                        runOnUiThread(new Runnable()
                         {
-                            Toast.makeText(mContext, "Pin Successfully Reset", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    mContext.startActivity(ACTIVITY_INTENT);
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, "Pin Successfully Reset", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        mContext.startActivity(ACTIVITY_INTENT);
 
-                } catch (Exception e)
-                {
-                    e.printStackTrace();
-
-                    mProgressDialog.dismiss();
-
-                    mSharedPreferences.edit().putBoolean(COMPLEXPASSCODE, true).apply();
-                    ACTIVITY_INTENT = new Intent(mContext, Settings.class);
-
-                    mPasscodeString = "";
-                    mPasscodeMark = "";
-
-                    runOnUiThread(new Runnable()
+                    } catch (Exception e)
                     {
-                        @Override
-                        public void run()
+                        e.printStackTrace();
+
+                        mProgressDialog.dismiss();
+
+                        mSharedPreferences.edit().putBoolean(COMPLEXPASSCODE, true).apply();
+                        ACTIVITY_INTENT = new Intent(mContext, Settings.class);
+
+                        mPasscodeString = "";
+                        mPasscodeMark = "";
+
+                        runOnUiThread(new Runnable()
                         {
-                            mTvPasscodeDisplay.setText("");
-                            Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    mContext.startActivity(ACTIVITY_INTENT);
-                }
+                            @Override
+                            public void run() {
+                                mTvPasscodeDisplay.setText("");
+                                Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        mContext.startActivity(ACTIVITY_INTENT);
+                    }
                 return null;
             }
 
             @Override
-            protected void onPostExecute(Void aVoid)
-            {
+            protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
 
                 mSharedPreferences.edit().putBoolean(COMPLEXPASSCODE, true).apply();
@@ -365,13 +446,5 @@ public class Settings_ResetComplexPasscode extends AppCompatActivity implements 
             }
         }.execute();
     }
-
-    private void progressBar()
-    {
-        mProgressDialog = new ProgressDialog(mContext);
-        mProgressDialog.setMessage("Verifying...");
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
-    }
+    // ----------------
 }

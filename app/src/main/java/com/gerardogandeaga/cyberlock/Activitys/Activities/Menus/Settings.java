@@ -18,55 +18,70 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.Supports.Globals;
+import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.COMPLEXPASSCODE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DELAY_TIME;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.LOGOUT_DELAY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.SCHEME;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownIsFinished;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTimer;
 
 public class Settings extends AppCompatActivity implements View.OnClickListener
 {
-    // DATA
-    private SharedPreferences mSharedPreferences;
-    // SPINNERS
-    private ArrayAdapter<CharSequence> mAdapterAutoLogoutDelay;
-    private String mAutoLogoutDelay;
-    private ArrayAdapter<CharSequence> mAdapterEncryptionMethod;
-    private String mOldEncryptionMethod;
-    private boolean mIsAutoSave;
-    private boolean mIsComplexCode;
-    // WIDGETS
-    private RelativeLayout mAutoSave, mChangePasscode, mComplexPasscode,mScrambleKey;
-    private CheckBox mCbAutoSave, mCbComplexPasscode;
-    private Spinner mSpAutoLogoutDelay, mSpEncryptionMethod;
-
     private Context mContext = this;
+    private SharedPreferences mSharedPreferences;
 
+    // DATA VARIABLES
+    // SPINNERS
+    private boolean
+            mIsAutoSave,
+            mIsComplexCode;
+    private ArrayAdapter<CharSequence>
+            mAdapterAutoLogoutDelay,
+            mAdapterEncryptionMethod;
+    private String
+            mAutoLogoutDelay,
+            mOldEncryptionMethod;
+
+    // WIDGETS
+    private CheckBox
+            mCbAutoSave,
+            mCbComplexPasscode,
+    // COLOR SCHEME
+    mCbBlue, mCbRed, mCbGreen, mCbYellow, mCbPurple, mCbGray;
+    private RelativeLayout
+            mAutoSave,
+            mChangePasscode,
+            mComplexPasscode,
+            mScrambleKey,
+    // COLOR SCHEME
+    mBlue, mRed, mGreen, mYellow, mPurple, mGray;
+    private Spinner
+            mSpAutoLogoutDelay,
+            mSpEncryptionMethod;
+
+    // INITIAL ON CREATE METHODS
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
+        Globals.COLORSCHEME(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-        ACTIVITY_INTENT = null;
-
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        }
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
         setupLayout();
     }
-
-    private void setupLayout()
-    {
+    private void setupLayout() {
+        setContentView(R.layout.activity_settings);
+        ACTIVITY_INTENT = null;
+        //
         this.mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
         this.mIsAutoSave = mSharedPreferences.getBoolean(AUTOSAVE, false);
         this.mIsComplexCode = mSharedPreferences.getBoolean(COMPLEXPASSCODE, false);
@@ -77,7 +92,10 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Settings");
+        getSupportActionBar().setIcon(R.drawable.ic_action_settings);
+        getSupportActionBar().setTitle("  Settings");
+        getSupportActionBar().setSubtitle("   Application Functionality And Visuals");
+//        getSupportActionBar().setTitle("");
 
         // SPINNER DATA
         // LOGOUT DELAY
@@ -95,10 +113,25 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         this.mCbAutoSave = (CheckBox) findViewById(R.id.cbAutoSave);
         this.mAutoSave = (RelativeLayout) findViewById(R.id.AutoSave);
         this.mChangePasscode = (RelativeLayout) findViewById(R.id.ChangePasscode);
-        this.mScrambleKey = (RelativeLayout) findViewById(R.id.ScrambleKey);
-
         this.mCbComplexPasscode = (CheckBox) findViewById(R.id.cbComplexPasscode);
         this.mComplexPasscode = (RelativeLayout) findViewById(R.id.ComplexPasscode);
+        this.mScrambleKey = (RelativeLayout) findViewById(R.id.ScrambleKey);
+
+        // COLOR SCHEME
+        this.mBlue = (RelativeLayout) findViewById(R.id.Blue);
+        this.mRed = (RelativeLayout) findViewById(R.id.Red);
+        this.mGreen = (RelativeLayout) findViewById(R.id.Green);
+        this.mYellow = (RelativeLayout) findViewById(R.id.Yellow);
+        this.mPurple = (RelativeLayout) findViewById(R.id.Purple);
+        this.mGray = (RelativeLayout) findViewById(R.id.Gray);
+
+        this.mCbBlue = (CheckBox) findViewById(R.id.cbBlue);
+        this.mCbRed = (CheckBox) findViewById(R.id.cbRed);
+        this.mCbGreen = (CheckBox) findViewById(R.id.cbGreen);
+        this.mCbYellow = (CheckBox) findViewById(R.id.cbYellow);
+        this.mCbPurple = (CheckBox) findViewById(R.id.cbPurple);
+        this.mCbGray = (CheckBox) findViewById(R.id.cbGray);
+        // ------------
 
         this.mAutoSave.setOnClickListener(this);
         this.mChangePasscode.setOnClickListener(this);
@@ -111,29 +144,58 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         this.mCbComplexPasscode.setClickable(false);
         this.mCbComplexPasscode.setChecked(false);
 
+        this.mCbBlue.setClickable(false);
+        this.mCbRed.setClickable(false);
+        this.mCbGreen.setClickable(false);
+        this.mCbYellow.setClickable(false);
+        this.mCbPurple.setClickable(false);
+        this.mCbGray.setClickable(false);
+
+        this.mBlue.setOnClickListener(this);
+        this.mRed.setOnClickListener(this);
+        this.mGreen.setOnClickListener(this);
+        this.mYellow.setOnClickListener(this);
+        this.mPurple.setOnClickListener(this);
+        this.mGray.setOnClickListener(this);
+
         savedStates();
 
         this.mSpAutoLogoutDelay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Object object = parent.getItemAtPosition(position);
-                if (object != null)
-                {
+                if (object != null) {
                     mAutoLogoutDelay = object.toString();
                     long time = 0;
-                    switch (mAutoLogoutDelay)
-                    {
-                        case "Immediate": time = 0; break;
-                        case "15 Seconds": time = 15000; break;
-                        case "30 Seconds": time = 30000; break;
-                        case "1 Minute": time = 60000; break;
-                        case "5 Minutes": time = 300000; break;
-                        case "10 Minutes": time = 600000; break;
-                        case "30 Minutes": time = 1800000; break;
-                        case "1 Hour": time = 3600000; break;
-                        case "2 Hours": time = 7200000; break;
+                    switch (mAutoLogoutDelay) {
+                        case "Immediate":
+                            time = 0;
+                            break;
+                        case "15 Seconds":
+                            time = 15000;
+                            break;
+                        case "30 Seconds":
+                            time = 30000;
+                            break;
+                        case "1 Minute":
+                            time = 60000;
+                            break;
+                        case "5 Minutes":
+                            time = 300000;
+                            break;
+                        case "10 Minutes":
+                            time = 600000;
+                            break;
+                        case "30 Minutes":
+                            time = 1800000;
+                            break;
+                        case "1 Hour":
+                            time = 3600000;
+                            break;
+                        case "2 Hours":
+                            time = 7200000;
+                            break;
                         case "Never":
                             break;
                     }
@@ -144,53 +206,44 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
         this.mSpEncryptionMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Object object = parent.getItemAtPosition(position);
-                if (object != null)
-                {
+                if (object != null) {
                     String algorithm = object.toString();
-                    if (algorithm.matches("AES - 256"))
-                    {
+                    if (algorithm.matches("AES - 256")) {
                         String newAlgorithm = "AES";
-                        if (!mSharedPreferences.getString(ENCRYPTION_ALGO, "AES").matches(newAlgorithm)) { onEncryptionMethodChange(newAlgorithm); }
-                    }
-                    else
-                    if (algorithm.matches("Blowfish - 448"))
-                    {
+                        if (!mSharedPreferences.getString(ENCRYPTION_ALGO, "AES").matches(newAlgorithm)) {
+                            onEncryptionMethodChange(newAlgorithm);
+                        }
+                    } else if (algorithm.matches("Blowfish - 448")) {
                         String newAlgorithm = "Blowfish";
-                        if (!mSharedPreferences.getString(ENCRYPTION_ALGO, "AES").matches(newAlgorithm)) { onEncryptionMethodChange(newAlgorithm); }
+                        if (!mSharedPreferences.getString(ENCRYPTION_ALGO, "AES").matches(newAlgorithm)) {
+                            onEncryptionMethodChange(newAlgorithm);
+                        }
                     }
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
     }
-
-    private void savedStates()
-    {
+    private void savedStates() {
         // CHECK BOXES
-        if (!mIsAutoSave)
-        {
+        if (!mIsAutoSave) {
             mCbAutoSave.setChecked(false);
         } else {
             mCbAutoSave.setChecked(true);
         }
 
-        if (!mIsComplexCode)
-        {
+        if (!mIsComplexCode) {
             mCbComplexPasscode.setChecked(false);
         } else {
             mCbComplexPasscode.setChecked(true);
@@ -203,8 +256,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
 
         // ENCRYPTION METHOD
         int algoSpinnerPosition;
-        switch (mSharedPreferences.getString(ENCRYPTION_ALGO, "AES"))
-        {
+        switch (mSharedPreferences.getString(ENCRYPTION_ALGO, "AES")) {
             case "AES":
                 algoSpinnerPosition = mAdapterEncryptionMethod.getPosition("AES - 256");
                 mSpEncryptionMethod.setSelection(algoSpinnerPosition);
@@ -216,54 +268,109 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
                 mOldEncryptionMethod = mSpEncryptionMethod.getItemAtPosition(algoSpinnerPosition).toString();
                 break;
         }
-    }
 
-    @Override
-    public void onClick(View v)
-    {
-        switch (v.getId())
-        {
-            case R.id.AutoSave: onAutoSave(); break;
-            case R.id.ChangePasscode: onResetPassword(); break;
-            case R.id.ComplexPasscode: onComplexPassword(); break;
-            case R.id.ScrambleKey: onScrambleKey(); break;
+        final String colourString = mSharedPreferences.getString(SCHEME, "SCHEME_BLUE");
+        switch (colourString) {
+            case "SCHEME_BLUE":
+                mCbBlue.setChecked(true);
+                break;
+            case "SCHEME_RED":
+                mCbRed.setChecked(true);
+                break;
+            case "SCHEME_GREEN":
+                mCbGreen.setChecked(true);
+                break;
+            case "SCHEME_YELLOW":
+                mCbYellow.setChecked(true);
+                break;
+            case "SCHEME_PURPLE":
+                mCbPurple.setChecked(true);
+                break;
+            case "SCHEME_GRAY":
+                mCbGray.setChecked(true);
+                break;
+            default:
+                mCbBlue.setChecked(true);
+                break;
         }
     }
+    // -------------------------
 
-    private void onAutoSave()
-    {
+    // ON CLICK
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.AutoSave:
+                onAutoSave();
+                break;
+            case R.id.ChangePasscode:
+                onResetPassword();
+                break;
+            case R.id.ComplexPasscode:
+                onComplexPassword();
+                break;
+            case R.id.ScrambleKey:
+                onScrambleKey();
+                break;
+            // COLOUR SCHEME
+            case R.id.Blue:
+                onColorSchemeChange(v.getId());
+                break;
+            case R.id.Red:
+                onColorSchemeChange(v.getId());
+                break;
+            case R.id.Green:
+                onColorSchemeChange(v.getId());
+                break;
+            case R.id.Yellow:
+                onColorSchemeChange(v.getId());
+                break;
+            case R.id.Purple:
+                onColorSchemeChange(v.getId());
+                break;
+            case R.id.Gray:
+                onColorSchemeChange(v.getId());
+                break;
+        }
+    }
+    // --------
+
+    // #########################################################################
+    // SETTINGS FEATURES                                                       #
+    private void onAutoSave() {
         final boolean autoSave = mSharedPreferences.getBoolean(AUTOSAVE, false);
 
-        if (!autoSave)
-        {
+        if (!autoSave) {
             mSharedPreferences.edit().putBoolean(AUTOSAVE, true).apply();
             mCbAutoSave.setChecked(true);
         } else {
             mSharedPreferences.edit().putBoolean(AUTOSAVE, false).apply();
             mCbAutoSave.setChecked(false);
         }
-    }
-
-    private void onResetPassword()
-    {
-        if (!mIsComplexCode)
-        {
+    }                                          //#
+    private void onResetPassword() {
+        if (!mIsComplexCode) {
             ACTIVITY_INTENT = new Intent(this, Settings_ResetShortPasscode.class);
             finish();
             startActivity(ACTIVITY_INTENT);
-        }
-        else
-        {
+        } else {
             ACTIVITY_INTENT = new Intent(this, Settings_ResetComplexPasscode.class);
             finish();
             startActivity(ACTIVITY_INTENT);
         }
-    }
-
-    private void onComplexPassword()
-    {
-        if (!mIsComplexCode)
-        {
+    }                                     //#
+    private void onComplexPassword() {
+        if (!mIsComplexCode) {
             // DIALOG BUILDER
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
@@ -274,16 +381,14 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
             alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
             {
                 @Override
-                public void onClick(DialogInterface dialog, int which)
-                {
+                public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }
             });
             alertDialog.setPositiveButton("Continue", new DialogInterface.OnClickListener()
             {
                 @Override
-                public void onClick(DialogInterface dialog, int which)
-                {
+                public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
 
                     ACTIVITY_INTENT = new Intent(mContext, Settings_ResetComplexPasscode.class);
@@ -303,16 +408,14 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
             alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
             {
                 @Override
-                public void onClick(DialogInterface dialog, int which)
-                {
+                public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }
             });
             alertDialog.setPositiveButton("Continue", new DialogInterface.OnClickListener()
             {
                 @Override
-                public void onClick(DialogInterface dialog, int which)
-                {
+                public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
 
                     ACTIVITY_INTENT = new Intent(mContext, Settings_ResetComplexPasscode.class);
@@ -321,10 +424,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
             });
             alertDialog.show();
         }
-    }
-
-    private void onScrambleKey()
-    {
+    }                                   //#
+    private void onScrambleKey() {
         // DIALOG BUILDER
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
@@ -335,26 +436,22 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
         {
             @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
         alertDialog.setPositiveButton("Scramble", new DialogInterface.OnClickListener()
         {
             @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
 
                 new Settings_ScrambleKey(mContext).execute();
             }
         });
         alertDialog.show();
-    }
-
-    private void onEncryptionMethodChange(final String algorithm)
-    {
+    }                                       //#
+    private void onEncryptionMethodChange(final String algorithm) {
         // DIALOG BUILDER
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
 
@@ -365,8 +462,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
         {
             @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
+            public void onClick(DialogInterface dialog, int which) {
                 mSpEncryptionMethod.setSelection(mAdapterEncryptionMethod.getPosition(mOldEncryptionMethod));
                 dialog.dismiss();
             }
@@ -374,56 +470,102 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         alertDialog.setPositiveButton("Continue", new DialogInterface.OnClickListener()
         {
             @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
 
                 new Settings_EncryptionMethodChange(mContext, algorithm).execute();
             }
         });
         alertDialog.show();
-    }
+    }      //#
+    private void onColorSchemeChange(int i) {
+        String colourString = "";
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) // ACTION BAR BACK BUTTON RESPONSE
-    {
-        switch (item.getItemId())
-        {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                onBackPressed();
-                return true;
+        switch (i) {
+            case R.id.Blue:
+                colourString = "SCHEME_BLUE";
+                mCbBlue.setChecked(true);
+                mCbRed.setChecked(false);
+                mCbGreen.setChecked(false);
+                mCbYellow.setChecked(false);
+                mCbPurple.setChecked(false);
+                mCbGray.setChecked(false);
+                break;
+            case R.id.Red:
+                colourString = "SCHEME_RED";
+                mCbBlue.setChecked(false);
+                mCbRed.setChecked(true);
+                mCbGreen.setChecked(false);
+                mCbYellow.setChecked(false);
+                mCbPurple.setChecked(false);
+                mCbGray.setChecked(false);
+                break;
+            case R.id.Green:
+                colourString = "SCHEME_GREEN";
+                mCbBlue.setChecked(false);
+                mCbRed.setChecked(false);
+                mCbGreen.setChecked(true);
+                mCbYellow.setChecked(false);
+                mCbPurple.setChecked(false);
+                mCbGray.setChecked(false);
+                break;
+            case R.id.Yellow:
+                colourString = "SCHEME_YELLOW";
+                mCbBlue.setChecked(false);
+                mCbRed.setChecked(false);
+                mCbGreen.setChecked(false);
+                mCbYellow.setChecked(true);
+                mCbPurple.setChecked(false);
+                mCbGray.setChecked(false);
+                break;
+            case R.id.Purple:
+                colourString = "SCHEME_PURPLE";
+                mCbBlue.setChecked(false);
+                mCbRed.setChecked(false);
+                mCbGreen.setChecked(false);
+                mCbYellow.setChecked(false);
+                mCbPurple.setChecked(true);
+                mCbGray.setChecked(false);
+                break;
+            case R.id.Gray:
+                colourString = "SCHEME_GRAY";
+                mCbBlue.setChecked(false);
+                mCbRed.setChecked(false);
+                mCbGreen.setChecked(false);
+                mCbYellow.setChecked(false);
+                mCbPurple.setChecked(false);
+                mCbGray.setChecked(true);
+                break;
         }
-        return super.onOptionsItemSelected(item);
-    }
+
+        mSharedPreferences.edit().putString(SCHEME, colourString).apply();
+
+        ACTIVITY_INTENT = new Intent(this, Settings.class);
+        this.finish();
+        this.startActivity(ACTIVITY_INTENT);
+    }                            //#
+    // #########################################################################
+
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
 
-        if (mCountDownIsFinished)
-        {
-            if (!APP_LOGGED_IN)
-            {
+        if (mCountDownIsFinished) {
+            if (!APP_LOGGED_IN) {
                 ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
                 this.finish(); // CLEAN UP AND END
                 this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
             }
-        } else
-        {
-            if (mCountDownTimer != null)
-            {
-                System.out.println("Cancel Called!");
+        } else {
+            if (mCountDownTimer != null) {
                 mCountDownTimer.cancel();
             }
         }
     }
-
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         super.onBackPressed();
         if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
         {
@@ -433,10 +575,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
             overridePendingTransition(R.anim.anim_push_upin, R.anim.anim_push_upin);
         }
     }
-
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
 
         if (!this.isFinishing()) // HOME AND TABS AND SCREEN OFF
@@ -446,13 +586,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
                 new LogoutProtocol().logoutExecuteAutosaveOff(mContext);
             }
         }
-    }
-
-    @Override
-    public void finish() // BACK BUTTON CACHES ACTIVITY ACTUAL START ---> MAIN ACTIVITY
-    {
-        Intent i = new Intent(this, MainActivity.class);
-        this.startActivity(i);
     }
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }

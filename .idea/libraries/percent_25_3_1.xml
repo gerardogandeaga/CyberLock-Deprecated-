@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="percent-25.3.1">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/f91a6bd88afff77dcd448c273997e746175f79b4/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/f91a6bd88afff77dcd448c273997e746175f79b4/output/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/b9e5aed67f588657308089bb9ef95ab0481d113d/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/b9e5aed67f588657308089bb9ef95ab0481d113d/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/percent/25.3.1/percent-25.3.1-sources.jar!/" />
+      <root url="jar://$USER_HOME$/AppData/Local/Android/Sdk/extras/android/m2repository/com/android/support/percent/25.3.1/percent-25.3.1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

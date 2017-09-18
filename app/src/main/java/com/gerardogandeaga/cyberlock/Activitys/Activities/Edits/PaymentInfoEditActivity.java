@@ -19,20 +19,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol;
+import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.Data;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.Supports.Globals;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownIsFinished;
-import static com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownIsFinished;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTimer;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
@@ -40,14 +41,13 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
 public class PaymentInfoEditActivity extends AppCompatActivity
 {
-    // DATA
+    // DATA VARIABLES
     private CryptContent mCryptContent;
     private Data mData;
     private String mCardType;
     private ArrayAdapter<CharSequence> mAdapter;
+
     // WIDGETS
-    private TextView mTvDate;
-    private Spinner mSpCardSelect;
     private EditText
             mEtLabel,
             mEtCardName,
@@ -59,23 +59,36 @@ public class PaymentInfoEditActivity extends AppCompatActivity
             mEtQuestion2,
             mEtAnswer1,
             mEtAnswer2;
+    private Spinner mSpCardSelect;
+    private TextView mTvDate;
 
+    // INITIAL ON CREATE METHODS
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
+        Globals.COLORSCHEME(this);
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+
+        setupLayout();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        return true;
+    }
+    private void setupLayout() {
         setContentView(R.layout.activity_edit_paymentinfo);
         ACTIVITY_INTENT = null;
-
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        }
-
+        //
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Card Edit");
+        getSupportActionBar().setIcon(R.drawable.ic_action_cardlock);
+        getSupportActionBar().setTitle("  Card Edit");
+        getSupportActionBar().setSubtitle("   Information Encryption");
+//        getSupportActionBar().setTitle("");
 
         this.mEtLabel = (EditText) findViewById(R.id.etTag);
         this.mEtCardName = (EditText) findViewById(R.id.etCardName);
@@ -101,6 +114,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         mEtCardNumber.addTextChangedListener(new TextWatcher()
         {
             int prevL = 0;
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 prevL = mEtCardNumber.getText().toString().length();
@@ -114,8 +128,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s) {
                 int length = s.length();
-                if ((prevL < length) && (length == 4 || length == 9 || length == 14))
-                {
+                if ((prevL < length) && (length == 4 || length == 9 || length == 14)) {
 
                     String data = mEtCardNumber.getText().toString();
                     mEtCardNumber
@@ -128,6 +141,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         mEtCardExpire.addTextChangedListener(new TextWatcher()
         {
             int prevL = 0;
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 prevL = mEtCardExpire.getText().toString().length();
@@ -141,8 +155,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable s) {
                 int length = s.length();
-                if ((prevL < length) && (length == 2))
-                {
+                if ((prevL < length) && (length == 2)) {
 
                     String data = mEtCardExpire.getText().toString();
                     mEtCardExpire.setText(data + "/");
@@ -154,115 +167,26 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         mSpCardSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Object object = parent.getItemAtPosition(position);
-                if (object != null) { mCardType = object.toString(); }
+                if (object != null) {
+                    mCardType = object.toString();
+                }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        int id = item.getItemId();
-
-        switch (id)
-        {
-            case (R.id.action_save):
-                onSave();
-                onBackPressed();
-                return true;
-            case (R.id.action_cancel):
-                onCancel();
-                return true;
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void onSave()
-    {
-        MasterDatabaseAccess masterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
-        masterDatabaseAccess.open();
-
-        if ((!mEtLabel.getText().toString().matches("")) || (!mEtCardName.getText().toString().matches("")) || (!mEtCardNumber.getText().toString().matches("")) || (!mEtCardExpire.getText().toString().matches("")) || (!mEtCardSecCode.getText().toString().matches("")) || (!mEtNotes.getText().toString().matches("")) || (!mEtQuestion1.getText().toString().matches("")) || (!mEtQuestion2.getText().toString().matches("")) || (!mEtAnswer1.getText().toString().matches("")) || (!mEtAnswer2.getText().toString().matches("")))
-        {
-            final String cardName = mEtCardName.getText().toString();
-            final String cardNumber = mEtCardNumber.getText().toString();
-            final String cardType = mCardType;
-            final String cardExpire = mEtCardExpire.getText().toString();
-            final String cardSecCode = mEtCardSecCode.getText().toString();
-            final String question1 = mEtQuestion1.getText().toString();
-            final String question2 = mEtQuestion2.getText().toString();
-            final String answer1 = mEtAnswer1.getText().toString();
-            final String answer2 = mEtAnswer2.getText().toString();
-            final String notes = mEtNotes.getText().toString();
-
-            final String format = "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s";
-            final String tmpString = String.format(format,
-                    cardName, cardNumber, cardType, cardExpire, cardSecCode, question1, question2, answer1, answer2, notes);
-
-            if (mData == null)
-            {
-
-                Data tmp = new Data();
-
-                tmp.setType("TYPE_PAYMENTINFO");
-                tmp.setLabel(mCryptContent.encryptContent(mEtLabel.getText().toString(), MASTER_KEY));
-                tmp.setContent(mCryptContent.encryptContent(tmpString, MASTER_KEY));
-
-                masterDatabaseAccess.save(tmp);
-            } else {
-
-                mData.setLabel(mCryptContent.encryptContent(mEtLabel.getText().toString(), MASTER_KEY));
-                mData.setContent(mCryptContent.encryptContent(tmpString, MASTER_KEY));
-
-                masterDatabaseAccess.update(mData);
-            }
-            masterDatabaseAccess.close();
-        } else {
-
-            masterDatabaseAccess.close();
-            Toast.makeText(this, "Nothing to save", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void onCancel()
-    {
-        ACTIVITY_INTENT = new Intent(this, MainActivity.class);
-        this.finish();
-        this.startActivity(ACTIVITY_INTENT);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_edit, menu);
-        return true;
-    }
-
-    private void setupActivity(Bundle bundle)
-    {
+    private void setupActivity(Bundle bundle) {
         mCryptContent = new CryptContent(this);
-        if (bundle != null)
-        {
+        if (bundle != null) {
             mData = (Data) bundle.get("DATA");
 
             // LOAD THE ACTIVITY WITH SAVED CONTENT
-            if (mData != null)
-            {
-                try
-                {
+            if (mData != null) {
+                try {
                     String label = mCryptContent.decryptContent(mData.getLabel(), MASTER_KEY);
                     mEtLabel.setText(label);
 
@@ -278,8 +202,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
                     String notes;
 
                     final String content = mCryptContent.decryptContent(mData.getContent(), MASTER_KEY);
-                    if (content != null)
-                    {
+                    if (content != null) {
                         Scanner scanner = new Scanner(content);
 
                         cardName = scanner.nextLine();
@@ -291,11 +214,9 @@ public class PaymentInfoEditActivity extends AppCompatActivity
                         question2 = scanner.nextLine();
                         answer1 = scanner.nextLine();
                         answer2 = scanner.nextLine();
-                        try
-                        {
+                        try {
                             notes = scanner.nextLine();
-                            while (scanner.hasNextLine())
-                            {
+                            while (scanner.hasNextLine()) {
                                 notes += "\n";
                                 notes += scanner.hasNextLine();
                             }
@@ -331,17 +252,93 @@ public class PaymentInfoEditActivity extends AppCompatActivity
             }
         }
     }
+    // -------------------------
+
+    // ON CLICK
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case (R.id.action_save):
+                onSave();
+                onBackPressed();
+                return true;
+            case (R.id.action_cancel):
+                onCancel();
+                return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    // --------
+
+    // ACTIVITY ACTIONS
+    public void onSave() {
+        MasterDatabaseAccess masterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
+        masterDatabaseAccess.open();
+
+        if ((!mEtLabel.getText().toString().matches("")) || (!mEtCardName.getText().toString().matches("")) || (!mEtCardNumber.getText().toString().matches("")) || (!mEtCardExpire.getText().toString().matches("")) || (!mEtCardSecCode.getText().toString().matches("")) || (!mEtNotes.getText().toString().matches("")) || (!mEtQuestion1.getText().toString().matches("")) || (!mEtQuestion2.getText().toString().matches("")) || (!mEtAnswer1.getText().toString().matches("")) || (!mEtAnswer2.getText().toString().matches(""))) {
+            final String cardName = mEtCardName.getText().toString();
+            final String cardNumber = mEtCardNumber.getText().toString();
+            final String cardType = mCardType;
+            final String cardExpire = mEtCardExpire.getText().toString();
+            final String cardSecCode = mEtCardSecCode.getText().toString();
+            final String question1 = mEtQuestion1.getText().toString();
+            final String question2 = mEtQuestion2.getText().toString();
+            final String answer1 = mEtAnswer1.getText().toString();
+            final String answer2 = mEtAnswer2.getText().toString();
+            final String notes = mEtNotes.getText().toString();
+
+            final String format = "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s";
+            final String tmpString = String.format(format,
+                    cardName, cardNumber, cardType, cardExpire, cardSecCode, question1, question2, answer1, answer2, notes);
+
+            if (mData == null) {
+
+                Data tmp = new Data();
+
+                tmp.setType("TYPE_PAYMENTINFO");
+                tmp.setLabel(mCryptContent.encryptContent(mEtLabel.getText().toString(), MASTER_KEY));
+                tmp.setContent(mCryptContent.encryptContent(tmpString, MASTER_KEY));
+
+                masterDatabaseAccess.save(tmp);
+            } else {
+
+                mData.setLabel(mCryptContent.encryptContent(mEtLabel.getText().toString(), MASTER_KEY));
+                mData.setContent(mCryptContent.encryptContent(tmpString, MASTER_KEY));
+
+                masterDatabaseAccess.update(mData);
+            }
+            masterDatabaseAccess.close();
+        } else {
+
+            masterDatabaseAccess.close();
+            Toast.makeText(this, "Nothing to save", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void onCancel() {
+        ACTIVITY_INTENT = new Intent(this, MainActivity.class);
+        this.finish();
+        this.startActivity(ACTIVITY_INTENT);
+    }
+    // ----------------
+
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
 
-        if (mCountDownIsFinished)
-        {
-            if (!APP_LOGGED_IN)
-            {
-                if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) { onSave(); MASTER_KEY = null; TEMP_PIN = null; }
+        if (mCountDownIsFinished) {
+            if (!APP_LOGGED_IN) {
+                if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) {
+                    onSave();
+                    MASTER_KEY = null;
+                    TEMP_PIN = null;
+                }
 
                 ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
                 ACTIVITY_INTENT.putExtra("lastActivity", "PAYMENTINFO_EDIT");
@@ -352,45 +349,37 @@ public class PaymentInfoEditActivity extends AppCompatActivity
 
                 System.gc();
             }
-        } else
-        {
-            if (mCountDownTimer != null)
-            {
+        } else {
+            if (mCountDownTimer != null) {
                 System.out.println("Cancel Called!");
                 mCountDownTimer.cancel();
             }
         }
     }
-
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         super.onBackPressed();
         if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
         {
-            if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) { onSave(); }
+            if (this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) {
+                onSave();
+            }
 
             ACTIVITY_INTENT = new Intent(this, MainActivity.class);
             finish();
             this.startActivity(ACTIVITY_INTENT);
         }
     }
-
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
 
-        if (!this.isFinishing())
-        { // HOME AND TABS AND SCREEN OFF
+        if (!this.isFinishing()) { // HOME AND TABS AND SCREEN OFF
             if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             {
-                if (!this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false))
-                {
+                if (!this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) {
                     new LogoutProtocol().logoutExecuteAutosaveOff(this);
-                }
-                else
-                {
+                } else {
                     new LogoutProtocol().logoutExecuteAutosaveOn(this);
                 }
             }
