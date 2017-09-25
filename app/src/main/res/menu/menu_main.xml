@@ -1,37 +1,40 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
-      tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity">
-
-    <item
-        android:id="@+id/action_playground"
-        android:icon="@drawable/ic_action_crypt"
-        android:orderInCategory="100"
-        android:title="Playground"
-        app:showAsAction="always"/>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity">
 
 
     <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_action_settings"
-        android:label="@string/Action_Settings"
-        android:orderInCategory="100"
-        android:title="Settings"
-        app:showAsAction="never"/>
+        android:id="@+id/subMenu1"
+        android:icon="@drawable/ic_action_add"
+        android:title="Add Document"
+        app:showAsAction="always">
 
-    <item
-        android:id="@+id/action_about"
-        android:icon="@drawable/ic_action_about"
-        android:label="@string/Action_About"
-        android:orderInCategory="100"
-        android:title="About"
-        app:showAsAction="never"/>
+        <menu>
+            <item
+                android:id="@+id/action_memo"
+                android:icon="@drawable/ic_action_memo"
+                android:label="@string/Action_Settings"
+                android:orderInCategory="0"
+                android:title="New Memo"
+                app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/action_contribute"
-        android:icon="@drawable/ic_action_contribute"
-        android:label="@string/Action_Contribute"
-        android:orderInCategory="100"
-        android:title="Contribute!"
-        app:showAsAction="never"/>
+            <item
+                android:id="@+id/action_paymentinfo"
+                android:icon="@drawable/ic_action_paymentinfo"
+                android:label="@string/Action_About"
+                android:orderInCategory="0"
+                android:title="New Payment Information"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/action_logininfo"
+                android:icon="@drawable/ic_action_logininfo"
+                android:label="@string/Action_Contribute"
+                android:orderInCategory="0"
+                android:title="New Login Credentials"
+                app:showAsAction="never"/>
+        </menu>
+    </item>
 </menu>

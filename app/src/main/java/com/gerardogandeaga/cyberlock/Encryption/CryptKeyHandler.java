@@ -5,11 +5,9 @@ import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.util.Base64;
 
-import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Arrays;
 
@@ -22,6 +20,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
@@ -58,36 +57,38 @@ public class CryptKeyHandler
     }
 
     // THESE FUNCTIONS GENERATE A ONE TIME RANDOM BYTE PASSWORD TO THE KEY GENERATOR (2ND FUNCTION)
-    public byte[] BYTE_KEY_GENERATE()
+    public String GENERATE_NEW_KEY(String passcode)
     {
         SecureRandom random = new SecureRandom();
         byte[] KEY = new byte[byteKeyLength];
         random.nextBytes(KEY);
 
-        /*  FUTURE KEY GENERATE REFACTOR
+        byte[] cryptKeyByteVal = GET_KEY_SPEC(KEY);
+        String cryptKeyStringVal = (Base64.encodeToString(cryptKeyByteVal, FLAGS));
+        String encryptedCryptKeyStringVal = ENCRYPT_KEY(cryptKeyStringVal, passcode);
 
-        cryptKeyByteVal = KEY_GENERATE(KEY);
-        cryptKeyStringVal = Base64.encodeToString(cryptKeyByteVal, FLAGS);
+        // **STORE KEY**
+        mSharedPreferences.edit().putString(CRYPT_KEY, encryptedCryptKeyStringVal).apply();
+        // -------------
 
-        return cryptKeyStringVal;
+        System.out.println("NEW KEY VALUE IN STRING: " + cryptKeyStringVal);
+        System.out.println("NEW KEY LENGTH IN BYTES: " + cryptKeyByteVal.length);
+        System.out.println("NEW KEY VALUE IN STRING ENCRYPTED: " + encryptedCryptKeyStringVal);
 
-        **Change return to String**
-         */
-
-        return KEY;
+        return encryptedCryptKeyStringVal;
     }
 
     @Nullable
-    public byte[] KEY_GENERATE(byte[] password)
+    private byte[] GET_KEY_SPEC(byte[] password)
 //            throws NoSuchAlgorithmException, InvalidKeySpecException
     {
         try
         {
-            KeySpec mKeySpec = new PBEKeySpec(Base64.encodeToString(password, FLAGS).toCharArray(), generateSalt(), iterations, keylength);
+            KeySpec mKeySpec = new PBEKeySpec(Base64.encodeToString(password, FLAGS).toCharArray(), GENERATE_SALT(), iterations, keylength);
             SecretKeyFactory mSecretKeyFactory = SecretKeyFactory.getInstance(KeyALGO);
 
             return mSecretKeyFactory.generateSecret(mKeySpec).getEncoded();
-        } catch (InvalidKeySpecException | NoSuchAlgorithmException e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -97,7 +98,7 @@ public class CryptKeyHandler
     // --------------------------------------------------------------------------------------------
 
     @Nullable
-    private byte[] getSymmetricKey(String password, byte[] salt, int iterations, int derivedKeyLength)
+    private byte[] GET_SYMMETRIC_KEY(String password, byte[] salt, int iterations, int derivedKeyLength)
 //            throws NoSuchAlgorithmException, InvalidKeySpecException
     {
         try
@@ -106,7 +107,7 @@ public class CryptKeyHandler
             SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(KeyALGO);
 
             return secretKeyFactory.generateSecret(keySpec).getEncoded();
-        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -114,14 +115,14 @@ public class CryptKeyHandler
     }
 
     @Nullable
-    public String ENCRYPTKEY(String dataToEncrypt, String key)
+    public String ENCRYPT_KEY(String dataToEncrypt, String key)
 //            throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidParameterSpecException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException
     {
         try
         {
-            byte[] saltByteVal = generateSalt();
+            byte[] saltByteVal = GENERATE_SALT();
 
-            byte[] encryptedPassword = getSymmetricKey(key, saltByteVal, iterations, keylength); // GENERATE KEY
+            byte[] encryptedPassword = GET_SYMMETRIC_KEY(key, saltByteVal, iterations, keylength); // GENERATE KEY
 
             SecretKeySpec secretKeySpec = new SecretKeySpec(encryptedPassword, ALGO);
             Cipher cipher = Cipher.getInstance(CipherALGO);
@@ -147,7 +148,7 @@ public class CryptKeyHandler
     }
 
     @Nullable
-    public String DECRYPTKEY(String dataToDecrypt, String key)
+    public String DECRYPT_KEY(String dataToDecrypt, String key)
 //            throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException
     {
         try
@@ -158,7 +159,7 @@ public class CryptKeyHandler
             byte[] saltByteVal = Arrays.copyOfRange(encryptedCombinedBytes, IVLength, IVLength + 16); // "BREAK" BYTES TO GET SALT BYTES ONLY
             byte[] encryptedTextByteVal = Arrays.copyOfRange(encryptedCombinedBytes, IVLength + 16, encryptedCombinedBytes.length); // "BREAK" BYTES TO GET CIPHER TEXT BYTES ONLY
 
-            byte[] encryptedPassword = getSymmetricKey(key, saltByteVal, iterations, keylength);
+            byte[] encryptedPassword = GET_SYMMETRIC_KEY(key, saltByteVal, iterations, keylength);
 
             SecretKeySpec secretKeySpec = new SecretKeySpec(encryptedPassword, ALGO);
             Cipher cipher = Cipher.getInstance(CipherALGO);
@@ -167,9 +168,7 @@ public class CryptKeyHandler
             byte[] decryptedTextByteVal = cipher.doFinal(encryptedTextByteVal); // DECRYPT TEXT
 
             return new String(decryptedTextByteVal);
-        } catch (NoSuchPaddingException | NoSuchAlgorithmException |
-                InvalidKeyException | InvalidAlgorithmParameterException |
-                IllegalBlockSizeException | BadPaddingException e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -177,7 +176,7 @@ public class CryptKeyHandler
         return null;
     }
 
-    private byte[] generateSalt()
+    private byte[] GENERATE_SALT()
     {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];

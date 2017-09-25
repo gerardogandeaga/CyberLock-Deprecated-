@@ -7,35 +7,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
-import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.Data;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.Supports.Globals;
+import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 
 import java.util.Scanner;
 
+import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownIsFinished;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTimer;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
 public class MemoEditActivity extends AppCompatActivity
 {
     // DATA VARIABLES
-    private CryptContent mCryptContent;
+    private CryptContent mCRYPTCONTENT;
     private Data mData;
 
     // WIDGETS
@@ -49,7 +49,7 @@ public class MemoEditActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         Globals.COLORSCHEME(this);
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
         setupLayout();
     }
@@ -67,9 +67,11 @@ public class MemoEditActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_action_memolock);
+        getSupportActionBar().setIcon(R.drawable.ic_graphic_memo);
         getSupportActionBar().setTitle("  Memo Edit");
-        getSupportActionBar().setSubtitle("   Memo Encryption");
+        getSupportActionBar().setSubtitle("   " +
+                "Algorithm: " +
+                getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(ENCRYPTION_ALGO, "---"));
 //        getSupportActionBar().setTitle("");
 
         this.mEtMemo = (EditText) findViewById(R.id.etText);
@@ -80,17 +82,17 @@ public class MemoEditActivity extends AppCompatActivity
         setupActivity(bundle);
     }
     private void setupActivity(Bundle bundle) {
-        mCryptContent = new CryptContent(this);
+        mCRYPTCONTENT = new CryptContent(this);
         if (bundle != null) {
             mData = (Data) bundle.get("DATA");
             if (mData != null) {
                 try {
-                    String label = mCryptContent.decryptContent(mData.getLabel(), MASTER_KEY);
+                    String label = mCRYPTCONTENT.DECRYPT_CONTENT(mData.getLabel(), MASTER_KEY);
                     mEtLabel.setText(label);
 
                     String memo;
 
-                    final String content = mCryptContent.decryptContent(mData.getContent(), MASTER_KEY);
+                    final String content = mCRYPTCONTENT.DECRYPT_CONTENT(mData.getContent(), MASTER_KEY);
                     if (content != null) {
                         Scanner scanner = new Scanner(content);
 
@@ -155,13 +157,13 @@ public class MemoEditActivity extends AppCompatActivity
                 Data temp = new Data();
 
                 temp.setType("TYPE_MEMO");
-                temp.setLabel(mCryptContent.encryptContent(mEtLabel.getText().toString(), MASTER_KEY));
-                temp.setContent(mCryptContent.encryptContent(tmpString, MASTER_KEY));
+                temp.setLabel(mCRYPTCONTENT.ENCRYPT_KEY(mEtLabel.getText().toString(), MASTER_KEY));
+                temp.setContent(mCRYPTCONTENT.ENCRYPT_KEY(tmpString, MASTER_KEY));
 
                 masterDatabaseAccess.save(temp);
             } else {
-                mData.setLabel(mCryptContent.encryptContent(mEtLabel.getText().toString(), MASTER_KEY));
-                mData.setContent(mCryptContent.encryptContent(tmpString, MASTER_KEY));
+                mData.setLabel(mCRYPTCONTENT.ENCRYPT_KEY(mEtLabel.getText().toString(), MASTER_KEY));
+                mData.setContent(mCRYPTCONTENT.ENCRYPT_KEY(tmpString, MASTER_KEY));
 
                 masterDatabaseAccess.update(mData);
             }

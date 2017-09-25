@@ -346,9 +346,13 @@ public class Settings_ResetComplexPasscode extends AppCompatActivity implements 
     public String addToPasscodeString(String s) {
         if (!s.matches("DEL"))
             {
-                mPasscodeString = mPasscodeString + s;
+                if (mPasscodeString.length() < 16) {
+                    mPasscodeString = mPasscodeString + s;
 
-                mPasscodeMark = mPasscodeMark + "*";
+                    mPasscodeMark = mPasscodeMark + "*";
+                } else {
+                    Toast.makeText(mContext, "Maximum Length Of 16 Characters Exceeded", Toast.LENGTH_SHORT).show();
+                }
             } else
             {
                 if (mPasscodeString.length() != 0)
@@ -388,17 +392,17 @@ public class Settings_ResetComplexPasscode extends AppCompatActivity implements 
                     {
                         CryptKeyHandler cryptKeyHandler = new CryptKeyHandler(mContext);
                         pinHash = cryptKeyHandler
-                                .ENCRYPTKEY(SHA256PinHash.hashFunction(codeFirst, SHA256PinHash.generateSalt()), codeFirst);
+                                .ENCRYPT_KEY(SHA256PinHash.HASH_FUNCTION(codeFirst, SHA256PinHash.GENERATE_SALT()), codeFirst);
 
                         mSharedPreferences.edit().putString(PIN, pinHash).apply(); // ADD HASHED PIN TO STORE
                         System.out.println("HASHED PIN :" + pinHash);
                         mSharedPreferences.edit().putString(CRYPT_KEY,
-                                cryptKeyHandler.ENCRYPTKEY(
-                                        cryptKeyHandler.DECRYPTKEY(
+                                cryptKeyHandler.ENCRYPT_KEY(
+                                        cryptKeyHandler.DECRYPT_KEY(
                                                 mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN), codeFirst))
                                 .apply();
                         TEMP_PIN = codeFirst;
-                        MASTER_KEY = cryptKeyHandler.DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN);
+                        MASTER_KEY = cryptKeyHandler.DECRYPT_KEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN);
 
                         mProgressDialog.dismiss();
 

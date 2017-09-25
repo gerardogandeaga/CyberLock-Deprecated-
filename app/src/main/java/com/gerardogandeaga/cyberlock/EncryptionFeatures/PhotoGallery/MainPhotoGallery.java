@@ -57,8 +57,8 @@
 //        this.mPhotoDatabaseAccess = PhotoDatabaseAccess.getInstance(this);
 //
 //        // ACTION BAR TITLE AND BACK BUTTON
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+//        Toolbar child_toolbar = (Toolbar) findViewById(R.id.child_toolbar);
+//        setSupportActionBar(child_toolbar);
 //
 //        getSupportActionBar().setHomeButtonEnabled(true);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);

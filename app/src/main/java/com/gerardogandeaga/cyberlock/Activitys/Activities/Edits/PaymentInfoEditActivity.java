@@ -10,7 +10,6 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -19,30 +18,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
-import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.Data;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.Supports.Globals;
+import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownIsFinished;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTimer;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
 public class PaymentInfoEditActivity extends AppCompatActivity
 {
     // DATA VARIABLES
-    private CryptContent mCryptContent;
+    private CryptContent mCRYPTCONTENT;
     private Data mData;
     private String mCardType;
     private ArrayAdapter<CharSequence> mAdapter;
@@ -67,7 +67,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         Globals.COLORSCHEME(this);
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
         setupLayout();
     }
@@ -85,9 +85,11 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_action_cardlock);
+        getSupportActionBar().setIcon(R.drawable.ic_graphic_paymentinfo);
         getSupportActionBar().setTitle("  Card Edit");
-        getSupportActionBar().setSubtitle("   Information Encryption");
+        getSupportActionBar().setSubtitle("   " +
+                "Algorithm: " +
+                getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(ENCRYPTION_ALGO, "---"));
 //        getSupportActionBar().setTitle("");
 
         this.mEtLabel = (EditText) findViewById(R.id.etTag);
@@ -180,14 +182,14 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         });
     }
     private void setupActivity(Bundle bundle) {
-        mCryptContent = new CryptContent(this);
+        mCRYPTCONTENT = new CryptContent(this);
         if (bundle != null) {
             mData = (Data) bundle.get("DATA");
 
             // LOAD THE ACTIVITY WITH SAVED CONTENT
             if (mData != null) {
                 try {
-                    String label = mCryptContent.decryptContent(mData.getLabel(), MASTER_KEY);
+                    String label = mCRYPTCONTENT.DECRYPT_CONTENT(mData.getLabel(), MASTER_KEY);
                     mEtLabel.setText(label);
 
                     String cardName;
@@ -201,7 +203,7 @@ public class PaymentInfoEditActivity extends AppCompatActivity
                     String answer2;
                     String notes;
 
-                    final String content = mCryptContent.decryptContent(mData.getContent(), MASTER_KEY);
+                    final String content = mCRYPTCONTENT.DECRYPT_CONTENT(mData.getContent(), MASTER_KEY);
                     if (content != null) {
                         Scanner scanner = new Scanner(content);
 
@@ -302,14 +304,14 @@ public class PaymentInfoEditActivity extends AppCompatActivity
                 Data tmp = new Data();
 
                 tmp.setType("TYPE_PAYMENTINFO");
-                tmp.setLabel(mCryptContent.encryptContent(mEtLabel.getText().toString(), MASTER_KEY));
-                tmp.setContent(mCryptContent.encryptContent(tmpString, MASTER_KEY));
+                tmp.setLabel(mCRYPTCONTENT.ENCRYPT_KEY(mEtLabel.getText().toString(), MASTER_KEY));
+                tmp.setContent(mCRYPTCONTENT.ENCRYPT_KEY(tmpString, MASTER_KEY));
 
                 masterDatabaseAccess.save(tmp);
             } else {
 
-                mData.setLabel(mCryptContent.encryptContent(mEtLabel.getText().toString(), MASTER_KEY));
-                mData.setContent(mCryptContent.encryptContent(tmpString, MASTER_KEY));
+                mData.setLabel(mCRYPTCONTENT.ENCRYPT_KEY(mEtLabel.getText().toString(), MASTER_KEY));
+                mData.setContent(mCRYPTCONTENT.ENCRYPT_KEY(tmpString, MASTER_KEY));
 
                 masterDatabaseAccess.update(mData);
             }

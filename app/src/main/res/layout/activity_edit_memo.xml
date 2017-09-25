@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/toolbar"/>
+        layout="@layout/child_toolbar"/>
 
     <RelativeLayout
         android:id="@+id/Data"

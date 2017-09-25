@@ -30,26 +30,28 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.PLAYGROUIND_ALGO;
 
 public class MainPlaygroundActivity extends AppCompatActivity
 {
-    // DATA
     private SharedPreferences mSharedPreferences;
+
+    // DATA VARIABLES
     private int CryptState = 0;
     private String ALGO;
 
     // WIDGETS
-    private TextView mTvCrypt, mTvCryptTextOutput;
     private EditText mEtCryptPassword, mEtCryptTextInput;
     private Menu mMenu;
     private MenuItem
             mImCrypt,                        // OPERATION
             mImEncryptMode, mImDecryptMode,  // MODE
             mImAES256, mImBlowfish448;       // ALGORITHM
+    private TextView mTvCrypt, mTvCryptTextOutput;
 
+    // INITIAL ON CREATE METHODS
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         Globals.COLORSCHEME(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_playground);
+        setContentView(R.layout.activity_playground);
         ACTIVITY_INTENT = null;
 
         if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
@@ -58,7 +60,48 @@ public class MainPlaygroundActivity extends AppCompatActivity
 
         setupActivity();
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_playground, menu);
+        mMenu = menu;
 
+        mImCrypt = mMenu.findItem(R.id.acCryptAction);
+        mImEncryptMode = mMenu.findItem(R.id.EncryptMode);
+        mImDecryptMode = mMenu.findItem(R.id.DecryptMode);
+        mImAES256 = mMenu.findItem(R.id.acAES256);
+        mImBlowfish448 = mMenu.findItem(R.id.acBlowfish448);
+
+        mImEncryptMode.setChecked(true);
+        mImAES256.setChecked(true);
+
+        return true;
+    }
+    private void setupActivity()
+    {
+        mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
+        mSharedPreferences.edit().putString(PLAYGROUIND_ALGO, "AES - 256").apply();
+
+        // ACTION BAR TITLE AND BACK BUTTON
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.ic_action_crypt);
+        getSupportActionBar().setTitle("  Playground");
+        getSupportActionBar().setSubtitle("   Encryption Testing Interface");
+
+        mTvCrypt = (TextView) findViewById(R.id.tvCrypt);
+        mTvCryptTextOutput = (TextView) findViewById(R.id.tvCryptTextOutput);
+
+        mEtCryptPassword = (EditText) findViewById(R.id.etCryptPassword);
+        mEtCryptTextInput = (EditText) findViewById(R.id.etCryptTextInput);
+    }
+    // -------------------------
+
+    // ON CLICK
     @Override
     public boolean onOptionsItemSelected(MenuItem item) // ACTION BAR BACK BUTTON RESPONSE
     {
@@ -100,32 +143,6 @@ public class MainPlaygroundActivity extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private void switchCryptMode()
-    {
-        if (CryptState == 0) // ENCRYPT MODE
-        {
-            mTvCrypt.setText("{ TEXT ENCRYPTION }");
-            mEtCryptTextInput.getText().clear();
-
-            mEtCryptTextInput.setHint("Plain Text Input");
-            mTvCryptTextOutput.setText("Encrypted Output");
-
-            mImCrypt.setTitle("Encrypt");
-            mImEncryptMode.setChecked(true);
-        } else if (CryptState == 1) // DECRYPT MODE
-        {
-            mTvCrypt.setText("{ TEXT DECRYPTION }");
-            mEtCryptTextInput.getText().clear();
-
-            mEtCryptTextInput.setHint("Encrypted Text Input");
-            mTvCryptTextOutput.setText("Decrypted Output");
-
-            mImCrypt.setTitle("Decrypt");
-            mImDecryptMode.setChecked(true);
-        }
-    }
-
     private void onCryptButton()
     {
         if (CryptState == 0)
@@ -179,7 +196,33 @@ public class MainPlaygroundActivity extends AppCompatActivity
             }
         }
     }
+    // --------
 
+    // OTHER PLAYGROUND FUNCTIONS
+    private void switchCryptMode()
+    {
+        if (CryptState == 0) // ENCRYPT MODE
+        {
+            mTvCrypt.setText("{ TEXT ENCRYPTION }");
+            mEtCryptTextInput.getText().clear();
+
+            mEtCryptTextInput.setHint("Plain Text Input");
+            mTvCryptTextOutput.setText("Encrypted Output");
+
+            mImCrypt.setTitle("Encrypt");
+            mImEncryptMode.setChecked(true);
+        } else if (CryptState == 1) // DECRYPT MODE
+        {
+            mTvCrypt.setText("{ TEXT DECRYPTION }");
+            mEtCryptTextInput.getText().clear();
+
+            mEtCryptTextInput.setHint("Encrypted Text Input");
+            mTvCryptTextOutput.setText("Decrypted Output");
+
+            mImCrypt.setTitle("Decrypt");
+            mImDecryptMode.setChecked(true);
+        }
+    }
     private void copyOutput()
     {
         if (!mTvCryptTextOutput.getText().toString().matches(""))
@@ -196,49 +239,7 @@ public class MainPlaygroundActivity extends AppCompatActivity
             Toast.makeText(this, "Nothing To Copy", Toast.LENGTH_SHORT).show();
         }
     }
-
-    // CREATE INSTANCES
-    private void setupActivity()
-    {
-        mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-        mSharedPreferences.edit().putString(PLAYGROUIND_ALGO, "AES - 256").apply();
-
-        // ACTION BAR TITLE AND BACK BUTTON
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_action_crypt);
-        getSupportActionBar().setTitle("  Playground");
-        getSupportActionBar().setSubtitle("   Encryption Testing Interface");
-
-        mTvCrypt = (TextView) findViewById(R.id.tvCrypt);
-        mTvCryptTextOutput = (TextView) findViewById(R.id.tvCryptTextOutput);
-
-        mEtCryptPassword = (EditText) findViewById(R.id.etCryptPassword);
-        mEtCryptTextInput = (EditText) findViewById(R.id.etCryptTextInput);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_playground, menu);
-        mMenu = menu;
-
-        mImCrypt = mMenu.findItem(R.id.acCryptAction);
-        mImEncryptMode = mMenu.findItem(R.id.EncryptMode);
-        mImDecryptMode = mMenu.findItem(R.id.DecryptMode);
-        mImAES256 = mMenu.findItem(R.id.acAES256);
-        mImBlowfish448 = mMenu.findItem(R.id.acBlowfish448);
-
-        mImEncryptMode.setChecked(true);
-        mImAES256.setChecked(true);
-
-        return true;
-    }
-    // ----------------
+    // --------------------------
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
     @Override
@@ -265,7 +266,6 @@ public class MainPlaygroundActivity extends AppCompatActivity
             }
         }
     }
-
     @Override
     public void onBackPressed()
     {
@@ -278,7 +278,6 @@ public class MainPlaygroundActivity extends AppCompatActivity
             overridePendingTransition(R.anim.anim_slide_inleft, R.anim.anim_slide_outright);
         }
     }
-
     @Override
     public void onPause()
     {
@@ -293,5 +292,4 @@ public class MainPlaygroundActivity extends AppCompatActivity
         }
     }
     // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 }

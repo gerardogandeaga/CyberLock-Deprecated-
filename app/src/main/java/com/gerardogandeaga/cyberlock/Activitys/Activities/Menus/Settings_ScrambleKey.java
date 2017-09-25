@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.util.Base64;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
@@ -17,7 +16,6 @@ import java.util.List;
 
 import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
@@ -70,17 +68,11 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
         try
         {
             CryptKeyHandler keyHandler = new CryptKeyHandler(mContext);
-            CryptContent cryptContent = new CryptContent(mContext);
+            CryptContent CRYPTCONTENT = new CryptContent(mContext);
 
-            byte[] KEY_Byte = keyHandler.BYTE_KEY_GENERATE(); // GENERATE A NEW BYTE ARRAY AS A SYMMETRIC KEY
-            byte[] ENC_DEC_KEY_ByteVal = keyHandler.KEY_GENERATE(KEY_Byte);
+            keyHandler.GENERATE_NEW_KEY(TEMP_PIN); // GENERATE A NEW BYTE ARRAY AS A SYMMETRIC KEY
 
-            System.out.println("REGISTED KEY VAL :" + Base64.encodeToString(ENC_DEC_KEY_ByteVal, FLAGS));
-            System.out.println("REGISTED KEY SIZE :" + ENC_DEC_KEY_ByteVal.length);
-
-            String new_ENC_DEC_KEY = Base64.encodeToString(ENC_DEC_KEY_ByteVal, FLAGS);
-
-            mSharedPreferences.edit().remove(CRYPT_KEY).apply();
+            String newKeyStringVal = keyHandler.DECRYPT_KEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN);
 
             // GO THROUGH ALL DATABASES
             this.mMasterDatabaseAccess.open();
@@ -91,11 +83,11 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
                 String label = null;
                 String content = null;
 
-                label = cryptContent.decryptContent(data.getLabel(), MASTER_KEY);
-                content = cryptContent.decryptContent(data.getContent(), MASTER_KEY);
+                label = CRYPTCONTENT.DECRYPT_CONTENT(data.getLabel(), MASTER_KEY);
+                content = CRYPTCONTENT.DECRYPT_CONTENT(data.getContent(), MASTER_KEY);
 
-                if (label != null) data.setLabel(cryptContent.encryptContent(label, new_ENC_DEC_KEY));
-                if (content != null) data.setContent(cryptContent.encryptContent(content, new_ENC_DEC_KEY));
+                if (label != null) data.setLabel(CRYPTCONTENT.ENCRYPT_KEY(label, newKeyStringVal));
+                if (content != null) data.setContent(CRYPTCONTENT.ENCRYPT_KEY(content, newKeyStringVal));
 
                 mMasterDatabaseAccess.update(data);
                 label = null;
@@ -103,8 +95,7 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
                 System.out.println("done memo");
             }
             this.mMasterDatabaseAccess.close();
-            MASTER_KEY = new_ENC_DEC_KEY;
-            mSharedPreferences.edit().putString(CRYPT_KEY, keyHandler.ENCRYPTKEY(MASTER_KEY, TEMP_PIN)).apply();
+            MASTER_KEY = newKeyStringVal;
 
             new Handler(mContext.getMainLooper()).post(new Runnable()
             {

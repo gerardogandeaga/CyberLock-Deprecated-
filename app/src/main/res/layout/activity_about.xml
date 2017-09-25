@@ -25,7 +25,8 @@
             android:textAllCaps="false"
             android:textColor="@android:color/black"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            />
 
         <LinearLayout
             android:id="@+id/Intro"
@@ -41,7 +42,8 @@
                 android:fontFamily="monospace"
                 android:text="@string/CyberLocksTech"
                 android:textColor="@android:color/black"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -59,7 +61,8 @@
                 android:text="@string/AES"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                />
 
             <TextView
                 android:id="@+id/tvAESDesc"
@@ -68,7 +71,8 @@
                 android:fontFamily="monospace"
                 android:text="@string/AESInfo"
                 android:textColor="@android:color/black"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -86,7 +90,8 @@
                 android:text="@string/Blowfish"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                />
 
             <TextView
                 android:id="@+id/tvBlowfishDesc"
@@ -95,7 +100,8 @@
                 android:fontFamily="monospace"
                 android:text="@string/BlowfishInfo"
                 android:textColor="@android:color/black"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                />
 
         </LinearLayout>
 
@@ -114,7 +120,8 @@
                 android:text="@string/SHA256"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                />
 
             <TextView
                 android:id="@+id/tvSHA256Desc"
@@ -123,7 +130,8 @@
                 android:fontFamily="monospace"
                 android:text="@string/SHA256Info"
                 android:textColor="@android:color/black"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                />
         </LinearLayout>
 
     </LinearLayout>

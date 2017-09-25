@@ -12,7 +12,7 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/toolbar"/>
+        layout="@layout/child_toolbar"/>
 
     <ScrollView
         android:id="@+id/ScrollData"
@@ -35,7 +35,7 @@
                 android:id="@+id/AutoSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/clickable_background_main"
+                android:background="@drawable/clickable_scheme"
                 android:clickable="true">
 
                 <ImageView
@@ -107,7 +107,7 @@
                 android:id="@+id/AutoLogoutDelay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/clickable_background_main"
+                android:background="@drawable/clickable_scheme"
                 android:clickable="true">
 
                 <ImageView
@@ -170,7 +170,7 @@
                 android:id="@+id/ChangePasscode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/clickable_background_main"
+                android:background="@drawable/clickable_scheme"
                 android:clickable="true">
 
                 <ImageView
@@ -207,7 +207,7 @@
                 android:id="@+id/ComplexPasscode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/clickable_background_main"
+                android:background="@drawable/clickable_scheme"
                 android:clickable="true">
 
                 <ImageView
@@ -280,7 +280,7 @@
                 android:id="@+id/ScrambleKey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/clickable_background_main"
+                android:background="@drawable/clickable_scheme"
                 android:clickable="true">
 
                 <ImageView
@@ -336,7 +336,7 @@
                 android:id="@+id/EncryptionMethod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/clickable_background_main"
+                android:background="@drawable/clickable_scheme"
                 android:clickable="true">
 
                 <ImageView

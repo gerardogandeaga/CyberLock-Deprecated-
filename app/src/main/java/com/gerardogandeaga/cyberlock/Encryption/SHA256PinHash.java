@@ -13,7 +13,7 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
 public class SHA256PinHash
 {
     @NonNull
-    public static String hashFunction(String text, byte[] salt)
+    public static String HASH_FUNCTION(String text, byte[] salt)
             throws NoSuchAlgorithmException, UnsupportedEncodingException, NegativeArraySizeException
     {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -30,7 +30,7 @@ public class SHA256PinHash
         return Base64.encodeToString(combinedByteVal, FLAGS);
     }
 
-    public static byte[] generateSalt()
+    public static byte[] GENERATE_SALT()
     {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[128];
@@ -42,18 +42,17 @@ public class SHA256PinHash
     // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     @NonNull
     @Deprecated
-    public static String hashFunction(String text)
+    public static String HASH_FUNCTION(String text)
             throws NoSuchAlgorithmException, UnsupportedEncodingException, NegativeArraySizeException // <-------------- DEPRECATED HASH FUNCTION WITHOUT SALT
     {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         byte[] textBytes = text.getBytes("iso-8859-1");
         md.update(textBytes, 0, textBytes.length);
         byte[] sha1hash = md.digest();
-        return ConvertToHex(sha1hash);
+        return CONVERT_TO_HEX(sha1hash);
     }
-
     @NonNull
-    private static String ConvertToHex(byte[] data) {
+    private static String CONVERT_TO_HEX(byte[] data) {
         StringBuilder buf = new StringBuilder();
         for (byte b : data)
         {

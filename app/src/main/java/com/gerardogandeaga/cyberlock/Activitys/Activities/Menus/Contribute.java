@@ -5,13 +5,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
-import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.Supports.Globals;
+import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.APP_LOGGED_IN;
@@ -20,6 +22,8 @@ import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTi
 
 public class Contribute extends AppCompatActivity
 {
+    private TextView mTvWebPasgeURL;
+
     // INITIAL ON CREATE METHODS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,15 @@ public class Contribute extends AppCompatActivity
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Contribute");
+
+        this.mTvWebPasgeURL = (TextView) findViewById(R.id.tvURL);
+
+        this.mTvWebPasgeURL.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
     // -------------------------
 
@@ -85,7 +98,6 @@ public class Contribute extends AppCompatActivity
                 ACTIVITY_INTENT = new Intent(this, MainActivity.class);
                 this.finish();
                 this.startActivity(ACTIVITY_INTENT);
-                overridePendingTransition(R.anim.anim_push_upin, R.anim.anim_push_upin);
             }
     }
     @Override

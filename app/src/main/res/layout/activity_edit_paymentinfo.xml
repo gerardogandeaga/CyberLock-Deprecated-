@@ -7,7 +7,7 @@
                 android:layout_height="match_parent">
     <include
         android:id="@+id/include"
-        layout="@layout/toolbar"/>
+        layout="@layout/child_toolbar"/>
 
     <ScrollView
         android:id="@+id/Data"
@@ -109,8 +109,8 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:fontFamily="monospace"
-                        android:text="Expiry Date [ MM/YY ] "
-                        android:textSize="14sp"/>
+                        android:text="Expiry Date [ MM/YY ]"
+                        android:textSize="16sp"/>
 
                     <EditText
                         android:id="@+id/etCardExpire"
@@ -141,7 +141,7 @@
                         android:fontFamily="monospace"
                         android:text="Security Code"
                         android:textAllCaps="false"
-                        android:textSize="14sp"/>
+                        android:textSize="16sp"/>
 
                     <EditText
                         android:id="@+id/etCardSecCode"

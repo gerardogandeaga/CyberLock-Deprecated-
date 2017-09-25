@@ -273,16 +273,16 @@ public class Settings_ResetShortPasscode extends AppCompatActivity implements Vi
                         try
                             {
                                 CryptKeyHandler cryptKeyHandler = new CryptKeyHandler(mContext);
-                                pinHash = cryptKeyHandler.ENCRYPTKEY(SHA256PinHash.hashFunction(pinFirst, SHA256PinHash.generateSalt()), pinFirst);
+                                pinHash = cryptKeyHandler.ENCRYPT_KEY(SHA256PinHash.HASH_FUNCTION(pinFirst, SHA256PinHash.GENERATE_SALT()), pinFirst);
 
                                 mSharedPreferences.edit().putString(PIN, pinHash).apply(); // ADD HASHED PIN TO STORE
                                 System.out.println("HASHED PIN :" + pinHash);
                                 mSharedPreferences.edit().putString(CRYPT_KEY,
-                                        cryptKeyHandler.ENCRYPTKEY(
-                                                cryptKeyHandler.DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN), pinFirst))
+                                        cryptKeyHandler.ENCRYPT_KEY(
+                                                cryptKeyHandler.DECRYPT_KEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN), pinFirst))
                                         .apply();
                                 TEMP_PIN = pinFirst;
-                                MASTER_KEY = cryptKeyHandler.DECRYPTKEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN);
+                                MASTER_KEY = cryptKeyHandler.DECRYPT_KEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN);
 
                                 mProgressDialog.dismiss();
 

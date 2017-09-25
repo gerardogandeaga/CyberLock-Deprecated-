@@ -17,11 +17,10 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
 
 public class CryptContent
 {
-    // DATA
+    private SharedPreferences mSharedPreferences;
+
     private String ALGO, CipherALGO;
     private int IVLength;
-    // STORED SETTINGS
-    private SharedPreferences mSharedPreferences;
 
     public CryptContent(Context context)
     {
@@ -42,7 +41,7 @@ public class CryptContent
     }
 
     @Nullable
-    public String encryptContent(String dataToEncrypt, String symmetricKey)
+    public String ENCRYPT_KEY(String dataToEncrypt, String symmetricKey)
 //            throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidParameterSpecException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException
     {
         if (dataToEncrypt == null || dataToEncrypt.matches("")) {
@@ -53,7 +52,7 @@ public class CryptContent
         {
             if (!dataToEncrypt.matches("")) // CHECK IS THERE IS ACTULA CONTENT TO ENCRYPT
             {
-                System.out.println("encryptContent: ENCRYPT STARTING...");
+                System.out.println("ENCRYPT_KEY: ENCRYPT STARTING...");
                 byte[] encryptedPassword = Base64.decode(symmetricKey, FLAGS); // GENERATE KEY
 
                 SecretKeySpec secretKeySpec = new SecretKeySpec(encryptedPassword, ALGO);
@@ -68,7 +67,7 @@ public class CryptContent
                 System.arraycopy(ivByteVal, 0, combinedByteVal, 0, ivByteVal.length); // POSITIONING THE IV BYTES
                 System.arraycopy(encryptedTextByteVal, 0, combinedByteVal, ivByteVal.length, encryptedTextByteVal.length); // IMPLEMENTING INTO CIPHER
 
-                System.out.println("encryptContent: ENCRYPT DONE...");
+                System.out.println("ENCRYPT_KEY: ENCRYPT DONE...");
                 return Base64.encodeToString(combinedByteVal, FLAGS);
             } else
             {
@@ -76,7 +75,7 @@ public class CryptContent
             }
         } catch (Exception e)
         {
-            System.out.println("encryptContent: ENCRYPT FAILED!...");
+            System.out.println("ENCRYPT_KEY: ENCRYPT FAILED!...");
             e.printStackTrace();
 
             return dataToEncrypt;
@@ -84,7 +83,7 @@ public class CryptContent
     }
 
     @Nullable
-    public String decryptContent(String dataToDecrypt, String symmetricKey)
+    public String DECRYPT_CONTENT(String dataToDecrypt, String symmetricKey)
 //            throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException
     {
         if (dataToDecrypt == null || dataToDecrypt.matches("")) {
@@ -94,7 +93,7 @@ public class CryptContent
         try
         {
             System.out.println("ENCRYPTION ALGO " + ALGO);
-            System.out.println("decryptContent: DECRYPT STARTING...");
+            System.out.println("DECRYPT_CONTENT: DECRYPT STARTING...");
             byte[] encryptedCombinedBytes = Base64.decode(dataToDecrypt, FLAGS);
 
             byte[] ivByteVal = Arrays.copyOfRange(encryptedCombinedBytes, 0, IVLength); // "BREAK" BYTES TO GET IV BYTES ONLY
@@ -108,11 +107,11 @@ public class CryptContent
 
             byte[] decryptedTextByteVal = cipher.doFinal(encryptedTextByteVal); // DECRYPT TEXT
 
-            System.out.println("decryptContent: DECRYPT DONE...");
+            System.out.println("DECRYPT_CONTENT: DECRYPT DONE...");
             return new String(decryptedTextByteVal);
         } catch (Exception e)
         {
-            System.out.println("decryptContent: DECRYPT FAILED...");
+            System.out.println("DECRYPT_CONTENT: DECRYPT FAILED...");
             e.printStackTrace();
 
             return dataToDecrypt;

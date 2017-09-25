@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -74,7 +73,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         Globals.COLORSCHEME(this);
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
         setupLayout();
     }
@@ -94,19 +93,19 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_action_settings);
         getSupportActionBar().setTitle("  Settings");
-        getSupportActionBar().setSubtitle("   Application Functionality And Visuals");
+        getSupportActionBar().setSubtitle("   Functionality And Visuals");
 //        getSupportActionBar().setTitle("");
 
         // SPINNER DATA
         // LOGOUT DELAY
         this.mSpAutoLogoutDelay = (Spinner) findViewById(R.id.spAutoLogoutDelay);
-        mAdapterAutoLogoutDelay = ArrayAdapter.createFromResource(this, R.array.AutoLogoutDelay_array, R.layout.spinner_item);
+        mAdapterAutoLogoutDelay = ArrayAdapter.createFromResource(this, R.array.AutoLogoutDelay_array, R.layout.item_settings_spinner);
         mAdapterAutoLogoutDelay.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.mSpAutoLogoutDelay.setAdapter(mAdapterAutoLogoutDelay);
         // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // ENCRYPTION METHOD
         this.mSpEncryptionMethod = (Spinner) findViewById(R.id.spEncryptionMethod);
-        mAdapterEncryptionMethod = ArrayAdapter.createFromResource(this, R.array.CryptALGO_array, R.layout.spinner_item);
+        mAdapterEncryptionMethod = ArrayAdapter.createFromResource(this, R.array.CryptALGO_array, R.layout.item_settings_spinner);
         mAdapterEncryptionMethod.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.mSpEncryptionMethod.setAdapter(mAdapterEncryptionMethod);
 
@@ -572,7 +571,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
             ACTIVITY_INTENT = new Intent(this, MainActivity.class);
             this.finish();
             this.startActivity(ACTIVITY_INTENT);
-            overridePendingTransition(R.anim.anim_push_upin, R.anim.anim_push_upin);
         }
     }
     @Override

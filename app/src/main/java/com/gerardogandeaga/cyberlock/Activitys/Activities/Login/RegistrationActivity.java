@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -31,7 +30,6 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.COMPLEXPASSCODE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.PIN;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener
@@ -289,22 +287,13 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                                 CryptKeyHandler keyHandler = new CryptKeyHandler(mContext); // START THE KEY HANDLER
 
                                 // PIN AND ENCRYPTION PROCESSES
-                                String pinHash = SHA256PinHash.hashFunction(pinFirst, SHA256PinHash.generateSalt());
-                                passwordHashAndEcnrypted = keyHandler.ENCRYPTKEY(pinHash, pinFirst);
+                                String pinHash = SHA256PinHash.HASH_FUNCTION(pinFirst, SHA256PinHash.GENERATE_SALT());
+                                passwordHashAndEcnrypted = keyHandler.ENCRYPT_KEY(pinHash, pinFirst);
 
                                 mSharedPreferences.edit().putString(PIN, passwordHashAndEcnrypted).apply(); // ADD HASHED PIN TO STORE
                                 System.out.println("HASHED PIN :" + passwordHashAndEcnrypted);
 
-                                byte[] KEY_Byte = keyHandler.BYTE_KEY_GENERATE(); // GENERATE A NEW BYTE ARRAY AS A SYMMETRIC KEY
-                                byte[] ENC_DEC_KEY_ByteVal = keyHandler.KEY_GENERATE(KEY_Byte);
-
-                                System.out.println("REGISTED KEY VAL :" + Base64.encodeToString(ENC_DEC_KEY_ByteVal, FLAGS));
-                                System.out.println("REGISTED KEY SIZE :" + ENC_DEC_KEY_ByteVal.length);
-
-                                String ENC_DEC_KEY_StringVal = keyHandler.ENCRYPTKEY(Base64.encodeToString(ENC_DEC_KEY_ByteVal, FLAGS), pinFirst); // ENCRYPT BYTES TO STRING
-
-                                mSharedPreferences.edit().putString(CRYPT_KEY, ENC_DEC_KEY_StringVal).apply(); // STORE THE KEY IN THE KEY STORE
-                                System.out.println("REGISTER ENCRYPTED KEY VAL :" + ENC_DEC_KEY_StringVal);
+                                String keyStringVal = keyHandler.GENERATE_NEW_KEY(pinFirst); // GENERATE A NEW BYTE ARRAY AS A SYMMETRIC KEY
 
                                 mPinFirst = null;
                                 mPinSecond = null;

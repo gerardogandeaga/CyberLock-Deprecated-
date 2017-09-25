@@ -101,7 +101,8 @@
         powerful encryption.
     </string>
     <string name="Blowfish">Blowfish</string>
-    <string name="BlowfishInfo">Blowfish is a symmetric block cipher, designed by Bruce Schneier.
+    <string name="BlowfishInfo">
+        Blowfish is a symmetric block cipher, designed by Bruce Schneier.
         Blowfish has a 64-bit block size and a variable key length from 32 up to 448 bits.
     </string>
     <string name="SHA256">SHA-256</string>
@@ -115,8 +116,8 @@
     <!-- UPDATE FEED -->
     <string name="UpdateTitle">Update Board</string>
     <!-- Version 1.1-->
-    <string name="V1.1.0">V - 1.1.0 ( Release! )</string>
-    <string name="Update_V1.1.0">
+    <string name="V1.0.0">V - 1.0.0 ( Release! )</string>
+    <string name="Update_V1.0.0">
         Welcome to Cyber Lock! Initial release comes outfitted with a data,
         card info, login credential and playground encryptor. Content Algorithms
         currently supported are AES-256 and Blowfish-448 bit.

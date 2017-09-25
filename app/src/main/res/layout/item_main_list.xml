@@ -6,7 +6,8 @@
               android:layout_height="wrap_content"
               android:background="@drawable/clickable_background_listitem"
               android:clickable="true"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:padding="5dp">
 
     <RelativeLayout
         android:id="@+id/MemoListLayout"
@@ -21,7 +22,7 @@
             android:layout_toRightOf="@+id/imgDelete"
             android:clickable="false"
             android:orientation="vertical"
-            android:padding="5dp">
+            >
 
             <TextView
                 android:id="@+id/tvMemoLabel"
@@ -35,7 +36,7 @@
                 android:fontFamily="monospace"
                 android:padding="2dp"
                 android:text="Label..."
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"/>
 
             <TextView
@@ -49,8 +50,8 @@
                 android:background="@color/grayB4"
                 android:fontFamily="monospace"
                 android:padding="2dp"
-                android:text="Memo..."
-                android:textSize="16sp"/>
+                android:text="Memo"
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/tvMemoDate"
@@ -60,10 +61,12 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tvLabel"
                 android:background="@color/grayD9"
+                android:fontFamily="monospace"
                 android:gravity="top|center_horizontal"
                 android:padding="2dp"
                 android:paddingRight="0dp"
-                android:text="date"/>
+                android:text="date"
+                android:textSize="12sp"/>
         </LinearLayout>
 
     </RelativeLayout>
@@ -80,12 +83,12 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/imgDelete"
             android:layout_toRightOf="@+id/imgDelete"
-            android:padding="5dp">
+            >
 
             <ImageView
                 android:id="@+id/imgCard"
                 android:layout_width="64dp"
-                android:layout_height="48dp"
+                android:layout_height="44dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
@@ -111,7 +114,7 @@
                     android:fontFamily="monospace"
                     android:padding="2dp"
                     android:text="Label..."
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/tvCardName"
@@ -123,7 +126,7 @@
                     android:fontFamily="monospace"
                     android:padding="2dp"
                     android:text="Card Name"
-                    android:textSize="16sp"/>
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:id="@+id/tvCardNumber"
@@ -135,7 +138,7 @@
                     android:fontFamily="monospace"
                     android:padding="2dp"
                     android:text="Card Number"
-                    android:textSize="16sp"/>
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:id="@+id/tvPaymentInfoDate"
@@ -148,7 +151,7 @@
                     android:fontFamily="monospace"
                     android:padding="2dp"
                     android:text="date"
-                    android:textSize="14sp"/>
+                    android:textSize="12sp"/>
             </LinearLayout>
         </RelativeLayout>
 
@@ -169,7 +172,7 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/imgDelete"
             android:orientation="vertical"
-            android:padding="5dp">
+            >
 
             <TextView
                 android:id="@+id/tvLoginInfoLabel"
@@ -183,7 +186,7 @@
                 android:fontFamily="monospace"
                 android:padding="2dp"
                 android:text="Label..."
-                android:textSize="18sp"/>
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/tvURL"
@@ -197,7 +200,7 @@
                 android:fontFamily="monospace"
                 android:padding="2dp"
                 android:text="Url"
-                android:textSize="16sp"/>
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/tvUsername"
@@ -211,7 +214,7 @@
                 android:fontFamily="monospace"
                 android:padding="2dp"
                 android:text="Username"
-                android:textSize="16sp"/>
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/tvEmail"
@@ -225,7 +228,7 @@
                 android:fontFamily="monospace"
                 android:padding="2dp"
                 android:text="Email"
-                android:textSize="16sp"/>
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/tvPassword"
@@ -239,7 +242,7 @@
                 android:fontFamily="monospace"
                 android:padding="2dp"
                 android:text="Password"
-                android:textSize="16sp"/>
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/tvLoginInfoDate"
@@ -249,11 +252,12 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tvLabel"
                 android:background="@color/grayD9"
+                android:fontFamily="monospace"
                 android:gravity="top|center_horizontal"
                 android:padding="2dp"
                 android:paddingRight="0dp"
                 android:text="date"
-                />
+                android:textSize="12sp"/>
         </LinearLayout>
 
     </RelativeLayout>
