@@ -20,8 +20,8 @@ import android.widget.Toast;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
-import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.Data;
-import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.MasterDatabaseAccess;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.Data;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.Supports.Globals;
 import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
@@ -85,12 +85,9 @@ public class PaymentInfoEditActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_graphic_paymentinfo);
-        getSupportActionBar().setTitle("  Card Edit");
-        getSupportActionBar().setSubtitle("   " +
-                "Algorithm: " +
+        getSupportActionBar().setTitle("Card Edit");
+        getSupportActionBar().setSubtitle("Algorithm: " +
                 getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(ENCRYPTION_ALGO, "---"));
-//        getSupportActionBar().setTitle("");
 
         this.mEtLabel = (EditText) findViewById(R.id.etTag);
         this.mEtCardName = (EditText) findViewById(R.id.etCardName);

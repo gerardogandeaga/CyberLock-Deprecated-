@@ -22,14 +22,28 @@
         android:id="@+id/tvVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imgHeader"
+        android:layout_above="@+id/tvLastLoggedIn"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:fontFamily="monospace"
-        android:text=" Version 1.0.0"
+        android:text="Version 1.0.0"
         android:textColor="@color/white"
         android:textSize="10sp"
         android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvLastLoggedIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/Anchor"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:fontFamily="monospace"
+        android:text="Last logged in: September 12th, 2017 at 5:01 pm"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        />
 
     <LinearLayout
         android:id="@+id/Anchor"

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.BugReportActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/child_toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/include">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabSendReport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/TextFields"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            app:backgroundTint="?attr/colorPrimaryDark"
+            app:elevation="0dp"
+            app:fabSize="normal"
+            app:rippleColor="?attr/colorAccent"
+            app:srcCompat="@drawable/ic_action_send"/>
+
+        <LinearLayout
+            android:id="@+id/TextFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <EditText
+                android:id="@+id/etTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvWhereBRGoes"
+                android:layout_marginTop="53dp"
+                android:ems="10"
+                android:fontFamily="monospace"
+                android:hint="Title"
+                android:inputType="textPersonName"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/etDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/etDetails"
+                android:layout_marginTop="27dp"
+                android:ems="10"
+                android:fontFamily="monospace"
+                android:hint="Details"
+                android:inputType="textPersonName"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

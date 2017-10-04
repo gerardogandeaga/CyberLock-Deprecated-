@@ -1,4 +1,4 @@
-package com.gerardogandeaga.cyberlock.EncryptionFeatures.Database;
+package com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase;
 
 import android.content.Context;
 

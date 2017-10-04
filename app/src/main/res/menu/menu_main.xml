@@ -4,6 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity">
 
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_action_search"
+        android:title="Search"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/action_delete"
+        android:icon="@drawable/ic_action_trash"
+        android:title="Delete"
+        app:showAsAction="always"
+        />
 
     <item
         android:id="@+id/subMenu1"
@@ -15,7 +28,6 @@
             <item
                 android:id="@+id/action_memo"
                 android:icon="@drawable/ic_action_memo"
-                android:label="@string/Action_Settings"
                 android:orderInCategory="0"
                 android:title="New Memo"
                 app:showAsAction="never"/>
@@ -23,7 +35,6 @@
             <item
                 android:id="@+id/action_paymentinfo"
                 android:icon="@drawable/ic_action_paymentinfo"
-                android:label="@string/Action_About"
                 android:orderInCategory="0"
                 android:title="New Payment Information"
                 app:showAsAction="never"/>
@@ -31,7 +42,6 @@
             <item
                 android:id="@+id/action_logininfo"
                 android:icon="@drawable/ic_action_logininfo"
-                android:label="@string/Action_Contribute"
                 android:orderInCategory="0"
                 android:title="New Login Credentials"
                 app:showAsAction="never"/>

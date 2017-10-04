@@ -91,10 +91,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_action_settings);
-        getSupportActionBar().setTitle("  Settings");
-        getSupportActionBar().setSubtitle("   Functionality And Visuals");
-//        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle("Settings");
+        getSupportActionBar().setSubtitle("Functionality And Visuals");
 
         // SPINNER DATA
         // LOGOUT DELAY

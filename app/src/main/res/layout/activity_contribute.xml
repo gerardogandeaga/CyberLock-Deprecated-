@@ -23,26 +23,14 @@
             android:id="@+id/Letter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvURL"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:inputType="textMultiLine|textUri"
-                android:padding="10dp"
-                android:text="https://www.google.ca/"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/tvMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
+                android:padding="10dp"
                 android:text="@string/MessageToUserTitle"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
@@ -78,6 +66,18 @@
                 android:text="@string/Signature"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/btnURL"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/clickable_background_listitem"
+                android:fontFamily="monospace"
+                android:padding="10dp"
+                android:text="@string/CheckoutSite"
+                android:textAllCaps="false"
                 android:textStyle="bold"/>
 
         </LinearLayout>

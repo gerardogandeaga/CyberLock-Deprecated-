@@ -67,6 +67,8 @@
         <activity
             android:name=".Activitys.Activities.Main.MainPlaygroundActivity"
             android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Activitys.Activities.Menus.BugReportActivity">
+        </activity>
     </application>
 
 </manifest>

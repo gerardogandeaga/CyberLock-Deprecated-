@@ -1,18 +1,27 @@
 <resources>
     ------------------------------------------------------------------------------------------------
+    <!-- ACTION BARS -->
+    <!-- Main -->
+    <string name="actnbrMain"> Cyber Lock </string>
+    <!-- Edits -->
+    <string name="actnbrMemoEdit"> Memo Edit </string>
+    <string name="actnbrPaymentInfo"> Card Edit </string>
+    <string name="actnbrLoginInfo"> Login Edit </string>
+    <!-- Connect -->
+    <string name="actnbrBugReport"> Bug Report </string>
+    <!-- Connect -->
+    <string name="actnbrSettings"> Settings </string>
+    <string name="actnbrAbout"> About </string>
+    ------------------------------------------------------------------------------------------------
     <!-- MAINS -->
-    <string name="TitleActivityMain">MainActivity</string>
-    <string name="Action_Settings">Settings</string>
-    <string name="Action_About">About</string>
-    <string name="Action_Contribute">Contribute</string>
     ------------------------------------------------------------------------------------------------
     <!-- LOGIN AND REGISTRATION -->
-    <!--Set Pin Activity-->
+    <!--REGISTRATION-->
     <string name="NewPin">Please input a new pin</string>
     <string name="ConfirmPin">Please confirm pin</string>
     ------------------------------------------------------------------------------------------------
     <!-- ACTIVITY EDITS-->
-    <!-- Cyber Lock Content Arrays -->
+    <!-- CONTENT ARRAYS -->
     <string-array name="CardType_array">
         <item>None</item>
         <item>Visa</item>
@@ -46,9 +55,10 @@
         -->
     </string-array>
     ------------------------------------------------------------------------------------------------
-    <!-- DRAWER STATES -->
-    <string name="Open">Open</string>
-    <string name="Close">Close</string>
+    <!-- SHORT TEXT -->
+    <!-- APP STATE DATA -->
+    <!-- URLs -->
+    <string name="SiteURL">http://bitcoretechnologies.net/</string>
     ------------------------------------------------------------------------------------------------
     <!-- PARAGRAPHS -->
     <!-- SETTINGS -->
@@ -84,7 +94,8 @@
     </string>
     <string name="Sincerely">Sincerely,</string>
     <string name="Signature">GG.</string>
-    <string name="ContributeMethods">Contribute ( Donate, Rate/Review, Share )</string>
+    <string name="CheckoutSite">
+        Click here  to check out our site! \n\n{ http://bitcoretechnologies.net/ } </string>
     <!-- ABOUT -->
     <string name="CyberLocksTechTitle">Cyber Lock\'s Technology</string>
     <string name="CyberLocksTech">
@@ -112,6 +123,8 @@
         is a one way function “encryptor” which cannot be decrypted. SHA-256 is currently one of
         the strongest functions available.
     </string>
+    <!-- BUG REPORT -->
+    <string name="WhereBRGoes">This report will be sent straight to the developer for reviewing.</string>
     ------------------------------------------------------------------------------------------------
     <!-- UPDATE FEED -->
     <string name="UpdateTitle">Update Board</string>
@@ -122,5 +135,9 @@
         card info, login credential and playground encryptor. Content Algorithms
         currently supported are AES-256 and Blowfish-448 bit.
     </string>
+    ------------------------------------------------------------------------------------------------
+    <!-- DRAWER STATES -->
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
     ------------------------------------------------------------------------------------------------
 </resources>

@@ -64,4 +64,8 @@ public class Globals
         }
     }
     // ----------
+
+    // TODO LOG OUT THE LAST LOGGED IN TIME
+    // TODO LOG OUT LAST EDITED TIME
+    // TODO LAST OPENED DOCUMENT
 }

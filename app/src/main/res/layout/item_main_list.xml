@@ -114,7 +114,8 @@
                     android:fontFamily="monospace"
                     android:padding="2dp"
                     android:text="Label..."
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tvCardName"
@@ -186,7 +187,8 @@
                 android:fontFamily="monospace"
                 android:padding="2dp"
                 android:text="Label..."
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/tvURL"

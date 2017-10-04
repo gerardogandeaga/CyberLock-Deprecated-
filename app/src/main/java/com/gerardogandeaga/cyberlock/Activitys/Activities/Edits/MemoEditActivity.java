@@ -14,8 +14,8 @@ import android.widget.Toast;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
-import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.Data;
-import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.MasterDatabaseAccess;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.Data;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.Supports.Globals;
 import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
@@ -67,12 +67,9 @@ public class MemoEditActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_graphic_memo);
-        getSupportActionBar().setTitle("  Memo Edit");
-        getSupportActionBar().setSubtitle("   " +
-                "Algorithm: " +
+        getSupportActionBar().setTitle("Memo Edit");
+        getSupportActionBar().setSubtitle("Algorithm: " +
                 getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(ENCRYPTION_ALGO, "---"));
-//        getSupportActionBar().setTitle("");
 
         this.mEtMemo = (EditText) findViewById(R.id.etText);
         this.mEtLabel = (EditText) findViewById(R.id.etMemoTitle);
@@ -92,6 +89,7 @@ public class MemoEditActivity extends AppCompatActivity
 
                     String memo;
 
+                    // TODO PASS INTO ASYNC TASK TO CUT PROCESSES
                     final String content = mCRYPTCONTENT.DECRYPT_CONTENT(mData.getContent(), MASTER_KEY);
                     if (content != null) {
                         Scanner scanner = new Scanner(content);
@@ -156,7 +154,7 @@ public class MemoEditActivity extends AppCompatActivity
             if (mData == null) {
                 Data temp = new Data();
 
-                temp.setType("TYPE_MEMO");
+                temp.setType("TYPE_MEMO"); // TODO ENCRYPT TYPE!
                 temp.setLabel(mCRYPTCONTENT.ENCRYPT_KEY(mEtLabel.getText().toString(), MASTER_KEY));
                 temp.setContent(mCRYPTCONTENT.ENCRYPT_KEY(tmpString, MASTER_KEY));
 

@@ -89,9 +89,8 @@ public class MainPlaygroundActivity extends AppCompatActivity
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_action_crypt);
-        getSupportActionBar().setTitle("  Playground");
-        getSupportActionBar().setSubtitle("   Encryption Testing Interface");
+        getSupportActionBar().setTitle("Playground");
+        getSupportActionBar().setSubtitle("Encryption Testing Interface");
 
         mTvCrypt = (TextView) findViewById(R.id.tvCrypt);
         mTvCryptTextOutput = (TextView) findViewById(R.id.tvCryptTextOutput);
@@ -161,7 +160,8 @@ public class MainPlaygroundActivity extends AppCompatActivity
                         mTvCryptTextOutput.setText(encryptedText);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Toast.makeText(this, "Something Went Wrong...", Toast.LENGTH_SHORT).show();
+
+
                     }
                 } else {
                     Toast.makeText(this, "Please Input Text", Toast.LENGTH_SHORT).show();
@@ -183,7 +183,11 @@ public class MainPlaygroundActivity extends AppCompatActivity
                     try {
                         String decryptedText = playgroundCrypt.decrypt(plainText, key);
 
-                        mTvCryptTextOutput.setText(decryptedText);
+                        if (decryptedText != null) {
+                            mTvCryptTextOutput.setText(decryptedText);
+                        } else {
+                            Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show();
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show();

@@ -39,6 +39,42 @@
     </item>
 
     <item
+        android:id="@+id/subMenu3"
+        android:title="Connect">
+
+        <menu>
+            <item
+                android:id="@+id/action_bugReport"
+                android:icon="@drawable/ic_action_bug"
+                android:orderInCategory="2"
+                android:title="Report A Bug"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/action_share"
+                android:icon="@drawable/ic_action_share"
+                android:orderInCategory="2"
+                android:title="Share"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/action_rate"
+                android:icon="@drawable/ic_action_rate"
+                android:orderInCategory="2"
+                android:title="Rate"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/action_contribute"
+                android:icon="@drawable/ic_action_contribute"
+                android:orderInCategory="2"
+                android:title="Contribute!"
+                app:showAsAction="never"/>
+
+        </menu>
+    </item>
+
+    <item
         android:id="@+id/subMenu2"
         android:title="Options">
 
@@ -56,42 +92,6 @@
                 android:orderInCategory="1"
                 android:title="About"
                 app:showAsAction="never"/>
-        </menu>
-    </item>
-
-    <item
-        android:id="@+id/subMenu3"
-        android:title="Connect">
-
-        <menu>
-            <item
-                android:id="@+id/action_share"
-                android:icon="@drawable/ic_action_share"
-                android:orderInCategory="2"
-                android:title="Share"
-                app:showAsAction="never"/>
-
-            <item
-                android:id="@+id/action_rate"
-                android:icon="@drawable/ic_action_rate"
-                android:orderInCategory="2"
-                android:title="Rate"
-                app:showAsAction="never"/>
-
-            <item
-                android:id="@+id/action_donate"
-                android:icon="@drawable/ic_action_donate"
-                android:orderInCategory="2"
-                android:title="Donate"
-                app:showAsAction="never"/>
-
-            <item
-                android:id="@+id/action_contribute"
-                android:icon="@drawable/ic_action_contribute"
-                android:orderInCategory="2"
-                android:title="Contribute!"
-                app:showAsAction="never"/>
-
         </menu>
     </item>
 

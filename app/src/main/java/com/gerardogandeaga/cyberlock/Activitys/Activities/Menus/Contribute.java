@@ -1,13 +1,14 @@
 package com.gerardogandeaga.cyberlock.Activitys.Activities.Menus;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
@@ -22,7 +23,7 @@ import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTi
 
 public class Contribute extends AppCompatActivity
 {
-    private TextView mTvWebPasgeURL;
+    private Button mBtnURL;
 
     // INITIAL ON CREATE METHODS
     @Override
@@ -56,12 +57,16 @@ public class Contribute extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Contribute");
 
-        this.mTvWebPasgeURL = (TextView) findViewById(R.id.tvURL);
+        this.mBtnURL = (Button) findViewById(R.id.btnURL);
 
-        this.mTvWebPasgeURL.setOnClickListener(new View.OnClickListener()
+        this.mBtnURL.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
+                Uri uri = Uri.parse(getString(R.string.SiteURL));
+                Intent i = new Intent(Intent.ACTION_VIEW, uri);
+                finish();
+                startActivity(i);
             }
         });
     }

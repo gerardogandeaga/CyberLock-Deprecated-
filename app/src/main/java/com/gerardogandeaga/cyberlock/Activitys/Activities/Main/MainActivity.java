@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.BugReportActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.LoginInfoEditActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.MemoEditActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.PaymentInfoEditActivity;
@@ -33,8 +34,8 @@ import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Contribute;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings;
 import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
-import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.Data;
-import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.MasterDatabaseAccess;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.Data;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.Supports.Globals;
 import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
@@ -159,6 +160,7 @@ public class MainActivity extends AppCompatActivity
 
             final Data data = mDatas.get(position);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, 0);
+
 
             CryptContent CRYPTCONTENT = new CryptContent(mContext);
 
@@ -461,24 +463,38 @@ public class MainActivity extends AppCompatActivity
 
         switch (id)
         {
+            case R.id.action_memo:
+                onAddClicked("TYPE_MEMO");
+                break;
+            case R.id.action_paymentinfo:
+                onAddClicked("TYPE_PAYMENTINFO");
+                break;
+            case R.id.action_logininfo:
+                onAddClicked("TYPE_LOGININFO");
+                break;
+
+
+
             case R.id.action_playground:
                 ACTIVITY_INTENT = new Intent(this, MainPlaygroundActivity.class);
                 this.finish();
                 this.startActivity(ACTIVITY_INTENT);
                 break;
-
             case R.id.action_settings:
                 ACTIVITY_INTENT = new Intent(this, Settings.class);
                 this.finish();
                 this.startActivity(ACTIVITY_INTENT);
                 break;
-
             case R.id.action_about:
                 dialog.setContentView(R.layout.activity_about);
                 dialog.setTitle("About Cyber Lock");
                 dialog.show();
                 break;
-
+            case R.id.action_bugReport:
+                ACTIVITY_INTENT = new Intent(this, BugReportActivity.class);
+                this.finish();
+                this.startActivity(ACTIVITY_INTENT);
+                break;
             case R.id.action_contribute:
                 ACTIVITY_INTENT = new Intent(this, Contribute.class);
                 this.finish();
@@ -486,12 +502,11 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.action_webpage:
-                Uri uri = Uri.parse("http://bitcoretechnologies.net/");
+                Uri uri = Uri.parse(getString(R.string.SiteURL));
                 Intent i = new Intent(Intent.ACTION_VIEW, uri);
                 this.finish();
                 this.startActivity(i);
                 break;
-
         }
     }
     public void onAddClicked(String TYPE) {

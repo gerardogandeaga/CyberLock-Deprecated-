@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
 import com.gerardogandeaga.cyberlock.Encryption.CryptKeyHandler;
-import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.Data;
-import com.gerardogandeaga.cyberlock.EncryptionFeatures.Database.MasterDatabaseAccess;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.Data;
+import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.MasterDatabaseAccess;
 
 import java.util.List;
 
