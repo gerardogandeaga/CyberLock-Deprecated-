@@ -2,6 +2,7 @@ package com.gerardogandeaga.cyberlock.Activitys.Activities.Main;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -10,29 +11,33 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.BugReportActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.LoginInfoEditActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.MemoEditActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.PaymentInfoEditActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Contribute;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings;
+import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings_ScrambleKey;
 import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.Data;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.MasterDatabaseAccess;
@@ -40,6 +45,7 @@ import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.Supports.Globals;
 import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -52,9 +58,12 @@ import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTi
 public class MainActivity extends AppCompatActivity
 {
     private Context mContext = this;
+    private Menu mMenu;
 
     // DATA VARIABLES
+    private int mCount;
     private MasterDatabaseAccess mMasterDatabaseAccess;
+    private ArrayList<Data> mSelectedDatas;
     private List<Data> mDatas;
 
     // WIDGETS
@@ -65,16 +74,17 @@ public class MainActivity extends AppCompatActivity
     // INITIAL ON CREATE METHODS
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         Globals.COLORSCHEME(this);
         super.onCreate(savedInstanceState);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-
         setupLayout();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        mMenu = menu;
+
         return true;
     }
     @Override
@@ -85,14 +95,13 @@ public class MainActivity extends AppCompatActivity
         this.mDatas = mMasterDatabaseAccess.getAllData();
         this.mMasterDatabaseAccess.close();
         DataAdapter adapter = new DataAdapter(this, mDatas);
-        this.mListView.setAdapter(adapter);
+        this.mListView.setAdapter(adapter); // TODO CREATE EMPTY LIST MESSAGE
     }
     private void setupLayout() {
         setContentView(R.layout.activity_main);
         ACTIVITY_INTENT = null;
         // GET WIDGETS
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.Content);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         this.mNavigationView = (NavigationView) findViewById(R.id.NavigationContent);
         this.mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
@@ -100,11 +109,14 @@ public class MainActivity extends AppCompatActivity
 
         // GET DATA
         this.mMasterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
+
         // SET WIDGETS
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Cyber Lock");
+        getSupportActionBar().setTitle("");
 
         this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -117,8 +129,7 @@ public class MainActivity extends AppCompatActivity
         drawerLayout.addDrawerListener(mDrawerToggle);
         this.mDrawerToggle.syncState();
 
-        this.mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener()
-        {
+        this.mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -127,7 +138,7 @@ public class MainActivity extends AppCompatActivity
                 return false;
             }
         });
-    } // LAYOUT SET UP
+    }
     private void calculateDrawerSize() {
         Resources resources = getResources();
         DisplayMetrics metrics = new DisplayMetrics();
@@ -146,69 +157,56 @@ public class MainActivity extends AppCompatActivity
         params.width = (newWidth);
         mNavigationView.setLayoutParams(params);
     }
-    private class DataAdapter extends ArrayAdapter<Data>
-    {
-        private DataAdapter(Context context, List<Data> objects) {
-            super(context, 0, objects);
-        }
+    private void buildDialog() {
+        // LINEAR LAYOUT BUILDING
+        LinearLayout Content = new LinearLayout(mContext);
+        Content.setOrientation(LinearLayout.VERTICAL);
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.item_main_list, parent, false);
+        TextView tvTitle = new TextView(mContext);
+        tvTitle.setText("Label:");
+
+        TextView tvReport = new TextView(mContext);
+        tvReport.setText("Content:");
+
+        EditText etTitle = new EditText(mContext);
+        etTitle.setHint("Title");
+
+        EditText etReport = new EditText(mContext);
+        etReport.setHint("Details");
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(50, 20, 50, 0);
+//        Content.addView(tvTitle, layoutParams);
+        Content.addView(etTitle, layoutParams);
+//        Content.addView(tvReport, layoutParams);
+        Content.addView(etReport, layoutParams);
+
+        Content.setLayoutParams(layoutParams);
+
+        // DIALOG BUILDER
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setView(Content);
+        alertDialog.setTitle("Bug Report");
+        alertDialog.setCancelable(false);
+
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
+        });
+        alertDialog.setPositiveButton("Send", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
 
-            final Data data = mDatas.get(position);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, 0);
-
-
-            CryptContent CRYPTCONTENT = new CryptContent(mContext);
-
-            final LinearLayout Content = (LinearLayout) convertView.findViewById(R.id.Content);
-
-            final RelativeLayout MemoListLayout = (RelativeLayout) convertView.findViewById(R.id.MemoListLayout);
-            final RelativeLayout PaymentInfoListLayout = (RelativeLayout) convertView.findViewById(R.id.PaymentInfoListLayout);
-            final RelativeLayout LoginInfoListLayout = (RelativeLayout) convertView.findViewById(R.id.LoginInfoListLayout);
-
-//            final ImageView imgDelete = (ImageView) convertView.findViewById(R.id.imgDelete);
-
-            final String TYPE = data.getType();
-
-            switch (TYPE) {
-                case "TYPE_MEMO":
-                    PaymentInfoListLayout.setLayoutParams(params);
-                    LoginInfoListLayout.setLayoutParams(params);
-
-                    memoFunctions(data, CRYPTCONTENT, convertView, params, Content);
-                    break;
-
-                case "TYPE_PAYMENTINFO":
-                    MemoListLayout.setLayoutParams(params);
-                    LoginInfoListLayout.setLayoutParams(params);
-
-                    paymentInfoFunctions(data, CRYPTCONTENT, convertView, params);
-                    break;
-
-                case "TYPE_LOGININFO":
-                    MemoListLayout.setLayoutParams(params);
-                    PaymentInfoListLayout.setLayoutParams(params);
-
-                    loginInfoFunctions(data, CRYPTCONTENT, convertView, Content);
-                    break;
+                new Settings_ScrambleKey(mContext).execute();
             }
-
-
-            Content.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v) {
-                    onEditClicked(TYPE, data);
-                    System.out.println(TYPE);
-                }
-            });
-
-            return convertView;
-        }
+        });
+        alertDialog.show();
     }
     // -------------------------
 
@@ -222,18 +220,20 @@ public class MainActivity extends AppCompatActivity
 
         String memo = "";
 
-        Scanner scanner = new Scanner(content);
+        if (content != null) {
+            Scanner scanner = new Scanner(content);
 
-        try {
-            memo = scanner.nextLine();
-            while (scanner.hasNextLine()) {
-                memo += "\n";
-                memo += scanner.nextLine();
+            try {
+                memo = scanner.nextLine();
+                while (scanner.hasNextLine()) {
+                    memo += "\n";
+                    memo += scanner.nextLine();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            scanner.close();
         }
-        scanner.close();
 
         final TextView tvDate = (TextView) convertView.findViewById(R.id.tvMemoDate);
         final TextView tvLabel = (TextView) convertView.findViewById(R.id.tvMemoLabel);
@@ -268,6 +268,7 @@ public class MainActivity extends AppCompatActivity
                 return false;
             }
         });
+
     }
     private void paymentInfoFunctions(Data data, CryptContent CRYPTCONTENT, View convertView, LinearLayout.LayoutParams params) {
         data.setFullDisplayed(false);
@@ -444,6 +445,19 @@ public class MainActivity extends AppCompatActivity
         if (mDrawerToggle.onOptionsItemSelected(item)) return true;
 
         switch (item.getItemId()) {
+            // OPTIONS
+            case R.id.action_deletesweep:
+                onMultiSelectClicked();
+            case R.id.action_delete:
+                System.out.println("Delete Called");
+                onDeleteClicked();
+                return true;
+            case R.id.action_done:
+                onMultiSelectClicked();
+                return true;
+
+
+            // FUNTIONS
             case R.id.action_memo:
                 onAddClicked("TYPE_MEMO");
                 return true;
@@ -491,9 +505,7 @@ public class MainActivity extends AppCompatActivity
                 dialog.show();
                 break;
             case R.id.action_bugReport:
-                ACTIVITY_INTENT = new Intent(this, BugReportActivity.class);
-                this.finish();
-                this.startActivity(ACTIVITY_INTENT);
+                buildDialog();
                 break;
             case R.id.action_contribute:
                 ACTIVITY_INTENT = new Intent(this, Contribute.class);
@@ -546,14 +558,58 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
     }
-    public void onDeleteClicked(Data data) {
-        this.mMasterDatabaseAccess.open();
-        this.mMasterDatabaseAccess.delete(data);
-        this.mMasterDatabaseAccess.close();
+    public void onMultiSelectClicked() {
+        MenuInflater menuInflater = new MenuInflater(mContext);
 
-        ArrayAdapter<Data> adapter = (ArrayAdapter<Data>) mListView.getAdapter();
-        adapter.remove(data);
-        adapter.notifyDataSetChanged();
+        if (mListView.getChoiceMode() != ListView.CHOICE_MODE_MULTIPLE_MODAL) {
+            mSelectedDatas = new ArrayList<Data>();
+
+            mMenu.removeItem(R.id.action_search);
+            mMenu.removeItem(R.id.action_deletesweep);
+            mMenu.removeItem(R.id.subMenuAdd);
+
+            menuInflater.inflate(R.menu.menu_delete, mMenu);
+
+            MenuItem delete = mMenu.findItem(R.id.action_delete);
+            MenuItem done = mMenu.findItem(R.id.action_done);
+
+            delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            done.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            getSupportActionBar().setTitle(mCount + " Selected");
+
+            mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        } else {
+            mSelectedDatas = null;
+            mCount = 0;
+            onResume();
+
+            mMenu.removeItem(R.id.action_delete);
+            mMenu.removeItem(R.id.action_done);
+
+            menuInflater.inflate(R.menu.menu_main, mMenu);
+
+            MenuItem search = mMenu.findItem(R.id.action_search);
+            MenuItem multiSelect = mMenu.findItem(R.id.action_deletesweep);
+            MenuItem add = mMenu.findItem(R.id.subMenuAdd);
+
+            search.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            multiSelect.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            add.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            getSupportActionBar().setTitle("");
+
+            mListView.setChoiceMode(ListView.CHOICE_MODE_NONE);
+        }
+    }
+    public void onDeleteClicked() {
+        if (mSelectedDatas.size() != 0) {
+            this.mMasterDatabaseAccess.open();
+            for (Data id : mSelectedDatas) {
+                this.mMasterDatabaseAccess.delete(id);
+            }
+            this.mMasterDatabaseAccess.close();
+            onMultiSelectClicked();
+        } else {
+        }
     }
     // ----------------
 
@@ -577,6 +633,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        if (mListView.getChoiceMode() != ListView.CHOICE_MODE_MULTIPLE_MODAL)
         if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
         {
             new LogoutProtocol().logoutImmediate(this);
@@ -595,4 +652,84 @@ public class MainActivity extends AppCompatActivity
         }
     }
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    // INNER ADAPTER CLASS
+    private class DataAdapter extends ArrayAdapter<Data>
+    {
+        private DataAdapter(Context context, List<Data> objects) {
+            super(context, 0, objects);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = getLayoutInflater().inflate(R.layout.item_main_list, parent, false);
+            }
+
+            final Data data = mDatas.get(position);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, 0);
+
+            CryptContent CRYPTCONTENT = new CryptContent(mContext);
+
+            final LinearLayout Content = (LinearLayout) convertView.findViewById(R.id.Content);
+            final RelativeLayout MemoListLayout = (RelativeLayout) convertView.findViewById(R.id.MemoListLayout);
+            final RelativeLayout PaymentInfoListLayout = (RelativeLayout) convertView.findViewById(R.id.PaymentInfoListLayout);
+            final RelativeLayout LoginInfoListLayout = (RelativeLayout) convertView.findViewById(R.id.LoginInfoListLayout);
+
+            final String TYPE = data.getType();
+
+            switch (TYPE) {
+                case "TYPE_MEMO":
+                    PaymentInfoListLayout.setLayoutParams(params);
+                    LoginInfoListLayout.setLayoutParams(params);
+
+                    memoFunctions(data, CRYPTCONTENT, convertView, params, Content);
+                    break;
+
+                case "TYPE_PAYMENTINFO":
+                    MemoListLayout.setLayoutParams(params);
+                    LoginInfoListLayout.setLayoutParams(params);
+
+                    paymentInfoFunctions(data, CRYPTCONTENT, convertView, params);
+                    break;
+
+                case "TYPE_LOGININFO":
+                    MemoListLayout.setLayoutParams(params);
+                    PaymentInfoListLayout.setLayoutParams(params);
+
+                    loginInfoFunctions(data, CRYPTCONTENT, convertView, Content);
+                    break;
+            }
+
+            Content.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    if (mListView.getChoiceMode() != ListView.CHOICE_MODE_MULTIPLE_MODAL) {
+                        onEditClicked(TYPE, data);
+                    } else {
+                        if (!data.isSelected()) {
+                            Content.setBackgroundColor(getResources().getColor(R.color.gray_1L));
+                            data.setSelected(true);
+                            mSelectedDatas.add(data);
+                            mCount++;
+
+                            System.out.println(mSelectedDatas);
+                        } else {
+                            Content.setBackground(getResources().getDrawable(R.drawable.clickable_background_listitem));
+                            data.setSelected(false);
+                            mSelectedDatas.remove(data);
+                            mCount--;
+
+                            System.out.println(mSelectedDatas);
+                        }
+
+                        getSupportActionBar().setTitle(mCount + " Selected");
+                    }
+                }
+            });
+
+            return convertView;
+        }
+    }
 }

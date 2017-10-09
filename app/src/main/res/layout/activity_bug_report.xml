@@ -5,30 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/Content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.BugReportActivity">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/child_toolbar"/>
-
     <RelativeLayout
+        android:id="@+id/TestLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/include">
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabSendReport"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/TextFields"
-            android:layout_centerHorizontal="true"
-            android:clickable="true"
-            app:backgroundTint="?attr/colorPrimaryDark"
-            app:elevation="0dp"
-            app:fabSize="normal"
-            app:rippleColor="?attr/colorAccent"
-            app:srcCompat="@drawable/ic_action_send"/>
 
         <LinearLayout
             android:id="@+id/TextFields"
@@ -71,6 +55,19 @@
                 />
 
         </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabSendReport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/TextFields"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            app:backgroundTint="?attr/colorPrimaryDark"
+            app:elevation="0dp"
+            app:fabSize="normal"
+            app:rippleColor="?attr/colorAccent"
+            app:srcCompat="@drawable/ic_action_send"/>
 
     </RelativeLayout>
 

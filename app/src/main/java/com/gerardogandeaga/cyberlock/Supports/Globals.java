@@ -1,11 +1,12 @@
 package com.gerardogandeaga.cyberlock.Supports;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 
 import com.gerardogandeaga.cyberlock.R;
 
-public class Globals
+public class Globals extends AppCompatActivity
 {
     // SHARED PREFERENCES
     public static final String DIRECTORY = "com.gerardogandeaga.cyberlock";

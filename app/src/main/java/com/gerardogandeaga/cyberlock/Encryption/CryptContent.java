@@ -28,7 +28,7 @@ public class CryptContent
         ALGO = mSharedPreferences.getString(ENCRYPTION_ALGO, "AES");
         CipherALGO = ALGO + "/CBC/PKCS5Padding";
 
-        System.out.println("CREATE ALGO " + ALGO);
+//        System.out.println("CREATE ALGO " + ALGO);
         switch (ALGO)
         {
             case "AES":
@@ -52,7 +52,7 @@ public class CryptContent
         {
             if (!dataToEncrypt.matches("")) // CHECK IS THERE IS ACTULA CONTENT TO ENCRYPT
             {
-                System.out.println("ENCRYPT_KEY: ENCRYPT STARTING...");
+//                System.out.println("ENCRYPT_KEY: ENCRYPT STARTING...");
                 byte[] encryptedPassword = Base64.decode(symmetricKey, FLAGS); // GENERATE KEY
 
                 SecretKeySpec secretKeySpec = new SecretKeySpec(encryptedPassword, ALGO);
@@ -67,7 +67,7 @@ public class CryptContent
                 System.arraycopy(ivByteVal, 0, combinedByteVal, 0, ivByteVal.length); // POSITIONING THE IV BYTES
                 System.arraycopy(encryptedTextByteVal, 0, combinedByteVal, ivByteVal.length, encryptedTextByteVal.length); // IMPLEMENTING INTO CIPHER
 
-                System.out.println("ENCRYPT_KEY: ENCRYPT DONE...");
+//                System.out.println("ENCRYPT_KEY: ENCRYPT DONE...");
                 return Base64.encodeToString(combinedByteVal, FLAGS);
             } else
             {
@@ -75,7 +75,7 @@ public class CryptContent
             }
         } catch (Exception e)
         {
-            System.out.println("ENCRYPT_KEY: ENCRYPT FAILED!...");
+//            System.out.println("ENCRYPT_KEY: ENCRYPT FAILED!...");
             e.printStackTrace();
 
             return dataToEncrypt;
@@ -92,8 +92,8 @@ public class CryptContent
 
         try
         {
-            System.out.println("ENCRYPTION ALGO " + ALGO);
-            System.out.println("DECRYPT_CONTENT: DECRYPT STARTING...");
+//            System.out.println("ENCRYPTION ALGO " + ALGO);
+//            System.out.println("DECRYPT_CONTENT: DECRYPT STARTING...");
             byte[] encryptedCombinedBytes = Base64.decode(dataToDecrypt, FLAGS);
 
             byte[] ivByteVal = Arrays.copyOfRange(encryptedCombinedBytes, 0, IVLength); // "BREAK" BYTES TO GET IV BYTES ONLY
@@ -107,11 +107,11 @@ public class CryptContent
 
             byte[] decryptedTextByteVal = cipher.doFinal(encryptedTextByteVal); // DECRYPT TEXT
 
-            System.out.println("DECRYPT_CONTENT: DECRYPT DONE...");
+//            System.out.println("DECRYPT_CONTENT: DECRYPT DONE...");
             return new String(decryptedTextByteVal);
         } catch (Exception e)
         {
-            System.out.println("DECRYPT_CONTENT: DECRYPT FAILED...");
+//            System.out.println("DECRYPT_CONTENT: DECRYPT FAILED...");
             e.printStackTrace();
 
             return dataToDecrypt;

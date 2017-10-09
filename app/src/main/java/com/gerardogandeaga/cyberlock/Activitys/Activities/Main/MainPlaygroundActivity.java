@@ -279,7 +279,7 @@ public class MainPlaygroundActivity extends AppCompatActivity
             ACTIVITY_INTENT = new Intent(this, MainActivity.class);
             finish();
             this.startActivity(ACTIVITY_INTENT);
-            overridePendingTransition(R.anim.anim_slide_inleft, R.anim.anim_slide_outright);
+//            overridePendingTransition(R.anim.anim_slide_inleft, R.anim.anim_slide_outright);
         }
     }
     @Override

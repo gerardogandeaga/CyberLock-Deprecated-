@@ -6,6 +6,7 @@
               android:layout_height="wrap_content"
               android:background="@drawable/clickable_background_listitem"
               android:clickable="true"
+              android:elevation="1dp"
               android:orientation="vertical"
               android:padding="5dp">
 
@@ -18,11 +19,10 @@
             android:id="@+id/layoutText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imgDelete"
-            android:layout_toRightOf="@+id/imgDelete"
+            android:layout_toEndOf="@+id/cbData"
+            android:layout_toRightOf="@+id/cbData"
             android:clickable="false"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvMemoLabel"
@@ -32,7 +32,6 @@
                 android:layout_toEndOf="@+id/btnEdit"
                 android:layout_toLeftOf="@+id/tvDate"
                 android:layout_toRightOf="@+id/btnEdit"
-                android:background="@color/gray8F"
                 android:fontFamily="monospace"
                 android:padding="2dp"
                 android:text="Label..."
@@ -47,7 +46,6 @@
                 android:layout_toEndOf="@+id/btnEdit"
                 android:layout_toLeftOf="@+id/tvDate"
                 android:layout_toRightOf="@+id/btnEdit"
-                android:background="@color/grayB4"
                 android:fontFamily="monospace"
                 android:padding="2dp"
                 android:text="Memo"
@@ -60,12 +58,12 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tvLabel"
-                android:background="@color/grayD9"
                 android:fontFamily="monospace"
                 android:gravity="top|center_horizontal"
                 android:padding="2dp"
                 android:paddingRight="0dp"
                 android:text="date"
+                android:textColor="@color/green_1D"
                 android:textSize="12sp"/>
         </LinearLayout>
 
@@ -81,9 +79,8 @@
             android:id="@+id/layoutData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imgDelete"
-            android:layout_toRightOf="@+id/imgDelete"
-            >
+            android:layout_toEndOf="@+id/checkBox6"
+            android:layout_toRightOf="@+id/checkBox6">
 
             <ImageView
                 android:id="@+id/imgCard"
@@ -92,6 +89,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:background="@drawable/xml_card_image_border"
                 app:srcCompat="@drawable/card_default"/>
 
             <LinearLayout
@@ -110,7 +108,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:background="@color/gray8F"
                     android:fontFamily="monospace"
                     android:padding="2dp"
                     android:text="Label..."
@@ -123,7 +120,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:background="@color/grayB4"
                     android:fontFamily="monospace"
                     android:padding="2dp"
                     android:text="Card Name"
@@ -135,7 +131,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:background="@color/grayB4"
                     android:fontFamily="monospace"
                     android:padding="2dp"
                     android:text="Card Number"
@@ -148,10 +143,10 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/tvLabel"
-                    android:background="@color/grayD9"
                     android:fontFamily="monospace"
                     android:padding="2dp"
                     android:text="date"
+                    android:textColor="@color/green_1D"
                     android:textSize="12sp"/>
             </LinearLayout>
         </RelativeLayout>
@@ -160,7 +155,7 @@
 
     <RelativeLayout
         android:id="@+id/LoginInfoListLayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -171,9 +166,9 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/imgDelete"
-            android:orientation="vertical"
-            >
+            android:layout_toEndOf="@+id/checkBox5"
+            android:layout_toRightOf="@+id/checkBox5"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvLoginInfoLabel"
@@ -183,7 +178,6 @@
                 android:layout_toEndOf="@+id/btnEdit"
                 android:layout_toLeftOf="@+id/tvDate"
                 android:layout_toRightOf="@+id/btnEdit"
-                android:background="@color/gray8F"
                 android:fontFamily="monospace"
                 android:padding="2dp"
                 android:text="Label..."
@@ -198,7 +192,6 @@
                 android:layout_toEndOf="@+id/btnEdit"
                 android:layout_toLeftOf="@+id/tvDate"
                 android:layout_toRightOf="@+id/btnEdit"
-                android:background="@color/grayB4"
                 android:fontFamily="monospace"
                 android:padding="2dp"
                 android:text="Url"
@@ -212,7 +205,6 @@
                 android:layout_toEndOf="@+id/btnEdit"
                 android:layout_toLeftOf="@+id/tvDate"
                 android:layout_toRightOf="@+id/btnEdit"
-                android:background="@color/grayB4"
                 android:fontFamily="monospace"
                 android:padding="2dp"
                 android:text="Username"
@@ -226,7 +218,6 @@
                 android:layout_toEndOf="@+id/btnEdit"
                 android:layout_toLeftOf="@+id/tvDate"
                 android:layout_toRightOf="@+id/btnEdit"
-                android:background="@color/grayB4"
                 android:fontFamily="monospace"
                 android:padding="2dp"
                 android:text="Email"
@@ -240,7 +231,6 @@
                 android:layout_toEndOf="@+id/btnEdit"
                 android:layout_toLeftOf="@+id/tvDate"
                 android:layout_toRightOf="@+id/btnEdit"
-                android:background="@color/grayB4"
                 android:fontFamily="monospace"
                 android:padding="2dp"
                 android:text="Password"
@@ -253,12 +243,12 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tvLabel"
-                android:background="@color/grayD9"
                 android:fontFamily="monospace"
                 android:gravity="top|center_horizontal"
                 android:padding="2dp"
                 android:paddingRight="0dp"
                 android:text="date"
+                android:textColor="@color/green_1D"
                 android:textSize="12sp"/>
         </LinearLayout>
 

@@ -123,7 +123,7 @@ public class LoginInfoEditActivity extends AppCompatActivity
                             notes = scanner.nextLine();
                             while (scanner.hasNextLine()) {
                                 notes += "\n";
-                                notes += scanner.hasNextLine();
+                                notes += scanner.nextLine();
                             }
                             mEtNotes.setText(notes);
                         } catch (NoSuchElementException e) {

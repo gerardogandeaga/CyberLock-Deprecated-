@@ -14,6 +14,7 @@ public class Data implements Serializable
     private String mLabel;
     private String mContent;
     private boolean mFullDisplayed;
+    private boolean mSelected;
 
     private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy");
 
@@ -89,6 +90,15 @@ public class Data implements Serializable
     public boolean isFullDisplayed()
     {
         return this.mFullDisplayed;
+    }
+
+    public void setSelected(boolean selected)
+    {
+        this.mSelected = selected;
+    }
+    public boolean isSelected()
+    {
+        return this.mSelected;
     }
 
     @Override

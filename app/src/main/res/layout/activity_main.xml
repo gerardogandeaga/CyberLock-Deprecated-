@@ -6,7 +6,6 @@
     android:id="@+id/Content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorPrimaryDark"
     tools:context=".Activitys.Activities.Main.MainActivity">
 
     <RelativeLayout
@@ -24,11 +23,10 @@
             android:layout_above="@+id/Actions"
             android:layout_below="@+id/include"
             android:layout_centerHorizontal="true"
-            android:divider="@color/gray_1L"
-            android:dividerHeight="1dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="5dp"
             android:listSelector="@android:color/transparent"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:padding="5dp"
             android:scrollbars="none"/>
 
     </RelativeLayout>

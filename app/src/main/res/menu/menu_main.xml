@@ -12,16 +12,16 @@
         />
 
     <item
-        android:id="@+id/action_delete"
-        android:icon="@drawable/ic_action_trash"
-        android:title="Delete"
+        android:id="@+id/action_deletesweep"
+        android:icon="@drawable/ic_action_deletesweep"
+        android:title="Delete Sweep"
         app:showAsAction="always"
         />
 
     <item
-        android:id="@+id/subMenu1"
+        android:id="@+id/subMenuAdd"
         android:icon="@drawable/ic_action_add"
-        android:title="Add Document"
+        android:title="New"
         app:showAsAction="always">
 
         <menu>

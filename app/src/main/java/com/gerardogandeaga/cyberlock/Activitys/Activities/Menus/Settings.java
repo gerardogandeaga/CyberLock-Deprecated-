@@ -415,7 +415,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
 
-                    ACTIVITY_INTENT = new Intent(mContext, Settings_ResetComplexPasscode.class);
+                    ACTIVITY_INTENT = new Intent(mContext, Settings_ResetShortPasscode.class);
                     startActivity(ACTIVITY_INTENT);
                 }
             });

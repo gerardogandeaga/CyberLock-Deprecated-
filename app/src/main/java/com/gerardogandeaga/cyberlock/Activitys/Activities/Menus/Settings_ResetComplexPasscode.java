@@ -14,18 +14,24 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
+import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.Encryption.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.Encryption.SHA256PinHash;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.Supports.Globals;
+import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 
-import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.COMPLEXPASSCODE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.PIN;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownIsFinished;
+import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTimer;
 
 public class Settings_ResetComplexPasscode extends AppCompatActivity implements View.OnClickListener
 {
@@ -451,4 +457,45 @@ public class Settings_ResetComplexPasscode extends AppCompatActivity implements 
         }.execute();
     }
     // ----------------
+
+    // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (mCountDownIsFinished) {
+            if (!APP_LOGGED_IN) {
+                ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
+                this.finish(); // CLEAN UP AND END
+                this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
+            }
+        } else {
+            if (mCountDownTimer != null) {
+                mCountDownTimer.cancel();
+            }
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
+        {
+            ACTIVITY_INTENT = new Intent(this, MainActivity.class);
+            this.finish();
+            this.startActivity(ACTIVITY_INTENT);
+        }
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (!this.isFinishing()) // HOME AND TABS AND SCREEN OFF
+        {
+            if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
+            {
+                new LogoutProtocol().logoutExecuteAutosaveOff(mContext);
+            }
+        }
+    }
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }

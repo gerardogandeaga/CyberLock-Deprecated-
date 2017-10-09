@@ -4,17 +4,10 @@
       tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity">
 
     <item
-        android:id="@+id/subMenu1"
+        android:id="@+id/subMenuAdd"
         android:title="Functions">
 
         <menu>
-            <item
-                android:id="@+id/action_playground"
-                android:icon="@drawable/ic_action_crypt"
-                android:orderInCategory="0"
-                android:title="Playground"
-                app:showAsAction="always"/>
-
             <item
                 android:id="@+id/action_memo"
                 android:icon="@drawable/ic_action_memo"
@@ -34,6 +27,13 @@
                 android:icon="@drawable/ic_action_logininfo"
                 android:orderInCategory="0"
                 android:title="New Login Credentials"
+                app:showAsAction="always"/>
+
+            <item
+                android:id="@+id/action_playground"
+                android:icon="@drawable/ic_action_crypt"
+                android:orderInCategory="0"
+                android:title="Playground"
                 app:showAsAction="always"/>
         </menu>
     </item>
@@ -75,8 +75,8 @@
     </item>
 
     <item
-        android:id="@+id/subMenu2"
-        android:title="Options">
+        android:id="@+id/subMenuOptions"
+        android:title="App">
 
         <menu>
             <item

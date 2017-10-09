@@ -89,7 +89,6 @@ public class MemoEditActivity extends AppCompatActivity
 
                     String memo;
 
-                    // TODO PASS INTO ASYNC TASK TO CUT PROCESSES
                     final String content = mCRYPTCONTENT.DECRYPT_CONTENT(mData.getContent(), MASTER_KEY);
                     if (content != null) {
                         Scanner scanner = new Scanner(content);
@@ -97,11 +96,11 @@ public class MemoEditActivity extends AppCompatActivity
                         memo = scanner.nextLine();
                         while (scanner.hasNextLine()) {
                             memo += "\n";
-                            memo += scanner.hasNextLine();
+                            memo += scanner.nextLine();
                         }
                         scanner.close();
 
-                        mEtMemo.setText(content);
+                        mEtMemo.setText(memo);
                     }
 
                     if (!mData.getDate().matches("")) {
