@@ -1,257 +1,288 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:id="@+id/Content"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/clickable_background_listitem"
-              android:clickable="true"
-              android:elevation="1dp"
-              android:orientation="vertical"
-              android:padding="5dp">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/Content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/clickable_listitem"
+    android:clickable="true">
 
-    <RelativeLayout
-        android:id="@+id/MemoListLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/ColourTag"
+        android:layout_width="64dp"
+        android:layout_height="8dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+    </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/layoutText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/cbData"
-            android:layout_toRightOf="@+id/cbData"
-            android:clickable="false"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvMemoLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/btnEdit"
-                android:layout_toLeftOf="@+id/tvDate"
-                android:layout_toRightOf="@+id/btnEdit"
-                android:fontFamily="monospace"
-                android:padding="2dp"
-                android:text="Label..."
-                android:textSize="16sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/tvMemo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/btnEdit"
-                android:layout_toLeftOf="@+id/tvDate"
-                android:layout_toRightOf="@+id/btnEdit"
-                android:fontFamily="monospace"
-                android:padding="2dp"
-                android:text="Memo"
-                android:textSize="14sp"/>
-
-            <TextView
-                android:id="@+id/tvMemoDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/tvLabel"
-                android:fontFamily="monospace"
-                android:gravity="top|center_horizontal"
-                android:padding="2dp"
-                android:paddingRight="0dp"
-                android:text="date"
-                android:textColor="@color/green_1D"
-                android:textSize="12sp"/>
-        </LinearLayout>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/PaymentInfoListLayout"
+    <LinearLayout
+        android:id="@+id/Data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ColourTag"
+        android:clickable="false"
+        android:elevation="1dp"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <RelativeLayout
-            android:id="@+id/layoutData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/checkBox6"
-            android:layout_toRightOf="@+id/checkBox6">
-
-            <ImageView
-                android:id="@+id/imgCard"
-                android:layout_width="64dp"
-                android:layout_height="44dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/xml_card_image_border"
-                app:srcCompat="@drawable/card_default"/>
+            android:id="@+id/LoginInfoListLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/layoutText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginRight="5dp"
-                android:layout_toLeftOf="@+id/imgCard"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/checkBox5"
+                android:layout_toRightOf="@+id/checkBox5"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvPaymentInfoLabel"
+                    android:id="@+id/tvLoginInfoLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/btnEdit"
+                    android:layout_toLeftOf="@+id/tvDate"
+                    android:layout_toRightOf="@+id/btnEdit"
                     android:fontFamily="monospace"
                     android:padding="2dp"
                     android:text="Label..."
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/tvCardName"
+                    android:id="@+id/tvURL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/btnEdit"
+                    android:layout_toLeftOf="@+id/tvDate"
+                    android:layout_toRightOf="@+id/btnEdit"
                     android:fontFamily="monospace"
                     android:padding="2dp"
-                    android:text="Card Name"
+                    android:text="Url"
+                    android:textColor="@color/black"
                     android:textSize="14sp"/>
 
                 <TextView
-                    android:id="@+id/tvCardNumber"
+                    android:id="@+id/tvUsername"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/btnEdit"
+                    android:layout_toLeftOf="@+id/tvDate"
+                    android:layout_toRightOf="@+id/btnEdit"
                     android:fontFamily="monospace"
                     android:padding="2dp"
-                    android:text="Card Number"
+                    android:text="Username"
+                    android:textColor="@color/black"
                     android:textSize="14sp"/>
 
                 <TextView
-                    android:id="@+id/tvPaymentInfoDate"
+                    android:id="@+id/tvEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/btnEdit"
+                    android:layout_toLeftOf="@+id/tvDate"
+                    android:layout_toRightOf="@+id/btnEdit"
+                    android:fontFamily="monospace"
+                    android:padding="2dp"
+                    android:text="Email"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tvPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/btnEdit"
+                    android:layout_toLeftOf="@+id/tvDate"
+                    android:layout_toRightOf="@+id/btnEdit"
+                    android:fontFamily="monospace"
+                    android:padding="2dp"
+                    android:text="Password"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tvLoginInfoDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/tvLabel"
                     android:fontFamily="monospace"
+                    android:gravity="top|center_horizontal"
                     android:padding="2dp"
+                    android:paddingRight="0dp"
                     android:text="date"
-                    android:textColor="@color/green_1D"
+                    android:textColor="@color/black"
                     android:textSize="12sp"/>
             </LinearLayout>
+
         </RelativeLayout>
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/LoginInfoListLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/layoutText"
+        <RelativeLayout
+            android:id="@+id/PaymentInfoListLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/checkBox5"
-            android:layout_toRightOf="@+id/checkBox5"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvLoginInfoLabel"
+            <RelativeLayout
+                android:id="@+id/layoutData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/btnEdit"
-                android:layout_toLeftOf="@+id/tvDate"
-                android:layout_toRightOf="@+id/btnEdit"
-                android:fontFamily="monospace"
-                android:padding="2dp"
-                android:text="Label..."
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:layout_toEndOf="@+id/checkBox6"
+                android:layout_toRightOf="@+id/checkBox6">
 
-            <TextView
-                android:id="@+id/tvURL"
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/imgCard"
+                    android:layout_width="64dp"
+                    android:layout_height="44dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/xml_card_image_border"
+                    app:srcCompat="@drawable/card_default"/>
+
+                <LinearLayout
+                    android:id="@+id/layoutText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/imgCard"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvPaymentInfoLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:fontFamily="monospace"
+                        android:padding="2dp"
+                        android:text="Label..."
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tvCardName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:fontFamily="monospace"
+                        android:padding="2dp"
+                        android:text="Card Name"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/tvCardNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:fontFamily="monospace"
+                        android:padding="2dp"
+                        android:text="Card Number"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/tvPaymentInfoDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/tvLabel"
+                        android:fontFamily="monospace"
+                        android:padding="2dp"
+                        android:text="date"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/MemoListLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/layoutText"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/btnEdit"
-                android:layout_toLeftOf="@+id/tvDate"
-                android:layout_toRightOf="@+id/btnEdit"
-                android:fontFamily="monospace"
-                android:padding="2dp"
-                android:text="Url"
-                android:textSize="14sp"/>
+                android:layout_toEndOf="@+id/cbData"
+                android:layout_toRightOf="@+id/cbData"
+                android:clickable="false"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvUsername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/btnEdit"
-                android:layout_toLeftOf="@+id/tvDate"
-                android:layout_toRightOf="@+id/btnEdit"
-                android:fontFamily="monospace"
-                android:padding="2dp"
-                android:text="Username"
-                android:textSize="14sp"/>
+                <TextView
+                    android:id="@+id/tvMemoLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/btnEdit"
+                    android:layout_toLeftOf="@+id/tvDate"
+                    android:layout_toRightOf="@+id/btnEdit"
+                    android:fontFamily="monospace"
+                    android:padding="2dp"
+                    android:text="Label..."
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/tvEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/btnEdit"
-                android:layout_toLeftOf="@+id/tvDate"
-                android:layout_toRightOf="@+id/btnEdit"
-                android:fontFamily="monospace"
-                android:padding="2dp"
-                android:text="Email"
-                android:textSize="14sp"/>
+                <TextView
+                    android:id="@+id/tvMemo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/btnEdit"
+                    android:layout_toLeftOf="@+id/tvDate"
+                    android:layout_toRightOf="@+id/btnEdit"
+                    android:fontFamily="monospace"
+                    android:padding="2dp"
+                    android:text="Memo"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
 
-            <TextView
-                android:id="@+id/tvPassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/btnEdit"
-                android:layout_toLeftOf="@+id/tvDate"
-                android:layout_toRightOf="@+id/btnEdit"
-                android:fontFamily="monospace"
-                android:padding="2dp"
-                android:text="Password"
-                android:textSize="14sp"/>
+                <TextView
+                    android:id="@+id/tvMemoDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/tvLabel"
+                    android:fontFamily="monospace"
+                    android:gravity="top|center_horizontal"
+                    android:padding="2dp"
+                    android:paddingRight="0dp"
+                    android:text="date"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"/>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvLoginInfoDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/tvLabel"
-                android:fontFamily="monospace"
-                android:gravity="top|center_horizontal"
-                android:padding="2dp"
-                android:paddingRight="0dp"
-                android:text="date"
-                android:textColor="@color/green_1D"
-                android:textSize="12sp"/>
-        </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
 
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

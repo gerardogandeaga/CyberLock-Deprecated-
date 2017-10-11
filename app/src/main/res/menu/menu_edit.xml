@@ -9,11 +9,23 @@
         android:icon="@drawable/ic_action_save"
         android:orderInCategory="100"
         android:title="Save"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
     <item
         android:id="@+id/action_cancel"
         android:icon="@drawable/ic_action_cancel"
         android:orderInCategory="100"
         android:title="Cancel"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
+
+
+    <item
+        android:id="@+id/action_label"
+        android:orderInCategory="100"
+        android:title="Set New Label"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_colortag"
+        android:orderInCategory="100"
+        android:title="Colour Tag"
+        app:showAsAction="never"/>
 </menu>

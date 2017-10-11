@@ -1,4 +1,4 @@
-package com.gerardogandeaga.cyberlock.Encryption;
+package com.gerardogandeaga.cyberlock.Crypto;
 
 import android.support.annotation.NonNull;
 import android.util.Base64;

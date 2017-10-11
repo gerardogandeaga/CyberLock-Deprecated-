@@ -10,31 +10,26 @@
     <color name="gray3B">#3b3b3b</color>
 
     <!-- App Colour Themes -->
-    <color name="blue_2L">#70f1ff</color>
     <color name="blue_1L">#027ba2</color>
     <color name="blue_1D">#0d3e60</color>
     <color name="blue_2D">#0b324c</color>
     <color name="blue_3D">#09202d</color>
 
     <color name="red_2L">#ffffff</color>
-    <color name="red_1L">#eb362f</color>
     <color name="red_1D">#A4241F</color>
     <color name="red_2D">#791512</color>
     <color name="red_3D">#470d0b</color>
 
-    <color name="green_2L">#77ff8b</color>
     <color name="green_1L">#2eb443</color>
     <color name="green_1D">#218330</color>
     <color name="green_2D">#1a6d27</color>
     <color name="green_3D">#0a3911</color>
 
-    <color name="yellow_2L">#fef573</color>
     <color name="yellow_1L">#f2e52b</color>
     <color name="yellow_1D">#E5D714</color>
     <color name="yellow_2D">#978d0d</color>
     <color name="yellow_3D">#565108</color>
 
-    <color name="purple_2L">#ed9bfb</color>
     <color name="purple_1L">#c341d9</color>
     <color name="purple_1D">#9430A5</color>
     <color name="purple_2D">#671773</color>
@@ -51,5 +46,13 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 
-    <color name="orange00">#ff8800</color>
+
+    <!-- Colour Tags -->
+    <color name="coltag_blue">#037bc3</color>
+    <color name="coltag_red">#ec3327</color>
+    <color name="coltag_green">#679936</color>
+    <color name="coltag_yellow">#f0d774</color>
+    <color name="coltag_purple">#d93be8</color>
+    <color name="coltag_orange">#d77f09</color>
+    <color name="coltag_default">#8f8f8f</color>
 </resources>

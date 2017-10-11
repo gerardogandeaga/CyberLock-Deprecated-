@@ -7,8 +7,8 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.widget.Toast;
 
-import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
-import com.gerardogandeaga.cyberlock.Encryption.CryptKeyHandler;
+import com.gerardogandeaga.cyberlock.Crypto.CryptContent;
+import com.gerardogandeaga.cyberlock.Crypto.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.Data;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.MasterDatabaseAccess;
 

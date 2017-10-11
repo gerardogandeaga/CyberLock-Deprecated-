@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/Content"
+    android:id="@+id/Data"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Contribute">
@@ -73,7 +73,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/clickable_background_listitem"
+                android:background="@drawable/clickable_listitem"
                 android:fontFamily="monospace"
                 android:padding="10dp"
                 android:text="@string/CheckoutSite"
@@ -98,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/clickable_scheme"
+            android:background="@drawable/clickable_main"
             android:clickable="true"
             android:padding="10dp"
             app:srcCompat="@drawable/ic_action_donate"/>
@@ -108,7 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/clickable_scheme"
+            android:background="@drawable/clickable_main"
             android:clickable="true"
             android:padding="10dp"
             app:srcCompat="@drawable/ic_action_rate"/>
@@ -118,7 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/clickable_scheme"
+            android:background="@drawable/clickable_main"
             android:clickable="true"
             android:padding="10dp"
             app:srcCompat="@drawable/ic_action_share"/>

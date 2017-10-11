@@ -62,7 +62,7 @@
 //
 //        getSupportActionBar().setHomeButtonEnabled(true);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setTitle("Photo Lock");
+//        getSupportActionBar().setActionBarTitle("Photo Lock");
 //
 //        this.mGrdPhotos = (GridView) findViewById(R.id.grdPhotos);
 //        this.mFabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
@@ -244,7 +244,7 @@
 //        mProgressDialog = new ProgressDialog(this);
 //        mProgressDialog.setMax(100);
 //        mProgressDialog.setMessage("Loading data...");
-//        mProgressDialog.setTitle("Importing...");
+//        mProgressDialog.setActionBarTitle("Importing...");
 //        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 //        mProgressDialog.show();
 //    }

@@ -38,7 +38,7 @@ import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Contribute;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings_ScrambleKey;
-import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
+import com.gerardogandeaga.cyberlock.Crypto.CryptContent;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.Data;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.R;
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity
 {
     private Context mContext = this;
     private Menu mMenu;
+    private Resources mResources;
 
     // DATA VARIABLES
     private int mCount;
@@ -100,8 +101,9 @@ public class MainActivity extends AppCompatActivity
     private void setupLayout() {
         setContentView(R.layout.activity_main);
         ACTIVITY_INTENT = null;
+        mResources = getResources();
         // GET WIDGETS
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.Content);
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.Data);
 
         this.mNavigationView = (NavigationView) findViewById(R.id.NavigationContent);
         this.mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
@@ -185,19 +187,18 @@ public class MainActivity extends AppCompatActivity
         Content.setLayoutParams(layoutParams);
 
         // DIALOG BUILDER
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setView(Content);
-        alertDialog.setTitle("Bug Report");
-        alertDialog.setCancelable(false);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setView(Content);
+        dialog.setTitle("Bug Report");
+        dialog.setCancelable(false);
 
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-        {
+        dialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        alertDialog.setPositiveButton("Send", new DialogInterface.OnClickListener()
+        dialog.setPositiveButton("SEND", new DialogInterface.OnClickListener()
         {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -206,12 +207,12 @@ public class MainActivity extends AppCompatActivity
                 new Settings_ScrambleKey(mContext).execute();
             }
         });
-        alertDialog.show();
+        dialog.show();
     }
     // -------------------------
 
     // FUNCTIONS FOR THE DATA ADAPTER
-    private void memoFunctions(final Data data, CryptContent CRYPTCONTENT, View convertView, LinearLayout.LayoutParams params, LinearLayout layoutContent) {
+    private void memoFunctions(final Data data, CryptContent CRYPTCONTENT, View convertView, LinearLayout.LayoutParams params, RelativeLayout layoutContent) {
         data.setFullDisplayed(false);
 
         final String date = data.getDate();
@@ -352,7 +353,7 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
     }
-    private void loginInfoFunctions(final Data data, CryptContent CRYPTCONTENT, View convertView, LinearLayout layoutContent) {
+    private void loginInfoFunctions(final Data data, CryptContent CRYPTCONTENT, View convertView, RelativeLayout layoutContent) {
         data.setFullDisplayed(false);
 
         final String date = data.getDate();
@@ -671,33 +672,55 @@ public class MainActivity extends AppCompatActivity
 
             CryptContent CRYPTCONTENT = new CryptContent(mContext);
 
-            final LinearLayout Content = (LinearLayout) convertView.findViewById(R.id.Content);
+            final RelativeLayout Content = (RelativeLayout) convertView.findViewById(R.id.Content);
             final RelativeLayout MemoListLayout = (RelativeLayout) convertView.findViewById(R.id.MemoListLayout);
             final RelativeLayout PaymentInfoListLayout = (RelativeLayout) convertView.findViewById(R.id.PaymentInfoListLayout);
             final RelativeLayout LoginInfoListLayout = (RelativeLayout) convertView.findViewById(R.id.LoginInfoListLayout);
 
-            final String TYPE = data.getType();
 
+            final LinearLayout ColourTag = (LinearLayout) convertView.findViewById(R.id.ColourTag);
+
+            final String TYPE = data.getType();
             switch (TYPE) {
                 case "TYPE_MEMO":
                     PaymentInfoListLayout.setLayoutParams(params);
                     LoginInfoListLayout.setLayoutParams(params);
-
                     memoFunctions(data, CRYPTCONTENT, convertView, params, Content);
                     break;
-
                 case "TYPE_PAYMENTINFO":
                     MemoListLayout.setLayoutParams(params);
                     LoginInfoListLayout.setLayoutParams(params);
-
                     paymentInfoFunctions(data, CRYPTCONTENT, convertView, params);
                     break;
-
                 case "TYPE_LOGININFO":
                     MemoListLayout.setLayoutParams(params);
                     PaymentInfoListLayout.setLayoutParams(params);
-
                     loginInfoFunctions(data, CRYPTCONTENT, convertView, Content);
+                    break;
+            }
+
+            final String COL_TAG = data.getColourTag();
+            switch (COL_TAG) {
+                case "COL_BLUE":
+                    ColourTag.setBackgroundColor(getColor(R.color.coltag_blue));
+                    break;
+                case "COL_RED":
+                    ColourTag.setBackgroundColor(getColor(R.color.coltag_red));
+                    break;
+                case "COL_GREEN":
+                    ColourTag.setBackgroundColor(getColor(R.color.coltag_green));
+                    break;
+                case "COL_YELLOW":
+                    ColourTag.setBackgroundColor(getColor(R.color.coltag_yellow));
+                    break;
+                case "COL_PURPLE":
+                    ColourTag.setBackgroundColor(getColor(R.color.coltag_purple));
+                    break;
+                case "COL_ORANGE":
+                    ColourTag.setBackgroundColor(getColor(R.color.coltag_orange));
+                    break;
+                default:
+                    ColourTag.setBackgroundColor(getColor(R.color.coltag_default));
                     break;
             }
 
@@ -709,14 +732,14 @@ public class MainActivity extends AppCompatActivity
                         onEditClicked(TYPE, data);
                     } else {
                         if (!data.isSelected()) {
-                            Content.setBackgroundColor(getResources().getColor(R.color.gray_1L));
+                            Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem_selected));
                             data.setSelected(true);
                             mSelectedDatas.add(data);
                             mCount++;
 
                             System.out.println(mSelectedDatas);
                         } else {
-                            Content.setBackground(getResources().getDrawable(R.drawable.clickable_background_listitem));
+                            Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem));
                             data.setSelected(false);
                             mSelectedDatas.remove(data);
                             mCount--;

@@ -16,8 +16,10 @@ class MasterDatabaseOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE data(" +
+
                 "date INTEGER PRIMARY KEY, " +
                 "type TEXT, " +
+                "colour TEXT, " +
                 "label TEXT, " +
                 "content TEXT);");
     }

@@ -19,10 +19,11 @@ import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
-import com.gerardogandeaga.cyberlock.Encryption.CryptContent;
+import com.gerardogandeaga.cyberlock.Crypto.CryptContent;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.Data;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.Supports.EditDialogs;
 import com.gerardogandeaga.cyberlock.Supports.Globals;
 import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 
@@ -42,6 +43,8 @@ import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTi
 public class PaymentInfoEditActivity extends AppCompatActivity
 {
     // DATA VARIABLES
+    private boolean mIsNew = true;
+    private boolean mIsAutoSave = false;
     private CryptContent mCRYPTCONTENT;
     private Data mData;
     private String mCardType;
@@ -62,6 +65,9 @@ public class PaymentInfoEditActivity extends AppCompatActivity
     private Spinner mSpCardSelect;
     private TextView mTvDate;
 
+    private String mColourTag;
+    private EditDialogs mEditDialogs;
+
     // INITIAL ON CREATE METHODS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +86,8 @@ public class PaymentInfoEditActivity extends AppCompatActivity
     private void setupLayout() {
         setContentView(R.layout.activity_edit_paymentinfo);
         ACTIVITY_INTENT = null;
+        mEditDialogs = new EditDialogs(this);
+        mIsAutoSave = getSharedPreferences(DIRECTORY, MODE_PRIVATE).getBoolean(AUTOSAVE, false);
         //
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -181,13 +189,14 @@ public class PaymentInfoEditActivity extends AppCompatActivity
     private void setupActivity(Bundle bundle) {
         mCRYPTCONTENT = new CryptContent(this);
         if (bundle != null) {
+            mIsNew = false;
             mData = (Data) bundle.get("DATA");
-
-            // LOAD THE ACTIVITY WITH SAVED CONTENT
             if (mData != null) {
                 try {
                     String label = mCRYPTCONTENT.DECRYPT_CONTENT(mData.getLabel(), MASTER_KEY);
                     mEtLabel.setText(label);
+                    mTvDate.setText("Last Updated: " + mData.getDate());
+                    mColourTag = mData.getColourTag();
 
                     String cardName;
                     String cardNumber;
@@ -237,13 +246,6 @@ public class PaymentInfoEditActivity extends AppCompatActivity
                         int spinnerPosition = mAdapter.getPosition(cardType);
                         mSpCardSelect.setSelection(spinnerPosition);
                     }
-
-                    if (!mData.getDate().matches("")) {
-                        mTvDate.setText("Last Updated: " + mData.getDate());
-                    } else {
-                        mTvDate.setText("Last Updated: ---");
-                    }
-
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(this, "Error: could not set one or more text fields", Toast.LENGTH_SHORT).show();
@@ -260,12 +262,20 @@ public class PaymentInfoEditActivity extends AppCompatActivity
 
         switch (id) {
             case (R.id.action_save):
-                onSave();
-                onBackPressed();
-                return true;
+                if (!mIsAutoSave) {
+                    onSave();
+                    onBackPressed();
+                } else {
+                    onBackPressed();
+                }
+            return true;
             case (R.id.action_cancel):
                 onCancel();
                 return true;
+            case (R.id.action_colortag):
+                mEditDialogs.createColourPickDialog();
+                return true;
+
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -303,13 +313,34 @@ public class PaymentInfoEditActivity extends AppCompatActivity
                 tmp.setType("TYPE_PAYMENTINFO");
                 tmp.setLabel(mCRYPTCONTENT.ENCRYPT_KEY(mEtLabel.getText().toString(), MASTER_KEY));
                 tmp.setContent(mCRYPTCONTENT.ENCRYPT_KEY(tmpString, MASTER_KEY));
-
+                // SET COLOUR CONDITIONALLY
+                if (!mIsNew) {
+                    if (mEditDialogs.getTmpColour() == null) {
+                        tmp.setColourTag(mColourTag);
+                    } else {
+                        tmp.setColourTag(mEditDialogs.getTmpColour());
+                    }
+                } else {
+                    tmp.setColourTag(mEditDialogs.getTmpColour());
+                }
+                // ------------------------
                 masterDatabaseAccess.save(tmp);
             } else {
+                mData.setColourTag("COL_RED");
 
                 mData.setLabel(mCRYPTCONTENT.ENCRYPT_KEY(mEtLabel.getText().toString(), MASTER_KEY));
                 mData.setContent(mCRYPTCONTENT.ENCRYPT_KEY(tmpString, MASTER_KEY));
-
+                // SET COLOUR CONDITIONALLY
+                if (!mIsNew) {
+                    if (mEditDialogs.getTmpColour() == null) {
+                        mData.setColourTag(mColourTag);
+                    } else {
+                        mData.setColourTag(mEditDialogs.getTmpColour());
+                    }
+                } else {
+                    mData.setColourTag(mEditDialogs.getTmpColour());
+                }
+                // ------------------------
                 masterDatabaseAccess.update(mData);
             }
             masterDatabaseAccess.close();

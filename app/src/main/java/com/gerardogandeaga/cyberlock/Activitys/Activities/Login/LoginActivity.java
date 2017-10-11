@@ -20,8 +20,8 @@ import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.LoginInfoEditAct
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.MemoEditActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.PaymentInfoEditActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
-import com.gerardogandeaga.cyberlock.Encryption.CryptKeyHandler;
-import com.gerardogandeaga.cyberlock.Encryption.SHA256PinHash;
+import com.gerardogandeaga.cyberlock.Crypto.CryptKeyHandler;
+import com.gerardogandeaga.cyberlock.Crypto.SHA256PinHash;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.Data;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.Supports.Globals;

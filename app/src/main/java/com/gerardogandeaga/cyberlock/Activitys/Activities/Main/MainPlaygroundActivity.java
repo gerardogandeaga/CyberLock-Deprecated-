@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.Encryption.CryptPlayground;
+import com.gerardogandeaga.cyberlock.Crypto.CryptPlayground;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.Supports.Globals;
 

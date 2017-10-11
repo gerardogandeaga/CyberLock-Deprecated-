@@ -10,22 +10,25 @@ import java.util.Date;
 public class Data implements Serializable
 {
     private Date mDate;
-    private String mtype;
+    private String mType;
+    private String mColour;
     private String mLabel;
     private String mContent;
     private boolean mFullDisplayed;
     private boolean mSelected;
 
-    private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy");
+    private static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyy");
 
     public Data()
     {
         this.mDate = new Date();
     }
-    public Data(long time, String type, String label, String mContent)
+
+    public Data(long time, String type, String colour, String label, String mContent)
     {
         this.mDate = new Date(time);
-        this.mtype = type;
+        this.mType = type;
+        this.mColour = colour;
         this.mLabel = label;
         this.mContent = mContent;
     }
@@ -45,11 +48,22 @@ public class Data implements Serializable
 
     public String getType()
     {
-        return mtype;
+        return mType;
     }
     public void setType(String mtype)
     {
-        this.mtype = mtype;
+        this.mType = mtype;
+    }
+
+    public String getColourTag() {
+        return mColour;
+    }
+    public void setColourTag(String colour) {
+        if (colour != null) {
+            mColour = colour;
+        } else {
+            mColour = "DEFAULT";
+        }
     }
 
     public String getLabel()
