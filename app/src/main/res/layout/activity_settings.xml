@@ -9,8 +9,6 @@
     android:orientation="vertical"
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings">
 
-    <!-- TODO SETTINGS CARD VIEW LOOK -->
-
     <include
         android:id="@+id/include"
         layout="@layout/child_toolbar"/>

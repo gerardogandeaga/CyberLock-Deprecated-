@@ -47,22 +47,16 @@
             android:name=".Activitys.Activities.Menus.Settings"
             android:configChanges="orientation|screenSize"/>
         <activity
-            android:name=".Activitys.Activities.Menus.Settings_ResetShortPasscode"
+            android:name=".Supports.Settings_ResetShortPasscode"
             android:configChanges="orientation|screenSize"/>
         <activity
-            android:name=".Activitys.Activities.Menus.Settings_ResetComplexPasscode"
+            android:name=".Supports.Settings_ResetComplexPasscode"
             android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".Activitys.Activities.Main.MainActivity"
             android:configChanges="orientation|screenSize"/>
         <activity
-            android:name=".Activitys.Activities.Edits.MemoEditActivity"
-            android:configChanges="orientation|screenSize"/>
-        <activity
-            android:name=".Activitys.Activities.Edits.PaymentInfoEditActivity"
-            android:configChanges="orientation|screenSize"/>
-        <activity
-            android:name=".Activitys.Activities.Edits.LoginInfoEditActivity"
+            android:name=".Activitys.Activities.Main.MainEditActivity"
             android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".Activitys.Activities.Main.MainPlaygroundActivity"

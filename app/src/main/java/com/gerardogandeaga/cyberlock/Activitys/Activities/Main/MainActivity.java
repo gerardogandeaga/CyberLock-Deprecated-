@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,19 +32,16 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.LoginInfoEditActivity;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.MemoEditActivity;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.PaymentInfoEditActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Contribute;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings_ScrambleKey;
 import com.gerardogandeaga.cyberlock.Crypto.CryptContent;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.Data;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.Supports.Globals;
 import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
+import com.gerardogandeaga.cyberlock.Supports.Settings_ScrambleKey;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -450,7 +448,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_deletesweep:
                 onMultiSelectClicked();
             case R.id.action_delete:
-                System.out.println("Delete Called");
                 onDeleteClicked();
                 return true;
             case R.id.action_done:
@@ -460,13 +457,13 @@ public class MainActivity extends AppCompatActivity
 
             // FUNTIONS
             case R.id.action_memo:
-                onAddClicked("TYPE_MEMO");
+                onAddClicked(1);
                 return true;
             case R.id.action_paymentinfo:
-                onAddClicked("TYPE_PAYMENTINFO");
+                onAddClicked(2);
                 return true;
             case R.id.action_logininfo:
-                onAddClicked("TYPE_LOGININFO");
+                onAddClicked(3);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -479,16 +476,14 @@ public class MainActivity extends AppCompatActivity
         switch (id)
         {
             case R.id.action_memo:
-                onAddClicked("TYPE_MEMO");
+                onAddClicked(1);
                 break;
             case R.id.action_paymentinfo:
-                onAddClicked("TYPE_PAYMENTINFO");
+                onAddClicked(2);
                 break;
             case R.id.action_logininfo:
-                onAddClicked("TYPE_LOGININFO");
+                onAddClicked(3);
                 break;
-
-
 
             case R.id.action_playground:
                 ACTIVITY_INTENT = new Intent(this, MainPlaygroundActivity.class);
@@ -522,42 +517,18 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
     }
-    public void onAddClicked(String TYPE) {
-        switch (TYPE) {
-            case "TYPE_MEMO":
-                ACTIVITY_INTENT = new Intent(this, MemoEditActivity.class);
-                break;
-            case "TYPE_PAYMENTINFO":
-                ACTIVITY_INTENT = new Intent(this, PaymentInfoEditActivity.class);
-                break;
-            case "TYPE_LOGININFO":
-                ACTIVITY_INTENT = new Intent(this, LoginInfoEditActivity.class);
-                break;
-        }
+    public void onAddClicked(int TYPE) {
+
+        ACTIVITY_INTENT = new Intent(this, MainEditActivity.class);
+        ACTIVITY_INTENT.putExtra("type", TYPE);
         this.finish();
         this.startActivity(ACTIVITY_INTENT);
     }
-    public void onEditClicked(final String TYPE, final Data data) {
-        switch (TYPE) {
-            case "TYPE_MEMO":
-                ACTIVITY_INTENT = new Intent(mContext, MemoEditActivity.class);
-                ACTIVITY_INTENT.putExtra("DATA", data);
-                this.finish();
-                this.startActivity(ACTIVITY_INTENT);
-                break;
-            case "TYPE_PAYMENTINFO":
-                ACTIVITY_INTENT = new Intent(mContext, PaymentInfoEditActivity.class);
-                ACTIVITY_INTENT.putExtra("DATA", data);
-                this.finish();
-                this.startActivity(ACTIVITY_INTENT);
-                break;
-            case "TYPE_LOGININFO":
-                ACTIVITY_INTENT = new Intent(mContext, LoginInfoEditActivity.class);
-                ACTIVITY_INTENT.putExtra("DATA", data);
-                this.finish();
-                this.startActivity(ACTIVITY_INTENT);
-                break;
-        }
+    public void onEditClicked(final Data data) {
+        ACTIVITY_INTENT = new Intent(mContext, MainEditActivity.class);
+        ACTIVITY_INTENT.putExtra("data", data);
+        this.finish();
+        this.startActivity(ACTIVITY_INTENT);
     }
     public void onMultiSelectClicked() {
         MenuInflater menuInflater = new MenuInflater(mContext);
@@ -654,6 +625,12 @@ public class MainActivity extends AppCompatActivity
     }
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+    }
+
     // INNER ADAPTER CLASS
     private class DataAdapter extends ArrayAdapter<Data>
     {
@@ -729,7 +706,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onClick(View v) {
                     if (mListView.getChoiceMode() != ListView.CHOICE_MODE_MULTIPLE_MODAL) {
-                        onEditClicked(TYPE, data);
+                        onEditClicked(data);
                     } else {
                         if (!data.isSelected()) {
                             Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem_selected));

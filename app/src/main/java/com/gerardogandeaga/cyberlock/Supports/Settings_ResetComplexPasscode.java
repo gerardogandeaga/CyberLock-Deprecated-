@@ -1,4 +1,4 @@
-package com.gerardogandeaga.cyberlock.Activitys.Activities.Menus;
+package com.gerardogandeaga.cyberlock.Supports;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
+import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings;
 import com.gerardogandeaga.cyberlock.Crypto.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.Crypto.SHA256PinHash;
 import com.gerardogandeaga.cyberlock.R;

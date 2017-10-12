@@ -16,9 +16,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.LoginInfoEditActivity;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.MemoEditActivity;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.PaymentInfoEditActivity;
+import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainEditActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.Crypto.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.Crypto.SHA256PinHash;
@@ -50,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     // DATA VARIABLES
     // ACTIVITY INTENT
     private Intent mIntent;
-    private String mLastActivity;
+    private boolean mIsEdit;
     // SIMPLE PIN ARRAY VARIABLES
     private static boolean mIsArrayFull = false;
     private static int mIndex = -1;
@@ -89,8 +87,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mIsComplexCode = mSharedPreferences.getBoolean(COMPLEXPASSCODE, false);
 
         mIntent = getIntent();
-        mLastActivity = getIntent().getStringExtra("lastActivity");
-        mIntent.removeExtra("lastActivity"); // REMOVE LAST ACTIVITY INFO
+        mIsEdit = getIntent().getBooleanExtra("edit?", false);
+        mIntent.removeExtra("edit?"); // REMOVE LAST ACTIVITY INFO
 
         if (mSharedPreferences.getString(PIN, null) == null || mSharedPreferences.getString(CRYPT_KEY, null) == null) {
             LogoutProtocol.ACTIVITY_INTENT = new Intent(this, RegistrationActivity.class);
@@ -254,39 +252,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void loginIntent() {
         Intent i;
         Bundle bundle = mIntent.getExtras();
-        mIntent.removeExtra("lastDatabase");
+        mIntent.removeExtra("lastDB");
         clear();
 
-        if (mLastActivity != null) {
-            switch (mLastActivity) {
-                case ("MEMO_EDIT"):
-                    i = new Intent(LoginActivity.this, MemoEditActivity.class);
-                    i.putExtra("MEMO", (Data) bundle.get("lastDatabase"));
-                    break;
-
-                case ("PAYMENTINFO_EDIT"):
-                    i = new Intent(LoginActivity.this, PaymentInfoEditActivity.class);
-                    i.putExtra("PAYMENTINFO", (Data) bundle.get("lastDatabase"));
-                    break;
-
-                case ("LOGININFO_EDIT"):
-                    i = new Intent(LoginActivity.this, LoginInfoEditActivity.class);
-                    i.putExtra("LOGININFO", (Data) bundle.get("lastDatabase"));
-                    break;
-
-                default:
-                    i = new Intent(LoginActivity.this, MainActivity.class);
-                    break;
-            }
-
-            mProgressDialog.dismiss();
-            finish();
-            LoginActivity.this.startActivity(i); // MOVE TO MAIN ACTIVITY
-        } else {
+        if (mIsEdit) {
+            i = new Intent(LoginActivity.this, MainEditActivity.class);
+            i.putExtra("data", (Data) bundle.get("lastDB"));
+            } else {
             i = new Intent(LoginActivity.this, MainActivity.class);
-            finish();
-            LoginActivity.this.startActivity(i); // MOVE TO MAIN ACTIVITY
         }
+
+        mProgressDialog.dismiss();
+        finish();
+        LoginActivity.this.startActivity(i); // MOVE TO MAIN ACTIVITY
     }
     private void onPinCompleted() // ASYNC TASK
     {
@@ -313,14 +291,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     final String loginPinHash = SHA256PinHash
                             .HASH_FUNCTION(mPin, Arrays.copyOfRange(Base64.decode(decryptedPulledPin, FLAGS), 0, 128));
 
-                    System.out.println("LOGIN INPUT: " + loginPinHash);
-                    System.out.println("CACHED HASH: " + decryptedPulledPin);
+//                    System.out.println("LOGIN INPUT: " + loginPinHash);
+//                    System.out.println("CACHED HASH: " + decryptedPulledPin);
 
                     if (decryptedPulledPin.equals(loginPinHash)) /// TEST PERIODICALLY INPUTTED PIN AGAINST CACHED PIN
                     {
                         TEMP_PIN = mPin;
                         MASTER_KEY = new CryptKeyHandler(mContext).DECRYPT_KEY(mSharedPreferences.getString(CRYPT_KEY, null), mPin);
-                        System.out.println("MASTER KEY: " + MASTER_KEY);
+//                        System.out.println("MASTER KEY: " + MASTER_KEY);
 
                         runOnUiThread(new Runnable()
                         {

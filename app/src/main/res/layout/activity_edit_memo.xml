@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/grayD9"
-        tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Edits.MemoEditActivity"
+        tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainEditActivity"
         android:layout_below="@+id/include">
 
         <LinearLayout
@@ -25,44 +25,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/layoutLabel"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/etMemoTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/gray8F"
-                    android:ems="10"
-                    android:fontFamily="monospace"
-                    android:hint="Label..."
-                    android:inputType="none"
-                    android:maxLines="1"
-                    android:padding="10dp"
-                    android:textSize="18sp"
-                    android:textStyle="bold"/>
-
-            </LinearLayout>
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvLastUpdated"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/linearLayout"
-            android:background="@color/grayB4"
-            android:fontFamily="monospace"
-            android:padding="5dp"
-            android:text="Last Updated: -- --"
-            android:textSize="12sp"/>
 
         <LinearLayout
             android:id="@+id/layoutMainData"
@@ -78,8 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_below="@+id/tvLastUpdated"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:layout_alignParentTop="true">
 
             <EditText
                 android:id="@+id/etText"

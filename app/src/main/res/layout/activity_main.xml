@@ -6,6 +6,7 @@
     android:id="@+id/Data"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".Activitys.Activities.Main.MainActivity">
 
     <RelativeLayout
@@ -19,10 +20,11 @@
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_above="@+id/Actions"
             android:layout_below="@+id/include"
             android:layout_centerHorizontal="true"
+            android:layout_marginStart="20dp"
             android:divider="@color/gray_1L"
             android:dividerHeight="1dp"
             android:listSelector="@android:color/transparent"

@@ -17,13 +17,6 @@ public class Data implements Serializable
     private boolean mFullDisplayed;
     private boolean mSelected;
 
-    private static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyy");
-
-    public Data()
-    {
-        this.mDate = new Date();
-    }
-
     public Data(long time, String type, String colour, String label, String mContent)
     {
         this.mDate = new Date(time);
@@ -31,6 +24,12 @@ public class Data implements Serializable
         this.mColour = colour;
         this.mLabel = label;
         this.mContent = mContent;
+    }
+
+    private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    public Data()
+    {
+        this.mDate = new Date();
     }
 
     public String getDate()

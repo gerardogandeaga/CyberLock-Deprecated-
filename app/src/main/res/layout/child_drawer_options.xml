@@ -35,26 +35,14 @@
         android:id="@+id/tvLastLoggedIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/Anchor"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:fontFamily="monospace"
         android:text="Last logged in: September 12th, 2017 at 5:01 pm"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="10sp"
-        />
-
-    <LinearLayout
-        android:id="@+id/Anchor"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_alignBottom="@+id/imgHeader"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/imgHeader"
-        android:background="?attr/colorAccent"
-        android:orientation="horizontal">
-    </LinearLayout>
+        android:layout_alignParentStart="true"/>
 
 
 </RelativeLayout>

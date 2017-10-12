@@ -21,6 +21,10 @@ import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.Supports.Globals;
 import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
+import com.gerardogandeaga.cyberlock.Supports.Settings_EncryptionMethodChange;
+import com.gerardogandeaga.cyberlock.Supports.Settings_ResetComplexPasscode;
+import com.gerardogandeaga.cyberlock.Supports.Settings_ResetShortPasscode;
+import com.gerardogandeaga.cyberlock.Supports.Settings_ScrambleKey;
 
 import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.COMPLEXPASSCODE;
