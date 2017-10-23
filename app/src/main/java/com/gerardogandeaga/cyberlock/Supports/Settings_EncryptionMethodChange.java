@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.widget.Toast;
 
-import com.gerardogandeaga.cyberlock.Crypto.CryptContent;
+import com.gerardogandeaga.cyberlock.Crypto.CryptoContent;
 import com.gerardogandeaga.cyberlock.Crypto.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.Data;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.MasterDatabaseAccess;
@@ -19,20 +19,21 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.PIN;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.PASSCODE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
 public class Settings_EncryptionMethodChange extends AsyncTask<Void, Void, Void>
 {
-    // DATA
+    private Context mContext;
+    private CryptoContent mCryptoContent;
     private SharedPreferences mSharedPreferences;
 
+    // DATA VARIABLES
     private MasterDatabaseAccess mMasterDatabaseAccess;
     private List<Data> mDatas;
 
     private String ALGO;
     private String  CIPHER;
-    private Context mContext;
 
     // WIDGETS
     private ProgressDialog mProgressDialog;
@@ -40,23 +41,12 @@ public class Settings_EncryptionMethodChange extends AsyncTask<Void, Void, Void>
     public Settings_EncryptionMethodChange(Context context, String algorithm)
     {
         mContext = context;
-
+        mCryptoContent = new CryptoContent(mContext);
         mSharedPreferences = mContext.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-
-        this.mMasterDatabaseAccess = MasterDatabaseAccess.getInstance(mContext);
+        mMasterDatabaseAccess = MasterDatabaseAccess.getInstance(mContext);
 
         ALGO = algorithm;
         CIPHER = algorithm + "/CBC/PKCS5Padding";
-    }
-
-    private void progressBar()
-    {
-        mProgressDialog = new ProgressDialog(mContext);
-        mProgressDialog.setTitle("Encryption Method...");
-        mProgressDialog.setMessage("Changing Encryption Method...");
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
     }
 
     // ASYNC TASKS
@@ -69,14 +59,13 @@ public class Settings_EncryptionMethodChange extends AsyncTask<Void, Void, Void>
 
         System.out.println("Scramble Key: onPreExecute");
     }
-
     @Override
     protected Void doInBackground(Void... params)
     {
         try
         {
-            final CryptContent CRYPTCONTENT = new CryptContent(mContext);
-            String decryptedPulledPin = new CryptKeyHandler(mContext).DECRYPT_KEY(mSharedPreferences.getString(PIN, null), TEMP_PIN);
+            final CryptoContent CRYPTCONTENT = new CryptoContent(mContext);
+            String decryptedPulledPin = new CryptKeyHandler(mContext).DECRYPT_KEY(mSharedPreferences.getString(PASSCODE, null), TEMP_PIN);
             System.out.println(decryptedPulledPin);
 
             mSharedPreferences.edit().remove(CRYPT_KEY).apply();
@@ -91,7 +80,7 @@ public class Settings_EncryptionMethodChange extends AsyncTask<Void, Void, Void>
 
             String newKeyStringVal = cryptKeyHandler.DECRYPT_KEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN);
 
-            final CryptContent newCRYPTCONTENT = new CryptContent(mContext);
+            final CryptoContent newCRYPTCONTENT = new CryptoContent(mContext);
 
             // GO THROUGH ALL DATABASES
             this.mMasterDatabaseAccess.open();
@@ -99,23 +88,26 @@ public class Settings_EncryptionMethodChange extends AsyncTask<Void, Void, Void>
             for (int i = 0; i < mDatas.size(); i++)
             {
                 final Data data = mDatas.get(i);
-                String label = null;
-                String content = null;
+                String type = data.getType(mCryptoContent);
+                String colourTag = data.getColourTag(mCryptoContent);
+                String label = data.getLabel(mCryptoContent);
+                String content = data.getContent(mCryptoContent);
 
-                label = CRYPTCONTENT.DECRYPT_CONTENT(data.getLabel(), MASTER_KEY);
-                content = CRYPTCONTENT.DECRYPT_CONTENT(data.getContent(), MASTER_KEY);
-
-                if (label != null) data.setLabel(newCRYPTCONTENT.ENCRYPT_KEY(label, newKeyStringVal));
-                if (content != null) data.setContent(newCRYPTCONTENT.ENCRYPT_KEY(content, newKeyStringVal));
+                data.setType(newCRYPTCONTENT, type, newKeyStringVal);
+                data.setColourTag(newCRYPTCONTENT, colourTag, newKeyStringVal);
+                data.setLabel(newCRYPTCONTENT, label, newKeyStringVal);
+                data.setContent(newCRYPTCONTENT, content, newKeyStringVal);
 
                 mMasterDatabaseAccess.update(data);
+                type = null;
+                colourTag = null;
                 label = null;
                 content = null;
                 System.out.println("done memo");
             }
             this.mMasterDatabaseAccess.close();
             MASTER_KEY = newKeyStringVal;
-            mSharedPreferences.edit().putString(PIN, cryptKeyHandler.ENCRYPT_KEY(decryptedPulledPin, TEMP_PIN)).apply();
+            mSharedPreferences.edit().putString(PASSCODE, cryptKeyHandler.ENCRYPT_KEY(decryptedPulledPin, TEMP_PIN)).apply();
 
             new Handler(mContext.getMainLooper()).post(new Runnable()
             {
@@ -147,7 +139,6 @@ public class Settings_EncryptionMethodChange extends AsyncTask<Void, Void, Void>
         System.out.println("Changing Encryption: doInBackground");
         return null;
     }
-
     @Override
     protected void onPostExecute(Void aVoid)
     {
@@ -158,4 +149,13 @@ public class Settings_EncryptionMethodChange extends AsyncTask<Void, Void, Void>
         System.out.println("Scramble Key: onPostExecute");
     }
     // -----------
+    private void progressBar()
+    {
+        mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog.setTitle("Encryption Method...");
+        mProgressDialog.setMessage("Changing Encryption Method...");
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
 }

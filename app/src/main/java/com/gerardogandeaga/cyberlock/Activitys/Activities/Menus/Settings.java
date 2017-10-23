@@ -22,12 +22,12 @@ import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.Supports.Globals;
 import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.Supports.Settings_EncryptionMethodChange;
-import com.gerardogandeaga.cyberlock.Supports.Settings_ResetComplexPasscode;
-import com.gerardogandeaga.cyberlock.Supports.Settings_ResetShortPasscode;
+import com.gerardogandeaga.cyberlock.Supports.Settings_ChangeComplexPasscode;
+import com.gerardogandeaga.cyberlock.Supports.Settings_ChangeShortPasscode;
 import com.gerardogandeaga.cyberlock.Supports.Settings_ScrambleKey;
 
 import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.COMPLEXPASSCODE;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.IS_REGISTERED;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DELAY_TIME;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
@@ -87,7 +87,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         //
         this.mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
         this.mIsAutoSave = mSharedPreferences.getBoolean(AUTOSAVE, false);
-        this.mIsComplexCode = mSharedPreferences.getBoolean(COMPLEXPASSCODE, false);
+        this.mIsComplexCode = mSharedPreferences.getBoolean(IS_REGISTERED, false);
 
         // ACTION BAR TITLE AND BACK BUTTON
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -361,11 +361,11 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
     }                                          //#
     private void onResetPassword() {
         if (!mIsComplexCode) {
-            ACTIVITY_INTENT = new Intent(this, Settings_ResetShortPasscode.class);
+            ACTIVITY_INTENT = new Intent(this, Settings_ChangeShortPasscode.class);
             finish();
             startActivity(ACTIVITY_INTENT);
         } else {
-            ACTIVITY_INTENT = new Intent(this, Settings_ResetComplexPasscode.class);
+            ACTIVITY_INTENT = new Intent(this, Settings_ChangeComplexPasscode.class);
             finish();
             startActivity(ACTIVITY_INTENT);
         }
@@ -392,7 +392,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
 
-                    ACTIVITY_INTENT = new Intent(mContext, Settings_ResetComplexPasscode.class);
+                    ACTIVITY_INTENT = new Intent(mContext, Settings_ChangeComplexPasscode.class);
                     finish();
                     startActivity(ACTIVITY_INTENT);
                 }
@@ -419,7 +419,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
 
-                    ACTIVITY_INTENT = new Intent(mContext, Settings_ResetShortPasscode.class);
+                    ACTIVITY_INTENT = new Intent(mContext, Settings_ChangeShortPasscode.class);
                     startActivity(ACTIVITY_INTENT);
                 }
             });

@@ -15,22 +15,18 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.FLAGS;
 
-public class CryptContent
-{
-    private SharedPreferences mSharedPreferences;
+public class CryptoContent {
 
     private String ALGO, CipherALGO;
     private int IVLength;
 
-    public CryptContent(Context context)
-    {
-        mSharedPreferences = context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-        ALGO = mSharedPreferences.getString(ENCRYPTION_ALGO, "AES");
+    public CryptoContent(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
+        ALGO = sharedPreferences.getString(ENCRYPTION_ALGO, "AES");
         CipherALGO = ALGO + "/CBC/PKCS5Padding";
 
 //        System.out.println("CREATE ALGO " + ALGO);
-        switch (ALGO)
-        {
+        switch (ALGO) {
             case "AES":
                 IVLength = 16;
                 break;
@@ -41,18 +37,15 @@ public class CryptContent
     }
 
     @Nullable
-    public String ENCRYPT_KEY(String dataToEncrypt, String symmetricKey)
-//            throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidParameterSpecException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException
-    {
+    public String ENCRYPT_CONTENT(String dataToEncrypt, String symmetricKey) {
         if (dataToEncrypt == null || dataToEncrypt.matches("")) {
             return null;
         }
 
-        try
-        {
+        try {
             if (!dataToEncrypt.matches("")) // CHECK IS THERE IS ACTULA CONTENT TO ENCRYPT
             {
-//                System.out.println("ENCRYPT_KEY: ENCRYPT STARTING...");
+//                System.out.println("\n" + "ORIGINAL INPUT: " + dataToEncrypt);
                 byte[] encryptedPassword = Base64.decode(symmetricKey, FLAGS); // GENERATE KEY
 
                 SecretKeySpec secretKeySpec = new SecretKeySpec(encryptedPassword, ALGO);
@@ -68,32 +61,27 @@ public class CryptContent
                 System.arraycopy(encryptedTextByteVal, 0, combinedByteVal, ivByteVal.length, encryptedTextByteVal.length); // IMPLEMENTING INTO CIPHER
 
 //                System.out.println("ENCRYPT_KEY: ENCRYPT DONE...");
+//                System.out.println("ENCRYPTED OUTPUT: " + Base64.encodeToString(combinedByteVal, FLAGS));
                 return Base64.encodeToString(combinedByteVal, FLAGS);
-            } else
-            {
+            } else {
                 return ""; // RETURN NOTHING
             }
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
 //            System.out.println("ENCRYPT_KEY: ENCRYPT FAILED!...");
             e.printStackTrace();
 
             return dataToEncrypt;
         }
     }
-
     @Nullable
-    public String DECRYPT_CONTENT(String dataToDecrypt, String symmetricKey)
-//            throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException
-    {
+    public String DECRYPT_CONTENT(String dataToDecrypt, String symmetricKey) {
         if (dataToDecrypt == null || dataToDecrypt.matches("")) {
             return null;
         }
 
-        try
-        {
+        try {
+//            System.out.println("\n" + "ENCRYPTED INPUT: " + dataToDecrypt);
 //            System.out.println("ENCRYPTION ALGO " + ALGO);
-//            System.out.println("DECRYPT_CONTENT: DECRYPT STARTING...");
             byte[] encryptedCombinedBytes = Base64.decode(dataToDecrypt, FLAGS);
 
             byte[] ivByteVal = Arrays.copyOfRange(encryptedCombinedBytes, 0, IVLength); // "BREAK" BYTES TO GET IV BYTES ONLY
@@ -107,10 +95,9 @@ public class CryptContent
 
             byte[] decryptedTextByteVal = cipher.doFinal(encryptedTextByteVal); // DECRYPT TEXT
 
-//            System.out.println("DECRYPT_CONTENT: DECRYPT DONE...");
+//            System.out.println("DECRYPTED OUTPUT: " + new String(decryptedTextByteVal));
             return new String(decryptedTextByteVal);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
 //            System.out.println("DECRYPT_CONTENT: DECRYPT FAILED...");
             e.printStackTrace();
 

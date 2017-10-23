@@ -8,25 +8,26 @@
     android:background="@drawable/clickable_listitem"
     android:clickable="true">
 
-    <LinearLayout
+    <ImageView
         android:id="@+id/ColourTag"
-        android:layout_width="80dp"
-        android:layout_height="4dp"
+        android:layout_width="8dp"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/Data"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:background="@drawable/corner_colourtags"
         android:orientation="vertical">
-    </LinearLayout>
+    </ImageView>
 
     <LinearLayout
         android:id="@+id/Data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/ColourTag"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/ColourTag"
+        android:layout_toRightOf="@+id/ColourTag"
         android:clickable="false"
-        android:elevation="1dp"
         android:orientation="vertical"
         android:padding="5dp">
 
@@ -39,8 +40,6 @@
                 android:id="@+id/layoutText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/cbData"
-                android:layout_toRightOf="@+id/cbData"
                 android:clickable="false"
                 android:orientation="vertical">
 
@@ -48,42 +47,27 @@
                     android:id="@+id/tvMemoLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/btnEdit"
-                    android:layout_toLeftOf="@+id/tvDate"
-                    android:layout_toRightOf="@+id/btnEdit"
-                    android:fontFamily="monospace"
+                    android:maxLines="1"
                     android:padding="1dp"
                     android:text="Label..."
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"/>
+                    android:textAppearance="@style/myText.Label"/>
 
                 <TextView
                     android:id="@+id/tvMemo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/btnEdit"
-                    android:layout_toLeftOf="@+id/tvDate"
-                    android:layout_toRightOf="@+id/btnEdit"
-                    android:fontFamily="monospace"
                     android:padding="1dp"
                     android:text="Memo"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/myText.Content"
+                    />
 
                 <TextView
                     android:id="@+id/tvMemoDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/tvLabel"
                     android:fontFamily="monospace"
                     android:gravity="top|center_horizontal"
                     android:padding="1dp"
-                    android:paddingRight="0dp"
                     android:text="date"
                     android:textColor="@color/green_1D"
                     android:textSize="12sp"
@@ -107,7 +91,7 @@
 
                 <ImageView
                     android:id="@+id/imgCard"
-                    android:layout_width="76dp"
+                    android:layout_width="79dp"
                     android:layout_height="53dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
@@ -131,12 +115,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:fontFamily="monospace"
+                        android:maxLines="1"
                         android:padding="1dp"
                         android:text="Label..."
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textAppearance="@style/myText.Label"/>
 
                     <TextView
                         android:id="@+id/tvCardName"
@@ -144,11 +126,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:fontFamily="monospace"
                         android:padding="1dp"
                         android:text="Card Name"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"/>
+                        android:textAppearance="@style/myText.Content"
+                        />
 
                     <TextView
                         android:id="@+id/tvCardNumber"
@@ -156,11 +137,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:fontFamily="monospace"
                         android:padding="1dp"
                         android:text="Card Number"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"/>
+                        android:textAppearance="@style/myText.Content"
+                        />
 
                     <TextView
                         android:id="@+id/tvPaymentInfoDate"
@@ -193,92 +173,60 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/checkBox5"
-                android:layout_toRightOf="@+id/checkBox5"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvLoginInfoLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/btnEdit"
-                    android:layout_toLeftOf="@+id/tvDate"
-                    android:layout_toRightOf="@+id/btnEdit"
-                    android:fontFamily="monospace"
+                    android:maxLines="1"
                     android:padding="1dp"
                     android:text="Label..."
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"/>
+                    android:textAppearance="@style/myText.Label"/>
 
                 <TextView
                     android:id="@+id/tvURL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/btnEdit"
-                    android:layout_toLeftOf="@+id/tvDate"
-                    android:layout_toRightOf="@+id/btnEdit"
-                    android:fontFamily="monospace"
                     android:padding="1dp"
                     android:text="Url"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/myText.Content"
+                    />
 
                 <TextView
                     android:id="@+id/tvUsername"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/btnEdit"
-                    android:layout_toLeftOf="@+id/tvDate"
-                    android:layout_toRightOf="@+id/btnEdit"
-                    android:fontFamily="monospace"
                     android:padding="1dp"
                     android:text="Username"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/myText.Content"
+                    />
 
                 <TextView
                     android:id="@+id/tvEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/btnEdit"
-                    android:layout_toLeftOf="@+id/tvDate"
-                    android:layout_toRightOf="@+id/btnEdit"
-                    android:fontFamily="monospace"
                     android:padding="1dp"
                     android:text="Email"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/myText.Content"
+                    />
 
                 <TextView
                     android:id="@+id/tvPassword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/btnEdit"
-                    android:layout_toLeftOf="@+id/tvDate"
-                    android:layout_toRightOf="@+id/btnEdit"
-                    android:fontFamily="monospace"
                     android:padding="1dp"
                     android:text="Password"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/myText.Content"
+                    />
 
                 <TextView
                     android:id="@+id/tvLoginInfoDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/tvLabel"
                     android:fontFamily="monospace"
                     android:gravity="top|center_horizontal"
                     android:padding="1dp"
-                    android:paddingRight="0dp"
                     android:text="date"
                     android:textColor="@color/green_1D"
                     android:textSize="12sp"

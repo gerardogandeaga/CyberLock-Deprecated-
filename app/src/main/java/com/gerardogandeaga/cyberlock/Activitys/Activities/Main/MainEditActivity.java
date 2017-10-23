@@ -2,10 +2,8 @@ package com.gerardogandeaga.cyberlock.Activitys.Activities.Main;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -13,18 +11,17 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
-import com.gerardogandeaga.cyberlock.Crypto.CryptContent;
+import com.gerardogandeaga.cyberlock.Crypto.CryptoContent;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.Data;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.R;
@@ -46,11 +43,13 @@ import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownIs
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTimer;
 
 public class MainEditActivity extends AppCompatActivity {
+    private Context mContext = this;
+    private CryptoContent mCryptoContent;
+
     // DATA VARIABLES
     private boolean mIsNew = true;
     private boolean mIsAutoSave = false;
     private int TYPE;
-    private CryptContent mCRYPTCONTENT;
     private Data mData;
 
     private String mColourTag;
@@ -58,7 +57,9 @@ public class MainEditActivity extends AppCompatActivity {
 
     // WIDGETS
     // MAIN WIDGETS
+    private EditText mEtLabel;
     private EditText mEtNotes;
+    private TextView mTvDate;
 
     // MEMO WIDGETS
     private EditText
@@ -69,11 +70,7 @@ public class MainEditActivity extends AppCompatActivity {
             mEtCardName,
             mEtCardNumber,
             mEtCardExpire,
-            mEtCardSecCode,
-            mEtQuestion1,
-            mEtQuestion2,
-            mEtAnswer1,
-            mEtAnswer2;
+            mEtCardSecCode;
     private Spinner mSpCardSelect;
     // SUB DATA
     private String mCardType;
@@ -91,6 +88,7 @@ public class MainEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Globals.COLORSCHEME(this);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        mCryptoContent = new CryptoContent(mContext);
         super.onCreate(savedInstanceState);
 
         setupLayoutMain();
@@ -99,7 +97,16 @@ public class MainEditActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_edit, menu);
-        System.out.println("Menu Created!");
+
+//        for (int i = 0; i < menu.size(); i++) {
+//            Drawable drawable = menu.getItem(i).getIcon();
+//            if (drawable != null) {
+//                drawable.mutate();
+//                drawable.setColorFilter(
+//                        getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
+//            }
+//        }
+
         return true;
     }
     private void setupLayoutMain() {
@@ -108,19 +115,17 @@ public class MainEditActivity extends AppCompatActivity {
         mCustomDialogs = new CustomDialogs(this);
         mIsAutoSave = getSharedPreferences(DIRECTORY, MODE_PRIVATE).getBoolean(AUTOSAVE, false);
         // WIDGETS
-
         setupActivityMain();
     }
     private void setupActivityMain() {
         Bundle extras = getIntent().getExtras();
-        mCRYPTCONTENT = new CryptContent(this);
 
         if (extras != null) {
             mIsNew = false;
             mData = (Data) extras.get("data");
             if (mData != null) {
                 // IF ALREADY EXISTING DATABASE
-                switch (mData.getType()) {
+                switch (mData.getType(mCryptoContent)) {
                     case ("TYPE_MEMO"):
                         TYPE = 1;
                         setupActivityMemo();
@@ -159,21 +164,21 @@ public class MainEditActivity extends AppCompatActivity {
     // INITIALIZE WIDGETS
     private void setupLayoutMemo() {
         setContentView(R.layout.activity_edit_memo);
-        System.out.println("Layout Created!");
+//        System.out.println("Layout Created!");
         // WIDGETS
+        mTvDate = (TextView) findViewById(R.id.tvDate);
+        mEtLabel = (EditText) findViewById(R.id.etLabel);
         mEtMemo = (EditText) findViewById(R.id.etText);
     }
     private void setupLayoutPaymentInfo() {
         setContentView(R.layout.activity_edit_paymentinfo);
         // WIDGETS
+        mTvDate = (TextView) findViewById(R.id.tvDate);
+        mEtLabel = (EditText) findViewById(R.id.etLabel);
         mEtCardName = (EditText) findViewById(R.id.etCardName);
         mEtCardNumber = (EditText) findViewById(R.id.etCardNumber);
         mEtCardExpire = (EditText) findViewById(R.id.etCardExpire);
         mEtCardSecCode = (EditText) findViewById(R.id.etCardSecCode);
-        mEtQuestion1 = (EditText) findViewById(R.id.etQuestion1);
-        mEtQuestion2 = (EditText) findViewById(R.id.etQuestion2);
-        mEtAnswer1 = (EditText) findViewById(R.id.etAnswer1);
-        mEtAnswer2 = (EditText) findViewById(R.id.etAnswer2);
         mEtNotes = (EditText) findViewById(R.id.etNotes);
 
         mSpCardSelect = (Spinner) findViewById(R.id.spCardSelect);
@@ -248,6 +253,8 @@ public class MainEditActivity extends AppCompatActivity {
     private void setupLayoutLoginInfo() {
         setContentView(R.layout.activity_edit_logininfo);
         // WIDGETS
+        mTvDate = (TextView) findViewById(R.id.tvDate);
+        mEtLabel = (EditText) findViewById(R.id.etLabel);
         mEtUrl = (EditText) findViewById(R.id.etUrl);
         mEtUsername = (EditText) findViewById(R.id.etUsername);
         mEtEmail = (EditText) findViewById(R.id.etEmail);
@@ -260,16 +267,16 @@ public class MainEditActivity extends AppCompatActivity {
         setupLayoutMemo();
 
         if (mIsNew) {
-            setActionBarTitle(mCustomDialogs.getTmpLabel(), null);
+            setGlobalIdentifiers(setLabel(), null);
         } else {
             // GETTERS
-            final String colourTag = mData.getColourTag();
             final String date = mData.getDate();
-            final String label = mCRYPTCONTENT.DECRYPT_CONTENT(mData.getLabel(), MASTER_KEY);
-            final String content = mCRYPTCONTENT.DECRYPT_CONTENT(mData.getContent(), MASTER_KEY);
+            final String colourTag = mData.getColourTag(mCryptoContent);
+            final String label = mData.getLabel(mCryptoContent);
+            final String content = mData.getContent(mCryptoContent);
 
             // SETTERS
-            setActionBarTitle(label, date);
+            setGlobalIdentifiers(label, date);
             mColourTag = colourTag;
 
             String memo;
@@ -290,16 +297,16 @@ public class MainEditActivity extends AppCompatActivity {
         setupLayoutPaymentInfo();
 
         if (mIsNew) {
-            setActionBarTitle(mCustomDialogs.getTmpLabel(), null);
+            setGlobalIdentifiers(setLabel(), null);
         } else {
             // GETTERS
-            final String colourTag = mData.getColourTag();
+            final String colourTag = mData.getColourTag(mCryptoContent);
             final String date = mData.getDate();
-            final String label = mCRYPTCONTENT.DECRYPT_CONTENT(mData.getLabel(), MASTER_KEY);
-            final String content = mCRYPTCONTENT.DECRYPT_CONTENT(mData.getContent(), MASTER_KEY);
+            final String label = mData.getLabel(mCryptoContent);
+            final String content = mData.getContent(mCryptoContent);
 
             // SETTERS
-            setActionBarTitle(label, date);
+            setGlobalIdentifiers(label, date);
             mColourTag = colourTag;
 
             String cardName;
@@ -307,10 +314,6 @@ public class MainEditActivity extends AppCompatActivity {
             String cardType;
             String cardExpire;
             String cardSecCode;
-            String question1;
-            String question2;
-            String answer1;
-            String answer2;
             String notes;
 
             if (content != null) {
@@ -321,10 +324,6 @@ public class MainEditActivity extends AppCompatActivity {
                 cardType = scanner.nextLine();
                 cardExpire = scanner.nextLine();
                 cardSecCode = scanner.nextLine();
-                question1 = scanner.nextLine();
-                question2 = scanner.nextLine();
-                answer1 = scanner.nextLine();
-                answer2 = scanner.nextLine();
                 try {
                     notes = scanner.nextLine();
                     while (scanner.hasNextLine()) {
@@ -341,10 +340,6 @@ public class MainEditActivity extends AppCompatActivity {
                 mEtCardNumber.setText(cardNumber);
                 mEtCardExpire.setText(cardExpire);
                 mEtCardSecCode.setText(cardSecCode);
-                mEtQuestion1.setText(question1);
-                mEtQuestion2.setText(question2);
-                mEtAnswer1.setText(answer1);
-                mEtAnswer2.setText(answer2);
 
                 int spinnerPosition = mAdapter.getPosition(cardType);
                 mSpCardSelect.setSelection(spinnerPosition);
@@ -355,16 +350,16 @@ public class MainEditActivity extends AppCompatActivity {
         setupLayoutLoginInfo();
 
         if (mIsNew) {
-            setActionBarTitle(mCustomDialogs.getTmpLabel(), null);
+            setGlobalIdentifiers(setLabel(), null);
         } else {
             // GETTERS
-            final String colourTag = mData.getColourTag();
             final String date = mData.getDate();
-            final String label = mCRYPTCONTENT.DECRYPT_CONTENT(mData.getLabel(), MASTER_KEY);
-            final String content = mCRYPTCONTENT.DECRYPT_CONTENT(mData.getContent(), MASTER_KEY);
+            final String colourTag = mData.getColourTag(mCryptoContent);
+            final String label = mData.getLabel(mCryptoContent);
+            final String content = mData.getContent(mCryptoContent);
 
             // SETTERS
-            setActionBarTitle(label, date);
+            setGlobalIdentifiers(label, date);
             mColourTag = colourTag;
 
             String url;
@@ -421,9 +416,9 @@ public class MainEditActivity extends AppCompatActivity {
             case (R.id.action_colortag):
                 mCustomDialogs.createColourPickDialog();
                 return true;
-            case (R.id.action_label):
-                mCustomDialogs.createLabelDialog();
-                break;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -435,7 +430,6 @@ public class MainEditActivity extends AppCompatActivity {
         masterDatabaseAccess.open();
 
         String tmpContent = getWidgetData();
-        // ----------------------------------
 
         // SAVING
         if (dataIsValid(tmpContent)) {
@@ -461,29 +455,23 @@ public class MainEditActivity extends AppCompatActivity {
         // GETTING AND FORMATTING THE CONTENT CONDITIONALLY
         if (TYPE == 1) {
             final String memo = mEtMemo.getText().toString();
+
             final String format = "%s";
 
-            final String tmpString = String.format(format,
+            return String.format(format,
                     memo);
-
-            return tmpString;
         } else if (TYPE == 2) {
             final String cardName = mEtCardName.getText().toString();
             final String cardNumber = mEtCardNumber.getText().toString();
             final String cardType = mCardType;
             final String cardExpire = mEtCardExpire.getText().toString();
             final String cardSecCode = mEtCardSecCode.getText().toString();
-            final String question1 = mEtQuestion1.getText().toString();
-            final String question2 = mEtQuestion2.getText().toString();
-            final String answer1 = mEtAnswer1.getText().toString();
-            final String answer2 = mEtAnswer2.getText().toString();
             final String notes = mEtNotes.getText().toString();
+
             final String format = "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s";
 
-            final String tmpString = String.format(format,
-                    cardName, cardNumber, cardType, cardExpire, cardSecCode, question1, question2, answer1, answer2, notes);
-
-            return tmpString;
+            return String.format(format,
+                    cardName, cardNumber, cardType, cardExpire, cardSecCode, notes);
         } else if (TYPE == 3) {
             final String url = mEtUrl.getText().toString();
             final String username = mEtUsername.getText().toString();
@@ -492,22 +480,20 @@ public class MainEditActivity extends AppCompatActivity {
             final String notes = mEtNotes.getText().toString();
 
             final String format = "%s\n%s\n%s\n%s\n%s";
-            final String tmpString = String.format(format,
+
+            return String.format(format,
                     url, username, email, password, notes);
-
-            return tmpString;
         }
-
-        return "No Content To Save";
+        return "";
     }
     @Contract("!null -> true")
     private boolean dataIsValid(String content) {
-        return content != null || !content.matches("");
+        return !content.matches("");
     }
     private Data getData(String tmpContent) {
         String colourTag, label, content;
 
-        label = mCustomDialogs.getTmpLabel();
+        label = mEtLabel.getText().toString();
         content = tmpContent;
         colourTag = mCustomDialogs.getTmpColour();
         // SET COLOUR CONDITIONALLY
@@ -522,19 +508,33 @@ public class MainEditActivity extends AppCompatActivity {
         return setData(colourTag, label, content);
     }
     private Data setData(String colourTag, String label, String content) {
-        if (mData == null) {
+        if (mIsNew) {
             Data tmp = new Data();
 
-            tmp.setType("TYPE_MEMO"); // TODO ENCRYPT TYPE!
-            tmp.setColourTag(colourTag);
-            tmp.setLabel(mCRYPTCONTENT.ENCRYPT_KEY(label, MASTER_KEY));
-            tmp.setContent(mCRYPTCONTENT.ENCRYPT_KEY(content, MASTER_KEY));
+            String tmpType = null;
+            switch (TYPE) {
+                case (1):
+                    tmpType = "TYPE_MEMO";
+                    break;
+                case (2):
+                    tmpType = "TYPE_PAYMENTINFO";
+                    break;
+                case (3):
+                    tmpType = "TYPE_LOGININFO";
+                    break;
+                default:
+                    tmpType = "TYPE_MEMO"; // TODO CREATE A "COULD NOT READ TYPE" DIALOG ALLOWING FOR AN EDIT
+            }
+            tmp.setType(mCryptoContent, tmpType);
+            tmp.setColourTag(mCryptoContent, colourTag);
+            tmp.setLabel(mCryptoContent, label);
+            tmp.setContent(mCryptoContent, content);
 
             return tmp;
         } else {
-            mData.setColourTag(colourTag);
-            mData.setLabel(mCRYPTCONTENT.ENCRYPT_KEY(label, MASTER_KEY));
-            mData.setContent(mCRYPTCONTENT.ENCRYPT_KEY(content, MASTER_KEY));
+            mData.setColourTag(mCryptoContent, colourTag);
+            mData.setLabel(mCryptoContent, label);
+            mData.setContent(mCryptoContent, content);
 
             return mData;
         }
@@ -603,24 +603,34 @@ public class MainEditActivity extends AppCompatActivity {
     // --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // QUARANTINED FUNCTIONS
-    public void setActionBarTitle(String label, String date) {
+    private String setLabel() {
+        if (mData != null) {
+            return mData.getLabel();
+        } else {
+            return "";
+        }
+    }
+    public void setGlobalIdentifiers(String label, String date) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle(label);
-        if (label != null) {
-            getSupportActionBar().setSubtitle(date);
-        } // PRIMARILY FOR NEW DOCUMENTS
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(null);
+        mEtLabel.setText(label);
+
+        if (date != null) {
+            mTvDate.setText("Updated: " + date);
+        } else {
+            mTvDate.setText("");
+        }
     }
 
     // CUSTOM DIALOG INNER CLASS
     private class CustomDialogs implements View.OnClickListener {
         private Context mContext;
-        private AlertDialog.Builder mAlertDialog;
         private Dialog mDialog;
 
-        private String mCrrntLabel;
-        private String mTmpLabel;
         private String mTmpColour;
 
         private CustomDialogs(Context context) {
@@ -628,63 +638,6 @@ public class MainEditActivity extends AppCompatActivity {
         }
 
         // SET LABEL
-        private void createLabelDialog() {
-            mAlertDialog = new AlertDialog.Builder(mContext);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(10, 10, 10, 10);
-
-            // BUILD VIEW
-            final EditText etLabel = new EditText(mContext);
-
-            etLabel.setLayoutParams(params);
-
-            // BUILD DIALOG
-            mAlertDialog.setCancelable(false);
-            mAlertDialog.setTitle("Input A New Label");
-            mAlertDialog.setView(etLabel);
-
-            mAlertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            mAlertDialog.setPositiveButton("SET", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    setTmpLabel(etLabel.getText().toString());
-                    dialog.dismiss();
-                }
-            });
-            mAlertDialog.show();
-        }
-
-        @Contract(pure = true)
-        private String getTmpLabel() {
-            if (!mIsNew) {
-                // SET THE CURRENT LABEL IF THERE IS ONE
-                mCrrntLabel = getSupportActionBar().getTitle().toString();
-
-                if (mTmpLabel != null) {
-                    if (!mTmpLabel.matches("")) {
-                        return mTmpLabel; // SET NEW LABEL
-                    } else {
-                        if (!mCrrntLabel.matches("") || mCrrntLabel != null) {
-                            return mCrrntLabel; // IF THERE IS AN EXISTING LABEL
-                        } else {
-                            return "New Document"; // IF THERE IS NO CURRENT LABEL
-                        }
-                    }
-                }
-            }
-            return "New Document";
-        }
-
-        private void setTmpLabel(String tmpLabel) {
-            mTmpLabel = tmpLabel;
-            getSupportActionBar().setTitle(getTmpLabel());
-        }
 
         // COLOUR TAG CUSTOMIZATION
         private void createColourPickDialog() {
@@ -710,11 +663,9 @@ public class MainEditActivity extends AppCompatActivity {
 
             mDialog.show();
         }
-
         private String getTmpColour() {
             return mTmpColour;
         }
-
         private void setTmpColour(String tmpColour) {
             mTmpColour = tmpColour;
             mDialog.dismiss();

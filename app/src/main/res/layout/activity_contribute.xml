@@ -9,14 +9,14 @@
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Contribute">
 
     <include
-        android:id="@+id/include"
+        android:id="@+id/appBar"
         layout="@layout/child_toolbar"/>
 
     <ScrollView
         android:id="@+id/Data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/include"
+        android:layout_below="@+id/appBar"
         android:layout_above="@+id/Actions">
 
         <LinearLayout

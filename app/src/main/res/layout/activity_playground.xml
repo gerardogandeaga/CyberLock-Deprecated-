@@ -10,7 +10,7 @@
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainPlaygroundActivity">
 
     <include
-        android:id="@+id/include"
+        android:id="@+id/appBar"
         layout="@layout/child_toolbar"/>
 
     <TextView
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/include"
+        android:layout_below="@+id/appBar"
         android:background="@color/gray8F"
         android:fontFamily="monospace"
         android:padding="5dp"

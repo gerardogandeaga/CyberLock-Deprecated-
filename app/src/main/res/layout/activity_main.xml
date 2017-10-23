@@ -14,20 +14,17 @@
         android:layout_height="match_parent">
 
         <include
-            android:id="@+id/include"
+            android:id="@+id/appBar"
             layout="@layout/child_toolbar"/>
 
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/Actions"
-            android:layout_below="@+id/include"
+            android:layout_below="@+id/appBar"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="20dp"
-            android:divider="@color/gray_1L"
+            android:divider="@color/coltag_default"
             android:dividerHeight="1dp"
-            android:listSelector="@android:color/transparent"
             android:scrollbars="none"/>
 
     </RelativeLayout>

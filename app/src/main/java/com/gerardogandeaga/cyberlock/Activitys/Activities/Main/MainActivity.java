@@ -4,8 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,6 +26,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -35,7 +36,7 @@ import android.widget.TextView;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Contribute;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings;
-import com.gerardogandeaga.cyberlock.Crypto.CryptContent;
+import com.gerardogandeaga.cyberlock.Crypto.CryptoContent;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.Data;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.R;
@@ -47,15 +48,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownIsFinished;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTimer;
 
-public class MainActivity extends AppCompatActivity
-{
+public class MainActivity extends AppCompatActivity {
     private Context mContext = this;
+    private CryptoContent mCryptoContent;
     private Menu mMenu;
     private Resources mResources;
 
@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         Globals.COLORSCHEME(this);
+        mCryptoContent = new CryptoContent(mContext);
         super.onCreate(savedInstanceState);
         setupLayout();
     }
@@ -210,12 +211,12 @@ public class MainActivity extends AppCompatActivity
     // -------------------------
 
     // FUNCTIONS FOR THE DATA ADAPTER
-    private void memoFunctions(final Data data, CryptContent CRYPTCONTENT, View convertView, LinearLayout.LayoutParams params, RelativeLayout layoutContent) {
+    private void memoFunctions(final Data data, View convertView, LinearLayout.LayoutParams params, final RelativeLayout layoutContent) {
         data.setFullDisplayed(false);
 
         final String date = data.getDate();
-        final String label = CRYPTCONTENT.DECRYPT_CONTENT(data.getLabel(), MASTER_KEY);
-        final String content = CRYPTCONTENT.DECRYPT_CONTENT(data.getContent(), MASTER_KEY);
+        final String label = data.getLabel(mCryptoContent);
+        final String content = data.getContent(mCryptoContent);
 
         String memo = "";
 
@@ -251,30 +252,52 @@ public class MainActivity extends AppCompatActivity
         tvDate.setText(date);
 
         final String finalMemo = memo;
-        layoutContent.setOnLongClickListener(new View.OnLongClickListener()
-        {
-            @Override
-            public boolean onLongClick(View v) {
-                if (data.isFullDisplayed()) {
-                    if (finalMemo != null)
-                        tvMemo.setText(data.getShortText(mContext, finalMemo));
-                    data.setFullDisplayed(false);
-                } else {
-                    if (finalMemo != null) tvMemo.setText(finalMemo);
-                    data.setFullDisplayed(true);
-                }
 
-                return false;
+        layoutContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("HI!");
+                if (isEditable(data, layoutContent)) {
+                    View dialogView = View.inflate(mContext, R.layout.child_view_memo, null);
+                    ImageButton childDone = (ImageButton) dialogView.findViewById(R.id.btnChildDone);
+                    ImageButton childEdit = (ImageButton) dialogView.findViewById(R.id.btnChildEdit);
+                    TextView childLabel = (TextView) dialogView.findViewById(R.id.tvChildLabel);
+                    TextView childMemo = (TextView) dialogView.findViewById(R.id.tvChildMemo);
+                    TextView childDate = (TextView) dialogView.findViewById(R.id.tvChildDate);
+
+                    childLabel.setText(label);
+                    childMemo.setText(finalMemo);
+                    childDate.setText(date);
+
+                    // DIALOG BUILDER
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setView(dialogView);
+                    // DIALOG SHOW
+                    final AlertDialog dialog = builder.show();
+
+                    childEdit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            onEditClicked(data);
+                        }
+                    });
+                    childDone.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+                }
             }
         });
-
     }
-    private void paymentInfoFunctions(Data data, CryptContent CRYPTCONTENT, View convertView, LinearLayout.LayoutParams params) {
+    private void paymentInfoFunctions(Data data, View convertView, LinearLayout.LayoutParams params) {
         data.setFullDisplayed(false);
 
         final String date = data.getDate();
-        final String label = CRYPTCONTENT.DECRYPT_CONTENT(data.getLabel(), MASTER_KEY);
-        final String content = CRYPTCONTENT.DECRYPT_CONTENT(data.getContent(), MASTER_KEY);
+        final String label = data.getLabel(mCryptoContent);
+        final String content = data.getContent(mCryptoContent);
 
         String cardName = "";
         String cardNumber = "";
@@ -351,12 +374,12 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
     }
-    private void loginInfoFunctions(final Data data, CryptContent CRYPTCONTENT, View convertView, RelativeLayout layoutContent) {
+    private void loginInfoFunctions(final Data data, View convertView, RelativeLayout layoutContent) {
         data.setFullDisplayed(false);
 
         final String date = data.getDate();
-        final String label = CRYPTCONTENT.DECRYPT_CONTENT(data.getLabel(), MASTER_KEY);
-        final String content = CRYPTCONTENT.DECRYPT_CONTENT(data.getContent(), MASTER_KEY);
+        final String label = data.getLabel(mCryptoContent);
+        final String content = data.getContent(mCryptoContent);
 
         String url = "";
         String username = "";
@@ -414,25 +437,25 @@ public class MainActivity extends AppCompatActivity
         }
         tvDate.setText(date);
 
-        layoutContent.setOnLongClickListener(new View.OnLongClickListener()
-        {
-            @Override
-            public boolean onLongClick(View v) {
-                if (data.isFullDisplayed()) {
-                    tvUsername.setLayoutParams(hideParams);
-                    tvEmail.setLayoutParams(hideParams);
-                    tvPassword.setLayoutParams(hideParams);
-                    data.setFullDisplayed(false);
-                } else {
-                    tvUsername.setLayoutParams(displayParams);
-                    tvEmail.setLayoutParams(displayParams);
-                    tvPassword.setLayoutParams(displayParams);
-                    data.setFullDisplayed(true);
-                }
-
-                return false;
-            }
-        });
+//        layoutContent.setOnLongClickListener(new View.OnLongClickListener()
+//        {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                if (data.isFullDisplayed()) {
+//                    tvUsername.setLayoutParams(hideParams);
+//                    tvEmail.setLayoutParams(hideParams);
+//                    tvPassword.setLayoutParams(hideParams);
+//                    data.setFullDisplayed(false);
+//                } else {
+//                    tvUsername.setLayoutParams(displayParams);
+//                    tvEmail.setLayoutParams(displayParams);
+//                    tvPassword.setLayoutParams(displayParams);
+//                    data.setFullDisplayed(true);
+//                }
+//
+//                return false;
+//            }
+//        });
     }
     // ------------------------------
 
@@ -530,6 +553,27 @@ public class MainActivity extends AppCompatActivity
         this.finish();
         this.startActivity(ACTIVITY_INTENT);
     }
+    private boolean isEditable(Data data, RelativeLayout Content) {
+        if (mListView.getChoiceMode() != ListView.CHOICE_MODE_MULTIPLE_MODAL) {
+            return true;
+        } else {
+            if (!data.isSelected()) {
+                Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem_selected));
+                data.setSelected(true);
+                mSelectedDatas.add(data);
+                mCount++;
+            } else {
+                Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem));
+                data.setSelected(false);
+                mSelectedDatas.remove(data);
+                mCount--;
+            }
+            getSupportActionBar().setTitle(mCount + " Selected");
+
+            return false;
+        }
+    }
+    // MULTI SELECT
     public void onMultiSelectClicked() {
         MenuInflater menuInflater = new MenuInflater(mContext);
 
@@ -623,16 +667,11 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
+
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-    }
-
     // INNER ADAPTER CLASS
-    private class DataAdapter extends ArrayAdapter<Data>
+    private class DataAdapter extends ArrayAdapter<Data> // TODO OPTOMIZE LIST VIEW TO HANDLE MORE INPUTS AND VIEWS!!!
     {
         private DataAdapter(Context context, List<Data> objects) {
             super(context, 0, objects);
@@ -647,87 +686,67 @@ public class MainActivity extends AppCompatActivity
             final Data data = mDatas.get(position);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, 0);
 
-            CryptContent CRYPTCONTENT = new CryptContent(mContext);
-
             final RelativeLayout Content = (RelativeLayout) convertView.findViewById(R.id.Content);
             final RelativeLayout MemoListLayout = (RelativeLayout) convertView.findViewById(R.id.MemoListLayout);
             final RelativeLayout PaymentInfoListLayout = (RelativeLayout) convertView.findViewById(R.id.PaymentInfoListLayout);
             final RelativeLayout LoginInfoListLayout = (RelativeLayout) convertView.findViewById(R.id.LoginInfoListLayout);
 
 
-            final LinearLayout ColourTag = (LinearLayout) convertView.findViewById(R.id.ColourTag);
+            final ImageView ColourTag = (ImageView) convertView.findViewById(R.id.ColourTag);
 
-            final String TYPE = data.getType();
+            final String TYPE = data.getType(mCryptoContent);
             switch (TYPE) {
                 case "TYPE_MEMO":
                     PaymentInfoListLayout.setLayoutParams(params);
                     LoginInfoListLayout.setLayoutParams(params);
-                    memoFunctions(data, CRYPTCONTENT, convertView, params, Content);
+                    memoFunctions(data, convertView, params, Content);
                     break;
                 case "TYPE_PAYMENTINFO":
                     MemoListLayout.setLayoutParams(params);
                     LoginInfoListLayout.setLayoutParams(params);
-                    paymentInfoFunctions(data, CRYPTCONTENT, convertView, params);
+                    paymentInfoFunctions(data, convertView, params);
                     break;
                 case "TYPE_LOGININFO":
                     MemoListLayout.setLayoutParams(params);
                     PaymentInfoListLayout.setLayoutParams(params);
-                    loginInfoFunctions(data, CRYPTCONTENT, convertView, Content);
+                    loginInfoFunctions(data, convertView, Content);
                     break;
             }
 
-            final String COL_TAG = data.getColourTag();
+            final String COL_TAG = data.getColourTag(mCryptoContent);
             switch (COL_TAG) {
-                case "COL_BLUE":
-                    ColourTag.setBackgroundColor(getColor(R.color.coltag_blue));
-                    break;
-                case "COL_RED":
-                    ColourTag.setBackgroundColor(getColor(R.color.coltag_red));
-                    break;
-                case "COL_GREEN":
-                    ColourTag.setBackgroundColor(getColor(R.color.coltag_green));
-                    break;
-                case "COL_YELLOW":
-                    ColourTag.setBackgroundColor(getColor(R.color.coltag_yellow));
-                    break;
-                case "COL_PURPLE":
-                    ColourTag.setBackgroundColor(getColor(R.color.coltag_purple));
-                    break;
-                case "COL_ORANGE":
-                    ColourTag.setBackgroundColor(getColor(R.color.coltag_orange));
-                    break;
-                default:
-                    ColourTag.setBackgroundColor(getColor(R.color.coltag_default));
-                    break;
+                case "COL_BLUE": ColourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_blue), PorterDuff.Mode.MULTIPLY); break;
+                case "COL_RED": ColourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_red), PorterDuff.Mode.MULTIPLY); break;
+                case "COL_GREEN": ColourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_green), PorterDuff.Mode.MULTIPLY); break;
+                case "COL_YELLOW": ColourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_yellow), PorterDuff.Mode.MULTIPLY); break;
+                case "COL_PURPLE": ColourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_purple), PorterDuff.Mode.MULTIPLY); break;
+                case "COL_ORANGE": ColourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_orange), PorterDuff.Mode.MULTIPLY); break;
+                default: ColourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_default), PorterDuff.Mode.MULTIPLY); break;
             }
 
-            Content.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v) {
-                    if (mListView.getChoiceMode() != ListView.CHOICE_MODE_MULTIPLE_MODAL) {
-                        onEditClicked(data);
-                    } else {
-                        if (!data.isSelected()) {
-                            Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem_selected));
-                            data.setSelected(true);
-                            mSelectedDatas.add(data);
-                            mCount++;
-
-                            System.out.println(mSelectedDatas);
-                        } else {
-                            Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem));
-                            data.setSelected(false);
-                            mSelectedDatas.remove(data);
-                            mCount--;
-
-                            System.out.println(mSelectedDatas);
-                        }
-
-                        getSupportActionBar().setTitle(mCount + " Selected");
-                    }
-                }
-            });
+//            Content.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (mListView.getChoiceMode() != ListView.CHOICE_MODE_MULTIPLE_MODAL) {
+//                        if (!data.isSelected()) {
+//                            Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem_selected));
+//                            data.setSelected(true);
+//                            mSelectedDatas.add(data);
+//                            mCount++;
+//
+////                            System.out.println(mSelectedDatas);
+//                        } else {
+//                            Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem));
+//                            data.setSelected(false);
+//                            mSelectedDatas.remove(data);
+//                            mCount--;
+//
+////                            System.out.println(mSelectedDatas);
+//                        }
+//                        getSupportActionBar().setTitle(mCount + " Selected");
+//                    }
+//                }
+//            });
 
             return convertView;
         }

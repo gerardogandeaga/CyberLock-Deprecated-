@@ -1,50 +1,74 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="DefaultTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
         <!-- Customize your theme here. -->
+        <item name="colorPrimaryDark">@color/graySecondary</item>
         <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryDark">@color/blue_3D</item>
-        <item name="colorAccent">@color/blue_2D</item>
+        <item name="colorAccent">@color/orangeAccent</item>
 
-        <item name="android:windowFullscreen">true</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+
+        <!---->
+        <!--<item name="android:windowFullscreen">true</item>-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <!---->
     </style>
-
-    <style name="OverlaySchemeColorRed">
-        <item name="colorPrimary">@color/red_2L</item>
-        <item name="colorPrimaryDark">@color/red_3D</item>
-        <item name="colorAccent">@color/red_2D</item>
-    </style>
-    <style name="OverlaySchemeColorGreen">
-        <item name="colorPrimaryDark">@color/green_3D</item>
-        <item name="colorAccent">@color/green_2D</item>
-    </style>
-    <style name="OverlaySchemeColorYellow">
-        <item name="colorPrimaryDark">@color/yellow_3D</item>
-        <item name="colorAccent">@color/yellow_2D</item>
-    </style>
-    <style name="OverlaySchemeColorPurple">
-        <item name="colorPrimaryDark">@color/purple_3D</item>
-        <item name="colorAccent">@color/purple_2D</item>
-    </style>
-    <style name="OverlaySchemeColorGray">
-        <item name="colorPrimary">@color/gray_2L</item>
-        <item name="colorPrimaryDark">@color/gray_3D</item>
-        <item name="colorAccent">@color/gray_2D</item>
-    </style>
-
-
     <!-- Navigation Drawer Color -->
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
-        <item name="spinBars">true</item>
+        <item name="spinBars">false</item>
         <item name="color">@color/white</item>
     </style>
 
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <!-- Text Customizations -->
+    <!-- Edits -->
+    <style name="myText.MediumText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:gravity">start</item>
+    </style>
+
+
+    <style name="myText.Label" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:gravity">start</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="myText.Content" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:gravity">start</item>
+    </style>
+    <style name="myText.Date" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+
+    <!-- Headers -->
+    <style name="myText.Header.BigText" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+    <!-- Main Buttons -->
+    <style name="myText.Button.SmallText.White" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+    <style name="myText.Button.BigText.White" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
 </resources>

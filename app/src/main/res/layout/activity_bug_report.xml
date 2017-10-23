@@ -12,7 +12,7 @@
         android:id="@+id/TestLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/include">
+        android:layout_below="@+id/appBar">
 
         <LinearLayout
             android:id="@+id/TextFields"

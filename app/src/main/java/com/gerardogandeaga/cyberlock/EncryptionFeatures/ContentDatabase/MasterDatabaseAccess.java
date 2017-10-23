@@ -5,18 +5,23 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.gerardogandeaga.cyberlock.Crypto.CryptoContent;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class MasterDatabaseAccess
 {
+    private Context mContext;
+    private CryptoContent mCryptoContent;
     private SQLiteDatabase mSQLiteDatabase;
     private MasterDatabaseOpenHelper mOpenHelper;
     private static volatile MasterDatabaseAccess instance;
 
     private MasterDatabaseAccess(Context context) {
-        this.mOpenHelper = new MasterDatabaseOpenHelper(context);
+        mOpenHelper = new MasterDatabaseOpenHelper(context);
+        mContext = context;
     }
 
     public static synchronized MasterDatabaseAccess getInstance(Context context) {
@@ -28,7 +33,7 @@ public class MasterDatabaseAccess
     }
 
     public void open() {
-        this.mSQLiteDatabase = mOpenHelper.getWritableDatabase();
+        mSQLiteDatabase = mOpenHelper.getWritableDatabase();
     }
     public void close() {
         if (mSQLiteDatabase != null) {

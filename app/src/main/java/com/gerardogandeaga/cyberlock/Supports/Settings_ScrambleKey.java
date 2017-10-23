@@ -7,8 +7,8 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.widget.Toast;
 
-import com.gerardogandeaga.cyberlock.Crypto.CryptContent;
 import com.gerardogandeaga.cyberlock.Crypto.CryptKeyHandler;
+import com.gerardogandeaga.cyberlock.Crypto.CryptoContent;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.Data;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.MasterDatabaseAccess;
 
@@ -21,13 +21,14 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
 public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
 {
-    // DATA
+    private Context mContext;
+    private CryptoContent mCryptoContent;
     private SharedPreferences mSharedPreferences;
 
+    // DATA VARIABLES
     private MasterDatabaseAccess mMasterDatabaseAccess;
     private List<Data> mDatas;
-    
-    private Context mContext;
+
 
     // WIDGETS
     private ProgressDialog mProgressDialog;
@@ -35,20 +36,9 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
     public Settings_ScrambleKey(Context context)
     {
         mContext = context;
-
+        mCryptoContent = new CryptoContent(mContext);
         mSharedPreferences = mContext.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-
         this.mMasterDatabaseAccess = MasterDatabaseAccess.getInstance(mContext);
-    }
-
-    private void progressBar()
-    {
-        mProgressDialog = new ProgressDialog(mContext);
-        mProgressDialog.setTitle("Scrambling Key...");
-        mProgressDialog.setMessage("Loading Data...");
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
     }
 
     // ASYNC TASKS
@@ -61,14 +51,13 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
 
         System.out.println("Scramble Key: onPreExecute");
     }
-
     @Override
     protected Void doInBackground(Void... params)
     {
         try
         {
             CryptKeyHandler keyHandler = new CryptKeyHandler(mContext);
-            CryptContent CRYPTCONTENT = new CryptContent(mContext);
+            CryptoContent CRYPTCONTENT = new CryptoContent(mContext);
 
             keyHandler.GENERATE_NEW_KEY(TEMP_PIN); // GENERATE A NEW BYTE ARRAY AS A SYMMETRIC KEY
 
@@ -80,16 +69,20 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
             for (int i = 0; i < mDatas.size(); i++)
             {
                 final Data data = mDatas.get(i);
-                String label = null;
-                String content = null;
+                String type = data.getType(mCryptoContent);
+                String colourTag = data.getColourTag();
+                String label = data.getLabel(mCryptoContent);
+                String content = data.getContent(mCryptoContent);
 
-                label = CRYPTCONTENT.DECRYPT_CONTENT(data.getLabel(), MASTER_KEY);
-                content = CRYPTCONTENT.DECRYPT_CONTENT(data.getContent(), MASTER_KEY);
 
-                if (label != null) data.setLabel(CRYPTCONTENT.ENCRYPT_KEY(label, newKeyStringVal));
-                if (content != null) data.setContent(CRYPTCONTENT.ENCRYPT_KEY(content, newKeyStringVal));
+                data.setType(mCryptoContent, type, newKeyStringVal);
+                data.setColourTag(mCryptoContent, colourTag, newKeyStringVal);
+                data.setLabel(mCryptoContent, label, newKeyStringVal);
+                data.setContent(mCryptoContent, content, newKeyStringVal);
 
                 mMasterDatabaseAccess.update(data);
+                type = null;
+                colourTag = null;
                 label = null;
                 content = null;
                 System.out.println("done memo");
@@ -125,7 +118,6 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
         System.out.println("Scramble Key: doInBackground");
         return null;
     }
-
     @Override
     protected void onPostExecute(Void aVoid)
     {
@@ -136,4 +128,13 @@ public class Settings_ScrambleKey extends AsyncTask<Void, Void, Void>
         System.out.println("Scramble Key: onPostExecute");
     }
     // -----------
+    private void progressBar()
+    {
+        mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog.setTitle("Scrambling Key...");
+        mProgressDialog.setMessage("Loading Data...");
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
 }

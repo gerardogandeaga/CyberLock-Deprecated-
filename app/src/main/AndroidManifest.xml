@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.gerardogandeaga.cyberlock"
-          android:versionCode="1"
-          android:versionName="1.0">
-
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="21"/>
+          package="com.gerardogandeaga.cyberlock">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
@@ -23,8 +17,8 @@
         android:theme="@style/DefaultTheme">
         <activity
             android:name=".Activitys.Activities.Login.LoginActivity"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -33,36 +27,58 @@
         </activity>
         <activity
             android:name=".Activitys.Activities.Login.RegistrationActivity"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-        </activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
         <!-- MAIN ACTIVITIES -->
         <activity
             android:name=".Activitys.Activities.Menus.Contribute"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".Activitys.Activities.Menus.About"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".Activitys.Activities.Menus.Settings"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".Supports.Settings_ResetShortPasscode"
-            android:configChanges="orientation|screenSize"/>
+            android:name=".Supports.Settings_ChangeShortPasscode"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".Supports.Settings_ResetComplexPasscode"
-            android:configChanges="orientation|screenSize"/>
+            android:name=".Supports.Settings_ChangeComplexPasscode"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".Activitys.Activities.Main.MainActivity"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".Activitys.Activities.Main.MainEditActivity"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".Activitys.Activities.Main.MainPlaygroundActivity"
-            android:configChanges="orientation|screenSize"/>
-        <activity android:name=".Activitys.Activities.Menus.BugReportActivity">
-        </activity>
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".Activitys.Activities.Menus.BugReportActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"/>
+
+
+        <!--<activity-->
+            <!--android:name=".test"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:windowSoftInputMode="adjustResize">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
     </application>
 
 </manifest>

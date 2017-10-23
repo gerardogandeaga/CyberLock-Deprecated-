@@ -36,8 +36,8 @@
     <color name="purple_3D">#2e0934</color>
 
     <color name="gray_2L">#e1e1e1</color>
-    <color name="gray_1L">#a2a2a2</color>
-    <color name="gray_1D">#838383</color>
+    <color name="gray_1L">#b7b7b7</color>
+    <color name="gray_1D">#a0a0a0</color>
     <color name="gray_2D">#303030</color>
     <color name="gray_3D">#202020</color>
     <!-- App Colour Themes -->
@@ -54,5 +54,19 @@
     <color name="coltag_yellow">#f0d774</color>
     <color name="coltag_purple">#d93be8</color>
     <color name="coltag_orange">#d77f09</color>
-    <color name="coltag_default">#8f8f8f</color>
+    <color name="coltag_default">#d5d5d5</color>
+
+
+
+    <!-- Material Design Colors -->
+    <color name="orangeAccent">#e66021</color>
+    <color name="orangeDark">#cf4301</color>
+
+    <color name="grayLight">#e2d9d4</color>
+    <color name="grayPrimary">#5f5f5f</color>
+    <color name="graySecondary">#3d4142</color>
+
+    <color name="gray_light2">#cfcfcf</color>
+    <color name="gray_light1">#a5a5a5</color>
+    <color name="gray_dark1">#8f8f8f</color>
 </resources>

@@ -127,6 +127,7 @@
     <string name="WhereBRGoes">This report will be sent straight to the developer for reviewing.</string>
     ------------------------------------------------------------------------------------------------
     <!-- UPDATE FEED -->
+    <string name="CurrentVersion">Version 1.0.0</string>
     <string name="UpdateTitle">Update Board</string>
     <!-- Version 1.1-->
     <string name="V1.0.0">V - 1.0.0 ( Release! )</string>
@@ -140,4 +141,7 @@
     <string name="Open">Open</string>
     <string name="Close">Close</string>
     ------------------------------------------------------------------------------------------------
+    <!-- TEXT INPUT LAYOUT FIX -->
+    <item name="visible" type="id"/>
+    <item name="masked" type="id"/>
 </resources>
