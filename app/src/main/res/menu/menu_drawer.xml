@@ -9,10 +9,10 @@
 
         <menu>
             <item
-                android:id="@+id/action_memo"
-                android:icon="@drawable/ic_action_memo"
+                android:id="@+id/action_note"
+                android:icon="@drawable/ic_action_note"
                 android:orderInCategory="0"
-                android:title="New Memo"
+                android:title="New Note"
                 app:showAsAction="always"/>
 
             <item
@@ -43,12 +43,12 @@
         android:title="Connect">
 
         <menu>
-            <item
-                android:id="@+id/action_bugReport"
-                android:icon="@drawable/ic_action_bug"
-                android:orderInCategory="2"
-                android:title="Report A Bug"
-                app:showAsAction="never"/>
+            <!--<item-->
+                <!--android:id="@+id/action_bugReport"-->
+                <!--android:icon="@drawable/ic_action_bug"-->
+                <!--android:orderInCategory="2"-->
+                <!--android:title="Report A Bug"-->
+                <!--app:showAsAction="never"/>-->
 
             <item
                 android:id="@+id/action_share"
@@ -62,13 +62,6 @@
                 android:icon="@drawable/ic_action_rate"
                 android:orderInCategory="2"
                 android:title="Rate"
-                app:showAsAction="never"/>
-
-            <item
-                android:id="@+id/action_contribute"
-                android:icon="@drawable/ic_action_contribute"
-                android:orderInCategory="2"
-                android:title="Contribute!"
                 app:showAsAction="never"/>
 
         </menu>

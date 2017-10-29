@@ -5,11 +5,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 class MasterDatabaseOpenHelper extends SQLiteOpenHelper {
-    public static final String DATABASE = "data.db";
-    public static final String TABLE = "data";
-    public static final int VERSION = 1;
+    private static final String DATABASE = "data.db";
+    static final String TABLE = "data";
+    private static final int VERSION = 1;
 
-    public MasterDatabaseOpenHelper(Context context) {
+    MasterDatabaseOpenHelper(Context context) {
         super(context, DATABASE, null, VERSION);
     }
 

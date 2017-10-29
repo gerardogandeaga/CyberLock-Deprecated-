@@ -88,14 +88,11 @@ public class Settings_ChangeShortPasscode extends AppCompatActivity {
             {
                 mIsArrayFull = true;
 
-                if (mIsArrayFull)
+                for (int i = 0; i < mArray.length; i++)
                     {
-                        for (int i = 0; i < mArray.length; i++)
-                            {
-                                mPin = mPin + mArray[i];
-                            }
-                        System.out.println(mPin);
+                        mPin = mPin + mArray[i];
                     }
+                System.out.println(mPin);
             }
     }
     public void incrementIndexNumber() {

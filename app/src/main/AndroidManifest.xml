@@ -32,14 +32,6 @@
 
         <!-- MAIN ACTIVITIES -->
         <activity
-            android:name=".Activitys.Activities.Menus.Contribute"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity
-            android:name=".Activitys.Activities.Menus.About"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity
             android:name=".Activitys.Activities.Menus.Settings"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
@@ -61,10 +53,6 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".Activitys.Activities.Main.MainPlaygroundActivity"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity
-            android:name=".Activitys.Activities.Menus.BugReportActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
 

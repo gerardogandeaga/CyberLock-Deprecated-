@@ -11,7 +11,6 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -61,9 +60,9 @@ public class MainEditActivity extends AppCompatActivity {
     private EditText mEtNotes;
     private TextView mTvDate;
 
-    // MEMO WIDGETS
+    // NOTE WIDGETS
     private EditText
-            mEtMemo;
+            mEtNote;
 
     // PAYMENTINFO WIDGETS
     private EditText
@@ -87,7 +86,7 @@ public class MainEditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Globals.COLORSCHEME(this);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         mCryptoContent = new CryptoContent(mContext);
         super.onCreate(savedInstanceState);
 
@@ -126,9 +125,9 @@ public class MainEditActivity extends AppCompatActivity {
             if (mData != null) {
                 // IF ALREADY EXISTING DATABASE
                 switch (mData.getType(mCryptoContent)) {
-                    case ("TYPE_MEMO"):
+                    case ("TYPE_NOTE"):
                         TYPE = 1;
-                        setupActivityMemo();
+                        setupActivityNote();
                         break;
                     case ("TYPE_PAYMENTINFO"):
                         TYPE = 2;
@@ -146,7 +145,7 @@ public class MainEditActivity extends AppCompatActivity {
                 TYPE = (int) extras.get("type");
                 switch (TYPE) {
                     case (1):
-                        setupActivityMemo();
+                        setupActivityNote();
                         break;
                     case (2):
                         setupActivityPaymentInfo();
@@ -160,15 +159,15 @@ public class MainEditActivity extends AppCompatActivity {
         }
     }
 
-    // SUB SETUP ACTIVITIES CONDITIONAL TO DATA TYPE (IE. MEMO, PAYMENT-INFO, LOGIN-INFO)
+    // SUB SETUP ACTIVITIES CONDITIONAL TO DATA TYPE (IE. NOTE, PAYMENT-INFO, LOGIN-INFO)
     // INITIALIZE WIDGETS
-    private void setupLayoutMemo() {
-        setContentView(R.layout.activity_edit_memo);
+    private void setupLayoutNote() {
+        setContentView(R.layout.activity_edit_note);
 //        System.out.println("Layout Created!");
         // WIDGETS
         mTvDate = (TextView) findViewById(R.id.tvDate);
         mEtLabel = (EditText) findViewById(R.id.etLabel);
-        mEtMemo = (EditText) findViewById(R.id.etText);
+        mEtNote = (EditText) findViewById(R.id.etText);
     }
     private void setupLayoutPaymentInfo() {
         setContentView(R.layout.activity_edit_paymentinfo);
@@ -184,7 +183,7 @@ public class MainEditActivity extends AppCompatActivity {
         mSpCardSelect = (Spinner) findViewById(R.id.spCardSelect);
 
         mAdapter = ArrayAdapter.createFromResource(this, R.array.CardType_array, android.R.layout.simple_spinner_item);
-        mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         mSpCardSelect.setAdapter(mAdapter);
 
         mEtCardNumber.addTextChangedListener(new TextWatcher() {
@@ -263,8 +262,8 @@ public class MainEditActivity extends AppCompatActivity {
     }
 
     // SET DATA
-    private void setupActivityMemo() {
-        setupLayoutMemo();
+    private void setupActivityNote() {
+        setupLayoutNote();
 
         if (mIsNew) {
             setGlobalIdentifiers(setLabel(), null);
@@ -279,17 +278,17 @@ public class MainEditActivity extends AppCompatActivity {
             setGlobalIdentifiers(label, date);
             mColourTag = colourTag;
 
-            String memo;
+            String note;
             if (content != null) {
                 Scanner scanner = new Scanner(content);
 
-                memo = scanner.nextLine();
+                note = scanner.nextLine();
                 while (scanner.hasNextLine()) {
-                    memo += "\n";
-                    memo += scanner.nextLine();
+                    note += "\n";
+                    note += scanner.nextLine();
                 }
                 scanner.close();
-                mEtMemo.setText(memo); // SET THE MEMO FIELD
+                mEtNote.setText(note); // SET THE NOTE FIELD
             }
         }
     }
@@ -454,12 +453,12 @@ public class MainEditActivity extends AppCompatActivity {
     private String getWidgetData() {
         // GETTING AND FORMATTING THE CONTENT CONDITIONALLY
         if (TYPE == 1) {
-            final String memo = mEtMemo.getText().toString();
+            final String note = mEtNote.getText().toString();
 
             final String format = "%s";
 
             return String.format(format,
-                    memo);
+                    note);
         } else if (TYPE == 2) {
             final String cardName = mEtCardName.getText().toString();
             final String cardNumber = mEtCardNumber.getText().toString();
@@ -468,7 +467,7 @@ public class MainEditActivity extends AppCompatActivity {
             final String cardSecCode = mEtCardSecCode.getText().toString();
             final String notes = mEtNotes.getText().toString();
 
-            final String format = "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s";
+            final String format = "%s\n%s\n%s\n%s\n%s\n%s";
 
             return String.format(format,
                     cardName, cardNumber, cardType, cardExpire, cardSecCode, notes);
@@ -511,10 +510,10 @@ public class MainEditActivity extends AppCompatActivity {
         if (mIsNew) {
             Data tmp = new Data();
 
-            String tmpType = null;
+            String tmpType;
             switch (TYPE) {
                 case (1):
-                    tmpType = "TYPE_MEMO";
+                    tmpType = "TYPE_NOTE";
                     break;
                 case (2):
                     tmpType = "TYPE_PAYMENTINFO";
@@ -523,7 +522,7 @@ public class MainEditActivity extends AppCompatActivity {
                     tmpType = "TYPE_LOGININFO";
                     break;
                 default:
-                    tmpType = "TYPE_MEMO"; // TODO CREATE A "COULD NOT READ TYPE" DIALOG ALLOWING FOR AN EDIT
+                    tmpType = "TYPE_NOTE"; // TODO CREATE A "COULD NOT READ TYPE" DIALOG ALLOWING FOR AN EDIT
             }
             tmp.setType(mCryptoContent, tmpType);
             tmp.setColourTag(mCryptoContent, colourTag);
@@ -581,6 +580,7 @@ public class MainEditActivity extends AppCompatActivity {
             ACTIVITY_INTENT = new Intent(this, MainActivity.class);
             finish();
             startActivity(ACTIVITY_INTENT);
+            overridePendingTransition(R.anim.anim_slide_inleft, R.anim.anim_slide_outright);
         }
     }
     @Override

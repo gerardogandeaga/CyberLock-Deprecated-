@@ -2,10 +2,10 @@ package com.gerardogandeaga.cyberlock.Activitys.Activities.Main;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,19 +22,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Contribute;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings;
 import com.gerardogandeaga.cyberlock.Crypto.CryptoContent;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.Data;
@@ -42,7 +39,8 @@ import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.MasterDa
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.Supports.Globals;
 import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.Supports.Settings_ScrambleKey;
+
+import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     // INITIAL ON CREATE METHODS
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         Globals.COLORSCHEME(this);
         mCryptoContent = new CryptoContent(mContext);
         super.onCreate(savedInstanceState);
@@ -158,314 +156,32 @@ public class MainActivity extends AppCompatActivity {
         params.width = (newWidth);
         mNavigationView.setLayoutParams(params);
     }
-    private void buildDialog() {
-        // LINEAR LAYOUT BUILDING
-        LinearLayout Content = new LinearLayout(mContext);
-        Content.setOrientation(LinearLayout.VERTICAL);
 
-        TextView tvTitle = new TextView(mContext);
-        tvTitle.setText("Label:");
-
-        TextView tvReport = new TextView(mContext);
-        tvReport.setText("Content:");
-
-        EditText etTitle = new EditText(mContext);
-        etTitle.setHint("Title");
-
-        EditText etReport = new EditText(mContext);
-        etReport.setHint("Details");
-
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(50, 20, 50, 0);
-//        Content.addView(tvTitle, layoutParams);
-        Content.addView(etTitle, layoutParams);
-//        Content.addView(tvReport, layoutParams);
-        Content.addView(etReport, layoutParams);
-
-        Content.setLayoutParams(layoutParams);
-
-        // DIALOG BUILDER
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setView(Content);
-        dialog.setTitle("Bug Report");
-        dialog.setCancelable(false);
-
-        dialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        dialog.setPositiveButton("SEND", new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-
-                new Settings_ScrambleKey(mContext).execute();
-            }
-        });
-        dialog.show();
-    }
-    // -------------------------
-
-    // FUNCTIONS FOR THE DATA ADAPTER
-    private void memoFunctions(final Data data, View convertView, LinearLayout.LayoutParams params, final RelativeLayout layoutContent) {
-        data.setFullDisplayed(false);
-
-        final String date = data.getDate();
-        final String label = data.getLabel(mCryptoContent);
-        final String content = data.getContent(mCryptoContent);
-
-        String memo = "";
-
-        if (content != null) {
-            Scanner scanner = new Scanner(content);
-
-            try {
-                memo = scanner.nextLine();
-                while (scanner.hasNextLine()) {
-                    memo += "\n";
-                    memo += scanner.nextLine();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            scanner.close();
-        }
-
-        final TextView tvDate = (TextView) convertView.findViewById(R.id.tvMemoDate);
-        final TextView tvLabel = (TextView) convertView.findViewById(R.id.tvMemoLabel);
-        final TextView tvMemo = (TextView) convertView.findViewById(R.id.tvMemo);
-
-        if (label != null) {
-            tvLabel.setText(label);
-        } else {
-            tvLabel.setLayoutParams(params);
-        }
-        if (memo != null) {
-            tvMemo.setText(data.getShortText(mContext, memo));
-        } else {
-            tvMemo.setLayoutParams(params);
-        }
-        tvDate.setText(date);
-
-        final String finalMemo = memo;
-
-        layoutContent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("HI!");
-                if (isEditable(data, layoutContent)) {
-                    View dialogView = View.inflate(mContext, R.layout.child_view_memo, null);
-                    ImageButton childDone = (ImageButton) dialogView.findViewById(R.id.btnChildDone);
-                    ImageButton childEdit = (ImageButton) dialogView.findViewById(R.id.btnChildEdit);
-                    TextView childLabel = (TextView) dialogView.findViewById(R.id.tvChildLabel);
-                    TextView childMemo = (TextView) dialogView.findViewById(R.id.tvChildMemo);
-                    TextView childDate = (TextView) dialogView.findViewById(R.id.tvChildDate);
-
-                    childLabel.setText(label);
-                    childMemo.setText(finalMemo);
-                    childDate.setText(date);
-
-                    // DIALOG BUILDER
-                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setView(dialogView);
-                    // DIALOG SHOW
-                    final AlertDialog dialog = builder.show();
-
-                    childEdit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                            onEditClicked(data);
-                        }
-                    });
-                    childDone.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                        }
-                    });
-                }
-            }
-        });
-    }
-    private void paymentInfoFunctions(Data data, View convertView, LinearLayout.LayoutParams params) {
-        data.setFullDisplayed(false);
-
-        final String date = data.getDate();
-        final String label = data.getLabel(mCryptoContent);
-        final String content = data.getContent(mCryptoContent);
-
-        String cardName = "";
-        String cardNumber = "";
-        String cardType = "";
-
-        Scanner scanner = new Scanner(content);
-
-        try {
-            cardName = scanner.nextLine();
-            cardNumber = scanner.nextLine();
-            cardType = scanner.nextLine();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        scanner.close();
-
-        String tempNumber = "";
-
-        final TextView tvDate = (TextView) convertView.findViewById(R.id.tvPaymentInfoDate);
-        final TextView tvLabel = (TextView) convertView.findViewById(R.id.tvPaymentInfoLabel);
-        final TextView tvCardName = (TextView) convertView.findViewById(R.id.tvCardName);
-        final TextView tvCardNumber = (TextView) convertView.findViewById(R.id.tvCardNumber);
-        final ImageView imgCard = (ImageView) convertView.findViewById(R.id.imgCard);
-
-        if (label != null) {
-            tvLabel.setText(label);
-        } else {
-            tvLabel.setLayoutParams(params);
-        }
-        if (!cardName.matches("")) {
-            tvCardName.setText(cardName);
-        } else {
-            tvCardName.setLayoutParams(params);
-        }
-        if (!cardNumber.matches("")) { // ***** ASTRIX ALGORITHM
-            if (cardNumber.length() < 5) {
-                tempNumber = cardNumber.substring(0, cardNumber.length());
-            } else {
-                int i = 0;
-                while (i < cardNumber.length() - 5) {
-                    tempNumber = tempNumber + "*";
-                    i++;
-                }
-                tempNumber = tempNumber + cardNumber.substring(cardNumber.length() - 4, cardNumber.length());
-            }
-            tvCardNumber.setText(tempNumber);
-        } else {
-            tvCardNumber.setLayoutParams(params);
-        }
-        tvDate.setText(date);
-
+    // PAYMENTINFO CARD GRAPHIC
+    private Drawable setCardImage(String cardType) {
         switch (cardType) {
             case ("None"):
-                imgCard.setImageResource(R.drawable.card_default);
-                break;
+                return getResources().getDrawable(R.drawable.card_default);
             case ("Visa"):
-                imgCard.setImageResource(R.drawable.card_visa);
-                break;
+                return getResources().getDrawable(R.drawable.card_visa);
             case ("Master Card"):
-                imgCard.setImageResource(R.drawable.card_mastercard);
-                break;
+                return getResources().getDrawable(R.drawable.card_mastercard);
             case ("American Express"):
-                imgCard.setImageResource(R.drawable.card_americanexpress);
-                break;
+                return getResources().getDrawable(R.drawable.card_americanexpress);
             case ("Discover"):
-                imgCard.setImageResource(R.drawable.card_discover);
-                break;
+                return getResources().getDrawable(R.drawable.card_discover);
             case ("Other"):
-                imgCard.setImageResource(R.drawable.card_default);
-                break;
+                return getResources().getDrawable(R.drawable.card_default);
             default:
-                imgCard.setImageResource(R.drawable.card_americanexpress);
-                break;
+                return getResources().getDrawable(R.drawable.card_default);
         }
     }
-    private void loginInfoFunctions(final Data data, View convertView, RelativeLayout layoutContent) {
-        data.setFullDisplayed(false);
-
-        final String date = data.getDate();
-        final String label = data.getLabel(mCryptoContent);
-        final String content = data.getContent(mCryptoContent);
-
-        String url = "";
-        String username = "";
-        String email = "";
-        String password = "";
-
-        Scanner scanner = new Scanner(content);
-
-        try {
-            url = scanner.nextLine();
-            username = scanner.nextLine();
-            email = scanner.nextLine();
-            password = scanner.nextLine();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        final TextView tvDate = (TextView) convertView.findViewById(R.id.tvLoginInfoDate);
-        final TextView tvLabel = (TextView) convertView.findViewById(R.id.tvLoginInfoLabel);
-        final TextView tvUrl = (TextView) convertView.findViewById(R.id.tvURL);
-        final TextView tvUsername = (TextView) convertView.findViewById(R.id.tvUsername);
-        final TextView tvEmail = (TextView) convertView.findViewById(R.id.tvEmail);
-        final TextView tvPassword = (TextView) convertView.findViewById(R.id.tvPassword);
-
-        final LinearLayout.LayoutParams hideParams = new LinearLayout.LayoutParams(0, 0);
-        final LinearLayout.LayoutParams displayParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        if (!label.matches("")) {
-            tvLabel.setText(label);
-        } else {
-            tvLabel.setLayoutParams(hideParams);
-        }
-        if (!url.matches("")) {
-            tvUrl.setText("Url: " + url);
-        } else {
-            tvUrl.setLayoutParams(hideParams);
-        }
-        if (!username.matches("")) {
-            tvUsername.setText("Username: " + username);
-            tvUsername.setLayoutParams(hideParams);
-        } else {
-            tvUsername.setLayoutParams(hideParams);
-        }
-        if (!email.matches("")) {
-            tvEmail.setText("Email: " + email);
-            tvEmail.setLayoutParams(hideParams);
-        } else {
-            tvEmail.setLayoutParams(hideParams);
-        }
-        if (!password.matches("")) {
-            tvPassword.setText("Password: " + password);
-            tvPassword.setLayoutParams(hideParams);
-        } else {
-            tvPassword.setLayoutParams(hideParams);
-        }
-        tvDate.setText(date);
-
-//        layoutContent.setOnLongClickListener(new View.OnLongClickListener()
-//        {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                if (data.isFullDisplayed()) {
-//                    tvUsername.setLayoutParams(hideParams);
-//                    tvEmail.setLayoutParams(hideParams);
-//                    tvPassword.setLayoutParams(hideParams);
-//                    data.setFullDisplayed(false);
-//                } else {
-//                    tvUsername.setLayoutParams(displayParams);
-//                    tvEmail.setLayoutParams(displayParams);
-//                    tvPassword.setLayoutParams(displayParams);
-//                    data.setFullDisplayed(true);
-//                }
-//
-//                return false;
-//            }
-//        });
-    }
-    // ------------------------------
+    // -------------------------
 
     // ON ACTION CLICKS
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Dialog dialog = new Dialog(this);
-
         if (mDrawerToggle.onOptionsItemSelected(item)) return true;
-
         switch (item.getItemId()) {
             // OPTIONS
             case R.id.action_deletesweep:
@@ -477,9 +193,8 @@ public class MainActivity extends AppCompatActivity {
                 onMultiSelectClicked();
                 return true;
 
-
             // FUNTIONS
-            case R.id.action_memo:
+            case R.id.action_note:
                 onAddClicked(1);
                 return true;
             case R.id.action_paymentinfo:
@@ -498,38 +213,35 @@ public class MainActivity extends AppCompatActivity {
 
         switch (id)
         {
-            case R.id.action_memo:
+            case R.id.action_note:
                 onAddClicked(1);
+                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
                 break;
             case R.id.action_paymentinfo:
                 onAddClicked(2);
+                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
                 break;
             case R.id.action_logininfo:
                 onAddClicked(3);
+                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
                 break;
 
             case R.id.action_playground:
                 ACTIVITY_INTENT = new Intent(this, MainPlaygroundActivity.class);
                 this.finish();
                 this.startActivity(ACTIVITY_INTENT);
+                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
                 break;
             case R.id.action_settings:
                 ACTIVITY_INTENT = new Intent(this, Settings.class);
                 this.finish();
                 this.startActivity(ACTIVITY_INTENT);
+                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
                 break;
             case R.id.action_about:
                 dialog.setContentView(R.layout.activity_about);
                 dialog.setTitle("About Cyber Lock");
                 dialog.show();
-                break;
-            case R.id.action_bugReport:
-                buildDialog();
-                break;
-            case R.id.action_contribute:
-                ACTIVITY_INTENT = new Intent(this, Contribute.class);
-                this.finish();
-                this.startActivity(ACTIVITY_INTENT);
                 break;
 
             case R.id.action_webpage:
@@ -553,32 +265,12 @@ public class MainActivity extends AppCompatActivity {
         this.finish();
         this.startActivity(ACTIVITY_INTENT);
     }
-    private boolean isEditable(Data data, RelativeLayout Content) {
-        if (mListView.getChoiceMode() != ListView.CHOICE_MODE_MULTIPLE_MODAL) {
-            return true;
-        } else {
-            if (!data.isSelected()) {
-                Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem_selected));
-                data.setSelected(true);
-                mSelectedDatas.add(data);
-                mCount++;
-            } else {
-                Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem));
-                data.setSelected(false);
-                mSelectedDatas.remove(data);
-                mCount--;
-            }
-            getSupportActionBar().setTitle(mCount + " Selected");
-
-            return false;
-        }
-    }
     // MULTI SELECT
     public void onMultiSelectClicked() {
         MenuInflater menuInflater = new MenuInflater(mContext);
 
         if (mListView.getChoiceMode() != ListView.CHOICE_MODE_MULTIPLE_MODAL) {
-            mSelectedDatas = new ArrayList<Data>();
+            mSelectedDatas = new ArrayList<>();
 
             mMenu.removeItem(R.id.action_search);
             mMenu.removeItem(R.id.action_deletesweep);
@@ -617,14 +309,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void onDeleteClicked() {
-        if (mSelectedDatas.size() != 0) {
+        if (!mSelectedDatas.isEmpty()) {
             this.mMasterDatabaseAccess.open();
             for (Data id : mSelectedDatas) {
                 this.mMasterDatabaseAccess.delete(id);
             }
             this.mMasterDatabaseAccess.close();
             onMultiSelectClicked();
-        } else {
         }
     }
     // ----------------
@@ -667,49 +358,45 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // INNER ADAPTER CLASS
-    private class DataAdapter extends ArrayAdapter<Data> // TODO OPTOMIZE LIST VIEW TO HANDLE MORE INPUTS AND VIEWS!!!
+    private class DataAdapter extends ArrayAdapter<Data> // TODO OPTIMIZE LIST VIEW TO HANDLE MORE INPUTS AND VIEWS!!!
     {
         private DataAdapter(Context context, List<Data> objects) {
             super(context, 0, objects);
         }
 
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.item_main_list, parent, false);
             }
-
             final Data data = mDatas.get(position);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, 0);
 
             final RelativeLayout Content = (RelativeLayout) convertView.findViewById(R.id.Content);
             final RelativeLayout MemoListLayout = (RelativeLayout) convertView.findViewById(R.id.MemoListLayout);
             final RelativeLayout PaymentInfoListLayout = (RelativeLayout) convertView.findViewById(R.id.PaymentInfoListLayout);
             final RelativeLayout LoginInfoListLayout = (RelativeLayout) convertView.findViewById(R.id.LoginInfoListLayout);
-
-
             final ImageView ColourTag = (ImageView) convertView.findViewById(R.id.ColourTag);
 
             final String TYPE = data.getType(mCryptoContent);
             switch (TYPE) {
-                case "TYPE_MEMO":
-                    PaymentInfoListLayout.setLayoutParams(params);
-                    LoginInfoListLayout.setLayoutParams(params);
-                    memoFunctions(data, convertView, params, Content);
+                case "TYPE_NOTE":
+                    removeView(PaymentInfoListLayout);
+                    removeView(LoginInfoListLayout);
+                    noteFunctions(convertView, data, Content);
                     break;
                 case "TYPE_PAYMENTINFO":
-                    MemoListLayout.setLayoutParams(params);
-                    LoginInfoListLayout.setLayoutParams(params);
-                    paymentInfoFunctions(data, convertView, params);
+                    removeView(MemoListLayout);
+                    removeView(LoginInfoListLayout);
+                    paymentInfoFunctions(convertView, data, Content);
                     break;
                 case "TYPE_LOGININFO":
-                    MemoListLayout.setLayoutParams(params);
-                    PaymentInfoListLayout.setLayoutParams(params);
-                    loginInfoFunctions(data, convertView, Content);
+                    removeView(MemoListLayout);
+                    removeView(PaymentInfoListLayout);
+                    loginInfoFunctions(convertView, data, Content);
                     break;
             }
 
@@ -724,31 +411,337 @@ public class MainActivity extends AppCompatActivity {
                 default: ColourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_default), PorterDuff.Mode.MULTIPLY); break;
             }
 
-//            Content.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (mListView.getChoiceMode() != ListView.CHOICE_MODE_MULTIPLE_MODAL) {
-//                        if (!data.isSelected()) {
-//                            Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem_selected));
-//                            data.setSelected(true);
-//                            mSelectedDatas.add(data);
-//                            mCount++;
-//
-////                            System.out.println(mSelectedDatas);
-//                        } else {
-//                            Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem));
-//                            data.setSelected(false);
-//                            mSelectedDatas.remove(data);
-//                            mCount--;
-//
-////                            System.out.println(mSelectedDatas);
-//                        }
-//                        getSupportActionBar().setTitle(mCount + " Selected");
-//                    }
-//                }
-//            });
-
             return convertView;
+        }
+
+        // FUNCTIONS FOR THE DATA ADAPTER
+        private void noteFunctions(View convertView, final Data data, final RelativeLayout view) {
+            final TextView tvDate = (TextView) convertView.findViewById(R.id.tvMemoDate);
+            final TextView tvLabel = (TextView) convertView.findViewById(R.id.tvMemoLabel);
+            final TextView tvMemo = (TextView) convertView.findViewById(R.id.tvMemo);
+            // ----
+            final String date = data.getDate();
+            final String label = data.getLabel(mCryptoContent);
+            final String content = data.getContent(mCryptoContent);
+            final String TYPE = data.getType(mCryptoContent);
+            // ----
+            StringBuilder note;
+
+            Scanner scanner = new Scanner(content);
+            note = new StringBuilder(scanner.nextLine());
+            while (scanner.hasNextLine()) {
+                note.append("\n");
+                note.append(scanner.nextLine());
+            }
+            scanner.close();
+
+            // SET VIEWS
+            if (label != null) { tvLabel.setText(label); } else { removeView(tvLabel); }
+            tvMemo.setText(data.getShortText(mContext, note.toString()));
+            tvDate.setText(date);
+            // --------
+            final String prevMemo = note.toString();
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isEditable(data, view)) { // MULTI-SELECT MODE IS NOT ACTIVE
+                        View dialogView = View.inflate(mContext, R.layout.preview_note, null);
+                        ImageView childType = (ImageView) dialogView.findViewById(R.id.imgChildIconType);
+                        ImageButton childDone = (ImageButton) dialogView.findViewById(R.id.btnChildDone);
+                        ImageButton childEdit = (ImageButton) dialogView.findViewById(R.id.btnChildEdit);
+                        TextView childLabel = (TextView) dialogView.findViewById(R.id.tvChildLabel);
+                        TextView childMemo = (TextView) dialogView.findViewById(R.id.tvChildMemo);
+                        TextView childDate = (TextView) dialogView.findViewById(R.id.tvChildDate);
+
+                        childType.setImageDrawable(getIconType(TYPE));
+                        childLabel.setText(label);
+                        childMemo.setText(prevMemo);
+                        childDate.setText(date);
+
+                        // DIALOG BUILDER
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                        builder.setView(dialogView);
+                        // DIALOG SHOW
+                        final AlertDialog dialog = builder.show();
+
+                        childEdit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                onEditClicked(data);
+                            }
+                        });
+                        childDone.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                }
+            }); // PREVIEW DIALOG
+        }
+        private void paymentInfoFunctions(View convertView, final Data data, final RelativeLayout view) {
+            final TextView tvDate = (TextView) convertView.findViewById(R.id.tvPaymentInfoDate);
+            final TextView tvLabel = (TextView) convertView.findViewById(R.id.tvPaymentInfoLabel);
+            final TextView tvCardName = (TextView) convertView.findViewById(R.id.tvCardName);
+            final TextView tvCardNumber = (TextView) convertView.findViewById(R.id.tvCardNumber);
+            final ImageView imgCard = (ImageView) convertView.findViewById(R.id.imgCard);
+            // ----
+            final String date = data.getDate();
+            final String label = data.getLabel(mCryptoContent);
+            final String content = data.getContent(mCryptoContent);
+            final String TYPE = data.getType(mCryptoContent);
+            // ----
+            String name = "";
+            String number = "";
+            String cardType = "";
+            String expiry = "";
+            String cvv = "";
+            StringBuilder notes = new StringBuilder("");
+
+            Scanner scanner = new Scanner(content);
+            try {
+                name = scanner.nextLine();
+                number = scanner.nextLine();
+                cardType = scanner.nextLine();
+                expiry = scanner.nextLine();
+                cvv = scanner.nextLine();
+                notes = new StringBuilder(scanner.nextLine());
+                while (scanner.hasNextLine()) {
+                    notes.append("\n");
+                    notes.append(scanner.nextLine());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            scanner.close();
+
+            // SET VIEWS
+            if (isNull(label)) { tvLabel.setText(label); } else { removeView(tvLabel); }
+            if (isNull(name)) { tvCardName.setText(name); } else { removeView(tvCardName); }
+            tvDate.setText(date);
+            imgCard.setImageDrawable(setCardImage(cardType)); // SET CARD TYPE ICON
+            // ----
+            StringBuilder tempNumber = new StringBuilder();
+            if (!number.matches("")) { // ***** ASTRIX ALGORITHM
+                if (number.length() < 5) {
+                    tempNumber = new StringBuilder(number.substring(0, number.length()));
+                } else {
+                    int i = 0;
+                    while (i < number.length() - 5) {
+                        tempNumber.append("*");
+                        i++;
+                    }
+                    tempNumber.append(number.substring(number.length() - 4, number.length()));
+                }
+                tvCardNumber.setText(tempNumber.toString());
+            } else {
+                removeView(tvCardNumber);
+            }
+            // ----
+            final String prevName = name;
+            final String prevNumber = number;
+            final String prevExpiry = expiry;
+            final String prevCVV = cvv;
+            final String prevCardType = cardType;
+            final String prevNotes = notes.toString();
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isEditable(data, view)) {
+                        View dialogView = View.inflate(mContext, R.layout.preview_paymentinfo, null);
+                        ImageView childType = (ImageView) dialogView.findViewById(R.id.imgChildIconType);
+                        ImageButton childDone = (ImageButton) dialogView.findViewById(R.id.btnChildDone);
+                        ImageButton childEdit = (ImageButton) dialogView.findViewById(R.id.btnChildEdit);
+                        TextView childLabel = (TextView) dialogView.findViewById(R.id.tvChildLabel);
+                        TextView childCardName = (TextView) dialogView.findViewById(R.id.tvChildCardName);
+                        TextView childCardNumber= (TextView) dialogView.findViewById(R.id.tvChildCardNumber);
+                        TextView childCardExpiry = (TextView) dialogView.findViewById(R.id.tvChildCardExpiry);
+                        TextView childCardSecCode = (TextView) dialogView.findViewById(R.id.tvChildCardSecCode);
+                        TextView childCardType = (TextView) dialogView.findViewById(R.id.tvChildCardType);
+                        TextView childNotes = (TextView) dialogView.findViewById(R.id.tvChildNotes);
+                        TextView childDate = (TextView) dialogView.findViewById(R.id.tvChildDate);
+                        ImageView childCardIcon = (ImageView) dialogView.findViewById(R.id.imgChildCardType);
+
+                        childType.setImageDrawable(getIconType(TYPE));
+                        childLabel.setText(label);
+                        childCardName.setText("Holder Name: " + prevName);
+                        childCardNumber.setText("Number: " + prevNumber);
+                        childCardExpiry.setText("Expiry Date: " + prevExpiry);
+                        childCardSecCode.setText("CVV: " + prevCVV);
+                        childCardType.setText("Card Type: " + prevCardType);
+                        childNotes.setText(prevNotes);
+                        childDate.setText(date);
+                        childCardIcon.setImageDrawable(setCardImage(prevCardType));
+
+                        // DIALOG BUILDER
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                        builder.setView(dialogView);
+                        // DIALOG SHOW
+                        final AlertDialog dialog = builder.show();
+
+                        childEdit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                onEditClicked(data);
+                            }
+                        });
+                        childDone.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                }
+            });
+        }
+        private void loginInfoFunctions(View convertView, final Data data, final RelativeLayout view) {
+            final TextView tvDate = (TextView) convertView.findViewById(R.id.tvLoginInfoDate);
+            final TextView tvLabel = (TextView) convertView.findViewById(R.id.tvLoginInfoLabel);
+            final TextView tvUrl = (TextView) convertView.findViewById(R.id.tvURL);
+            final TextView tvUsername = (TextView) convertView.findViewById(R.id.tvUsername);
+            final TextView tvEmail = (TextView) convertView.findViewById(R.id.tvEmail);
+            final TextView tvPassword = (TextView) convertView.findViewById(R.id.tvPassword);
+            // ----
+            final String date = data.getDate();
+            final String label = data.getLabel(mCryptoContent);
+            final String content = data.getContent(mCryptoContent);
+            final String TYPE = data.getType(mCryptoContent);
+            // ----
+            String url = "";
+            String username = "";
+            String email = "";
+            String password = "";
+            StringBuilder notes = new StringBuilder("");
+
+            Scanner scanner = new Scanner(content);
+            try {
+                url = scanner.nextLine();
+                username = scanner.nextLine();
+                email = scanner.nextLine();
+                password = scanner.nextLine();
+                notes = new StringBuilder(scanner.nextLine());
+                while (scanner.hasNextLine()) {
+                    notes.append("\n");
+                    notes.append(scanner.nextLine());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            scanner.close();
+
+            // SET VIEWS
+            if (isNull(label)) { tvLabel.setText(label); } else { removeView(tvLabel); }
+            if (isNull(url)) { tvUrl.setText("URL: " + url); } else { removeView(tvUrl); }
+            if (isNull(username)) { tvUsername.setText("Username: " + username); } else { removeView(tvUsername); }
+            if (isNull(email)) { tvEmail.setText("Email: " + email); } else { removeView(tvEmail); }
+            if (isNull(password)) { tvPassword.setText("Password: " + password); } else { removeView(tvPassword); }
+            tvDate.setText(date);
+            // ----
+            final String finalUrl = url;
+            final String finalUsername = username;
+            final String finalEmail = email;
+            final String finalPassword = password;
+            final String finalNotes = notes.toString();
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isEditable(data, view)) {
+                        View dialogView = View.inflate(mContext, R.layout.preview_logininfo, null);
+                        ImageView childType = (ImageView) dialogView.findViewById(R.id.imgChildIconType);
+                        ImageButton childDone = (ImageButton) dialogView.findViewById(R.id.btnChildDone);
+                        ImageButton childEdit = (ImageButton) dialogView.findViewById(R.id.btnChildEdit);
+                        TextView childLabel = (TextView) dialogView.findViewById(R.id.tvChildLabel);
+                        TextView childUrl = (TextView) dialogView.findViewById(R.id.tvchildUrl);
+                        TextView childUsername = (TextView) dialogView.findViewById(R.id.tvChildUsername);
+                        TextView childEmail = (TextView) dialogView.findViewById(R.id.tvChildEmail);
+                        TextView childPassword = (TextView) dialogView.findViewById(R.id.tvChildPassword);
+                        TextView childNotes = (TextView) dialogView.findViewById(R.id.tvChildNotes);
+                        TextView childDate = (TextView) dialogView.findViewById(R.id.tvChildDate);
+
+                        childType.setImageDrawable(getIconType(TYPE));
+                        childLabel.setText(label);
+                        childUrl.setText("URL: " + finalUrl);
+                        childUsername.setText("Username: " + finalUsername);
+                        childEmail.setText("Email: " + finalEmail);
+                        childPassword.setText("Password: " + finalPassword);
+                        childNotes.setText(finalNotes);
+                        childDate.setText(date);
+
+                        // DIALOG BUILDER
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                        builder.setView(dialogView);
+                        // DIALOG SHOW
+                        final AlertDialog dialog = builder.show();
+
+                        childEdit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                                onEditClicked(data);
+                            }
+                        });
+                        childDone.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                }
+            });
+        }
+        // ------------------------------
+        // SIMPLE OVERLOADED "REMOVE" FUNCTIONS
+        private void removeView(TextView view) {
+            view.setVisibility(View.GONE);
+        }
+        private void removeView(RelativeLayout view) {
+            view.setVisibility(View.GONE);
+        }
+        // ----------------
+        // DIALOG EXTRAS
+        private Drawable getIconType(String TYPE) {
+            switch (TYPE) {
+                case "TYPE_NOTE":
+                    return mResources.getDrawable(R.drawable.ic_graphic_note);
+                case "TYPE_PAYMENTINFO":
+                    return mResources.getDrawable(R.drawable.ic_graphic_paymentinfo);
+                case "TYPE_LOGININFO":
+                    return mResources.getDrawable(R.drawable.ic_graphic_logininfo);
+                default:
+                    Toast.makeText(mContext, "Could find 'type' of DATA", Toast.LENGTH_SHORT).show(); break;
+            }
+            return mResources.getDrawable(R.drawable.ic_graphic_none);
+        }
+        // PRIMITIVES
+        @Contract("null -> false")
+        private boolean isNull(String string) {
+            if (string != null) { if (string.isEmpty()) { return false; } }
+            return string != null;
+        }
+        private boolean isEditable(Data data, RelativeLayout Content) {
+            if (mListView.getChoiceMode() != ListView.CHOICE_MODE_MULTIPLE_MODAL) {
+                return true;
+            } else {
+                if (!data.isSelected()) {
+                    Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem_selected));
+                    data.setSelected(true);
+                    mSelectedDatas.add(data);
+                    mCount++;
+                } else {
+                    Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem));
+                    data.setSelected(false);
+                    mSelectedDatas.remove(data);
+                    mCount--;
+                }
+                getSupportActionBar().setTitle(mCount + " Selected");
+
+                return false;
+            }
         }
     }
 }

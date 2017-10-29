@@ -6,7 +6,7 @@
     android:id="@+id/Content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_light2"
+    android:background="@android:color/white"
     android:orientation="vertical"
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainEditActivity">
 
@@ -26,13 +26,13 @@
         android:maxLines="1"
         android:padding="10dp"
         android:scrollbars="horizontal"
-        android:textAppearance="@style/myText.Label"/>
+        android:textAppearance="@style/myText.Label"
+        tools:targetApi="lollipop"/>
 
     <ScrollView
         android:id="@+id/Data"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/MainInfo"
@@ -45,11 +45,7 @@
                 android:id="@+id/layoutCard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginStart="10dp"
+                android:layout_margin="10dp"
                 android:background="@drawable/background_fill_graymid"
                 android:orientation="vertical"
                 android:padding="10dp">
@@ -126,21 +122,15 @@
 
             </LinearLayout>
 
-            <ScrollView
+            <EditText
+                android:id="@+id/etNotes"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
-
-                <EditText
-                    android:id="@+id/etNotes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:gravity="start|end"
-                    android:hint="Notes..."
-                    android:inputType="textMultiLine"
-                    android:textAppearance="@style/myText.Content"/>
-            </ScrollView>
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|end"
+                android:hint="Notes..."
+                android:inputType="textMultiLine"
+                android:textAppearance="@style/myText.Content"/>
 
             <TextView
                 android:id="@+id/tvDate"
@@ -152,4 +142,5 @@
 
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

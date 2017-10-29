@@ -38,13 +38,11 @@ public class CryptoContent {
 
     @Nullable
     public String ENCRYPT_CONTENT(String dataToEncrypt, String symmetricKey) {
-        if (dataToEncrypt == null || dataToEncrypt.matches("")) {
+        if (dataToEncrypt == null || dataToEncrypt.isEmpty()) {
             return null;
         }
 
         try {
-            if (!dataToEncrypt.matches("")) // CHECK IS THERE IS ACTULA CONTENT TO ENCRYPT
-            {
 //                System.out.println("\n" + "ORIGINAL INPUT: " + dataToEncrypt);
                 byte[] encryptedPassword = Base64.decode(symmetricKey, FLAGS); // GENERATE KEY
 
@@ -63,9 +61,6 @@ public class CryptoContent {
 //                System.out.println("ENCRYPT_KEY: ENCRYPT DONE...");
 //                System.out.println("ENCRYPTED OUTPUT: " + Base64.encodeToString(combinedByteVal, FLAGS));
                 return Base64.encodeToString(combinedByteVal, FLAGS);
-            } else {
-                return ""; // RETURN NOTHING
-            }
         } catch (Exception e) {
 //            System.out.println("ENCRYPT_KEY: ENCRYPT FAILED!...");
             e.printStackTrace();
@@ -75,7 +70,7 @@ public class CryptoContent {
     }
     @Nullable
     public String DECRYPT_CONTENT(String dataToDecrypt, String symmetricKey) {
-        if (dataToDecrypt == null || dataToDecrypt.matches("")) {
+        if (dataToDecrypt == null || dataToDecrypt.isEmpty()) {
             return null;
         }
 

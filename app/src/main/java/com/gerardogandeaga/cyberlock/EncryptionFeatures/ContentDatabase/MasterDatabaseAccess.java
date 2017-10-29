@@ -5,23 +5,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.gerardogandeaga.cyberlock.Crypto.CryptoContent;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MasterDatabaseAccess
-{
-    private Context mContext;
-    private CryptoContent mCryptoContent;
+public class MasterDatabaseAccess {
     private SQLiteDatabase mSQLiteDatabase;
     private MasterDatabaseOpenHelper mOpenHelper;
     private static volatile MasterDatabaseAccess instance;
 
     private MasterDatabaseAccess(Context context) {
         mOpenHelper = new MasterDatabaseOpenHelper(context);
-        mContext = context;
     }
 
     public static synchronized MasterDatabaseAccess getInstance(Context context) {
@@ -66,8 +60,8 @@ public class MasterDatabaseAccess
         mSQLiteDatabase.delete(MasterDatabaseOpenHelper.TABLE, "date = ?", new String[]{date});
     }
 
-    public List getAllData() {
-        List data = new ArrayList<>();
+    public List<Data> getAllData() {
+        List<Data> data = new ArrayList<>();
         Cursor cursor = mSQLiteDatabase.rawQuery("SELECT * From data ORDER BY date DESC", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {

@@ -5,7 +5,6 @@
     android:id="@+id/Content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_light2"
     android:orientation="vertical"
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainEditActivity">
 

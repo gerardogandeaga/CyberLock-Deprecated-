@@ -36,7 +36,8 @@
                 android:hint="Enter Passcode"
                 android:inputType="textPassword"
                 android:maxLength="16"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:textAppearance="@style/myText.Settings.Header"/>
 
         </android.support.design.widget.TextInputLayout>
 

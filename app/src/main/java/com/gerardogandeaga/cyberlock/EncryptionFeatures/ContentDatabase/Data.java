@@ -29,7 +29,7 @@ public class Data implements Serializable {
         this.mContent = mContent;
     }
 
-    private static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy | hh:mm aaa");
+    private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy 'at' hh:mm aaa");
     public Data() {
         this.mDate = new Date();
     }

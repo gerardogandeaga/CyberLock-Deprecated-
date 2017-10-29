@@ -26,10 +26,10 @@
 
         <menu>
             <item
-                android:id="@+id/action_memo"
-                android:icon="@drawable/ic_action_memo"
+                android:id="@+id/action_note"
+                android:icon="@drawable/ic_action_note"
                 android:orderInCategory="0"
-                android:title="New Memo"
+                android:title="New Note"
                 app:showAsAction="never"/>
 
             <item

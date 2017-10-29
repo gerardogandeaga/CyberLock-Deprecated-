@@ -3,7 +3,5 @@
           android:id="@android:id/text1"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:fontFamily="monospace"
-          android:textColor="@color/black"
-          android:textSize="18dp">
+          android:textAppearance="@style/myText.Settings.Description">
 </TextView>

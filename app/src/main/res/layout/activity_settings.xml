@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/Data"
+    android:id="@+id/Content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -14,7 +14,6 @@
         layout="@layout/child_toolbar"/>
 
     <ScrollView
-        android:id="@+id/ScrollData"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
@@ -23,18 +22,17 @@
         android:padding="0dp">
 
         <LinearLayout
-            android:id="@+id/Data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/appbar"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/AutoSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true">
+                android:background="@drawable/clickable_listitem"
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
                     android:id="@+id/imgAutoSave"
@@ -44,6 +42,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:contentDescription="auto save"
                     android:tint="@color/black"
                     app:srcCompat="@drawable/ic_graphic_autosave"/>
 
@@ -61,7 +61,7 @@
 
                     <LinearLayout
                         android:id="@+id/autoSave"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -71,24 +71,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:layout_weight="1"
-                            android:fontFamily="monospace"
                             android:text="Auto Save"
-                            android:textAllCaps="false"
-                            android:textColor="@color/black"
-                            android:textSize="20sp"
-                            android:textStyle="bold"/>
+                            android:textAppearance="@style/myText.Settings.Header"/>
 
                         <TextView
                             android:id="@+id/tvAutoSaveDesc"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="monospace"
                             android:text="Automatically save notes without needing to select the save button"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            />
+                            android:textAppearance="@style/myText.Settings.Description"/>
 
                     </LinearLayout>
 
@@ -96,8 +87,9 @@
                         android:id="@+id/cbAutoSave"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:buttonTint="@color/black"
                         android:textSize="16sp"
-                        app:buttonTint="@color/black"/>
+                        tools:targetApi="lollipop"/>
 
                 </LinearLayout>
             </RelativeLayout>
@@ -106,7 +98,9 @@
                 android:id="@+id/AutoLogoutDelay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true">
+                android:background="@drawable/clickable_listitem"
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
                     android:id="@+id/imgAutoLogoutDelay"
@@ -116,6 +110,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:contentDescription="auto logout"
                     android:tint="@color/black"
                     app:srcCompat="@drawable/ic_graphic_logout_delay"/>
 
@@ -136,23 +132,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="monospace"
                         android:text="Auto Logout Delay"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textAppearance="@style/myText.Settings.Header"/>
 
                     <TextView
                         android:id="@+id/tvAutoLogoutDelayDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="monospace"
                         android:text="Select how long it takes for the application to automatically logout"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        />
+                        android:textAppearance="@style/myText.Settings.Description"/>
 
                     <Spinner
                         android:id="@+id/spAutoLogoutDelay"
@@ -161,7 +149,8 @@
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/black"
                         android:popupBackground="@color/white"
-                        android:spinnerMode="dialog"/>
+                        android:spinnerMode="dialog"
+                        tools:targetApi="lollipop"/>
                 </LinearLayout>
             </RelativeLayout>
 
@@ -169,7 +158,9 @@
                 android:id="@+id/ChangePasscode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true">
+                android:background="@drawable/clickable_listitem"
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
                     android:id="@+id/imgChangePassword"
@@ -179,6 +170,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:contentDescription="change passcode"
                     android:tint="@color/black"
                     app:srcCompat="@drawable/ic_graphic_change_password"/>
 
@@ -192,94 +185,19 @@
                     android:layout_toEndOf="@+id/imgChangePassword"
                     android:layout_toRightOf="@+id/imgChangePassword"
                     android:clickable="false"
-                    android:fontFamily="monospace"
                     android:padding="10dp"
                     android:text="Change Passcode"
-                    android:textAllCaps="false"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textAppearance="@style/myText.Settings.Header"/>
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/ComplexPasscode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true">
-
-                <ImageView
-                    android:id="@+id/imgComplexPasscode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:tint="@color/black"
-                    app:srcCompat="@drawable/ic_graphic_complex_password"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/imgComplexPasscode"
-                    android:layout_toRightOf="@+id/imgComplexPasscode"
-                    android:clickable="false"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <LinearLayout
-                        android:id="@+id/complexPasscode"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tvComplexPasscode"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_weight="1"
-                            android:fontFamily="monospace"
-                            android:text="Complex Passcode"
-                            android:textAllCaps="false"
-                            android:textColor="@color/black"
-                            android:textSize="20sp"
-                            android:textStyle="bold"/>
-
-                        <TextView
-                            android:id="@+id/tvComplexPasscodeDesc"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="monospace"
-                            android:text="Change pin into a longer more complex passcode"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            />
-
-                    </LinearLayout>
-
-                    <CheckBox
-                        android:id="@+id/cbComplexPasscode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:checked="false"
-                        android:textSize="16sp"
-                        app:buttonTint="@color/black"/>
-
-                </LinearLayout>
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/ScrambleKey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true">
+                android:background="@drawable/clickable_listitem"
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
                     android:id="@+id/imgScrambleEncryptionKey"
@@ -289,6 +207,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:contentDescription="scramble crypt key"
                     android:tint="@color/black"
                     app:srcCompat="@drawable/ic_graphic_scramble_key"/>
 
@@ -309,23 +229,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="monospace"
                         android:text="Scramble Encryption Key"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textAppearance="@style/myText.Settings.Header"/>
 
                     <TextView
                         android:id="@+id/tvScrambleKeyDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="monospace"
                         android:text="Changes encryption key. Size is determined by algorithm selected."
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        />
+                        android:textAppearance="@style/myText.Settings.Description"/>
 
                 </LinearLayout>
 
@@ -335,7 +248,9 @@
                 android:id="@+id/EncryptionMethod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true">
+                android:background="@drawable/clickable_listitem"
+                android:clickable="true"
+                android:focusable="true">
 
                 <ImageView
                     android:id="@+id/imgEncryptionMethod"
@@ -345,6 +260,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:contentDescription="encryption method"
                     android:tint="@color/black"
                     app:srcCompat="@drawable/ic_graphic_change_encryption_method"/>
 
@@ -362,12 +279,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="monospace"
                         android:text="Encryption Method"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
+                        android:textAppearance="@style/myText.Settings.Header"/>
 
                     <Spinner
                         android:id="@+id/spEncryptionMethod"
@@ -376,207 +289,208 @@
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/black"
                         android:popupBackground="@color/white"
-                        android:spinnerMode="dialog"/>
+                        android:spinnerMode="dialog"
+                        tools:targetApi="lollipop"/>
 
                 </LinearLayout>
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/ColourScheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+            <!--<RelativeLayout-->
+            <!--android:id="@+id/ColourScheme"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--&gt;-->
 
-                <ImageView
-                    android:id="@+id/imgColourScheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:tint="@color/black"
-                    app:srcCompat="@drawable/ic_graphic_colourscheme"/>
+            <!--<ImageView-->
+            <!--android:id="@+id/imgColourScheme"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:tint="@color/black"-->
+            <!--app:srcCompat="@drawable/ic_graphic_colourscheme"/>-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toEndOf="@+id/imgColourScheme"
-                    android:layout_toRightOf="@+id/imgColourScheme"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_toEndOf="@+id/imgColourScheme"-->
+            <!--android:layout_toRightOf="@+id/imgColourScheme"-->
+            <!--android:orientation="vertical"-->
+            <!--android:padding="10dp">-->
 
-                    <TextView
-                        android:id="@+id/tvColourScheme"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"
-                        android:fontFamily="monospace"
-                        android:text="Colour Scheme"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
+            <!--<TextView-->
+            <!--android:id="@+id/tvColourScheme"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:fontFamily="monospace"-->
+            <!--android:text="Colour Scheme"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="20sp"-->
+            <!--android:textStyle="bold"/>-->
 
-                    <LinearLayout
-                        android:id="@+id/ColorScheme"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/imgColourScheme"
-                        android:layout_toRightOf="@+id/imgColourScheme">
+            <!--<LinearLayout-->
+            <!--android:id="@+id/ColorScheme"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_toEndOf="@+id/imgColourScheme"-->
+            <!--android:layout_toRightOf="@+id/imgColourScheme">-->
 
-                        <RelativeLayout
-                            android:id="@+id/Blue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
+            <!--<RelativeLayout-->
+            <!--android:id="@+id/Blue"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1">-->
 
-                            <ImageView
-                                android:id="@+id/imgBlue"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:scaleType="fitXY"
-                                app:srcCompat="@drawable/scheme_blue"/>
+            <!--<ImageView-->
+            <!--android:id="@+id/imgBlue"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:scaleType="fitXY"-->
+            <!--app:srcCompat="@drawable/scheme_blue"/>-->
 
-                            <CheckBox
-                                android:id="@+id/cbBlue"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentTop="true"
-                                android:checked="false"
-                                app:buttonTint="@color/white"/>
+            <!--<CheckBox-->
+            <!--android:id="@+id/cbBlue"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:checked="false"-->
+            <!--app:buttonTint="@color/white"/>-->
 
-                        </RelativeLayout>
+            <!--</RelativeLayout>-->
 
-                        <RelativeLayout
-                            android:id="@+id/Red"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
+            <!--<RelativeLayout-->
+            <!--android:id="@+id/Red"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1">-->
 
-                            <ImageView
-                                android:id="@+id/imgRed"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:scaleType="fitXY"
-                                app:srcCompat="@drawable/scheme_red"/>
+            <!--<ImageView-->
+            <!--android:id="@+id/imgRed"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:scaleType="fitXY"-->
+            <!--app:srcCompat="@drawable/scheme_red"/>-->
 
-                            <CheckBox
-                                android:id="@+id/cbRed"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignEnd="@+id/imgRed"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignRight="@+id/imgRed"
-                                android:checked="false"
-                                app:buttonTint="@color/white"/>
-                        </RelativeLayout>
+            <!--<CheckBox-->
+            <!--android:id="@+id/cbRed"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignEnd="@+id/imgRed"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_alignRight="@+id/imgRed"-->
+            <!--android:checked="false"-->
+            <!--app:buttonTint="@color/white"/>-->
+            <!--</RelativeLayout>-->
 
-                        <RelativeLayout
-                            android:id="@+id/Green"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
+            <!--<RelativeLayout-->
+            <!--android:id="@+id/Green"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1">-->
 
-                            <ImageView
-                                android:id="@+id/imgGreen"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:scaleType="fitXY"
-                                app:srcCompat="@drawable/scheme_green"/>
+            <!--<ImageView-->
+            <!--android:id="@+id/imgGreen"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:scaleType="fitXY"-->
+            <!--app:srcCompat="@drawable/scheme_green"/>-->
 
-                            <CheckBox
-                                android:id="@+id/cbGreen"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentTop="true"
-                                android:checked="false"
-                                app:buttonTint="@color/white"/>
-                        </RelativeLayout>
+            <!--<CheckBox-->
+            <!--android:id="@+id/cbGreen"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:checked="false"-->
+            <!--app:buttonTint="@color/white"/>-->
+            <!--</RelativeLayout>-->
 
-                        <RelativeLayout
-                            android:id="@+id/Yellow"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
+            <!--<RelativeLayout-->
+            <!--android:id="@+id/Yellow"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1">-->
 
-                            <ImageView
-                                android:id="@+id/imgYellow"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:scaleType="fitXY"
-                                app:srcCompat="@drawable/scheme_yellow"/>
+            <!--<ImageView-->
+            <!--android:id="@+id/imgYellow"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:scaleType="fitXY"-->
+            <!--app:srcCompat="@drawable/scheme_yellow"/>-->
 
-                            <CheckBox
-                                android:id="@+id/cbYellow"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentTop="true"
-                                android:checked="false"
-                                app:buttonTint="@color/white"/>
-                        </RelativeLayout>
+            <!--<CheckBox-->
+            <!--android:id="@+id/cbYellow"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:checked="false"-->
+            <!--app:buttonTint="@color/white"/>-->
+            <!--</RelativeLayout>-->
 
-                        <RelativeLayout
-                            android:id="@+id/Purple"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
+            <!--<RelativeLayout-->
+            <!--android:id="@+id/Purple"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1">-->
 
-                            <ImageView
-                                android:id="@+id/imgPurple"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:scaleType="fitXY"
-                                app:srcCompat="@drawable/scheme_purple"/>
+            <!--<ImageView-->
+            <!--android:id="@+id/imgPurple"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:scaleType="fitXY"-->
+            <!--app:srcCompat="@drawable/scheme_purple"/>-->
 
-                            <CheckBox
-                                android:id="@+id/cbPurple"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentTop="true"
-                                android:checked="false"
-                                app:buttonTint="@color/white"/>
+            <!--<CheckBox-->
+            <!--android:id="@+id/cbPurple"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:checked="false"-->
+            <!--app:buttonTint="@color/white"/>-->
 
-                        </RelativeLayout>
+            <!--</RelativeLayout>-->
 
-                        <RelativeLayout
-                            android:id="@+id/Gray"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
+            <!--<RelativeLayout-->
+            <!--android:id="@+id/Gray"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1">-->
 
-                            <ImageView
-                                android:id="@+id/imgGray"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:scaleType="fitXY"
-                                app:srcCompat="@drawable/scheme_gray"/>
+            <!--<ImageView-->
+            <!--android:id="@+id/imgGray"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:scaleType="fitXY"-->
+            <!--app:srcCompat="@drawable/scheme_gray"/>-->
 
-                            <CheckBox
-                                android:id="@+id/cbGray"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentTop="true"
-                                android:checked="false"
-                                app:buttonTint="@color/white"/>
-                        </RelativeLayout>
+            <!--<CheckBox-->
+            <!--android:id="@+id/cbGray"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:checked="false"-->
+            <!--app:buttonTint="@color/white"/>-->
+            <!--</RelativeLayout>-->
 
-                    </LinearLayout>
+            <!--</LinearLayout>-->
 
-                </LinearLayout>
+            <!--</LinearLayout>-->
 
-            </RelativeLayout>
+            <!--</RelativeLayout>-->
 
         </LinearLayout>
     </ScrollView>

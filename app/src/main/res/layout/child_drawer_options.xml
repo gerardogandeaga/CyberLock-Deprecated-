@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.AppBarLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/DrawerContent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,21 +20,21 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvCurrentVersion"
+                android:id="@+id/CyberLock"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/CurrentVersion"
+                android:text="Cyber Lock"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="22sp"
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/tvLastLogin"
+                android:id="@+id/tvCurrentVersion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Last logged in at 5:43 pm on October 3, 2017"
+                android:text="Power. Simplicity. Reliability."
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:textStyle="bold"/>
 
         </LinearLayout>
@@ -41,124 +42,3 @@
     </android.support.v7.widget.Toolbar>
 
 </android.support.design.widget.AppBarLayout>
-
-
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-    <!--<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--android:id="@+id/DrawerContent"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:background="@color/white"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<android.support.percent.PercentRelativeLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--app:layout_heightPercent="25%"-->
-    <!--android:id="@+id/percentRelativeLayout2">-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/imageView"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:scaleType="centerCrop"-->
-    <!--app:srcCompat="@drawable/wallpaper_drawer"-->
-    <!--android:layout_alignParentBottom="true"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/tvVersion"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--android:fontFamily="monospace"-->
-    <!--android:text="Version 1.0.0"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="12sp"/>-->
-
-    <!--</android.support.percent.PercentRelativeLayout>-->
-
-
-    <!--<LinearLayout-->
-    <!--android:id="@+id/Anchor"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="5dp"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--android:layout_below="@+id/percentRelativeLayout2"-->
-    <!--android:background="?attr/colorPrimaryDark"-->
-    <!--android:orientation="horizontal">-->
-    <!--</LinearLayout>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/UpdateTitle"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentEnd="true"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--android:layout_below="@+id/Anchor"-->
-    <!--android:fontFamily="monospace"-->
-    <!--android:padding="10dp"-->
-    <!--android:text="@string/UpdateTitle"-->
-    <!--android:textAlignment="center"-->
-    <!--android:textColor="@color/black"-->
-    <!--android:textSize="24sp"-->
-    <!--android:textStyle="bold"/>-->
-
-    <!--<ScrollView-->
-    <!--android:id="@+id/Data"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_below="@+id/UpdateTitle"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_alignParentEnd="true"-->
-    <!--android:layout_alignParentBottom="true">-->
-
-    <!--<LinearLayout-->
-    <!--android:id="@+id/ScrollAnchor"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:orientation="vertical"-->
-    <!--android:padding="10dp">-->
-
-    <!--<LinearLayout-->
-    <!--android:id="@+id/V1.1.0"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:orientation="vertical"-->
-    <!--&gt;-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/Title_V1.0.0"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:fontFamily="monospace"-->
-    <!--android:gravity="start"-->
-    <!--android:text="@string/V1.0.0"-->
-    <!--android:textColor="@color/black"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textStyle="bold"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/Text_V1.0.0"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:fontFamily="monospace"-->
-    <!--android:gravity="start"-->
-    <!--android:text="@string/Update_V1.0.0"-->
-    <!--android:textColor="@color/black"-->
-    <!--android:textSize="16sp"/>-->
-    <!--</LinearLayout>-->
-
-
-    <!--</LinearLayout>-->
-
-    <!--</ScrollView>-->
-
-
-    <!--</android.support.percent.PercentRelativeLayout >-->

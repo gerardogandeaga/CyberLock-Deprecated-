@@ -53,10 +53,7 @@ public class MainPlaygroundActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playground);
         ACTIVITY_INTENT = null;
-
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        }
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
         setupActivity();
     }
@@ -279,7 +276,7 @@ public class MainPlaygroundActivity extends AppCompatActivity
             ACTIVITY_INTENT = new Intent(this, MainActivity.class);
             finish();
             this.startActivity(ACTIVITY_INTENT);
-//            overridePendingTransition(R.anim.anim_slide_inleft, R.anim.anim_slide_outright);
+            overridePendingTransition(R.anim.anim_slide_inleft, R.anim.anim_slide_outright);
         }
     }
     @Override

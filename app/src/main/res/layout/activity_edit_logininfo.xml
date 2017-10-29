@@ -5,7 +5,7 @@
     android:id="@+id/Content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_light2"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainEditActivity">
 
@@ -25,98 +25,79 @@
         android:maxLines="1"
         android:padding="10dp"
         android:scrollbars="horizontal"
-        android:textAppearance="@style/myText.Label"/>
+        android:textAppearance="@style/myText.Label"
+        tools:targetApi="lollipop"/>
 
     <ScrollView
-        android:id="@+id/Data"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/grayD9">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/layoutHigherData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:orientation="vertical"
-            android:weightSum="1">
+            android:padding="10dp">
 
             <LinearLayout
-                android:id="@+id/layoutMainData"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginStart="10dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:background="@drawable/background_fill_graymid"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:weightSum="1">
 
                 <EditText
                     android:id="@+id/etUrl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:fontFamily="monospace"
                     android:hint="URL"
                     android:inputType="text|textUri"
                     android:textAlignment="center"
-                    android:textSize="16sp"/>
-
-                <EditText
-                    android:id="@+id/etUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:fontFamily="monospace"
-                    android:hint="Username"
-                    android:inputType="text"
-                    android:textAlignment="center"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/myText.Content"/>
 
                 <EditText
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:fontFamily="monospace"
                     android:hint="Email"
                     android:inputType="text|textEmailAddress|textWebEmailAddress"
                     android:textAlignment="center"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/myText.Content"/>
+
+                <EditText
+                    android:id="@+id/etUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Username"
+                    android:inputType="text"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/myText.Content"/>
 
                 <EditText
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:fontFamily="monospace"
                     android:hint="Password"
                     android:inputType="text|textVisiblePassword"
                     android:textAlignment="center"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/myText.Content"/>
 
             </LinearLayout>
 
-            <ScrollView
-                android:id="@+id/TextData"
+            <EditText
+                android:id="@+id/etNotes"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
-
-                <EditText
-                    android:id="@+id/etNotes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:fontFamily="monospace"
-                    android:hint="Notes..."
-                    android:inputType="textMultiLine"
-                    android:padding="10dp"
-                    />
-            </ScrollView>
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|end"
+                android:hint="Notes..."
+                android:inputType="textMultiLine"
+                android:textAppearance="@style/myText.Content"/>
 
             <TextView
                 android:id="@+id/tvDate"
@@ -130,3 +111,30 @@
     </ScrollView>
 
 </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

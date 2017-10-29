@@ -4,14 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import static android.content.Context.MODE_PRIVATE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DELAY_TIME;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.Supports.Globals.LAST_LOGIN;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
@@ -40,7 +34,6 @@ public class LogoutProtocol
                 TEMP_PIN = null;
                 MASTER_KEY = null;
                 APP_LOGGED_IN = false;
-                setLastLoginTime(context);
             }
         }.start();
     }
@@ -60,7 +53,6 @@ public class LogoutProtocol
                 mCountDownIsFinished = true;
 
                 APP_LOGGED_IN = false;
-                setLastLoginTime(context);
             }
         }.start();
     }
@@ -69,17 +61,5 @@ public class LogoutProtocol
         TEMP_PIN = null;
         MASTER_KEY = null;
         APP_LOGGED_IN = false;
-
-        setLastLoginTime(context);
-    }
-
-    // SET LAST LOGIN TIME
-    private void setLastLoginTime(final Context context) {
-        long time = new Date().getTime();
-        Date date = new Date(time);
-        final DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy | hh:mm aaa");
-        final String finalDate = dateFormat.format(date);
-
-        context.getSharedPreferences(DIRECTORY, MODE_PRIVATE).edit().putString(LAST_LOGIN, finalDate).apply();
     }
 }
