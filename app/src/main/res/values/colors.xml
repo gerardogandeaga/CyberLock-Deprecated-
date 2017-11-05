@@ -48,12 +48,12 @@
 
 
     <!-- Colour Tags -->
-    <color name="coltag_blue">#037bc3</color>
-    <color name="coltag_red">#ec3327</color>
-    <color name="coltag_green">#679936</color>
-    <color name="coltag_yellow">#f0d774</color>
-    <color name="coltag_purple">#d93be8</color>
-    <color name="coltag_orange">#d77f09</color>
+    <color name="coltag_blue">#159ca4</color>
+    <color name="coltag_red">#ab3c29</color>
+    <color name="coltag_green">#19a972</color>
+    <color name="coltag_yellow">#e1c557</color>
+    <color name="coltag_purple">#86588e</color>
+    <color name="coltag_orange">#d98f2b</color>
     <color name="coltag_default">#d5d5d5</color>
 
 
@@ -69,4 +69,8 @@
     <color name="gray_light2">#cfcfcf</color>
     <color name="gray_light1">#a5a5a5</color>
     <color name="gray_dark1">#8f8f8f</color>
+
+    <color name="matCream">#cbc7ae</color>
+    <color name="matBlue">#233152</color>
+    <color name="matOrange">#bd6f14</color>
 </resources>

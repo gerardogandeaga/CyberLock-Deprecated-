@@ -16,8 +16,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
@@ -56,10 +58,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
     // WIDGETS
     private CheckBox
             mCbAutoSave;
-    private RelativeLayout
-            mAutoSave,
-            mChangePasscode,
-            mScrambleKey;
     private Spinner
             mSpAutoLogoutDelay,
             mSpEncryptionMethod;
@@ -81,7 +79,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         this.mIsAutoSave = mSharedPreferences.getBoolean(AUTOSAVE, false);
 
         // ACTION BAR TITLE AND BACK BUTTON
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -91,25 +89,25 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
 
         // SPINNER DATA
         // LOGOUT DELAY
-        this.mSpAutoLogoutDelay = (Spinner) findViewById(R.id.spAutoLogoutDelay);
-        mAdapterAutoLogoutDelay = ArrayAdapter.createFromResource(this, R.array.AutoLogoutDelay_array, R.layout.item_settings_spinner);
+        this.mSpAutoLogoutDelay = findViewById(R.id.spAutoLogoutDelay);
+        mAdapterAutoLogoutDelay = ArrayAdapter.createFromResource(this, R.array.AutoLogoutDelay_array, R.layout.spinner_setting_text);
         mAdapterAutoLogoutDelay.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         this.mSpAutoLogoutDelay.setAdapter(mAdapterAutoLogoutDelay);
         // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // ENCRYPTION METHOD
-        this.mSpEncryptionMethod = (Spinner) findViewById(R.id.spEncryptionMethod);
-        mAdapterEncryptionMethod = ArrayAdapter.createFromResource(this, R.array.CryptALGO_array, R.layout.item_settings_spinner);
+        this.mSpEncryptionMethod = findViewById(R.id.spEncryptionMethod);
+        mAdapterEncryptionMethod = ArrayAdapter.createFromResource(this, R.array.CryptALGO_array, R.layout.spinner_setting_text);
         mAdapterEncryptionMethod.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         this.mSpEncryptionMethod.setAdapter(mAdapterEncryptionMethod);
 
-        this.mCbAutoSave = (CheckBox) findViewById(R.id.cbAutoSave);
-        this.mAutoSave = (RelativeLayout) findViewById(R.id.AutoSave);
-        this.mChangePasscode = (RelativeLayout) findViewById(R.id.ChangePasscode);
-        this.mScrambleKey = (RelativeLayout) findViewById(R.id.ScrambleKey);
+        this.mCbAutoSave = findViewById(R.id.cbAutoSave);
+        RelativeLayout autoSave = findViewById(R.id.AutoSave);
+        RelativeLayout changePasscode = findViewById(R.id.ChangePasscode);
+        RelativeLayout scrambleKey = findViewById(R.id.ScrambleKey);
 
-        this.mAutoSave.setOnClickListener(this);
-        this.mChangePasscode.setOnClickListener(this);
-        this.mScrambleKey.setOnClickListener(this);
+        autoSave.setOnClickListener(this);
+        changePasscode.setOnClickListener(this);
+        scrambleKey.setOnClickListener(this);
 
         this.mCbAutoSave.setClickable(false);
         this.mCbAutoSave.setChecked(false);
@@ -125,42 +123,22 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
                     mAutoLogoutDelay = object.toString();
                     long time = 0;
                     switch (mAutoLogoutDelay) {
-                        case "Immediate":
-                            time = 0;
-                            break;
-                        case "15 Seconds":
-                            time = 15000;
-                            break;
-                        case "30 Seconds":
-                            time = 30000;
-                            break;
-                        case "1 Minute":
-                            time = 60000;
-                            break;
-                        case "5 Minutes":
-                            time = 300000;
-                            break;
-                        case "10 Minutes":
-                            time = 600000;
-                            break;
-                        case "30 Minutes":
-                            time = 1800000;
-                            break;
-                        case "1 Hour":
-                            time = 3600000;
-                            break;
-                        case "2 Hours":
-                            time = 7200000;
-                            break;
-                        case "Never":
-                            break;
+                        case "Immediate": time = 0; break;
+                        case "15 Seconds": time = 15000; break;
+                        case "30 Seconds": time = 30000; break;
+                        case "1 Minute": time = 60000; break;
+                        case "5 Minutes": time = 300000; break;
+                        case "10 Minutes": time = 600000; break;
+                        case "30 Minutes": time = 1800000; break;
+                        case "1 Hour": time = 3600000; break;
+                        case "2 Hours": time = 7200000; break;
+                        case "Never": break;
                     }
 
                     System.out.println("Time = " + time);
                     mSharedPreferences.edit().putString(LOGOUT_DELAY, mAutoLogoutDelay).putLong(DELAY_TIME, time).apply();
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -263,73 +241,117 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         }
     }                                          //#
     private void onChangePassword() {
-        View dialogView = View.inflate(mContext, R.layout.dialog_passcode_change, null);
-        EditText childExisting = (EditText) dialogView.findViewById(R.id.etExisting);
-        EditText childInitial = (EditText) dialogView.findViewById(R.id.etInitial);
-        EditText childFinal = (EditText) dialogView.findViewById(R.id.etFinal);
-        Button childChangePasscode = (Button) dialogView.findViewById(R.id.btnRegister);
+        View v = View.inflate(mContext, R.layout.dialog_view_passcode_change, null);
+        // Dialog primitives
+        ImageView icon = v.findViewById(R.id.imgDialogAction);
+        TextView title = v.findViewById(R.id.tvDialogTitle);
+        Button negative = v.findViewById(R.id.btnDialogNegative);
+        Button positive = v.findViewById(R.id.btnDialogPositive);
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_passcode));
+        title.setText("Change Passcode");
+        negative.setText("Cancel");
+        positive.setText("Change");
+        // -----------------
+        EditText current = v.findViewById(R.id.etCurrent);
+        EditText initial = v.findViewById(R.id.etInitial);
+        EditText Final = v.findViewById(R.id.etFinal);
 
         // DIALOG BUILDER
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setView(dialogView);
-        // DIALOG SHOW
+        builder.setView(v);
         final AlertDialog dialog = builder.show();
-    }                                     //#
-    private void onScrambleKey() {
-        // DIALOG BUILDER
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-
-        alertDialog.setTitle("Scramble Encryption Key");
-        alertDialog.setMessage(R.string.AlertDialog_ScrambleKey);
-        alertDialog.setCancelable(false);
-
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-        {
+        // -----------------------------------------------------------
+        negative.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-        alertDialog.setPositiveButton("Scramble", new DialogInterface.OnClickListener()
-        {
+        positive.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 dialog.dismiss();
-
                 new Settings_ScrambleKey(mContext).execute();
             }
         });
-        alertDialog.show();
-    }                                       //#
-    private void onEncryptionMethodChange(final String algorithm) {
+        // -----------------------------------------------------------
+    }                                     //#
+    private void onScrambleKey() {
+        View v = View.inflate(mContext, R.layout.dialog_view_alert_info, null);
+        // Dialog primitives
+        ImageView icon = v.findViewById(R.id.imgDialogAction);
+        TextView title = v.findViewById(R.id.tvDialogTitle);
+        Button negative = v.findViewById(R.id.btnDialogNegative);
+        Button positive = v.findViewById(R.id.btnDialogPositive);
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_keys));
+        title.setText("Scramble Encryption Key");
+        negative.setText("Cancel");
+        positive.setText("Scramble");
+        // -----------------
+        TextView alertText = v.findViewById(R.id.tvDialogAlertText);
+        alertText.setText(R.string.AlertDialog_ScrambleKey);
         // DIALOG BUILDER
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-
-        alertDialog.setTitle("Encryption Method");
-        alertDialog.setMessage(R.string.AlertDialog_EncryptionMethodChange);
-        alertDialog.setCancelable(false);
-
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-        {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setView(v);
+        final AlertDialog dialog = builder.show();
+        // -----------------------------------------------------------
+        negative.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mSpEncryptionMethod.setSelection(mAdapterEncryptionMethod.getPosition(mOldEncryptionMethod));
+            public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-        alertDialog.setPositiveButton("Continue", new DialogInterface.OnClickListener()
-        {
+        positive.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 dialog.dismiss();
-
+                new Settings_ScrambleKey(mContext).execute();
+            }
+        });
+        // -----------------------------------------------------------
+    }                                       //#
+    private void onEncryptionMethodChange(final String algorithm) {
+        View v = View.inflate(mContext, R.layout.dialog_view_alert_info, null);
+        // Dialog primitives
+        ImageView icon = v.findViewById(R.id.imgDialogAction);
+        TextView title = v.findViewById(R.id.tvDialogTitle);
+        Button negative = v.findViewById(R.id.btnDialogNegative);
+        Button positive = v.findViewById(R.id.btnDialogPositive);
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_shield));
+        title.setText("Change Encryption Method");
+        negative.setText("Cancel");
+        positive.setText("Change");
+        // -----------------
+        TextView alertText = v.findViewById(R.id.tvDialogAlertText);
+        alertText.setText(R.string.AlertDialog_EncryptionMethodChange);
+        // DIALOG BUILDER
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setView(v);
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                mSpEncryptionMethod.setSelection(mAdapterEncryptionMethod.getPosition(mOldEncryptionMethod));
+            }
+        });
+        final AlertDialog dialog = builder.show();
+        // -----------------------------------------------------------
+        negative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                mSpEncryptionMethod.setSelection(mAdapterEncryptionMethod.getPosition(mOldEncryptionMethod));
+            }
+        });
+        positive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
                 new Settings_EncryptionMethodChange(mContext, algorithm).execute();
             }
         });
-        alertDialog.show();
+        // -----------------------------------------------------------
     }      //#
     // #########################################################################
-
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
     @Override

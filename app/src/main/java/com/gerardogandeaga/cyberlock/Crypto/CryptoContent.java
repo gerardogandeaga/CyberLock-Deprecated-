@@ -71,6 +71,7 @@ public class CryptoContent {
     @Nullable
     public String DECRYPT_CONTENT(String dataToDecrypt, String symmetricKey) {
         if (dataToDecrypt == null || dataToDecrypt.isEmpty()) {
+            System.out.println("Null return!");
             return null;
         }
 

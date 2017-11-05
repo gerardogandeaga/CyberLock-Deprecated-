@@ -32,6 +32,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:drawableLeft="@drawable/ic_passcode"
+                android:drawableStart="@drawable/ic_passcode"
                 android:ems="10"
                 android:hint="Enter Passcode"
                 android:inputType="textPassword"

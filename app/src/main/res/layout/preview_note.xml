@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainEditActivity">
 
-    <include layout="@layout/child_label_buttons"/>
+    <include layout="@layout/priview_child_label_buttons"/>
 
     <ScrollView
         android:layout_width="match_parent"

@@ -103,8 +103,8 @@ public class Data implements Serializable {
     public void setContent(CryptoContent cryptoContent, String content, String masterKey) {
         this.mContent = cryptoContent.ENCRYPT_CONTENT(content, masterKey);
     }
-    public String getShortText(Context context, String text) {
-        float widthSp = (context.getResources().getDisplayMetrics().widthPixels / (12 * context.getResources().getDisplayMetrics().scaledDensity));
+    public String getShortNoteText(Context context, String text) {
+        float widthSp = (context.getResources().getDisplayMetrics().widthPixels / (4 * context.getResources().getDisplayMetrics().scaledDensity));
         int finalWidth = (int) widthSp;
 
         String temp = text.replaceAll("\n", " ");
@@ -115,11 +115,16 @@ public class Data implements Serializable {
         }
     }
 
-    public void setFullDisplayed(boolean fullDisplayed) {
-        this.mFullDisplayed = fullDisplayed;
-    }
-    public boolean isFullDisplayed() {
-        return this.mFullDisplayed;
+    public String getShortText(Context context, String text) {
+        float widthSp = (context.getResources().getDisplayMetrics().widthPixels / (20 * context.getResources().getDisplayMetrics().scaledDensity));
+        int finalWidth = (int) widthSp;
+
+        String temp = text.replaceAll("\n", " ");
+        if (temp.length() > finalWidth) {
+            return temp.substring(0, finalWidth) + "...";
+        } else {
+            return temp;
+        }
     }
 
     public void setSelected(boolean selected) {

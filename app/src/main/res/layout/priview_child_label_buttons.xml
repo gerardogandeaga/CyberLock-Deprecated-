@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/background_label"
+              android:elevation="3dp"
+              android:orientation="horizontal"
+              android:padding="10dp"
+              tools:targetApi="lollipop">
+
+    <ImageView
+        android:id="@+id/imgChildIconType"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="DATA type icon"
+        app:srcCompat="@drawable/ic_note"/>
+
+    <LinearLayout
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:background="@color/grayPrimary"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvChildLabel"
+        style="@style/myText.Label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_weight="1"
+        android:maxLines="1"
+        android:scrollbars="horizontal"
+        android:textAppearance="@style/myText.Label"/>
+
+    <ImageButton
+        android:id="@+id/btnChildDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Done"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:srcCompat="@drawable/ic_action_close"/>
+
+    <ImageButton
+        android:id="@+id/btnChildEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@android:color/transparent"
+        android:contentDescription="Edit"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:srcCompat="@drawable/ic_action_edit"/>
+</LinearLayout>

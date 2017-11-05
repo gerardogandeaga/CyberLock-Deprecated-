@@ -11,7 +11,7 @@
 
     <include
         android:id="@+id/appBar"
-        layout="@layout/child_toolbar"/>
+        layout="@layout/main_child_toolbar"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                     android:layout_marginStart="10dp"
                     android:contentDescription="auto save"
                     android:tint="@color/black"
-                    app:srcCompat="@drawable/ic_graphic_autosave"/>
+                    app:srcCompat="@drawable/test"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -113,7 +113,7 @@
                     android:layout_marginStart="10dp"
                     android:contentDescription="auto logout"
                     android:tint="@color/black"
-                    app:srcCompat="@drawable/ic_graphic_logout_delay"/>
+                    app:srcCompat="@drawable/ic_timer"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -173,7 +173,7 @@
                     android:layout_marginStart="10dp"
                     android:contentDescription="change passcode"
                     android:tint="@color/black"
-                    app:srcCompat="@drawable/ic_graphic_change_password"/>
+                    app:srcCompat="@drawable/ic_passcode"/>
 
                 <TextView
                     android:id="@+id/tvChangePasscode"
@@ -209,8 +209,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
                     android:contentDescription="scramble crypt key"
-                    android:tint="@color/black"
-                    app:srcCompat="@drawable/ic_graphic_scramble_key"/>
+                    app:srcCompat="@drawable/ic_keys"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -263,7 +262,7 @@
                     android:layout_marginStart="10dp"
                     android:contentDescription="encryption method"
                     android:tint="@color/black"
-                    app:srcCompat="@drawable/ic_graphic_change_encryption_method"/>
+                    app:srcCompat="@drawable/ic_shield"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

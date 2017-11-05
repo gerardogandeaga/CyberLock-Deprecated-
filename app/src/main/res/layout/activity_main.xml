@@ -6,7 +6,6 @@
     android:id="@+id/Data"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".Activitys.Activities.Main.MainActivity">
 
     <RelativeLayout
@@ -15,17 +14,13 @@
 
         <include
             android:id="@+id/appBar"
-            layout="@layout/child_toolbar"/>
+            layout="@layout/main_child_toolbar"/>
 
-        <ListView
-            android:id="@+id/listView"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/appBar"
-            android:layout_centerHorizontal="true"
-            android:divider="@color/coltag_default"
-            android:dividerHeight="1dp"
-            android:scrollbars="none"/>
+            android:layout_below="@+id/appBar"/>
 
     </RelativeLayout>
 
@@ -35,7 +30,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/white"
-        app:headerLayout="@layout/child_drawer_options"
+        app:headerLayout="@layout/drawer_options"
         app:itemIconTint="@color/black"
         app:menu="@menu/menu_drawer">
 

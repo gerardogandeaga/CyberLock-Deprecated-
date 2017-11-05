@@ -1,10 +1,13 @@
 package com.gerardogandeaga.cyberlock.Activitys.Activities.Main;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,22 +15,22 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +46,7 @@ import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
 import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -53,19 +57,17 @@ import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTi
 
 public class MainActivity extends AppCompatActivity {
     private Context mContext = this;
-    private CryptoContent mCryptoContent;
     private Menu mMenu;
     private Resources mResources;
 
     // DATA VARIABLES
+    private boolean mIsMultiChoice = false;
     private int mCount;
     private MasterDatabaseAccess mMasterDatabaseAccess;
     private ArrayList<Data> mSelectedDatas;
-    private List<Data> mDatas;
 
     // WIDGETS
     private ActionBarDrawerToggle mDrawerToggle;
-    private ListView mListView;
     private NavigationView mNavigationView;
 
     // INITIAL ON CREATE METHODS
@@ -73,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         Globals.COLORSCHEME(this);
-        mCryptoContent = new CryptoContent(mContext);
         super.onCreate(savedInstanceState);
         setupLayout();
     }
@@ -88,41 +89,33 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
         this.mMasterDatabaseAccess.open();
-        this.mDatas = mMasterDatabaseAccess.getAllData();
+        List<Data> datas = mMasterDatabaseAccess.getAllData();
         this.mMasterDatabaseAccess.close();
-        DataAdapter adapter = new DataAdapter(this, mDatas);
-        this.mListView.setAdapter(adapter); // TODO CREATE EMPTY LIST MESSAGE
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        RVDataAdapter adapter = new RVDataAdapter(mContext, datas);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     }
     private void setupLayout() {
         setContentView(R.layout.activity_main);
         ACTIVITY_INTENT = null;
         mResources = getResources();
         // GET WIDGETS
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.Data);
+        DrawerLayout drawerLayout = findViewById(R.id.Data);
 
-        this.mNavigationView = (NavigationView) findViewById(R.id.NavigationContent);
+        this.mNavigationView = findViewById(R.id.NavigationContent);
         this.mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
-        this.mListView = (ListView) findViewById(R.id.listView);
-
-        // GET DATA
         this.mMasterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
 
         // SET WIDGETS
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
-
-        this.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            }
-        });
 
         calculateDrawerSize();
         drawerLayout.addDrawerListener(mDrawerToggle);
@@ -157,27 +150,6 @@ public class MainActivity extends AppCompatActivity {
         mNavigationView.setLayoutParams(params);
     }
 
-    // PAYMENTINFO CARD GRAPHIC
-    private Drawable setCardImage(String cardType) {
-        switch (cardType) {
-            case ("None"):
-                return getResources().getDrawable(R.drawable.card_default);
-            case ("Visa"):
-                return getResources().getDrawable(R.drawable.card_visa);
-            case ("Master Card"):
-                return getResources().getDrawable(R.drawable.card_mastercard);
-            case ("American Express"):
-                return getResources().getDrawable(R.drawable.card_americanexpress);
-            case ("Discover"):
-                return getResources().getDrawable(R.drawable.card_discover);
-            case ("Other"):
-                return getResources().getDrawable(R.drawable.card_default);
-            default:
-                return getResources().getDrawable(R.drawable.card_default);
-        }
-    }
-    // -------------------------
-
     // ON ACTION CLICKS
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -207,11 +179,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     private void onNavigationItemClicked(MenuItem menuItem) {
-
-        int id = menuItem.getItemId();
         Dialog dialog = new Dialog(this);
 
-        switch (id)
+        switch (menuItem.getItemId())
         {
             case R.id.action_note:
                 onAddClicked(1);
@@ -269,8 +239,9 @@ public class MainActivity extends AppCompatActivity {
     public void onMultiSelectClicked() {
         MenuInflater menuInflater = new MenuInflater(mContext);
 
-        if (mListView.getChoiceMode() != ListView.CHOICE_MODE_MULTIPLE_MODAL) {
+        if (!mIsMultiChoice) {
             mSelectedDatas = new ArrayList<>();
+            onResume();
 
             mMenu.removeItem(R.id.action_search);
             mMenu.removeItem(R.id.action_deletesweep);
@@ -285,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
             done.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             getSupportActionBar().setTitle(mCount + " Selected");
 
-            mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+            mIsMultiChoice = true;
         } else {
             mSelectedDatas = null;
             mCount = 0;
@@ -303,9 +274,9 @@ public class MainActivity extends AppCompatActivity {
             search.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             multiSelect.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             add.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            getSupportActionBar().setTitle("");
+            getSupportActionBar().setTitle(null);
 
-            mListView.setChoiceMode(ListView.CHOICE_MODE_NONE);
+            mIsMultiChoice = false;
         }
     }
     public void onDeleteClicked() {
@@ -340,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (mListView.getChoiceMode() != ListView.CHOICE_MODE_MULTIPLE_MODAL)
+        if (!mIsMultiChoice)
         if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
         {
             new LogoutProtocol().logoutImmediate(this);
@@ -358,72 +329,71 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+//    @Override
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//        onResume();
+//    }
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // INNER ADAPTER CLASS
-    private class DataAdapter extends ArrayAdapter<Data> // TODO OPTIMIZE LIST VIEW TO HANDLE MORE INPUTS AND VIEWS!!!
-    {
-        private DataAdapter(Context context, List<Data> objects) {
-            super(context, 0, objects);
+    private class RVDataAdapter extends android.support.v7.widget.RecyclerView.Adapter<RVDataAdapter.ViewHolder> {
+        private Context mContext;
+        private List<Data> mDatas = Collections.emptyList();
+
+        RVDataAdapter(Context context, List<Data> datas) {
+            mContext = context;
+            mDatas = datas;
         }
 
-        @NonNull
         @Override
-        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-            if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.item_main_list, parent, false);
-            }
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list_item, parent, false);
+            return new ViewHolder(v);
+        }
+        @Override
+        public void onBindViewHolder(ViewHolder vh, int position) {
+            CryptoContent cc = new CryptoContent(mContext);
             final Data data = mDatas.get(position);
-
-            final RelativeLayout Content = (RelativeLayout) convertView.findViewById(R.id.Content);
-            final RelativeLayout MemoListLayout = (RelativeLayout) convertView.findViewById(R.id.MemoListLayout);
-            final RelativeLayout PaymentInfoListLayout = (RelativeLayout) convertView.findViewById(R.id.PaymentInfoListLayout);
-            final RelativeLayout LoginInfoListLayout = (RelativeLayout) convertView.findViewById(R.id.LoginInfoListLayout);
-            final ImageView ColourTag = (ImageView) convertView.findViewById(R.id.ColourTag);
-
-            final String TYPE = data.getType(mCryptoContent);
+            String TYPE = data.getType(cc);
             switch (TYPE) {
                 case "TYPE_NOTE":
-                    removeView(PaymentInfoListLayout);
-                    removeView(LoginInfoListLayout);
-                    noteFunctions(convertView, data, Content);
+                    noteFunctions(vh, data, cc, TYPE);
                     break;
                 case "TYPE_PAYMENTINFO":
-                    removeView(MemoListLayout);
-                    removeView(LoginInfoListLayout);
-                    paymentInfoFunctions(convertView, data, Content);
+                    paymentInfoFunctions(vh, data, cc, TYPE);
                     break;
                 case "TYPE_LOGININFO":
-                    removeView(MemoListLayout);
-                    removeView(PaymentInfoListLayout);
-                    loginInfoFunctions(convertView, data, Content);
+                    loginInfoFunctions(vh, data, cc, TYPE);
+                    break;
+                default:
+                    Toast.makeText(mContext, "Error with data type", Toast.LENGTH_SHORT).show();
                     break;
             }
-
-            final String COL_TAG = data.getColourTag(mCryptoContent);
-            switch (COL_TAG) {
-                case "COL_BLUE": ColourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_blue), PorterDuff.Mode.MULTIPLY); break;
-                case "COL_RED": ColourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_red), PorterDuff.Mode.MULTIPLY); break;
-                case "COL_GREEN": ColourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_green), PorterDuff.Mode.MULTIPLY); break;
-                case "COL_YELLOW": ColourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_yellow), PorterDuff.Mode.MULTIPLY); break;
-                case "COL_PURPLE": ColourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_purple), PorterDuff.Mode.MULTIPLY); break;
-                case "COL_ORANGE": ColourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_orange), PorterDuff.Mode.MULTIPLY); break;
-                default: ColourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_default), PorterDuff.Mode.MULTIPLY); break;
+            if (!mIsMultiChoice) {
+                vh.checkbox.setClickable(false);
+                vh.checkbox.setVisibility(View.GONE);
+            } else {
+                vh.checkbox.setClickable(true);
+                vh.checkbox.setVisibility(View.VISIBLE);
             }
-
-            return convertView;
+        }
+        @Override
+        public int getItemCount() {
+            return mDatas.size();
+        }
+        @Override
+        public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+            super.onAttachedToRecyclerView(recyclerView);
         }
 
         // FUNCTIONS FOR THE DATA ADAPTER
-        private void noteFunctions(View convertView, final Data data, final RelativeLayout view) {
-            final TextView tvDate = (TextView) convertView.findViewById(R.id.tvMemoDate);
-            final TextView tvLabel = (TextView) convertView.findViewById(R.id.tvMemoLabel);
-            final TextView tvMemo = (TextView) convertView.findViewById(R.id.tvMemo);
-            // ----
-            final String date = data.getDate();
-            final String label = data.getLabel(mCryptoContent);
-            final String content = data.getContent(mCryptoContent);
-            final String TYPE = data.getType(mCryptoContent);
+        private void noteFunctions(final ViewHolder vh, final Data d, CryptoContent cc, final String TYPE) {
+            setColourTag(vh, d.getColourTag(cc));
+            final String date = d.getDate();
+            final String label = d.getLabel(cc);
+            final String content = d.getContent(cc);
             // ----
             StringBuilder note;
 
@@ -435,25 +405,25 @@ public class MainActivity extends AppCompatActivity {
             }
             scanner.close();
 
-            // SET VIEWS
-            if (label != null) { tvLabel.setText(label); } else { removeView(tvLabel); }
-            tvMemo.setText(data.getShortText(mContext, note.toString()));
-            tvDate.setText(date);
-            // --------
             final String prevMemo = note.toString();
-            view.setOnClickListener(new View.OnClickListener() {
+            // SET VIEWS
+            vh.label.setText(label);
+            vh.date.setText(date);
+            setContentNote(vh, d.getShortNoteText(mContext, prevMemo));
+            // --------
+            vh.cv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isEditable(data, view)) { // MULTI-SELECT MODE IS NOT ACTIVE
+                    if (isEditable(d, vh)) {
                         View dialogView = View.inflate(mContext, R.layout.preview_note, null);
-                        ImageView childType = (ImageView) dialogView.findViewById(R.id.imgChildIconType);
-                        ImageButton childDone = (ImageButton) dialogView.findViewById(R.id.btnChildDone);
-                        ImageButton childEdit = (ImageButton) dialogView.findViewById(R.id.btnChildEdit);
-                        TextView childLabel = (TextView) dialogView.findViewById(R.id.tvChildLabel);
-                        TextView childMemo = (TextView) dialogView.findViewById(R.id.tvChildMemo);
-                        TextView childDate = (TextView) dialogView.findViewById(R.id.tvChildDate);
+                        ImageView childType = dialogView.findViewById(R.id.imgChildIconType);
+                        ImageButton childDone = dialogView.findViewById(R.id.btnChildDone);
+                        ImageButton childEdit = dialogView.findViewById(R.id.btnChildEdit);
+                        TextView childLabel = dialogView.findViewById(R.id.tvChildLabel);
+                        TextView childMemo = dialogView.findViewById(R.id.tvChildMemo);
+                        TextView childDate = dialogView.findViewById(R.id.tvChildDate);
 
-                        childType.setImageDrawable(getIconType(TYPE));
+                        setDataIcon(childType, TYPE);
                         childLabel.setText(label);
                         childMemo.setText(prevMemo);
                         childDate.setText(date);
@@ -468,7 +438,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 dialog.dismiss();
-                                onEditClicked(data);
+                                onEditClicked(d);
                             }
                         });
                         childDone.setOnClickListener(new View.OnClickListener() {
@@ -481,17 +451,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }); // PREVIEW DIALOG
         }
-        private void paymentInfoFunctions(View convertView, final Data data, final RelativeLayout view) {
-            final TextView tvDate = (TextView) convertView.findViewById(R.id.tvPaymentInfoDate);
-            final TextView tvLabel = (TextView) convertView.findViewById(R.id.tvPaymentInfoLabel);
-            final TextView tvCardName = (TextView) convertView.findViewById(R.id.tvCardName);
-            final TextView tvCardNumber = (TextView) convertView.findViewById(R.id.tvCardNumber);
-            final ImageView imgCard = (ImageView) convertView.findViewById(R.id.imgCard);
-            // ----
-            final String date = data.getDate();
-            final String label = data.getLabel(mCryptoContent);
-            final String content = data.getContent(mCryptoContent);
-            final String TYPE = data.getType(mCryptoContent);
+        private void paymentInfoFunctions(final ViewHolder vh, final Data d, CryptoContent cc, final String TYPE) {
+            setColourTag(vh, d.getColourTag(cc));
+            final String date = d.getDate();
+            final String label = d.getLabel(cc);
+            final String content = d.getContent(cc);
             // ----
             String name = "";
             String number = "";
@@ -513,58 +477,56 @@ public class MainActivity extends AppCompatActivity {
                     notes.append(scanner.nextLine());
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
             scanner.close();
 
-            // SET VIEWS
-            if (isNull(label)) { tvLabel.setText(label); } else { removeView(tvLabel); }
-            if (isNull(name)) { tvCardName.setText(name); } else { removeView(tvCardName); }
-            tvDate.setText(date);
-            imgCard.setImageDrawable(setCardImage(cardType)); // SET CARD TYPE ICON
-            // ----
-            StringBuilder tempNumber = new StringBuilder();
+            StringBuilder tmp = new StringBuilder();
             if (!number.matches("")) { // ***** ASTRIX ALGORITHM
                 if (number.length() < 5) {
-                    tempNumber = new StringBuilder(number.substring(0, number.length()));
+                    tmp = new StringBuilder(number.substring(0, number.length()));
                 } else {
                     int i = 0;
                     while (i < number.length() - 5) {
-                        tempNumber.append("*");
+                        tmp.append("*");
                         i++;
                     }
-                    tempNumber.append(number.substring(number.length() - 4, number.length()));
+                    tmp.append(number.substring(number.length() - 4, number.length()));
                 }
-                tvCardNumber.setText(tempNumber.toString());
+                setContentPaymentinfo(vh, cardType, d.getShortText(mContext, name), tmp.toString());
             } else {
-                removeView(tvCardNumber);
+                setContentPaymentinfo(vh, cardType, d.getShortText(mContext, name), "");
             }
-            // ----
+
             final String prevName = name;
             final String prevNumber = number;
             final String prevExpiry = expiry;
             final String prevCVV = cvv;
             final String prevCardType = cardType;
             final String prevNotes = notes.toString();
-            view.setOnClickListener(new View.OnClickListener() {
+            // SET VIEWS
+            vh.label.setText(label);
+            vh.date.setText(date);
+            // ----
+            vh.cv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isEditable(data, view)) {
+                    if (isEditable(d, vh)) {
                         View dialogView = View.inflate(mContext, R.layout.preview_paymentinfo, null);
-                        ImageView childType = (ImageView) dialogView.findViewById(R.id.imgChildIconType);
-                        ImageButton childDone = (ImageButton) dialogView.findViewById(R.id.btnChildDone);
-                        ImageButton childEdit = (ImageButton) dialogView.findViewById(R.id.btnChildEdit);
-                        TextView childLabel = (TextView) dialogView.findViewById(R.id.tvChildLabel);
-                        TextView childCardName = (TextView) dialogView.findViewById(R.id.tvChildCardName);
-                        TextView childCardNumber= (TextView) dialogView.findViewById(R.id.tvChildCardNumber);
-                        TextView childCardExpiry = (TextView) dialogView.findViewById(R.id.tvChildCardExpiry);
-                        TextView childCardSecCode = (TextView) dialogView.findViewById(R.id.tvChildCardSecCode);
-                        TextView childCardType = (TextView) dialogView.findViewById(R.id.tvChildCardType);
-                        TextView childNotes = (TextView) dialogView.findViewById(R.id.tvChildNotes);
-                        TextView childDate = (TextView) dialogView.findViewById(R.id.tvChildDate);
-                        ImageView childCardIcon = (ImageView) dialogView.findViewById(R.id.imgChildCardType);
+                        ImageView childType = dialogView.findViewById(R.id.imgChildIconType);
+                        ImageButton childDone = dialogView.findViewById(R.id.btnChildDone);
+                        ImageButton childEdit = dialogView.findViewById(R.id.btnChildEdit);
+                        TextView childLabel = dialogView.findViewById(R.id.tvChildLabel);
+                        TextView childCardName = dialogView.findViewById(R.id.tvChildCardName);
+                        TextView childCardNumber = dialogView.findViewById(R.id.tvChildCardNumber);
+                        TextView childCardExpiry = dialogView.findViewById(R.id.tvChildCardExpiry);
+                        TextView childCardSecCode = dialogView.findViewById(R.id.tvChildCardSecCode);
+                        TextView childCardType = dialogView.findViewById(R.id.tvChildCardType);
+                        TextView childNotes = dialogView.findViewById(R.id.tvChildNotes);
+                        TextView childDate = dialogView.findViewById(R.id.tvChildDate);
+                        ImageView childCardIcon = dialogView.findViewById(R.id.imgChildCardType);
 
-                        childType.setImageDrawable(getIconType(TYPE));
+                        setDataIcon(childType, TYPE);
                         childLabel.setText(label);
                         childCardName.setText("Holder Name: " + prevName);
                         childCardNumber.setText("Number: " + prevNumber);
@@ -585,7 +547,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 dialog.dismiss();
-                                onEditClicked(data);
+                                onEditClicked(d);
                             }
                         });
                         childDone.setOnClickListener(new View.OnClickListener() {
@@ -598,30 +560,23 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        private void loginInfoFunctions(View convertView, final Data data, final RelativeLayout view) {
-            final TextView tvDate = (TextView) convertView.findViewById(R.id.tvLoginInfoDate);
-            final TextView tvLabel = (TextView) convertView.findViewById(R.id.tvLoginInfoLabel);
-            final TextView tvUrl = (TextView) convertView.findViewById(R.id.tvURL);
-            final TextView tvUsername = (TextView) convertView.findViewById(R.id.tvUsername);
-            final TextView tvEmail = (TextView) convertView.findViewById(R.id.tvEmail);
-            final TextView tvPassword = (TextView) convertView.findViewById(R.id.tvPassword);
-            // ----
-            final String date = data.getDate();
-            final String label = data.getLabel(mCryptoContent);
-            final String content = data.getContent(mCryptoContent);
-            final String TYPE = data.getType(mCryptoContent);
+        private void loginInfoFunctions(final ViewHolder vh, final Data d, CryptoContent cc, final String TYPE) {
+            setColourTag(vh, d.getColourTag(cc));
+            final String date = d.getDate();
+            final String label = d.getLabel(cc);
+            final String content = d.getContent(cc);
             // ----
             String url = "";
-            String username = "";
             String email = "";
+            String username = "";
             String password = "";
             StringBuilder notes = new StringBuilder("");
 
             Scanner scanner = new Scanner(content);
             try {
                 url = scanner.nextLine();
-                username = scanner.nextLine();
                 email = scanner.nextLine();
+                username = scanner.nextLine();
                 password = scanner.nextLine();
                 notes = new StringBuilder(scanner.nextLine());
                 while (scanner.hasNextLine()) {
@@ -629,45 +584,42 @@ public class MainActivity extends AppCompatActivity {
                     notes.append(scanner.nextLine());
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
             scanner.close();
 
-            // SET VIEWS
-            if (isNull(label)) { tvLabel.setText(label); } else { removeView(tvLabel); }
-            if (isNull(url)) { tvUrl.setText("URL: " + url); } else { removeView(tvUrl); }
-            if (isNull(username)) { tvUsername.setText("Username: " + username); } else { removeView(tvUsername); }
-            if (isNull(email)) { tvEmail.setText("Email: " + email); } else { removeView(tvEmail); }
-            if (isNull(password)) { tvPassword.setText("Password: " + password); } else { removeView(tvPassword); }
-            tvDate.setText(date);
-            // ----
             final String finalUrl = url;
-            final String finalUsername = username;
             final String finalEmail = email;
+            final String finalUsername = username;
             final String finalPassword = password;
             final String finalNotes = notes.toString();
-            view.setOnClickListener(new View.OnClickListener() {
+            // SET VIEWS
+            vh.label.setText(label);
+            vh.date.setText(date);
+            setContentLogininfo(vh, finalUrl, finalEmail, finalUsername);
+            // ----
+            vh.cv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isEditable(data, view)) {
+                    if (isEditable(d, vh)) {
                         View dialogView = View.inflate(mContext, R.layout.preview_logininfo, null);
-                        ImageView childType = (ImageView) dialogView.findViewById(R.id.imgChildIconType);
-                        ImageButton childDone = (ImageButton) dialogView.findViewById(R.id.btnChildDone);
-                        ImageButton childEdit = (ImageButton) dialogView.findViewById(R.id.btnChildEdit);
-                        TextView childLabel = (TextView) dialogView.findViewById(R.id.tvChildLabel);
-                        TextView childUrl = (TextView) dialogView.findViewById(R.id.tvchildUrl);
-                        TextView childUsername = (TextView) dialogView.findViewById(R.id.tvChildUsername);
-                        TextView childEmail = (TextView) dialogView.findViewById(R.id.tvChildEmail);
-                        TextView childPassword = (TextView) dialogView.findViewById(R.id.tvChildPassword);
-                        TextView childNotes = (TextView) dialogView.findViewById(R.id.tvChildNotes);
-                        TextView childDate = (TextView) dialogView.findViewById(R.id.tvChildDate);
+                        ImageView childType = dialogView.findViewById(R.id.imgChildIconType);
+                        ImageButton childDone = dialogView.findViewById(R.id.btnChildDone);
+                        ImageButton childEdit = dialogView.findViewById(R.id.btnChildEdit);
+                        TextView childLabel = dialogView.findViewById(R.id.tvChildLabel);
+                        TextView childUrl = dialogView.findViewById(R.id.tvchildUrl);
+                        TextView childUsername = dialogView.findViewById(R.id.tvChildUsername);
+                        TextView childEmail = dialogView.findViewById(R.id.tvChildEmail);
+                        TextView childPassword = dialogView.findViewById(R.id.tvChildPassword);
+                        TextView childNotes = dialogView.findViewById(R.id.tvChildNotes);
+                        TextView childDate = dialogView.findViewById(R.id.tvChildDate);
 
-                        childType.setImageDrawable(getIconType(TYPE));
+                        setDataIcon(childType, TYPE);
                         childLabel.setText(label);
-                        childUrl.setText("URL: " + finalUrl);
-                        childUsername.setText("Username: " + finalUsername);
-                        childEmail.setText("Email: " + finalEmail);
-                        childPassword.setText("Password: " + finalPassword);
+                        childUrl.setText(finalUrl);
+                        childUsername.setText(finalUsername);
+                        childEmail.setText(finalEmail);
+                        childPassword.setText(finalPassword);
                         childNotes.setText(finalNotes);
                         childDate.setText(date);
 
@@ -681,7 +633,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 dialog.dismiss();
-                                onEditClicked(data);
+                                onEditClicked(d);
                             }
                         });
                         childDone.setOnClickListener(new View.OnClickListener() {
@@ -695,52 +647,163 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         // ------------------------------
-        // SIMPLE OVERLOADED "REMOVE" FUNCTIONS
-        private void removeView(TextView view) {
-            view.setVisibility(View.GONE);
+        private void setContentNote(ViewHolder vh, String note) {
+            resetViews(vh);
+            vh.content.setText(note);
         }
-        private void removeView(RelativeLayout view) {
-            view.setVisibility(View.GONE);
-        }
-        // ----------------
-        // DIALOG EXTRAS
-        private Drawable getIconType(String TYPE) {
-            switch (TYPE) {
-                case "TYPE_NOTE":
-                    return mResources.getDrawable(R.drawable.ic_graphic_note);
-                case "TYPE_PAYMENTINFO":
-                    return mResources.getDrawable(R.drawable.ic_graphic_paymentinfo);
-                case "TYPE_LOGININFO":
-                    return mResources.getDrawable(R.drawable.ic_graphic_logininfo);
-                default:
-                    Toast.makeText(mContext, "Could find 'type' of DATA", Toast.LENGTH_SHORT).show(); break;
+        private void setContentPaymentinfo(ViewHolder vh, String type, String name, String number) {
+            resetViews(vh);
+            String dName = "CARD NAME: ";
+            String dNumber = "CARD NUMBER: ";
+            String empty = "*** card information does not \n contain a holder name or number ***";
+            String s;
+            if (isNotNull(name) && isNotNull(number)) {
+                s = dName + name + "\n" + dNumber + number;
+                vh.content.setText(s);
+            } else if (isNotNull(name) && !isNotNull(number)) {
+                s = dName + name + "\n" + "\n";
+                vh.content.setText(s);
+            } else if (!isNotNull(name) && isNotNull(number)) {
+                s = dNumber + number + "\n" + "\n";
+                vh.content.setText(s);
+            } else if (!isNotNull(name) && !isNotNull(number)) {
+                s = empty;
+                vh.content.setText(s);
+                vh.content.setTextColor(mResources.getColor(R.color.red_1D));
+                vh.content.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
             }
-            return mResources.getDrawable(R.drawable.ic_graphic_none);
+            Drawable img = setCardImage(type);
+            System.out.println(type);
+            float x = img.getMinimumWidth();
+            float y = img.getMinimumHeight();
+            float scale = 0.65f;
+            int xx = (int) ((int) x - (x * scale));
+            int yy = (int) ((int) y - (y * scale));
+            img.setBounds(0, 0, xx, yy);
+            vh.content.setCompoundDrawables(null, null, img, null);
+            s = null;
+        }
+        private void setContentLogininfo(ViewHolder vh, String url, String email, String username) {
+            resetViews(vh);
+            String dUrl = "URL: ";
+            String dEmail = "EMAIL: ";
+            String dUsername = "USERNAME: ";
+            String empty = "Login credentials are missing url, email and/or username";
+            String s;
+            if (isNotNull(url)) {
+                if (isNotNull(email) && isNotNull(username)) {
+                    s = dUrl + url + "\n" + dEmail + email;
+                    vh.content.setText(s);
+                } else if (isNotNull(email) && !isNotNull(username)) {
+                    s = dUrl + url + "\n" + dEmail + email;
+                    vh.content.setText(s);
+                } else if (!isNotNull(email) && isNotNull(username)) {
+                    s = dUrl + url + "\n" + dUsername + username;
+                    vh.content.setText(s);
+                }
+            } else if (!isNotNull(url)) {
+                if (isNotNull(email) && isNotNull(username)) {
+                    s = dEmail + email + "\n" + dUsername + username;
+                    vh.content.setText(s);
+                } else if (isNotNull(email) && !isNotNull(username)) {
+                    s = dEmail + email + "\n" + "\n";
+                    vh.content.setText(s);
+                } else if (!isNotNull(email) && isNotNull(username)) {
+                    s = dUsername + username + "\n" + "\n";
+                    vh.content.setText(s);
+                } else if (!isNotNull(email) && !isNotNull(username)) {
+                    s = empty;
+                    vh.content.setText(s);
+                }
+            }
+            s = null;
+        }
+        // ------------------------------
+        // SETTERS
+        private void resetViews(ViewHolder vh) {
+            vh.content.setCompoundDrawables(null, null, null, null);
+            vh.content.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+            vh.content.setTextColor(mResources.getColor(R.color.black));
+            vh.content.setText("");
+        }
+        private void setColourTag(ViewHolder vh, String col) {
+            final PorterDuff.Mode m = PorterDuff.Mode.MULTIPLY;
+            switch (col) {
+                case "COL_BLUE": vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_blue), m); break;
+                case "COL_RED": vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_red), m); break;
+                case "COL_GREEN": vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_green), m); break;
+                case "COL_YELLOW": vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_yellow), m); break;
+                case "COL_PURPLE": vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_purple), m); break;
+                case "COL_ORANGE": vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_orange), m); break;
+                default: vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_default), m); break;
+            }
+        }
+        private Drawable setCardImage(String cardType) {
+            switch (cardType) {
+                case ("Visa"): return getResources().getDrawable(R.drawable.card_visa);
+                case ("Master Card"): return getResources().getDrawable(R.drawable.card_mastercard);
+                case ("American Express"): return getResources().getDrawable(R.drawable.card_americanexpress);
+                case ("Discover"): return getResources().getDrawable(R.drawable.card_discover);
+                default: return getResources().getDrawable(R.drawable.card_default);
+            }
+        }
+        // DIALOG EXTRAS
+        private void setDataIcon(ImageView img, String s) {
+            Drawable d;
+            switch (s) {
+                case "TYPE_NOTE": d = mResources.getDrawable(R.drawable.ic_note); break;
+                case "TYPE_PAYMENTINFO": d = mResources.getDrawable(R.drawable.ic_card); break;
+                case "TYPE_LOGININFO": d = mResources.getDrawable(R.drawable.ic_login); break;
+                default: d = mResources.getDrawable(R.drawable.ic_graphic_none); break;
+            }
+            img.setImageDrawable(d);
+            img.setColorFilter(mResources.getColor(R.color.white));
         }
         // PRIMITIVES
         @Contract("null -> false")
-        private boolean isNull(String string) {
-            if (string != null) { if (string.isEmpty()) { return false; } }
-            return string != null;
+        private boolean isNotNull(String s) {
+            return s != null && !s.isEmpty();
         }
-        private boolean isEditable(Data data, RelativeLayout Content) {
-            if (mListView.getChoiceMode() != ListView.CHOICE_MODE_MULTIPLE_MODAL) {
+        @SuppressLint("ResourceType")
+        private boolean isEditable(Data d, ViewHolder vh) {
+            if (!mIsMultiChoice) {
                 return true;
             } else {
-                if (!data.isSelected()) {
-                    Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem_selected));
-                    data.setSelected(true);
-                    mSelectedDatas.add(data);
+                if (!d.isSelected()) {
+                    vh.checkbox.setChecked(true);
+                    d.setSelected(true);
+                    mSelectedDatas.add(d);
                     mCount++;
                 } else {
-                    Content.setBackground(mResources.getDrawable(R.drawable.clickable_listitem));
-                    data.setSelected(false);
-                    mSelectedDatas.remove(data);
+                    vh.checkbox.setChecked(false);
+                    d.setSelected(false);
+                    mSelectedDatas.remove(d);
                     mCount--;
                 }
                 getSupportActionBar().setTitle(mCount + " Selected");
 
                 return false;
+            }
+        }
+
+        // VIEW HOLDER CLASS
+        class ViewHolder extends RecyclerView.ViewHolder {
+            CardView cv;
+            CheckBox checkbox;
+            ImageView colourTag;
+            TextView date;
+            TextView label;
+            TextView content;
+
+            ViewHolder(View itemView) {
+                super(itemView);
+                // GLOBAL
+                cv = itemView.findViewById(R.id.cardView);
+                checkbox = itemView.findViewById(R.id.cbDataSelect);
+                colourTag = itemView.findViewById(R.id.imgColourTag);
+                date = itemView.findViewById(R.id.tvDate);
+                label = itemView.findViewById(R.id.tvLabel);
+                content = itemView.findViewById(R.id.tvContent);
             }
         }
     }

@@ -11,7 +11,7 @@
 
     <include
         android:id="@+id/appBar"
-        layout="@layout/child_toolbar"/>
+        layout="@layout/main_child_toolbar"/>
 
     <EditText
         android:id="@+id/etLabel"
@@ -51,6 +51,8 @@
                     android:id="@+id/etUrl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_graphic_url"
+                    android:drawableStart="@drawable/ic_graphic_url"
                     android:ems="10"
                     android:hint="URL"
                     android:inputType="text|textUri"
@@ -61,6 +63,8 @@
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_graphic_email"
+                    android:drawableStart="@drawable/ic_graphic_email"
                     android:ems="10"
                     android:hint="Email"
                     android:inputType="text|textEmailAddress|textWebEmailAddress"
@@ -71,6 +75,8 @@
                     android:id="@+id/etUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_graphic_username"
+                    android:drawableStart="@drawable/ic_graphic_username"
                     android:ems="10"
                     android:hint="Username"
                     android:inputType="text"
@@ -81,6 +87,8 @@
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_passcode"
+                    android:drawableStart="@drawable/ic_passcode"
                     android:ems="10"
                     android:hint="Password"
                     android:inputType="text|textVisiblePassword"

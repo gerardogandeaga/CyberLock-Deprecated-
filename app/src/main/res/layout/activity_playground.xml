@@ -11,7 +11,7 @@
 
     <include
         android:id="@+id/appBar"
-        layout="@layout/child_toolbar"/>
+        layout="@layout/main_child_toolbar"/>
 
     <TextView
         android:id="@+id/tvCrypt"

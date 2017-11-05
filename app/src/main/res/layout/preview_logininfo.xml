@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainEditActivity">
 
-    <include layout="@layout/child_label_buttons"/>
+    <include layout="@layout/priview_child_label_buttons"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -34,26 +34,45 @@
                     android:id="@+id/tvchildUrl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/myText.Content"/>
-
-                <TextView
-                    android:id="@+id/tvChildUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:textAppearance="@style/myText.Content"/>
+                    android:drawableLeft="@drawable/ic_graphic_url"
+                    android:drawableStart="@drawable/ic_graphic_url"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textAppearance="@style/myText.Content"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tvChildEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/myText.Content"/>
+                    android:drawableLeft="@drawable/ic_graphic_email"
+                    android:drawableStart="@drawable/ic_graphic_email"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textAppearance="@style/myText.Content"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tvChildUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_graphic_username"
+                    android:drawableStart="@drawable/ic_graphic_username"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textAppearance="@style/myText.Content"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tvChildPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/myText.Content"/>
+                    android:drawableLeft="@drawable/ic_passcode"
+                    android:drawableStart="@drawable/ic_passcode"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textAppearance="@style/myText.Content"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 

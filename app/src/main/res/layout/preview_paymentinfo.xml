@@ -10,7 +10,7 @@
     android:orientation="vertical"
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainEditActivity">
 
-    <include layout="@layout/child_label_buttons"/>
+    <include layout="@layout/priview_child_label_buttons"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -34,20 +34,26 @@
                     android:id="@+id/tvChildCardName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/myText.Content"/>
+                    android:maxLines="1"
+                    android:textAppearance="@style/myText.Content"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tvChildCardNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/myText.Content"/>
+                    android:maxLines="1"
+                    android:textAppearance="@style/myText.Content"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tvChildCardExpiry"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:textAppearance="@style/myText.Content"/>
+                    android:maxLines="1"
+                    android:textAppearance="@style/myText.Content"
+                    android:textStyle="bold"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -66,14 +72,18 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textAppearance="@style/myText.Content"
-                            tools:ignore="NestedWeights"/>
+                            android:textStyle="bold"
+                            tools:ignore="NestedWeights"
+                            android:maxLines="1"/>
 
                         <TextView
                             android:id="@+id/tvChildCardType"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textAppearance="@style/myText.Content"/>
+                            android:maxLines="1"
+                            android:textAppearance="@style/myText.Content"
+                            android:textStyle="bold"/>
                     </LinearLayout>
 
                     <ImageView

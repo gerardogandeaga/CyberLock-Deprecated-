@@ -10,21 +10,21 @@
         <menu>
             <item
                 android:id="@+id/action_note"
-                android:icon="@drawable/ic_action_note"
+                android:icon="@drawable/ic_note"
                 android:orderInCategory="0"
                 android:title="New Note"
                 app:showAsAction="always"/>
 
             <item
                 android:id="@+id/action_paymentinfo"
-                android:icon="@drawable/ic_action_paymentinfo"
+                android:icon="@drawable/ic_card"
                 android:orderInCategory="0"
                 android:title="New Payment Information"
                 app:showAsAction="always"/>
 
             <item
                 android:id="@+id/action_logininfo"
-                android:icon="@drawable/ic_action_logininfo"
+                android:icon="@drawable/ic_login"
                 android:orderInCategory="0"
                 android:title="New Login Credentials"
                 app:showAsAction="always"/>
@@ -74,7 +74,7 @@
         <menu>
             <item
                 android:id="@+id/action_settings"
-                android:icon="@drawable/ic_action_settings"
+                android:icon="@drawable/ic_settings"
                 android:orderInCategory="1"
                 android:title="Settings"
                 app:showAsAction="never"/>
