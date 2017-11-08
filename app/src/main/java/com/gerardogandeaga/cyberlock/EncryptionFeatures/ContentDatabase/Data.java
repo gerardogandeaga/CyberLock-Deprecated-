@@ -104,7 +104,7 @@ public class Data implements Serializable {
         this.mContent = cryptoContent.ENCRYPT_CONTENT(content, masterKey);
     }
     public String getShortNoteText(Context context, String text) {
-        float widthSp = (context.getResources().getDisplayMetrics().widthPixels / (4 * context.getResources().getDisplayMetrics().scaledDensity));
+        float widthSp = (context.getResources().getDisplayMetrics().widthPixels / (6 * context.getResources().getDisplayMetrics().scaledDensity));
         int finalWidth = (int) widthSp;
 
         String temp = text.replaceAll("\n", " ");

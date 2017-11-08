@@ -18,13 +18,13 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        Button start = findViewById(R.id.btnTest);
+        Button start = (Button) findViewById(R.id.btnTest);
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 View v = View.inflate(mContext, R.layout.dialog_custom_loadbar, null);
-                LinearLayout ln = v.findViewById(R.id.anim);
-                TextView tv = v.findViewById(R.id.test);
+                LinearLayout ln = (LinearLayout) v.findViewById(R.id.anim);
+                TextView tv = (TextView) v.findViewById(R.id.test);
 
                 TranslateAnimation left2right = new TranslateAnimation(0, 350, 0, 0);
                 left2right.setDuration(1000);

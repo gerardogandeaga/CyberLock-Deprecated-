@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -55,22 +54,21 @@ import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.APP_LOGGED_I
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownIsFinished;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTimer;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private Context mContext = this;
     private Menu mMenu;
     private Resources mResources;
 
-    // DATA VARIABLES
+    // Data Variables
     private boolean mIsMultiChoice = false;
     private int mCount;
     private MasterDatabaseAccess mMasterDatabaseAccess;
     private ArrayList<Data> mSelectedDatas;
 
-    // WIDGETS
-    private ActionBarDrawerToggle mDrawerToggle;
+    // Widgets
     private NavigationView mNavigationView;
 
-    // INITIAL ON CREATE METHODS
+    // Initial on create methods
     @Override
     public void onCreate(Bundle savedInstanceState) {
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
@@ -93,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         List<Data> datas = mMasterDatabaseAccess.getAllData();
         this.mMasterDatabaseAccess.close();
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         RVDataAdapter adapter = new RVDataAdapter(mContext, datas);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -102,26 +100,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ACTIVITY_INTENT = null;
         mResources = getResources();
-        // GET WIDGETS
-        DrawerLayout drawerLayout = findViewById(R.id.Data);
 
-        this.mNavigationView = findViewById(R.id.NavigationContent);
-        this.mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
-        this.mMasterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
-
-        // SET WIDGETS
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        // Appbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setTitle("");
+        // Options
+        ImageButton btnNotes = (ImageButton) findViewById(R.id.btnNotes);
+        ImageButton btnPlayground = (ImageButton) findViewById(R.id.btnPlayground);
+        ImageButton btnSettings = (ImageButton) findViewById(R.id.btnSettings);
 
-        calculateDrawerSize();
-        drawerLayout.addDrawerListener(mDrawerToggle);
-        this.mDrawerToggle.syncState();
-
-        this.mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        btnNotes.setOnClickListener(this);
+        btnPlayground.setOnClickListener(this);
+        btnSettings.setOnClickListener(this);
+        // Drawer Layout
+        mNavigationView = (NavigationView) findViewById(R.id.NavigationContent);
+        mMasterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
+        computeNavViewSize();
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -131,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private void calculateDrawerSize() {
+    private void computeNavViewSize() {
         Resources resources = getResources();
         DisplayMetrics metrics = new DisplayMetrics();
 
@@ -150,10 +148,22 @@ public class MainActivity extends AppCompatActivity {
         mNavigationView.setLayoutParams(params);
     }
 
-    // ON ACTION CLICKS
+    // On action clicks
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnSettings:
+                ACTIVITY_INTENT = new Intent(this, Settings.class);
+                this.finish();
+                this.startActivity(ACTIVITY_INTENT);
+                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
+                break;
+        }
+    }
+    // ----------------
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) return true;
+//        if (mDrawerToggle.onOptionsItemSelected(item)) return true;
         switch (item.getItemId()) {
             // OPTIONS
             case R.id.action_deletesweep:
@@ -181,8 +191,7 @@ public class MainActivity extends AppCompatActivity {
     private void onNavigationItemClicked(MenuItem menuItem) {
         Dialog dialog = new Dialog(this);
 
-        switch (menuItem.getItemId())
-        {
+        switch (menuItem.getItemId()) {
             case R.id.action_note:
                 onAddClicked(1);
                 overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
@@ -235,6 +244,8 @@ public class MainActivity extends AppCompatActivity {
         this.finish();
         this.startActivity(ACTIVITY_INTENT);
     }
+    // ----------------
+
     // MULTI SELECT
     public void onMultiSelectClicked() {
         MenuInflater menuInflater = new MenuInflater(mContext);
@@ -312,10 +323,10 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         if (!mIsMultiChoice)
-        if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
-        {
-            new LogoutProtocol().logoutImmediate(this);
-        }
+            if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
+            {
+                new LogoutProtocol().logoutImmediate(this);
+            }
     }
     @Override
     public void onPause() {
@@ -416,12 +427,12 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (isEditable(d, vh)) {
                         View dialogView = View.inflate(mContext, R.layout.preview_note, null);
-                        ImageView childType = dialogView.findViewById(R.id.imgChildIconType);
-                        ImageButton childDone = dialogView.findViewById(R.id.btnChildDone);
-                        ImageButton childEdit = dialogView.findViewById(R.id.btnChildEdit);
-                        TextView childLabel = dialogView.findViewById(R.id.tvChildLabel);
-                        TextView childMemo = dialogView.findViewById(R.id.tvChildMemo);
-                        TextView childDate = dialogView.findViewById(R.id.tvChildDate);
+                        ImageView childType = (ImageView) dialogView.findViewById(R.id.imgChildIconType);
+                        ImageButton childDone = (ImageButton) dialogView.findViewById(R.id.btnChildDone);
+                        ImageButton childEdit = (ImageButton) dialogView.findViewById(R.id.btnChildEdit);
+                        TextView childLabel = (TextView) dialogView.findViewById(R.id.tvChildLabel);
+                        TextView childMemo = (TextView) dialogView.findViewById(R.id.tvChildMemo);
+                        TextView childDate = (TextView) dialogView.findViewById(R.id.tvChildDate);
 
                         setDataIcon(childType, TYPE);
                         childLabel.setText(label);
@@ -513,18 +524,18 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (isEditable(d, vh)) {
                         View dialogView = View.inflate(mContext, R.layout.preview_paymentinfo, null);
-                        ImageView childType = dialogView.findViewById(R.id.imgChildIconType);
-                        ImageButton childDone = dialogView.findViewById(R.id.btnChildDone);
-                        ImageButton childEdit = dialogView.findViewById(R.id.btnChildEdit);
-                        TextView childLabel = dialogView.findViewById(R.id.tvChildLabel);
-                        TextView childCardName = dialogView.findViewById(R.id.tvChildCardName);
-                        TextView childCardNumber = dialogView.findViewById(R.id.tvChildCardNumber);
-                        TextView childCardExpiry = dialogView.findViewById(R.id.tvChildCardExpiry);
-                        TextView childCardSecCode = dialogView.findViewById(R.id.tvChildCardSecCode);
-                        TextView childCardType = dialogView.findViewById(R.id.tvChildCardType);
-                        TextView childNotes = dialogView.findViewById(R.id.tvChildNotes);
-                        TextView childDate = dialogView.findViewById(R.id.tvChildDate);
-                        ImageView childCardIcon = dialogView.findViewById(R.id.imgChildCardType);
+                        ImageView childType = (ImageView) dialogView.findViewById(R.id.imgChildIconType);
+                        ImageButton childDone = (ImageButton) dialogView.findViewById(R.id.btnChildDone);
+                        ImageButton childEdit = (ImageButton) dialogView.findViewById(R.id.btnChildEdit);
+                        TextView childLabel = (TextView) dialogView.findViewById(R.id.tvChildLabel);
+                        TextView childCardName = (TextView) dialogView.findViewById(R.id.tvChildCardName);
+                        TextView childCardNumber = (TextView) dialogView.findViewById(R.id.tvChildCardNumber);
+                        TextView childCardExpiry = (TextView) dialogView.findViewById(R.id.tvChildCardExpiry);
+                        TextView childCardSecCode = (TextView) dialogView.findViewById(R.id.tvChildCardSecCode);
+                        TextView childCardType = (TextView) dialogView.findViewById(R.id.tvChildCardType);
+                        TextView childNotes = (TextView) dialogView.findViewById(R.id.tvChildNotes);
+                        TextView childDate = (TextView) dialogView.findViewById(R.id.tvChildDate);
+                        ImageView childCardIcon = (ImageView) dialogView.findViewById(R.id.imgChildCardType);
 
                         setDataIcon(childType, TYPE);
                         childLabel.setText(label);
@@ -603,16 +614,16 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (isEditable(d, vh)) {
                         View dialogView = View.inflate(mContext, R.layout.preview_logininfo, null);
-                        ImageView childType = dialogView.findViewById(R.id.imgChildIconType);
-                        ImageButton childDone = dialogView.findViewById(R.id.btnChildDone);
-                        ImageButton childEdit = dialogView.findViewById(R.id.btnChildEdit);
-                        TextView childLabel = dialogView.findViewById(R.id.tvChildLabel);
-                        TextView childUrl = dialogView.findViewById(R.id.tvchildUrl);
-                        TextView childUsername = dialogView.findViewById(R.id.tvChildUsername);
-                        TextView childEmail = dialogView.findViewById(R.id.tvChildEmail);
-                        TextView childPassword = dialogView.findViewById(R.id.tvChildPassword);
-                        TextView childNotes = dialogView.findViewById(R.id.tvChildNotes);
-                        TextView childDate = dialogView.findViewById(R.id.tvChildDate);
+                        ImageView childType = (ImageView) dialogView.findViewById(R.id.imgChildIconType);
+                        ImageButton childDone = (ImageButton) dialogView.findViewById(R.id.btnChildDone);
+                        ImageButton childEdit = (ImageButton) dialogView.findViewById(R.id.btnChildEdit);
+                        TextView childLabel = (TextView) dialogView.findViewById(R.id.tvChildLabel);
+                        TextView childUrl = (TextView) dialogView.findViewById(R.id.tvchildUrl);
+                        TextView childUsername = (TextView) dialogView.findViewById(R.id.tvChildUsername);
+                        TextView childEmail = (TextView) dialogView.findViewById(R.id.tvChildEmail);
+                        TextView childPassword = (TextView) dialogView.findViewById(R.id.tvChildPassword);
+                        TextView childNotes = (TextView) dialogView.findViewById(R.id.tvChildNotes);
+                        TextView childDate = (TextView) dialogView.findViewById(R.id.tvChildDate);
 
                         setDataIcon(childType, TYPE);
                         childLabel.setText(label);
@@ -729,36 +740,65 @@ public class MainActivity extends AppCompatActivity {
         private void setColourTag(ViewHolder vh, String col) {
             final PorterDuff.Mode m = PorterDuff.Mode.MULTIPLY;
             switch (col) {
-                case "COL_BLUE": vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_blue), m); break;
-                case "COL_RED": vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_red), m); break;
-                case "COL_GREEN": vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_green), m); break;
-                case "COL_YELLOW": vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_yellow), m); break;
-                case "COL_PURPLE": vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_purple), m); break;
-                case "COL_ORANGE": vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_orange), m); break;
-                default: vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_default), m); break;
+                case "COL_BLUE":
+                    vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_blue), m);
+                    break;
+                case "COL_RED":
+                    vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_red), m);
+                    break;
+                case "COL_GREEN":
+                    vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_green), m);
+                    break;
+                case "COL_YELLOW":
+                    vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_yellow), m);
+                    break;
+                case "COL_PURPLE":
+                    vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_purple), m);
+                    break;
+                case "COL_ORANGE":
+                    vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_orange), m);
+                    break;
+                default:
+                    vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_default), m);
+                    break;
             }
         }
         private Drawable setCardImage(String cardType) {
             switch (cardType) {
-                case ("Visa"): return getResources().getDrawable(R.drawable.card_visa);
-                case ("Master Card"): return getResources().getDrawable(R.drawable.card_mastercard);
-                case ("American Express"): return getResources().getDrawable(R.drawable.card_americanexpress);
-                case ("Discover"): return getResources().getDrawable(R.drawable.card_discover);
-                default: return getResources().getDrawable(R.drawable.card_default);
+                case ("Visa"):
+                    return getResources().getDrawable(R.drawable.card_visa);
+                case ("Master Card"):
+                    return getResources().getDrawable(R.drawable.card_mastercard);
+                case ("American Express"):
+                    return getResources().getDrawable(R.drawable.card_americanexpress);
+                case ("Discover"):
+                    return getResources().getDrawable(R.drawable.card_discover);
+                default:
+                    return getResources().getDrawable(R.drawable.card_default);
             }
         }
+
         // DIALOG EXTRAS
         private void setDataIcon(ImageView img, String s) {
             Drawable d;
             switch (s) {
-                case "TYPE_NOTE": d = mResources.getDrawable(R.drawable.ic_note); break;
-                case "TYPE_PAYMENTINFO": d = mResources.getDrawable(R.drawable.ic_card); break;
-                case "TYPE_LOGININFO": d = mResources.getDrawable(R.drawable.ic_login); break;
-                default: d = mResources.getDrawable(R.drawable.ic_graphic_none); break;
+                case "TYPE_NOTE":
+                    d = mResources.getDrawable(R.drawable.ic_note);
+                    break;
+                case "TYPE_PAYMENTINFO":
+                    d = mResources.getDrawable(R.drawable.ic_card);
+                    break;
+                case "TYPE_LOGININFO":
+                    d = mResources.getDrawable(R.drawable.ic_login);
+                    break;
+                default:
+                    d = mResources.getDrawable(R.drawable.ic_graphic_none);
+                    break;
             }
             img.setImageDrawable(d);
             img.setColorFilter(mResources.getColor(R.color.white));
         }
+
         // PRIMITIVES
         @Contract("null -> false")
         private boolean isNotNull(String s) {
@@ -798,12 +838,12 @@ public class MainActivity extends AppCompatActivity {
             ViewHolder(View itemView) {
                 super(itemView);
                 // GLOBAL
-                cv = itemView.findViewById(R.id.cardView);
-                checkbox = itemView.findViewById(R.id.cbDataSelect);
-                colourTag = itemView.findViewById(R.id.imgColourTag);
-                date = itemView.findViewById(R.id.tvDate);
-                label = itemView.findViewById(R.id.tvLabel);
-                content = itemView.findViewById(R.id.tvContent);
+                cv = (CardView) itemView.findViewById(R.id.cardView);
+                checkbox = (CheckBox) itemView.findViewById(R.id.cbDataSelect);
+                colourTag = (ImageView) itemView.findViewById(R.id.imgColourTag);
+                date = (TextView) itemView.findViewById(R.id.tvDate);
+                label = (TextView) itemView.findViewById(R.id.tvLabel);
+                content = (TextView) itemView.findViewById(R.id.tvContent);
             }
         }
     }

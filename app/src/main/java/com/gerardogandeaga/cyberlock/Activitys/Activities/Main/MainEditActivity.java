@@ -165,22 +165,22 @@ public class MainEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_note);
 //        System.out.println("Layout Created!");
         // WIDGETS
-        mTvDate = findViewById(R.id.tvDate);
-        mEtLabel = findViewById(R.id.etLabel);
-        mEtNote = findViewById(R.id.etText);
+        mTvDate = (TextView) findViewById(R.id.tvDate);
+        mEtLabel = (EditText) findViewById(R.id.etLabel);
+        mEtNote = (EditText) findViewById(R.id.etText);
     }
     private void setupLayoutPaymentInfo() {
         setContentView(R.layout.activity_edit_paymentinfo);
         // WIDGETS
-        mTvDate = findViewById(R.id.tvDate);
-        mEtLabel = findViewById(R.id.etLabel);
-        mEtCardName = findViewById(R.id.etCardName);
-        mEtCardNumber = findViewById(R.id.etCardNumber);
-        mEtCardExpire = findViewById(R.id.etCardExpire);
-        mEtCardSecCode = findViewById(R.id.etCardSecCode);
-        mEtNotes = findViewById(R.id.etNotes);
+        mTvDate = (TextView) findViewById(R.id.tvDate);
+        mEtLabel = (EditText) findViewById(R.id.etLabel);
+        mEtCardName = (EditText) findViewById(R.id.etCardName);
+        mEtCardNumber = (EditText) findViewById(R.id.etCardNumber);
+        mEtCardExpire = (EditText) findViewById(R.id.etCardExpire);
+        mEtCardSecCode = (EditText) findViewById(R.id.etCardSecCode);
+        mEtNotes = (EditText) findViewById(R.id.etNotes);
 
-        mSpCardSelect = findViewById(R.id.spCardSelect);
+        mSpCardSelect = (Spinner) findViewById(R.id.spCardSelect);
 
         mAdapter = ArrayAdapter.createFromResource(this, R.array.CardType_array, android.R.layout.simple_spinner_item);
         mAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
@@ -252,13 +252,13 @@ public class MainEditActivity extends AppCompatActivity {
     private void setupLayoutLoginInfo() {
         setContentView(R.layout.activity_edit_logininfo);
         // WIDGETS
-        mTvDate = findViewById(R.id.tvDate);
-        mEtLabel = findViewById(R.id.etLabel);
-        mEtUrl = findViewById(R.id.etUrl);
-        mEtUsername = findViewById(R.id.etUsername);
-        mEtEmail = findViewById(R.id.etEmail);
-        mEtPassword = findViewById(R.id.etPassword);
-        mEtNotes = findViewById(R.id.etNotes);
+        mTvDate = (TextView) findViewById(R.id.tvDate);
+        mEtLabel = (EditText) findViewById(R.id.etLabel);
+        mEtUrl = (EditText) findViewById(R.id.etUrl);
+        mEtUsername = (EditText) findViewById(R.id.etUsername);
+        mEtEmail = (EditText) findViewById(R.id.etEmail);
+        mEtPassword = (EditText) findViewById(R.id.etPassword);
+        mEtNotes = (EditText) findViewById(R.id.etNotes);
     }
 
     // SET DATA
@@ -611,7 +611,7 @@ public class MainEditActivity extends AppCompatActivity {
         }
     }
     public void setGlobalIdentifiers(String label, String date) {
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -647,12 +647,12 @@ public class MainEditActivity extends AppCompatActivity {
             mDialog.setContentView(R.layout.dialog_colourtag);
             mDialog.setCanceledOnTouchOutside(true);
             // BUTTONS
-            ImageView blue = mDialog.findViewById(R.id.imgBlue);
-            ImageView red = mDialog.findViewById(R.id.imgRed);
-            ImageView green = mDialog.findViewById(R.id.imgGreen);
-            ImageView yellow = mDialog.findViewById(R.id.imgYellow);
-            ImageView purple = mDialog.findViewById(R.id.imgPurple);
-            ImageView orange = mDialog.findViewById(R.id.imgOrange);
+            ImageView blue = (ImageView) mDialog.findViewById(R.id.imgBlue);
+            ImageView red = (ImageView) mDialog.findViewById(R.id.imgRed);
+            ImageView green = (ImageView) mDialog.findViewById(R.id.imgGreen);
+            ImageView yellow = (ImageView) mDialog.findViewById(R.id.imgYellow);
+            ImageView purple = (ImageView) mDialog.findViewById(R.id.imgPurple);
+            ImageView orange = (ImageView) mDialog.findViewById(R.id.imgOrange);
 
             blue.setOnClickListener(this);
             red.setOnClickListener(this);

@@ -30,9 +30,9 @@
                 android:id="@+id/AutoSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/clickable_listitem"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
 
                 <ImageView
                     android:id="@+id/imgAutoSave"
@@ -45,7 +45,7 @@
                     android:layout_marginStart="10dp"
                     android:contentDescription="auto save"
                     android:tint="@color/black"
-                    app:srcCompat="@drawable/test"/>
+                    app:srcCompat="@drawable/ic_save"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -98,9 +98,9 @@
                 android:id="@+id/AutoLogoutDelay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/clickable_listitem"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
 
                 <ImageView
                     android:id="@+id/imgAutoLogoutDelay"
@@ -158,9 +158,9 @@
                 android:id="@+id/ChangePasscode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/clickable_listitem"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
 
                 <ImageView
                     android:id="@+id/imgChangePassword"
@@ -195,9 +195,9 @@
                 android:id="@+id/ScrambleKey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/clickable_listitem"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
 
                 <ImageView
                     android:id="@+id/imgScrambleEncryptionKey"
@@ -209,7 +209,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
                     android:contentDescription="scramble crypt key"
-                    app:srcCompat="@drawable/ic_keys"/>
+                    app:srcCompat="@drawable/ic_key"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -247,9 +247,9 @@
                 android:id="@+id/EncryptionMethod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/clickable_listitem"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
 
                 <ImageView
                     android:id="@+id/imgEncryptionMethod"

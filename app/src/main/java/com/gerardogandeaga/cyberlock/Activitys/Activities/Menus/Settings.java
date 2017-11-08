@@ -79,7 +79,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         this.mIsAutoSave = mSharedPreferences.getBoolean(AUTOSAVE, false);
 
         // ACTION BAR TITLE AND BACK BUTTON
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -89,21 +89,21 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
 
         // SPINNER DATA
         // LOGOUT DELAY
-        this.mSpAutoLogoutDelay = findViewById(R.id.spAutoLogoutDelay);
+        this.mSpAutoLogoutDelay = (Spinner) findViewById(R.id.spAutoLogoutDelay);
         mAdapterAutoLogoutDelay = ArrayAdapter.createFromResource(this, R.array.AutoLogoutDelay_array, R.layout.spinner_setting_text);
         mAdapterAutoLogoutDelay.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         this.mSpAutoLogoutDelay.setAdapter(mAdapterAutoLogoutDelay);
         // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // ENCRYPTION METHOD
-        this.mSpEncryptionMethod = findViewById(R.id.spEncryptionMethod);
+        this.mSpEncryptionMethod = (Spinner) findViewById(R.id.spEncryptionMethod);
         mAdapterEncryptionMethod = ArrayAdapter.createFromResource(this, R.array.CryptALGO_array, R.layout.spinner_setting_text);
         mAdapterEncryptionMethod.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         this.mSpEncryptionMethod.setAdapter(mAdapterEncryptionMethod);
 
-        this.mCbAutoSave = findViewById(R.id.cbAutoSave);
-        RelativeLayout autoSave = findViewById(R.id.AutoSave);
-        RelativeLayout changePasscode = findViewById(R.id.ChangePasscode);
-        RelativeLayout scrambleKey = findViewById(R.id.ScrambleKey);
+        this.mCbAutoSave = (CheckBox) findViewById(R.id.cbAutoSave);
+        RelativeLayout autoSave = (RelativeLayout) findViewById(R.id.AutoSave);
+        RelativeLayout changePasscode = (RelativeLayout) findViewById(R.id.ChangePasscode);
+        RelativeLayout scrambleKey = (RelativeLayout) findViewById(R.id.ScrambleKey);
 
         autoSave.setOnClickListener(this);
         changePasscode.setOnClickListener(this);
@@ -243,18 +243,18 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
     private void onChangePassword() {
         View v = View.inflate(mContext, R.layout.dialog_view_passcode_change, null);
         // Dialog primitives
-        ImageView icon = v.findViewById(R.id.imgDialogAction);
-        TextView title = v.findViewById(R.id.tvDialogTitle);
-        Button negative = v.findViewById(R.id.btnDialogNegative);
-        Button positive = v.findViewById(R.id.btnDialogPositive);
+        ImageView icon = (ImageView) v.findViewById(R.id.imgDialogAction);
+        TextView title = (TextView) v.findViewById(R.id.tvDialogTitle);
+        Button negative = (Button) v.findViewById(R.id.btnDialogNegative);
+        Button positive = (Button) v.findViewById(R.id.btnDialogPositive);
         icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_passcode));
         title.setText("Change Passcode");
         negative.setText("Cancel");
         positive.setText("Change");
         // -----------------
-        EditText current = v.findViewById(R.id.etCurrent);
-        EditText initial = v.findViewById(R.id.etInitial);
-        EditText Final = v.findViewById(R.id.etFinal);
+        EditText current = (EditText) v.findViewById(R.id.etCurrent);
+        EditText initial = (EditText) v.findViewById(R.id.etInitial);
+        EditText Final = (EditText) v.findViewById(R.id.etFinal);
 
         // DIALOG BUILDER
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -279,16 +279,16 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
     private void onScrambleKey() {
         View v = View.inflate(mContext, R.layout.dialog_view_alert_info, null);
         // Dialog primitives
-        ImageView icon = v.findViewById(R.id.imgDialogAction);
-        TextView title = v.findViewById(R.id.tvDialogTitle);
-        Button negative = v.findViewById(R.id.btnDialogNegative);
-        Button positive = v.findViewById(R.id.btnDialogPositive);
+        ImageView icon = (ImageView) v.findViewById(R.id.imgDialogAction);
+        TextView title = (TextView) v.findViewById(R.id.tvDialogTitle);
+        Button negative = (Button) v.findViewById(R.id.btnDialogNegative);
+        Button positive = (Button) v.findViewById(R.id.btnDialogPositive);
         icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_keys));
         title.setText("Scramble Encryption Key");
         negative.setText("Cancel");
         positive.setText("Scramble");
         // -----------------
-        TextView alertText = v.findViewById(R.id.tvDialogAlertText);
+        TextView alertText = (TextView) v.findViewById(R.id.tvDialogAlertText);
         alertText.setText(R.string.AlertDialog_ScrambleKey);
         // DIALOG BUILDER
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -313,16 +313,16 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
     private void onEncryptionMethodChange(final String algorithm) {
         View v = View.inflate(mContext, R.layout.dialog_view_alert_info, null);
         // Dialog primitives
-        ImageView icon = v.findViewById(R.id.imgDialogAction);
-        TextView title = v.findViewById(R.id.tvDialogTitle);
-        Button negative = v.findViewById(R.id.btnDialogNegative);
-        Button positive = v.findViewById(R.id.btnDialogPositive);
+        ImageView icon = (ImageView) v.findViewById(R.id.imgDialogAction);
+        TextView title = (TextView) v.findViewById(R.id.tvDialogTitle);
+        Button negative = (Button) v.findViewById(R.id.btnDialogNegative);
+        Button positive = (Button) v.findViewById(R.id.btnDialogPositive);
         icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_shield));
         title.setText("Change Encryption Method");
         negative.setText("Cancel");
         positive.setText("Change");
         // -----------------
-        TextView alertText = v.findViewById(R.id.tvDialogAlertText);
+        TextView alertText = (TextView) v.findViewById(R.id.tvDialogAlertText);
         alertText.setText(R.string.AlertDialog_EncryptionMethodChange);
         // DIALOG BUILDER
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);

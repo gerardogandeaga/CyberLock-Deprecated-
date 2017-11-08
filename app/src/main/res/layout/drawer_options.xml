@@ -17,10 +17,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="RtlSymmetry">
 
             <TextView
-                android:id="@+id/CyberLock"
+                android:id="@+id/Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Cyber Lock"
@@ -29,22 +30,13 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/tvCurrentVersion"
+                android:id="@+id/SubTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Power. Simplicity. Reliability."
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
-
-            <!--<TextView-->
-                <!--android:id="@+id/tvLastLogin"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="Last logged in at 5:43 pm on October 3, 2017"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:textSize="12sp"-->
-                <!--android:textStyle="bold"/>-->
 
         </LinearLayout>
 

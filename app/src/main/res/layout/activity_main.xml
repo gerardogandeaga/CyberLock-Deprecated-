@@ -16,11 +16,88 @@
             android:id="@+id/appBar"
             layout="@layout/main_child_toolbar"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/appBar"/>
+            android:layout_below="@+id/appBar"
+            android:orientation="horizontal">
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btnNotes"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="image"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:srcCompat="@drawable/ic_file"/>
+
+                    <ImageButton
+                        android:id="@+id/btnPlayground"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="image"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:srcCompat="@drawable/ic_cancel"/>
+
+                    <ImageButton
+                        android:id="@+id/btnSettings"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="image"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:srcCompat="@drawable/ic_settings"/>
+
+                    <ImageButton
+                        android:id="@+id/btnShare"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="image"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:srcCompat="@drawable/ic_save"/>
+
+                    <ImageButton
+                        android:id="@+id/btnRate"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="image"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:srcCompat="@drawable/ic_save"/>
+
+                    <ImageButton
+                        android:id="@+id/btnAbout"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="image"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:srcCompat="@drawable/ic_save"/>
+
+                </LinearLayout>
+            </ScrollView>
+
+            <LinearLayout
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray_dark1"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
 
     </RelativeLayout>
 
@@ -28,8 +105,7 @@
         android:id="@+id/NavigationContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/white"
+        android:layout_gravity="end"
         app:headerLayout="@layout/drawer_options"
         app:itemIconTint="@color/black"
         app:menu="@menu/menu_drawer">
