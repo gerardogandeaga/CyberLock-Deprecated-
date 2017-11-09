@@ -97,27 +97,24 @@
     <string name="CheckoutSite">
         Click here  to check out our site! \n\n{ http://bitcoretechnologies.net/ } </string>
     <!-- ABOUT -->
-    <string name="CyberLocksTechTitle">Cyber Lock\'s Technology</string>
-    <string name="CyberLocksTech">
+    <string name="CyberLockTechTitle">Cryptography</string>
+    <string name="CyberLockTech">
         Cyber Lock is a mobile application designed to secure and privatize your personal information.
         Cyber Lock is equipped to utilize four different symmetric Encryption Algorithms; AES, Blowfish,
         RC4 and Triple DES. Pins are protected using a salted SHA-256 algorithm, a powerful one-way
         hash function that cannot be decrypted.
-    </string>
-    <string name="AES">AES</string>
-    <string name="AESInfo">
+        \n\n
+        <b>AES</b>\n\n
         Advanced Encryption Standard (AES) is a newer and stronger encryption standard, which uses
         the Rijndael algorithm. This algorithm was developed by Joan Daemen and Vincent Rijmen of
         Belgium. AES has a block size of 128 and is able to use 128, 192, and 256-bit keys for
         powerful encryption.
-    </string>
-    <string name="Blowfish">Blowfish</string>
-    <string name="BlowfishInfo">
+        \n\n
+        <b>Blowfish</b>\n\n
         Blowfish is a symmetric block cipher, designed by Bruce Schneier.
         Blowfish has a 64-bit block size and a variable key length from 32 up to 448 bits.
-    </string>
-    <string name="SHA256">SHA-256</string>
-    <string name="SHA256Info">
+        \n\n
+        <b>SHA-256</b>\n\n
         SHA-256 (Secure Hash Algorithm), a cryptographic function which takes an input and spits
         out an alphanumeric string. SHA-256 generates an almost-unique, fixed 256-bit hash. A hash
         is a one way function “encryptor” which cannot be decrypted. SHA-256 is currently one of
@@ -129,9 +126,9 @@
     <!-- UPDATE FEED -->
     <string name="CurrentVersion">Version 1.0.0</string>
     <string name="UpdateTitle">Update Board</string>
-    <!-- Version 1.1-->
-    <string name="V1.0.0">V - 1.0.0 ( Release! )</string>
-    <string name="Update_V1.0.0">
+    <!-- Versions-->
+    <string name="V1_0_0">
+        <b>1.0.0v</b>\n
         Welcome to Cyber Lock! Initial release comes outfitted with a data,
         card info, login credential and playground encryptor. Content Algorithms
         currently supported are AES-256 and Blowfish-448 bit.

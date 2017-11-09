@@ -12,11 +12,10 @@
         />
 
     <item
-        android:id="@+id/action_deletesweep"
+        android:id="@+id/action_select"
         android:icon="@drawable/ic_select"
-        android:title="Delete Sweep"
-        app:showAsAction="always"
-        />
+        android:title="Select"
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/subMenuAdd"
@@ -27,7 +26,7 @@
         <menu>
             <item
                 android:id="@+id/action_note"
-                android:icon="@drawable/ic_note"
+                android:icon="@drawable/ic_file"
                 android:orderInCategory="0"
                 android:title="New Note"
                 app:showAsAction="never"/>

@@ -11,7 +11,7 @@
         <item name="homeAsUpIndicator">@drawable/ic_back</item>
 
         <!---->
-        <!--<item name="android:windowFullscreen">true</item>-->
+        <!--<itextname="android:windowFullscreen">true</item>-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!---->
@@ -19,7 +19,7 @@
     <!-- Navigation Drawer Color -->
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
-        <!--<item name="color">@color/black</item>-->
+        <!--<itextname="color">@color/black</item>-->
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light"/>

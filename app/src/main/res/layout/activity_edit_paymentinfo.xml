@@ -10,24 +10,9 @@
     android:orientation="vertical"
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainEditActivity">
 
-    <include
-        android:id="@+id/appBar"
-        layout="@layout/main_child_toolbar"/>
+    <include layout="@layout/main_child_toolbar"/>
 
-    <EditText
-        android:id="@+id/etLabel"
-        style="@style/myText.Label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_label"
-        android:elevation="3dp"
-        android:hint="Label"
-        android:inputType="text"
-        android:maxLines="1"
-        android:padding="10dp"
-        android:scrollbars="horizontal"
-        android:textAppearance="@style/myText.Label"
-        tools:targetApi="lollipop"/>
+    <include layout="@layout/child_edit_label"/>
 
     <ScrollView
         android:id="@+id/Data"

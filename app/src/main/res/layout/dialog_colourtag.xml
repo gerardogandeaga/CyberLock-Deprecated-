@@ -31,80 +31,80 @@
 
             <ImageView
                 android:id="@+id/imgBlue"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/clickable_tagitem"
                 android:clickable="true"
                 android:contentDescription="blue"
                 android:focusable="true"
                 android:scaleType="centerCrop"
                 android:tint="@color/coltag_blue"
-                app:srcCompat="@drawable/ic_graphic_tag"
+                app:srcCompat="@drawable/ic_tag"
                 tools:ignore="VectorDrawableCompat"/>
 
             <ImageView
                 android:id="@+id/imgRed"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/clickable_tagitem"
                 android:clickable="true"
                 android:contentDescription="red"
                 android:focusable="true"
                 android:scaleType="centerCrop"
                 android:tint="@color/coltag_red"
-                app:srcCompat="@drawable/ic_graphic_tag"
+                app:srcCompat="@drawable/ic_tag"
                 tools:ignore="VectorDrawableCompat"/>
 
             <ImageView
                 android:id="@+id/imgGreen"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/clickable_tagitem"
                 android:clickable="true"
                 android:contentDescription="green"
                 android:focusable="true"
                 android:scaleType="centerCrop"
                 android:tint="@color/coltag_green"
-                app:srcCompat="@drawable/ic_graphic_tag"
+                app:srcCompat="@drawable/ic_tag"
                 tools:ignore="VectorDrawableCompat"/>
 
             <ImageView
                 android:id="@+id/imgYellow"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/clickable_tagitem"
                 android:clickable="true"
                 android:contentDescription="yellow"
                 android:focusable="true"
                 android:scaleType="centerCrop"
                 android:tint="@color/coltag_yellow"
-                app:srcCompat="@drawable/ic_graphic_tag"
+                app:srcCompat="@drawable/ic_tag"
                 tools:ignore="VectorDrawableCompat"/>
 
             <ImageView
                 android:id="@+id/imgPurple"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/clickable_tagitem"
                 android:clickable="true"
                 android:contentDescription="purple"
                 android:focusable="true"
                 android:scaleType="centerCrop"
                 android:tint="@color/coltag_purple"
-                app:srcCompat="@drawable/ic_graphic_tag"
+                app:srcCompat="@drawable/ic_tag"
                 tools:ignore="VectorDrawableCompat"/>
 
             <ImageView
                 android:id="@+id/imgOrange"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/clickable_tagitem"
                 android:clickable="true"
                 android:contentDescription="orange"
                 android:focusable="true"
                 android:scaleType="centerCrop"
                 android:tint="@color/coltag_orange"
-                app:srcCompat="@drawable/ic_graphic_tag"
+                app:srcCompat="@drawable/ic_tag"
                 tools:ignore="VectorDrawableCompat"/>
 
         </LinearLayout>

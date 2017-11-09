@@ -21,7 +21,8 @@
 
     <item
         android:id="@+id/action_colortag"
+        android:icon="@drawable/ic_tag"
         android:orderInCategory="100"
         android:title="Colour Tag"
-        app:showAsAction="never"/>
+        app:showAsAction="always"/>
 </menu>

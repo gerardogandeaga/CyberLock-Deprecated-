@@ -72,7 +72,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         setupLayout();
     }
     private void setupLayout() {
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.view_settings);
         ACTIVITY_INTENT = null;
         //
         this.mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
@@ -87,14 +87,11 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
         getSupportActionBar().setTitle("Settings");
         getSupportActionBar().setSubtitle("Functionality And Visuals");
 
-        // SPINNER DATA
-        // LOGOUT DELAY
         this.mSpAutoLogoutDelay = (Spinner) findViewById(R.id.spAutoLogoutDelay);
         mAdapterAutoLogoutDelay = ArrayAdapter.createFromResource(this, R.array.AutoLogoutDelay_array, R.layout.spinner_setting_text);
         mAdapterAutoLogoutDelay.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         this.mSpAutoLogoutDelay.setAdapter(mAdapterAutoLogoutDelay);
-        // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        // ENCRYPTION METHOD
+
         this.mSpEncryptionMethod = (Spinner) findViewById(R.id.spEncryptionMethod);
         mAdapterEncryptionMethod = ArrayAdapter.createFromResource(this, R.array.CryptALGO_array, R.layout.spinner_setting_text);
         mAdapterEncryptionMethod.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
@@ -217,7 +214,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
                 onAutoSave();
                 break;
             case R.id.ChangePasscode:
-                onChangePassword();
+                onChangePasscode();
                 break;
 
             case R.id.ScrambleKey:
@@ -240,7 +237,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
             mCbAutoSave.setChecked(false);
         }
     }                                          //#
-    private void onChangePassword() {
+    private void onChangePasscode() {
         View v = View.inflate(mContext, R.layout.dialog_view_passcode_change, null);
         // Dialog primitives
         ImageView icon = (ImageView) v.findViewById(R.id.imgDialogAction);
@@ -275,7 +272,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
             }
         });
         // -----------------------------------------------------------
-    }                                     //#
+    }                                    //#
     private void onScrambleKey() {
         View v = View.inflate(mContext, R.layout.dialog_view_alert_info, null);
         // Dialog primitives

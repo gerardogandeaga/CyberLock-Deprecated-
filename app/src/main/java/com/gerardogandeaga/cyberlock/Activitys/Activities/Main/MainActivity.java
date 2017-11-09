@@ -2,16 +2,15 @@ package com.gerardogandeaga.cyberlock.Activitys.Activities.Main;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -23,24 +22,32 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity;
-import com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings;
 import com.gerardogandeaga.cyberlock.Crypto.CryptoContent;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.Data;
 import com.gerardogandeaga.cyberlock.EncryptionFeatures.ContentDatabase.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.Supports.Globals;
 import com.gerardogandeaga.cyberlock.Supports.LogoutProtocol;
+import com.gerardogandeaga.cyberlock.Supports.Settings_EncryptionMethodChange;
+import com.gerardogandeaga.cyberlock.Supports.Settings_ScrambleKey;
 
 import org.jetbrains.annotations.Contract;
 
@@ -49,58 +56,63 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+import iammert.com.expandablelib.ExpandCollapseListener;
+import iammert.com.expandablelib.ExpandableLayout;
+import iammert.com.expandablelib.Section;
+
+import static com.gerardogandeaga.cyberlock.Supports.Globals.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.DELAY_TIME;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.ENCRYPTION_ALGO;
+import static com.gerardogandeaga.cyberlock.Supports.Globals.LOGOUT_DELAY;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownIsFinished;
 import static com.gerardogandeaga.cyberlock.Supports.LogoutProtocol.mCountDownTimer;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private int STATE = 0;
     private Context mContext = this;
-    private Menu mMenu;
-    private Resources mResources;
+    private SharedPreferences mSharedPreferences;
 
     // Data Variables
     private boolean mIsMultiChoice = false;
     private int mCount;
     private MasterDatabaseAccess mMasterDatabaseAccess;
     private ArrayList<Data> mSelectedDatas;
+    private String mAutoLogoutDelay, mOldEncryptionMethod;
+    // State
+    private boolean mIsAutoSave;
+    private ArrayAdapter<CharSequence> mAdapterAutoLogoutDelay,mAdapterEncryptionMethod;
 
     // Widgets
+    private ImageButton mBtnNotes, mBtnPlayground, mBtnSettings;
+    private CheckBox mCbAutoSave;
+    private Spinner mSpAutoLogoutDelay, mSpEncryptionMethod;
+
+    // Views
+    private Menu mMenu;
+    private LinearLayout mAnchorView;
     private NavigationView mNavigationView;
+    private View mView;
 
     // Initial on create methods
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+    @Override public void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         Globals.COLORSCHEME(this);
         super.onCreate(savedInstanceState);
         setupLayout();
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         mMenu = menu;
 
         return true;
     }
-    @Override
-    public void onResume() {
-        super.onResume();
-        this.mMasterDatabaseAccess.open();
-        List<Data> datas = mMasterDatabaseAccess.getAllData();
-        this.mMasterDatabaseAccess.close();
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        RVDataAdapter adapter = new RVDataAdapter(mContext, datas);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-    }
     private void setupLayout() {
-        setContentView(R.layout.activity_main);
         ACTIVITY_INTENT = null;
-        mResources = getResources();
-
+        setContentView(R.layout.activity_main);
         // Appbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -108,26 +120,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setTitle("");
         // Options
-        ImageButton btnNotes = (ImageButton) findViewById(R.id.btnNotes);
-        ImageButton btnPlayground = (ImageButton) findViewById(R.id.btnPlayground);
-        ImageButton btnSettings = (ImageButton) findViewById(R.id.btnSettings);
-
-        btnNotes.setOnClickListener(this);
-        btnPlayground.setOnClickListener(this);
-        btnSettings.setOnClickListener(this);
+        mBtnNotes = (ImageButton) findViewById(R.id.btnNotes);
+        mBtnPlayground = (ImageButton) findViewById(R.id.btnPlayground);
+        mBtnSettings = (ImageButton) findViewById(R.id.btnSettings);
+        //
+        mBtnNotes.setOnClickListener(this);
+        mBtnPlayground.setOnClickListener(this);
+        mBtnSettings.setOnClickListener(this);
         // Drawer Layout
         mNavigationView = (NavigationView) findViewById(R.id.NavigationContent);
-        mMasterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
         computeNavViewSize();
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                onNavigationItemClicked(item);
-
-                return false;
-            }
-        });
+        navigationViewItems();
+        // Main view
+        mAnchorView = (LinearLayout) findViewById(R.id.AnchorView);
+        createNotes();
     }
     private void computeNavViewSize() {
         Resources resources = getResources();
@@ -147,26 +153,91 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         params.width = (newWidth);
         mNavigationView.setLayoutParams(params);
     }
+    private void navigationViewItems() {
+        View view = mNavigationView.inflateHeaderView(R.layout.drawer_header); // Set the navigation header view and parse to 'View'
+        ExpandableLayout el = (ExpandableLayout) view.findViewById(R.id.expandableLayout);
 
-    // On action clicks
-    @Override
-    public void onClick(View v) {
+        el.setRenderer(new ExpandableLayout.Renderer<InfoCategory, Info>() {
+            @Override public void renderParent(View v, InfoCategory ic, boolean b, int i) {
+                ((TextView) v.findViewById(R.id.parentTitle)).setText(ic.title);
+            }
+            @Override public void renderChild(View v, Info io, int ip, int ic) {
+                ((TextView) v.findViewById(R.id.childTitle)).setText(io.text);
+            }
+        });
+        el.setExpandListener(new ExpandCollapseListener.ExpandListener<InfoCategory>() {
+            @Override public void onExpanded(int i, InfoCategory ic, View v) {
+                v.findViewById(R.id.expandableArrow).setRotation(90);
+            }
+        });
+        el.setCollapseListener(new ExpandCollapseListener.CollapseListener<InfoCategory>() {
+            @Override public void onCollapsed(int i, InfoCategory ic, View v) {
+                v.findViewById(R.id.expandableArrow).setRotation(-90);
+            }
+        });
+
+        el.addSection(sectionUpdates());
+        el.addSection(sectionTechnology());
+    } // Set expandable views
+    // Expandable items
+    private Section<InfoCategory, Info> sectionUpdates() {
+        Section<InfoCategory, Info> section = new Section<>();
+        InfoCategory ic = new InfoCategory(getString(R.string.UpdateTitle));
+
+        List<Info> ioList = new ArrayList<>();
+
+        ioList.add(new Info(getResources().getText(R.string.V1_0_0)));
+
+        section.parent = ic;
+        section.children.addAll(ioList);
+
+        return section;
+    } // Update board
+    private Section<InfoCategory, Info> sectionTechnology() {
+        Section<InfoCategory, Info> section = new Section<>();
+        InfoCategory ic = new InfoCategory(getString(R.string.CyberLockTechTitle));
+
+        List<Info> ioList = new ArrayList<>();
+
+        ioList.add(new Info(getResources().getText(R.string.CyberLockTech)));
+
+        section.parent = ic;
+        section.children.addAll(ioList);
+
+        return section;
+    } // Cyber Lock's technology
+
+    // Main click-listener
+    @Override public void onClick(View v) {
         switch (v.getId()) {
+            // Notes
+            case R.id.btnNotes:
+                STATE = 0;
+                switchStates();
+                break;
             case R.id.btnSettings:
-                ACTIVITY_INTENT = new Intent(this, Settings.class);
-                this.finish();
-                this.startActivity(ACTIVITY_INTENT);
-                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
+                STATE = 1;
+                switchStates();
+                break;
+
+            // Settings
+            case R.id.AutoSave:
+                onAutoSave();
+                break;
+            case R.id.ChangePasscode:
+                onChangePasscode();
+                break;
+            case R.id.ScrambleKey:
+                onScrambleKey();
                 break;
         }
     }
-    // ----------------
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    // Global clicks
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
 //        if (mDrawerToggle.onOptionsItemSelected(item)) return true;
         switch (item.getItemId()) {
             // OPTIONS
-            case R.id.action_deletesweep:
+            case R.id.action_select:
                 onMultiSelectClicked();
             case R.id.action_delete:
                 onDeleteClicked();
@@ -188,51 +259,150 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return super.onOptionsItemSelected(item);
     }
-    private void onNavigationItemClicked(MenuItem menuItem) {
-        Dialog dialog = new Dialog(this);
+    // -------------------
 
-        switch (menuItem.getItemId()) {
-            case R.id.action_note:
-                onAddClicked(1);
-                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
-                break;
-            case R.id.action_paymentinfo:
-                onAddClicked(2);
-                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
-                break;
-            case R.id.action_logininfo:
-                onAddClicked(3);
-                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
-                break;
+    // Create views
+    private void createNotes() {
+        getSupportActionBar().setTitle("Notes");
+        if (mMenu != null) getMenuInflater().inflate(R.menu.menu_main, mMenu);
+        mBtnNotes.setBackgroundColor(getResources().getColor(R.color.gray_2L));
+        //
+        mMasterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
+        mMasterDatabaseAccess.open();
+        List<Data> dlist = mMasterDatabaseAccess.getAllData();
+        mMasterDatabaseAccess.close();
+        //
+        mView = View.inflate(this, R.layout.view_notes, null);
+        mAnchorView.addView(mView);
+        RecyclerView rv = (RecyclerView) findViewById(R.id.recyclerView);
+        RVDataAdapter adapter = new RVDataAdapter(this, dlist);
+        rv.setAdapter(adapter);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+    }
+    private void createSettings() {
+        getSupportActionBar().setTitle("Settings");
+        mBtnSettings.setBackgroundColor(getResources().getColor(R.color.gray_2L));
+        //
+        mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
+        mIsAutoSave = mSharedPreferences.getBoolean(AUTOSAVE, false);
+        //
+        mView = View.inflate(this, R.layout.view_settings, null);
+        mAnchorView.addView(mView);
+        //
+        mSpAutoLogoutDelay = (Spinner) findViewById(R.id.spAutoLogoutDelay);
+        mAdapterAutoLogoutDelay = ArrayAdapter.createFromResource(this, R.array.AutoLogoutDelay_array, R.layout.spinner_setting_text);
+        mAdapterAutoLogoutDelay.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+        mSpAutoLogoutDelay.setAdapter(mAdapterAutoLogoutDelay);
 
-            case R.id.action_playground:
-                ACTIVITY_INTENT = new Intent(this, MainPlaygroundActivity.class);
-                this.finish();
-                this.startActivity(ACTIVITY_INTENT);
-                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
-                break;
-            case R.id.action_settings:
-                ACTIVITY_INTENT = new Intent(this, Settings.class);
-                this.finish();
-                this.startActivity(ACTIVITY_INTENT);
-                overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
-                break;
-            case R.id.action_about:
-                dialog.setContentView(R.layout.activity_about);
-                dialog.setTitle("About Cyber Lock");
-                dialog.show();
-                break;
+        mSpEncryptionMethod = (Spinner) findViewById(R.id.spEncryptionMethod);
+        mAdapterEncryptionMethod = ArrayAdapter.createFromResource(this, R.array.CryptALGO_array, R.layout.spinner_setting_text);
+        mAdapterEncryptionMethod.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+        mSpEncryptionMethod.setAdapter(mAdapterEncryptionMethod);
 
-            case R.id.action_webpage:
-                Uri uri = Uri.parse(getString(R.string.SiteURL));
-                Intent i = new Intent(Intent.ACTION_VIEW, uri);
-                this.finish();
-                this.startActivity(i);
+        mCbAutoSave = (CheckBox) findViewById(R.id.cbAutoSave);
+        RelativeLayout autoSave = (RelativeLayout) findViewById(R.id.AutoSave);
+        RelativeLayout changePasscode = (RelativeLayout) findViewById(R.id.ChangePasscode);
+        RelativeLayout scrambleKey = (RelativeLayout) findViewById(R.id.ScrambleKey);
+
+        autoSave.setOnClickListener(this);
+        changePasscode.setOnClickListener(this);
+        scrambleKey.setOnClickListener(this);
+
+        mCbAutoSave.setClickable(false);
+        mCbAutoSave.setChecked(false);
+
+        savedStates();
+
+        this.mSpAutoLogoutDelay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Object object = parent.getItemAtPosition(position);
+                if (object != null) {
+                    mAutoLogoutDelay = object.toString();
+                    long time = 0;
+                    switch (mAutoLogoutDelay) {
+                        case "Immediate": time = 0; break;
+                        case "15 Seconds": time = 15000; break;
+                        case "30 Seconds": time = 30000; break;
+                        case "1 Minute": time = 60000; break;
+                        case "5 Minutes": time = 300000; break;
+                        case "10 Minutes": time = 600000; break;
+                        case "30 Minutes": time = 1800000; break;
+                        case "1 Hour": time = 3600000; break;
+                        case "2 Hours": time = 7200000; break;
+                        case "Never": break;
+                    }
+
+                    System.out.println("Time = " + time);
+                    mSharedPreferences.edit().putString(LOGOUT_DELAY, mAutoLogoutDelay).putLong(DELAY_TIME, time).apply();
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        this.mSpEncryptionMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Object object = parent.getItemAtPosition(position);
+                if (object != null) {
+                    String algorithm = object.toString();
+                    if (algorithm.matches("AES - 256")) {
+                        String newAlgorithm = "AES";
+                        if (!mSharedPreferences.getString(ENCRYPTION_ALGO, "AES").matches(newAlgorithm)) {
+                            onEncryptionMethodChange(newAlgorithm);
+                        }
+                    } else if (algorithm.matches("Blowfish - 448")) {
+                        String newAlgorithm = "Blowfish";
+                        if (!mSharedPreferences.getString(ENCRYPTION_ALGO, "AES").matches(newAlgorithm)) {
+                            onEncryptionMethodChange(newAlgorithm);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+    // View managers
+    private void switchStates() {
+        cleanup();
+        switch (STATE) {
+            case 0:
+                createNotes();
+                break;
+            case 1:
+                createSettings();
                 break;
         }
     }
-    public void onAddClicked(int TYPE) {
+    private void cleanup() {
+        mMenu.clear();
+        mBtnNotes.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        mBtnPlayground.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        mBtnSettings.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        // Clean up notes
+        mMasterDatabaseAccess  = null;
+        mSelectedDatas = null;
+        mIsMultiChoice = false;
+        mCount = 0;
+        // Clean up settings
+        mSharedPreferences = null;
+        mSpAutoLogoutDelay = null;
+        mSpEncryptionMethod = null;
+        mAdapterAutoLogoutDelay = null;
+        mAdapterEncryptionMethod = null;
+        mCbAutoSave = null;
+        // View
+        mAnchorView.removeAllViews();
+    }
 
+    // Notes ########################################################
+    public void onAddClicked(int TYPE) {
         ACTIVITY_INTENT = new Intent(this, MainEditActivity.class);
         ACTIVITY_INTENT.putExtra("type", TYPE);
         this.finish();
@@ -245,20 +415,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.startActivity(ACTIVITY_INTENT);
     }
     // ----------------
-
-    // MULTI SELECT
     public void onMultiSelectClicked() {
-        MenuInflater menuInflater = new MenuInflater(mContext);
-
         if (!mIsMultiChoice) {
             mSelectedDatas = new ArrayList<>();
             onResume();
 
-            mMenu.removeItem(R.id.action_search);
-            mMenu.removeItem(R.id.action_deletesweep);
-            mMenu.removeItem(R.id.subMenuAdd);
-
-            menuInflater.inflate(R.menu.menu_delete, mMenu);
+            mMenu.clear();
+            getMenuInflater().inflate(R.menu.menu_delete, mMenu);
 
             MenuItem delete = mMenu.findItem(R.id.action_delete);
             MenuItem done = mMenu.findItem(R.id.action_done);
@@ -273,38 +436,185 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mCount = 0;
             onResume();
 
-            mMenu.removeItem(R.id.action_delete);
-            mMenu.removeItem(R.id.action_done);
-
-            menuInflater.inflate(R.menu.menu_main, mMenu);
+            mMenu.clear();
+            getMenuInflater().inflate(R.menu.menu_main, mMenu);
 
             MenuItem search = mMenu.findItem(R.id.action_search);
-            MenuItem multiSelect = mMenu.findItem(R.id.action_deletesweep);
+            MenuItem multiSelect = mMenu.findItem(R.id.action_select);
             MenuItem add = mMenu.findItem(R.id.subMenuAdd);
 
             search.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             multiSelect.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             add.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            getSupportActionBar().setTitle(null);
+            getSupportActionBar().setTitle("Notes");
 
             mIsMultiChoice = false;
         }
     }
     public void onDeleteClicked() {
         if (!mSelectedDatas.isEmpty()) {
-            this.mMasterDatabaseAccess.open();
+            mMasterDatabaseAccess.open();
             for (Data id : mSelectedDatas) {
-                this.mMasterDatabaseAccess.delete(id);
+                mMasterDatabaseAccess.delete(id);
             }
-            this.mMasterDatabaseAccess.close();
+            mMasterDatabaseAccess.close();
             onMultiSelectClicked();
         }
     }
+    // Settings #####################################################
+    private void savedStates() {
+        // CHECK BOXES
+        if (!mIsAutoSave) {
+            mCbAutoSave.setChecked(false);
+        } else {
+            mCbAutoSave.setChecked(true);
+        }
+
+        int delaySpinnerPosition = mAdapterAutoLogoutDelay.getPosition(mSharedPreferences.getString(LOGOUT_DELAY, "Immediate"));
+        mSpAutoLogoutDelay.setSelection(delaySpinnerPosition);
+
+        // ENCRYPTION METHOD
+        int algoSpinnerPosition;
+        switch (mSharedPreferences.getString(ENCRYPTION_ALGO, "AES")) {
+            case "AES":
+                algoSpinnerPosition = mAdapterEncryptionMethod.getPosition("AES - 256");
+                mSpEncryptionMethod.setSelection(algoSpinnerPosition);
+                mOldEncryptionMethod = mSpEncryptionMethod.getItemAtPosition(algoSpinnerPosition).toString();
+                break;
+            case "Blowfish":
+                algoSpinnerPosition = mAdapterEncryptionMethod.getPosition("Blowfish - 448");
+                mSpEncryptionMethod.setSelection(algoSpinnerPosition);
+                mOldEncryptionMethod = mSpEncryptionMethod.getItemAtPosition(algoSpinnerPosition).toString();
+                break;
+        }
+    }
     // ----------------
+    private void onAutoSave() {
+        final boolean autoSave = mSharedPreferences.getBoolean(AUTOSAVE, false);
+
+        if (!autoSave) {
+            mSharedPreferences.edit().putBoolean(AUTOSAVE, true).apply();
+            mCbAutoSave.setChecked(true);
+        } else {
+            mSharedPreferences.edit().putBoolean(AUTOSAVE, false).apply();
+            mCbAutoSave.setChecked(false);
+        }
+    }
+    private void onChangePasscode() {
+        View v = View.inflate(mContext, R.layout.dialog_view_passcode_change, null);
+        // Dialog primitives
+        ImageView icon = (ImageView) v.findViewById(R.id.imgDialogAction);
+        TextView title = (TextView) v.findViewById(R.id.tvDialogTitle);
+        Button negative = (Button) v.findViewById(R.id.btnDialogNegative);
+        Button positive = (Button) v.findViewById(R.id.btnDialogPositive);
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_passcode));
+        title.setText("Change Passcode");
+        negative.setText("Cancel");
+        positive.setText("Change");
+        // -----------------
+        EditText current = (EditText) v.findViewById(R.id.etCurrent);
+        EditText initial = (EditText) v.findViewById(R.id.etInitial);
+        EditText Final = (EditText) v.findViewById(R.id.etFinal);
+
+        // DIALOG BUILDER
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext);
+        builder.setView(v);
+        final android.support.v7.app.AlertDialog dialog = builder.show();
+        // -----------------------------------------------------------
+        negative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        positive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                new Settings_ScrambleKey(mContext).execute();
+            }
+        });
+        // -----------------------------------------------------------
+    }
+    private void onScrambleKey() {
+        View v = View.inflate(mContext, R.layout.dialog_view_alert_info, null);
+        // Dialog primitives
+        ImageView icon = (ImageView) v.findViewById(R.id.imgDialogAction);
+        TextView title = (TextView) v.findViewById(R.id.tvDialogTitle);
+        Button negative = (Button) v.findViewById(R.id.btnDialogNegative);
+        Button positive = (Button) v.findViewById(R.id.btnDialogPositive);
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_keys));
+        title.setText("Scramble Encryption Key");
+        negative.setText("Cancel");
+        positive.setText("Scramble");
+        // -----------------
+        TextView alertText = (TextView) v.findViewById(R.id.tvDialogAlertText);
+        alertText.setText(R.string.AlertDialog_ScrambleKey);
+        // DIALOG BUILDER
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext);
+        builder.setView(v);
+        final android.support.v7.app.AlertDialog dialog = builder.show();
+        // -----------------------------------------------------------
+        negative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        positive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                new Settings_ScrambleKey(mContext).execute();
+            }
+        });
+        // -----------------------------------------------------------
+    }
+    private void onEncryptionMethodChange(final String algorithm) {
+        View v = View.inflate(mContext, R.layout.dialog_view_alert_info, null);
+        // Dialog primitives
+        ImageView icon = (ImageView) v.findViewById(R.id.imgDialogAction);
+        TextView title = (TextView) v.findViewById(R.id.tvDialogTitle);
+        Button negative = (Button) v.findViewById(R.id.btnDialogNegative);
+        Button positive = (Button) v.findViewById(R.id.btnDialogPositive);
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_shield));
+        title.setText("Change Encryption Method");
+        negative.setText("Cancel");
+        positive.setText("Change");
+        // -----------------
+        TextView alertText = (TextView) v.findViewById(R.id.tvDialogAlertText);
+        alertText.setText(R.string.AlertDialog_EncryptionMethodChange);
+        // DIALOG BUILDER
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext);
+        builder.setView(v);
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                mSpEncryptionMethod.setSelection(mAdapterEncryptionMethod.getPosition(mOldEncryptionMethod));
+            }
+        });
+        final android.support.v7.app.AlertDialog dialog = builder.show();
+        // -----------------------------------------------------------
+        negative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                mSpEncryptionMethod.setSelection(mAdapterEncryptionMethod.getPosition(mOldEncryptionMethod));
+            }
+        });
+        positive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                new Settings_EncryptionMethodChange(mContext, algorithm).execute();
+            }
+        });
+        // -----------------------------------------------------------
+    }
+    // ##############################################################
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
-    @Override
-    public void onStart() {
+    @Override public void onStart() {
         super.onStart();
 
         if (mCountDownIsFinished) {
@@ -319,8 +629,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
         super.onBackPressed();
         if (!mIsMultiChoice)
             if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
@@ -328,8 +637,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new LogoutProtocol().logoutImmediate(this);
             }
     }
-    @Override
-    public void onPause() {
+    @Override public void onPause() {
         super.onPause();
 
         if (!this.isFinishing()) // HOME AND TABS AND SCREEN OFF
@@ -340,15 +648,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//        onResume();
-//    }
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    // INNER ADAPTER CLASS
+    // Inner recycler view adapter class
     private class RVDataAdapter extends android.support.v7.widget.RecyclerView.Adapter<RVDataAdapter.ViewHolder> {
         private Context mContext;
         private List<Data> mDatas = Collections.emptyList();
@@ -666,7 +968,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             resetViews(vh);
             String dName = "CARD NAME: ";
             String dNumber = "CARD NUMBER: ";
-            String empty = "*** card information does not \n contain a holder name or number ***";
+            String empty = "*** card information does not \n contain a holder text or number ***";
             String s;
             if (isNotNull(name) && isNotNull(number)) {
                 s = dName + name + "\n" + dNumber + number;
@@ -680,7 +982,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else if (!isNotNull(name) && !isNotNull(number)) {
                 s = empty;
                 vh.content.setText(s);
-                vh.content.setTextColor(mResources.getColor(R.color.red_1D));
+                vh.content.setTextColor(getResources().getColor(R.color.red_1D));
                 vh.content.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
             }
             Drawable img = setCardImage(type);
@@ -734,7 +1036,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         private void resetViews(ViewHolder vh) {
             vh.content.setCompoundDrawables(null, null, null, null);
             vh.content.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
-            vh.content.setTextColor(mResources.getColor(R.color.black));
+            vh.content.setTextColor(getResources().getColor(R.color.black));
             vh.content.setText("");
         }
         private void setColourTag(ViewHolder vh, String col) {
@@ -783,20 +1085,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Drawable d;
             switch (s) {
                 case "TYPE_NOTE":
-                    d = mResources.getDrawable(R.drawable.ic_note);
+                    d = getResources().getDrawable(R.drawable.ic_note);
                     break;
                 case "TYPE_PAYMENTINFO":
-                    d = mResources.getDrawable(R.drawable.ic_card);
+                    d = getResources().getDrawable(R.drawable.ic_card);
                     break;
                 case "TYPE_LOGININFO":
-                    d = mResources.getDrawable(R.drawable.ic_login);
+                    d = getResources().getDrawable(R.drawable.ic_login);
                     break;
                 default:
-                    d = mResources.getDrawable(R.drawable.ic_graphic_none);
+                    d = getResources().getDrawable(R.drawable.ic_graphic_none);
                     break;
             }
             img.setImageDrawable(d);
-            img.setColorFilter(mResources.getColor(R.color.white));
+            img.setColorFilter(getResources().getColor(R.color.white));
         }
 
         // PRIMITIVES
@@ -845,6 +1147,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 label = (TextView) itemView.findViewById(R.id.tvLabel);
                 content = (TextView) itemView.findViewById(R.id.tvContent);
             }
+        }
+    }
+    //
+    private class InfoCategory {
+        private String title;
+
+        InfoCategory(String title) {
+            this.title = title;
+        }
+    }
+    private class Info {
+        private CharSequence text;
+
+        Info(CharSequence text) {
+            this.text = text;
         }
     }
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_label"
+    android:elevation="3dp"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <EditText
+        android:id="@+id/etLabel"
+        style="@style/myText.Label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:background="@drawable/background_label"
+        android:hint="Label"
+        android:inputType="text"
+        android:maxLines="1"
+        android:scrollbars="horizontal"
+        android:textAppearance="@style/myText.Label"/>
+
+    <ImageView
+        android:id="@+id/imgColourTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:clickable="true"
+        android:contentDescription="colour tag"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:srcCompat="@drawable/ic_tag"/>
+</LinearLayout>
