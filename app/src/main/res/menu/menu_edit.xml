@@ -17,12 +17,4 @@
         android:orderInCategory="100"
         android:title="Cancel"
         app:showAsAction="always"/>
-
-
-    <item
-        android:id="@+id/action_colortag"
-        android:icon="@drawable/ic_tag"
-        android:orderInCategory="100"
-        android:title="Colour Tag"
-        app:showAsAction="always"/>
 </menu>

@@ -11,11 +11,10 @@
 
     <ImageView
         android:id="@+id/imgDialogAction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_gravity="center_vertical"
-        android:contentDescription="action icon"
-        android:tint="@color/white"/>
+        android:contentDescription="action icon"/>
 
     <TextView
         android:id="@+id/tvDialogTitle"

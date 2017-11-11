@@ -23,11 +23,12 @@
         android:scrollbars="horizontal"
         android:textAppearance="@style/myText.Label"/>
 
-    <ImageView
-        android:id="@+id/imgColourTag"
+    <ImageButton
+        android:id="@+id/btnColourTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:background="@android:color/transparent"
         android:clickable="true"
         android:contentDescription="colour tag"
         android:focusable="true"

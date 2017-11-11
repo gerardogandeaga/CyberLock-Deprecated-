@@ -1,112 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HorizontalScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/Content"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="15dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvColourLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Colour Label"
-            android:textAlignment="center"
-            android:textAppearance="@style/myText.Settings.Header"/>
+        <ImageView
+            android:id="@+id/imgBlue"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="blue"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:scaleType="centerCrop"
+            app:srcCompat="@color/coltag_blue"
+            tools:ignore="VectorDrawableCompat"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:orientation="horizontal"
-            >
+        <ImageView
+            android:id="@+id/imgRed"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="blue"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:scaleType="centerCrop"
+            app:srcCompat="@color/coltag_red"
+            tools:ignore="VectorDrawableCompat"/>
 
-            <ImageView
-                android:id="@+id/imgBlue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/clickable_tagitem"
-                android:clickable="true"
-                android:contentDescription="blue"
-                android:focusable="true"
-                android:scaleType="centerCrop"
-                android:tint="@color/coltag_blue"
-                app:srcCompat="@drawable/ic_tag"
-                tools:ignore="VectorDrawableCompat"/>
+        <ImageView
+            android:id="@+id/imgGreen"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="blue"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:scaleType="centerCrop"
+            app:srcCompat="@color/coltag_green"
+            tools:ignore="VectorDrawableCompat"/>
 
-            <ImageView
-                android:id="@+id/imgRed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/clickable_tagitem"
-                android:clickable="true"
-                android:contentDescription="red"
-                android:focusable="true"
-                android:scaleType="centerCrop"
-                android:tint="@color/coltag_red"
-                app:srcCompat="@drawable/ic_tag"
-                tools:ignore="VectorDrawableCompat"/>
-
-            <ImageView
-                android:id="@+id/imgGreen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/clickable_tagitem"
-                android:clickable="true"
-                android:contentDescription="green"
-                android:focusable="true"
-                android:scaleType="centerCrop"
-                android:tint="@color/coltag_green"
-                app:srcCompat="@drawable/ic_tag"
-                tools:ignore="VectorDrawableCompat"/>
-
-            <ImageView
-                android:id="@+id/imgYellow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/clickable_tagitem"
-                android:clickable="true"
-                android:contentDescription="yellow"
-                android:focusable="true"
-                android:scaleType="centerCrop"
-                android:tint="@color/coltag_yellow"
-                app:srcCompat="@drawable/ic_tag"
-                tools:ignore="VectorDrawableCompat"/>
-
-            <ImageView
-                android:id="@+id/imgPurple"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/clickable_tagitem"
-                android:clickable="true"
-                android:contentDescription="purple"
-                android:focusable="true"
-                android:scaleType="centerCrop"
-                android:tint="@color/coltag_purple"
-                app:srcCompat="@drawable/ic_tag"
-                tools:ignore="VectorDrawableCompat"/>
-
-            <ImageView
-                android:id="@+id/imgOrange"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/clickable_tagitem"
-                android:clickable="true"
-                android:contentDescription="orange"
-                android:focusable="true"
-                android:scaleType="centerCrop"
-                android:tint="@color/coltag_orange"
-                app:srcCompat="@drawable/ic_tag"
-                tools:ignore="VectorDrawableCompat"/>
-
-        </LinearLayout>
     </LinearLayout>
-</HorizontalScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgYellow"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="blue"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:scaleType="centerCrop"
+            app:srcCompat="@color/coltag_yellow"
+            tools:ignore="VectorDrawableCompat"/>
+
+        <ImageView
+            android:id="@+id/imgPurple"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="blue"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:scaleType="centerCrop"
+            app:srcCompat="@color/coltag_purple"
+            tools:ignore="VectorDrawableCompat"/>
+
+        <ImageView
+            android:id="@+id/imgOrange"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="blue"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:scaleType="centerCrop"
+            app:srcCompat="@color/coltag_orange"
+            tools:ignore="VectorDrawableCompat"/>
+
+    </LinearLayout>
+
+</LinearLayout>

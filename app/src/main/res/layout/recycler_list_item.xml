@@ -21,8 +21,8 @@
             android:id="@+id/imgColourTag"
             android:layout_width="8dp"
             android:layout_height="match_parent"
-            android:background="@drawable/colourtag"
-            android:contentDescription="colour tag"/>
+            android:contentDescription="colour tag"
+            app:srcCompat="@color/white"/>
 
         <CheckBox
             android:id="@+id/cbDataSelect"

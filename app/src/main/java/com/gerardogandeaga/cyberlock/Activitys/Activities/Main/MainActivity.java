@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -145,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         float screenWidth = width / resources.getDisplayMetrics().density;
         float navWidth = screenWidth - 56;
 
-        navWidth = Math.min(navWidth, 320);
+        navWidth = Math.min(navWidth, 320); // b = 320
 
         int newWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, navWidth, resources.getDisplayMetrics());
 
@@ -511,7 +510,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         title.setText("Change Passcode");
         negative.setText("Cancel");
         positive.setText("Change");
-        // -----------------
+        // ----------------- TODO password change
         EditText current = (EditText) v.findViewById(R.id.etCurrent);
         EditText initial = (EditText) v.findViewById(R.id.etInitial);
         EditText Final = (EditText) v.findViewById(R.id.etFinal);
@@ -531,7 +530,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                new Settings_ScrambleKey(mContext).execute();
             }
         });
         // -----------------------------------------------------------
@@ -543,7 +541,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView title = (TextView) v.findViewById(R.id.tvDialogTitle);
         Button negative = (Button) v.findViewById(R.id.btnDialogNegative);
         Button positive = (Button) v.findViewById(R.id.btnDialogPositive);
-        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_keys));
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.ic_key));
         title.setText("Scramble Encryption Key");
         negative.setText("Cancel");
         positive.setText("Scramble");
@@ -660,13 +658,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mDatas = datas;
         }
 
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_list_item, parent, false);
             return new ViewHolder(v);
         }
-        @Override
-        public void onBindViewHolder(ViewHolder vh, int position) {
+        @Override public void onBindViewHolder(ViewHolder vh, int position) {
             CryptoContent cc = new CryptoContent(mContext);
             final Data data = mDatas.get(position);
             String TYPE = data.getType(cc);
@@ -692,21 +688,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 vh.checkbox.setVisibility(View.VISIBLE);
             }
         }
-        @Override
-        public int getItemCount() {
+        @Override public int getItemCount() {
             return mDatas.size();
         }
-        @Override
-        public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
             super.onAttachedToRecyclerView(recyclerView);
         }
 
-        // FUNCTIONS FOR THE DATA ADAPTER
+        // Functions for the data adapter
         private void noteFunctions(final ViewHolder vh, final Data d, CryptoContent cc, final String TYPE) {
-            setColourTag(vh, d.getColourTag(cc));
             final String date = d.getDate();
+            final String colourTag = d.getColourTag(cc);
             final String label = d.getLabel(cc);
             final String content = d.getContent(cc);
+            vh.colourTag.setColorFilter(setColourFiler(colourTag));
             // ----
             StringBuilder note;
 
@@ -718,43 +713,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             scanner.close();
 
-            final String prevMemo = note.toString();
+            final String prevNote = note.toString();
             // SET VIEWS
             vh.label.setText(label);
             vh.date.setText(date);
-            setContentNote(vh, d.getShortNoteText(mContext, prevMemo));
+            setContentNote(vh, d.getShortNoteText(mContext, prevNote));
             // --------
             vh.cv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (isEditable(d, vh)) {
-                        View dialogView = View.inflate(mContext, R.layout.preview_note, null);
-                        ImageView childType = (ImageView) dialogView.findViewById(R.id.imgChildIconType);
-                        ImageButton childDone = (ImageButton) dialogView.findViewById(R.id.btnChildDone);
-                        ImageButton childEdit = (ImageButton) dialogView.findViewById(R.id.btnChildEdit);
-                        TextView childLabel = (TextView) dialogView.findViewById(R.id.tvChildLabel);
-                        TextView childMemo = (TextView) dialogView.findViewById(R.id.tvChildMemo);
-                        TextView childDate = (TextView) dialogView.findViewById(R.id.tvChildDate);
+                        View dv = View.inflate(mContext, R.layout.preview_note, null);
+                        ImageView type = (ImageView) dv.findViewById(R.id.imgChildIconType);
+                        ImageButton cancel = (ImageButton) dv.findViewById(R.id.btnChildDone);
+                        ImageButton edit = (ImageButton) dv.findViewById(R.id.btnChildEdit);
+                        ImageView ColourTag = (ImageView) dv.findViewById(R.id.imgColourTag);
+                        TextView Label = (TextView) dv.findViewById(R.id.tvChildLabel);
+                        TextView Note = (TextView) dv.findViewById(R.id.tvChildMemo);
+                        TextView Date = (TextView) dv.findViewById(R.id.tvChildDate);
 
-                        setDataIcon(childType, TYPE);
-                        childLabel.setText(label);
-                        childMemo.setText(prevMemo);
-                        childDate.setText(date);
+                        setDataIcon(type, TYPE);
+                        ColourTag.setColorFilter(setColourFiler(colourTag));
+                        Label.setText(label);
+                        Note.setText(prevNote);
+                        Date.setText(date);
 
                         // DIALOG BUILDER
                         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                        builder.setView(dialogView);
+                        builder.setView(dv);
                         // DIALOG SHOW
                         final AlertDialog dialog = builder.show();
 
-                        childEdit.setOnClickListener(new View.OnClickListener() {
+                        edit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 dialog.dismiss();
                                 onEditClicked(d);
                             }
                         });
-                        childDone.setOnClickListener(new View.OnClickListener() {
+                        cancel.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 dialog.dismiss();
@@ -762,13 +759,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         });
                     }
                 }
-            }); // PREVIEW DIALOG
+            }); // Preview dialog
         }
         private void paymentInfoFunctions(final ViewHolder vh, final Data d, CryptoContent cc, final String TYPE) {
-            setColourTag(vh, d.getColourTag(cc));
             final String date = d.getDate();
+            final String colourTag = d.getColourTag(cc);
             final String label = d.getLabel(cc);
             final String content = d.getContent(cc);
+            vh.colourTag.setColorFilter(setColourFiler(colourTag));
             // ----
             String name = "";
             String number = "";
@@ -825,21 +823,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onClick(View v) {
                     if (isEditable(d, vh)) {
-                        View dialogView = View.inflate(mContext, R.layout.preview_paymentinfo, null);
-                        ImageView childType = (ImageView) dialogView.findViewById(R.id.imgChildIconType);
-                        ImageButton childDone = (ImageButton) dialogView.findViewById(R.id.btnChildDone);
-                        ImageButton childEdit = (ImageButton) dialogView.findViewById(R.id.btnChildEdit);
-                        TextView childLabel = (TextView) dialogView.findViewById(R.id.tvChildLabel);
-                        TextView childCardName = (TextView) dialogView.findViewById(R.id.tvChildCardName);
-                        TextView childCardNumber = (TextView) dialogView.findViewById(R.id.tvChildCardNumber);
-                        TextView childCardExpiry = (TextView) dialogView.findViewById(R.id.tvChildCardExpiry);
-                        TextView childCardSecCode = (TextView) dialogView.findViewById(R.id.tvChildCardSecCode);
-                        TextView childCardType = (TextView) dialogView.findViewById(R.id.tvChildCardType);
-                        TextView childNotes = (TextView) dialogView.findViewById(R.id.tvChildNotes);
-                        TextView childDate = (TextView) dialogView.findViewById(R.id.tvChildDate);
-                        ImageView childCardIcon = (ImageView) dialogView.findViewById(R.id.imgChildCardType);
+                        View dv = View.inflate(mContext, R.layout.preview_paymentinfo, null);
+                        ImageView childType = (ImageView) dv.findViewById(R.id.imgChildIconType);
+                        ImageButton childDone = (ImageButton) dv.findViewById(R.id.btnChildDone);
+                        ImageButton childEdit = (ImageButton) dv.findViewById(R.id.btnChildEdit);
+                        ImageView ColourTag = (ImageView) dv.findViewById(R.id.imgColourTag);
+                        TextView childLabel = (TextView) dv.findViewById(R.id.tvChildLabel);
+                        TextView childCardName = (TextView) dv.findViewById(R.id.tvChildCardName);
+                        TextView childCardNumber = (TextView) dv.findViewById(R.id.tvChildCardNumber);
+                        TextView childCardExpiry = (TextView) dv.findViewById(R.id.tvChildCardExpiry);
+                        TextView childCardSecCode = (TextView) dv.findViewById(R.id.tvChildCardSecCode);
+                        TextView childCardType = (TextView) dv.findViewById(R.id.tvChildCardType);
+                        TextView childNotes = (TextView) dv.findViewById(R.id.tvChildNotes);
+                        TextView childDate = (TextView) dv.findViewById(R.id.tvChildDate);
+                        ImageView childCardIcon = (ImageView) dv.findViewById(R.id.imgChildCardType);
 
                         setDataIcon(childType, TYPE);
+                        ColourTag.setColorFilter(setColourFiler(colourTag));
                         childLabel.setText(label);
                         childCardName.setText("Holder Name: " + prevName);
                         childCardNumber.setText("Number: " + prevNumber);
@@ -852,7 +852,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         // DIALOG BUILDER
                         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                        builder.setView(dialogView);
+                        builder.setView(dv);
                         // DIALOG SHOW
                         final AlertDialog dialog = builder.show();
 
@@ -874,10 +874,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
         }
         private void loginInfoFunctions(final ViewHolder vh, final Data d, CryptoContent cc, final String TYPE) {
-            setColourTag(vh, d.getColourTag(cc));
             final String date = d.getDate();
+            final String colourTag = d.getColourTag(cc);
             final String label = d.getLabel(cc);
             final String content = d.getContent(cc);
+            vh.colourTag.setColorFilter(setColourFiler(colourTag));
             // ----
             String url = "";
             String email = "";
@@ -915,19 +916,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onClick(View v) {
                     if (isEditable(d, vh)) {
-                        View dialogView = View.inflate(mContext, R.layout.preview_logininfo, null);
-                        ImageView childType = (ImageView) dialogView.findViewById(R.id.imgChildIconType);
-                        ImageButton childDone = (ImageButton) dialogView.findViewById(R.id.btnChildDone);
-                        ImageButton childEdit = (ImageButton) dialogView.findViewById(R.id.btnChildEdit);
-                        TextView childLabel = (TextView) dialogView.findViewById(R.id.tvChildLabel);
-                        TextView childUrl = (TextView) dialogView.findViewById(R.id.tvchildUrl);
-                        TextView childUsername = (TextView) dialogView.findViewById(R.id.tvChildUsername);
-                        TextView childEmail = (TextView) dialogView.findViewById(R.id.tvChildEmail);
-                        TextView childPassword = (TextView) dialogView.findViewById(R.id.tvChildPassword);
-                        TextView childNotes = (TextView) dialogView.findViewById(R.id.tvChildNotes);
-                        TextView childDate = (TextView) dialogView.findViewById(R.id.tvChildDate);
+                        View dv = View.inflate(mContext, R.layout.preview_logininfo, null);
+                        ImageView childType = (ImageView) dv.findViewById(R.id.imgChildIconType);
+                        ImageButton childDone = (ImageButton) dv.findViewById(R.id.btnChildDone);
+                        ImageButton childEdit = (ImageButton) dv.findViewById(R.id.btnChildEdit);
+                        ImageView ColourTag = (ImageView) dv.findViewById(R.id.imgColourTag);
+                        TextView childLabel = (TextView) dv.findViewById(R.id.tvChildLabel);
+                        TextView childUrl = (TextView) dv.findViewById(R.id.tvchildUrl);
+                        TextView childUsername = (TextView) dv.findViewById(R.id.tvChildUsername);
+                        TextView childEmail = (TextView) dv.findViewById(R.id.tvChildEmail);
+                        TextView childPassword = (TextView) dv.findViewById(R.id.tvChildPassword);
+                        TextView childNotes = (TextView) dv.findViewById(R.id.tvChildNotes);
+                        TextView childDate = (TextView) dv.findViewById(R.id.tvChildDate);
 
                         setDataIcon(childType, TYPE);
+                        ColourTag.setColorFilter(setColourFiler(colourTag));
                         childLabel.setText(label);
                         childUrl.setText(finalUrl);
                         childUsername.setText(finalUsername);
@@ -938,7 +941,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         // DIALOG BUILDER
                         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                        builder.setView(dialogView);
+                        builder.setView(dv);
                         // DIALOG SHOW
                         final AlertDialog dialog = builder.show();
 
@@ -1032,37 +1035,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             s = null;
         }
         // ------------------------------
-        // SETTERS
+        // Setters
         private void resetViews(ViewHolder vh) {
             vh.content.setCompoundDrawables(null, null, null, null);
             vh.content.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
             vh.content.setTextColor(getResources().getColor(R.color.black));
             vh.content.setText("");
         }
-        private void setColourTag(ViewHolder vh, String col) {
-            final PorterDuff.Mode m = PorterDuff.Mode.MULTIPLY;
+        private int setColourFiler(String col) {
             switch (col) {
                 case "COL_BLUE":
-                    vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_blue), m);
-                    break;
+                    return (getResources().getColor(R.color.coltag_blue));
                 case "COL_RED":
-                    vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_red), m);
-                    break;
+                    return (getResources().getColor(R.color.coltag_red));
                 case "COL_GREEN":
-                    vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_green), m);
-                    break;
+                    return (getResources().getColor(R.color.coltag_green));
                 case "COL_YELLOW":
-                    vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_yellow), m);
-                    break;
+                    return (getResources().getColor(R.color.coltag_yellow));
                 case "COL_PURPLE":
-                    vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_purple), m);
-                    break;
+                    return (getResources().getColor(R.color.coltag_purple));
                 case "COL_ORANGE":
-                    vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_orange), m);
-                    break;
+                    return (getResources().getColor(R.color.coltag_orange));
                 default:
-                    vh.colourTag.getBackground().setColorFilter(getResources().getColor(R.color.coltag_default), m);
-                    break;
+                    return (getResources().getColor(R.color.coltag_default));
             }
         }
         private Drawable setCardImage(String cardType) {
@@ -1079,35 +1074,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     return getResources().getDrawable(R.drawable.card_default);
             }
         }
-
-        // DIALOG EXTRAS
+        // Dialog Extras
         private void setDataIcon(ImageView img, String s) {
-            Drawable d;
             switch (s) {
                 case "TYPE_NOTE":
-                    d = getResources().getDrawable(R.drawable.ic_note);
+                    img.setImageDrawable(getResources().getDrawable(R.drawable.ic_file));
                     break;
                 case "TYPE_PAYMENTINFO":
-                    d = getResources().getDrawable(R.drawable.ic_card);
+                    img.setImageDrawable(getResources().getDrawable(R.drawable.ic_card));
                     break;
                 case "TYPE_LOGININFO":
-                    d = getResources().getDrawable(R.drawable.ic_login);
+                    img.setImageDrawable(getResources().getDrawable(R.drawable.ic_login));
                     break;
                 default:
-                    d = getResources().getDrawable(R.drawable.ic_graphic_none);
+                    img.setImageDrawable(getResources().getDrawable(R.drawable.ic_graphic_none));
                     break;
             }
-            img.setImageDrawable(d);
-            img.setColorFilter(getResources().getColor(R.color.white));
         }
 
-        // PRIMITIVES
-        @Contract("null -> false")
-        private boolean isNotNull(String s) {
+        // Primitives
+        @Contract("null -> false") private boolean isNotNull(String s) {
             return s != null && !s.isEmpty();
         }
-        @SuppressLint("ResourceType")
-        private boolean isEditable(Data d, ViewHolder vh) {
+        @SuppressLint("ResourceType") private boolean isEditable(Data d, ViewHolder vh) {
             if (!mIsMultiChoice) {
                 return true;
             } else {
@@ -1128,7 +1117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-        // VIEW HOLDER CLASS
+        // View holder class
         class ViewHolder extends RecyclerView.ViewHolder {
             CardView cv;
             CheckBox checkbox;

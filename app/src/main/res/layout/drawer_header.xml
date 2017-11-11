@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
@@ -49,11 +49,18 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@drawable/preview4"
+        android:scaleType="centerCrop"
+        android:contentDescription="header wallpaper"/>
+
     <iammert.com.expandablelib.ExpandableLayout
         android:id="@+id/expandableLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:parentLayout="@layout/expandable_parent"
-        app:childLayout="@layout/expandable_child"/>
+        app:childLayout="@layout/expandable_child"
+        app:parentLayout="@layout/expandable_parent"/>
 
 </LinearLayout>

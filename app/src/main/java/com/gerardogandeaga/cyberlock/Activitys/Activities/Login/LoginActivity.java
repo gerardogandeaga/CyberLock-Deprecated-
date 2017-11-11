@@ -39,11 +39,11 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences mSharedPreferences;
 
     private String mPasscode;
-    // ACTIVITY INTENT
+    // Activity intent
     private Intent mIntent;
     private boolean mIsEdit;
 
-    // WIDGETS
+    // Widgets
     private EditText mEtPasscode;
     private ProgressDialog mProgressDialog;
 
