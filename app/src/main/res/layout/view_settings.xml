@@ -3,488 +3,585 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/Content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:scrollbars="vertical"
     tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings">
 
-    <ScrollView
+    <RelativeLayout
+        android:id="@+id/AutoSave"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="0dp">
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imgAutoSave"
+            android:layout_toRightOf="@+id/imgAutoSave"
+            android:clickable="false"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-            <RelativeLayout
-                android:id="@+id/AutoSave"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/autoSave"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground">
-
-                <ImageView
-                    android:id="@+id/imgAutoSave"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:contentDescription="auto save"
-                    android:tint="@color/black"
-                    app:srcCompat="@drawable/ic_save"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/imgAutoSave"
-                    android:layout_toRightOf="@+id/imgAutoSave"
-                    android:clickable="false"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <LinearLayout
-                        android:id="@+id/autoSave"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tvAutoSave"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="Auto Save"
-                            android:textAppearance="@style/myText.Settings.Header"/>
-
-                        <TextView
-                            android:id="@+id/tvAutoSaveDesc"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Automatically save notes without needing to select the save button"
-                            android:textAppearance="@style/myText.Settings.Description"/>
-
-                    </LinearLayout>
-
-                    <CheckBox
-                        android:id="@+id/cbAutoSave"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:buttonTint="@color/black"
-                        android:textSize="16sp"
-                        tools:targetApi="lollipop"/>
-
-                </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/AutoLogoutDelay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground">
-
-                <ImageView
-                    android:id="@+id/imgAutoLogoutDelay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:contentDescription="auto logout"
-                    android:tint="@color/black"
-                    app:srcCompat="@drawable/ic_timer"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/imgAutoLogoutDelay"
-                    android:layout_toRightOf="@+id/imgAutoLogoutDelay"
-                    android:clickable="false"
-                    android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/tvAutoLogoutDelay"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Auto Logout Delay"
-                        android:textAppearance="@style/myText.Settings.Header"/>
-
-                    <TextView
-                        android:id="@+id/tvAutoLogoutDelayDesc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Select how long it takes for the application to automatically logout"
-                        android:textAppearance="@style/myText.Settings.Description"/>
-
-                    <Spinner
-                        android:id="@+id/spAutoLogoutDelay"
-                        style="@style/Platform.Widget.AppCompat.Spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/black"
-                        android:popupBackground="@color/white"
-                        android:spinnerMode="dialog"
-                        tools:targetApi="lollipop"/>
-                </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/ChangePasscode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground">
-
-                <ImageView
-                    android:id="@+id/imgChangePassword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:contentDescription="change passcode"
-                    android:tint="@color/black"
-                    app:srcCompat="@drawable/ic_passcode"/>
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvChangePasscode"
+                    android:id="@+id/tvAutoSave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/imgChangePassword"
-                    android:layout_toRightOf="@+id/imgChangePassword"
-                    android:clickable="false"
-                    android:padding="10dp"
-                    android:text="Change Passcode"
+                    android:layout_marginTop="5dp"
+                    android:text="Auto Save"
                     android:textAppearance="@style/myText.Settings.Header"/>
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/ScrambleKey"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground">
-
-                <ImageView
-                    android:id="@+id/imgScrambleEncryptionKey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:contentDescription="scramble crypt key"
-                    app:srcCompat="@drawable/ic_key"/>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tvAutoSaveDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/imgScrambleEncryptionKey"
-                    android:layout_toRightOf="@+id/imgScrambleEncryptionKey"
-                    android:clickable="false"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                    android:text="Automatically save notes without needing to select the save button"
+                    android:textAppearance="@style/myText.Settings.Description"/>
 
-                    <TextView
-                        android:id="@+id/tvScrambleKey"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Scramble Encryption Key"
-                        android:textAppearance="@style/myText.Settings.Header"/>
+            </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tvScrambleKeyDesc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Changes encryption key. Size is determined by algorithm selected."
-                        android:textAppearance="@style/myText.Settings.Description"/>
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/EncryptionMethod"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground">
-
-                <ImageView
-                    android:id="@+id/imgEncryptionMethod"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:contentDescription="encryption method"
-                    android:tint="@color/black"
-                    app:srcCompat="@drawable/ic_shield"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/imgEncryptionMethod"
-                    android:layout_toRightOf="@+id/imgEncryptionMethod"
-                    android:clickable="false"
-                    android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/tvEncryptionMethod"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Encryption Method"
-                        android:textAppearance="@style/myText.Settings.Header"/>
-
-                    <Spinner
-                        android:id="@+id/spEncryptionMethod"
-                        style="@style/Platform.Widget.AppCompat.Spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/black"
-                        android:popupBackground="@color/white"
-                        android:spinnerMode="dialog"
-                        tools:targetApi="lollipop"/>
-
-                </LinearLayout>
-            </RelativeLayout>
-
-            <!--<RelativeLayout-->
-            <!--android:id="@+id/ColourScheme"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--&gt;-->
-
-            <!--<ImageView-->
-            <!--android:id="@+id/imgColourScheme"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_alignParentStart="true"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:tint="@color/black"-->
-            <!--app:srcCompat="@drawable/ic_graphic_colourscheme"/>-->
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_toEndOf="@+id/imgColourScheme"-->
-            <!--android:layout_toRightOf="@+id/imgColourScheme"-->
-            <!--android:orientation="vertical"-->
-            <!--android:padding="10dp">-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/tvColourScheme"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="5dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:fontFamily="monospace"-->
-            <!--android:text="Colour Scheme"-->
-            <!--android:textAllCaps="false"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:textSize="20sp"-->
-            <!--android:textStyle="bold"/>-->
-
-            <!--<LinearLayout-->
-            <!--android:id="@+id/ColorScheme"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_toEndOf="@+id/imgColourScheme"-->
-            <!--android:layout_toRightOf="@+id/imgColourScheme">-->
-
-            <!--<RelativeLayout-->
-            <!--android:id="@+id/Blue"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1">-->
-
-            <!--<ImageView-->
-            <!--android:id="@+id/imgBlue"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:scaleType="fitXY"-->
-            <!--app:srcCompat="@drawable/scheme_blue"/>-->
-
-            <!--<CheckBox-->
-            <!--android:id="@+id/cbBlue"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:checked="false"-->
-            <!--app:buttonTint="@color/white"/>-->
-
-            <!--</RelativeLayout>-->
-
-            <!--<RelativeLayout-->
-            <!--android:id="@+id/Red"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1">-->
-
-            <!--<ImageView-->
-            <!--android:id="@+id/imgRed"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:scaleType="fitXY"-->
-            <!--app:srcCompat="@drawable/scheme_red"/>-->
-
-            <!--<CheckBox-->
-            <!--android:id="@+id/cbRed"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignEnd="@+id/imgRed"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_alignRight="@+id/imgRed"-->
-            <!--android:checked="false"-->
-            <!--app:buttonTint="@color/white"/>-->
-            <!--</RelativeLayout>-->
-
-            <!--<RelativeLayout-->
-            <!--android:id="@+id/Green"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1">-->
-
-            <!--<ImageView-->
-            <!--android:id="@+id/imgGreen"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:scaleType="fitXY"-->
-            <!--app:srcCompat="@drawable/scheme_green"/>-->
-
-            <!--<CheckBox-->
-            <!--android:id="@+id/cbGreen"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:checked="false"-->
-            <!--app:buttonTint="@color/white"/>-->
-            <!--</RelativeLayout>-->
-
-            <!--<RelativeLayout-->
-            <!--android:id="@+id/Yellow"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1">-->
-
-            <!--<ImageView-->
-            <!--android:id="@+id/imgYellow"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:scaleType="fitXY"-->
-            <!--app:srcCompat="@drawable/scheme_yellow"/>-->
-
-            <!--<CheckBox-->
-            <!--android:id="@+id/cbYellow"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:checked="false"-->
-            <!--app:buttonTint="@color/white"/>-->
-            <!--</RelativeLayout>-->
-
-            <!--<RelativeLayout-->
-            <!--android:id="@+id/Purple"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1">-->
-
-            <!--<ImageView-->
-            <!--android:id="@+id/imgPurple"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:scaleType="fitXY"-->
-            <!--app:srcCompat="@drawable/scheme_purple"/>-->
-
-            <!--<CheckBox-->
-            <!--android:id="@+id/cbPurple"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:checked="false"-->
-            <!--app:buttonTint="@color/white"/>-->
-
-            <!--</RelativeLayout>-->
-
-            <!--<RelativeLayout-->
-            <!--android:id="@+id/Gray"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1">-->
-
-            <!--<ImageView-->
-            <!--android:id="@+id/imgGray"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:scaleType="fitXY"-->
-            <!--app:srcCompat="@drawable/scheme_gray"/>-->
-
-            <!--<CheckBox-->
-            <!--android:id="@+id/cbGray"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:checked="false"-->
-            <!--app:buttonTint="@color/white"/>-->
-            <!--</RelativeLayout>-->
-
-            <!--</LinearLayout>-->
-
-            <!--</LinearLayout>-->
-
-            <!--</RelativeLayout>-->
+            <CheckBox
+                android:id="@+id/cbAutoSave"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:buttonTint="@color/black"
+                android:textSize="16sp"
+                tools:targetApi="lollipop"/>
 
         </LinearLayout>
-    </ScrollView>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light2"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/AutoLogoutDelay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imgAutoLogoutDelay"
+            android:layout_toRightOf="@+id/imgAutoLogoutDelay"
+            android:clickable="false"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tvAutoLogoutDelay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Auto Logout Delay"
+                android:textAppearance="@style/myText.Settings.Header"/>
+
+            <TextView
+                android:id="@+id/tvAutoLogoutDelayDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select how long it takes for the application to automatically logout"
+                android:textAppearance="@style/myText.Settings.Description"/>
+
+            <Spinner
+                android:id="@+id/spAutoLogoutDelay"
+                style="@style/Platform.Widget.AppCompat.Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/black"
+                android:popupBackground="@color/white"
+                android:spinnerMode="dialog"
+                tools:targetApi="lollipop"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light2"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/ChangePasscode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <TextView
+            android:id="@+id/tvChangePasscode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imgChangePassword"
+            android:layout_toRightOf="@+id/imgChangePassword"
+            android:clickable="false"
+            android:padding="10dp"
+            android:text="Change Passcode"
+            android:textAppearance="@style/myText.Settings.Header"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light2"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/ScrambleKey"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imgScrambleEncryptionKey"
+            android:layout_toRightOf="@+id/imgScrambleEncryptionKey"
+            android:clickable="false"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tvScrambleKey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Scramble Encryption Key"
+                android:textAppearance="@style/myText.Settings.Header"/>
+
+            <TextView
+                android:id="@+id/tvScrambleKeyDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Changes encryption key. Size is determined by algorithm selected."
+                android:textAppearance="@style/myText.Settings.Description"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light2"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/EncryptionMethod"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/imgEncryptionMethod"
+            android:layout_toRightOf="@+id/imgEncryptionMethod"
+            android:clickable="false"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tvEncryptionMethod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Encryption Method"
+                android:textAppearance="@style/myText.Settings.Header"/>
+
+            <Spinner
+                android:id="@+id/spEncryptionMethod"
+                style="@style/Platform.Widget.AppCompat.Spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/black"
+                android:popupBackground="@color/white"
+                android:spinnerMode="dialog"
+                tools:targetApi="lollipop"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light2"
+        android:orientation="vertical">
+    </LinearLayout>
 
 </LinearLayout>
+
+
+
+
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout-->
+<!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:orientation="vertical"-->
+<!--android:scrollbars="vertical"-->
+<!--tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings">-->
+
+<!--<ScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:padding="0dp">-->
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/AutoSave"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:clickable="true"-->
+            <!--android:focusable="true"-->
+            <!--android:foreground="?android:attr/selectableItemBackground">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/imgAutoSave"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_marginStart="10dp"-->
+                <!--android:contentDescription="auto save"-->
+                <!--android:tint="@color/black"-->
+                <!--app:srcCompat="@drawable/ic_save"/>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_toEndOf="@+id/imgAutoSave"-->
+                <!--android:layout_toRightOf="@+id/imgAutoSave"-->
+                <!--android:clickable="false"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:padding="10dp">-->
+
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/autoSave"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:orientation="vertical">-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/tvAutoSave"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginTop="5dp"-->
+                        <!--android:text="Auto Save"-->
+                        <!--android:textAppearance="@style/myText.Settings.Header"/>-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/tvAutoSaveDesc"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="Automatically save notes without needing to select the save button"-->
+                        <!--android:textAppearance="@style/myText.Settings.Description"/>-->
+
+                <!--</LinearLayout>-->
+
+                <!--<CheckBox-->
+                    <!--android:id="@+id/cbAutoSave"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:buttonTint="@color/black"-->
+                    <!--android:textSize="16sp"-->
+                    <!--tools:targetApi="lollipop"/>-->
+
+            <!--</LinearLayout>-->
+        <!--</RelativeLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@color/gray_light2"-->
+            <!--android:orientation="vertical">-->
+        <!--</LinearLayout>-->
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/AutoLogoutDelay"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:clickable="true"-->
+            <!--android:focusable="true"-->
+            <!--android:foreground="?android:attr/selectableItemBackground">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/imgAutoLogoutDelay"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_marginStart="10dp"-->
+                <!--android:contentDescription="auto logout"-->
+                <!--android:tint="@color/black"-->
+                <!--app:srcCompat="@drawable/ic_timer"/>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_toEndOf="@+id/imgAutoLogoutDelay"-->
+                <!--android:layout_toRightOf="@+id/imgAutoLogoutDelay"-->
+                <!--android:clickable="false"-->
+                <!--android:orientation="vertical"-->
+                <!--android:padding="10dp">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvAutoLogoutDelay"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:text="Auto Logout Delay"-->
+                    <!--android:textAppearance="@style/myText.Settings.Header"/>-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvAutoLogoutDelayDesc"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Select how long it takes for the application to automatically logout"-->
+                    <!--android:textAppearance="@style/myText.Settings.Description"/>-->
+
+                <!--<Spinner-->
+                    <!--android:id="@+id/spAutoLogoutDelay"-->
+                    <!--style="@style/Platform.Widget.AppCompat.Spinner"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:backgroundTint="@color/black"-->
+                    <!--android:popupBackground="@color/white"-->
+                    <!--android:spinnerMode="dialog"-->
+                    <!--tools:targetApi="lollipop"/>-->
+            <!--</LinearLayout>-->
+        <!--</RelativeLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@color/gray_light2"-->
+            <!--android:orientation="vertical">-->
+        <!--</LinearLayout>-->
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/ChangePasscode"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:clickable="true"-->
+            <!--android:focusable="true"-->
+            <!--android:foreground="?android:attr/selectableItemBackground">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/imgChangePassword"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_marginStart="10dp"-->
+                <!--android:contentDescription="change passcode"-->
+                <!--android:tint="@color/black"-->
+                <!--app:srcCompat="@drawable/ic_passcode"/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tvChangePasscode"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_toEndOf="@+id/imgChangePassword"-->
+                <!--android:layout_toRightOf="@+id/imgChangePassword"-->
+                <!--android:clickable="false"-->
+                <!--android:padding="10dp"-->
+                <!--android:text="Change Passcode"-->
+                <!--android:textAppearance="@style/myText.Settings.Header"/>-->
+
+        <!--</RelativeLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@color/gray_light2"-->
+            <!--android:orientation="vertical">-->
+        <!--</LinearLayout>-->
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/ScrambleKey"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:clickable="true"-->
+            <!--android:focusable="true"-->
+            <!--android:foreground="?android:attr/selectableItemBackground">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/imgScrambleEncryptionKey"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_marginStart="10dp"-->
+                <!--android:contentDescription="scramble crypt key"-->
+                <!--app:srcCompat="@drawable/ic_key"/>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_toEndOf="@+id/imgScrambleEncryptionKey"-->
+                <!--android:layout_toRightOf="@+id/imgScrambleEncryptionKey"-->
+                <!--android:clickable="false"-->
+                <!--android:orientation="vertical"-->
+                <!--android:padding="10dp">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvScrambleKey"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:text="Scramble Encryption Key"-->
+                    <!--android:textAppearance="@style/myText.Settings.Header"/>-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvScrambleKeyDesc"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:text="Changes encryption key. Size is determined by algorithm selected."-->
+                    <!--android:textAppearance="@style/myText.Settings.Description"/>-->
+
+            <!--</LinearLayout>-->
+
+        <!--</RelativeLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@color/gray_light2"-->
+            <!--android:orientation="vertical">-->
+        <!--</LinearLayout>-->
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/EncryptionMethod"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:clickable="true"-->
+            <!--android:focusable="true"-->
+            <!--android:foreground="?android:attr/selectableItemBackground">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/imgEncryptionMethod"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_marginStart="10dp"-->
+                <!--android:contentDescription="encryption method"-->
+                <!--android:tint="@color/black"-->
+                <!--app:srcCompat="@drawable/ic_shield"/>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_toEndOf="@+id/imgEncryptionMethod"-->
+                <!--android:layout_toRightOf="@+id/imgEncryptionMethod"-->
+                <!--android:clickable="false"-->
+                <!--android:orientation="vertical"-->
+                <!--android:padding="10dp">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvEncryptionMethod"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:text="Encryption Method"-->
+                    <!--android:textAppearance="@style/myText.Settings.Header"/>-->
+
+                <!--<Spinner-->
+                    <!--android:id="@+id/spEncryptionMethod"-->
+                    <!--style="@style/Platform.Widget.AppCompat.Spinner"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:backgroundTint="@color/black"-->
+                    <!--android:popupBackground="@color/white"-->
+                    <!--android:spinnerMode="dialog"-->
+                    <!--tools:targetApi="lollipop"/>-->
+
+            <!--</LinearLayout>-->
+        <!--</RelativeLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@color/gray_light2"-->
+            <!--android:orientation="vertical">-->
+        <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
+
+<!--</ScrollView>-->
+
+<!--</LinearLayout>-->
+

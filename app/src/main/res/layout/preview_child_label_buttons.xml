@@ -20,11 +20,11 @@
 
     <ImageView
         android:id="@+id/imgColourTag"
-        android:layout_width="3dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
-        android:src="@color/white"
+        android:src="@color/black"
         android:orientation="horizontal"
         android:contentDescription="colour tag">
     </ImageView>
@@ -65,5 +65,5 @@
         android:contentDescription="Edit"
         android:tint="@color/black"
         android:foreground="?android:attr/selectableItemBackground"
-        app:srcCompat="@drawable/ic_action_edit"/>
+        app:srcCompat="@drawable/ic_edit"/>
 </LinearLayout>

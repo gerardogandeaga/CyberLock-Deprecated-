@@ -40,6 +40,13 @@
                         android:foreground="?android:attr/selectableItemBackground"
                         app:srcCompat="@drawable/ic_file"/>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray_light2"
+                        android:orientation="vertical">
+                    </LinearLayout>
+
                     <ImageButton
                         android:id="@+id/btnSettings"
                         android:layout_width="48dp"
@@ -48,42 +55,6 @@
                         android:contentDescription="image"
                         android:foreground="?android:attr/selectableItemBackground"
                         app:srcCompat="@drawable/ic_settings"/>
-
-                    <ImageButton
-                        android:id="@+id/btnPlayground"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="image"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:srcCompat="@drawable/ic_cancel"/>
-
-                    <ImageButton
-                        android:id="@+id/btnShare"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="image"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:srcCompat="@drawable/ic_save"/>
-
-                    <ImageButton
-                        android:id="@+id/btnRate"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="image"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:srcCompat="@drawable/ic_save"/>
-
-                    <ImageButton
-                        android:id="@+id/btnAbout"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="image"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:srcCompat="@drawable/ic_save"/>
 
                 </LinearLayout>
             </ScrollView>

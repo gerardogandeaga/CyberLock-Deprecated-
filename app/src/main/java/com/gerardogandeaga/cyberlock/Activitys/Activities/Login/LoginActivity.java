@@ -34,7 +34,7 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.PASSCODE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity{
     private Context mContext = this;
     private SharedPreferences mSharedPreferences;
 
@@ -44,12 +44,12 @@ public class LoginActivity extends AppCompatActivity {
     private boolean mIsEdit;
 
     // Widgets
+    private Button mBtnLogin;
     private EditText mEtPasscode;
     private ProgressDialog mProgressDialog;
 
     // INITIAL ON CREATE METHODS
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         Globals.COLORSCHEME(this);
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
@@ -72,9 +72,9 @@ public class LoginActivity extends AppCompatActivity {
             setContentView(R.layout.activity_passcode_login);
 
             mEtPasscode = (EditText) findViewById(R.id.etPasscode);
-            Button btnLogin = (Button) findViewById(R.id.btnLogin);
+            mBtnLogin = (Button) findViewById(R.id.btnLogin);
 
-            btnLogin.setOnClickListener(new View.OnClickListener() {
+            mBtnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mPasscode = mEtPasscode.getText().toString();
@@ -187,24 +187,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
-    @Override
-    protected void onStart() // <--- ON *LOGIN REQUIREMENT* START -- *LOGIN = FALSE*
-    {
+    @Override protected void onStart() {
         super.onStart();
 
         LogoutProtocol.APP_LOGGED_IN = false; // APP NOT LOGGED IN
         System.out.println("MASTER KEY IS EQUAL TO " + MASTER_KEY);
-    }
-    @Override
-    public void onBackPressed() // <--- BACK PRESSED *HOME*
-    {
+    } // <--- ON *LOGIN REQUIREMENT* START -- *LOGIN = FALSE*
+    @Override public void onBackPressed() {
         super.onBackPressed();
 
         Intent homeIntent = new Intent(Intent.ACTION_MAIN); // (NEXT LINES) SCRIPT TO SEND TO THE OS HOME SCREEN
         homeIntent.addCategory(Intent.CATEGORY_HOME);
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(homeIntent);
-    }
+    } // <--- BACK PRESSED *HOME*
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // QUARANTINED FUNCTIONS

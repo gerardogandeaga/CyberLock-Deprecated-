@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Main -->
+    <!-- Drawer States -->
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
+    ------------------------------------------------------------------------------------------------
+    <!-- Notes -->
+    <!-- Recycler View Item -->
+    <!-- Payment Information -->
+    <string name="cName"><b>Holder Name: </b></string>
+    <string name="cNumber"><b>Number: </b></string>
+    <string name="cExpire"><b>Expiry Date: </b></string>
+    <string name="cCVV"><b>CVV: </b></string>
+    <string name="cType"><b>Card Type: </b></string>
+    ------------------------------------------------------------------------------------------------
+    <!-- Settings -->
+    <!-- Auto Logout Delay -->
+    <string-array name="AutoLogoutDelay_array">
+        <item>Immediate</item>
+        <item>15 Seconds</item>
+        <item>30 Seconds</item>
+        <item>1 Minute</item>
+        <item>5 Minutes</item>
+        <item>10 Minutes</item>
+        <item>30 Minutes</item>
+        <item>1 Hour</item>
+        <item>2 Hours</item>
+        <item>Never</item>
+    </string-array>
+    <!-- Encryption Algorithms -->
+    <string-array name="CryptALGO_array">
+        <item>AES - 256</item>
+        <item>Blowfish - 448</item>
+        <!-- Rest of the encryption features
+        <item>RC4 – 256</item>
+        <item>Triple DES - 168</item>
+        -->
+    </string-array>
+    ------------------------------------------------------------------------------------------------
+    <!-- Edit Activity -->
+    <string-array name="CardType_array">
+        <item>None</item>
+        <item>Visa</item>
+        <item>Master Card</item>
+        <item>American Express</item>
+        <item>Discover</item>
+        <item>Other</item>
+    </string-array>
+    ------------------------------------------------------------------------------------------------
+    <!-- TEXT INPUT LAYOUT FIX -->
+    <item name="visible" type="id"/>
+    <item name="masked" type="id"/>
+</resources>

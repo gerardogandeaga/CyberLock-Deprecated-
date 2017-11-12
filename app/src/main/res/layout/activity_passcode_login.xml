@@ -5,7 +5,7 @@
     android:id="@+id/Content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorAccent"
+    android:background="@color/gray3B"
     android:orientation="vertical">
 
     <LinearLayout
@@ -16,36 +16,25 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/background_fill_white_border_gray"
         android:orientation="vertical"
-        app:layout_marginBottomPercent="15%">
+        app:layout_marginBottomPercent="30%">
 
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/Passcode"
+        <EditText
+            android:id="@+id/etPasscode"
+            style="@style/myText.Label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp">
-
-            <EditText
-                android:id="@+id/etPasscode"
-                style="@style/myText.Label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:drawableLeft="@drawable/ic_passcode"
-                android:drawableStart="@drawable/ic_passcode"
-                android:ems="10"
-                android:hint="Enter Passcode"
-                android:inputType="textPassword"
-                android:maxLength="16"
-                android:maxLines="1"
-                android:textAppearance="@style/myText.Settings.Header"/>
-
-        </android.support.design.widget.TextInputLayout>
+            android:layout_marginBottom="30dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:hint="Enter Passcode"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:maxLines="1"
+            android:textAppearance="@style/myText.Settings.Header"/>
 
         <Button
             android:id="@+id/btnLogin"
-            style="@style/myText.Button.BigText.White"
+            android:textAppearance="@style/myText.Dialog.Buttons"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
