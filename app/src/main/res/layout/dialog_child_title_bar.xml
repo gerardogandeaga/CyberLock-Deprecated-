@@ -11,7 +11,7 @@
 
     <ImageView
         android:id="@+id/imgDialogAction"
-        android:layout_width="28dp"
+        android:layout_width="0dp"
         android:layout_height="28dp"
         android:layout_gravity="center_vertical"
         android:contentDescription="action icon"/>
@@ -27,4 +27,5 @@
         android:layout_marginStart="5dp"
         android:layout_weight="1"
         android:textAppearance="@style/myText.Dialog.Title"/>
+
 </LinearLayout>

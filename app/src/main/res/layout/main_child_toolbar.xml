@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:theme="@style/AppTheme.AppBarOverlay"
-    app:elevation="0dp"
+    app:elevation="5dp"
     app:layout_collapseParallaxMultiplier="0">
 
     <android.support.design.widget.AppBarLayout
@@ -15,15 +15,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:theme="@style/AppTheme.AppBarOverlay"
-        app:elevation="0dp"
         app:layout_collapseParallaxMultiplier="0">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:background="@color/white"
             app:contentInsetStartWithNavigation="0dp"
-            app:elevation="0dp"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
 

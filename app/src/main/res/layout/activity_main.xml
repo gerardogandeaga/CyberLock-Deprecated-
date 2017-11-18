@@ -43,9 +43,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/gray_light2"
-                        android:orientation="vertical">
-                    </LinearLayout>
+                        android:background="@color/gray_dark1"
+                        android:orientation="vertical"
+                        android:layout_marginRight="3dp"
+                        android:layout_marginLeft="3dp"/>
 
                     <ImageButton
                         android:id="@+id/btnSettings"
@@ -57,6 +58,7 @@
                         app:srcCompat="@drawable/ic_settings"/>
 
                 </LinearLayout>
+
             </ScrollView>
 
             <LinearLayout
@@ -83,8 +85,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        app:itemIconTint="@color/black">
-
-    </android.support.design.widget.NavigationView>
+        app:itemIconTint="@color/black"/>
 
 </android.support.v4.widget.DrawerLayout>

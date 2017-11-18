@@ -73,4 +73,8 @@
     <color name="matCream">#cbc7ae</color>
     <color name="matPurple">#2c1e41</color>
     <color name="matOrange">#bd6f14</color>
+
+
+    <color name="grayblue">#607d8a</color>
+    <color name="dgrayblue">#465a65</color>
 </resources>

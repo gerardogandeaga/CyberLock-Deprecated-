@@ -5,7 +5,7 @@
     android:id="@+id/Content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorAccent"
+    android:background="@color/gray3B"
     android:orientation="vertical">
 
     <LinearLayout
@@ -21,64 +21,49 @@
 
         <TextView
             android:id="@+id/tvInstruction"
-            style="@style/myText.MediumText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableTop="@drawable/ic_passcode"
             android:gravity="center_horizontal|center_vertical"
+            android:layout_marginBottom="30dp"
             android:text="Secure your data"
             android:textAlignment="center"
+            android:textAppearance="@style/myText.MediumText"
             android:textStyle="bold"/>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/Initial"
+        <EditText
+            android:id="@+id/etInitial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginBottom="30dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:hint="Enter Passcode"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:maxLines="1"
+            android:textAppearance="@style/myText.Label"/>
 
-            <EditText
-                android:id="@+id/etInitial"
-                style="@style/myText.Label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:ems="10"
-                android:hint="Enter Passcode"
-                android:inputType="textPassword"
-                android:maxLength="16"
-                android:maxLines="1"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/Final"
+        <EditText
+            android:id="@+id/etFinal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp">
-
-            <EditText
-                android:id="@+id/etFinal"
-                style="@style/myText.Label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:ems="10"
-                android:hint="Confirm Passcode"
-                android:inputType="textPassword"
-                android:maxLength="16"
-                android:maxLines="1"/>
-
-        </android.support.design.widget.TextInputLayout>
+            android:layout_marginBottom="30dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:hint="Confirm Passcode"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:maxLines="1"
+            android:textAppearance="@style/myText.Label"/>
 
         <Button
             android:id="@+id/btnRegister"
-            style="@style/myText.Button.BigText.White"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@drawable/flat_button_orange"
-            android:text="Register"/>
+            android:text="Register"
+            android:textAppearance="@style/myText.Dialog.Buttons"/>
 
     </LinearLayout>
 

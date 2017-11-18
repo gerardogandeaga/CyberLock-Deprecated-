@@ -1,5 +1,6 @@
 package com.gerardogandeaga.cyberlock.Activitys.Activities.Login;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity;
@@ -34,21 +34,19 @@ import static com.gerardogandeaga.cyberlock.Supports.Globals.MASTER_KEY;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.PASSCODE;
 import static com.gerardogandeaga.cyberlock.Supports.Globals.TEMP_PIN;
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private Context mContext = this;
     private SharedPreferences mSharedPreferences;
 
-    private String mPasscode;
     // Activity intent
     private Intent mIntent;
     private boolean mIsEdit;
-
+    private StringBuilder mStringBuilder = new StringBuilder();
     // Widgets
-    private Button mBtnLogin;
-    private EditText mEtPasscode;
+    private TextView mTvPasscode;
     private ProgressDialog mProgressDialog;
 
-    // INITIAL ON CREATE METHODS
+    // Initial on create methods
     @Override protected void onCreate(Bundle savedInstanceState) {
         Globals.COLORSCHEME(this);
         super.onCreate(savedInstanceState);
@@ -69,23 +67,15 @@ public class LoginActivity extends AppCompatActivity{
             this.finish();
             this.startActivity(LogoutProtocol.ACTIVITY_INTENT);
         } else {
-            setContentView(R.layout.activity_passcode_login);
+            setContentView(R.layout.test);
 
-            mEtPasscode = (EditText) findViewById(R.id.etPasscode);
-            mBtnLogin = (Button) findViewById(R.id.btnLogin);
-
-            mBtnLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mPasscode = mEtPasscode.getText().toString();
-
-                    if (!mPasscode.matches("")) {
-                        onPinCompleted();
-                    } else {
-                        Toast.makeText(mContext, "No Passcode detected", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+            mTvPasscode = (TextView) findViewById(R.id.tvPasscode);
+            findViewById(R.id.btn0).setOnClickListener(this);findViewById(R.id.btn5).setOnClickListener(this);
+            findViewById(R.id.btn1).setOnClickListener(this);findViewById(R.id.btn6).setOnClickListener(this);
+            findViewById(R.id.btn2).setOnClickListener(this);findViewById(R.id.btn7).setOnClickListener(this);
+            findViewById(R.id.btn3).setOnClickListener(this);findViewById(R.id.btn8).setOnClickListener(this);
+            findViewById(R.id.btn4).setOnClickListener(this);findViewById(R.id.btn9).setOnClickListener(this);
+            findViewById(R.id.btnDelete).setOnClickListener(this);findViewById(R.id.btnEnter).setOnClickListener(this);
         }
     }
     private void progressBar() {
@@ -97,13 +87,41 @@ public class LoginActivity extends AppCompatActivity{
     }
     // -------------------------
 
+    @Override public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn0: buildString("0"); break; case R.id.btn5: buildString("5"); break;
+            case R.id.btn1: buildString("1"); break; case R.id.btn6: buildString("6"); break;
+            case R.id.btn2: buildString("2"); break; case R.id.btn7: buildString("7"); break;
+            case R.id.btn3: buildString("3"); break; case R.id.btn8: buildString("8"); break;
+            case R.id.btn4: buildString("4"); break; case R.id.btn9: buildString("9"); break;
+            case R.id.btnDelete: buildString("Del"); break; case R.id.btnEnter: onPinCompleted(); break;
+        }
+    }
+    private void buildString(String s) {
+        mTvPasscode.setText("");
+        if (!s.matches("Del")) {
+            if (mStringBuilder.length() < 16) {
+                mStringBuilder.append(s);
+            } else {
+                Toast.makeText(this, "Passcode can not be longer than 16 characters" , Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            if (mStringBuilder.length() > 0) {
+                mStringBuilder.deleteCharAt(mStringBuilder.length() - 1);
+            }
+        }
+        for (int i = 0; i < mStringBuilder.length(); i++) {
+            mTvPasscode.append("*");
+        }
+    }
+
     // WHEN LOGIN CLICK IS REGISTERED
     public void clear() {
-        mPasscode = "";
+        mStringBuilder = new StringBuilder();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mEtPasscode.getText().clear();
+                mTvPasscode.setText("");
             }
         });
     }
@@ -124,61 +142,59 @@ public class LoginActivity extends AppCompatActivity{
         finish();
         LoginActivity.this.startActivity(i); // MOVE TO MAIN ACTIVITY
     }
-    private void onPinCompleted() {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-                progressBar();
-            }
-            @Override
-            protected Void doInBackground(Void... params) {
-                try // TRY LOGIN MECHANICS
-                {
-                    final String decryptedPulledPin = new CryptKeyHandler(mContext)
-                            .DECRYPT_KEY(mSharedPreferences.getString(PASSCODE, null), mPasscode);
-                    final String loginPinHash = SHA256PinHash
-                            .HASH_FUNCTION(mPasscode, Arrays.copyOfRange(Base64.decode(decryptedPulledPin, FLAGS), 0, 128));
-
+    @SuppressLint("StaticFieldLeak") private void onPinCompleted() {
+        if (mStringBuilder.length() == 0) {
+            Toast.makeText(mContext, "No Passcode detected", Toast.LENGTH_SHORT).show();
+            clear();
+        } else {
+            new AsyncTask<Void, Void, Void>() {
+                @Override protected void onPreExecute() {
+                    super.onPreExecute();
+                    progressBar();
+                }
+                @Override protected Void doInBackground(Void... params) {
+                    try {
+                        String s = mStringBuilder.toString();
+                        final String decryptedPulledPin = new CryptKeyHandler(mContext)
+                                .DECRYPT_KEY(mSharedPreferences.getString(PASSCODE, null), s);
+                        final String loginPinHash = SHA256PinHash
+                                .HASH_FUNCTION(s, Arrays.copyOfRange(Base64.decode(decryptedPulledPin, FLAGS), 0, 128));
 //                    System.out.println("LOGIN INPUT: " + loginPinHash);
 
 //                    System.out.println("CACHED HASH: " + decryptedPulledPin);
+                        if (decryptedPulledPin.equals(loginPinHash)) /// TEST PERIODICALLY INPUTTED PASSCODE AGAINST CACHED PASSCODE
+                        {
+                            TEMP_PIN = s;
+                            MASTER_KEY = new CryptKeyHandler(mContext).DECRYPT_KEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN);
+                            System.out.println("MASTER KEY: " + MASTER_KEY);
 
-                    if (decryptedPulledPin.equals(loginPinHash)) /// TEST PERIODICALLY INPUTTED PASSCODE AGAINST CACHED PASSCODE
-                    {
-                        TEMP_PIN = mPasscode;
-                        MASTER_KEY = new CryptKeyHandler(mContext).DECRYPT_KEY(mSharedPreferences.getString(CRYPT_KEY, null), TEMP_PIN);
-                        System.out.println("MASTER KEY: " + MASTER_KEY);
+                            LogoutProtocol.APP_LOGGED_IN = true; // APP LOGGED IN
+                            getLastLoginTime();
+                            loginIntent();
 
-                        LogoutProtocol.APP_LOGGED_IN = true; // APP LOGGED IN
-                        getLastLoginTime();
-                        loginIntent();
-
-                        System.gc();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    clear();
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(mContext, "Please Try Again", Toast.LENGTH_SHORT).show(); // SOMETHING WENT WRONG WITH DATA COMPARISONS
+                            System.gc();
                         }
-                    });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        clear();
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, "Please Try Again", Toast.LENGTH_SHORT).show(); // SOMETHING WENT WRONG WITH DATA COMPARISONS
+                            }
+                        });
+                    }
+
+                    return null;
                 }
-
-                return null;
-            }
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-
-                clear();
-                mProgressDialog.dismiss();
-            }
-        }.execute();
+                @Override protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+                    clear();
+                    mProgressDialog.dismiss();
+                }
+            }.execute();
+        }
     }
     // ------------------------------
 
