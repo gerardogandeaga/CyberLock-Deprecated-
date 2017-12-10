@@ -7,7 +7,7 @@
               android:background="@drawable/background_label"
               android:elevation="3dp"
               android:orientation="horizontal"
-              android:padding="10dp"
+              android:padding="5dp"
               tools:targetApi="lollipop">
 
     <ImageView
@@ -24,14 +24,14 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
-        android:src="@color/black"
+        android:contentDescription="colour tag"
         android:orientation="horizontal"
-        android:contentDescription="colour tag">
+        android:src="@color/black">
     </ImageView>
 
     <TextView
         android:id="@+id/tvChildLabel"
-        style="@style/myText.Label"
+        style="@style/myText.Edit.Label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -42,7 +42,7 @@
         android:layout_weight="1"
         android:maxLines="1"
         android:scrollbars="horizontal"
-        android:textAppearance="@style/myText.Label"/>
+        android:textAppearance="@style/myText.Edit.Label"/>
 
     <ImageButton
         android:id="@+id/btnChildDone"
@@ -54,7 +54,8 @@
         android:background="@android:color/transparent"
         android:contentDescription="Done"
         android:foreground="?android:attr/selectableItemBackground"
-        app:srcCompat="@drawable/ic_cancel"/>
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_cross2"/>
 
     <ImageButton
         android:id="@+id/btnChildEdit"
@@ -63,7 +64,9 @@
         android:layout_gravity="center_vertical"
         android:background="@android:color/transparent"
         android:contentDescription="Edit"
-        android:tint="@color/black"
         android:foreground="?android:attr/selectableItemBackground"
+        android:scaleType="centerCrop"
+        android:tint="@color/black"
         app:srcCompat="@drawable/ic_edit"/>
+
 </LinearLayout>

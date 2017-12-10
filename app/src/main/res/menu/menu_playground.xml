@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/acCryptAction"
-        android:icon="@drawable/ic_action_crypt"
+        android:icon="@drawable/ic_crypt"
         app:showAsAction="always"
         android:title="Encrypt"/>
 
@@ -28,7 +28,7 @@
 
 
     <item
-        android:id="@+id/EncryptionMethod"
+        android:id="@+id/EncryptionAlgorithm"
         android:title="Encryption Method">
         <menu>
             <group

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainEditActivity">
+    tools:context=".activities.core.ActivityEdit">
 
     <include layout="@layout/main_child_toolbar"/>
 
@@ -26,7 +26,7 @@
 
             <EditText
                 android:id="@+id/etText"
-                style="@style/myText.Content"
+                style="@style/myText.Edit.Content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top"
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:textAlignment="textEnd"
-                android:textAppearance="@style/myText.Date"/>
+                android:textAppearance="@style/myText.Edit.Date"/>
         </LinearLayout>
     </ScrollView>
 

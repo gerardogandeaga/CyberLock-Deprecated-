@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainEditActivity">
+    tools:context=".activities.core.ActivityEdit">
 
     <include layout="@layout/main_child_toolbar"/>
 
@@ -42,7 +42,7 @@
                     android:hint="URL"
                     android:inputType="text|textUri"
                     android:textAlignment="center"
-                    android:textAppearance="@style/myText.Content"/>
+                    android:textAppearance="@style/myText.Edit.Content"/>
 
                 <EditText
                     android:id="@+id/etEmail"
@@ -54,7 +54,7 @@
                     android:hint="Email"
                     android:inputType="text|textEmailAddress|textWebEmailAddress"
                     android:textAlignment="center"
-                    android:textAppearance="@style/myText.Content"/>
+                    android:textAppearance="@style/myText.Edit.Content"/>
 
                 <EditText
                     android:id="@+id/etUsername"
@@ -66,7 +66,7 @@
                     android:hint="Username"
                     android:inputType="text"
                     android:textAlignment="center"
-                    android:textAppearance="@style/myText.Content"/>
+                    android:textAppearance="@style/myText.Edit.Content"/>
 
                 <EditText
                     android:id="@+id/etPassword"
@@ -78,7 +78,7 @@
                     android:hint="Password"
                     android:inputType="text|textVisiblePassword"
                     android:textAlignment="center"
-                    android:textAppearance="@style/myText.Content"/>
+                    android:textAppearance="@style/myText.Edit.Content"/>
 
             </LinearLayout>
 
@@ -90,7 +90,7 @@
                 android:gravity="start|end"
                 android:hint="Notes..."
                 android:inputType="textMultiLine"
-                android:textAppearance="@style/myText.Content"/>
+                android:textAppearance="@style/myText.Edit.Content"/>
 
             <TextView
                 android:id="@+id/tvDate"
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:textAlignment="textEnd"
-                android:textAppearance="@style/myText.Date"/>
+                android:textAppearance="@style/myText.Edit.Date"/>
 
         </LinearLayout>
     </ScrollView>

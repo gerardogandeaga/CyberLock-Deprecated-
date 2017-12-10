@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Titles-->
+    <!-- Settings -->
+    <string name="titleSelectDelayTime">Select Delay Time</string>
+    <string name="titleChangePasscode">Change Passcode</string>
+    <string name="titleScrambleEncryptionKey">Scramble Encryption Key</string>
+    <string name="titleChangeEncryptionAlgo">Change Encryption Algorithm</string>
+    ------------------------------------------------------------------------------------------------
+    <!-- Buttons-->
+    <!-- Negative -->
+    <string name="btnCancel">Cancel</string>
+    <string name="btnDone">Done</string>
+    <!-- Positive -->
+    <string name="btnEdit">Edit</string>
+    <string name="btnChange">Change</string>
+    <string name="btnScramble">Scramble</string>
+</resources>

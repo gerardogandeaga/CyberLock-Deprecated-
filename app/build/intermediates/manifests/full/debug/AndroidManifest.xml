@@ -14,21 +14,20 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_TASKS" />
 
-    <meta-data
-        android:name="android.support.VERSION"
-        android:value="25.3.1" />
-
     <application
         android:allowBackup="true"
+        android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Cyber Lock"
+        android:logo="@drawable/ic_back"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:testOnly="true"
+        android:theme="@style/MainTheme" >
         <activity
-            android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Login.LoginActivity"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:name="com.gerardogandeaga.cyberlock.activities.clearances.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,51 +35,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Login.RegistrationActivity"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
-        </activity>
-        <activity
-            android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/TitleActivityMain"
-            android:theme="@style/AppTheme" >
-        </activity>
+            android:name="com.gerardogandeaga.cyberlock.activities.clearances.RegistrationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
         <!-- MAIN ACTIVITIES -->
         <activity
-            android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Contribute"
-            android:configChanges="orientation|screenSize" />
+            android:name="com.gerardogandeaga.cyberlock.activities.core.ActivitySettings"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.About"
-            android:configChanges="orientation|screenSize" />
+            android:name="com.gerardogandeaga.cyberlock.support.settings.SettingsChangePasscode"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings"
-            android:configChanges="orientation|screenSize" />
+            android:name="com.gerardogandeaga.cyberlock.activities.core.ActivityMain"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.gerardogandeaga.cyberlock.Activitys.Activities.Menus.Settings_ResetPin"
-            android:configChanges="orientation|screenSize" />
+            android:name="com.gerardogandeaga.cyberlock.activities.core.ActivityEdit"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MainMemoActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.PaymentInfo.MainPaymentInfoActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.MainLoginInfoActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.PrivateMemo.MemoEditActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.PaymentInfo.PaymentInfoEditActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.LoginInfo.LoginInfoEditActivity"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name="com.gerardogandeaga.cyberlock.EncryptionFeatures.Playground.MainPlaygroundActivity"
-            android:configChanges="orientation|screenSize" >
-        </activity>
+            android:name="com.gerardogandeaga.cyberlock.activities.core.ActivityPlayground"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize" />
+
+        <meta-data
+            android:name="android.support.VERSION"
+            android:value="25.4.0" />
     </application>
 
 </manifest>

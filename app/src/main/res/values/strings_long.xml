@@ -12,7 +12,7 @@
         Additionally and most importantly, do not exit or close the application during the process
         as it may result in data loss.
     </string>
-    <string name="AlertDialog_EncryptionMethodChange">
+    <string name="AlertDialog_EncryptionAlgorithmChange">
         On pressing continue you content will be momentarily decrypted and re-encrypted using the
         new encryption algorithm. Please wait for the process to be completed and response message
         to be successful. Once the process has started you will not be able to cancel it.

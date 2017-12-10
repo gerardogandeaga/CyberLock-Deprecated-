@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/Content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray3B"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/InputField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/background_fill_white_border_gray"
+        android:orientation="vertical"
+        app:layout_marginBottomPercent="15%">
+
+
+        <TextView
+            android:id="@+id/tvInstruction"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_marginBottom="30dp"
+            android:text="Secure your data"
+            android:textAlignment="center"
+            android:textAppearance="@style/myText.Dialog.Title"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/etInitial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:hint="Enter Passcode"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:maxLines="1"
+            android:textAppearance="@style/myText.Edit.Label"/>
+
+        <EditText
+            android:id="@+id/etFinal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:background="@color/white"
+            android:ems="10"
+            android:hint="Confirm Passcode"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:maxLines="1"
+            android:textAppearance="@style/myText.Edit.Label"/>
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_gray"
+            android:text="Register"
+            android:textAppearance="@style/myText.Dialog.Buttons"/>
+
+    </LinearLayout>
+
+</android.support.percent.PercentRelativeLayout>

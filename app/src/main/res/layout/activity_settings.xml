@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grayE1"
+    android:orientation="vertical"
+    tools:context=".activities.core.ActivitySettings">
+
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/main_child_toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="5dp">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="5dp"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/AutoSave"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="15dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:clickable="false"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/autoSave"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvAutoSave"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="Auto Save"
+                                    android:textAppearance="@style/myText.Settings.Header"/>
+
+                                <TextView
+                                    android:id="@+id/tvAutoSaveDesc"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Automatically save notes without needing to select the save button"
+                                    android:textAppearance="@style/myText.Settings.Description"/>
+
+                            </LinearLayout>
+
+                            <CheckBox
+                                android:id="@+id/cbAutoSave"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:textSize="16sp"
+                                tools:targetApi="lollipop"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/AutoLogoutDelay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="15dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:clickable="false"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvAutoLogoutDelay"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="Auto Logout Delay"
+                                android:textAppearance="@style/myText.Settings.Header"/>
+
+                            <TextView
+                                android:id="@+id/tvAutoLogoutDelayDesc"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Select how long it takes for the application to automatically logout"
+                                android:textAppearance="@style/myText.Settings.Description"/>
+
+                            <Spinner
+                                android:id="@+id/spAutoLogoutDelay"
+                                style="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/black"
+                                android:clickable="false"
+                                android:focusable="false"
+                                android:popupBackground="@color/white"
+                                android:prompt="@string/titleSelectDelayTime"
+                                android:spinnerMode="dialog"
+                                tools:targetApi="lollipop"/>
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="5dp"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/ChangePasscode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="15dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            >
+
+                            <TextView
+                                android:id="@+id/tvChangePasscode"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:text="Change Passcode"
+                                android:textAppearance="@style/myText.Settings.Header"/>
+
+                            <TextView
+                                android:id="@+id/tvChangePasscodeDesc"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Changing passcode does not affect your data or your encryption key"
+                                android:textAppearance="@style/myText.Settings.Description"/>
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="5dp"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/ScrambleKey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="15dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:clickable="false"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvScrambleKey"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Scramble Encryption Key"
+                                android:textAppearance="@style/myText.Settings.Header"/>
+
+                            <TextView
+                                android:id="@+id/tvScrambleKeyDesc"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Changes encryption key. Size is determined by algorithm selected."
+                                android:textAppearance="@style/myText.Settings.Description"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/EncryptionAlgorithm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="15dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvEncryptionAlgorithm"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="Encryption Algorithm"
+                                android:textAppearance="@style/myText.Settings.Header"/>
+
+                            <Spinner
+                                android:id="@+id/spEncryptionAlgorithm"
+                                style="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/black"
+                                android:clickable="false"
+                                android:focusable="false"
+                                android:popupBackground="@color/white"
+                                android:prompt="@string/titleChangeEncryptionAlgo"
+                                android:spinnerMode="dialog"
+                                tools:targetApi="lollipop"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

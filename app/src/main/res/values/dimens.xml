@@ -5,5 +5,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <!-- Drawer Icon Sizes -->
-    <!--<ditextname="design_navigation_icon_size" tools:override="true">48dp</dimen>-->
+    <dimen name="design_navigation_icon_size" tools:override="true">32dp</dimen>
 </resources>

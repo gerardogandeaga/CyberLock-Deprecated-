@@ -2,18 +2,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity">
+    tools:context=".activities.core.ActivityMain">
 
     <item
-        android:id="@+id/action_save"
-        android:icon="@drawable/ic_save"
+        android:id="@+id/miSave"
+        android:icon="@drawable/ic_test"
 
         android:orderInCategory="100"
         android:title="Save"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/action_cancel"
-        android:icon="@drawable/ic_cancel"
+        android:id="@+id/miCancel"
+        android:icon="@drawable/ic_cross1"
         android:orderInCategory="100"
         android:title="Cancel"
         app:showAsAction="always"/>

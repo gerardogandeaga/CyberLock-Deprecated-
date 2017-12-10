@@ -2,48 +2,64 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainActivity">
+    tools:context=".activities.core.ActivityMain">
 
     <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/ic_search"
-        android:title="Search"
-        app:showAsAction="always"
-        />
-
-    <item
-        android:id="@+id/action_select"
+        android:id="@+id/miSelect"
         android:icon="@drawable/ic_select"
         android:title="Select"
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/subMenuAdd"
-        android:icon="@drawable/ic_add"
-        android:title="New"
+        android:id="@+id/mnuNew"
+        android:icon="@drawable/ic_edit"
+        android:title="New Data"
         app:showAsAction="always">
 
         <menu>
             <item
-                android:id="@+id/action_note"
-                android:icon="@drawable/ic_file"
+                android:id="@+id/acNote"
+                android:icon="@drawable/ic_note"
                 android:orderInCategory="0"
                 android:title="New Note"
                 app:showAsAction="never"/>
 
             <item
-                android:id="@+id/action_paymentinfo"
-                android:icon="@drawable/ic_card"
+                android:id="@+id/acPaymentInfo"
+                android:icon="@drawable/ic_test"
                 android:orderInCategory="0"
                 android:title="New Payment Information"
                 app:showAsAction="never"/>
 
             <item
-                android:id="@+id/action_logininfo"
+                android:id="@+id/acLoginInfo"
                 android:icon="@drawable/ic_login"
                 android:orderInCategory="0"
                 android:title="New Login Credentials"
                 app:showAsAction="never"/>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/mnuOptions"
+        android:icon="@drawable/ic_options"
+        android:title="Options"
+        app:showAsAction="always">
+
+        <menu>
+            <item
+                android:id="@+id/acSettings"
+                android:icon="@drawable/ic_settings"
+                android:orderInCategory="0"
+                android:title="Settings"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/acAbout"
+                android:orderInCategory="0"
+                android:title="About"
+                app:showAsAction="never"/>
+
         </menu>
     </item>
 </menu>

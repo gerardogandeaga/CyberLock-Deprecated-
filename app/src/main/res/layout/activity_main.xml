@@ -6,7 +6,8 @@
     android:id="@+id/Data"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activitys.Activities.Main.MainActivity">
+    android:background="@color/grayE1"
+    tools:context=".activities.core.ActivityMain">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,67 +17,11 @@
             android:id="@+id/appBar"
             layout="@layout/main_child_toolbar"/>
 
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/appBar"
-            android:orientation="horizontal">
-
-            <ScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:id="@+id/btnNotes"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="image"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:srcCompat="@drawable/ic_file"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/gray_dark1"
-                        android:orientation="vertical"
-                        android:layout_marginRight="3dp"
-                        android:layout_marginLeft="3dp"/>
-
-                    <ImageButton
-                        android:id="@+id/btnSettings"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="image"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:srcCompat="@drawable/ic_settings"/>
-
-                </LinearLayout>
-
-            </ScrollView>
-
-            <LinearLayout
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/gray_dark1">
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/AnchorView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-            </LinearLayout>
-
-        </LinearLayout>
+            android:layout_below="@+id/appBar"/>
 
     </RelativeLayout>
 
@@ -84,7 +29,13 @@
         android:id="@+id/NavigationContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="end"
-        app:itemIconTint="@color/black"/>
+        android:layout_gravity="start"
+        android:background="@color/white"
+        app:headerLayout="@layout/drawer_header"
+        app:itemIconTint="@color/black">
+
+    </android.support.design.widget.NavigationView>
+
+    <!--app:headerLayout="@layout/drawer_options"-->
 
 </android.support.v4.widget.DrawerLayout>

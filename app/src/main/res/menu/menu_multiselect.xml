@@ -1,0 +1,18 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.core.ActivityMain">
+
+    <item
+        android:id="@+id/action_delete"
+        android:icon="@drawable/ic_trash"
+        android:title="Delete"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_done"
+        android:icon="@drawable/ic_checkmark1"
+        android:title="Done"
+        app:showAsAction="always"/>
+</menu>

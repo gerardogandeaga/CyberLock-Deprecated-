@@ -4,25 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/orangeDark"
     android:gravity="end"
     android:orientation="horizontal">
 
     <Button
-        android:id="@+id/btnDialogNegative"
+        android:id="@+id/btnNegative"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@drawable/flat_button_orange"
+        android:background="@drawable/button_gray"
         android:textAppearance="@style/myText.Dialog.Buttons"
         tools:ignore="ButtonStyle"/>
 
     <Button
-        android:id="@+id/btnDialogPositive"
+        android:id="@+id/btnPositive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@drawable/flat_button_orange"
+        android:background="@drawable/button_gray"
         android:textAppearance="@style/myText.Dialog.Buttons"
         tools:ignore="ButtonStyle"/>
 </LinearLayout>

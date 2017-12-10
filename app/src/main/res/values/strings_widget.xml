@@ -2,8 +2,8 @@
 <resources>
     <!-- Main -->
     <!-- Drawer States -->
-    <string name="Open">Open</string>
-    <string name="Close">Close</string>
+    <string name="DRAWER_OPEN">Open</string>
+    <string name="DRAWER_CLOSE">Close</string>
     ------------------------------------------------------------------------------------------------
     <!-- Notes -->
     <!-- Recycler View Item -->
@@ -40,12 +40,11 @@
     ------------------------------------------------------------------------------------------------
     <!-- Edit Activity -->
     <string-array name="CardType_array">
-        <item>None</item>
+        <item>Other</item>
         <item>Visa</item>
         <item>Master Card</item>
         <item>American Express</item>
         <item>Discover</item>
-        <item>Other</item>
     </string-array>
     ------------------------------------------------------------------------------------------------
     <!-- TEXT INPUT LAYOUT FIX -->

@@ -6,22 +6,22 @@
     android:layout_height="wrap_content"
     android:background="@drawable/background_label"
     android:elevation="3dp"
-    android:orientation="horizontal"
-    android:padding="10dp">
+    android:orientation="horizontal">
 
     <EditText
         android:id="@+id/etLabel"
-        style="@style/myText.Label"
+        style="@style/myText.Edit.Label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:background="@drawable/background_label"
         android:hint="Label"
-        android:inputType="text"
+        android:inputType="text|textPersonName"
         android:maxLines="1"
         android:scrollbars="horizontal"
-        android:textAppearance="@style/myText.Label"/>
+        android:textAppearance="@style/myText.Edit.Label"
+        android:padding="10dp"/>
 
     <ImageButton
         android:id="@+id/btnColourTag"
@@ -33,5 +33,6 @@
         android:contentDescription="colour tag"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        app:srcCompat="@drawable/ic_tag"/>
+        app:srcCompat="@drawable/ic_tag"
+        android:padding="10dp"/>
 </LinearLayout>

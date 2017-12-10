@@ -12,12 +12,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Cyber Lock"
+        android:logo="@drawable/ic_back"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/DefaultTheme">
+        android:theme="@style/MainTheme">
 
         <activity
-            android:name=".Activitys.Activities.Login.LoginActivity"
+            android:name=".activities.clearances.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -27,36 +28,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activitys.Activities.Login.RegistrationActivity"
+            android:name=".activities.clearances.RegistrationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
 
         <!-- MAIN ACTIVITIES -->
         <activity
-            android:name=".Activitys.Activities.Menus.Settings"
+            android:name=".activities.core.ActivitySettings"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".Supports.Settings_ChangeShortPasscode"
+            android:name=".support.settings.SettingsChangePasscode"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".Supports.Settings_ChangeComplexPasscode"
+            android:name=".activities.core.ActivityMain"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".Activitys.Activities.Main.MainActivity"
+            android:name=".activities.core.ActivityEdit"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".Activitys.Activities.Main.MainEditActivity"
+            android:name=".activities.core.ActivityPlayground"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
-        <activity
-            android:name=".Activitys.Activities.Main.MainPlaygroundActivity"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize"/>
-        
+
     </application>
 
 </manifest>

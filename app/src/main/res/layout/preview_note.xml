@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/Content"
@@ -7,37 +7,30 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context="com.gerardogandeaga.cyberlock.Activitys.Activities.Main.MainEditActivity">
+    tools:context=".activities.core.ActivityEdit">
 
-    <include layout="@layout/preview_child_label_buttons"/>
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fillViewport="true">
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvNote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:gravity="top"
+            android:padding="5dp"
+            android:textAppearance="@style/myText.Edit.Content"/>
 
-            <TextView
-                android:id="@+id/tvChildMemo"
-                style="@style/myText.Content"
-                android:padding="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top"/>
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:textAlignment="textEnd"
+            android:textAppearance="@style/myText.Edit.Date"/>
 
-            <TextView
-                android:id="@+id/tvChildDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/myText.Date"/>
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

@@ -8,28 +8,28 @@ package android.support.percent;
 
 public final class R {
     public static final class attr {
-        public static final int layout_aspectRatio = 0x7f010126;
-        public static final int layout_heightPercent = 0x7f01011e;
-        public static final int layout_marginBottomPercent = 0x7f010123;
-        public static final int layout_marginEndPercent = 0x7f010125;
-        public static final int layout_marginLeftPercent = 0x7f010120;
-        public static final int layout_marginPercent = 0x7f01011f;
-        public static final int layout_marginRightPercent = 0x7f010122;
-        public static final int layout_marginStartPercent = 0x7f010124;
-        public static final int layout_marginTopPercent = 0x7f010121;
-        public static final int layout_widthPercent = 0x7f01011d;
+        public static final int layout_aspectRatio = 0x7f0400ad;
+        public static final int layout_heightPercent = 0x7f0400e0;
+        public static final int layout_marginBottomPercent = 0x7f0400e3;
+        public static final int layout_marginEndPercent = 0x7f0400e4;
+        public static final int layout_marginLeftPercent = 0x7f0400e5;
+        public static final int layout_marginPercent = 0x7f0400e6;
+        public static final int layout_marginRightPercent = 0x7f0400e7;
+        public static final int layout_marginStartPercent = 0x7f0400e8;
+        public static final int layout_marginTopPercent = 0x7f0400e9;
+        public static final int layout_widthPercent = 0x7f0400f0;
     }
     public static final class styleable {
-        public static final int[] PercentLayout_Layout = { 0x7f01011d, 0x7f01011e, 0x7f01011f, 0x7f010120, 0x7f010121, 0x7f010122, 0x7f010123, 0x7f010124, 0x7f010125, 0x7f010126 };
-        public static final int PercentLayout_Layout_layout_aspectRatio = 9;
+        public static final int[] PercentLayout_Layout = { 0x7f0400ad, 0x7f0400e0, 0x7f0400e3, 0x7f0400e4, 0x7f0400e5, 0x7f0400e6, 0x7f0400e7, 0x7f0400e8, 0x7f0400e9, 0x7f0400f0 };
+        public static final int PercentLayout_Layout_layout_aspectRatio = 0;
         public static final int PercentLayout_Layout_layout_heightPercent = 1;
-        public static final int PercentLayout_Layout_layout_marginBottomPercent = 6;
-        public static final int PercentLayout_Layout_layout_marginEndPercent = 8;
-        public static final int PercentLayout_Layout_layout_marginLeftPercent = 3;
-        public static final int PercentLayout_Layout_layout_marginPercent = 2;
-        public static final int PercentLayout_Layout_layout_marginRightPercent = 5;
+        public static final int PercentLayout_Layout_layout_marginBottomPercent = 2;
+        public static final int PercentLayout_Layout_layout_marginEndPercent = 3;
+        public static final int PercentLayout_Layout_layout_marginLeftPercent = 4;
+        public static final int PercentLayout_Layout_layout_marginPercent = 5;
+        public static final int PercentLayout_Layout_layout_marginRightPercent = 6;
         public static final int PercentLayout_Layout_layout_marginStartPercent = 7;
-        public static final int PercentLayout_Layout_layout_marginTopPercent = 4;
-        public static final int PercentLayout_Layout_layout_widthPercent = 0;
+        public static final int PercentLayout_Layout_layout_marginTopPercent = 8;
+        public static final int PercentLayout_Layout_layout_widthPercent = 9;
     }
 }
