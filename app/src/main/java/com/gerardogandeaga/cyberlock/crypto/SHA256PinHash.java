@@ -14,8 +14,7 @@ public class SHA256PinHash
 {
     @NonNull
     public static String HASH_FUNCTION(String text, byte[] salt)
-            throws NoSuchAlgorithmException, UnsupportedEncodingException, NegativeArraySizeException
-    {
+            throws NoSuchAlgorithmException, UnsupportedEncodingException, NegativeArraySizeException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] textBytes = text.getBytes("UTF-8");
         digest.reset();
@@ -30,8 +29,7 @@ public class SHA256PinHash
         return Base64.encodeToString(combinedByteVal, FLAGS);
     }
 
-    public static byte[] GENERATE_SALT()
-    {
+    public static byte[] GENERATE_SALT() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[128];
         random.nextBytes(salt);
@@ -43,8 +41,7 @@ public class SHA256PinHash
     @NonNull
     @Deprecated
     public static String HASH_FUNCTION(String text)
-            throws NoSuchAlgorithmException, UnsupportedEncodingException, NegativeArraySizeException // <-------------- DEPRECATED HASH FUNCTION WITHOUT SALT
-    {
+            throws NoSuchAlgorithmException, UnsupportedEncodingException, NegativeArraySizeException { // <-------------- DEPRECATED HASH FUNCTION WITHOUT SALT
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         byte[] textBytes = text.getBytes("iso-8859-1");
         md.update(textBytes, 0, textBytes.length);
@@ -54,12 +51,10 @@ public class SHA256PinHash
     @NonNull
     private static String CONVERT_TO_HEX(byte[] data) {
         StringBuilder buf = new StringBuilder();
-        for (byte b : data)
-        {
+        for (byte b : data) {
             int halfbyte = (b >>> 4) & 0x0F;
             int two_halfs = 0;
-            do
-            {
+            do {
                 buf.append((0 <= halfbyte) && (halfbyte <= 9) ? (char) ('0' + halfbyte) : (char) ('a' + (halfbyte - 10)));
                 halfbyte = b & 0x0F;
             } while (two_halfs++ < 1);

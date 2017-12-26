@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.crypto.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.crypto.CryptoContent;
-import com.gerardogandeaga.cyberlock.sqlite.data.RawData;
+import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
 import com.gerardogandeaga.cyberlock.sqlite.data.MasterDatabaseAccess;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class SettingsScrambleCryptKey extends AsyncTask<Void, Void, Void> {
     private SharedPreferences mSharedPreferences;
     // DATA VARIABLES
     private MasterDatabaseAccess mMasterDatabaseAccess;
-    private List<RawData> mRawData;
+    private List<RawDataPackage> mRawDatumPackages;
     // WIDGETS
     private ProgressDialog mProgressDialog;
 
@@ -54,21 +54,21 @@ public class SettingsScrambleCryptKey extends AsyncTask<Void, Void, Void> {
 
             // GO THROUGH ALL DATABASES
             this.mMasterDatabaseAccess.open();
-            this.mRawData = mMasterDatabaseAccess.getAllData();
+            this.mRawDatumPackages = mMasterDatabaseAccess.getAllData();
 
-            for (int i = 0; i < mRawData.size(); i++) {
-                final RawData rawData = mRawData.get(i);
-                String type = rawData.getType(mCryptoContent);
-                String colourTag = rawData.getColourTag(mCryptoContent);
-                String label = rawData.getLabel(mCryptoContent);
-                String content = rawData.getContent(mCryptoContent);
+            for (int i = 0; i < mRawDatumPackages.size(); i++) { // TODO try counting down
+                final RawDataPackage rawDataPackage = mRawDatumPackages.get(i);
+                String type = rawDataPackage.getType(mCryptoContent);
+                String colourTag = rawDataPackage.getColourTag(mCryptoContent);
+                String label = rawDataPackage.getLabel(mCryptoContent);
+                String content = rawDataPackage.getContent(mCryptoContent);
 
-                rawData.setType(mCryptoContent, type, newKeyStringVal);
-                rawData.setColourTag(mCryptoContent, colourTag, newKeyStringVal);
-                rawData.setLabel(mCryptoContent, label, newKeyStringVal);
-                rawData.setContent(mCryptoContent, content, newKeyStringVal);
+                rawDataPackage.setType(mCryptoContent, type, newKeyStringVal);
+                rawDataPackage.setColourTag(mCryptoContent, colourTag, newKeyStringVal);
+                rawDataPackage.setLabel(mCryptoContent, label, newKeyStringVal);
+                rawDataPackage.setContent(mCryptoContent, content, newKeyStringVal);
 
-                mMasterDatabaseAccess.update(rawData);
+                mMasterDatabaseAccess.update(rawDataPackage);
             }
 
             this.mMasterDatabaseAccess.close();
@@ -102,7 +102,7 @@ public class SettingsScrambleCryptKey extends AsyncTask<Void, Void, Void> {
     private void progressBar() {
         mProgressDialog = new ProgressDialog(mContext);
         mProgressDialog.setTitle("Scrambling Key...");
-        mProgressDialog.setMessage("Loading RawData...");
+        mProgressDialog.setMessage("Loading RawDataPackage...");
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setCancelable(false);
         mProgressDialog.show();

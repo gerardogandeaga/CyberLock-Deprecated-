@@ -1,10 +1,7 @@
 package com.gerardogandeaga.cyberlock.support;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-
-import com.gerardogandeaga.cyberlock.R;
 
 public class Globals extends AppCompatActivity {
     // SHARED PREFERENCES KEYS
@@ -19,7 +16,7 @@ public class Globals extends AppCompatActivity {
     public static final String DELAY_TIME = "DELAY_TIME";
     // --
     public static final String PLAYGROUIND_ALGO = "PLAYGROUND_ALGO";
-    public static final String ENCRYPTION_ALGO = "ENCRYPTION_ALGO";
+    public static final String CRYPT_ALGO = "CRYPT_ALGO";
     public static final String CIPHER_ALGO = "CIPHER_ALGO";
 
     // SENSITIVE
@@ -35,21 +32,5 @@ public class Globals extends AppCompatActivity {
     // CRYPTO
     public static String TEMP_PIN;
     public static String MASTER_KEY;
-    // ----------
-
-    // APP STATES
-    public static final String SCHEME = "SCHEME";
-    public static void COLORSCHEME(Context context) {
-        String colourString = context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(SCHEME, "SCHEME_BLUE");
-
-        switch (colourString) {
-            case "SCHEME_BLUE":
-                context.getTheme().applyStyle(R.style.MainTheme, true);
-                break;
-            default:
-                context.getTheme().applyStyle(R.style.MainTheme, true);
-                break;
-        }
-    }
     // ----------
 }

@@ -1,11 +1,7 @@
 package com.gerardogandeaga.cyberlock.activities.core;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,26 +10,24 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.activities.clearances.LoginActivity;
+import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
+import com.gerardogandeaga.cyberlock.activities.core.edit.EditGraphics;
+import com.gerardogandeaga.cyberlock.activities.dialogs.DialogColourTag;
 import com.gerardogandeaga.cyberlock.crypto.CryptoContent;
 import com.gerardogandeaga.cyberlock.sqlite.data.MasterDatabaseAccess;
-import com.gerardogandeaga.cyberlock.sqlite.data.RawData;
-import com.gerardogandeaga.cyberlock.support.Globals;
+import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
 import com.gerardogandeaga.cyberlock.support.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.support.handlers.RawDataHandler;
-
-import org.jetbrains.annotations.Contract;
+import com.gerardogandeaga.cyberlock.support.graphics.DrawableColours;
+import com.gerardogandeaga.cyberlock.support.handlers.extractors.ContentHandler;
 
 import static com.gerardogandeaga.cyberlock.support.Globals.AUTOSAVE;
 import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
@@ -41,173 +35,161 @@ import static com.gerardogandeaga.cyberlock.support.Globals.MASTER_KEY;
 import static com.gerardogandeaga.cyberlock.support.Globals.TEMP_PIN;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mCountDownIsFinished;
+import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mIsCountDownTimerFinished;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mCountDownTimer;
 
-public class ActivityEdit extends AppCompatActivity implements View.OnClickListener , View.OnLongClickListener {
+public class ActivityEdit extends AppCompatActivity implements View.OnClickListener {
     private Context mContext = this;
-    private CryptoContent mCryptoContent;
+    private View mView;
+    private CryptoContent cc;
 
-    // RawData variables
+    // RawDataPackage variables
     private boolean mIsNew = true;
     private boolean mIsAutoSave = false;
-    private int TYPE;
-    private RawData mRawData;
-    private RawDataHandler mRawDataHandler;
+    private RawDataPackage mRawDataPackage;
+    private ContentHandler mContentHandler;
+    private EditGraphics mEditGraphics;
 
-    private String mTag;
-    private CustomDialogs mCustomDialogs;
+    private String TYPE;
+    private static final String[] ARGS = new String[]{ "TYPE_NOTE", "TYPE_PAYMENTINFO", "TYPE_LOGININFO" };
+
+    public static String mColour;
+
+    private DialogColourTag mDialogColourTag;
 
     // Widgets
+
     // Global
     private EditText mEtLabel;
     private EditText mEtNotes;
     private TextView mTvDate;
+    private ImageView mImgTag;
     // Notes
     private EditText mEtNote;
     // Paymentinfo
+    private ImageView mIcon;
     private EditText mEtCardName, mEtCardNumber, mEtCardExpire, mEtCardCVV;
     private Spinner mSpCardSelect;
     //
     private String mCardType;
     private ArrayAdapter<CharSequence> mAdapter;
     // Logininfo
-    private ImageButton mBtnColourTag;
     private EditText mEtUrl, mEtEmail, mEtUsername, mEtPassword;
 
     // Create methods
-    @Override protected void onCreate(Bundle savedInstanceState) {
-        Globals.COLORSCHEME(this);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        mCryptoContent = new CryptoContent(mContext);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setupLayoutMain();
-    }
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_edit, menu);
-        //
-        PorterDuff.Mode mode = PorterDuff.Mode.SRC_ATOP;
-        //
-        menu.findItem(R.id.miSave).getIcon().mutate().setColorFilter(setMenuItemsColour(), mode);
-        menu.findItem(R.id.miCancel).getIcon().mutate().setColorFilter(setMenuItemsColour(), mode);
-
-        return true;
-    }
-    private void setupLayoutMain() {
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         ACTIVITY_INTENT = null;
-        // RawData
-        mCustomDialogs = new CustomDialogs(this);
-        mIsAutoSave = getSharedPreferences(DIRECTORY, MODE_PRIVATE).getBoolean(AUTOSAVE, false);
-        // View then widgets
-        setupActivityMain();
+        this.mIsAutoSave = getSharedPreferences(DIRECTORY, MODE_PRIVATE).getBoolean(AUTOSAVE, false);
+
+        // Edit tools
+        this.cc = new CryptoContent(this);
+        this.mEditGraphics = new EditGraphics(this);
+
+        // Activity creation
+        extractBundle(); // Layout
+        // Create tag dialog object
+        this.mDialogColourTag = new DialogColourTag(this, mEditGraphics, mImgTag);
     }
-    private void setupGlobalWidgets() {
-        mBtnColourTag = (ImageButton) findViewById(R.id.btnColourTag);
-        mTvDate = (TextView) findViewById(R.id.tvDate);
-        mEtLabel = (EditText) findViewById(R.id.etLabel);
-        //
-        mBtnColourTag.setOnClickListener(this);
-        mBtnColourTag.setOnLongClickListener(this);
-    }
+
     private void setupSupportActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //
-        final Drawable drawerIcon = getResources().getDrawable(R.drawable.ic_back);
-        drawerIcon.mutate().setColorFilter(setMenuItemsColour(), PorterDuff.Mode.SRC_ATOP);
-        //
-        getSupportActionBar().setHomeAsUpIndicator(drawerIcon);
-        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(false);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setTitle(null);
+        getSupportActionBar().setHomeAsUpIndicator(DrawableColours.mutateHomeAsUpIndicatorDrawable(
+                this, this.getResources().getDrawable(R.drawable.ic_back)));
     }
-    private void setupActivityMain() {
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            mIsNew = false;
-            mRawData = (RawData) extras.get("data");
-            mRawDataHandler = new RawDataHandler(mContext, mRawData);
-            if (mRawData != null) {
-                // IF ALREADY EXISTING DATABASE
-                switch (mRawData.getType(mCryptoContent)) {
-                    case ("TYPE_NOTE"):
-                        TYPE = 1;
-                        setupActivityNote();
-                        break;
-                    case ("TYPE_PAYMENTINFO"):
-                        TYPE = 2;
-                        setupActivityPaymentInfo();
-                        break;
-                    case ("TYPE_LOGININFO"):
-                        TYPE = 3;
-                        setupActivityLoginInfo();
-                        break;
+
+    private void extractBundle() {
+        /*
+        When activating the editor there are 3 possible states in which is will enter:
+        STATE 1 : Completely new (When it is called by the ADD function and  is not a data item yet)
+        STATE 2 : Floating raw data item (When editor is suspended by the logout protocol but has
+                                          not been saved in the database master database accessor)
+        STATE 3 : Saved raw data item (When the data item has already been saved and is merely
+                                       going to get updated)
+        */
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            this.mRawDataPackage = (RawDataPackage) bundle.get("data");
+            this.mIsNew = (mRawDataPackage == null);
+
+            if (!mIsNew) {
+                this.mContentHandler = new ContentHandler(this, mRawDataPackage);
+                switch (mRawDataPackage.getType(cc)) {
+                    case "TYPE_NOTE":        setupLayoutNote(); TYPE = ARGS[0]; break;
+                    case "TYPE_PAYMENTINFO": setupLayoutPaymentInfo(); TYPE = ARGS[1]; break;
+                    case "TYPE_LOGININFO":   setupLayoutLoginInfo(); TYPE = ARGS[2]; break;
                 }
-                extras.remove("data");
-            } else {
-                // IF THIS IS A NEW DOCUMENT
-                mIsNew = true;
-                TYPE = (int) extras.get("type");
-                switch (TYPE) {
-                    case (1): setupActivityNote(); break;
-                    case (2): setupActivityPaymentInfo(); break;
-                    case (3): setupActivityLoginInfo(); break;
+                // Check if data item already exists
+                containsData(); // Will alter between STATE 2 & 3 by switching mIsNew
+                // New data override!!!
+                if (!bundle.getBoolean("isNew?")) {
+                    this.mIsNew = false; // Will alter between STATE 2 & 3 by switching mIsNew
                 }
-                extras.remove("type");
+            } else { // If data is completely new
+                switch ((String) bundle.get("type")) { // STATE 1
+                    case "TYPE_NOTE":        setupLayoutNote(); TYPE = ARGS[0]; break;
+                    case "TYPE_PAYMENTINFO": setupLayoutPaymentInfo(); TYPE = ARGS[1]; break;
+                    case "TYPE_LOGININFO":   setupLayoutLoginInfo(); TYPE = ARGS[2]; break;
+                }
             }
+            bundle.remove("data");
+            bundle.remove("type");
         }
     }
-    private int setMenuItemsColour() {
-        return getResources().getColor(R.color.matLightWhiteYellow);
+
+    private void containsData() {
+        MasterDatabaseAccess masterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
+        masterDatabaseAccess.open();
+        System.out.println("Is New ? 1 : " + mIsNew);
+        this.mIsNew = masterDatabaseAccess.containsData(this.mRawDataPackage);
+        System.out.println("Is New ? 2 : " + mIsNew);
+        masterDatabaseAccess.close();
     }
-    // Widget setters
-    private String setLabel() {
-        if (mRawData != null) {
-            return mRawData.getLabel();
-        } else {
-            return "";
-        }
-    }                                                       // Labels
-    public void setTag(String tag) {
-        switch (tag){
-            case "COL_BLUE": mBtnColourTag.setColorFilter(getResources().getColor(R.color.coltag_blue)); break;
-            case "COL_RED": mBtnColourTag.setColorFilter(getResources().getColor(R.color.coltag_red)); break;
-            case "COL_GREEN": mBtnColourTag.setColorFilter(getResources().getColor(R.color.coltag_green)); break;
-            case "COL_YELLOW": mBtnColourTag.setColorFilter(getResources().getColor(R.color.coltag_yellow)); break;
-            case "COL_PURPLE": mBtnColourTag.setColorFilter(getResources().getColor(R.color.coltag_purple)); break;
-            case "COL_ORANGE": mBtnColourTag.setColorFilter(getResources().getColor(R.color.coltag_orange)); break;
-            default: break;
-        }
-    }                                      // Colour tag
-    public void setGlobalViews(String label, String date, String colourTag) {
-        setupSupportActionBar();
-        setupGlobalWidgets();
 
-        mEtLabel.setText(label);
-        setTag(colourTag);
-        if (date != null) { mTvDate.setText("Updated: " + date); } else { mTvDate.setText(""); }
-    }   // Everything else
+    // Layouts
+    private void setupMainWidgets() {
+        // Main widgets
+        this.mEtLabel = findViewById(R.id.etLabel);
+        this.mTvDate = findViewById(R.id.tvDate);
+        this.mImgTag = findViewById(R.id.imgTag);
 
-    // Initialize widgets
+        this.mImgTag.setOnClickListener(this);
+    }
+    //
     private void setupLayoutNote() {
-        setContentView(R.layout.activity_edit_note);
+        mView = View.inflate(this, R.layout.activity_edit_note, null);
+        setContentView(mView);
+        setupSupportActionBar(); // Action bar
         // Widgets
-        mEtNote = (EditText) findViewById(R.id.etText);
+        setupMainWidgets();
+        mEtNote = findViewById(R.id.etText);
+
+        setupDataNote();
     }
     private void setupLayoutPaymentInfo() {
-        setContentView(R.layout.activity_edit_paymentinfo);
-        // Widgets
-        mEtCardName = (EditText) findViewById(R.id.etCardName);
-        mEtCardNumber = (EditText) findViewById(R.id.etCardNumber);
-        mEtCardExpire = (EditText) findViewById(R.id.etCardExpire);
-        mEtCardCVV = (EditText) findViewById(R.id.etCardSecCode);
-        mEtNotes = (EditText) findViewById(R.id.etNotes);
+        mView = View.inflate(this, R.layout.activity_edit_paymentinfo, null);
+        setContentView(mView);
+        setupSupportActionBar(); // Action bar
 
-        mSpCardSelect = (Spinner) findViewById(R.id.spCardSelect);
+        this.mIcon = findViewById(R.id.imgIcon);
+        // Widgets
+        setupMainWidgets();
+        mEtCardName = findViewById(R.id.etCardName);
+        mEtCardNumber = findViewById(R.id.etCardNumber);
+        mEtCardExpire = findViewById(R.id.etCardExpire);
+        mEtCardCVV = findViewById(R.id.etCardSecCode);
+        mEtNotes = findViewById(R.id.etNotes);
+
+        mSpCardSelect = findViewById(R.id.spCardSelect);
         //
-        mAdapter = ArrayAdapter.createFromResource(this, R.array.CardType_array, android.R.layout.simple_spinner_item);
+        mAdapter = ArrayAdapter.createFromResource(this, R.array.CardType_array, R.layout.spinner_setting_text);
         mAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         mSpCardSelect.setAdapter(mAdapter);
 
@@ -265,6 +247,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
                 Object object = parent.getItemAtPosition(position);
                 if (object != null) {
                     mCardType = object.toString();
+                    mIcon.setImageDrawable(mEditGraphics.getCardImage(mCardType));
                 }
             }
 
@@ -272,71 +255,96 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        setupDataPaymentInfo();
     }
     private void setupLayoutLoginInfo() {
-        setContentView(R.layout.activity_edit_logininfo);
+        mView = View.inflate(this, R.layout.activity_edit_logininfo, null);
+        setContentView(mView);
+        setupSupportActionBar(); // Action bar
         // Widgets
-        mEtUrl = (EditText) findViewById(R.id.etUrl);
-        mEtUsername = (EditText) findViewById(R.id.etUsername);
-        mEtEmail = (EditText) findViewById(R.id.etEmail);
-        mEtPassword = (EditText) findViewById(R.id.etPassword);
-        mEtNotes = (EditText) findViewById(R.id.etNotes);
+        setupMainWidgets();
+        mEtUrl = findViewById(R.id.etUrl);
+        mEtUsername = findViewById(R.id.etUsername);
+        mEtEmail = findViewById(R.id.etEmail);
+        mEtPassword = findViewById(R.id.etPassword);
+        mEtNotes = findViewById(R.id.etNotes);
+
+        setupDataLoginInfo();
     }
     // Pull data
-    private void setupActivityNote() {
-        setupLayoutNote();
-
+    private void setupDataNote() {
         if (mIsNew) {
-            setGlobalViews(setLabel(), null, "null");
+            setLabel(null);
+            setDate(null);
+            setTag(null);
         } else {
-            // Set label, date, tag
-            setGlobalViews(mRawDataHandler.mLabel, mRawDataHandler.mDate, mRawDataHandler.mTag);
-            mTag = mRawDataHandler.mTag;
+            setLabel(mContentHandler.mLabel);
+            setDate(mContentHandler.mDate);
+            setTag(mContentHandler.mTag);
+
+            mColour = mContentHandler.mTag;
             // Set note
-            mEtNote.setText(mRawDataHandler.mNote);
+            mEtNote.setText(mContentHandler.mNote);
         }
     }
-    private void setupActivityPaymentInfo() {
-        setupLayoutPaymentInfo();
-
+    private void setupDataPaymentInfo() {
         if (mIsNew) {
-            setGlobalViews(setLabel(), null, "null");
+            setLabel(null);
+            setDate(null);
+            setTag(null);
         } else {
-            // Set label, date, tag
-            setGlobalViews(mRawDataHandler.mLabel, mRawDataHandler.mDate, mRawDataHandler.mTag);
-            mTag = mRawDataHandler.mTag;
+            setLabel(mContentHandler.mLabel);
+            setDate(mContentHandler.mDate);
+            setTag(mContentHandler.mTag);
+
+            mColour = mContentHandler.mTag;
             // Set name, number, expiry, cvv, cardType
-            mEtCardName.setText(mRawDataHandler.mName);
-            mEtCardNumber.setText(mRawDataHandler.mNumber);
-            mEtCardExpire.setText(mRawDataHandler.mExpiry);
-            mEtCardCVV.setText(mRawDataHandler.mCVV);
+            mEtCardName.setText(mContentHandler.mName);
+            mEtCardNumber.setText(mContentHandler.mNumber);
+            mEtCardExpire.setText(mContentHandler.mExpiry);
+            mEtCardCVV.setText(mContentHandler.mCVV);
             //
-            int spinnerPosition = mAdapter.getPosition(mRawDataHandler.mCardtype);
+            int spinnerPosition = mAdapter.getPosition(mContentHandler.mCardType);
             mSpCardSelect.setSelection(spinnerPosition);
-            mEtNotes.setText(mRawDataHandler.mNote);
-        }
-    }
-    private void setupActivityLoginInfo() {
-        setupLayoutLoginInfo();
+            mEtNotes.setText(mContentHandler.mNote);
 
-        if (mIsNew) {
-            setGlobalViews(setLabel(), null, "null");
-        } else {
-            // Set label, date, tag
-            setGlobalViews(mRawDataHandler.mLabel, mRawDataHandler.mDate, mRawDataHandler.mTag);
-            mTag = mRawDataHandler.mTag;
-            // Set url, email, username, password,
-            mEtUrl.setText(mRawDataHandler.mUrl);
-            mEtEmail.setText(mRawDataHandler.mEmail);
-            mEtUsername.setText(mRawDataHandler.mUsername);
-            mEtPassword.setText(mRawDataHandler.mPassword);
-            mEtNotes.setText(mRawDataHandler.mNote);
+            mIcon.setImageDrawable(mEditGraphics.getCardImage(mContentHandler.mCardType));
         }
     }
-    // ----------------------------------------------------------------------------------
+    private void setupDataLoginInfo() {
+        if (mIsNew) {
+            setLabel(null);
+            setDate(null);
+            setTag(null);
+        } else {
+            setLabel(mContentHandler.mLabel);
+            setDate(mContentHandler.mDate);
+            setTag(mContentHandler.mTag);
+
+            mColour = mContentHandler.mTag;
+            // Set url, email, username, password,
+            mEtUrl.setText(mContentHandler.mUrl);
+            mEtEmail.setText(mContentHandler.mEmail);
+            mEtUsername.setText(mContentHandler.mUsername);
+            mEtPassword.setText(mContentHandler.mPassword);
+            mEtNotes.setText(mContentHandler.mNote);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
+
+        DrawableColours.mutateMenuItems(this, menu);
+
+        return true;
+    }
 
     // On click
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         switch (id) {
@@ -358,16 +366,13 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         }
         return super.onOptionsItemSelected(item);
     }
-    @Override public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnColourTag: mCustomDialogs.createColourPickDialog(); break;
+            case R.id.imgTag:
+                mDialogColourTag.initializeDialog();
+                break;
         }
-    }
-    @Override public boolean onLongClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnColourTag: Toast.makeText(mContext, "Select Colour Tag", Toast.LENGTH_SHORT).show(); return true;
-        }
-        return false;
     }
     // --------
 
@@ -376,19 +381,21 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         MasterDatabaseAccess masterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
         masterDatabaseAccess.open();
 
-        String tmpContent = getWidgetData();
+        String tmpContent = getViewData();
 
-        // SAVING
-        if (dataIsValid(tmpContent)) {
-            if (mRawData == null) {
-                masterDatabaseAccess.save(getData(tmpContent)); // IF NEW
+        // Saving
+        if (!tmpContent.isEmpty()) {
+            if (mIsNew) {
+                masterDatabaseAccess.save(getData(
+                        mEtLabel.getText().toString(), tmpContent, mEditGraphics.getColourId(mIsNew, mRawDataPackage, cc)));
             } else {
-                masterDatabaseAccess.update(getData(tmpContent)); // IF EXISTING
+                masterDatabaseAccess.update(getData(
+                        mEtLabel.getText().toString(), tmpContent, mEditGraphics.getColourId(mIsNew, mRawDataPackage, cc)));
             }
             masterDatabaseAccess.close();
         } else {
             Toast.makeText(this, "No Content To Save", Toast.LENGTH_SHORT).show();
-            masterDatabaseAccess.close(); // IF NOT CONTENT TO SAVE
+            masterDatabaseAccess.close();
         }
     }
     private void onCancel() {
@@ -398,17 +405,34 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
     }
     // -------
 
+    // Widget setters
+    private void setLabel(String label) {
+        if (label != null) {
+            mEtLabel.setText(label);
+        }
+    }
+    private void setDate(String date) {
+        if (date != null) {
+            mTvDate.setText("Updated: " + date);
+        }
+    }
+    private void setTag(String colour) {
+        if (colour != null) {
+            mEditGraphics.alterTagColour(mImgTag, colour);
+        }
+    }
+
     // Getters and setters for saving
-    private String getWidgetData() {
+    private String getViewData() {
         // GETTING AND FORMATTING THE CONTENT CONDITIONALLY
-        if (TYPE == 1) {
+        if (TYPE.matches(ARGS[0])) {
             final String note = mEtNote.getText().toString();
 
             final String format = "%s";
 
             return String.format(format,
                     note);
-        } else if (TYPE == 2) {
+        } else if (TYPE.matches(ARGS[1])) {
             final String cardName = mEtCardName.getText().toString();
             final String cardNumber = mEtCardNumber.getText().toString();
             final String cardType = mCardType;
@@ -420,7 +444,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
 
             return String.format(format,
                     cardName, cardNumber, cardType, cardExpire, cardSecCode, notes);
-        } else if (TYPE == 3) {
+        } else if (TYPE.matches(ARGS[2])) {
             final String url = mEtUrl.getText().toString();
             final String email = mEtEmail.getText().toString();
             final String username = mEtUsername.getText().toString();
@@ -434,50 +458,29 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         }
         return "";
     }
-    @Contract("!null -> true")
-    private boolean dataIsValid(String content) {
-        return !content.matches("");
-    }
-    private RawData getData(String tmpContent) {
-        String colourTag, label, content;
-
-        label = mEtLabel.getText().toString();
-        content = tmpContent;
-        colourTag = mCustomDialogs.getTmpColour();
-        // SET COLOUR CONDITIONALLY
-        if (!mIsNew) {
-            if (mCustomDialogs.getTmpColour() == null) {
-                colourTag = mTag;
-            } else {
-                colourTag = mCustomDialogs.getTmpColour();
-            }
-        }
-
-        return setData(colourTag, label, content);
-    }
-    private RawData setData(String colourTag, String label, String content) {
+    private RawDataPackage getData(String label, String content, String colour) {
         if (mIsNew) {
-            RawData tmp = new RawData();
+            RawDataPackage tmp = new RawDataPackage();
 
             String tmpType;
             switch (TYPE) {
-                case (1): tmpType = "TYPE_NOTE"; break;
-                case (2): tmpType = "TYPE_PAYMENTINFO"; break;
-                case (3): tmpType = "TYPE_LOGININFO"; break;
-                default:  tmpType = "TYPE_NOTE"; // TODO CREATE A "COULD NOT READ TYPE" DIALOG ALLOWING FOR AN EDIT
+                case ("TYPE_NOTE"):        tmpType = "TYPE_NOTE"; break;
+                case ("TYPE_PAYMENTINFO"): tmpType = "TYPE_PAYMENTINFO"; break;
+                case ("TYPE_LOGININFO"):   tmpType = "TYPE_LOGININFO"; break;
+                default:                   tmpType = "TYPE_NOTE"; break; // TODO CREATE A "COULD NOT READ TYPE" DIALOG ALLOWING FOR AN EDIT
             }
-            tmp.setType(mCryptoContent, tmpType);
-            tmp.setColourTag(mCryptoContent, colourTag);
-            tmp.setLabel(mCryptoContent, label);
-            tmp.setContent(mCryptoContent, content);
+            tmp.setType(cc, tmpType);
+            tmp.setColourTag(cc, colour);
+            tmp.setLabel(cc, label);
+            tmp.setContent(cc, content);
 
             return tmp;
         } else {
-            mRawData.setColourTag(mCryptoContent, colourTag);
-            mRawData.setLabel(mCryptoContent, label);
-            mRawData.setContent(mCryptoContent, content);
+            mRawDataPackage.setColourTag(cc, mEditGraphics.getColourId(false, mRawDataPackage, cc));
+            mRawDataPackage.setLabel(cc, label);
+            mRawDataPackage.setContent(cc, content);
 
-            return mRawData;
+            return mRawDataPackage;
         }
     }
     // ----------------------------------
@@ -486,33 +489,28 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
     @Override protected void onStart() {
         super.onStart();
 
-        if (mCountDownIsFinished) {
+        if (mIsCountDownTimerFinished) {
             if (!APP_LOGGED_IN) {
+                // If auto save
                 if (getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) {
                     onSave();
                     MASTER_KEY = null;
                     TEMP_PIN = null;
                 }
-
-                ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
-                ACTIVITY_INTENT.putExtra("edit?", true);
-                ACTIVITY_INTENT.putExtra("lastDB", mRawData);
-
-                finish(); // CLEAN UP AND END
-                startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
-
-                System.gc();
+                finish();
+                startActivity(ACTIVITY_INTENT);
+                ACTIVITY_INTENT = null;
             }
         } else {
             if (mCountDownTimer != null) {
                 mCountDownTimer.cancel();
+                ACTIVITY_INTENT = null;
             }
         }
     }
     @Override public void onBackPressed() {
         super.onBackPressed();
-        if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
-        {
+        if (ACTIVITY_INTENT == null) {
             if (getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) {
                 onSave();
             }
@@ -526,81 +524,26 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
     @Override public void onPause() {
         super.onPause();
 
-        if (!isFinishing()) // HOME AND TABS AND SCREEN OFF
-        {
-            if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
-            {
+        if (!isFinishing()) { // HOME AND TABS AND SCREEN OFF
+            if (ACTIVITY_INTENT == null) {
+
+                // Load data into intent
+                ACTIVITY_INTENT = new Intent(this, ActivityLogin.class);
+                ACTIVITY_INTENT.putExtra("edit?", true);
+                ACTIVITY_INTENT.putExtra("isNew?", mIsNew);
+                ACTIVITY_INTENT.putExtra("lastDB", getData(
+                        mEtLabel.getText().toString(),
+                        getViewData(),
+                        mEditGraphics.getColourId(mIsNew, mRawDataPackage, cc)));
+                // ---------------------
+
                 if (!getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) {
                     new LogoutProtocol().logoutExecuteAutosaveOff(this);
                 } else {
                     new LogoutProtocol().logoutExecuteAutosaveOn(this);
                 }
             }
-
         }
     }
     // --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-    // Custom dialog class
-    private class CustomDialogs implements View.OnClickListener {
-        private Context mContext;
-        private AlertDialog mAlertDialog;
-        //
-        private String mTmpColour;
-
-        private CustomDialogs(Context context) {
-            mContext = context;
-        }
-
-        private void createColourPickDialog() {
-            View dv = View.inflate(mContext, R.layout.dialog_colourtag, null);
-            ImageView blue = (ImageView) dv.findViewById(R.id.imgBlue);
-            ImageView red = (ImageView) dv.findViewById(R.id.imgRed);
-            ImageView green = (ImageView) dv.findViewById(R.id.imgGreen);
-            ImageView yellow = (ImageView) dv.findViewById(R.id.imgYellow);
-            ImageView purple = (ImageView) dv.findViewById(R.id.imgPurple);
-            ImageView orange = (ImageView) dv.findViewById(R.id.imgOrange);
-
-            blue.setOnClickListener(this);
-            red.setOnClickListener(this);
-            green.setOnClickListener(this);
-            yellow.setOnClickListener(this);
-            purple.setOnClickListener(this);
-            orange.setOnClickListener(this);
-
-            // Dialog builder
-            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            builder.setView(dv);
-            builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override public void onCancel(DialogInterface dialog) {
-                    mAlertDialog = null;
-                }
-            });
-            // Dialog show
-            mAlertDialog = builder.show();
-            mAlertDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-        @Contract(pure = true) private String getTmpColour() {
-            return mTmpColour;
-        }
-        private void setTmpColour(String tmpColour) {
-            mTmpColour = tmpColour;
-            mAlertDialog.dismiss();
-            mAlertDialog = null;
-            setTag(mTmpColour);
-        }
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.imgBlue: setTmpColour("COL_BLUE"); break;
-                case R.id.imgRed: setTmpColour("COL_RED"); break;
-                case R.id.imgGreen: setTmpColour("COL_GREEN"); break;
-                case R.id.imgYellow: setTmpColour("COL_YELLOW"); break;
-                case R.id.imgPurple: setTmpColour("COL_PURPLE"); break;
-                case R.id.imgOrange: setTmpColour("COL_ORANGE"); break;
-                default: setTmpColour("DEFAULT"); break;
-            }
-        }
-    }
 }

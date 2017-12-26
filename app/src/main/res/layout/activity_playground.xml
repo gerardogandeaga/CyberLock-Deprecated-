@@ -3,15 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/Data"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grayD9"
     tools:context=".activities.core.ActivityPlayground">
 
     <include
         android:id="@+id/appBar"
-        layout="@layout/main_child_toolbar"/>
+        layout="@layout/toolbar_main"/>
 
     <TextView
         android:id="@+id/tvCrypt"
@@ -20,7 +18,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/appBar"
-        android:background="@color/gray8F"
         android:fontFamily="monospace"
         android:padding="5dp"
         android:text="{ Text Encryption }"
@@ -44,7 +41,6 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
-            android:background="@color/grayB4"
             android:ems="10"
             android:fontFamily="monospace"
             android:hint="Key ( Password )"
@@ -58,7 +54,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/etCryptPassword"
-            android:background="@color/gray5D"
             android:orientation="horizontal"/>
 
         <android.support.percent.PercentRelativeLayout
@@ -76,7 +71,6 @@
                     android:id="@+id/etCryptTextInput"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/grayB4"
                     android:fontFamily="monospace"
                     android:gravity="top|left"
                     android:hint="Plain Text Input"
@@ -89,7 +83,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/DataInput"
-                android:background="@color/gray5D"
                 android:orientation="horizontal"/>
 
             <ScrollView
@@ -103,7 +96,6 @@
                     android:id="@+id/tvCryptTextOutput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/grayB4"
                     android:fontFamily="monospace"
                     android:padding="5dp"
                     android:text="Encrypted Output"

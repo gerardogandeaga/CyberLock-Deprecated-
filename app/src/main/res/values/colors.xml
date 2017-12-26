@@ -1,85 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ffffff</color> <!-- top bar -->
-
-    <color name="grayE1">#e5e5e5</color>
-    <color name="grayD9">#cfcfcf</color>
-    <color name="grayB4">#b4b4b4</color>
-    <color name="gray8F">#8f8f8f</color>
-    <color name="gray5D">#5d5d5d</color>
-    <color name="gray3B">#3b3b3b</color>
-
-    <!-- App Colour Themes -->
-    <color name="blue_1L">#027ba2</color>
-    <color name="blue_1D">#0d3e60</color>
-    <color name="blue_2D">#0b324c</color>
-    <color name="blue_3D">#09202d</color>
-
-    <color name="red_2L">#ffffff</color>
-    <color name="red_1D">#A4241F</color>
-    <color name="red_2D">#791512</color>
-    <color name="red_3D">#470d0b</color>
-
-    <color name="green_1L">#2eb443</color>
-    <color name="green_1D">#218330</color>
-    <color name="green_2D">#1a6d27</color>
-    <color name="green_3D">#0a3911</color>
-
-    <color name="yellow_1L">#f2e52b</color>
-    <color name="yellow_1D">#E5D714</color>
-    <color name="yellow_2D">#978d0d</color>
-    <color name="yellow_3D">#565108</color>
-
-    <color name="purple_1L">#c341d9</color>
-    <color name="purple_1D">#9430A5</color>
-    <color name="purple_2D">#671773</color>
-    <color name="purple_3D">#2e0934</color>
-
-    <color name="gray_2L">#e1e1e1</color>
-    <color name="gray_1L">#b7b7b7</color>
-    <color name="gray_1D">#a0a0a0</color>
-    <color name="gray_2D">#303030</color>
-    <color name="gray_3D">#202020</color>
-    <!-- App Colour Themes -->
-
-    <!-- Basic Colours -->
+    <!-- Constants -->
     <color name="white">#ffffff</color>
     <color name="black">#131313</color>
 
+    <!-- Gray -->
+    <color name="c_gray_0">#f9f9f9</color>
+    <color name="c_gray_10">#e5e5e5</color>
+    <color name="c_gray_20">#e1e1e1</color>
+    <color name="c_gray_30">#a5a5a5</color>
+    <color name="c_gray_40">#8f8f8f</color>
+
+    <!-- Green -->
+    <color name="c_green_70">#218330</color>
+
+    <!-- Blue -->
+    <color name="c_blue_90">#09263c</color>
+
+    <!-- Red -->
+
+    <!-- Yellow -->
+    <color name="c_yellow_20">#fffad6</color>
+    <color name="c_yellow_30">#e2dcac</color>
+    <color name="c_yellow_40">#fdff9b</color>
+
+    <!-- Purple -->
+
+    <!-- Orange -->
+    <color name="c_orange_60">#e66021</color>
+    <color name="c_orange_70">#cf4301</color>
+
+    <!-- Pink -->
+    <color name="c_pink_40">#ef5661</color>
+    <color name="c_pink_50">#f14652</color>
 
     <!-- Colour Tags -->
-    <color name="coltag_blue">#196ed6</color>
-    <color name="coltag_red">#de2926</color>
-    <color name="coltag_green">#1dc444</color>
-    <color name="coltag_yellow">#eade30</color>
-    <color name="coltag_purple">#964bc9</color>
-    <color name="coltag_orange">#e7892a</color>
-    <color name="coltag_default">#d5d5d5</color>
-
-
-    <!-- Material Design Colors -->
-    <color name="pink">#ef5661</color>
-    <color name="matDarkBlue">#09263c</color>
-    <color name="matLightWhiteYellow">#fffad6</color>
-    <color name="matDarkWhiteYellow">#dcd7b4</color>
-
-
-    <color name="orangeAccent">#e66021</color>
-    <color name="orangeDark">#cf4301</color>
-
-    <color name="grayLight">#e2d9d4</color>
-    <color name="grayPrimary">#5f5f5f</color>
-    <color name="graySecondary">#3d4142</color>
-
-    <color name="gray_light2">#e1e1e1</color>
-    <color name="gray_light1">#a5a5a5</color>
-    <color name="gray_dark1">#8f8f8f</color>
-
-    <color name="matCream">#cbc7ae</color>
-    <color name="matPurple">#2c1e41</color>
-    <color name="matOrange">#bd6f14</color>
-
-
-    <color name="grayblue">#607d8a</color>
-    <color name="dgrayblue">#465a65</color>
+    <color name="ct_default">#d5d5d5</color>
+    <color name="ct_blue">#196ed6</color>
+    <color name="ct_red">#de2926</color>
+    <color name="ct_green">#1dc444</color>
+    <color name="ct_yellow">#eade30</color>
+    <color name="ct_purple">#964bc9</color>
+    <color name="ct_orange">#e7892a</color>
 </resources>

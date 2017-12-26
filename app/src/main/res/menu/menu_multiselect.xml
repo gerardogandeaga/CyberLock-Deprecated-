@@ -10,9 +10,4 @@
         android:title="Delete"
         app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/action_done"
-        android:icon="@drawable/ic_checkmark1"
-        android:title="Done"
-        app:showAsAction="always"/>
 </menu>

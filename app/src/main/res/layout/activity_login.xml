@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentRelativeLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/Content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray3B"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="wallpaper"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/preview5"
-        android:contentDescription="wallpaper"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/preview5"/>
 
     <LinearLayout
         android:id="@+id/InputField"
@@ -22,23 +24,33 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="128dp"
         android:alpha="1"
-        android:background="@drawable/background_fill_white_border_gray"
         android:orientation="vertical"
+        android:padding="40dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_marginBottomPercent="30%">
 
-        <EditText
-            android:id="@+id/etPasscode"
-            style="@style/myText.Edit.Label"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:ems="10"
-            android:hint="Enter Passcode"
-            android:inputType="textPassword"
-            android:maxLength="16"
-            android:maxLines="1"
-            android:textAppearance="@style/myText.Settings.Header"/>
+            android:layout_height="match_parent"
+            app:hintTextAppearance="@style/myText.Clearance.Header">
+
+            <EditText
+                android:id="@+id/etPasscode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter Passcode"
+                android:inputType="textPassword"
+                android:maxLength="16"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="20sp"/>
+
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/btnLogin"
@@ -51,4 +63,4 @@
 
     </LinearLayout>
 
-</android.support.percent.PercentRelativeLayout>
+</android.support.constraint.ConstraintLayout>

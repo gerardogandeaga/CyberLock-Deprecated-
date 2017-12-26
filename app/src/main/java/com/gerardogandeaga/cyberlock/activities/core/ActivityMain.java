@@ -3,8 +3,6 @@ package com.gerardogandeaga.cyberlock.activities.core;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -22,34 +20,36 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.activities.clearances.LoginActivity;
+import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
 import com.gerardogandeaga.cyberlock.activities.dialogs.DialogDataPreview;
 import com.gerardogandeaga.cyberlock.sqlite.data.MasterDatabaseAccess;
-import com.gerardogandeaga.cyberlock.sqlite.data.RawData;
-import com.gerardogandeaga.cyberlock.support.Globals;
+import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
 import com.gerardogandeaga.cyberlock.support.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.support.adapter.DataItem;
-import com.gerardogandeaga.cyberlock.support.handlers.DataItemHandler;
+import com.gerardogandeaga.cyberlock.support.adapter.DataItemView;
+import com.gerardogandeaga.cyberlock.support.graphics.DrawableColours;
+import com.gerardogandeaga.cyberlock.support.handlers.extractors.RawDataListItemHandler;
+import com.gerardogandeaga.cyberlock.support.handlers.selection.AdapterItemHandler;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.listeners.OnClickListener;
+import com.mikepenz.fastadapter.listeners.OnLongClickListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mCountDownIsFinished;
+import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mIsCountDownTimerFinished;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mCountDownTimer;
 
-public class ActivityMain extends AppCompatActivity {
+public class ActivityMain extends AppCompatActivity implements View.OnClickListener {
     private Context mContext = this;
 
-    // RawData Variables
-    private boolean mIsMultiChoice = false;
-    private int mCount;
-    private MasterDatabaseAccess mMasterDatabaseAccess;
-    private ArrayList<RawData> mSelectedRawData;
+    // Adapter
+    private FastItemAdapter<DataItemView> mFastItemAdapter;
+    private View mView;
+
     // Views
     private Menu mMenu;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -57,85 +57,147 @@ public class ActivityMain extends AppCompatActivity {
     private NavigationView mNavigationView;
 
     // Initial on create methods
-    @Override public void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        Globals.COLORSCHEME(this);
-        super.onCreate(savedInstanceState);
-        setupLayout();
-    }
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        this.mMenu = menu;
-        //
-        PorterDuff.Mode mode = PorterDuff.Mode.SRC_ATOP;
-        //
-        menu.findItem(R.id.miSelect).getIcon().mutate().setColorFilter(setMenuItemsColour(), mode);
-        menu.findItem(R.id.mnuNew).getIcon().mutate().setColorFilter(setMenuItemsColour(), mode);
-        menu.findItem(R.id.mnuOptions).getIcon().mutate().setColorFilter(setMenuItemsColour(), mode);
-
-        return true;
-    }
-    //
-    private void setupLayout() {
         ACTIVITY_INTENT = null;
-        setContentView(R.layout.activity_main);
-        // Appbar
+        super.onCreate(savedInstanceState);
+
+        View view = View.inflate(this, R.layout.activity_main, null);
+        this.mView = view;
+
+        setContentView(view);
         setupSupportActionBar();
 
         // Pull data list from database
-        this.mMasterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
-        this.mMasterDatabaseAccess.open();
-        List<RawData> rawDataList = this.mMasterDatabaseAccess.getAllData();
-        this.mMasterDatabaseAccess.close();
+        MasterDatabaseAccess masterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
+        masterDatabaseAccess.open();
+        List<RawDataPackage> rawDataPackageList = masterDatabaseAccess.getAllData();
+        masterDatabaseAccess.close();
 
-        // Create and configure FastAdapter
-        FastItemAdapter<DataItem> fastItemAdapter = new FastItemAdapter<>();
+        // Create the FastAdapter
+        this.mFastItemAdapter = new FastItemAdapter<>();
 
-        fastItemAdapter.withOnClickListener(new OnClickListener<DataItem>() {
-            @Override public boolean onClick(View view, IAdapter<DataItem> adapter, DataItem item, int position) {
-                new DialogDataPreview(mContext, item.mRawData).initializeDialog();
+        // Configure the FastAdapter
+        mFastItemAdapter.setHasStableIds(true);
+        mFastItemAdapter.withSelectable(true);
+        mFastItemAdapter.withMultiSelect(true);
+        mFastItemAdapter.withSelectOnLongClick(true);
+
+        // Item Listeners
+        this.mFastItemAdapter.withOnClickListener(new OnClickListener<DataItemView>() {
+            @Override
+            public boolean onClick(@NonNull View view, @NonNull IAdapter<DataItemView> adapter, @NonNull DataItemView item, int position) {
+                // Perform normal on click if it is active and if it return false then continue to next step
+                if (!AdapterItemHandler.onClick(mFastItemAdapter, item, position)) {
+                    new DialogDataPreview(mContext, item.mRawDataPackage).initializeDialog();
+                } else {
+                    getSupportActionBar().setTitle(Integer.toString(AdapterItemHandler.getCount()));
+                }
+
+                // Check if there is still data in array, if not then reset the action bar
+                if (!AdapterItemHandler.isValid()) {
+                    onCreateOptionsMenu(mMenu);
+                    resetSupportActionBar();
+                }
+
+                return true;
+            }
+        });
+        this.mFastItemAdapter.withOnLongClickListener(new OnLongClickListener<DataItemView>() {
+            @Override
+            public boolean onLongClick(@NonNull View view, @NonNull IAdapter<DataItemView> adapter, @NonNull DataItemView item, int position) {
+                if (!AdapterItemHandler.isActive()) {
+                    AdapterItemHandler.onLongClick(mFastItemAdapter, item, position);
+                    onCreateOptionsMenu(mMenu);
+
+                    getSupportActionBar().setTitle(Integer.toString(AdapterItemHandler.getCount()));
+                    getSupportActionBar().setSubtitle("Items Selected");
+                    getSupportActionBar().setHomeAsUpIndicator(DrawableColours.mutateHomeAsUpIndicatorDrawable(
+                            mContext, mContext.getResources().getDrawable(R.drawable.ic_back)));
+
+                    return true;
+                }
                 return false;
             }
         });
 
         // Setup and configure RecyclerView
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(fastItemAdapter);
+        recyclerView.setAdapter(mFastItemAdapter);
 
-        // Derive adapter DataItems from rawDataList
-        List<DataItem> dataItemList = new DataItemHandler().getDataItems(this, rawDataList);
-        fastItemAdapter.add(dataItemList);
+        // Derive adapter DataItems from rawDataPackageList
+        List<DataItemView> dataItemViewList = new RawDataListItemHandler().getDataItems(this, rawDataPackageList);
+        mFastItemAdapter.add(dataItemViewList);
+
+
+        FloatingActionMenu actionMenu = findViewById(R.id.fabAdd);
+        actionMenu.setClosedOnTouchOutside(true);
+
+        FloatingActionButton actionNote = findViewById(R.id.fabNote);
+        FloatingActionButton actionPaymentInfo = findViewById(R.id.fabPaymentInfo);
+        FloatingActionButton actionLoginInfo = findViewById(R.id.fabLoginInfo);
+        actionNote.setOnClickListener(this);
+        actionPaymentInfo.setOnClickListener(this);
+        actionLoginInfo.setOnClickListener(this);
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.mMenu = menu;
+
+        // Clear menus
+        if (mMenu != null && mMenu.hasVisibleItems()) {
+            mMenu.clear();
+        }
+
+        // Check is multi select mode is active
+        if (!AdapterItemHandler.isActive()) { // If not in multi select mode
+            getMenuInflater().inflate(R.menu.menu_main, mMenu);         // Inflate main menu
+        } else { // If multi select mode is active
+            getMenuInflater().inflate(R.menu.menu_multiselect, mMenu);  // Inflate multi select menu
+        }
+
+        if (mMenu.hasVisibleItems()) {
+            DrawableColours.mutateMenuItems(this, menu);
+        }
+
+        return true;
+    }
+    //
     private void setupSupportActionBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(false);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setTitle(null);
 
         // Drawer Layout
-        this.mDrawerLayout = (DrawerLayout) findViewById(R.id.Data);
-        this.mNavigationView = (NavigationView) findViewById(R.id.NavigationContent);
+        this.mDrawerLayout = findViewById(R.id.Data);
+        this.mNavigationView = findViewById(R.id.NavigationContent);
         this.mDrawerToggle = new ActionBarDrawerToggle(this, this.mDrawerLayout, R.string.DRAWER_OPEN, R.string.DRAWER_CLOSE);
         this.mDrawerToggle.setDrawerIndicatorEnabled(false);
         //
-        final Drawable drawerIcon = getResources().getDrawable(R.drawable.ic_drawer);
-        drawerIcon.mutate().setColorFilter(setMenuItemsColour(), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(drawerIcon);
+        getSupportActionBar().setHomeAsUpIndicator(DrawableColours.mutateHomeAsUpIndicatorDrawable(
+                this, this.getResources().getDrawable(R.drawable.ic_drawer)));
 
         computeNavViewSize();
         this.mDrawerToggle.syncState();
         this.mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                onNavigationItemClicked(item);
                 return false;
             }
         });
     }
+    private void resetSupportActionBar() {
+        getSupportActionBar().setTitle(null);
+        getSupportActionBar().setSubtitle(null);
+        getSupportActionBar().setHomeAsUpIndicator(DrawableColours.mutateHomeAsUpIndicatorDrawable(
+                this, this.getResources().getDrawable(R.drawable.ic_drawer)));
+    }
+    //
     private void computeNavViewSize() {
         Resources resources = getResources();
         DisplayMetrics metrics = new DisplayMetrics();
@@ -154,99 +216,60 @@ public class ActivityMain extends AppCompatActivity {
         params.width = (newWidth);
         this.mNavigationView.setLayoutParams(params);
     }
-    private int setMenuItemsColour() {
-        return getResources().getColor(R.color.matLightWhiteYellow);
-    }
 
     // Global clicks
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         if (this.mDrawerToggle.onOptionsItemSelected(item)) return true;
         switch (item.getItemId()) {
             // Misc
-            case android.R.id.home: if (this.mDrawerLayout.isDrawerVisible(GravityCompat.START)) {
-                this.mDrawerLayout.closeDrawer(GravityCompat.START);
-            } else {
-                this.mDrawerLayout.openDrawer(GravityCompat.START);
-            }; return true;
-            case R.id.miSelect: onMultiSelectClicked(); return true;
+            case android.R.id.home:
+                if (!AdapterItemHandler.isActive()) {
+                    if (this.mDrawerLayout.isDrawerVisible(GravityCompat.START)) {
+                        this.mDrawerLayout.closeDrawer(GravityCompat.START);
+                    } else {
+                        this.mDrawerLayout.openDrawer(GravityCompat.START);
+                    }
+                } else {
+                    onBackPressed();
+                }
+                return true;
 
             // On multi select mode
-            case R.id.action_delete: onDeleteClicked(); return true;
-            case R.id.action_done: onMultiSelectClicked(); return true;
+            case R.id.action_delete:
+                AdapterItemHandler.onDelete(this, mFastItemAdapter, mView);
+                onCreateOptionsMenu(mMenu);
+                resetSupportActionBar();
+                return true;
 
             // New sub menu
-            case R.id.acNote: onAddClicked(1); return true;
-            case R.id.acPaymentInfo: onAddClicked(2); return true;
-            case R.id.acLoginInfo: onAddClicked(3); return true;
+//            case R.id.acNote:        onAddClicked("TYPE_NOTE"); return true;
+//            case R.id.acPaymentInfo: onAddClicked("TYPE_PAYMENTINFO"); return true;
+//            case R.id.acLoginInfo:   onAddClicked("TYPE_LOGININFO"); return true;
 
             // Options sub menu
             case R.id.acSettings: onSettings(); return true;
         }
         return super.onOptionsItemSelected(item);
     }
-    private void onNavigationItemClicked(MenuItem menuItem) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fabNote:        onAddClicked("TYPE_NOTE"); break;
+            case R.id.fabPaymentInfo: onAddClicked("TYPE_PAYMENTINFO"); break;
+            case R.id.fabLoginInfo:   onAddClicked( "TYPE_LOGININFO"); break;
+        }
     }
 
     // Menu options functions
     // Notes, PaymentInfo, LoginInfo ################################
-    public void onAddClicked(int TYPE) {
+    public void onAddClicked(String TYPE) {
         ACTIVITY_INTENT = new Intent(this, ActivityEdit.class);
         ACTIVITY_INTENT.putExtra("type", TYPE);
         this.finish();
         this.startActivity(ACTIVITY_INTENT);
     }
-    // ----------------
-    public void onMultiSelectClicked() {
-        PorterDuff.Mode mode = PorterDuff.Mode.SRC_ATOP;
-        //
-        if (!this.mIsMultiChoice) {
-            this.mSelectedRawData = new ArrayList<>();
 
-            this.mMenu.clear();
-            getMenuInflater().inflate(R.menu.menu_multiselect, this.mMenu);
-
-            MenuItem delete = this.mMenu.findItem(R.id.action_delete);
-            MenuItem done = this.mMenu.findItem(R.id.action_done);
-            delete.getIcon().mutate().setColorFilter(setMenuItemsColour(), mode);
-            done.getIcon().mutate().setColorFilter(setMenuItemsColour(), mode);
-
-            delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            done.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            getSupportActionBar().setTitle(this.mCount + " Selected");
-
-            this.mIsMultiChoice = true;
-        } else {
-            this.mSelectedRawData = null;
-            this.mCount = 0;
-
-            this.mMenu.clear();
-            getMenuInflater().inflate(R.menu.menu_main, this.mMenu);
-
-            MenuItem multiSelect = this.mMenu.findItem(R.id.miSelect);
-            MenuItem add = this.mMenu.findItem(R.id.mnuNew);
-            MenuItem options = this.mMenu.findItem(R.id.mnuOptions);
-            multiSelect.getIcon().mutate().setColorFilter(setMenuItemsColour(), mode);
-            add.getIcon().mutate().setColorFilter(setMenuItemsColour(), mode);
-            options.getIcon().mutate().setColorFilter(setMenuItemsColour(), mode);
-
-            multiSelect.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            add.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            options.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            getSupportActionBar().setTitle(null);
-
-            this.mIsMultiChoice = false;
-        }
-    } // TODO Better streamline the multi select and reset vies of the list items
-    public void onDeleteClicked() {
-        if (!this.mSelectedRawData.isEmpty()) {
-            this.mMasterDatabaseAccess.open();
-            for (RawData id : this.mSelectedRawData) {
-                this.mMasterDatabaseAccess.delete(id);
-            }
-            this.mMasterDatabaseAccess.close();
-            onMultiSelectClicked();
-        }
-    }
     // ActivitySettings, About ##############################################
     private void onSettings() {
         ACTIVITY_INTENT = new Intent(this, ActivitySettings.class);
@@ -266,9 +289,9 @@ public class ActivityMain extends AppCompatActivity {
     @Override public void onStart() {
         super.onStart();
 
-        if (mCountDownIsFinished) {
+        if (mIsCountDownTimerFinished) {
             if (!APP_LOGGED_IN) {
-                ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
+                ACTIVITY_INTENT = new Intent(this, ActivityLogin.class);
                 this.finish(); // CLEAN UP AND END
                 this.startActivity(ACTIVITY_INTENT); // GO TO LOGIN ACTIVITY
             }
@@ -279,18 +302,24 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
     @Override public void onBackPressed() {
-        super.onBackPressed();
-        if (!this.mIsMultiChoice)
-            if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
-            {
+        if (!AdapterItemHandler.isActive()) {
+            if (ACTIVITY_INTENT == null) { // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
                 new LogoutProtocol().logoutImmediate(this);
             }
+        } else {
+            AdapterItemHandler.cancel(mFastItemAdapter);
+            onCreateOptionsMenu(mMenu);
+            resetSupportActionBar();
+
+            return;
+        }
+
+        super.onBackPressed();
     }
     @Override public void onPause() {
         super.onPause();
 
-        if (!this.isFinishing()) // HOME AND TABS AND SCREEN OFF
-        {
+        if (!this.isFinishing()) { // HOME AND TABS AND SCREEN OFF
             if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             {
                 new LogoutProtocol().logoutExecuteAutosaveOff(mContext);

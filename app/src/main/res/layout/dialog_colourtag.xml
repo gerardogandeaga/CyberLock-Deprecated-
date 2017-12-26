@@ -22,7 +22,7 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:scaleType="centerCrop"
-            app:srcCompat="@color/coltag_blue"
+            app:srcCompat="@color/ct_blue"
             tools:ignore="VectorDrawableCompat"/>
 
         <ImageView
@@ -35,7 +35,7 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:scaleType="centerCrop"
-            app:srcCompat="@color/coltag_red"
+            app:srcCompat="@color/ct_red"
             tools:ignore="VectorDrawableCompat"/>
 
         <ImageView
@@ -48,7 +48,7 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:scaleType="centerCrop"
-            app:srcCompat="@color/coltag_green"
+            app:srcCompat="@color/ct_green"
             tools:ignore="VectorDrawableCompat"/>
 
     </LinearLayout>
@@ -67,7 +67,7 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:scaleType="centerCrop"
-            app:srcCompat="@color/coltag_yellow"
+            app:srcCompat="@color/ct_yellow"
             tools:ignore="VectorDrawableCompat"/>
 
         <ImageView
@@ -80,7 +80,7 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:scaleType="centerCrop"
-            app:srcCompat="@color/coltag_purple"
+            app:srcCompat="@color/ct_purple"
             tools:ignore="VectorDrawableCompat"/>
 
         <ImageView
@@ -93,7 +93,7 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:scaleType="centerCrop"
-            app:srcCompat="@color/coltag_orange"
+            app:srcCompat="@color/ct_orange"
             tools:ignore="VectorDrawableCompat"/>
 
     </LinearLayout>

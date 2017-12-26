@@ -7,97 +7,34 @@
         <!---->
 
         <!-- Customize your theme here. -->
-        <item name="colorPrimaryDark">@color/matDarkBlue</item>
-        <item name="colorPrimary">@color/grayblue</item>
-        <item name="colorAccent">@color/matDarkBlue</item>
+        <item name="colorPrimaryDark">@color/c_blue_90</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorAccent">@color/c_blue_90</item>
+    </style>
+
+    <!-- Edit Activity Colours -->
+    <style name="OverlayPrimaryColorBlue">
+        <item name="colorPrimaryDark">@color/ct_blue</item>
+    </style>
+    <style name="OverlayPrimaryColorRed">
+        <item name="colorPrimaryDark">@color/ct_red</item>
+    </style>
+    <style name="OverlayPrimaryColorGreen">
+        <item name="colorPrimaryDark">@color/ct_green</item>
+    </style>
+    <style name="OverlayPrimaryColorYellow">
+        <item name="colorPrimaryDark">@color/ct_yellow</item>
+    </style>
+    <style name="OverlayPrimaryColorPurple">
+        <item name="colorPrimaryDark">@color/ct_purple</item>
+    </style>
+    <style name="OverlayPrimaryColorOrange">
+        <item name="colorPrimaryDark">@color/ct_orange</item>
     </style>
 
 
 
-
+    <!-- Primitives -->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
-
-
-
-    <!-- ####################################################################################### -->
-    <!-- Text Customizations -->
-    <!-- Main Edit -->
-    <style name="myText.Edit.Label" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:gravity">start</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-    <style name="myText.Edit.Content" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:gravity">start</item>
-    </style>
-    <style name="myText.Edit.Date" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">sans-serif</item>
-    </style>
-
-    <!-- List Items -->
-    <style name="myText.List.Label" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:gravity">start</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-    <style name="myText.List.Content" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:gravity">start</item>
-    </style>
-    <style name="myText.List.Date" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">10sp</item>
-        <item name="android:textColor">@color/green_1D</item>
-        <item name="android:fontFamily">sans-serif</item>
-    </style>
-
-    <!-- Settings -->
-    <style name="myText.Settings.Header" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">22sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">sans-serif</item>
-    </style>
-    <style name="myText.Settings.Description" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">sans-serif</item>
-    </style>
-
-    <!-- Dialog -->
-    <style name="myText.Dialog.Title" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:gravity">start</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:maxLines">1</item>
-    </style>
-    <style name="myText.Dialog.Content" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:gravity">start</item>
-    </style>
-    <style name="myText.Dialog.Buttons" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:gravity">start</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:maxLines">1</item>
-    </style>
-    <!-- ####################################################################################### -->
-    <!-- TODO Custom fonts -->
 </resources>

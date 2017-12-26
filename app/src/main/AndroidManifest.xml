@@ -18,7 +18,7 @@
         android:theme="@style/MainTheme">
 
         <activity
-            android:name=".activities.clearances.LoginActivity"
+            android:name=".activities.clearances.ActivityLogin"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.clearances.RegistrationActivity"
+            android:name=".activities.clearances.ActivityRegistration"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
 

@@ -5,13 +5,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.core.ActivityEdit;
 import com.gerardogandeaga.cyberlock.crypto.CryptoContent;
-import com.gerardogandeaga.cyberlock.sqlite.data.RawData;
-import com.gerardogandeaga.cyberlock.support.handlers.RawDataHandler;
+import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
+import com.gerardogandeaga.cyberlock.support.handlers.extractors.ContentHandler;
 
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
 
@@ -20,20 +21,20 @@ public class DialogDataPreview {
     private CryptoContent mCryptoContent;
 
     // Data variables
-    private RawData mRawData;
+    private RawDataPackage mRawDataPackage;
 
     // Views
     private AlertDialog.Builder mBuilder;
 
-    public DialogDataPreview(Context context, RawData rawData) {
+    public DialogDataPreview(Context context, RawDataPackage rawDataPackage) {
         this.mContext = context;
         this.mCryptoContent = new CryptoContent(mContext);
-        this.mRawData = rawData;
+        this.mRawDataPackage = rawDataPackage;
     }
 
     // Select type
     public void initializeDialog() {
-        switch (mRawData.getType(mCryptoContent)) {
+        switch (mRawDataPackage.getType(mCryptoContent)) {
             case "TYPE_NOTE":        constructPreviewNote(); break;
             case "TYPE_PAYMENTINFO": constructPreviewPaymentInfo(); break;
             case "TYPE_LOGININFO":   constructPreviewLoginInfo(); break;
@@ -42,17 +43,20 @@ public class DialogDataPreview {
 
     // Create dialog
     private void constructPreviewNote() {
+        View titleView = View.inflate(mContext, R.layout.dialog_title, null);
         View view = View.inflate(mContext, R.layout.preview_note, null);
-        RawDataHandler dataHandler = new RawDataHandler(mContext, mRawData);
+        ContentHandler dataHandler = new ContentHandler(mContext, mRawDataPackage);
         //
-        TextView note = (TextView) view.findViewById(R.id.tvNote);
-        TextView date = (TextView) view.findViewById(R.id.tvDate);
+        TextView title = titleView.findViewById(R.id.tvDialogTitle);
+        TextView date = titleView.findViewById(R.id.tvDate);
+        TextView note = view.findViewById(R.id.tvNote);
 
+        title.setText(dataHandler.mLabel);
+        date.setText("Updated: " + dataHandler.mDate);
         note.setText(dataHandler.mNote);
-        date.setText(dataHandler.mDate);
 
         mBuilder = new AlertDialog.Builder(mContext);
-        mBuilder.setTitle(dataHandler.mLabel);
+        mBuilder.setCustomTitle(titleView);
         mBuilder.setView(view);
         mBuilder.setNegativeButton(R.string.btnDone, new DialogInterface.OnClickListener() {
             @Override
@@ -71,28 +75,32 @@ public class DialogDataPreview {
         mBuilder.show();
     }
     private void constructPreviewPaymentInfo() {
+        View titleView = View.inflate(mContext, R.layout.dialog_title, null);
         View view = View.inflate(mContext, R.layout.preview_paymentinfo, null);
-        RawDataHandler dataHandler = new RawDataHandler(mContext, mRawData);
+        ContentHandler dataHandler = new ContentHandler(mContext, mRawDataPackage);
         //
-        TextView name = (TextView) view.findViewById(R.id.tvName);
-        TextView number = (TextView) view.findViewById(R.id.tvNumber);
-        TextView expiry = (TextView) view.findViewById(R.id.tvExpiry);
-        TextView cvv = (TextView) view.findViewById(R.id.tvCVV);
-        TextView cardType = (TextView) view.findViewById(R.id.tvCardType);
-        TextView note = (TextView) view.findViewById(R.id.tvNote);
-        TextView date = (TextView) view.findViewById(R.id.tvDate);
+        TextView title = titleView.findViewById(R.id.tvDialogTitle);
+        TextView date = titleView.findViewById(R.id.tvDate);
+        TextView name = view.findViewById(R.id.tvName);
+        TextView number = view.findViewById(R.id.tvNumber);
+        TextView expiry = view.findViewById(R.id.tvExpiry);
+        TextView cvv = view.findViewById(R.id.tvCVV);
+        TextView cardType = view.findViewById(R.id.tvCardType);
+        TextView note = view.findViewById(R.id.tvNote);
+        ImageView icon = view.findViewById(R.id.imgIcon);
 
+        title.setText(dataHandler.mLabel);
+        date.setText("Updated: " + dataHandler.mDate);
         name.setText(dataHandler.mName);
         number.setText(dataHandler.mNumber);
         expiry.setText(dataHandler.mExpiry);
         cvv.setText(dataHandler.mCVV);
-        cardType.setText(dataHandler.mCardtype);
+        cardType.setText(dataHandler.mCardType);
         note.setText(dataHandler.mNote);
-        date.setText(dataHandler.mDate);
-        cardType.setCompoundDrawables(null, null, dataHandler.mCardImage, null);
+        icon.setImageDrawable(dataHandler.mCardImage);
 
         mBuilder = new AlertDialog.Builder(mContext);
-        mBuilder.setTitle(dataHandler.mLabel);
+        mBuilder.setCustomTitle(titleView);
         mBuilder.setView(view);
         mBuilder.setNegativeButton(R.string.btnDone, new DialogInterface.OnClickListener() {
             @Override
@@ -111,25 +119,28 @@ public class DialogDataPreview {
         mBuilder.show();
     }
     private void constructPreviewLoginInfo() {
+        View titleView = View.inflate(mContext, R.layout.dialog_title, null);
         View view = View.inflate(mContext, R.layout.preview_logininfo, null);
-        RawDataHandler dataHandler = new RawDataHandler(mContext, mRawData);
+        ContentHandler dataHandler = new ContentHandler(mContext, mRawDataPackage);
         //
-        TextView url = (TextView) view.findViewById(R.id.tvUrl);
-        TextView email = (TextView) view.findViewById(R.id.tvEmail);
-        TextView username = (TextView) view.findViewById(R.id.tvUsername);
-        TextView password = (TextView) view.findViewById(R.id.tvPassword);
-        TextView note = (TextView) view.findViewById(R.id.tvNote);
-        TextView date = (TextView) view.findViewById(R.id.tvDate);
+        TextView title = titleView.findViewById(R.id.tvDialogTitle);
+        TextView date = titleView.findViewById(R.id.tvDate);
+        TextView url = view.findViewById(R.id.tvUrl);
+        TextView email = view.findViewById(R.id.tvEmail);
+        TextView username = view.findViewById(R.id.tvUsername);
+        TextView password = view.findViewById(R.id.tvPassword);
+        TextView note = view.findViewById(R.id.tvNote);
 
+        title.setText(dataHandler.mLabel);
+        date.setText("Updated: " + dataHandler.mDate);
         url.setText(dataHandler.mUrl);
         email.setText(dataHandler.mEmail);
         username.setText(dataHandler.mUsername);
         password.setText(dataHandler.mPassword);
         note.setText(dataHandler.mNote);
-        date.setText(dataHandler.mDate);
 
         mBuilder = new AlertDialog.Builder(mContext);
-        mBuilder.setTitle(dataHandler.mLabel);
+        mBuilder.setCustomTitle(titleView);
         mBuilder.setView(view);
         mBuilder.setNegativeButton(R.string.btnDone, new DialogInterface.OnClickListener() {
             @Override
@@ -151,7 +162,7 @@ public class DialogDataPreview {
     // Edit data package
     private void onEdit() {
         ACTIVITY_INTENT = new Intent(mContext, ActivityEdit.class);
-        ACTIVITY_INTENT.putExtra("data", mRawData);
+        ACTIVITY_INTENT.putExtra("data", mRawDataPackage);
         mContext.startActivity(ACTIVITY_INTENT);
     }
 }

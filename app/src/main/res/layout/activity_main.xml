@@ -6,24 +6,88 @@
     android:id="@+id/Data"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grayE1"
+    android:background="@color/c_gray_10"
     tools:context=".activities.core.ActivityMain">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <include
             android:id="@+id/appBar"
-            layout="@layout/main_child_toolbar"/>
+            layout="@layout/toolbar_main"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/appBar"/>
+            android:layout_height="match_parent">
 
-    </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <com.github.clans.fab.FloatingActionMenu
+                android:id="@+id/fabAdd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"
+                app:menu_colorNormal="@color/accent"
+                app:menu_colorPressed="@color/accent"
+                app:menu_colorRipple="@color/c_pink_50"
+                app:menu_icon="@drawable/ic_white_add"
+                app:menu_shadowRadius="2dp"
+                app:menu_shadowYOffset="1dp">
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fabNote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_white_note"
+                    app:fab_colorDisabled="@color/accent"
+                    app:fab_colorNormal="@color/accent"
+                    app:fab_colorPressed="@color/accent"
+                    app:fab_colorRipple="@color/c_pink_50"
+                    app:fab_label="Note"
+                    app:fab_size="mini"/>
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fabPaymentInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_white_card"
+                    app:fab_colorDisabled="@color/accent"
+                    app:fab_colorNormal="@color/accent"
+                    app:fab_colorPressed="@color/accent"
+                    app:fab_colorRipple="@color/c_pink_50"
+                    app:fab_label="Payment Information"
+                    app:fab_size="mini"/>
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fabLoginInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_white_login"
+                    app:fab_colorDisabled="@color/accent"
+                    app:fab_colorNormal="@color/accent"
+                    app:fab_colorPressed="@color/accent"
+                    app:fab_colorRipple="@color/c_pink_50"
+                    app:fab_label="Login Credentials"
+                    app:fab_size="mini"/>
+
+            </com.github.clans.fab.FloatingActionMenu>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/NavigationContent"

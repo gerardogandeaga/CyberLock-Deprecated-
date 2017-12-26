@@ -5,43 +5,37 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="1dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="0dp"
     app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/background_item_ripple"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imgColourTag"
             android:layout_width="64dp"
             android:layout_height="8dp"
-            android:contentDescription="colour tag"/>
+            android:contentDescription="tag tag"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent"
+            android:baselineAligned="false"
             android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/cbItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"/>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
                 android:gravity="bottom"
                 android:orientation="vertical"
                 android:padding="5dp">
@@ -50,7 +44,6 @@
                     android:id="@+id/tvLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
                     android:maxLines="1"
                     android:minLines="1"
                     android:text="Label"
@@ -69,7 +62,6 @@
                     android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
                     android:maxLines="1"
                     android:minLines="1"
                     android:text="Date"
@@ -79,12 +71,14 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_light2"
-            android:orientation="vertical"/>
 
     </LinearLayout>
 
 </android.support.v7.widget.CardView>
+
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:background="@color/gray_light2"-->
+    <!--android:orientation="vertical"/>-->

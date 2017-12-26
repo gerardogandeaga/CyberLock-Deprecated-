@@ -22,7 +22,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import static com.gerardogandeaga.cyberlock.support.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.support.Globals.ENCRYPTION_ALGO;
+import static com.gerardogandeaga.cyberlock.support.Globals.CRYPT_ALGO;
 import static com.gerardogandeaga.cyberlock.support.Globals.FLAGS;
 
 public class CryptKeyHandler
@@ -38,7 +38,7 @@ public class CryptKeyHandler
     public CryptKeyHandler(Context context)
     {
         mSharedPreferences = context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-        ALGO = mSharedPreferences.getString(ENCRYPTION_ALGO, "AES");
+        ALGO = mSharedPreferences.getString(CRYPT_ALGO, "AES");
         CipherALGO = ALGO + "/CBC/PKCS5Padding";
 
         switch (ALGO)

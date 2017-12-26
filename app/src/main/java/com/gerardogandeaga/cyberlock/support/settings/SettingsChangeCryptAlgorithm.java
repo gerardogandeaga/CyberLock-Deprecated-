@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.crypto.CryptoContent;
 import com.gerardogandeaga.cyberlock.crypto.CryptKeyHandler;
-import com.gerardogandeaga.cyberlock.sqlite.data.RawData;
+import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
 import com.gerardogandeaga.cyberlock.sqlite.data.MasterDatabaseAccess;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 import static com.gerardogandeaga.cyberlock.support.Globals.CIPHER_ALGO;
 import static com.gerardogandeaga.cyberlock.support.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.support.Globals.ENCRYPTION_ALGO;
+import static com.gerardogandeaga.cyberlock.support.Globals.CRYPT_ALGO;
 import static com.gerardogandeaga.cyberlock.support.Globals.MASTER_KEY;
 import static com.gerardogandeaga.cyberlock.support.Globals.PASSCODE;
 import static com.gerardogandeaga.cyberlock.support.Globals.TEMP_PIN;
@@ -30,7 +30,7 @@ public class SettingsChangeCryptAlgorithm extends AsyncTask<Void, Void, Void>
 
     // DATA VARIABLES
     private MasterDatabaseAccess mMasterDatabaseAccess;
-    private List<RawData> mRawData;
+    private List<RawDataPackage> mRawDatumPackages;
 
     private String ALGO;
     private String  CIPHER;
@@ -69,10 +69,10 @@ public class SettingsChangeCryptAlgorithm extends AsyncTask<Void, Void, Void>
             System.out.println(decryptedPulledPin);
 
             mSharedPreferences.edit().remove(CRYPT_KEY).apply();
-            mSharedPreferences.edit().remove(ENCRYPTION_ALGO).apply();
+            mSharedPreferences.edit().remove(CRYPT_ALGO).apply();
             mSharedPreferences.edit().remove(CIPHER_ALGO).apply();
 
-            mSharedPreferences.edit().putString(ENCRYPTION_ALGO, ALGO).apply();
+            mSharedPreferences.edit().putString(CRYPT_ALGO, ALGO).apply();
             mSharedPreferences.edit().putString(CIPHER_ALGO, CIPHER).apply();
 
             final CryptKeyHandler cryptKeyHandler = new CryptKeyHandler(mContext);
@@ -84,21 +84,21 @@ public class SettingsChangeCryptAlgorithm extends AsyncTask<Void, Void, Void>
 
             // GO THROUGH ALL DATABASES
             this.mMasterDatabaseAccess.open();
-            this.mRawData = mMasterDatabaseAccess.getAllData();
+            this.mRawDatumPackages = mMasterDatabaseAccess.getAllData();
 
-            for (int i = 0; i < mRawData.size(); i++) {
-                final RawData rawData = mRawData.get(i);
-                String type = rawData.getType(mCryptoContent);
-                String colourTag = rawData.getColourTag(mCryptoContent);
-                String label = rawData.getLabel(mCryptoContent);
-                String content = rawData.getContent(mCryptoContent);
+            for (int i = 0; i < mRawDatumPackages.size(); i++) {
+                final RawDataPackage rawDataPackage = mRawDatumPackages.get(i);
+                String type = rawDataPackage.getType(mCryptoContent);
+                String colourTag = rawDataPackage.getColourTag(mCryptoContent);
+                String label = rawDataPackage.getLabel(mCryptoContent);
+                String content = rawDataPackage.getContent(mCryptoContent);
 
-                rawData.setType(new_cc, type, newKeyStringVal);
-                rawData.setColourTag(new_cc, colourTag, newKeyStringVal);
-                rawData.setLabel(new_cc, label, newKeyStringVal);
-                rawData.setContent(new_cc, content, newKeyStringVal);
+                rawDataPackage.setType(new_cc, type, newKeyStringVal);
+                rawDataPackage.setColourTag(new_cc, colourTag, newKeyStringVal);
+                rawDataPackage.setLabel(new_cc, label, newKeyStringVal);
+                rawDataPackage.setContent(new_cc, content, newKeyStringVal);
 
-                mMasterDatabaseAccess.update(rawData);
+                mMasterDatabaseAccess.update(rawDataPackage);
             }
 
             this.mMasterDatabaseAccess.close();
@@ -114,7 +114,7 @@ public class SettingsChangeCryptAlgorithm extends AsyncTask<Void, Void, Void>
                 }
             });
 
-            System.out.println("NEW ENCRYPTION ALGO: " + mSharedPreferences.getString(ENCRYPTION_ALGO, "AES") + "!!!!!!");
+            System.out.println("NEW ENCRYPTION ALGO: " + mSharedPreferences.getString(CRYPT_ALGO, "AES") + "!!!!!!");
 
         } catch (Exception e)
         {

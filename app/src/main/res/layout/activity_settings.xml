@@ -6,13 +6,13 @@
     android:id="@+id/Content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grayE1"
+    android:background="@color/c_gray_10"
     android:orientation="vertical"
     tools:context=".activities.core.ActivitySettings">
 
     <include
         android:id="@+id/appBar"
-        layout="@layout/main_child_toolbar"/>
+        layout="@layout/toolbar_main"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -80,12 +80,11 @@
 
                             </LinearLayout>
 
-                            <CheckBox
-                                android:id="@+id/cbAutoSave"
+                            <android.support.v7.widget.SwitchCompat
+                                android:id="@+id/swAutoSave"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:textSize="16sp"
-                                tools:targetApi="lollipop"/>
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"/>
 
                         </LinearLayout>
 

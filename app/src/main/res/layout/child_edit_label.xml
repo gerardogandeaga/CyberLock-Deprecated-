@@ -19,20 +19,20 @@
         android:hint="Label"
         android:inputType="text|textPersonName"
         android:maxLines="1"
+        android:padding="10dp"
         android:scrollbars="horizontal"
-        android:textAppearance="@style/myText.Edit.Label"
-        android:padding="10dp"/>
+        android:textAppearance="@style/myText.Edit.Label"/>
 
-    <ImageButton
-        android:id="@+id/btnColourTag"
+    <ImageView
+        android:id="@+id/imgTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:background="@android:color/transparent"
         android:clickable="true"
-        android:contentDescription="colour tag"
+        android:contentDescription="tag tag"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        app:srcCompat="@drawable/ic_tag"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        app:srcCompat="@drawable/ic_tag"/>
 </LinearLayout>

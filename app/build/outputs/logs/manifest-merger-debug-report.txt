@@ -4,29 +4,31 @@ ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\ap
 INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:2:1-59:12
 INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:2:1-59:12
 INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:2:1-59:12
-MERGED from [com.android.support:design:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-25.4.0.aar\4f8e1c797606a8935c5e05f18f6b0dce\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:appcompat-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.4.0.aar\b4c1fabea8fbca9ec0b5c5ca9c9f1414\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:percent:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\percent-25.4.0.aar\a950ad8267d3f35168532ad83fc040c9\AndroidManifest.xml:17:1-28:12
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\9f9145c5f5f155f2231ea7a624f89993\AndroidManifest.xml:2:1-11:12
-MERGED from [com.android.support:gridlayout-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\gridlayout-v7-25.4.0.aar\c66a10d78a497c4ff95eb15eafdf2c0f\AndroidManifest.xml:17:1-28:12
-MERGED from [com.android.support:cardview-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\cardview-v7-25.4.0.aar\b993430ad6898c96e7cfdb19348e4b41\AndroidManifest.xml:17:1-28:12
-MERGED from [com.android.support:recyclerview-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-25.4.0.aar\1784fb0dd07d401f02a983f74675f141\AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:design:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-27.0.2.aar\bb8454855181ae906148454243b4026f\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:appcompat-v7:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\appcompat-v7-27.0.2.aar\ccce84166bcd83861cb775e1481a84b9\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:percent:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\percent-27.0.2.aar\e3475515db696ffc94c78fcaeb1f5df6\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\2019beeba70d7bcfc79b7a327b4d13f7\AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:gridlayout-v7:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\gridlayout-v7-27.0.2.aar\933c1924185b5111c8342a462ac3e9dd\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:cardview-v7:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\cardview-v7-27.0.2.aar\d416ab20bd6fb3e96174580a5550193f\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:recyclerview-v7:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-27.0.2.aar\f9f64c5f854fa516eccbccdfbc6bb02e\AndroidManifest.xml:17:1-22:12
 MERGED from [com.github.iammert:ExpandableLayout:1.4.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\ExpandableLayout-1.4.1.aar\024ef15e582d1d017b606cd362fc16dc\AndroidManifest.xml:2:1-11:12
 MERGED from [com.mikepenz:fastadapter:3.0.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-3.0.4.aar\55f333ea56c0c9d7b6f5455ba32f232d\AndroidManifest.xml:2:1-12:12
 MERGED from [com.mikepenz:fastadapter-commons:3.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-commons-3.0.3.aar\99b959828fef70c86bcb89635087f9dd\AndroidManifest.xml:2:1-12:12
 MERGED from [com.mikepenz:fastadapter-extensions-expandable:3.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-extensions-expandable-3.0.3.aar\6ae682e0cb0ce5d13f896fa94de5428b\AndroidManifest.xml:2:1-12:12
 MERGED from [com.mikepenz:fastadapter-extensions:3.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-extensions-3.0.3.aar\87d76ea35b1afc3aac7b702f04c08a35\AndroidManifest.xml:2:1-12:12
 MERGED from [com.mikepenz:materialize:1.1.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\materialize-1.1.2.aar\68b3e44aaa3e0038030f7a28d7a21d19\AndroidManifest.xml:2:1-12:12
-MERGED from [com.jakewharton:butterknife:8.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\butterknife-8.4.0.aar\c0b5cb91355eca45888bbc3ac998591d\AndroidManifest.xml:2:1-7:12
-MERGED from [com.android.support:animated-vector-drawable:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.4.0.aar\231c4511a93aaee277030df7862e8f5b\AndroidManifest.xml:17:1-28:12
-MERGED from [com.android.support:support-vector-drawable:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.4.0.aar\077a670cedc9365eadd63199878429ae\AndroidManifest.xml:17:1-28:12
-MERGED from [com.android.support:transition:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\transition-25.4.0.aar\840b8a840b73f32b241cef30b2a6f8b5\AndroidManifest.xml:17:1-28:12
-MERGED from [com.android.support:support-v4:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-v4-25.4.0.aar\b48959983271ccf1c521b003b7785b93\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-fragment:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-fragment-25.4.0.aar\d96e13921840cd969376e20e657abcd5\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-core-ui:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.4.0.aar\6b06b63c40912399cb399173f16330a4\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-media-compat:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.4.0.aar\44e0db99afb82ae656aeff295c48e526\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-core-utils:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.4.0.aar\4bfb487823d445bf9820262081d8ddab\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-compat:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-compat-25.4.0.aar\a4624e76ccd1c8ecdcd8f5d2f8b0aa09\AndroidManifest.xml:17:1-31:12
+MERGED from [com.jakewharton:butterknife:8.8.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\butterknife-8.8.1.aar\28832033b0944e3ded43d3a39a7fbce9\AndroidManifest.xml:2:1-7:12
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\eecfdf5949c1fc90eb2cd07cf0d925e5\AndroidManifest.xml:2:1-14:12
+MERGED from [com.android.support:support-v4:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-v4-27.0.2.aar\07cc25f2139e07fb96c3a22cbd066a6d\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-fragment:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-fragment-27.0.2.aar\8977a88acbe29d102ac240179237c3b1\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-utils-27.0.2.aar\7355af41aaac5091049353687c7bd549\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-27.0.2.aar\5bd99ae006a756f000961cbb7272fba7\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-27.0.2.aar\d2915baef72f4cebc06e094d189fdec8\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:transition:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\transition-27.0.2.aar\7955a554dfaf88ebe8e93f5622a816b7\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-ui-27.0.2.aar\b5da9db3e293ec98cb6d60672c601bfe\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-media-compat:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-media-compat-27.0.2.aar\1d615fb60a343e43157e11e78c010e3e\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-compat-27.0.2.aar\6d4a53a7834c59bc3bb94eef5d108e23\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\runtime-1.0.3.aar\8270cd840517975cd261ad007ff88fd8\AndroidManifest.xml:17:1-24:12
 INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:2:1-59:12
 INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:2:1-59:12
 INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:2:1-59:12
@@ -66,38 +68,10 @@ ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\ap
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:9:22-65
 application
 ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:11:5-57:19
-MERGED from [com.android.support:design:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-25.4.0.aar\4f8e1c797606a8935c5e05f18f6b0dce\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:design:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-25.4.0.aar\4f8e1c797606a8935c5e05f18f6b0dce\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:appcompat-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.4.0.aar\b4c1fabea8fbca9ec0b5c5ca9c9f1414\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:appcompat-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.4.0.aar\b4c1fabea8fbca9ec0b5c5ca9c9f1414\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:percent:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\percent-25.4.0.aar\a950ad8267d3f35168532ad83fc040c9\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:percent:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\percent-25.4.0.aar\a950ad8267d3f35168532ad83fc040c9\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\9f9145c5f5f155f2231ea7a624f89993\AndroidManifest.xml:9:5-20
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\9f9145c5f5f155f2231ea7a624f89993\AndroidManifest.xml:9:5-20
-MERGED from [com.android.support:gridlayout-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\gridlayout-v7-25.4.0.aar\c66a10d78a497c4ff95eb15eafdf2c0f\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:gridlayout-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\gridlayout-v7-25.4.0.aar\c66a10d78a497c4ff95eb15eafdf2c0f\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:cardview-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\cardview-v7-25.4.0.aar\b993430ad6898c96e7cfdb19348e4b41\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:cardview-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\cardview-v7-25.4.0.aar\b993430ad6898c96e7cfdb19348e4b41\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:recyclerview-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-25.4.0.aar\1784fb0dd07d401f02a983f74675f141\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:recyclerview-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-25.4.0.aar\1784fb0dd07d401f02a983f74675f141\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:animated-vector-drawable:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.4.0.aar\231c4511a93aaee277030df7862e8f5b\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:animated-vector-drawable:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.4.0.aar\231c4511a93aaee277030df7862e8f5b\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:support-vector-drawable:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.4.0.aar\077a670cedc9365eadd63199878429ae\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:support-vector-drawable:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.4.0.aar\077a670cedc9365eadd63199878429ae\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:transition:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\transition-25.4.0.aar\840b8a840b73f32b241cef30b2a6f8b5\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:transition:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\transition-25.4.0.aar\840b8a840b73f32b241cef30b2a6f8b5\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:support-v4:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-v4-25.4.0.aar\b48959983271ccf1c521b003b7785b93\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-v4:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-v4-25.4.0.aar\b48959983271ccf1c521b003b7785b93\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-fragment:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-fragment-25.4.0.aar\d96e13921840cd969376e20e657abcd5\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-fragment:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-fragment-25.4.0.aar\d96e13921840cd969376e20e657abcd5\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-core-ui:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.4.0.aar\6b06b63c40912399cb399173f16330a4\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-core-ui:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.4.0.aar\6b06b63c40912399cb399173f16330a4\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-media-compat:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.4.0.aar\44e0db99afb82ae656aeff295c48e526\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-media-compat:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.4.0.aar\44e0db99afb82ae656aeff295c48e526\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-core-utils:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.4.0.aar\4bfb487823d445bf9820262081d8ddab\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-core-utils:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.4.0.aar\4bfb487823d445bf9820262081d8ddab\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-compat:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-compat-25.4.0.aar\a4624e76ccd1c8ecdcd8f5d2f8b0aa09\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-compat:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-compat-25.4.0.aar\a4624e76ccd1c8ecdcd8f5d2f8b0aa09\AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\2019beeba70d7bcfc79b7a327b4d13f7\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\2019beeba70d7bcfc79b7a327b4d13f7\AndroidManifest.xml:9:5-20
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\eecfdf5949c1fc90eb2cd07cf0d925e5\AndroidManifest.xml:12:5-20
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\eecfdf5949c1fc90eb2cd07cf0d925e5\AndroidManifest.xml:12:5-20
 	android:supportsRtl
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:17:9-35
 	android:label
@@ -112,7 +86,7 @@ MERGED from [com.android.support:support-compat:25.4.0] C:\Users\gerardogandeaga
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:18:9-41
 	android:logo
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:15:9-41
-activity#com.gerardogandeaga.cyberlock.activities.clearances.LoginActivity
+activity#com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin
 ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:20:9-29:20
 	android:screenOrientation
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:22:13-49
@@ -130,7 +104,7 @@ category#android.intent.category.LAUNCHER
 ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:27:17-76
 	android:name
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:27:27-74
-activity#com.gerardogandeaga.cyberlock.activities.clearances.RegistrationActivity
+activity#com.gerardogandeaga.cyberlock.activities.clearances.ActivityRegistration
 ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:30:9-33:57
 	android:screenOrientation
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml:32:13-49
@@ -182,20 +156,20 @@ uses-sdk
 INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml
 INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml
-MERGED from [com.android.support:design:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-25.4.0.aar\4f8e1c797606a8935c5e05f18f6b0dce\AndroidManifest.xml:21:5-23:62
-MERGED from [com.android.support:design:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-25.4.0.aar\4f8e1c797606a8935c5e05f18f6b0dce\AndroidManifest.xml:21:5-23:62
-MERGED from [com.android.support:appcompat-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.4.0.aar\b4c1fabea8fbca9ec0b5c5ca9c9f1414\AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:appcompat-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.4.0.aar\b4c1fabea8fbca9ec0b5c5ca9c9f1414\AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:percent:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\percent-25.4.0.aar\a950ad8267d3f35168532ad83fc040c9\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:percent:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\percent-25.4.0.aar\a950ad8267d3f35168532ad83fc040c9\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\9f9145c5f5f155f2231ea7a624f89993\AndroidManifest.xml:5:5-7:41
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\9f9145c5f5f155f2231ea7a624f89993\AndroidManifest.xml:5:5-7:41
-MERGED from [com.android.support:gridlayout-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\gridlayout-v7-25.4.0.aar\c66a10d78a497c4ff95eb15eafdf2c0f\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:gridlayout-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\gridlayout-v7-25.4.0.aar\c66a10d78a497c4ff95eb15eafdf2c0f\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:cardview-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\cardview-v7-25.4.0.aar\b993430ad6898c96e7cfdb19348e4b41\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:cardview-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\cardview-v7-25.4.0.aar\b993430ad6898c96e7cfdb19348e4b41\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:recyclerview-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-25.4.0.aar\1784fb0dd07d401f02a983f74675f141\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:recyclerview-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-25.4.0.aar\1784fb0dd07d401f02a983f74675f141\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:design:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-27.0.2.aar\bb8454855181ae906148454243b4026f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:design:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-27.0.2.aar\bb8454855181ae906148454243b4026f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\appcompat-v7-27.0.2.aar\ccce84166bcd83861cb775e1481a84b9\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\appcompat-v7-27.0.2.aar\ccce84166bcd83861cb775e1481a84b9\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:percent:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\percent-27.0.2.aar\e3475515db696ffc94c78fcaeb1f5df6\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:percent:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\percent-27.0.2.aar\e3475515db696ffc94c78fcaeb1f5df6\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\2019beeba70d7bcfc79b7a327b4d13f7\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\2019beeba70d7bcfc79b7a327b4d13f7\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:gridlayout-v7:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\gridlayout-v7-27.0.2.aar\933c1924185b5111c8342a462ac3e9dd\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:gridlayout-v7:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\gridlayout-v7-27.0.2.aar\933c1924185b5111c8342a462ac3e9dd\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\cardview-v7-27.0.2.aar\d416ab20bd6fb3e96174580a5550193f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\cardview-v7-27.0.2.aar\d416ab20bd6fb3e96174580a5550193f\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-27.0.2.aar\f9f64c5f854fa516eccbccdfbc6bb02e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-27.0.2.aar\f9f64c5f854fa516eccbccdfbc6bb02e\AndroidManifest.xml:20:5-44
 MERGED from [com.github.iammert:ExpandableLayout:1.4.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\ExpandableLayout-1.4.1.aar\024ef15e582d1d017b606cd362fc16dc\AndroidManifest.xml:7:5-9:41
 MERGED from [com.github.iammert:ExpandableLayout:1.4.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\ExpandableLayout-1.4.1.aar\024ef15e582d1d017b606cd362fc16dc\AndroidManifest.xml:7:5-9:41
 MERGED from [com.mikepenz:fastadapter:3.0.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-3.0.4.aar\55f333ea56c0c9d7b6f5455ba32f232d\AndroidManifest.xml:8:5-10:41
@@ -208,30 +182,32 @@ MERGED from [com.mikepenz:fastadapter-extensions:3.0.3] C:\Users\gerardogandeaga
 MERGED from [com.mikepenz:fastadapter-extensions:3.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-extensions-3.0.3.aar\87d76ea35b1afc3aac7b702f04c08a35\AndroidManifest.xml:8:5-10:41
 MERGED from [com.mikepenz:materialize:1.1.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\materialize-1.1.2.aar\68b3e44aaa3e0038030f7a28d7a21d19\AndroidManifest.xml:8:5-10:41
 MERGED from [com.mikepenz:materialize:1.1.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\materialize-1.1.2.aar\68b3e44aaa3e0038030f7a28d7a21d19\AndroidManifest.xml:8:5-10:41
-MERGED from [com.jakewharton:butterknife:8.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\butterknife-8.4.0.aar\c0b5cb91355eca45888bbc3ac998591d\AndroidManifest.xml:5:5-43
-MERGED from [com.jakewharton:butterknife:8.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\butterknife-8.4.0.aar\c0b5cb91355eca45888bbc3ac998591d\AndroidManifest.xml:5:5-43
-MERGED from [com.android.support:animated-vector-drawable:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.4.0.aar\231c4511a93aaee277030df7862e8f5b\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:animated-vector-drawable:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.4.0.aar\231c4511a93aaee277030df7862e8f5b\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-vector-drawable:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.4.0.aar\077a670cedc9365eadd63199878429ae\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-vector-drawable:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.4.0.aar\077a670cedc9365eadd63199878429ae\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:transition:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\transition-25.4.0.aar\840b8a840b73f32b241cef30b2a6f8b5\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:transition:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\transition-25.4.0.aar\840b8a840b73f32b241cef30b2a6f8b5\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-v4:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-v4-25.4.0.aar\b48959983271ccf1c521b003b7785b93\AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-v4:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-v4-25.4.0.aar\b48959983271ccf1c521b003b7785b93\AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-fragment:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-fragment-25.4.0.aar\d96e13921840cd969376e20e657abcd5\AndroidManifest.xml:21:5-23:60
-MERGED from [com.android.support:support-fragment:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-fragment-25.4.0.aar\d96e13921840cd969376e20e657abcd5\AndroidManifest.xml:21:5-23:60
-MERGED from [com.android.support:support-core-ui:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.4.0.aar\6b06b63c40912399cb399173f16330a4\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-core-ui:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.4.0.aar\6b06b63c40912399cb399173f16330a4\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-media-compat:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.4.0.aar\44e0db99afb82ae656aeff295c48e526\AndroidManifest.xml:21:5-23:63
-MERGED from [com.android.support:support-media-compat:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.4.0.aar\44e0db99afb82ae656aeff295c48e526\AndroidManifest.xml:21:5-23:63
-MERGED from [com.android.support:support-core-utils:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.4.0.aar\4bfb487823d445bf9820262081d8ddab\AndroidManifest.xml:21:5-23:61
-MERGED from [com.android.support:support-core-utils:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.4.0.aar\4bfb487823d445bf9820262081d8ddab\AndroidManifest.xml:21:5-23:61
-MERGED from [com.android.support:support-compat:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-compat-25.4.0.aar\a4624e76ccd1c8ecdcd8f5d2f8b0aa09\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-compat:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-compat-25.4.0.aar\a4624e76ccd1c8ecdcd8f5d2f8b0aa09\AndroidManifest.xml:21:5-23:58
+MERGED from [com.jakewharton:butterknife:8.8.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\butterknife-8.8.1.aar\28832033b0944e3ded43d3a39a7fbce9\AndroidManifest.xml:5:5-43
+MERGED from [com.jakewharton:butterknife:8.8.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\butterknife-8.8.1.aar\28832033b0944e3ded43d3a39a7fbce9\AndroidManifest.xml:5:5-43
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\eecfdf5949c1fc90eb2cd07cf0d925e5\AndroidManifest.xml:8:5-10:41
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\eecfdf5949c1fc90eb2cd07cf0d925e5\AndroidManifest.xml:8:5-10:41
+MERGED from [com.android.support:support-v4:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-v4-27.0.2.aar\07cc25f2139e07fb96c3a22cbd066a6d\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-v4-27.0.2.aar\07cc25f2139e07fb96c3a22cbd066a6d\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-fragment-27.0.2.aar\8977a88acbe29d102ac240179237c3b1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-fragment-27.0.2.aar\8977a88acbe29d102ac240179237c3b1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-utils-27.0.2.aar\7355af41aaac5091049353687c7bd549\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-utils-27.0.2.aar\7355af41aaac5091049353687c7bd549\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-27.0.2.aar\5bd99ae006a756f000961cbb7272fba7\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-27.0.2.aar\5bd99ae006a756f000961cbb7272fba7\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-27.0.2.aar\d2915baef72f4cebc06e094d189fdec8\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-27.0.2.aar\d2915baef72f4cebc06e094d189fdec8\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\transition-27.0.2.aar\7955a554dfaf88ebe8e93f5622a816b7\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\transition-27.0.2.aar\7955a554dfaf88ebe8e93f5622a816b7\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-ui-27.0.2.aar\b5da9db3e293ec98cb6d60672c601bfe\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-ui-27.0.2.aar\b5da9db3e293ec98cb6d60672c601bfe\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-media-compat-27.0.2.aar\1d615fb60a343e43157e11e78c010e3e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-media-compat-27.0.2.aar\1d615fb60a343e43157e11e78c010e3e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-compat-27.0.2.aar\6d4a53a7834c59bc3bb94eef5d108e23\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-compat-27.0.2.aar\6d4a53a7834c59bc3bb94eef5d108e23\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\runtime-1.0.3.aar\8270cd840517975cd261ad007ff88fd8\AndroidManifest.xml:20:5-22:41
+MERGED from [android.arch.lifecycle:runtime:1.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\runtime-1.0.3.aar\8270cd840517975cd261ad007ff88fd8\AndroidManifest.xml:20:5-22:41
 INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml
 INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml
-	tools:overrideLibrary
-		ADDED from [com.android.support:design:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-25.4.0.aar\4f8e1c797606a8935c5e05f18f6b0dce\AndroidManifest.xml:23:9-59
 	android:targetSdkVersion
 		INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml
@@ -240,37 +216,3 @@ INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock
 		INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml
 		ADDED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\gerardogandeaga\Documents\AndroidStudioProjects\CyberLock\app\src\main\AndroidManifest.xml
-meta-data#android.support.VERSION
-ADDED from [com.android.support:design:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-25.4.0.aar\4f8e1c797606a8935c5e05f18f6b0dce\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:appcompat-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.4.0.aar\b4c1fabea8fbca9ec0b5c5ca9c9f1414\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:appcompat-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\appcompat-v7-25.4.0.aar\b4c1fabea8fbca9ec0b5c5ca9c9f1414\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:percent:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\percent-25.4.0.aar\a950ad8267d3f35168532ad83fc040c9\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:percent:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\percent-25.4.0.aar\a950ad8267d3f35168532ad83fc040c9\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:gridlayout-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\gridlayout-v7-25.4.0.aar\c66a10d78a497c4ff95eb15eafdf2c0f\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:gridlayout-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\gridlayout-v7-25.4.0.aar\c66a10d78a497c4ff95eb15eafdf2c0f\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:cardview-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\cardview-v7-25.4.0.aar\b993430ad6898c96e7cfdb19348e4b41\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:cardview-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\cardview-v7-25.4.0.aar\b993430ad6898c96e7cfdb19348e4b41\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:recyclerview-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-25.4.0.aar\1784fb0dd07d401f02a983f74675f141\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:recyclerview-v7:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-25.4.0.aar\1784fb0dd07d401f02a983f74675f141\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:animated-vector-drawable:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.4.0.aar\231c4511a93aaee277030df7862e8f5b\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:animated-vector-drawable:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-25.4.0.aar\231c4511a93aaee277030df7862e8f5b\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:support-vector-drawable:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.4.0.aar\077a670cedc9365eadd63199878429ae\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:support-vector-drawable:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-25.4.0.aar\077a670cedc9365eadd63199878429ae\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:transition:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\transition-25.4.0.aar\840b8a840b73f32b241cef30b2a6f8b5\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:transition:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\transition-25.4.0.aar\840b8a840b73f32b241cef30b2a6f8b5\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:support-v4:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-v4-25.4.0.aar\b48959983271ccf1c521b003b7785b93\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-v4:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-v4-25.4.0.aar\b48959983271ccf1c521b003b7785b93\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-fragment:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-fragment-25.4.0.aar\d96e13921840cd969376e20e657abcd5\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-fragment:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-fragment-25.4.0.aar\d96e13921840cd969376e20e657abcd5\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-core-ui:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.4.0.aar\6b06b63c40912399cb399173f16330a4\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-core-ui:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-ui-25.4.0.aar\6b06b63c40912399cb399173f16330a4\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-media-compat:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.4.0.aar\44e0db99afb82ae656aeff295c48e526\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-media-compat:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-media-compat-25.4.0.aar\44e0db99afb82ae656aeff295c48e526\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-core-utils:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.4.0.aar\4bfb487823d445bf9820262081d8ddab\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-core-utils:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-utils-25.4.0.aar\4bfb487823d445bf9820262081d8ddab\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-compat:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-compat-25.4.0.aar\a4624e76ccd1c8ecdcd8f5d2f8b0aa09\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-compat:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-compat-25.4.0.aar\a4624e76ccd1c8ecdcd8f5d2f8b0aa09\AndroidManifest.xml:26:9-28:38
-	android:value
-		ADDED from [com.android.support:design:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-25.4.0.aar\4f8e1c797606a8935c5e05f18f6b0dce\AndroidManifest.xml:28:13-35
-	android:name
-		ADDED from [com.android.support:design:25.4.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-25.4.0.aar\4f8e1c797606a8935c5e05f18f6b0dce\AndroidManifest.xml:27:13-51

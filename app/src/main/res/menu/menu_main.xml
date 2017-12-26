@@ -5,42 +5,6 @@
     tools:context=".activities.core.ActivityMain">
 
     <item
-        android:id="@+id/miSelect"
-        android:icon="@drawable/ic_select"
-        android:title="Select"
-        app:showAsAction="always"/>
-
-    <item
-        android:id="@+id/mnuNew"
-        android:icon="@drawable/ic_edit"
-        android:title="New Data"
-        app:showAsAction="always">
-
-        <menu>
-            <item
-                android:id="@+id/acNote"
-                android:icon="@drawable/ic_note"
-                android:orderInCategory="0"
-                android:title="New Note"
-                app:showAsAction="never"/>
-
-            <item
-                android:id="@+id/acPaymentInfo"
-                android:icon="@drawable/ic_test"
-                android:orderInCategory="0"
-                android:title="New Payment Information"
-                app:showAsAction="never"/>
-
-            <item
-                android:id="@+id/acLoginInfo"
-                android:icon="@drawable/ic_login"
-                android:orderInCategory="0"
-                android:title="New Login Credentials"
-                app:showAsAction="never"/>
-        </menu>
-    </item>
-
-    <item
         android:id="@+id/mnuOptions"
         android:icon="@drawable/ic_options"
         android:title="Options"
@@ -53,6 +17,12 @@
                 android:orderInCategory="0"
                 android:title="Settings"
                 app:showAsAction="never"/>
+
+            <!--<item-->
+                <!--android:id="@+id/acPlayground"-->
+                <!--android:orderInCategory="0"-->
+                <!--android:title="Crypto Playground"-->
+                <!--app:showAsAction="never"/>-->
 
             <item
                 android:id="@+id/acAbout"

@@ -6,7 +6,7 @@
 
     <item
         android:id="@+id/miSave"
-        android:icon="@drawable/ic_test"
+        android:icon="@drawable/ic_save"
 
         android:orderInCategory="100"
         android:title="Save"
