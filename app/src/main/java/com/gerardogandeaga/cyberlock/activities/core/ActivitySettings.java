@@ -347,8 +347,7 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
     }
     @Override public void onBackPressed() {
         super.onBackPressed();
-        if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
-        {
+        if (ACTIVITY_INTENT == null) { // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
             ACTIVITY_INTENT = new Intent(this, ActivityMain.class);
             this.finish();
             this.startActivity(ACTIVITY_INTENT);

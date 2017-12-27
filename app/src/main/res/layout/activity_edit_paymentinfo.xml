@@ -64,7 +64,6 @@
                         android:ems="10"
                         android:inputType="textPersonName"
                         android:maxLines="1"
-                        android:textAlignment="textStart"
                         android:textAppearance="@style/myText.Edit.Content"/>
 
                 </LinearLayout>

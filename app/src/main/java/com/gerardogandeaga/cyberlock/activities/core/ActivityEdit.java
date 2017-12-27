@@ -300,7 +300,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
 
             mColour = mContentHandler.mTag;
             // Set name, number, expiry, cvv, cardType
-            mEtCardName.setText(mContentHandler.mName);
+            mEtCardName.setText(mContentHandler.mHolder);
             mEtCardNumber.setText(mContentHandler.mNumber);
             mEtCardExpire.setText(mContentHandler.mExpiry);
             mEtCardCVV.setText(mContentHandler.mCVV);

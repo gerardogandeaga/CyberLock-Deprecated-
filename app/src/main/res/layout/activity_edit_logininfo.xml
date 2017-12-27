@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:elevation="2dp"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -40,9 +41,10 @@
                     app:srcCompat="@drawable/graphic_login_url"/>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
@@ -74,28 +76,30 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/graphic_login_password"/>
+                    app:srcCompat="@drawable/graphic_login_email"/>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="3dp"
-                        android:text="Password"
+                        android:text="Email"
                         android:textSize="16sp"/>
 
                     <EditText
-                        android:id="@+id/etPassword"
+                        android:id="@+id/etEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="text|textVisiblePassword"
+                        android:inputType="text|textEmailAddress|textWebEmailAddress"
                         android:textAppearance="@style/myText.Edit.Content"/>
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -113,9 +117,10 @@
                     app:srcCompat="@drawable/graphic_login_username"/>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
@@ -134,6 +139,7 @@
                         android:textAppearance="@style/myText.Edit.Content"/>
 
                 </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -146,27 +152,28 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/graphic_login_email"/>
+                    app:srcCompat="@drawable/graphic_login_password"/>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="3dp"
-                        android:text="Email"
+                        android:text="Password"
                         android:textSize="16sp"/>
 
                     <EditText
-                        android:id="@+id/etEmail"
+                        android:id="@+id/etPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="text|textEmailAddress|textWebEmailAddress"
+                        android:inputType="text|textVisiblePassword"
                         android:textAppearance="@style/myText.Edit.Content"/>
 
                 </LinearLayout>

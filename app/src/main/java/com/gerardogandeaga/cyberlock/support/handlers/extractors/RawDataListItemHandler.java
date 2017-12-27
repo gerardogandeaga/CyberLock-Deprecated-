@@ -31,6 +31,8 @@ public class RawDataListItemHandler {
                     new DataItemView()
                             .withIdentifier((long) (i + 1))
                             .withRawDataPackage(rawDataPackage)
+                            .withType(rawDataPackage.getType(cc))
+
                             .withLabel(rawDataPackage.getLabel(cc))
                             .withContent(getUnbindedContent(cc, rawDataPackage, rawDataPackage.getContent(cc)))
                             .withDate(rawDataPackage.getDate())
@@ -68,21 +70,16 @@ public class RawDataListItemHandler {
         return note.toString();
     }
     private String parsePaymentInfoContent(String content) {
-        String name;
+        String holder;
         String number;
         
         Scanner scanner = new Scanner(content);
-        name = scanner.nextLine();
+        holder = scanner.nextLine();
         number = scanner.nextLine();
         scanner.close();
-        //
-        String format = "";
-        // Check if strings are empty
-        if (!name.isEmpty()) format = name;
-        if (!number.isEmpty()) if (format.isEmpty()) format = number; else format += "\n" + number;
-        if (format.isEmpty()) format = "No Preview RawDataPackage!"; // if there is no preview content
 
-        return format;
+        final String format = "%s\n%s";
+        return String.format(format, holder, censorNumber(number));
     }
     private String parseLoginInfoContent(String content) {
         String url;
@@ -94,15 +91,9 @@ public class RawDataListItemHandler {
         email = scanner.nextLine();
         username = scanner.nextLine();
         scanner.close();
-        //
-        String format = "";
-        // Check if strings are empty
-        if (!url.isEmpty()) format = url;
-        if (!email.isEmpty()) { if (format.isEmpty()) format = email; else format += "\n" + email; }
-        if (!username.isEmpty()) { if (format.isEmpty()) format = username; else format += "\n" + username; }
-        if (format.isEmpty()) format = "No Preview RawDataPackage!"; // if there is no preview content
 
-        return format;
+        final String format = "%s\n%s\n%s";
+        return String.format(format, url, email, username);
     }
     // ---------------------------
 
@@ -117,7 +108,20 @@ public class RawDataListItemHandler {
             default:           return mContext.getResources().getColor(R.color.ct_default);
         }
     }
-    //
+
+    private String censorNumber(String number) {
+        if (number.length() > 4) {
+            StringBuilder tmp = new StringBuilder();
+            for (int i = 0; i < number.length(); i++) {
+                if (i == (number.length() - 4)) {
+                    return tmp.append(number.substring(i, number.length())).toString();
+                }
+                tmp.append("*");
+            }
+        }
+        return number;
+    }
+
     private Drawable getCardImage(String content) {
         String cardType;
         Drawable factoryIcon = null;

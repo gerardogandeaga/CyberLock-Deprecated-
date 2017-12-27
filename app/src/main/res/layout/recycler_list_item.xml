@@ -16,7 +16,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_item_ripple"
         android:orientation="vertical">
 
         <ImageView
@@ -28,46 +27,119 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tvLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:minLines="1"
+                android:text="Label"
+                android:textAppearance="@style/myText.List.Label"/>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/Note"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_weight="1"
                 android:gravity="bottom"
-                android:orientation="vertical"
-                android:padding="5dp">
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:minLines="1"
-                    android:text="Label"
-                    android:textAppearance="@style/myText.List.Label"/>
-
-                <TextView
-                    android:id="@+id/tvContent"
+                    android:id="@+id/tvNote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="2"
-                    android:minLines="2"
                     android:text="Content"
                     android:textAppearance="@style/myText.List.Content"/>
 
-                <TextView
-                    android:id="@+id/tvDate"
-                    android:layout_width="wrap_content"
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/PaymentInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:minLines="1"
-                    android:text="Date"
-                    android:textAppearance="@style/myText.List.Date"/>
+                    android:layout_gravity="top"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvHolder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="Holder"
+                        android:textAppearance="@style/myText.List.Content"/>
+
+                    <TextView
+                        android:id="@+id/tvNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="Number"
+                        android:textAppearance="@style/myText.List.Content"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgCardIcon"
+                    android:layout_width="56dp"
+                    android:layout_height="37dp"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/card_default"/>
 
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LoginInfo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="Url"
+                    android:textAppearance="@style/myText.List.Content"/>
+
+                <TextView
+                    android:id="@+id/tvEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="Email"
+                    android:textAppearance="@style/myText.List.Content"/>
+
+                <TextView
+                    android:id="@+id/tvUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="Username"
+                    android:textAppearance="@style/myText.List.Content"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:minLines="1"
+                android:text="Date"
+                android:textAppearance="@style/myText.List.Date"/>
 
         </LinearLayout>
 

@@ -6,10 +6,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
+import com.gerardogandeaga.cyberlock.support.ViewHandler;
 import com.gerardogandeaga.cyberlock.support.handlers.selection.graphic.AdapterItemGraphics;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
@@ -17,18 +19,21 @@ import com.mikepenz.materialize.holder.StringHolder;
 import com.mikepenz.materialize.util.UIUtils;
 
 import java.util.List;
+import java.util.Scanner;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DataItemView extends AbstractItem<DataItemView, DataItemView.ViewHolder> {
     public RawDataPackage mRawDataPackage;
+    private String mType;
 
     // List information
     private StringHolder mLabel;
-    private StringHolder mContent;
     private StringHolder mDate;
     private int mTag;
+
+    private StringHolder mContent;
     private Drawable mCardType;
 
     // View holder class
@@ -36,12 +41,26 @@ public class DataItemView extends AbstractItem<DataItemView, DataItemView.ViewHo
         @NonNull protected View View;
 
         @BindView(R.id.cardView)     CardView  CardView;
+        @BindView(R.id.Note)         LinearLayout Note;
+        @BindView(R.id.PaymentInfo)  LinearLayout PaymentInfo;
+        @BindView(R.id.LoginInfo)    LinearLayout LoginInfo;
+
         @BindView(R.id.tvLabel)      TextView  Label;
-        @BindView(R.id.tvContent)    TextView  Content;
         @BindView(R.id.tvDate)       TextView  Date;
         @BindView(R.id.imgColourTag) ImageView Tag;
 
-        ViewHolder(View view) {
+        // Note
+        @BindView(R.id.tvNote)    TextView Notes;
+        // PaymentInfo
+        @BindView(R.id.tvHolder)     TextView  Holder;
+        @BindView(R.id.tvNumber)     TextView  Number;
+        @BindView(R.id.imgCardIcon)  ImageView CardIcon;
+        // LoginInfo
+        @BindView(R.id.tvUrl)        TextView  Url;
+        @BindView(R.id.tvEmail)      TextView  Email;
+        @BindView(R.id.tvUsername)   TextView  Username;
+
+        ViewHolder(@NonNull View view) {
             super(view);
             ButterKnife.bind(this, view);
             this.View = view;
@@ -49,39 +68,94 @@ public class DataItemView extends AbstractItem<DataItemView, DataItemView.ViewHo
 
         // Binding and unbinding
         @Override
-        public void bindView(DataItemView item, List<Object> payloads) {
+        public void bindView(@NonNull DataItemView item,@NonNull List<Object> payloads) {
             //get the context
             Context ctx = itemView.getContext();
-
             UIUtils.setBackground(View, AdapterItemGraphics.getItemDrawableStates(ctx, R.color.white, R.color.c_yellow_20, true));
 
+            ViewHandler.setLinearLayoutVisibility(Note, PaymentInfo, LoginInfo, item.mType);
+
             // Bind our data to the view
-            StringHolder.applyTo(item.mLabel, Label);
-            StringHolder.applyTo(item.mContent, Content);
-            StringHolder.applyTo(item.mDate, Date);
+            ViewHandler.setOrHideTextView(item.mLabel, Label);
+            ViewHandler.setOrHideTextView(item.mDate, Date);
+            filterContent(item);
 
-
-            // Image filter for tag
+            // Images
             Tag.setVisibility(android.view.View.VISIBLE);
             Tag.setBackgroundColor(item.mTag);
-            // If there is a card type
-            if (item.mCardType != null) {
-                Content.setCompoundDrawables(null, null, item.mCardType, null);
-            }
         }
 
         @Override
-        public void unbindView(DataItemView item) {
-            // Clear view text
+        public void unbindView(@NonNull DataItemView item) {
+            // Nullify Views
             Label.setText(null);
-            Content.setText(null);
             Date.setText(null);
+
+            Notes.setText(null);
+
+            Holder.setText(null);
+            Number.setText(null);
+            CardIcon.setImageDrawable(null);
+
+            Url.setText(null);
+            Email.setText(null);
+            Username.setText(null);
+
+            // Reset visibility
+            Note.setVisibility(android.view.View.GONE);
+            PaymentInfo.setVisibility(android.view.View.GONE);
+            LoginInfo.setVisibility(android.view.View.GONE);
+
+            // TextViews
+            Label.setVisibility(android.view.View.GONE);
+            Date.setVisibility(android.view.View.GONE);
+
+            Notes.setVisibility(android.view.View.GONE);
+
+            Holder.setVisibility(android.view.View.GONE);
+            Number.setVisibility(android.view.View.GONE);
+
+            Url.setVisibility(android.view.View.GONE);
+            Email.setVisibility(android.view.View.GONE);
+            Username.setVisibility(android.view.View.GONE);
+
+            // ImageViews
+            CardIcon.setVisibility(android.view.View.GONE);
 
             item.getViewHolder(View);
 
             // Clear graphics
             Tag.setVisibility(android.view.View.INVISIBLE);
-            Content.setCompoundDrawables(null, null, null, null);
+        }
+
+        // Filter content
+        private void filterContent(DataItemView item) {
+            Scanner scanner = new Scanner(item.mContent.toString());
+            switch(item.mType) {
+                case "TYPE_NOTE":
+                    ViewHandler.setOrHideTextView(item.mContent, Notes);
+                    break;
+                case "TYPE_PAYMENTINFO":
+                    String holder = "", number = "";
+                    if (scanner.hasNextLine()) holder = scanner.nextLine();
+                    if (scanner.hasNextLine()) number = scanner.nextLine();
+
+                    ViewHandler.setOrHideTextView(holder, Holder);
+                    ViewHandler.setOrHideTextView(number, Number);
+                    ViewHandler.setOrHideImageView(item.mCardType, CardIcon);
+                    break;
+                case "TYPE_LOGININFO":
+                    String url = "", email = "", username = "";
+                    if (scanner.hasNextLine()) url = scanner.nextLine();
+                    if (scanner.hasNextLine()) email = scanner.nextLine();
+                    if (scanner.hasNextLine()) username = scanner.nextLine();
+
+                    ViewHandler.setOrHideTextView(url, Url);
+                    ViewHandler.setOrHideTextView(email, Email);
+                    ViewHandler.setOrHideTextView(username, Username);
+                    break;
+            }
+            scanner.close();
         }
     }
 
@@ -90,12 +164,13 @@ public class DataItemView extends AbstractItem<DataItemView, DataItemView.ViewHo
         this.mRawDataPackage = rawDataPackage;
         return this;
     }
-    public DataItemView withLabel(String label) {
-        this.mLabel = new StringHolder(label);
+
+    public DataItemView withType(String type) {
+        this.mType = type;
         return this;
     }
-    public DataItemView withContent(String content) {
-        this.mContent = new StringHolder(content);
+    public DataItemView withLabel(String label) {
+        this.mLabel = new StringHolder(label);
         return this;
     }
     public DataItemView withDate(String date) {
@@ -106,7 +181,12 @@ public class DataItemView extends AbstractItem<DataItemView, DataItemView.ViewHo
         this.mTag = tag;
         return this;
     }
-    //
+
+    public DataItemView withContent(String note) {
+        this.mContent = new StringHolder(note);
+        return this;
+    }
+
     public DataItemView withCardIcon(Drawable cardType) {
         this.mCardType = cardType;
         return this;

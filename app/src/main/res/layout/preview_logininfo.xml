@@ -18,14 +18,16 @@
         android:weightSum="1">
 
         <LinearLayout
+            android:id="@+id/Url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
                 app:srcCompat="@drawable/graphic_login_url"/>
 
             <LinearLayout
@@ -55,14 +57,16 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/Email"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
                 app:srcCompat="@drawable/graphic_login_email"/>
 
             <LinearLayout
@@ -92,14 +96,16 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/Username"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
                 app:srcCompat="@drawable/graphic_login_username"/>
 
             <LinearLayout
@@ -128,14 +134,16 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/Password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
                 app:srcCompat="@drawable/graphic_login_password"/>
 
             <LinearLayout
@@ -165,6 +173,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/Notes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"

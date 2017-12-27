@@ -18,7 +18,7 @@ public class ContentHandler {
 
     public String mNote;
 
-    public String mName;
+    public String mHolder;
     public String mNumber;
     public String mCardType;
     public String mExpiry;
@@ -93,7 +93,7 @@ public class ContentHandler {
         }
         scanner.close();
 
-        mName = name;
+        mHolder = name;
         mNumber = number;
         mCardType = cardType;
         mExpiry = expiry;

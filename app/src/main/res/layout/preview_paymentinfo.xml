@@ -17,6 +17,7 @@
         android:padding="10dp">
 
         <LinearLayout
+            android:id="@+id/Holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -24,8 +25,8 @@
 
             <ImageView
                 android:id="@+id/imgHolder"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
                 app:srcCompat="@drawable/graphic_card_holder"/>
 
@@ -53,14 +54,16 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/Number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
                 app:srcCompat="@drawable/graphic_card_number"/>
 
             <LinearLayout
@@ -89,14 +92,16 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/Expiry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
                 app:srcCompat="@drawable/graphic_card_expiry"/>
 
             <LinearLayout
@@ -126,14 +131,16 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/CVV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
                 app:srcCompat="@drawable/graphic_card_code"/>
 
             <LinearLayout
@@ -163,14 +170,16 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/CardType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
                 app:srcCompat="@drawable/graphic_card_type"/>
 
             <LinearLayout
@@ -210,6 +219,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/Notes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
