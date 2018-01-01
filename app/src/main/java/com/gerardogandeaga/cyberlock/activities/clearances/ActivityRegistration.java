@@ -23,6 +23,7 @@ import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.support.Globals.CRYPT_ALGO;
 import static com.gerardogandeaga.cyberlock.support.Globals.IS_REGISTERED;
 import static com.gerardogandeaga.cyberlock.support.Globals.PASSCODE;
+import static com.gerardogandeaga.cyberlock.support.Globals.THEME;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
 
 public class ActivityRegistration extends AppCompatActivity {
@@ -124,6 +125,7 @@ public class ActivityRegistration extends AppCompatActivity {
 
                     // INITIAL SETTINGS
                     mSharedPreferences.edit().putBoolean(AUTOSAVE, false).apply();
+                    mSharedPreferences.edit().putInt(THEME, 0).apply();
 
                     Intent i = new Intent(ActivityRegistration.this, ActivityLogin.class);
                     ActivityRegistration.this.startActivity(i);

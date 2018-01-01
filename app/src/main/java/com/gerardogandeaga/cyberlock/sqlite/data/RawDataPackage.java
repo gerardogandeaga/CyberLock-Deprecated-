@@ -103,7 +103,7 @@ public class RawDataPackage implements Serializable {
         this.mContent = cryptoContent.encrypt(content, masterKey);
     }
     public String getShortNoteText(Context context, String text) {
-        float widthSp = (context.getResources().getDisplayMetrics().widthPixels / (4 * context.getResources().getDisplayMetrics().scaledDensity));
+        float widthSp = (context.getResources().getDisplayMetrics().widthPixels / (((int) 3.5) * context.getResources().getDisplayMetrics().scaledDensity));
         int finalWidth = (int) widthSp;
 
         String temp = text.replaceAll("\n", " ");

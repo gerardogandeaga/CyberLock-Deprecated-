@@ -2,6 +2,7 @@ package com.gerardogandeaga.cyberlock.activities.core;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,8 +11,10 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -25,10 +28,12 @@ import com.gerardogandeaga.cyberlock.activities.dialogs.DialogDataPreview;
 import com.gerardogandeaga.cyberlock.sqlite.data.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
 import com.gerardogandeaga.cyberlock.support.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.support.adapter.DataItemView;
 import com.gerardogandeaga.cyberlock.support.graphics.DrawableColours;
-import com.gerardogandeaga.cyberlock.support.handlers.extractors.RawDataListItemHandler;
+import com.gerardogandeaga.cyberlock.support.graphics.Themes;
+import com.gerardogandeaga.cyberlock.support.handlers.extractors.RecyclerViewItemDataHandler;
 import com.gerardogandeaga.cyberlock.support.handlers.selection.AdapterItemHandler;
+import com.gerardogandeaga.cyberlock.support.recyclerview.decorations.RecyclerViewPaddingItemDecoration;
+import com.gerardogandeaga.cyberlock.support.recyclerview.items.RecyclerViewItem;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.mikepenz.fastadapter.IAdapter;
@@ -38,20 +43,24 @@ import com.mikepenz.fastadapter.listeners.OnLongClickListener;
 
 import java.util.List;
 
+import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.support.Globals.RV_FORMAT;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mIsCountDownTimerFinished;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mIsCountDownTimerFinished;
 
 public class ActivityMain extends AppCompatActivity implements View.OnClickListener {
     private Context mContext = this;
+    private SharedPreferences mSharedPreferences;
 
     // Adapter
-    private FastItemAdapter<DataItemView> mFastItemAdapter;
+    private FastItemAdapter<RecyclerViewItem> mFastItemAdapter;
     private View mView;
 
     // Views
     private Menu mMenu;
+    private RecyclerView mRecyclerView;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
@@ -59,8 +68,10 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     // Initial on create methods
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Themes.setTheme(this);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         ACTIVITY_INTENT = null;
+        this.mSharedPreferences = this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
         super.onCreate(savedInstanceState);
 
         View view = View.inflate(this, R.layout.activity_main, null);
@@ -85,9 +96,9 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         mFastItemAdapter.withSelectOnLongClick(true);
 
         // Item Listeners
-        this.mFastItemAdapter.withOnClickListener(new OnClickListener<DataItemView>() {
+        this.mFastItemAdapter.withOnClickListener(new OnClickListener<RecyclerViewItem>() {
             @Override
-            public boolean onClick(@NonNull View view, @NonNull IAdapter<DataItemView> adapter, @NonNull DataItemView item, int position) {
+            public boolean onClick(@NonNull View view, @NonNull IAdapter<RecyclerViewItem> adapter, @NonNull RecyclerViewItem item, int position) {
                 // Perform normal on click if it is active and if it return false then continue to next step
                 if (!AdapterItemHandler.onClick(mFastItemAdapter, item, position)) {
                     new DialogDataPreview(mContext, item.mRawDataPackage).initializeDialog();
@@ -104,9 +115,9 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                 return true;
             }
         });
-        this.mFastItemAdapter.withOnLongClickListener(new OnLongClickListener<DataItemView>() {
+        this.mFastItemAdapter.withOnLongClickListener(new OnLongClickListener<RecyclerViewItem>() {
             @Override
-            public boolean onLongClick(@NonNull View view, @NonNull IAdapter<DataItemView> adapter, @NonNull DataItemView item, int position) {
+            public boolean onLongClick(@NonNull View view, @NonNull IAdapter<RecyclerViewItem> adapter, @NonNull RecyclerViewItem item, int position) {
                 if (!AdapterItemHandler.isActive()) {
                     AdapterItemHandler.onLongClick(mFastItemAdapter, item, position);
                     onCreateOptionsMenu(mMenu);
@@ -123,13 +134,26 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         });
 
         // Setup and configure RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(mFastItemAdapter);
+        LinearLayoutManager linearLayoutManager =
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        StaggeredGridLayoutManager staggeredGridLayoutManager =
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+
+        mRecyclerView = findViewById(R.id.recyclerView);
+        // Set layout format
+        switch (mSharedPreferences.getString(RV_FORMAT, "")) {
+            case "RV_STAGGEREDGRID":
+                mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+                mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(8, false)); break;
+            default:
+                mRecyclerView.setLayoutManager(linearLayoutManager);
+                mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(8, true));break;
+        }
+        mRecyclerView.setAdapter(mFastItemAdapter); // Set adapter
 
         // Derive adapter DataItems from rawDataPackageList
-        List<DataItemView> dataItemViewList = new RawDataListItemHandler().getDataItems(this, rawDataPackageList);
-        mFastItemAdapter.add(dataItemViewList);
+        List<RecyclerViewItem> recyclerViewItemList = new RecyclerViewItemDataHandler().getDataItems(this, rawDataPackageList);
+        mFastItemAdapter.add(recyclerViewItemList);
 
 
         FloatingActionMenu actionMenu = findViewById(R.id.fabAdd);
@@ -154,8 +178,14 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         // Check is multi select mode is active
         if (!AdapterItemHandler.isActive()) { // If not in multi select mode
             getMenuInflater().inflate(R.menu.menu_main, mMenu);         // Inflate main menu
+            MenuItem linear = menu.findItem(R.id.acListLinear);
+            MenuItem grid = menu.findItem(R.id.acListStaggeredGrid);
+            switch (mSharedPreferences.getString(RV_FORMAT, "")) {
+                case "RV_STAGGEREDGRID": grid.setChecked(true); break;
+                default:                 linear.setChecked(true); break;
+            }
         } else { // If multi select mode is active
-            getMenuInflater().inflate(R.menu.menu_multiselect, mMenu);  // Inflate multi select menu
+            getMenuInflater().inflate(R.menu.menu_delete, mMenu);  // Inflate multi select menu
         }
 
         if (mMenu.hasVisibleItems()) {
@@ -168,28 +198,29 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     private void setupSupportActionBar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false); // true
         getSupportActionBar().setHomeButtonEnabled(false);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setTitle(null);
+        getSupportActionBar().setSubtitle(null);
 
-        // Drawer Layout
-        this.mDrawerLayout = findViewById(R.id.Data);
-        this.mNavigationView = findViewById(R.id.NavigationContent);
-        this.mDrawerToggle = new ActionBarDrawerToggle(this, this.mDrawerLayout, R.string.DRAWER_OPEN, R.string.DRAWER_CLOSE);
-        this.mDrawerToggle.setDrawerIndicatorEnabled(false);
-        //
-        getSupportActionBar().setHomeAsUpIndicator(DrawableColours.mutateHomeAsUpIndicatorDrawable(
-                this, this.getResources().getDrawable(R.drawable.ic_drawer)));
-
-        computeNavViewSize();
-        this.mDrawerToggle.syncState();
-        this.mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                return false;
-            }
-        });
+//        // Drawer Layout
+//        this.mDrawerLayout = findViewById(R.id.Data);
+//        this.mNavigationView = findViewById(R.id.NavigationContent);
+//        this.mDrawerToggle = new ActionBarDrawerToggle(this, this.mDrawerLayout, R.string.DRAWER_OPEN, R.string.DRAWER_CLOSE);
+//        this.mDrawerToggle.setDrawerIndicatorEnabled(false);
+//        //
+//        getSupportActionBar().setHomeAsUpIndicator(DrawableColours.mutateHomeAsUpIndicatorDrawable(
+//                this, this.getResources().getDrawable(R.drawable.ic_drawer)));
+//
+//        computeNavViewSize();
+//        this.mDrawerToggle.syncState();
+//        this.mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                return false;
+//            }
+//        });
     }
     private void resetSupportActionBar() {
         getSupportActionBar().setTitle(null);
@@ -217,11 +248,42 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         this.mNavigationView.setLayoutParams(params);
     }
 
+    private void removeRecyclerViewDecorations() {
+        if (mRecyclerView != null) {
+            if (mRecyclerView.getItemDecorationCount() != 0) {
+                for (int i = 0; i < mRecyclerView.getItemDecorationCount(); i++) {
+                    mRecyclerView.removeItemDecorationAt(i);
+                }
+            }
+        }
+    }
+
     // Global clicks
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (this.mDrawerToggle.onOptionsItemSelected(item)) return true;
+//        if (this.mDrawerToggle.onOptionsItemSelected(item)) return true;
         switch (item.getItemId()) {
+            // Options
+            case R.id.acSettings: onSettings(); return true;
+
+            // List layouts
+            case R.id.acListLinear:
+                if (mSharedPreferences.getString(RV_FORMAT, "").matches("RV_LINEAR")) return true;
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+                removeRecyclerViewDecorations();
+                mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(8, true));
+                item.setChecked(true);
+                mSharedPreferences.edit().putString(RV_FORMAT, "RV_LINEAR").apply();
+                return true;
+            case R.id.acListStaggeredGrid:
+                if (mSharedPreferences.getString(RV_FORMAT, "").matches("RV_STAGGEREDGRID")) return true;
+                mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager( 2, GridLayoutManager.VERTICAL));
+                removeRecyclerViewDecorations();
+                mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(8, false));
+                item.setChecked(true);
+                mSharedPreferences.edit().putString(RV_FORMAT, "RV_STAGGEREDGRID").apply();
+                return true;
+
             // Misc
             case android.R.id.home:
                 if (!AdapterItemHandler.isActive()) {
@@ -241,14 +303,6 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                 onCreateOptionsMenu(mMenu);
                 resetSupportActionBar();
                 return true;
-
-            // New sub menu
-//            case R.id.acNote:        onAddClicked("TYPE_NOTE"); return true;
-//            case R.id.acPaymentInfo: onAddClicked("TYPE_PAYMENTINFO"); return true;
-//            case R.id.acLoginInfo:   onAddClicked("TYPE_LOGININFO"); return true;
-
-            // Options sub menu
-            case R.id.acSettings: onSettings(); return true;
         }
         return super.onOptionsItemSelected(item);
     }

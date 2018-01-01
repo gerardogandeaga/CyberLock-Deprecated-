@@ -6,7 +6,6 @@
     android:id="@+id/Content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/c_gray_10"
     android:orientation="vertical"
     tools:context=".activities.core.ActivityEdit">
 
@@ -15,11 +14,9 @@
     <include layout="@layout/child_edit_label"/>
 
     <ScrollView
-        android:id="@+id/Data"
+        android:id="@+id/Content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/MainInfo"
@@ -217,7 +214,7 @@
                         android:text="Card Type"
                         android:textSize="16sp"/>
 
-                    <Spinner
+                    <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/spCardSelect"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

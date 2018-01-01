@@ -6,16 +6,16 @@ import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.sqlite.data.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
-import com.gerardogandeaga.cyberlock.support.adapter.DataItemView;
+import com.gerardogandeaga.cyberlock.support.recyclerview.items.RecyclerViewItem;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 
 import java.util.ArrayList;
 
 public class UndoHelper {
     private Context mContext;
-    private FastItemAdapter<DataItemView> mFastItemAdapter;
+    private FastItemAdapter<RecyclerViewItem> mFastItemAdapter;
     private ArrayList<RawDataPackage> mTempDataPackageArray;
-    private ArrayList<DataItemView> mItemViewArray;
+    private ArrayList<RecyclerViewItem> mItemViewArray;
 
     private CountDownTimer mCountDownTimer;
 
@@ -23,7 +23,7 @@ public class UndoHelper {
         this.mContext = context;
     }
 
-    public void populateTempArray(FastItemAdapter<DataItemView> fastItemAdapter, ArrayList<RawDataPackage> dataPackages, ArrayList<DataItemView> items) {
+    public void populateTempArray(FastItemAdapter<RecyclerViewItem> fastItemAdapter, ArrayList<RawDataPackage> dataPackages, ArrayList<RecyclerViewItem> items) {
         this.mFastItemAdapter = fastItemAdapter;
         this.mTempDataPackageArray = dataPackages;
         this.mItemViewArray = items;
@@ -41,7 +41,7 @@ public class UndoHelper {
                 masterDatabaseAccess.save(mTempDataPackageArray.get(i));
 
                 // Re-input into adapter
-                DataItemView item = mItemViewArray.get(i);
+                RecyclerViewItem item = mItemViewArray.get(i);
                 item.withSetSelected(false);
                 int index = (int) (item.getIdentifier() - 1L);
                 mFastItemAdapter.add(index, item);

@@ -1,34 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--<item name="colorPrimaryDark">#ffffff</item>-->
+    <!--<item name="colorPrimary">#ffffff</item>-->
+    <!--<item name="colorAccent">#ffffff</item>-->
+    <!--<item name="colorHighlight">#ffffff</item>-->
+
     <!-- Constants -->
     <color name="white">#ffffff</color>
     <color name="black">#131313</color>
+
+    <!-- Whites -->
+    <color name="c_white_10">#faf4ed</color>
+    <color name="c_white_20">#f7ede1</color>
 
     <!-- Gray -->
     <color name="c_gray_0">#f9f9f9</color>
     <color name="c_gray_10">#e5e5e5</color>
     <color name="c_gray_20">#e1e1e1</color>
-    <color name="c_gray_30">#a5a5a5</color>
+    <color name="c_gray_30">#c4c4c4</color>
     <color name="c_gray_40">#8f8f8f</color>
+    <color name="c_gray_70">#303638</color>
+    <color name="c_gray_80">#262626</color>
 
     <!-- Green -->
+    <color name="c_green_30">#31c748</color>
     <color name="c_green_70">#218330</color>
 
     <!-- Blue -->
+    <color name="c_blue_80">#0f3e61</color>
     <color name="c_blue_90">#09263c</color>
 
-    <!-- Red -->
-
     <!-- Yellow -->
-    <color name="c_yellow_20">#fffad6</color>
-    <color name="c_yellow_30">#e2dcac</color>
+    <color name="c_yellow_20">#fffae3</color>
     <color name="c_yellow_40">#fdff9b</color>
+    <color name="c_yellow_50">#e2dcac</color>
+
+    <!-- Red -->
+    <color name="c_red_10">#ffcfcf</color>
+    <color name="c_red_80">#b92b3c</color>
 
     <!-- Purple -->
 
     <!-- Orange -->
-    <color name="c_orange_60">#e66021</color>
-    <color name="c_orange_70">#cf4301</color>
+    <color name="c_orange_60">#e2903d</color>
+    <color name="c_orange_70">#bf6f1f</color>
+    <color name="c_orange_80">#cf4301</color>
 
     <!-- Pink -->
     <color name="c_pink_40">#ef5661</color>
@@ -36,10 +52,13 @@
 
     <!-- Colour Tags -->
     <color name="ct_default">#d5d5d5</color>
-    <color name="ct_blue">#196ed6</color>
-    <color name="ct_red">#de2926</color>
-    <color name="ct_green">#1dc444</color>
-    <color name="ct_yellow">#e2e216</color>
-    <color name="ct_purple">#964bc9</color>
+    <color name="ct_blue">#536eb9</color>
+    <color name="ct_red">#d94f3a</color>
+    <color name="ct_green">#10b367</color>
+    <color name="ct_yellow">#f1d44a</color>
+    <color name="ct_purple">#b71f96</color>
     <color name="ct_orange">#e7892a</color>
+
+    <!-- Translucent-->
+    <color name="tr_orange_60">#f0e2903d</color>
 </resources>

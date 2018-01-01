@@ -3,6 +3,7 @@ package com.gerardogandeaga.cyberlock.activities.dialogs;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.gerardogandeaga.cyberlock.R;
@@ -48,7 +49,7 @@ public class DialogColourTag implements View.OnClickListener {
         builder.setView(dv);
         // Dialog show
         this.mAlertDialog = builder.show();
-//        this.mAlertDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        this.mAlertDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     @Override

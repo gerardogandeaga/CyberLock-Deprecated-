@@ -14,19 +14,19 @@ import org.jetbrains.annotations.Contract;
 public class DrawableColours {
     @NonNull
     public static Drawable mutateHomeAsUpIndicatorDrawable(Context context, Drawable drawable) {
-        drawable.mutate().setColorFilter(getWhite(context), getMode());
+        drawable.mutate().setColorFilter(getColour(context), getMode());
         return drawable;
     }
 
     public static void mutateMenuItems(Context context, Menu menu) {
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
-            item.getIcon().mutate().setColorFilter(getWhite(context), getMode());
+            item.getIcon().mutate().setColorFilter(getColour(context), getMode());
         }
     }
 
-    public static int getWhite(Context context) {
-        return context.getResources().getColor(R.color.white);
+    public static int getColour(Context context) {
+        return context.getResources().getColor(R.color.c_red_80);
     }
 
     @Contract(pure = true)

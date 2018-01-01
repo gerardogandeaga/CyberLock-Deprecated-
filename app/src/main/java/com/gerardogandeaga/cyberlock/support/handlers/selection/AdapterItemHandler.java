@@ -9,7 +9,7 @@ import android.view.View;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.sqlite.data.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
-import com.gerardogandeaga.cyberlock.support.adapter.DataItemView;
+import com.gerardogandeaga.cyberlock.support.recyclerview.items.RecyclerViewItem;
 import com.gerardogandeaga.cyberlock.support.handlers.selection.undo.UndoHelper;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 
@@ -25,13 +25,13 @@ public class AdapterItemHandler {
     @SuppressLint("StaticFieldLeak")
     private static UndoHelper mUndoHelper;
 
-    public static void onLongClick(FastItemAdapter<DataItemView> fastItemAdapter, DataItemView item, int position) {
+    public static void onLongClick(FastItemAdapter<RecyclerViewItem> fastItemAdapter, RecyclerViewItem item, int position) {
         mIsActive = true;
         mRawDataPackageList = new ArrayList<>();
         onClick(fastItemAdapter, item, position);
     }
 
-    public static boolean onClick(FastItemAdapter<DataItemView> fastItemAdapter, DataItemView item, int position) {
+    public static boolean onClick(FastItemAdapter<RecyclerViewItem> fastItemAdapter, RecyclerViewItem item, int position) {
         if (mIsActive) {
             RawDataPackage rawDataPackage = item.mRawDataPackage;
 
@@ -51,9 +51,9 @@ public class AdapterItemHandler {
         return false;
     }
 
-    public static void onDelete(Context context, FastItemAdapter<DataItemView> fastItemAdapter, View view) {
+    public static void onDelete(Context context, FastItemAdapter<RecyclerViewItem> fastItemAdapter, View view) {
         if (mIsActive && (!mRawDataPackageList.isEmpty() || mRawDataPackageList == null)) {
-            ArrayList<DataItemView> selectedItems = new ArrayList<>(fastItemAdapter.getSelectedItems());
+            ArrayList<RecyclerViewItem> selectedItems = new ArrayList<>(fastItemAdapter.getSelectedItems());
 
             mUndoHelper = new UndoHelper(context);
             mUndoHelper.populateTempArray(fastItemAdapter, mRawDataPackageList, selectedItems);
@@ -75,7 +75,7 @@ public class AdapterItemHandler {
         }
     }
 
-    public static void cancel(FastItemAdapter<DataItemView> fastItemAdapter) {
+    public static void cancel(FastItemAdapter<RecyclerViewItem> fastItemAdapter) {
         for (int i = 0; i < fastItemAdapter.getItemCount(); i++) {
             fastItemAdapter.deselect(i);
         }
@@ -117,7 +117,7 @@ public class AdapterItemHandler {
 
         // Snack bar
         Snackbar snackbar = Snackbar.make(view, mCount + s, Snackbar.LENGTH_LONG);
-        snackbar.setActionTextColor(view.getContext().getResources().getColor(R.color.c_yellow_20));
+        snackbar.setActionTextColor(view.getContext().getResources().getColor(R.color.c_red_80));
         snackbar.setAction("Undo", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

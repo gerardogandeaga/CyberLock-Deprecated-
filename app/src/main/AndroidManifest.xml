@@ -15,7 +15,7 @@
         android:logo="@drawable/ic_back"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/MainTheme">
+        android:theme="@style/AppTheme">
 
         <activity
             android:name=".activities.clearances.ActivityLogin"

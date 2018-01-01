@@ -22,6 +22,7 @@ import com.gerardogandeaga.cyberlock.crypto.CryptKeyHandler;
 import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
 import com.gerardogandeaga.cyberlock.support.KeyChecker;
 import com.gerardogandeaga.cyberlock.support.LogoutProtocol;
+import com.gerardogandeaga.cyberlock.support.graphics.Fonts;
 
 import static com.gerardogandeaga.cyberlock.support.Globals.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
@@ -69,6 +70,8 @@ public class ActivityLogin extends AppCompatActivity {
 
             this.mEtPasscode = findViewById(R.id.etPasscode);
             Button btnLogin = findViewById(R.id.btnLogin);
+
+            btnLogin.setTypeface(Fonts.robotoMonoBold(this));
 
             btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override

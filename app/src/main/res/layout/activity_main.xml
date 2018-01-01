@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/Data"
+    android:id="@+id/Content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/c_gray_10"
+    android:background="?attr/backgroundColour"
     tools:context=".activities.core.ActivityMain">
 
     <LinearLayout
@@ -40,10 +40,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_margin="5dp"
-                app:menu_colorNormal="@color/accent"
-                app:menu_colorPressed="@color/accent"
-                app:menu_colorRipple="@color/c_pink_50"
-                app:menu_icon="@drawable/ic_white_add"
+                app:menu_colorNormal="@color/tr_orange_60"
+                app:menu_colorPressed="@color/tr_orange_60"
+                app:menu_colorRipple="@color/tr_orange_60"
+                app:menu_icon="@drawable/ic_accent_add"
                 app:menu_shadowRadius="2dp"
                 app:menu_shadowYOffset="1dp">
 
@@ -51,11 +51,11 @@
                     android:id="@+id/fabNote"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_white_note"
-                    app:fab_colorDisabled="@color/accent"
-                    app:fab_colorNormal="@color/accent"
-                    app:fab_colorPressed="@color/accent"
-                    app:fab_colorRipple="@color/c_pink_50"
+                    android:src="@drawable/ic_accent_note"
+                    app:fab_colorDisabled="@color/c_orange_60"
+                    app:fab_colorNormal="@color/c_orange_60"
+                    app:fab_colorPressed="@color/c_orange_60"
+                    app:fab_colorRipple="@color/c_orange_60"
                     app:fab_label="Note"
                     app:fab_size="mini"/>
 
@@ -63,11 +63,11 @@
                     android:id="@+id/fabPaymentInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_white_card"
-                    app:fab_colorDisabled="@color/accent"
-                    app:fab_colorNormal="@color/accent"
-                    app:fab_colorPressed="@color/accent"
-                    app:fab_colorRipple="@color/c_pink_50"
+                    android:src="@drawable/ic_accent_card"
+                    app:fab_colorDisabled="@color/tr_orange_60"
+                    app:fab_colorNormal="@color/tr_orange_60"
+                    app:fab_colorPressed="@color/tr_orange_60"
+                    app:fab_colorRipple="@color/tr_orange_60"
                     app:fab_label="Payment Information"
                     app:fab_size="mini"/>
 
@@ -75,11 +75,11 @@
                     android:id="@+id/fabLoginInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_white_login"
-                    app:fab_colorDisabled="@color/accent"
-                    app:fab_colorNormal="@color/accent"
-                    app:fab_colorPressed="@color/accent"
-                    app:fab_colorRipple="@color/c_pink_50"
+                    android:src="@drawable/ic_accent_login"
+                    app:fab_colorDisabled="@color/tr_orange_60"
+                    app:fab_colorNormal="@color/tr_orange_60"
+                    app:fab_colorPressed="@color/tr_orange_60"
+                    app:fab_colorRipple="@color/tr_orange_60"
                     app:fab_label="Login Credentials"
                     app:fab_size="mini"/>
 
@@ -88,17 +88,6 @@
         </RelativeLayout>
 
     </LinearLayout>
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/NavigationContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/white"
-        app:headerLayout="@layout/drawer_header"
-        app:itemIconTint="@color/black">
-
-    </android.support.design.widget.NavigationView>
 
     <!--app:headerLayout="@layout/drawer_options"-->
 

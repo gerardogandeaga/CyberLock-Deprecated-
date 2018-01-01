@@ -1,16 +1,15 @@
 package com.gerardogandeaga.cyberlock.activities.core;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -29,14 +28,14 @@ import com.gerardogandeaga.cyberlock.support.settings.SettingsChangePasscode;
 import com.gerardogandeaga.cyberlock.support.settings.SettingsScrambleCryptKey;
 
 import static com.gerardogandeaga.cyberlock.support.Globals.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.support.Globals.CRYPT_ALGO;
 import static com.gerardogandeaga.cyberlock.support.Globals.DELAY_TIME;
 import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.support.Globals.CRYPT_ALGO;
 import static com.gerardogandeaga.cyberlock.support.Globals.LOGOUT_DELAY;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mIsCountDownTimerFinished;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mIsCountDownTimerFinished;
 
 public class ActivitySettings extends AppCompatActivity implements View.OnClickListener {
     private Context mContext = this;
@@ -61,7 +60,7 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
     // Initial create methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         ACTIVITY_INTENT = null;
         super.onCreate(savedInstanceState);
 

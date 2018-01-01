@@ -14,21 +14,22 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/c_blue_90"
+        android:background="@color/c_orange_60"
         android:elevation="3dp"
         app:contentInsetStartWithNavigation="0dp"
         app:layout_scrollFlags="scroll|enterAlways"
         app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:titleTextColor="@color/c_yellow_20"
-        app:subtitleTextColor="@color/c_yellow_30">
+        app:subtitleTextColor="@color/c_yellow_50"
+        app:titleTextColor="@color/c_yellow_20">
 
         <ImageView
             android:id="@+id/imgIcon"
-            android:layout_width="wrap_content"
+            android:layout_width="48dp"
             android:layout_height="32dp"
-            android:src="@drawable/card_default"
-            android:scaleType="fitStart"
-            android:contentDescription="card icon"/>
+            android:background="@drawable/bk_outline"
+            android:contentDescription="card icon"
+            android:scaleType="fitCenter"
+            android:src="@drawable/card_default"/>
     </android.support.v7.widget.Toolbar>
 
 </android.support.design.widget.AppBarLayout>

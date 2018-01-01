@@ -17,7 +17,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.support.Globals.FLAGS;
-import static com.gerardogandeaga.cyberlock.support.Globals.PLAYGROUIND_ALGO;
+import static com.gerardogandeaga.cyberlock.support.Globals.PLAYGROUND_ALGO;
 
 public class CryptPlayground
 {
@@ -33,7 +33,7 @@ public class CryptPlayground
     {
         mSharedPreferences = context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
 
-        switch (mSharedPreferences.getString(PLAYGROUIND_ALGO, "AES - 256"))
+        switch (mSharedPreferences.getString(PLAYGROUND_ALGO, "AES - 256"))
         {
             case "AES - 256":
                 ALGO = "AES";

@@ -14,12 +14,10 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/c_blue_90"
         android:elevation="3dp"
+        android:background="@color/c_orange_60"
         app:contentInsetStartWithNavigation="0dp"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:titleTextColor="@color/white"
-        app:subtitleTextColor="@color/c_gray_10"/>
+        app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
 </android.support.design.widget.AppBarLayout>

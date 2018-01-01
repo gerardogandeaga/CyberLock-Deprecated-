@@ -21,14 +21,13 @@ import com.gerardogandeaga.cyberlock.crypto.CryptPlayground;
 import com.gerardogandeaga.cyberlock.support.LogoutProtocol;
 
 import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.support.Globals.PLAYGROUIND_ALGO;
+import static com.gerardogandeaga.cyberlock.support.Globals.PLAYGROUND_ALGO;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mIsCountDownTimerFinished;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mCountDownTimer;
 
-public class ActivityPlayground extends AppCompatActivity
-{
+public class ActivityPlayground extends AppCompatActivity {
     private SharedPreferences mSharedPreferences;
 
     // DATA VARIABLES
@@ -73,7 +72,7 @@ public class ActivityPlayground extends AppCompatActivity
     }
     private void setupActivity() {
         mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-        mSharedPreferences.edit().putString(PLAYGROUIND_ALGO, "AES - 256").apply();
+        mSharedPreferences.edit().putString(PLAYGROUND_ALGO, "AES - 256").apply();
 
         // ACTION BAR TITLE AND BACK BUTTON
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -115,12 +114,12 @@ public class ActivityPlayground extends AppCompatActivity
                 break;
             // ALGO METHODS
             case R.id.acAES256:
-                mSharedPreferences.edit().putString(PLAYGROUIND_ALGO, "AES - 256").apply();
+                mSharedPreferences.edit().putString(PLAYGROUND_ALGO, "AES - 256").apply();
                 mImAES256.setChecked(true);
                 Toast.makeText(this, "Algorithm Set to AES", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.acBlowfish448:
-                mSharedPreferences.edit().putString(PLAYGROUIND_ALGO, "Blowfish - 448").apply();
+                mSharedPreferences.edit().putString(PLAYGROUND_ALGO, "Blowfish - 448").apply();
                 mImBlowfish448.setChecked(true);
                 Toast.makeText(this, "Algorithm Set to Blowfish", Toast.LENGTH_SHORT).show();
                 break;

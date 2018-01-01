@@ -1,9 +1,10 @@
 package com.gerardogandeaga.cyberlock.activities.dialogs;
 
-import android.app.AlertDialog;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,6 +45,7 @@ public class DialogDataPreview {
     }
 
     // Create dialog
+    @SuppressLint("SetTextI18n")
     private void constructPreviewNote() {
         View titleView = View.inflate(mContext, R.layout.dialog_title, null);
         View view = View.inflate(mContext, R.layout.preview_note, null);
@@ -51,6 +53,7 @@ public class DialogDataPreview {
         //
         TextView title = titleView.findViewById(R.id.tvDialogTitle);
         TextView date = titleView.findViewById(R.id.tvDate);
+
         TextView note = view.findViewById(R.id.tvNote);
 
         title.setText(contentHandler.mLabel);
@@ -78,6 +81,7 @@ public class DialogDataPreview {
         mBuilder.create();
         mBuilder.show();
     }
+    @SuppressLint("SetTextI18n")
     private void constructPreviewPaymentInfo() {
         View titleView = View.inflate(mContext, R.layout.dialog_title, null);
         View view = View.inflate(mContext, R.layout.preview_paymentinfo, null);
@@ -89,8 +93,10 @@ public class DialogDataPreview {
         LinearLayout CVV = view.findViewById(R.id.CVV);
         LinearLayout CardType = view.findViewById(R.id.CardType);
         LinearLayout Notes = view.findViewById(R.id.Notes);
+
         TextView title = titleView.findViewById(R.id.tvDialogTitle);
         TextView date = titleView.findViewById(R.id.tvDate);
+
         TextView holder = view.findViewById(R.id.tvName);
         TextView number = view.findViewById(R.id.tvNumber);
         TextView expiry = view.findViewById(R.id.tvExpiry);
@@ -130,6 +136,7 @@ public class DialogDataPreview {
         mBuilder.create();
         mBuilder.show();
     }
+    @SuppressLint("SetTextI18n")
     private void constructPreviewLoginInfo() {
         View titleView = View.inflate(mContext, R.layout.dialog_title, null);
         View view = View.inflate(mContext, R.layout.preview_logininfo, null);
@@ -140,8 +147,10 @@ public class DialogDataPreview {
         LinearLayout Username = view.findViewById(R.id.Username);
         LinearLayout Password = view.findViewById(R.id.Password);
         LinearLayout Notes = view.findViewById(R.id.Notes);
+
         TextView title = titleView.findViewById(R.id.tvDialogTitle);
         TextView date = titleView.findViewById(R.id.tvDate);
+
         TextView url = view.findViewById(R.id.tvUrl);
         TextView email = view.findViewById(R.id.tvEmail);
         TextView username = view.findViewById(R.id.tvUsername);

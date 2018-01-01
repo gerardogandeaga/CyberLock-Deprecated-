@@ -6,6 +6,7 @@
 
     <item
         android:id="@+id/mnuOptions"
+        android:layout_height="wrap_content"
         android:icon="@drawable/ic_options"
         android:title="Options"
         app:showAsAction="always">
@@ -18,18 +19,38 @@
                 android:title="Settings"
                 app:showAsAction="never"/>
 
-            <!--<item-->
-                <!--android:id="@+id/acPlayground"-->
-                <!--android:orderInCategory="0"-->
-                <!--android:title="Crypto Playground"-->
-                <!--app:showAsAction="never"/>-->
-
             <item
                 android:id="@+id/acAbout"
                 android:orderInCategory="0"
                 android:title="About"
                 app:showAsAction="never"/>
 
+            <item
+                android:title="List Format">
+
+                <menu>
+
+                    <group
+                        android:checkableBehavior="single">
+
+                        <item
+                            android:id="@+id/acListLinear"
+                            android:icon="@drawable/ic_list_linear"
+                            android:title="Linear Format"/>
+
+                        <item
+                            android:id="@+id/acListStaggeredGrid"
+                            android:icon="@drawable/ic_list_grid"
+                            android:title="Grid Format"/>
+
+                    </group>
+
+                </menu>
+
+            </item>
+
         </menu>
+
     </item>
+
 </menu>
