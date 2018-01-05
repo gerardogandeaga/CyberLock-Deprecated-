@@ -6,6 +6,7 @@
     android:id="@+id/Content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundColour"
     android:orientation="vertical"
     tools:context=".activities.core.ActivityEdit">
 
@@ -20,7 +21,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="?attr/cardbackgroundColour"
             android:elevation="2dp"
             android:orientation="vertical"
             android:padding="10dp">
@@ -35,6 +36,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
+                    android:tint="?attr/tintColour"
                     app:srcCompat="@drawable/graphic_login_url"/>
 
                 <LinearLayout
@@ -49,15 +51,16 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="URL"
-                        android:textSize="16sp"/>
+                        android:textAppearance="@style/myText.Edit.Hint"
+                        />
 
                     <EditText
                         android:id="@+id/etUrl"
+                        style="@style/myText.Edit.Content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="text|textUri"
-                        android:textAppearance="@style/myText.Edit.Content"/>
+                        android:inputType="text|textUri"/>
 
                 </LinearLayout>
 
@@ -73,6 +76,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
+                    android:tint="?attr/tintColour"
                     app:srcCompat="@drawable/graphic_login_email"/>
 
                 <LinearLayout
@@ -87,15 +91,16 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="Email"
-                        android:textSize="16sp"/>
+                        android:textAppearance="@style/myText.Edit.Hint"
+                        />
 
                     <EditText
                         android:id="@+id/etEmail"
+                        style="@style/myText.Edit.Content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="text|textEmailAddress|textWebEmailAddress"
-                        android:textAppearance="@style/myText.Edit.Content"/>
+                        android:inputType="text|textEmailAddress|textWebEmailAddress"/>
 
                 </LinearLayout>
 
@@ -111,6 +116,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
+                    android:tint="?attr/tintColour"
                     app:srcCompat="@drawable/graphic_login_username"/>
 
                 <LinearLayout
@@ -125,15 +131,16 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="Username"
-                        android:textSize="16sp"/>
+                        android:textAppearance="@style/myText.Edit.Hint"
+                        />
 
                     <EditText
                         android:id="@+id/etUsername"
+                        style="@style/myText.Edit.Content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="text"
-                        android:textAppearance="@style/myText.Edit.Content"/>
+                        android:inputType="text"/>
 
                 </LinearLayout>
 
@@ -149,7 +156,8 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/graphic_login_password"/>
+                    app:srcCompat="@drawable/graphic_login_password"
+                    android:tint="?attr/tintColour"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -163,15 +171,16 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="Password"
-                        android:textSize="16sp"/>
+                        android:textAppearance="@style/myText.Edit.Hint"
+                        />
 
                     <EditText
                         android:id="@+id/etPassword"
+                        style="@style/myText.Edit.Content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="text|textVisiblePassword"
-                        android:textAppearance="@style/myText.Edit.Content"/>
+                        android:inputType="text|textVisiblePassword"/>
 
                 </LinearLayout>
 
@@ -188,16 +197,17 @@
                     android:layout_height="wrap_content"
                     android:padding="3dp"
                     android:text="Additional Notes"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/myText.Edit.Hint"
+                    />
 
                 <EditText
                     android:id="@+id/etNotes"
+                    style="@style/myText.Edit.Content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="start|end"
-                    android:inputType="textMultiLine"
-                    android:textAppearance="@style/myText.Edit.Content"/>
+                    android:inputType="textMultiLine"/>
 
             </LinearLayout>
 

@@ -13,6 +13,7 @@ import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
 import com.gerardogandeaga.cyberlock.support.ViewHandler;
 import com.gerardogandeaga.cyberlock.support.graphics.Fonts;
+import com.gerardogandeaga.cyberlock.support.graphics.Themes;
 import com.gerardogandeaga.cyberlock.support.handlers.selection.graphic.AdapterItemGraphics;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
@@ -72,7 +73,8 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
         public void bindView(@NonNull RecyclerViewItem item, @NonNull List<Object> payloads) {
             //get the context
             Context context = itemView.getContext();
-            UIUtils.setBackground(View, AdapterItemGraphics.getItemDrawableStates(context, R.color.white, R.color.c_yellow_20, false));
+            UIUtils.setBackground(View, AdapterItemGraphics.getItemDrawableStates(
+                    context, Themes.recyclerListItemRegular(), Themes.recyclerListItemSelected(), false));
             ViewHandler.setLinearLayoutVisibility(Note, PaymentInfo, LoginInfo, item.mType);
 
             // Bind our data to the view

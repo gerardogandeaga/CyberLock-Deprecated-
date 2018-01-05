@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.crypto.CryptoContent;
 import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
+import com.gerardogandeaga.cyberlock.support.graphics.Themes;
 
 import org.jetbrains.annotations.Contract;
 
@@ -50,13 +51,6 @@ public class EditGraphics {
         return factoryIcon;
     }
 
-
-
-
-
-
-
-
     // Colour tag
     public void alterTagColour(ImageView imageView, String args) {
         imageView.setColorFilter(getColour(mContext, args), PorterDuff.Mode.SRC_ATOP);
@@ -72,7 +66,7 @@ public class EditGraphics {
             case "COL_YELLOW": return resources.getColor(R.color.ct_yellow);
             case "COL_PURPLE": return resources.getColor(R.color.ct_purple);
             case "COL_ORANGE": return resources.getColor(R.color.ct_orange);
-            default:           return resources.getColor(R.color.black);
+            default:           return Themes.defaultTag(context);
         }
     }
 

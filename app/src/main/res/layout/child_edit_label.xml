@@ -16,7 +16,7 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:background="@android:color/transparent"
-        android:hint="Label"
+        android:hint="Label..."
         android:inputType="text|textPersonName"
         android:maxLines="1"
         android:padding="10dp"

@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="?attr/backgroundColour"
     tools:context=".activities.core.ActivityEdit">
 
     <include layout="@layout/toolbar_paymentinfo"/>
@@ -14,7 +15,6 @@
     <include layout="@layout/child_edit_label"/>
 
     <ScrollView
-        android:id="@+id/Content"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -22,7 +22,7 @@
             android:id="@+id/MainInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/c_gray_0"
+            android:background="?attr/cardbackgroundColour"
             android:elevation="2dp"
             android:orientation="vertical"
             android:padding="10dp">
@@ -37,6 +37,8 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
+                    android:tint="?attr/tintColour"
+                    android:tintMode="src_atop"
                     app:srcCompat="@drawable/graphic_card_holder"/>
 
                 <LinearLayout
@@ -51,17 +53,17 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="Holder Name"
-                        android:textSize="16sp"/>
+                        android:textAppearance="@style/myText.Edit.Hint"
+                        />
 
                     <EditText
                         android:id="@+id/etCardName"
+                        style="@style/myText.Edit.Content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:ems="10"
                         android:inputType="textPersonName"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"/>
+                        android:maxLines="1"/>
 
                 </LinearLayout>
 
@@ -77,6 +79,8 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
+                    android:tint="?attr/tintColour"
+                    android:tintMode="src_atop"
                     app:srcCompat="@drawable/graphic_card_number"/>
 
                 <LinearLayout
@@ -91,18 +95,19 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="Card / Identifying Number"
-                        android:textSize="16sp"/>
+                        android:textAppearance="@style/myText.Edit.Hint"
+                        />
 
                     <EditText
                         android:id="@+id/etCardNumber"
+                        style="@style/myText.Edit.Content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
                         android:inputType="number"
                         android:maxLength="25"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"/>
+                        android:maxLines="1"/>
 
                 </LinearLayout>
 
@@ -118,6 +123,8 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
+                    android:tint="?attr/tintColour"
+                    android:tintMode="src_atop"
                     app:srcCompat="@drawable/graphic_card_expiry"/>
 
                 <LinearLayout
@@ -132,18 +139,19 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="Expiry Date"
-                        android:textSize="16sp"/>
+                        android:textAppearance="@style/myText.Edit.Hint"
+                        />
 
                     <EditText
                         android:id="@+id/etCardExpire"
+                        style="@style/myText.Edit.Content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
                         android:inputType="number"
                         android:maxLength="5"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"/>
+                        android:maxLines="1"/>
 
                 </LinearLayout>
 
@@ -159,6 +167,8 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
+                    android:tint="?attr/tintColour"
+                    android:tintMode="src_atop"
                     app:srcCompat="@drawable/graphic_card_code"/>
 
                 <LinearLayout
@@ -172,19 +182,19 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="CVV / Security Code"
-                        android:textSize="16sp"/>
+                        android:textAppearance="@style/myText.Edit.Hint"
+                        />
 
                     <EditText
                         android:id="@+id/etCardSecCode"
+                        style="@style/myText.Edit.Content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
                         android:inputType="number"
                         android:maxLength="4"
-                        android:maxLines="1"
-                        android:textAlignment="textStart"
-                        android:textAppearance="@style/myText.Edit.Content"/>
+                        android:maxLines="1"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -199,6 +209,8 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
+                    android:tint="?attr/tintColour"
+                    android:tintMode="src_atop"
                     app:srcCompat="@drawable/graphic_card_type"/>
 
                 <LinearLayout
@@ -212,7 +224,8 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="Card Type"
-                        android:textSize="16sp"/>
+                        android:textAppearance="@style/myText.Edit.Hint"
+                        />
 
                     <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/spCardSelect"
@@ -236,17 +249,17 @@
                     android:layout_height="wrap_content"
                     android:padding="3dp"
                     android:text="Additional Notes"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/myText.Edit.Hint"
+                    />
 
                 <EditText
                     android:id="@+id/etNotes"
+                    style="@style/myText.Edit.Content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="start|end"
-                    android:inputType="textMultiLine"
-                    android:textAlignment="textStart"
-                    android:textAppearance="@style/myText.Edit.Content"/>
+                    android:inputType="textMultiLine"/>
             </LinearLayout>
 
             <TextView

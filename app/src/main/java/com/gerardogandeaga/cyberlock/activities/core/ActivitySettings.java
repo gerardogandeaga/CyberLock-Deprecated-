@@ -1,5 +1,6 @@
 package com.gerardogandeaga.cyberlock.activities.core;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -23,6 +25,7 @@ import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
 import com.gerardogandeaga.cyberlock.support.KeyChecker;
 import com.gerardogandeaga.cyberlock.support.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.support.graphics.DrawableColours;
+import com.gerardogandeaga.cyberlock.support.graphics.Themes;
 import com.gerardogandeaga.cyberlock.support.settings.SettingsChangeCryptAlgorithm;
 import com.gerardogandeaga.cyberlock.support.settings.SettingsChangePasscode;
 import com.gerardogandeaga.cyberlock.support.settings.SettingsScrambleCryptKey;
@@ -32,6 +35,7 @@ import static com.gerardogandeaga.cyberlock.support.Globals.CRYPT_ALGO;
 import static com.gerardogandeaga.cyberlock.support.Globals.DELAY_TIME;
 import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.support.Globals.LOGOUT_DELAY;
+import static com.gerardogandeaga.cyberlock.support.Globals.THEME;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mCountDownTimer;
@@ -52,6 +56,7 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
             mOldEncryptionAlgorithm;
 
     // Widgets
+    private CheckBox mCbLight, mCbDark;
     private android.support.v7.widget.SwitchCompat mSwAutoSave;
     private Spinner
             mSpAutoLogoutDelay,
@@ -60,6 +65,7 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
     // Initial create methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Themes.setTheme(this);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         ACTIVITY_INTENT = null;
         super.onCreate(savedInstanceState);
@@ -73,34 +79,70 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
         // Action bar
         setupSupportActionBar();
         // Widgets
+
+        // Spinners
+        iniAutoSave();
+        iniAutoLogoutDelay();
+        iniChangePasscode();
+        iniThemeSelector();
+        iniScrambleKey();
+        iniEncryptionAlgorithmChange();
+
+        savedStates();
+    }
+    private void setupSupportActionBar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Settings");
+        getSupportActionBar().setSubtitle("Functionality And Visuals");
+        getSupportActionBar().setHomeAsUpIndicator(DrawableColours.mutateHomeAsUpIndicatorDrawable(
+                this, this.getResources().getDrawable(R.drawable.ic_back)));
+    }
+    private void savedStates() {
+        actionThemeSelector(mSharedPreferences.getString(THEME, ""), false);
+
+        // CHECK BOXES
+        mSwAutoSave.setChecked(this.mIsAutoSave);
+
+        int delaySpinnerPosition = mAdapterAutoLogoutDelay.getPosition(this.mSharedPreferences.getString(LOGOUT_DELAY, "Immediate"));
+        mSpAutoLogoutDelay.setSelection(delaySpinnerPosition);
+
+        // ENCRYPTION METHOD
+        int algoSpinnerPosition;
+        switch (this.mSharedPreferences.getString(CRYPT_ALGO, "AES")) {
+            case "AES":
+                algoSpinnerPosition = mAdapterEncryptionAlgorithm.getPosition("AES - 256");
+                mSpEncryptionAlgorithm.setSelection(algoSpinnerPosition);
+                mOldEncryptionAlgorithm = mSpEncryptionAlgorithm.getItemAtPosition(algoSpinnerPosition).toString();
+                break;
+            case "Blowfish":
+                algoSpinnerPosition = mAdapterEncryptionAlgorithm.getPosition("Blowfish - 448");
+                mSpEncryptionAlgorithm.setSelection(algoSpinnerPosition);
+                mOldEncryptionAlgorithm = mSpEncryptionAlgorithm.getItemAtPosition(algoSpinnerPosition).toString();
+                break;
+        }
+    }
+    // -------------------------
+    private void iniAutoSave() {
+        this.mSwAutoSave = findViewById(R.id.swAutoSave);
+        RelativeLayout autoSave = findViewById(R.id.AutoSave);
+
+        mSwAutoSave.setClickable(false);
+        mSwAutoSave.setChecked(false);
+
+        autoSave.setOnClickListener(this);
+    }
+    private void iniAutoLogoutDelay() {
         this.mSpAutoLogoutDelay = findViewById(R.id.spAutoLogoutDelay);
         this.mAdapterAutoLogoutDelay = ArrayAdapter.createFromResource(this, R.array.AutoLogoutDelay_array, R.layout.spinner_setting_text);
         this.mAdapterAutoLogoutDelay.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         this.mSpAutoLogoutDelay.setAdapter(mAdapterAutoLogoutDelay);
 
-        this.mSpEncryptionAlgorithm = findViewById(R.id.spEncryptionAlgorithm);
-        this.mAdapterEncryptionAlgorithm = ArrayAdapter.createFromResource(this, R.array.CryptALGO_array, R.layout.spinner_setting_text);
-        this.mAdapterEncryptionAlgorithm.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-        this.mSpEncryptionAlgorithm.setAdapter(mAdapterEncryptionAlgorithm);
-
-        this.mSwAutoSave = findViewById(R.id.swAutoSave);
-        RelativeLayout autoSave = findViewById(R.id.AutoSave);
-        RelativeLayout changePasscode = findViewById(R.id.ChangePasscode);
-        RelativeLayout scrambleKey = findViewById(R.id.ScrambleKey);
-
         RelativeLayout autoLogoutDelay = findViewById(R.id.AutoLogoutDelay);
-        RelativeLayout encryptionAlgorithm = findViewById(R.id.EncryptionAlgorithm);
 
-        autoSave.setOnClickListener(this);
-        changePasscode.setOnClickListener(this);
-        scrambleKey.setOnClickListener(this);
         autoLogoutDelay.setOnClickListener(this);
-        encryptionAlgorithm.setOnClickListener(this);
-
-        mSwAutoSave.setClickable(false);
-        mSwAutoSave.setChecked(false);
-
-        savedStates();
 
         this.mSpAutoLogoutDelay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -130,6 +172,39 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+    }
+    private void iniChangePasscode() {
+        RelativeLayout changePasscode = findViewById(R.id.ChangePasscode);
+
+        changePasscode.setOnClickListener(this);
+    }
+    private void iniThemeSelector() {
+        this.mCbLight = findViewById(R.id.cbLight);
+        this.mCbDark = findViewById(R.id.cbDark);
+        RelativeLayout Light = findViewById(R.id.Light);
+        RelativeLayout Dark = findViewById(R.id.Dark);
+
+        mCbLight.setClickable(false);
+        mCbDark.setClickable(false);
+
+        Light.setOnClickListener(this);
+        Dark.setOnClickListener(this);
+    }
+    private void iniScrambleKey() {
+        RelativeLayout scrambleKey = findViewById(R.id.ScrambleKey);
+
+        scrambleKey.setOnClickListener(this);
+    }
+    private void iniEncryptionAlgorithmChange() {
+        this.mSpEncryptionAlgorithm = findViewById(R.id.spEncryptionAlgorithm);
+        this.mAdapterEncryptionAlgorithm = ArrayAdapter.createFromResource(this, R.array.CryptALGO_array, R.layout.spinner_setting_text);
+        this.mAdapterEncryptionAlgorithm.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+        this.mSpEncryptionAlgorithm.setAdapter(mAdapterEncryptionAlgorithm);
+
+        RelativeLayout encryptionAlgorithm = findViewById(R.id.EncryptionAlgorithm);
+
+        encryptionAlgorithm.setOnClickListener(this);
+
         this.mSpEncryptionAlgorithm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -139,12 +214,12 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
                     if (algorithm.matches("AES - 256")) {
                         String newAlgorithm = "AES";
                         if (!mSharedPreferences.getString(CRYPT_ALGO, "AES").matches(newAlgorithm)) {
-                            onEncryptionAlgorithmChange(newAlgorithm);
+                            actionEncryptionAlgorithmChange(newAlgorithm);
                         }
                     } else if (algorithm.matches("Blowfish - 448")) {
                         String newAlgorithm = "Blowfish";
                         if (!mSharedPreferences.getString(CRYPT_ALGO, "AES").matches(newAlgorithm)) {
-                            onEncryptionAlgorithmChange(newAlgorithm);
+                            actionEncryptionAlgorithmChange(newAlgorithm);
                         }
                     }
                 }
@@ -155,39 +230,6 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
             }
         });
     }
-    private void setupSupportActionBar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Settings");
-        getSupportActionBar().setSubtitle("Functionality And Visuals");
-        getSupportActionBar().setHomeAsUpIndicator(DrawableColours.mutateHomeAsUpIndicatorDrawable(
-                this, this.getResources().getDrawable(R.drawable.ic_back)));
-    }
-    private void savedStates() {
-        // CHECK BOXES
-        mSwAutoSave.setChecked(this.mIsAutoSave);
-
-        int delaySpinnerPosition = mAdapterAutoLogoutDelay.getPosition(this.mSharedPreferences.getString(LOGOUT_DELAY, "Immediate"));
-        mSpAutoLogoutDelay.setSelection(delaySpinnerPosition);
-
-        // ENCRYPTION METHOD
-        int algoSpinnerPosition;
-        switch (this.mSharedPreferences.getString(CRYPT_ALGO, "AES")) {
-            case "AES":
-                algoSpinnerPosition = mAdapterEncryptionAlgorithm.getPosition("AES - 256");
-                mSpEncryptionAlgorithm.setSelection(algoSpinnerPosition);
-                mOldEncryptionAlgorithm = mSpEncryptionAlgorithm.getItemAtPosition(algoSpinnerPosition).toString();
-                break;
-            case "Blowfish":
-                algoSpinnerPosition = mAdapterEncryptionAlgorithm.getPosition("Blowfish - 448");
-                mSpEncryptionAlgorithm.setSelection(algoSpinnerPosition);
-                mOldEncryptionAlgorithm = mSpEncryptionAlgorithm.getItemAtPosition(algoSpinnerPosition).toString();
-                break;
-        }
-    }
-    // -------------------------
 
     // On click
     @Override
@@ -203,17 +245,30 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.AutoSave: onAutoSave(); break;
-            case R.id.ChangePasscode: onChangePasscode(); break;
-            case R.id.ScrambleKey: onScrambleKey(); break;
+            // Auto save
+            case R.id.AutoSave: actionAutoSave(); break;
+
+            // Themes
+            case R.id.Light:  actionThemeSelector("THEME_LIGHT", true); break;
+            case R.id.Dark:   actionThemeSelector("THEME_DARK", true); break;
+
+            // Auto logout delay
             case R.id.AutoLogoutDelay: mSpAutoLogoutDelay.performClick(); break;
+
+            // Change passcode
+            case R.id.ChangePasscode: actionChangePasscode(); break;
+
+            // Scramble key
+            case R.id.ScrambleKey: actionScrambleKey(); break;
+
+            // Encryption algorithm change
             case R.id.EncryptionAlgorithm: mSpEncryptionAlgorithm.performClick(); break;
         }
     }
     // --------
 
-    // #########################################################################
-    private void onAutoSave() {
+    // Actions
+    private void actionAutoSave() {
         final boolean autoSave = this.mSharedPreferences.getBoolean(AUTOSAVE, false);
 
         if (!autoSave) {
@@ -224,7 +279,21 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
             mSwAutoSave.setChecked(false);
         }
     }
-    private void onChangePasscode() {
+    private void actionThemeSelector(String theme, boolean forceRestart) {
+        if (theme.matches("THEME_DARK")) {
+            mCbLight.setChecked(false);
+            mCbDark.setChecked(true);
+        } else {
+            mCbLight.setChecked(true);
+            mCbDark.setChecked(false);
+        }
+        mSharedPreferences.edit().putString(THEME, theme).apply();
+        if (forceRestart) {
+            ACTIVITY_INTENT = new Intent(this, ActivitySettings.class);
+            this.startActivity(ACTIVITY_INTENT);
+        }
+    }
+    private void actionChangePasscode() {
         View v = View.inflate(mContext, R.layout.dialog_view_passcode_change, null);
         // Dialog primitives
         final EditText current = v.findViewById(R.id.etCurrent);
@@ -270,15 +339,21 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
         // Dialog show
         final AlertDialog dialog = builder.show();
     }
-    private void onScrambleKey() {
-        View v = View.inflate(mContext, R.layout.dialog_view_alert_info, null);
+    @SuppressLint("SetTextI18n")
+    private void actionScrambleKey() {
+        View titleView = View.inflate(mContext, R.layout.dialog_title, null);
+        View view = View.inflate(mContext, R.layout.dialog_view_alert_info, null);
         // Dialog primitives
-        TextView alertText = v.findViewById(R.id.tvDialogAlertText);
+        TextView title = titleView.findViewById(R.id.tvDialogTitle);
+        titleView.findViewById(R.id.tvDate).setVisibility(View.GONE);
+        TextView alertText = view.findViewById(R.id.tvDialogAlertText);
+
+        title.setText("Scramble Encryption Key");
         alertText.setText(R.string.AlertDialog_ScrambleKey);
         // Dialog builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setView(v);
-        builder.setTitle(R.string.titleScrambleEncryptionKey);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.MyDialogStyle);
+        builder.setView(view);
+        builder.setCustomTitle(titleView);
         builder.setNegativeButton(R.string.btnCancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -295,15 +370,20 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
         // Dialog show
         final AlertDialog dialog = builder.show();
     }
-    private void onEncryptionAlgorithmChange(final String algorithm) {
+    private void actionEncryptionAlgorithmChange(final String algorithm) {
+        View titleView = View.inflate(mContext, R.layout.dialog_title, null);
         View v = View.inflate(mContext, R.layout.dialog_view_alert_info, null);
         // Dialog primitives
+        TextView title = titleView.findViewById(R.id.tvDialogTitle);
+        titleView.findViewById(R.id.tvDate).setVisibility(View.GONE);
         TextView alertText = v.findViewById(R.id.tvDialogAlertText);
+
+        title.setText("Change Encryption Algorithm");
         alertText.setText(R.string.AlertDialog_EncryptionAlgorithmChange);
         // DIALOG BUILDER
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.MyDialogStyle);
         builder.setView(v);
-        builder.setTitle(R.string.titleChangeEncryptionAlgo);
+        builder.setCustomTitle(titleView);
         builder.setNegativeButton(R.string.btnCancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -326,7 +406,6 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
         });
         final AlertDialog dialog = builder.show();
     }
-    // #########################################################################
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
     @Override protected void onStart() {

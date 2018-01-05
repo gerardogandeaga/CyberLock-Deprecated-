@@ -27,6 +27,7 @@ import com.gerardogandeaga.cyberlock.sqlite.data.MasterDatabaseAccess;
 import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
 import com.gerardogandeaga.cyberlock.support.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.support.graphics.DrawableColours;
+import com.gerardogandeaga.cyberlock.support.graphics.Themes;
 import com.gerardogandeaga.cyberlock.support.handlers.extractors.ContentHandler;
 
 import static com.gerardogandeaga.cyberlock.support.Globals.AUTOSAVE;
@@ -80,6 +81,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Themes.setTheme(this);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         ACTIVITY_INTENT = null;
         this.mIsAutoSave = getSharedPreferences(DIRECTORY, MODE_PRIVATE).getBoolean(AUTOSAVE, false);

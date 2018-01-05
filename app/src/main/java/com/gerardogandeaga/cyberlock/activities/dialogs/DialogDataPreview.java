@@ -62,7 +62,7 @@ public class DialogDataPreview {
 
         note.setText(contentHandler.mNote);
 
-        mBuilder = new AlertDialog.Builder(mContext);
+        mBuilder = new AlertDialog.Builder(mContext, R.style.MyDialogStyle);
         mBuilder.setCustomTitle(titleView);
         mBuilder.setView(view);
         mBuilder.setNegativeButton(R.string.btnDone, new DialogInterface.OnClickListener() {
@@ -117,7 +117,7 @@ public class DialogDataPreview {
         if (ViewHandler.setLinearLayoutVisibility(Notes, contentHandler.mNote))        notes.setText(contentHandler.mNote);
         icon.setImageDrawable(contentHandler.mCardImage);
 
-        mBuilder = new AlertDialog.Builder(mContext);
+        mBuilder = new AlertDialog.Builder(mContext, R.style.MyDialogStyle);
         mBuilder.setCustomTitle(titleView);
         mBuilder.setView(view);
         mBuilder.setNegativeButton(R.string.btnDone, new DialogInterface.OnClickListener() {
@@ -167,7 +167,7 @@ public class DialogDataPreview {
         if (ViewHandler.setLinearLayoutVisibility(Password, contentHandler.mPassword)) password.setText(contentHandler.mPassword);
         if (ViewHandler.setLinearLayoutVisibility(Notes, contentHandler.mNote))        notes.setText(contentHandler.mNote);
 
-        mBuilder = new AlertDialog.Builder(mContext);
+        mBuilder = new AlertDialog.Builder(mContext, R.style.MyDialogStyle);
         mBuilder.setCustomTitle(titleView);
         mBuilder.setView(view);
         mBuilder.setNegativeButton(R.string.btnDone, new DialogInterface.OnClickListener() {

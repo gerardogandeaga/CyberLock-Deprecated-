@@ -5,8 +5,11 @@
         <attr name="backgroundColour" format="color"/>
         <attr name="cardbackgroundColour" format="color"/>
 
+        <attr name="tintColour" format="color"/>
+
         <attr name="textColourPrimary" format="color"/>
         <attr name="textColourSecondary" format="color"/>
+        <attr name="textColourHint" format="color"/>
 
     </declare-styleable>
 </resources>

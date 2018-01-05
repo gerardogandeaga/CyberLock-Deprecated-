@@ -125,7 +125,7 @@ public class ActivityRegistration extends AppCompatActivity {
 
                     // INITIAL SETTINGS
                     mSharedPreferences.edit().putBoolean(AUTOSAVE, false).apply();
-                    mSharedPreferences.edit().putInt(THEME, 0).apply();
+                    mSharedPreferences.edit().putString(THEME, "THEME_LIGHT").apply();
 
                     Intent i = new Intent(ActivityRegistration.this, ActivityLogin.class);
                     ActivityRegistration.this.startActivity(i);

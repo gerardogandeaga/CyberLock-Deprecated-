@@ -6,7 +6,7 @@
     android:id="@+id/Content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="?attr/backgroundColour"
     android:orientation="vertical"
     tools:context=".activities.core.ActivitySettings">
 
@@ -201,6 +201,7 @@
                     </LinearLayout>
 
                     <RelativeLayout
+                        android:id="@+id/Light"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:layout_gravity="center_vertical"
@@ -214,6 +215,7 @@
                             app:srcCompat="@color/white"/>
 
                         <CheckBox
+                            android:id="@+id/cbLight"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -223,6 +225,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/Dark"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:layout_gravity="center_vertical"
@@ -234,9 +237,10 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            app:srcCompat="@color/c_gray_70"/>
+                            app:srcCompat="@color/c_blue_90"/>
 
                         <CheckBox
+                            android:id="@+id/cbDark"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
