@@ -10,11 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
+import com.gerardogandeaga.cyberlock.sqlite.data.DataPackage;
 import com.gerardogandeaga.cyberlock.support.ViewHandler;
 import com.gerardogandeaga.cyberlock.support.graphics.Fonts;
 import com.gerardogandeaga.cyberlock.support.graphics.Themes;
-import com.gerardogandeaga.cyberlock.support.handlers.selection.graphic.AdapterItemGraphics;
+import com.gerardogandeaga.cyberlock.support.handlers.selection.graphic.AdapterItemBackground;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.mikepenz.materialize.holder.StringHolder;
@@ -27,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerViewItem.ViewHolder> {
-    public RawDataPackage mRawDataPackage;
+    public DataPackage mDataPackage;
     private String mType;
 
     // List information
@@ -73,7 +73,7 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
         public void bindView(@NonNull RecyclerViewItem item, @NonNull List<Object> payloads) {
             //get the context
             Context context = itemView.getContext();
-            UIUtils.setBackground(View, AdapterItemGraphics.getItemDrawableStates(
+            UIUtils.setBackground(View, AdapterItemBackground.getItemDrawableStates(
                     context, Themes.recyclerListItemRegular(), Themes.recyclerListItemSelected(), false));
             ViewHandler.setLinearLayoutVisibility(Note, PaymentInfo, LoginInfo, item.mType);
 
@@ -175,8 +175,8 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
     }
 
     // Setting content information
-    public RecyclerViewItem withRawDataPackage(RawDataPackage rawDataPackage) {
-        this.mRawDataPackage = rawDataPackage;
+    public RecyclerViewItem withRawDataPackage(DataPackage dataPackage) {
+        this.mDataPackage = dataPackage;
         return this;
     }
 

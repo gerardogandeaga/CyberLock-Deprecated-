@@ -20,34 +20,30 @@ import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
-import com.gerardogandeaga.cyberlock.activities.core.edit.EditGraphics;
 import com.gerardogandeaga.cyberlock.activities.dialogs.DialogColourTag;
-import com.gerardogandeaga.cyberlock.crypto.CryptoContent;
-import com.gerardogandeaga.cyberlock.sqlite.data.MasterDatabaseAccess;
-import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
+import com.gerardogandeaga.cyberlock.sqlite.data.DBAccess;
+import com.gerardogandeaga.cyberlock.sqlite.data.DataPackage;
 import com.gerardogandeaga.cyberlock.support.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.support.graphics.DrawableColours;
+import com.gerardogandeaga.cyberlock.support.graphics.EditGraphics;
 import com.gerardogandeaga.cyberlock.support.graphics.Themes;
 import com.gerardogandeaga.cyberlock.support.handlers.extractors.ContentHandler;
 
-import static com.gerardogandeaga.cyberlock.support.Globals.AUTOSAVE;
-import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.support.Globals.MASTER_KEY;
-import static com.gerardogandeaga.cyberlock.support.Globals.TEMP_PIN;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mIsCountDownTimerFinished;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mIsCountDownTimerFinished;
+import static com.gerardogandeaga.cyberlock.support.Stored.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.support.Stored.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.support.Stored.TMP_PWD;
 
 public class ActivityEdit extends AppCompatActivity implements View.OnClickListener {
-    private Context mContext = this;
     private View mView;
-    private CryptoContent cc;
 
-    // RawDataPackage variables
+    // data variables
     private boolean mIsNew = true;
     private boolean mIsAutoSave = false;
-    private RawDataPackage mRawDataPackage;
+    private DataPackage mDataPackage;
     private ContentHandler mContentHandler;
     private EditGraphics mEditGraphics;
 
@@ -58,26 +54,24 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
 
     private DialogColourTag mDialogColourTag;
 
-    // Widgets
-
-    // Global
+    // widgets
+    // global
     private EditText mEtLabel;
     private EditText mEtNotes;
     private TextView mTvDate;
     private ImageView mImgTag;
-    // Notes
+    // notes
     private EditText mEtNote;
-    // Paymentinfo
+    // paymentinfo
     private ImageView mIcon;
     private EditText mEtCardName, mEtCardNumber, mEtCardExpire, mEtCardCVV;
     private Spinner mSpCardSelect;
     //
     private String mCardType;
     private ArrayAdapter<CharSequence> mAdapter;
-    // Logininfo
+    // logininfo
     private EditText mEtUrl, mEtEmail, mEtUsername, mEtPassword;
 
-    // Create methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +81,6 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         this.mIsAutoSave = getSharedPreferences(DIRECTORY, MODE_PRIVATE).getBoolean(AUTOSAVE, false);
 
         // Edit tools
-        this.cc = new CryptoContent(this);
         this.mEditGraphics = new EditGraphics(this);
 
         // Activity creation
@@ -118,12 +111,12 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         */
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            this.mRawDataPackage = (RawDataPackage) bundle.get("data");
-            this.mIsNew = (mRawDataPackage == null);
+            this.mDataPackage = (DataPackage) bundle.get("data");
+            this.mIsNew = (mDataPackage == null);
 
             if (!mIsNew) {
-                this.mContentHandler = new ContentHandler(this, mRawDataPackage);
-                switch (mRawDataPackage.getType(cc)) {
+                this.mContentHandler = new ContentHandler(this, mDataPackage);
+                switch (mDataPackage.getType()) {
                     case "TYPE_NOTE":        setupLayoutNote(); TYPE = ARGS[0]; break;
                     case "TYPE_PAYMENTINFO": setupLayoutPaymentInfo(); TYPE = ARGS[1]; break;
                     case "TYPE_LOGININFO":   setupLayoutLoginInfo(); TYPE = ARGS[2]; break;
@@ -147,15 +140,15 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
     }
 
     private void containsData() {
-        MasterDatabaseAccess masterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
-        masterDatabaseAccess.open();
+        DBAccess dbAccess = DBAccess.getInstance(this);
+        dbAccess.open();
         System.out.println("Is New ? 1 : " + mIsNew);
-        this.mIsNew = masterDatabaseAccess.containsData(this.mRawDataPackage);
+        this.mIsNew = dbAccess.containsData(this.mDataPackage);
         System.out.println("Is New ? 2 : " + mIsNew);
-        masterDatabaseAccess.close();
+        dbAccess.close();
     }
 
-    // Layouts
+    // layouts
     private void setupMainWidgets() {
         // Main widgets
         this.mEtLabel = findViewById(R.id.etLabel);
@@ -274,7 +267,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
 
         setupDataLoginInfo();
     }
-    // Pull data
+    // pull data
     private void setupDataNote() {
         if (mIsNew) {
             setLabel(null);
@@ -380,24 +373,24 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
 
     // Actions
     private void onSave() {
-        MasterDatabaseAccess masterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
-        masterDatabaseAccess.open();
+        DBAccess dbAccess = DBAccess.getInstance(this);
+        dbAccess.open();
 
         String tmpContent = getViewData();
 
         // Saving
         if (!tmpContent.isEmpty()) {
             if (mIsNew) {
-                masterDatabaseAccess.save(getData(
-                        mEtLabel.getText().toString(), tmpContent, mEditGraphics.getColourId(mIsNew, mRawDataPackage, cc)));
+                dbAccess.save(getData(
+                        mEtLabel.getText().toString(), tmpContent, mEditGraphics.getColourId(mIsNew, mDataPackage)));
             } else {
-                masterDatabaseAccess.update(getData(
-                        mEtLabel.getText().toString(), tmpContent, mEditGraphics.getColourId(mIsNew, mRawDataPackage, cc)));
+                dbAccess.update(getData(
+                        mEtLabel.getText().toString(), tmpContent, mEditGraphics.getColourId(mIsNew, mDataPackage)));
             }
-            masterDatabaseAccess.close();
+            dbAccess.close();
         } else {
             Toast.makeText(this, "No Content To Save", Toast.LENGTH_SHORT).show();
-            masterDatabaseAccess.close();
+            dbAccess.close();
         }
     }
     private void onCancel() {
@@ -460,9 +453,9 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         }
         return "";
     }
-    private RawDataPackage getData(String label, String content, String colour) {
+    private DataPackage getData(String label, String content, String tag) {
         if (mIsNew) {
-            RawDataPackage tmp = new RawDataPackage();
+            DataPackage tmp = new DataPackage();
 
             String tmpType;
             switch (TYPE) {
@@ -471,18 +464,18 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
                 case ("TYPE_LOGININFO"):   tmpType = "TYPE_LOGININFO"; break;
                 default:                   tmpType = "TYPE_NOTE"; break; // TODO CREATE A "COULD NOT READ TYPE" DIALOG ALLOWING FOR AN EDIT
             }
-            tmp.setType(cc, tmpType);
-            tmp.setColourTag(cc, colour);
-            tmp.setLabel(cc, label);
-            tmp.setContent(cc, content);
+            tmp.setType(tmpType);
+            tmp.setTag(tag);
+            tmp.setLabel(label);
+            tmp.setContent(content);
 
             return tmp;
         } else {
-            mRawDataPackage.setColourTag(cc, mEditGraphics.getColourId(false, mRawDataPackage, cc));
-            mRawDataPackage.setLabel(cc, label);
-            mRawDataPackage.setContent(cc, content);
+            mDataPackage.setTag(mEditGraphics.getColourId(false, mDataPackage));
+            mDataPackage.setLabel(label);
+            mDataPackage.setContent(content);
 
-            return mRawDataPackage;
+            return mDataPackage;
         }
     }
     // ----------------------------------
@@ -496,8 +489,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
                 // If auto save
                 if (getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) {
                     onSave();
-                    MASTER_KEY = null;
-                    TEMP_PIN = null;
+                    TMP_PWD = null;
                 }
                 finish();
                 startActivity(ACTIVITY_INTENT);
@@ -536,7 +528,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
                 ACTIVITY_INTENT.putExtra("lastDB", getData(
                         mEtLabel.getText().toString(),
                         getViewData(),
-                        mEditGraphics.getColourId(mIsNew, mRawDataPackage, cc)));
+                        mEditGraphics.getColourId(mIsNew, mDataPackage)));
                 // ---------------------
 
                 if (!getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) {

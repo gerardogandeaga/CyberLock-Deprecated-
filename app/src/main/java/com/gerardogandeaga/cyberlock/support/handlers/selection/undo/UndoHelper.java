@@ -2,10 +2,9 @@ package com.gerardogandeaga.cyberlock.support.handlers.selection.undo;
 
 import android.content.Context;
 import android.os.CountDownTimer;
-import android.widget.Toast;
 
-import com.gerardogandeaga.cyberlock.sqlite.data.MasterDatabaseAccess;
-import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
+import com.gerardogandeaga.cyberlock.sqlite.data.DBAccess;
+import com.gerardogandeaga.cyberlock.sqlite.data.DataPackage;
 import com.gerardogandeaga.cyberlock.support.recyclerview.items.RecyclerViewItem;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 public class UndoHelper {
     private Context mContext;
     private FastItemAdapter<RecyclerViewItem> mFastItemAdapter;
-    private ArrayList<RawDataPackage> mTempDataPackageArray;
+    private ArrayList<DataPackage> mTempDataPackageArray;
     private ArrayList<RecyclerViewItem> mItemViewArray;
 
     private CountDownTimer mCountDownTimer;
@@ -23,7 +22,7 @@ public class UndoHelper {
         this.mContext = context;
     }
 
-    public void populateTempArray(FastItemAdapter<RecyclerViewItem> fastItemAdapter, ArrayList<RawDataPackage> dataPackages, ArrayList<RecyclerViewItem> items) {
+    public void populateTempArray(FastItemAdapter<RecyclerViewItem> fastItemAdapter, ArrayList<DataPackage> dataPackages, ArrayList<RecyclerViewItem> items) {
         this.mFastItemAdapter = fastItemAdapter;
         this.mTempDataPackageArray = dataPackages;
         this.mItemViewArray = items;
@@ -34,11 +33,11 @@ public class UndoHelper {
         mCountDownTimer.cancel();
 
         if (!mTempDataPackageArray.isEmpty()) {
-            MasterDatabaseAccess masterDatabaseAccess = MasterDatabaseAccess.getInstance(mContext);
-            masterDatabaseAccess.open();
+            DBAccess dbAccess = DBAccess.getInstance(mContext);
+            dbAccess.open();
             for (int i = 0; i < mTempDataPackageArray.size(); i++) {
                 // Re-save data packages
-                masterDatabaseAccess.save(mTempDataPackageArray.get(i));
+                dbAccess.save(mTempDataPackageArray.get(i));
 
                 // Re-input into adapter
                 RecyclerViewItem item = mItemViewArray.get(i);
@@ -48,7 +47,7 @@ public class UndoHelper {
 
                 mFastItemAdapter.notifyAdapterDataSetChanged();
             }
-            masterDatabaseAccess.close();
+            dbAccess.close();
             finish();
         }
     }
@@ -66,13 +65,13 @@ public class UndoHelper {
 
             @Override
             public void onFinish() {
-                Toast.makeText(mContext, "Done!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Done!", Toast.LENGTH_SHORT).show();
                 deleteData();
             }
         }.start();
     }
 
-    public void finish() {
+    private void finish() {
         this.mFastItemAdapter = null;
         this.mTempDataPackageArray = null;
         this.mItemViewArray = null;

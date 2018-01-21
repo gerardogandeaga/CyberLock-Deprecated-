@@ -5,9 +5,8 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.gerardogandeaga.cyberlock.crypto.CryptoContent;
-import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.sqlite.data.DataPackage;
 import com.gerardogandeaga.cyberlock.support.recyclerview.items.RecyclerViewItem;
 
 import java.util.ArrayList;
@@ -17,30 +16,29 @@ import java.util.Scanner;
 public class RecyclerViewItemDataHandler {
     private Context mContext;
 
-    public List<RecyclerViewItem> getDataItems(Context context, List<RawDataPackage> rawDataPackageList) {
+    public List<RecyclerViewItem> getDataItems(Context context, List<DataPackage> dataPackageList) {
         this.mContext = context;
         
         // RecyclerViewItem list as an array
         List<RecyclerViewItem> recyclerViewItemArrayList = new ArrayList<>();
 
-        CryptoContent cc = new CryptoContent(mContext);
         // Iterate through SQLite data list
-        for(int i = 0; i < rawDataPackageList.size(); i++) {
-            RawDataPackage rawDataPackage = rawDataPackageList.get(i);
+        for(int i = 0; i < dataPackageList.size(); i++) {
+            DataPackage dataPackage = dataPackageList.get(i);
 
             recyclerViewItemArrayList.add(
                     // Get rawDataPackage from index
                     new RecyclerViewItem()
                             .withIdentifier((long) (i + 1))
-                            .withRawDataPackage(rawDataPackage)
-                            .withType(rawDataPackage.getType(cc))
+                            .withRawDataPackage(dataPackage)
+                            .withType(dataPackage.getType())
 
-                            .withLabel(rawDataPackage.getLabel(cc))
-                            .withContent(getUnbindedContent(cc, rawDataPackage, rawDataPackage.getContent(cc)))
-                            .withDate(rawDataPackage.getDate())
-                            .withTag(getColour(cc, rawDataPackage))
+                            .withLabel(dataPackage.getLabel())
+                            .withContent(getUnbindedContent(dataPackage, dataPackage.getContent()))
+                            .withDate(dataPackage.getDate())
+                            .withTag(getColour(dataPackage))
                             // If type is paymentinfo
-                            .withCardIcon(getCardImage(rawDataPackage.getContent(cc)))
+                            .withCardIcon(getCardImage(dataPackage.getContent()))
             );
         }
 
@@ -49,10 +47,10 @@ public class RecyclerViewItemDataHandler {
 
     // Deconstruct content strings
     @Nullable
-    private String getUnbindedContent(CryptoContent cc, RawDataPackage rawDataPackage, String content) {
+    private String getUnbindedContent(DataPackage dataPackage, String content) {
         // Return content based on rawDataPackage-type
-        switch (rawDataPackage.getType(cc)) {
-            case "TYPE_NOTE":        return rawDataPackage.getShortNoteText(mContext, parseNoteContent(content));
+        switch (dataPackage.getType()) {
+            case "TYPE_NOTE":        return dataPackage.getShortNoteText(mContext, parseNoteContent(content));
             case "TYPE_PAYMENTINFO": return parsePaymentInfoContent(content);
             case "TYPE_LOGININFO":   return parseLoginInfoContent(content);
             default: return null;
@@ -101,8 +99,8 @@ public class RecyclerViewItemDataHandler {
     }
     // ---------------------------
 
-    private int getColour(CryptoContent cc, RawDataPackage rawDataPackage) {
-        switch (rawDataPackage.getColourTag(cc)) {
+    private int getColour(DataPackage dataPackage) {
+        switch (dataPackage.getTag()) {
             case "COL_BLUE":   return mContext.getResources().getColor(R.color.ct_blue);
             case "COL_RED":    return mContext.getResources().getColor(R.color.ct_red);
             case "COL_GREEN":  return mContext.getResources().getColor(R.color.ct_green);

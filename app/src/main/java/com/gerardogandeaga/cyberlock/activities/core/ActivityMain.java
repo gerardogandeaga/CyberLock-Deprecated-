@@ -3,21 +3,14 @@ package com.gerardogandeaga.cyberlock.activities.core;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,8 +18,9 @@ import android.view.View;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
 import com.gerardogandeaga.cyberlock.activities.dialogs.DialogDataPreview;
-import com.gerardogandeaga.cyberlock.sqlite.data.MasterDatabaseAccess;
-import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
+import com.gerardogandeaga.cyberlock.activities.dialogs.DialogOptions;
+import com.gerardogandeaga.cyberlock.sqlite.data.DBAccess;
+import com.gerardogandeaga.cyberlock.sqlite.data.DataPackage;
 import com.gerardogandeaga.cyberlock.support.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.support.graphics.DrawableColours;
 import com.gerardogandeaga.cyberlock.support.graphics.Themes;
@@ -43,12 +37,12 @@ import com.mikepenz.fastadapter.listeners.OnLongClickListener;
 
 import java.util.List;
 
-import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.support.Globals.RV_FORMAT;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mCountDownTimer;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mIsCountDownTimerFinished;
+import static com.gerardogandeaga.cyberlock.support.Stored.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.support.Stored.RV_FORMAT;
 
 public class ActivityMain extends AppCompatActivity implements View.OnClickListener {
     private Context mContext = this;
@@ -61,9 +55,6 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     // Views
     private Menu mMenu;
     private RecyclerView mRecyclerView;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout mDrawerLayout;
-    private NavigationView mNavigationView;
 
     // Initial on create methods
     @Override
@@ -81,10 +72,10 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         setupSupportActionBar();
 
         // Pull data list from database
-        MasterDatabaseAccess masterDatabaseAccess = MasterDatabaseAccess.getInstance(this);
-        masterDatabaseAccess.open();
-        List<RawDataPackage> rawDataPackageList = masterDatabaseAccess.getAllData();
-        masterDatabaseAccess.close();
+        DBAccess dbAccess = DBAccess.getInstance(this);
+        dbAccess.open();
+        List<DataPackage> dataPackageList = dbAccess.getAllData();
+        dbAccess.close();
 
         // Create the FastAdapter
         this.mFastItemAdapter = new FastItemAdapter<>();
@@ -101,7 +92,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
             public boolean onClick(@NonNull View view, @NonNull IAdapter<RecyclerViewItem> adapter, @NonNull RecyclerViewItem item, int position) {
                 // Perform normal on click if it is active and if it return false then continue to next step
                 if (!AdapterItemHandler.onClick(mFastItemAdapter, item, position)) {
-                    new DialogDataPreview(mContext, item.mRawDataPackage).initializeDialog();
+                    new DialogDataPreview(mContext, item.mDataPackage).initializeDialog();
                 } else {
                     getSupportActionBar().setTitle(Integer.toString(AdapterItemHandler.getCount()));
                 }
@@ -152,7 +143,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setAdapter(mFastItemAdapter); // Set adapter
 
         // Derive adapter DataItems from rawDataPackageList
-        List<RecyclerViewItem> recyclerViewItemList = new RecyclerViewItemDataHandler().getDataItems(this, rawDataPackageList);
+        List<RecyclerViewItem> recyclerViewItemList = new RecyclerViewItemDataHandler().getDataItems(this, dataPackageList);
         mFastItemAdapter.add(recyclerViewItemList);
 
 
@@ -203,49 +194,12 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setSubtitle(null);
-
-//        // Drawer Layout
-//        this.mDrawerLayout = findViewById(R.id.Data);
-//        this.mNavigationView = findViewById(R.id.NavigationContent);
-//        this.mDrawerToggle = new ActionBarDrawerToggle(this, this.mDrawerLayout, R.string.DRAWER_OPEN, R.string.DRAWER_CLOSE);
-//        this.mDrawerToggle.setDrawerIndicatorEnabled(false);
-//        //
-//        getSupportActionBar().setHomeAsUpIndicator(DrawableColours.mutateHomeAsUpIndicatorDrawable(
-//                this, this.getResources().getDrawable(R.drawable.ic_drawer)));
-//
-//        computeNavViewSize();
-//        this.mDrawerToggle.syncState();
-//        this.mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                return false;
-//            }
-//        });
     }
     private void resetSupportActionBar() {
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setSubtitle(null);
         getSupportActionBar().setHomeAsUpIndicator(DrawableColours.mutateHomeAsUpIndicatorDrawable(
                 this, this.getResources().getDrawable(R.drawable.ic_drawer)));
-    }
-    //
-    private void computeNavViewSize() {
-        Resources resources = getResources();
-        DisplayMetrics metrics = new DisplayMetrics();
-
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int width = metrics.widthPixels;
-
-        float screenWidth = width / resources.getDisplayMetrics().density;
-        float navWidth = screenWidth - 56;
-
-        navWidth = Math.min(navWidth, 320);
-
-        int newWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, navWidth, resources.getDisplayMetrics());
-
-        DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) this.mNavigationView.getLayoutParams();
-        params.width = (newWidth);
-        this.mNavigationView.setLayoutParams(params);
     }
 
     private void removeRecyclerViewDecorations() {
@@ -285,17 +239,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                 return true;
 
             // Misc
-            case android.R.id.home:
-                if (!AdapterItemHandler.isActive()) {
-                    if (this.mDrawerLayout.isDrawerVisible(GravityCompat.START)) {
-                        this.mDrawerLayout.closeDrawer(GravityCompat.START);
-                    } else {
-                        this.mDrawerLayout.openDrawer(GravityCompat.START);
-                    }
-                } else {
-                    onBackPressed();
-                }
-                return true;
+            case android.R.id.home: onBackPressed(); return true;
 
             // On multi select mode
             case R.id.action_delete:
@@ -326,10 +270,12 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
     // ActivitySettings, About ##############################################
     private void onSettings() {
-        ACTIVITY_INTENT = new Intent(this, ActivitySettings.class);
-        this.finish();
-        this.startActivity(ACTIVITY_INTENT);
-        overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
+        new DialogOptions(this);
+
+//        ACTIVITY_INTENT = new Intent(this, ActivitySettings.class);
+//        this.finish();
+//        this.startActivity(ACTIVITY_INTENT);
+//        overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
     }
     private void onPlayground() {
         ACTIVITY_INTENT = new Intent(this, ActivityPlayground.class);
@@ -374,8 +320,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         super.onPause();
 
         if (!this.isFinishing()) { // HOME AND TABS AND SCREEN OFF
-            if (ACTIVITY_INTENT == null) // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
-            {
+            if (ACTIVITY_INTENT == null) { // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
                 new LogoutProtocol().logoutExecuteAutosaveOff(mContext);
             }
         }

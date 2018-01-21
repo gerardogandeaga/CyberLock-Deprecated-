@@ -66,21 +66,27 @@
     </style>
 
     <!-- Settings -->
-    <style name="myText.Settings.Header" parent="TextAppearance.AppCompat">
+    <style name="myText.Settings.Category" parent="TextAppearance.AppCompat">
         <item name="android:textSize">22sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?attr/textColourPrimary</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+    <style name="myText.Settings.Header" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/textColourPrimary</item>
+        <item name="android:fontFamily">@font/roboto_mono</item>
     </style>
     <style name="myText.Settings.Description" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">?attr/textColourPrimary</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">@font/roboto_mono</item>
     </style>
 
     <!-- Dialog -->
     <style name="myText.Dialog.Title" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:textColor">?attr/textColourPrimary</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:gravity">start</item>

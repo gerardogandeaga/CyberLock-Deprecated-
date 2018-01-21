@@ -1,7 +1,6 @@
 package com.gerardogandeaga.cyberlock.activities.clearances;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,146 +8,136 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.crypto.CryptKeyHandler;
-import com.gerardogandeaga.cyberlock.crypto.SHA256PinHash;
+import com.gerardogandeaga.cyberlock.crypto.CryptKey;
+import com.gerardogandeaga.cyberlock.crypto.Hash;
+import com.gerardogandeaga.cyberlock.support.Stored;
+import com.gerardogandeaga.cyberlock.support.graphics.CustomLoadDialog;
 
-import static com.gerardogandeaga.cyberlock.support.Globals.AUTOSAVE;
-import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.support.Globals.CRYPT_ALGO;
-import static com.gerardogandeaga.cyberlock.support.Globals.IS_REGISTERED;
-import static com.gerardogandeaga.cyberlock.support.Globals.PASSCODE;
-import static com.gerardogandeaga.cyberlock.support.Globals.THEME;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.support.Stored.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.support.Stored.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.support.Stored.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.support.Stored.ENCRYPTION_ALGORITHM;
+import static com.gerardogandeaga.cyberlock.support.Stored.PASSWORD;
+import static com.gerardogandeaga.cyberlock.support.Stored.THEME;
 
 public class ActivityRegistration extends AppCompatActivity {
     private Context mContext = this;
     private SharedPreferences mSharedPreferences;
 
-    // RawDataPackage variables
-    private String[] mPasscodes = new String[2];
+    // widgets
+    private CustomLoadDialog mCustomLoadDialog;
 
-    // WIDGETS
-    private EditText mEtInitial, mEtFinal;
-    private ProgressDialog mProgressDialog;
-
-    // Initial create methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-
-        setupLayout();
-    }
-    private void setupLayout() {
-        setContentView(R.layout.activity_register);
+        // fullscreen
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ACTIVITY_INTENT = null;
-        mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
-        boolean isRegistered = mSharedPreferences.getBoolean(IS_REGISTERED, false);
+        this.mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
+        super.onCreate(savedInstanceState);
 
-        if (isRegistered) {
+        // check is user is already registered
+        if (isRegistered()) {
             ACTIVITY_INTENT = new Intent(this, ActivityLogin.class);
             this.finish();
             this.startActivity(ACTIVITY_INTENT);
         } else {
-            mEtInitial = findViewById(R.id.etInitial);
-            mEtFinal = findViewById(R.id.etFinal);
-            Button btnRegister = findViewById(R.id.btnRegister);
+            setContentView(View.inflate(this, R.layout.activity_register, null));
+            final EditText tvInput1 = findViewById(R.id.etInitial);
+            final EditText tvInput2 = findViewById(R.id.etFinal);
+            final Button btnRegister = findViewById(R.id.btnRegister);
 
+            // register button listener
             btnRegister.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mPasscodes[0] = mEtInitial.getText().toString();
-                    mPasscodes[1] = mEtFinal.getText().toString();
+                    final String[] passwords = new String[2];
+                    passwords[0] = tvInput1.getText().toString();
+                    passwords[1] = tvInput2.getText().toString();
+                    tvInput1.getText().clear();
+                    tvInput2.getText().clear();
 
-                    if (!mPasscodes[0].matches("") && !mPasscodes[1].matches("")) {
-                        if (mPasscodes[0].matches(mPasscodes[1])) {
-                            onPasscodeCompleted();
+                    if (!passwords[0].isEmpty() && !passwords[1].isEmpty()) {
+                        if (passwords[0].equals(passwords[1])) {
+                            register(passwords);
                         } else {
-                            clear();
-                            Toast.makeText(mContext, "Passcodes do not match", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "Passwords do not match", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        clear();
                         Toast.makeText(mContext, "One or more fields are missing", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         }
     }
-    private void progressBar() {
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setMessage("Registering...");
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
-    }
-    // -------------------------
 
-    // PASSCODE REGISTRATION
-    public void clear() {
-        mPasscodes = new String[2];
-        mEtInitial.getText().clear();
-        mEtFinal.getText().clear();
-    }
-    @SuppressLint("StaticFieldLeak") private void onPasscodeCompleted() {
+    // registration process
+    @SuppressLint("StaticFieldLeak")
+    private void register(final String[] passwords) {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-
-                progressBar();
+                mCustomLoadDialog = new CustomLoadDialog(mContext);
+                mCustomLoadDialog.indeterminateLoad("Registering...");
             }
+
             @Override
             protected Void doInBackground(Void... params) {
+                // do initial processes suc saving data and setting global variables
+                initialPreferences(passwords);
 
-                final String passcode = mPasscodes[0];
-                try {
-                    mSharedPreferences.edit().putString(CRYPT_ALGO, "AES").apply();
+                // end load
+                mCustomLoadDialog.dismiss();
 
-                    CryptKeyHandler keyHandler = new CryptKeyHandler(mContext); // START THE KEY HANDLER
-
-                    // PASSCODE AND ENCRYPTION PROCESSES
-                    final String pinHash = SHA256PinHash.HASH_FUNCTION(passcode, SHA256PinHash.GENERATE_SALT());
-                    final String passcodeHashAndEncrypted = keyHandler.ENCRYPT_KEY(pinHash, passcode);
-
-                    mSharedPreferences.edit().putString(PASSCODE, passcodeHashAndEncrypted).apply(); // ADD HASHED passcode TO STORE
-                    System.out.println("HASHED passcode :" + passcodeHashAndEncrypted);
-
-                    String keyStringVal = keyHandler.GENERATE_NEW_KEY(passcode); // GENERATE A NEW BYTE ARRAY AS A SYMMETRIC KEY
-                    keyStringVal = null; // TODO IMPROVE GENERATION VS GETTER
-
-                    // INITIAL SETTINGS
-                    mSharedPreferences.edit().putBoolean(AUTOSAVE, false).apply();
-                    mSharedPreferences.edit().putString(THEME, "THEME_LIGHT").apply();
-
-                    Intent i = new Intent(ActivityRegistration.this, ActivityLogin.class);
-                    ActivityRegistration.this.startActivity(i);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(mContext, "Something Went Wrong...", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+                // start a new intent and exit
+                ActivityRegistration.this.startActivity(
+                        new Intent(ActivityRegistration.this, ActivityLogin.class));
 
                 return null;
             }
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-
-                mProgressDialog.dismiss();
-            }
         }.execute();
     }
-    // ----------------
+    // initial preferences and global variables
+    private void initialPreferences(final String[] passwords) {
+
+        final String password = passwords[0];
+        this.mSharedPreferences.edit()
+                // security
+                .putString(PASSWORD, Hash.generateSecurePasscode(this, password))
+                .putString(CRYPT_KEY, CryptKey.generateNewMasterEncryptionKey(mContext, password))
+                .putString(ENCRYPTION_ALGORITHM, "AES")
+                // settings
+                .putBoolean(AUTOSAVE, false)
+                .putString(THEME, "THEME_LIGHT")
+                .apply();
+    }
+
+    private boolean isRegistered() {
+        final boolean isRegistered = Stored.getIsRegistered(this);
+        final String password = Stored.getPassword(this);
+        final String key = Stored.getMasterKey(this);
+
+        return (isRegistered && password != null && key != null);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (isRegistered()) {
+            ACTIVITY_INTENT = new Intent(this, ActivityLogin.class);
+            this.finish();
+            this.startActivity(ACTIVITY_INTENT);
+        }
+    }
 }

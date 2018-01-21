@@ -55,12 +55,12 @@
         android:src="@drawable/preview12"
         android:scaleType="centerCrop"
         android:contentDescription="header wallpaper"/>
-
-    <iammert.com.expandablelib.ExpandableLayout
-        android:id="@+id/expandableLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:childLayout="@layout/expandable_child"
-        app:parentLayout="@layout/expandable_parent"/>
-
 </LinearLayout>
+
+
+<!--<iammert.com.expandablelib.ExpandableLayout-->
+<!--android:id="@+id/expandableLayout"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--app:childLayout="@layout/expandable_child"-->
+<!--app:parentLayout="@layout/expandable_parent"/>-->

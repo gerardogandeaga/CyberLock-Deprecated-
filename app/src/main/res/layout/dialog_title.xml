@@ -4,9 +4,9 @@
     android:id="@+id/Title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/cardbackgroundColour"
     android:orientation="vertical"
     android:paddingBottom="10dp"
-    android:background="?attr/cardbackgroundColour"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
     android:paddingTop="10dp">
@@ -15,6 +15,7 @@
         android:id="@+id/tvDialogTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:maxLines="1"
         android:text="Title"
         android:textAppearance="@style/myText.Dialog.Title"/>
@@ -24,6 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
+        android:layout_weight="1"
         android:text="date"
         android:textAppearance="@style/myText.Edit.Date"/>
 

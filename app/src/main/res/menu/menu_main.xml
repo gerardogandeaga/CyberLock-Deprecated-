@@ -26,6 +26,7 @@
                 app:showAsAction="never"/>
 
             <item
+                android:icon="@drawable/ic_list_format"
                 android:title="List Format">
 
                 <menu>

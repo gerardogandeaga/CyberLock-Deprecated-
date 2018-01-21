@@ -12,8 +12,7 @@ import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.core.ActivityEdit;
-import com.gerardogandeaga.cyberlock.crypto.CryptoContent;
-import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
+import com.gerardogandeaga.cyberlock.sqlite.data.DataPackage;
 import com.gerardogandeaga.cyberlock.support.ViewHandler;
 import com.gerardogandeaga.cyberlock.support.handlers.extractors.ContentHandler;
 
@@ -21,23 +20,21 @@ import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTE
 
 public class DialogDataPreview {
     private Context mContext;
-    private CryptoContent cc;
 
     // Data variables
-    private RawDataPackage mRawDataPackage;
+    private DataPackage mDataPackage;
 
     // Views
     private AlertDialog.Builder mBuilder;
 
-    public DialogDataPreview(Context context, RawDataPackage rawDataPackage) {
+    public DialogDataPreview(Context context, DataPackage dataPackage) {
         this.mContext = context;
-        this.cc = new CryptoContent(mContext);
-        this.mRawDataPackage = rawDataPackage;
+        this.mDataPackage = dataPackage;
     }
 
     // Select type
     public void initializeDialog() {
-        switch (mRawDataPackage.getType(cc)) {
+        switch (mDataPackage.getType()) {
             case "TYPE_NOTE":        constructPreviewNote(); break;
             case "TYPE_PAYMENTINFO": constructPreviewPaymentInfo(); break;
             case "TYPE_LOGININFO":   constructPreviewLoginInfo(); break;
@@ -49,7 +46,7 @@ public class DialogDataPreview {
     private void constructPreviewNote() {
         View titleView = View.inflate(mContext, R.layout.dialog_title, null);
         View view = View.inflate(mContext, R.layout.preview_note, null);
-        ContentHandler contentHandler = new ContentHandler(mContext, mRawDataPackage);
+        ContentHandler contentHandler = new ContentHandler(mContext, mDataPackage);
         //
         TextView title = titleView.findViewById(R.id.tvDialogTitle);
         TextView date = titleView.findViewById(R.id.tvDate);
@@ -85,7 +82,7 @@ public class DialogDataPreview {
     private void constructPreviewPaymentInfo() {
         View titleView = View.inflate(mContext, R.layout.dialog_title, null);
         View view = View.inflate(mContext, R.layout.preview_paymentinfo, null);
-        ContentHandler contentHandler = new ContentHandler(mContext, mRawDataPackage);
+        ContentHandler contentHandler = new ContentHandler(mContext, mDataPackage);
         //
         LinearLayout Holder = view.findViewById(R.id.Holder);
         LinearLayout Number = view.findViewById(R.id.Number);
@@ -140,7 +137,7 @@ public class DialogDataPreview {
     private void constructPreviewLoginInfo() {
         View titleView = View.inflate(mContext, R.layout.dialog_title, null);
         View view = View.inflate(mContext, R.layout.preview_logininfo, null);
-        ContentHandler contentHandler = new ContentHandler(mContext, mRawDataPackage);
+        ContentHandler contentHandler = new ContentHandler(mContext, mDataPackage);
         //
         LinearLayout Url = view.findViewById(R.id.Url);
         LinearLayout Email = view.findViewById(R.id.Email);
@@ -210,7 +207,7 @@ public class DialogDataPreview {
     // Edit data package
     private void onEdit() {
         ACTIVITY_INTENT = new Intent(mContext, ActivityEdit.class);
-        ACTIVITY_INTENT.putExtra("data", mRawDataPackage);
+        ACTIVITY_INTENT.putExtra("data", mDataPackage);
         mContext.startActivity(ACTIVITY_INTENT);
     }
 }

@@ -1,6 +1,5 @@
 package com.gerardogandeaga.cyberlock.activities.core;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,7 +16,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.R;
@@ -26,20 +24,17 @@ import com.gerardogandeaga.cyberlock.support.KeyChecker;
 import com.gerardogandeaga.cyberlock.support.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.support.graphics.DrawableColours;
 import com.gerardogandeaga.cyberlock.support.graphics.Themes;
-import com.gerardogandeaga.cyberlock.support.settings.SettingsChangeCryptAlgorithm;
-import com.gerardogandeaga.cyberlock.support.settings.SettingsChangePasscode;
-import com.gerardogandeaga.cyberlock.support.settings.SettingsScrambleCryptKey;
+import com.gerardogandeaga.cyberlock.support.settings.ChangePasscode;
 
-import static com.gerardogandeaga.cyberlock.support.Globals.AUTOSAVE;
-import static com.gerardogandeaga.cyberlock.support.Globals.CRYPT_ALGO;
-import static com.gerardogandeaga.cyberlock.support.Globals.DELAY_TIME;
-import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.support.Globals.LOGOUT_DELAY;
-import static com.gerardogandeaga.cyberlock.support.Globals.THEME;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mCountDownTimer;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mIsCountDownTimerFinished;
+import static com.gerardogandeaga.cyberlock.support.Stored.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.support.Stored.DELAY_TIME;
+import static com.gerardogandeaga.cyberlock.support.Stored.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.support.Stored.LOGOUT_DELAY;
+import static com.gerardogandeaga.cyberlock.support.Stored.THEME;
 
 public class ActivitySettings extends AppCompatActivity implements View.OnClickListener {
     private Context mContext = this;
@@ -85,8 +80,6 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
         iniAutoLogoutDelay();
         iniChangePasscode();
         iniThemeSelector();
-        iniScrambleKey();
-        iniEncryptionAlgorithmChange();
 
         savedStates();
     }
@@ -109,20 +102,20 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
         int delaySpinnerPosition = mAdapterAutoLogoutDelay.getPosition(this.mSharedPreferences.getString(LOGOUT_DELAY, "Immediate"));
         mSpAutoLogoutDelay.setSelection(delaySpinnerPosition);
 
-        // ENCRYPTION METHOD
-        int algoSpinnerPosition;
-        switch (this.mSharedPreferences.getString(CRYPT_ALGO, "AES")) {
-            case "AES":
-                algoSpinnerPosition = mAdapterEncryptionAlgorithm.getPosition("AES - 256");
-                mSpEncryptionAlgorithm.setSelection(algoSpinnerPosition);
-                mOldEncryptionAlgorithm = mSpEncryptionAlgorithm.getItemAtPosition(algoSpinnerPosition).toString();
-                break;
-            case "Blowfish":
-                algoSpinnerPosition = mAdapterEncryptionAlgorithm.getPosition("Blowfish - 448");
-                mSpEncryptionAlgorithm.setSelection(algoSpinnerPosition);
-                mOldEncryptionAlgorithm = mSpEncryptionAlgorithm.getItemAtPosition(algoSpinnerPosition).toString();
-                break;
-        }
+//        // ENCRYPTION METHOD
+//        int algoSpinnerPosition;
+//        switch (this.mSharedPreferences.getString(ENCRYPTION_ALGORITHM, "AES")) {
+//            case "AES":
+//                algoSpinnerPosition = mAdapterEncryptionAlgorithm.getPosition("AES - 256");
+//                mSpEncryptionAlgorithm.setSelection(algoSpinnerPosition);
+//                mOldEncryptionAlgorithm = mSpEncryptionAlgorithm.getItemAtPosition(algoSpinnerPosition).toString();
+//                break;
+//            case "Blowfish":
+//                algoSpinnerPosition = mAdapterEncryptionAlgorithm.getPosition("Blowfish - 448");
+//                mSpEncryptionAlgorithm.setSelection(algoSpinnerPosition);
+//                mOldEncryptionAlgorithm = mSpEncryptionAlgorithm.getItemAtPosition(algoSpinnerPosition).toString();
+//                break;
+//        }
     }
     // -------------------------
     private void iniAutoSave() {
@@ -190,46 +183,6 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
         Light.setOnClickListener(this);
         Dark.setOnClickListener(this);
     }
-    private void iniScrambleKey() {
-        RelativeLayout scrambleKey = findViewById(R.id.ScrambleKey);
-
-        scrambleKey.setOnClickListener(this);
-    }
-    private void iniEncryptionAlgorithmChange() {
-        this.mSpEncryptionAlgorithm = findViewById(R.id.spEncryptionAlgorithm);
-        this.mAdapterEncryptionAlgorithm = ArrayAdapter.createFromResource(this, R.array.CryptALGO_array, R.layout.spinner_setting_text);
-        this.mAdapterEncryptionAlgorithm.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-        this.mSpEncryptionAlgorithm.setAdapter(mAdapterEncryptionAlgorithm);
-
-        RelativeLayout encryptionAlgorithm = findViewById(R.id.EncryptionAlgorithm);
-
-        encryptionAlgorithm.setOnClickListener(this);
-
-        this.mSpEncryptionAlgorithm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Object object = parent.getItemAtPosition(position);
-                if (object != null) {
-                    String algorithm = object.toString();
-                    if (algorithm.matches("AES - 256")) {
-                        String newAlgorithm = "AES";
-                        if (!mSharedPreferences.getString(CRYPT_ALGO, "AES").matches(newAlgorithm)) {
-                            actionEncryptionAlgorithmChange(newAlgorithm);
-                        }
-                    } else if (algorithm.matches("Blowfish - 448")) {
-                        String newAlgorithm = "Blowfish";
-                        if (!mSharedPreferences.getString(CRYPT_ALGO, "AES").matches(newAlgorithm)) {
-                            actionEncryptionAlgorithmChange(newAlgorithm);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-    }
 
     // On click
     @Override
@@ -257,12 +210,6 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
 
             // Change passcode
             case R.id.ChangePasscode: actionChangePasscode(); break;
-
-            // Scramble key
-            case R.id.ScrambleKey: actionScrambleKey(); break;
-
-            // Encryption algorithm change
-            case R.id.EncryptionAlgorithm: mSpEncryptionAlgorithm.performClick(); break;
         }
     }
     // --------
@@ -318,12 +265,12 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
                 final String p2 = Final.getText().toString();
                 if (!p0.isEmpty() || !p1.isEmpty() || !p2.isEmpty()) { // Check if any fields are empty
                     if (p1.matches(p2)) { // Check is entries match and are not empty
-                        if (new KeyChecker(mContext, mSharedPreferences).keyCompare(p0)) { // check if original passcode matches the one entered
+                        if (KeyChecker.comparePasswords(mContext, p0)) { // check if original passcode matches the one entered
                             final String[] passcodes = new String[3];
                             passcodes[0] = p0;
                             passcodes[1] = p1;
                             passcodes[2] = p2;
-                            SettingsChangePasscode obj = new SettingsChangePasscode(mContext, mSharedPreferences, passcodes);
+                            ChangePasscode obj = new ChangePasscode(mContext, mSharedPreferences, passcodes);
                             dialog.dismiss();
                         } else {
                             Toast.makeText(mContext, "Wrong passcode", Toast.LENGTH_SHORT).show();
@@ -337,73 +284,6 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
             }
         });
         // Dialog show
-        final AlertDialog dialog = builder.show();
-    }
-    @SuppressLint("SetTextI18n")
-    private void actionScrambleKey() {
-        View titleView = View.inflate(mContext, R.layout.dialog_title, null);
-        View view = View.inflate(mContext, R.layout.dialog_view_alert_info, null);
-        // Dialog primitives
-        TextView title = titleView.findViewById(R.id.tvDialogTitle);
-        titleView.findViewById(R.id.tvDate).setVisibility(View.GONE);
-        TextView alertText = view.findViewById(R.id.tvDialogAlertText);
-
-        title.setText("Scramble Encryption Key");
-        alertText.setText(R.string.AlertDialog_ScrambleKey);
-        // Dialog builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.MyDialogStyle);
-        builder.setView(view);
-        builder.setCustomTitle(titleView);
-        builder.setNegativeButton(R.string.btnCancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.setPositiveButton(R.string.btnScramble, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                new SettingsScrambleCryptKey(mContext).execute();
-            }
-        });
-        // Dialog show
-        final AlertDialog dialog = builder.show();
-    }
-    private void actionEncryptionAlgorithmChange(final String algorithm) {
-        View titleView = View.inflate(mContext, R.layout.dialog_title, null);
-        View v = View.inflate(mContext, R.layout.dialog_view_alert_info, null);
-        // Dialog primitives
-        TextView title = titleView.findViewById(R.id.tvDialogTitle);
-        titleView.findViewById(R.id.tvDate).setVisibility(View.GONE);
-        TextView alertText = v.findViewById(R.id.tvDialogAlertText);
-
-        title.setText("Change Encryption Algorithm");
-        alertText.setText(R.string.AlertDialog_EncryptionAlgorithmChange);
-        // DIALOG BUILDER
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.MyDialogStyle);
-        builder.setView(v);
-        builder.setCustomTitle(titleView);
-        builder.setNegativeButton(R.string.btnCancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                mSpEncryptionAlgorithm.setSelection(mAdapterEncryptionAlgorithm.getPosition(mOldEncryptionAlgorithm));
-            }
-        });
-        builder.setPositiveButton(R.string.btnChange, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                new SettingsChangeCryptAlgorithm(mContext, algorithm).execute();
-            }
-        });
-        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                mSpEncryptionAlgorithm.setSelection(mAdapterEncryptionAlgorithm.getPosition(mOldEncryptionAlgorithm));
-            }
-        });
         final AlertDialog dialog = builder.show();
     }
 
@@ -443,3 +323,114 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
     }
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }
+
+//
+//    private void iniScrambleKey() {
+//        RelativeLayout scrambleKey = findViewById(R.id.ScrambleKey);
+//
+//        scrambleKey.setOnClickListener(this);
+//    }
+//    private void iniEncryptionAlgorithmChange() {
+//        this.mSpEncryptionAlgorithm = findViewById(R.id.spEncryptionAlgorithm);
+//        this.mAdapterEncryptionAlgorithm = ArrayAdapter.createFromResource(this, R.array.CryptALGO_array, R.layout.spinner_setting_text);
+//        this.mAdapterEncryptionAlgorithm.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+//        this.mSpEncryptionAlgorithm.setAdapter(mAdapterEncryptionAlgorithm);
+//
+//        RelativeLayout encryptionAlgorithm = findViewById(R.id.EncryptionAlgorithm);
+//
+//        encryptionAlgorithm.setOnClickListener(this);
+//
+//        this.mSpEncryptionAlgorithm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Object object = parent.getItemAtPosition(position);
+//                if (object != null) {
+//                    String algorithm = object.toString();
+//                    if (algorithm.matches("AES - 256")) {
+//                        String newAlgorithm = "AES";
+//                        if (!mSharedPreferences.getString(ENCRYPTION_ALGORITHM, "AES").matches(newAlgorithm)) {
+//                            actionEncryptionAlgorithmChange(newAlgorithm);
+//                        }
+//                    } else if (algorithm.matches("Blowfish - 448")) {
+//                        String newAlgorithm = "Blowfish";
+//                        if (!mSharedPreferences.getString(ENCRYPTION_ALGORITHM, "AES").matches(newAlgorithm)) {
+//                            actionEncryptionAlgorithmChange(newAlgorithm);
+//                        }
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//            }
+//        });
+//    }
+
+//
+//    @SuppressLint("SetTextI18n")
+//    private void actionScrambleKey() {
+//        View titleView = View.inflate(mContext, R.layout.dialog_title, null);
+//        View view = View.inflate(mContext, R.layout.dialog_view_alert_info, null);
+//        // Dialog primitives
+//        TextView title = titleView.findViewById(R.id.tvDialogTitle);
+//        titleView.findViewById(R.id.tvDate).setVisibility(View.GONE);
+//        TextView alertText = view.findViewById(R.id.tvDialogAlertText);
+//
+//        title.setText("Scramble Encryption Key");
+//        alertText.setText(R.string.AlertDialog_ScrambleKey);
+//        // Dialog builder
+//        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.MyDialogStyle);
+//        builder.setView(view);
+//        builder.setCustomTitle(titleView);
+//        builder.setNegativeButton(R.string.btnCancel, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//        builder.setPositiveButton(R.string.btnScramble, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//                new ScrambleCryptKey(mContext).execute();
+//            }
+//        });
+//        // Dialog show
+//        final AlertDialog dialog = builder.show();
+//    }
+//    private void actionEncryptionAlgorithmChange(final String algorithm) {
+//        View titleView = View.inflate(mContext, R.layout.dialog_title, null);
+//        View v = View.inflate(mContext, R.layout.dialog_view_alert_info, null);
+//        // Dialog primitives
+//        TextView title = titleView.findViewById(R.id.tvDialogTitle);
+//        titleView.findViewById(R.id.tvDate).setVisibility(View.GONE);
+//        TextView alertText = v.findViewById(R.id.tvDialogAlertText);
+//
+//        title.setText("Change Encryption Algorithm");
+//        alertText.setText(R.string.AlertDialog_EncryptionAlgorithmChange);
+//        // DIALOG BUILDER
+//        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.MyDialogStyle);
+//        builder.setView(v);
+//        builder.setCustomTitle(titleView);
+//        builder.setNegativeButton(R.string.btnCancel, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//                mSpEncryptionAlgorithm.setSelection(mAdapterEncryptionAlgorithm.getPosition(mOldEncryptionAlgorithm));
+//            }
+//        });
+//        builder.setPositiveButton(R.string.btnChange, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//                new ChangeCryptAlgorithm(mContext, algorithm).execute();
+//            }
+//        });
+//        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+//            @Override
+//            public void onCancel(DialogInterface dialog) {
+//                mSpEncryptionAlgorithm.setSelection(mAdapterEncryptionAlgorithm.getPosition(mOldEncryptionAlgorithm));
+//            }
+//        });
+//        final AlertDialog dialog = builder.show();
+//    }

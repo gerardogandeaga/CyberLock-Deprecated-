@@ -1,4 +1,4 @@
-package com.gerardogandeaga.cyberlock.activities.core.edit;
+package com.gerardogandeaga.cyberlock.support.graphics;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -7,9 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.crypto.CryptoContent;
-import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
-import com.gerardogandeaga.cyberlock.support.graphics.Themes;
+import com.gerardogandeaga.cyberlock.sqlite.data.DataPackage;
 
 import org.jetbrains.annotations.Contract;
 
@@ -71,7 +69,7 @@ public class EditGraphics {
     }
 
     @Contract(pure = true)
-    public String getColourId(Boolean isNew, RawDataPackage rawDataPackage, CryptoContent cc) {
+    public String getColourId(Boolean isNew, DataPackage dataPackage) {
         if (isNew) {
             if (this.mColor != null) {
                 return this.mColor;
@@ -80,11 +78,10 @@ public class EditGraphics {
             }
         } else {
             if (this.mColor == null) {
-                return rawDataPackage.getColourTag(cc);
+                return dataPackage.getTag();
             } else {
                 return this.mColor;
             }
         }
     }
-    // ----------
 }

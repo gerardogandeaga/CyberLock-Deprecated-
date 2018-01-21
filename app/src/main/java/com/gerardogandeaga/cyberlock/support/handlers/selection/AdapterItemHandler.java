@@ -7,8 +7,8 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.sqlite.data.MasterDatabaseAccess;
-import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
+import com.gerardogandeaga.cyberlock.sqlite.data.DBAccess;
+import com.gerardogandeaga.cyberlock.sqlite.data.DataPackage;
 import com.gerardogandeaga.cyberlock.support.recyclerview.items.RecyclerViewItem;
 import com.gerardogandeaga.cyberlock.support.handlers.selection.undo.UndoHelper;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
@@ -20,30 +20,30 @@ import java.util.ArrayList;
 public class AdapterItemHandler {
     private static boolean mIsActive = false;
     private static int mCount = 0;
-    private static ArrayList<RawDataPackage> mRawDataPackageList;
+    private static ArrayList<DataPackage> mDataPackageList;
     // Undo handler
     @SuppressLint("StaticFieldLeak")
     private static UndoHelper mUndoHelper;
 
     public static void onLongClick(FastItemAdapter<RecyclerViewItem> fastItemAdapter, RecyclerViewItem item, int position) {
         mIsActive = true;
-        mRawDataPackageList = new ArrayList<>();
+        mDataPackageList = new ArrayList<>();
         onClick(fastItemAdapter, item, position);
     }
 
     public static boolean onClick(FastItemAdapter<RecyclerViewItem> fastItemAdapter, RecyclerViewItem item, int position) {
         if (mIsActive) {
-            RawDataPackage rawDataPackage = item.mRawDataPackage;
+            DataPackage dataPackage = item.mDataPackage;
 
             // Check is the list already contains the data package
-            if (!mRawDataPackageList.contains(rawDataPackage)) { // If item does not exist
-                mRawDataPackageList.add(rawDataPackage);
+            if (!mDataPackageList.contains(dataPackage)) { // If item does not exist
+                mDataPackageList.add(dataPackage);
                 fastItemAdapter.select(position);
             } else {
-                mRawDataPackageList.remove(rawDataPackage);      // If Item does exist
+                mDataPackageList.remove(dataPackage);      // If Item does exist
                 fastItemAdapter.deselect(position);
             }
-            mCount = mRawDataPackageList.size();
+            mCount = mDataPackageList.size();
 
             return true;
         }
@@ -52,18 +52,18 @@ public class AdapterItemHandler {
     }
 
     public static void onDelete(Context context, FastItemAdapter<RecyclerViewItem> fastItemAdapter, View view) {
-        if (mIsActive && (!mRawDataPackageList.isEmpty() || mRawDataPackageList == null)) {
+        if (mIsActive && (!mDataPackageList.isEmpty() || mDataPackageList == null)) {
             ArrayList<RecyclerViewItem> selectedItems = new ArrayList<>(fastItemAdapter.getSelectedItems());
 
             mUndoHelper = new UndoHelper(context);
-            mUndoHelper.populateTempArray(fastItemAdapter, mRawDataPackageList, selectedItems);
+            mUndoHelper.populateTempArray(fastItemAdapter, mDataPackageList, selectedItems);
 
-            MasterDatabaseAccess masterDatabaseAccess = MasterDatabaseAccess.getInstance(context);
-            masterDatabaseAccess.open();
-            for (RawDataPackage id: mRawDataPackageList) {
-                masterDatabaseAccess.delete(id);
+            DBAccess dbAccess = DBAccess.getInstance(context);
+            dbAccess.open();
+            for (DataPackage id: mDataPackageList) {
+                dbAccess.delete(id);
             }
-            masterDatabaseAccess.close();
+            dbAccess.close();
 
             // Remove items from view
             fastItemAdapter.deleteAllSelectedItems();
@@ -83,7 +83,7 @@ public class AdapterItemHandler {
     }
 
     private static void finish() {
-        mRawDataPackageList = new ArrayList<>();
+        mDataPackageList = new ArrayList<>();
         mCount = 0;
         mIsActive = false;
     }
@@ -93,8 +93,8 @@ public class AdapterItemHandler {
         return mIsActive;
     }
     public static boolean isValid() {
-        if (mRawDataPackageList != null) {
-            boolean bool = !mRawDataPackageList.isEmpty();
+        if (mDataPackageList != null) {
+            boolean bool = !mDataPackageList.isEmpty();
             if (!bool) mIsActive = false;
             return bool;
         }

@@ -4,10 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
 
-import static com.gerardogandeaga.cyberlock.support.Globals.DELAY_TIME;
-import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.support.Globals.MASTER_KEY;
-import static com.gerardogandeaga.cyberlock.support.Globals.TEMP_PIN;
+import static com.gerardogandeaga.cyberlock.support.Stored.DELAY_TIME;
+import static com.gerardogandeaga.cyberlock.support.Stored.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.support.Stored.TMP_PWD;
 
 public class LogoutProtocol {
     // DATA VARIABLES
@@ -29,8 +28,7 @@ public class LogoutProtocol {
             public void onFinish() {
                 mIsCountDownTimerFinished = true;
 
-                TEMP_PIN = null;
-                MASTER_KEY = null;
+                TMP_PWD = null;
                 APP_LOGGED_IN = false;
             }
         }.start();
@@ -53,8 +51,7 @@ public class LogoutProtocol {
     }
 
     public void logoutImmediate(final Context context) {
-        TEMP_PIN = null;
-        MASTER_KEY = null;
+        TMP_PWD = null;
         APP_LOGGED_IN = false;
     }
 }

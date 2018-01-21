@@ -4,8 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.crypto.CryptoContent;
-import com.gerardogandeaga.cyberlock.sqlite.data.RawDataPackage;
+import com.gerardogandeaga.cyberlock.sqlite.data.DataPackage;
 
 import java.util.Scanner;
 
@@ -30,18 +29,17 @@ public class ContentHandler {
     public String mUsername;
     public String mPassword;
 
-    public ContentHandler(Context context, RawDataPackage rawDataPackage) {
+    public ContentHandler(Context context, DataPackage dataPackage) {
         this.mContext = context;
-        CryptoContent cc = new CryptoContent(mContext);
 
         // Primitive string data
-        mLabel = rawDataPackage.getLabel(cc);
-        mDate = rawDataPackage.getDate();
-        mTag = rawDataPackage.getColourTag(cc);
+        mLabel = dataPackage.getLabel();
+        mDate = dataPackage.getDate();
+        mTag = dataPackage.getTag();
 
         // Content parsing
-        String content = rawDataPackage.getContent(cc);
-        switch (rawDataPackage.getType(cc)) {
+        String content = dataPackage.getContent();
+        switch (dataPackage.getType()) {
             case "TYPE_NOTE":        setNoteContent(content); break;
             case "TYPE_PAYMENTINFO": setPaymentInfoContent(content); break;
             case "TYPE_LOGININFO":   setLoginInfoContent(content); break;

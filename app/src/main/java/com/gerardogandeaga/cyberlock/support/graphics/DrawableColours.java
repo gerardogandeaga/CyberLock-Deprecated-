@@ -26,7 +26,7 @@ public class DrawableColours {
     }
 
     public static int getColour(Context context) {
-        return context.getResources().getColor(R.color.c_red_80);
+        return context.getResources().getColor(R.color.white);
     }
 
     @Contract(pure = true)

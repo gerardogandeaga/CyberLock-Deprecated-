@@ -38,7 +38,7 @@
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".support.settings.SettingsChangePasscode"
+            android:name=".support.settings.ChangePasscode"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
@@ -53,6 +53,10 @@
             android:name=".activities.core.ActivityPlayground"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts"/>
 
     </application>
 

@@ -20,8 +20,8 @@ import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
 import com.gerardogandeaga.cyberlock.crypto.CryptPlayground;
 import com.gerardogandeaga.cyberlock.support.LogoutProtocol;
 
-import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.support.Globals.PLAYGROUND_ALGO;
+import static com.gerardogandeaga.cyberlock.support.Stored.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.support.Stored.PLAYGROUND_ALGO;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mIsCountDownTimerFinished;

@@ -6,8 +6,8 @@ import com.gerardogandeaga.cyberlock.R;
 
 import org.jetbrains.annotations.Contract;
 
-import static com.gerardogandeaga.cyberlock.support.Globals.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.support.Globals.THEME;
+import static com.gerardogandeaga.cyberlock.support.Stored.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.support.Stored.THEME;
 
 public class Themes {
     private static String AppTheme = "THEME_LIGHT";

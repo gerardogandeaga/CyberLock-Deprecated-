@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.core.ActivityEdit;
-import com.gerardogandeaga.cyberlock.activities.core.edit.EditGraphics;
+import com.gerardogandeaga.cyberlock.support.graphics.EditGraphics;
 
 public class DialogColourTag implements View.OnClickListener {
     private Context mContext;
