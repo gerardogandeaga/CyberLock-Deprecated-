@@ -23,7 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:testOnly="true"
-        android:theme="@style/MainTheme" >
+        android:theme="@style/AppTheme" >
         <activity
             android:name="com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin"
             android:screenOrientation="portrait"
@@ -45,7 +45,7 @@
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.gerardogandeaga.cyberlock.support.settings.SettingsChangePasscode"
+            android:name="com.gerardogandeaga.cyberlock.support.settings.ChangePasscode"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -60,6 +60,10 @@
             android:name="com.gerardogandeaga.cyberlock.activities.core.ActivityPlayground"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
