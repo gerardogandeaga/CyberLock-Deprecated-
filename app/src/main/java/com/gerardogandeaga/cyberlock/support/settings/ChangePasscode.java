@@ -33,7 +33,7 @@ public class ChangePasscode {
             protected void onPreExecute() {
                 super.onPreExecute();
                 mCustomLoadDialog = new CustomLoadDialog(mContext);
-                mCustomLoadDialog.indeterminateLoad("Changing Passcode");
+                mCustomLoadDialog.indeterminateProgress("Changing Passcode");
             }
 
             @Override

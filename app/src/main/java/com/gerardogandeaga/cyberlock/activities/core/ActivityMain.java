@@ -2,7 +2,6 @@ package com.gerardogandeaga.cyberlock.activities.core;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +21,7 @@ import com.gerardogandeaga.cyberlock.activities.dialogs.DialogOptions;
 import com.gerardogandeaga.cyberlock.sqlite.data.DBAccess;
 import com.gerardogandeaga.cyberlock.sqlite.data.DataPackage;
 import com.gerardogandeaga.cyberlock.support.LogoutProtocol;
+import com.gerardogandeaga.cyberlock.support.Stored;
 import com.gerardogandeaga.cyberlock.support.graphics.DrawableColours;
 import com.gerardogandeaga.cyberlock.support.graphics.Themes;
 import com.gerardogandeaga.cyberlock.support.handlers.extractors.RecyclerViewItemDataHandler;
@@ -41,12 +41,24 @@ import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTE
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mCountDownTimer;
 import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mIsCountDownTimerFinished;
-import static com.gerardogandeaga.cyberlock.support.Stored.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.support.Stored.RV_FORMAT;
 
-public class ActivityMain extends AppCompatActivity implements View.OnClickListener {
+public class ActivityMain extends AppCompatActivity implements View.OnClickListener, DialogOptions.OnInputListener {
+    private static final String TAG = "ActivityMain";
+
+    @Override
+    public void sendInput(boolean bool) {
+        if (bool) {
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+            removeRecyclerViewDecorations();
+            mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(8, true));
+        } else {
+            mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager( 2, GridLayoutManager.VERTICAL));
+            removeRecyclerViewDecorations();
+            mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(8, false));
+        }
+    }
+
     private Context mContext = this;
-    private SharedPreferences mSharedPreferences;
 
     // Adapter
     private FastItemAdapter<RecyclerViewItem> mFastItemAdapter;
@@ -54,7 +66,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
     // Views
     private Menu mMenu;
-    private RecyclerView mRecyclerView;
+    public RecyclerView mRecyclerView;
 
     // Initial on create methods
     @Override
@@ -62,13 +74,11 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         Themes.setTheme(this);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         ACTIVITY_INTENT = null;
-        this.mSharedPreferences = this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
         super.onCreate(savedInstanceState);
 
-        View view = View.inflate(this, R.layout.activity_main, null);
-        this.mView = view;
-
-        setContentView(view);
+        // set view
+        this.mView = View.inflate(this, R.layout.activity_main, null);
+        setContentView(mView);
         setupSupportActionBar();
 
         // Pull data list from database
@@ -132,7 +142,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
         mRecyclerView = findViewById(R.id.recyclerView);
         // Set layout format
-        switch (mSharedPreferences.getString(RV_FORMAT, "")) {
+        switch (Stored.getListFormat(this)) {
             case "RV_STAGGEREDGRID":
                 mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
                 mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(8, false)); break;
@@ -169,12 +179,6 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         // Check is multi select mode is active
         if (!AdapterItemHandler.isActive()) { // If not in multi select mode
             getMenuInflater().inflate(R.menu.menu_main, mMenu);         // Inflate main menu
-            MenuItem linear = menu.findItem(R.id.acListLinear);
-            MenuItem grid = menu.findItem(R.id.acListStaggeredGrid);
-            switch (mSharedPreferences.getString(RV_FORMAT, "")) {
-                case "RV_STAGGEREDGRID": grid.setChecked(true); break;
-                default:                 linear.setChecked(true); break;
-            }
         } else { // If multi select mode is active
             getMenuInflater().inflate(R.menu.menu_delete, mMenu);  // Inflate multi select menu
         }
@@ -202,7 +206,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                 this, this.getResources().getDrawable(R.drawable.ic_drawer)));
     }
 
-    private void removeRecyclerViewDecorations() {
+    public void removeRecyclerViewDecorations() {
         if (mRecyclerView != null) {
             if (mRecyclerView.getItemDecorationCount() != 0) {
                 for (int i = 0; i < mRecyclerView.getItemDecorationCount(); i++) {
@@ -218,31 +222,13 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 //        if (this.mDrawerToggle.onOptionsItemSelected(item)) return true;
         switch (item.getItemId()) {
             // Options
-            case R.id.acSettings: onSettings(); return true;
-
-            // List layouts
-            case R.id.acListLinear:
-                if (mSharedPreferences.getString(RV_FORMAT, "").matches("RV_LINEAR")) return true;
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-                removeRecyclerViewDecorations();
-                mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(8, true));
-                item.setChecked(true);
-                mSharedPreferences.edit().putString(RV_FORMAT, "RV_LINEAR").apply();
-                return true;
-            case R.id.acListStaggeredGrid:
-                if (mSharedPreferences.getString(RV_FORMAT, "").matches("RV_STAGGEREDGRID")) return true;
-                mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager( 2, GridLayoutManager.VERTICAL));
-                removeRecyclerViewDecorations();
-                mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(8, false));
-                item.setChecked(true);
-                mSharedPreferences.edit().putString(RV_FORMAT, "RV_STAGGEREDGRID").apply();
-                return true;
+            case R.id.option_options: onSettings(); return true;
 
             // Misc
             case android.R.id.home: onBackPressed(); return true;
 
             // On multi select mode
-            case R.id.action_delete:
+            case R.id.option_delete:
                 AdapterItemHandler.onDelete(this, mFastItemAdapter, mView);
                 onCreateOptionsMenu(mMenu);
                 resetSupportActionBar();
@@ -270,12 +256,10 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
     // ActivitySettings, About ##############################################
     private void onSettings() {
-        new DialogOptions(this);
+//        new DialogOptions(this);
 
-//        ACTIVITY_INTENT = new Intent(this, ActivitySettings.class);
-//        this.finish();
-//        this.startActivity(ACTIVITY_INTENT);
-//        overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
+        DialogOptions dialogOptions = new DialogOptions();
+        dialogOptions.show(getFragmentManager(), "DialogOptions");
     }
     private void onPlayground() {
         ACTIVITY_INTENT = new Intent(this, ActivityPlayground.class);

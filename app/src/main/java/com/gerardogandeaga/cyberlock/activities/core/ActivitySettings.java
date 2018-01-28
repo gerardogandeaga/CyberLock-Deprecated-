@@ -241,7 +241,7 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
         }
     }
     private void actionChangePasscode() {
-        View v = View.inflate(mContext, R.layout.dialog_view_passcode_change, null);
+        View v = View.inflate(mContext, R.layout.fragment_option_changepassord, null);
         // Dialog primitives
         final EditText current = v.findViewById(R.id.etCurrent);
         final EditText initial = v.findViewById(R.id.etInitial);
@@ -250,7 +250,7 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
         // Dialog builder
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setView(v);
-        builder.setTitle(R.string.titleChangePasscode);
+        builder.setTitle(R.string.titleChangePassword);
         builder.setNegativeButton(R.string.btnCancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -369,8 +369,8 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
 //
 //    @SuppressLint("SetTextI18n")
 //    private void actionScrambleKey() {
-//        View titleView = View.inflate(mContext, R.layout.dialog_title, null);
-//        View view = View.inflate(mContext, R.layout.dialog_view_alert_info, null);
+//        View titleView = View.inflate(mContext, R.layout.fragment_dialog_preview_title, null);
+//        View view = View.inflate(mContext, R.layout.fragment_dialog_alertinfo, null);
 //        // Dialog primitives
 //        TextView title = titleView.findViewById(R.id.tvDialogTitle);
 //        titleView.findViewById(R.id.tvDate).setVisibility(View.GONE);
@@ -399,8 +399,8 @@ public class ActivitySettings extends AppCompatActivity implements View.OnClickL
 //        final AlertDialog dialog = builder.show();
 //    }
 //    private void actionEncryptionAlgorithmChange(final String algorithm) {
-//        View titleView = View.inflate(mContext, R.layout.dialog_title, null);
-//        View v = View.inflate(mContext, R.layout.dialog_view_alert_info, null);
+//        View titleView = View.inflate(mContext, R.layout.fragment_dialog_preview_title, null);
+//        View v = View.inflate(mContext, R.layout.fragment_dialog_alertinfo, null);
 //        // Dialog primitives
 //        TextView title = titleView.findViewById(R.id.tvDialogTitle);
 //        titleView.findViewById(R.id.tvDate).setVisibility(View.GONE);

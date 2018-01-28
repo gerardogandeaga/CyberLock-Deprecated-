@@ -88,7 +88,7 @@ public class ActivityRegistration extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
                 mCustomLoadDialog = new CustomLoadDialog(mContext);
-                mCustomLoadDialog.indeterminateLoad("Registering...");
+                mCustomLoadDialog.indeterminateProgress("Registering...");
             }
 
             @Override

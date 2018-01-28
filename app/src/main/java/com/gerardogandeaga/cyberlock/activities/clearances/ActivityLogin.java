@@ -34,7 +34,7 @@ public class ActivityLogin extends AppCompatActivity {
     private SharedPreferences mSharedPreferences;
 
     // widgets
-    private CustomLoadDialog mCustomLoadDialog;
+    private CustomLoadDialog mLoadDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +78,8 @@ public class ActivityLogin extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                mCustomLoadDialog = new CustomLoadDialog(mContext);
-                mCustomLoadDialog.indeterminateLoad("Verifying...");
+                mLoadDialog = new CustomLoadDialog(mContext);
+                mLoadDialog.indeterminateProgress("Verifying Password, Please Wait.");
             }
             @Override
             protected Void doInBackground(Void... params) {
@@ -87,7 +87,7 @@ public class ActivityLogin extends AppCompatActivity {
                     if (KeyChecker.comparePasswords(mContext, password)) { // check if original passcode matches the one entered
                         setGlobalVariables(password);
                         loginIntent();
-                        mCustomLoadDialog.dismiss();
+                        mLoadDialog.dismiss();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -28,7 +28,7 @@ public class ScrambleCryptKey extends AsyncTask<Void, Void, Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         mCustomLoadDialog = new CustomLoadDialog(mContext);
-        mCustomLoadDialog.indeterminateLoad("Scrambling...");
+        mCustomLoadDialog.indeterminateProgress("Scrambling...");
     }
     @Override
     protected Void doInBackground(Void... params) {

@@ -3,7 +3,7 @@
     <!-- Titles-->
     <!-- Settings -->
     <string name="titleSelectDelayTime">Select Delay Time</string>
-    <string name="titleChangePasscode">Change Passcode</string>
+    <string name="titleChangePassword">Change Password</string>
     <string name="titleScrambleEncryptionKey">Scramble Encryption Key</string>
     <string name="titleChangeEncryptionAlgo">Change Encryption Algorithm</string>
     ------------------------------------------------------------------------------------------------

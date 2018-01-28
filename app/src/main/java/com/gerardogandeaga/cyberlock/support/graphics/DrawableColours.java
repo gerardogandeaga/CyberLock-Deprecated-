@@ -21,7 +21,9 @@ public class DrawableColours {
     public static void mutateMenuItems(Context context, Menu menu) {
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
-            item.getIcon().mutate().setColorFilter(getColour(context), getMode());
+            if (item.getIcon() != null) {
+                item.getIcon().mutate().setColorFilter(getColour(context), getMode());
+            }
         }
     }
 

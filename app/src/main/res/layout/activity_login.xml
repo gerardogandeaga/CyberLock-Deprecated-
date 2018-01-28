@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@drawable/button_gray"
+            android:background="@drawable/bk_outline_black_ripple"
             android:text="Login"
             android:textAppearance="@style/myText.Dialog.Buttons"/>
 

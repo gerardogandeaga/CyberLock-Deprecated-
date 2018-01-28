@@ -343,7 +343,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         int id = item.getItemId();
 
         switch (id) {
-            case (R.id.miSave):
+            case (R.id.option_save):
                 if (!mIsAutoSave) {
                     onSave();
                     onBackPressed();
@@ -351,7 +351,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
                     onBackPressed();
                 }
                 return true;
-            case (R.id.miCancel):
+            case (R.id.option_cancel):
                 onCancel();
                 return true;
 

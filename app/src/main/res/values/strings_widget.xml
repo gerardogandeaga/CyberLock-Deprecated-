@@ -18,15 +18,12 @@
     <!-- Auto Logout Delay -->
     <string-array name="AutoLogoutDelay_array">
         <item>Immediate</item>
-        <item>15 Seconds</item>
-        <item>30 Seconds</item>
         <item>1 Minute</item>
+        <item>2 Minutes</item>
         <item>5 Minutes</item>
         <item>10 Minutes</item>
+        <item>15 Minutes</item>
         <item>30 Minutes</item>
-        <item>1 Hour</item>
-        <item>2 Hours</item>
-        <item>Never</item>
     </string-array>
     <!-- Encryption Algorithms -->
     <string-array name="CryptALGO_array">

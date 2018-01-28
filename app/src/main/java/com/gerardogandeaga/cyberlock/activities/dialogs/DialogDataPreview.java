@@ -2,14 +2,15 @@ package com.gerardogandeaga.cyberlock.activities.dialogs;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.core.ActivityEdit;
 import com.gerardogandeaga.cyberlock.sqlite.data.DataPackage;
@@ -25,7 +26,7 @@ public class DialogDataPreview {
     private DataPackage mDataPackage;
 
     // Views
-    private AlertDialog.Builder mBuilder;
+    private MaterialDialog.Builder mBuilder;
 
     public DialogDataPreview(Context context, DataPackage dataPackage) {
         this.mContext = context;
@@ -42,45 +43,43 @@ public class DialogDataPreview {
     }
 
     // Create dialog
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n") // TODO change the additional notes into an expandable layout like options change password
     private void constructPreviewNote() {
-        View titleView = View.inflate(mContext, R.layout.dialog_title, null);
         View view = View.inflate(mContext, R.layout.preview_note, null);
         ContentHandler contentHandler = new ContentHandler(mContext, mDataPackage);
         //
-        TextView title = titleView.findViewById(R.id.tvDialogTitle);
-        TextView date = titleView.findViewById(R.id.tvDate);
+        TextView title = view.findViewById(R.id.tvDialogTitle);
+        TextView date = view.findViewById(R.id.tvDate);
 
         TextView note = view.findViewById(R.id.tvNote);
 
         title.setText(contentHandler.mLabel);
         date.setText("Updated: " + contentHandler.mDate);
-        mutateTitle(titleView, title, date, contentHandler);
+        mutateTitle(view, title, date, contentHandler);
 
         note.setText(contentHandler.mNote);
 
-        mBuilder = new AlertDialog.Builder(mContext, R.style.MyDialogStyle);
-        mBuilder.setCustomTitle(titleView);
-        mBuilder.setView(view);
-        mBuilder.setNegativeButton(R.string.btnDone, new DialogInterface.OnClickListener() {
+        this.mBuilder = new MaterialDialog.Builder(mContext);
+        mBuilder.customView(view, false);
+        mBuilder.negativeText(R.string.btnDone);
+        mBuilder.positiveText(R.string.btnEdit);
+        mBuilder.onNegative(new MaterialDialog.SingleButtonCallback() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                 dialog.dismiss();
             }
         });
-        mBuilder.setPositiveButton(R.string.btnEdit, new DialogInterface.OnClickListener() {
+        mBuilder.onPositive(new MaterialDialog.SingleButtonCallback() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                 dialog.dismiss();
                 onEdit();
             }
         });
-        mBuilder.create();
         mBuilder.show();
     }
     @SuppressLint("SetTextI18n")
     private void constructPreviewPaymentInfo() {
-        View titleView = View.inflate(mContext, R.layout.dialog_title, null);
         View view = View.inflate(mContext, R.layout.preview_paymentinfo, null);
         ContentHandler contentHandler = new ContentHandler(mContext, mDataPackage);
         //
@@ -91,8 +90,8 @@ public class DialogDataPreview {
         LinearLayout CardType = view.findViewById(R.id.CardType);
         LinearLayout Notes = view.findViewById(R.id.Notes);
 
-        TextView title = titleView.findViewById(R.id.tvDialogTitle);
-        TextView date = titleView.findViewById(R.id.tvDate);
+        TextView title = view.findViewById(R.id.tvDialogTitle);
+        TextView date = view.findViewById(R.id.tvDate);
 
         TextView holder = view.findViewById(R.id.tvName);
         TextView number = view.findViewById(R.id.tvNumber);
@@ -104,7 +103,7 @@ public class DialogDataPreview {
 
         title.setText(contentHandler.mLabel);
         date.setText("Updated: " + contentHandler.mDate);
-        mutateTitle(titleView, title, date, contentHandler);
+        mutateTitle(view, title, date, contentHandler);
 
         if (ViewHandler.setLinearLayoutVisibility(Holder, contentHandler.mHolder))     holder.setText(contentHandler.mHolder);
         if (ViewHandler.setLinearLayoutVisibility(Number, contentHandler.mNumber))     number.setText(contentHandler.mNumber);
@@ -114,28 +113,27 @@ public class DialogDataPreview {
         if (ViewHandler.setLinearLayoutVisibility(Notes, contentHandler.mNote))        notes.setText(contentHandler.mNote);
         icon.setImageDrawable(contentHandler.mCardImage);
 
-        mBuilder = new AlertDialog.Builder(mContext, R.style.MyDialogStyle);
-        mBuilder.setCustomTitle(titleView);
-        mBuilder.setView(view);
-        mBuilder.setNegativeButton(R.string.btnDone, new DialogInterface.OnClickListener() {
+        this.mBuilder = new MaterialDialog.Builder(mContext);
+        mBuilder.customView(view, false);
+        mBuilder.negativeText(R.string.btnDone);
+        mBuilder.positiveText(R.string.btnEdit);
+        mBuilder.onNegative(new MaterialDialog.SingleButtonCallback() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                 dialog.dismiss();
             }
         });
-        mBuilder.setPositiveButton(R.string.btnEdit, new DialogInterface.OnClickListener() {
+        mBuilder.onPositive(new MaterialDialog.SingleButtonCallback() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                 dialog.dismiss();
                 onEdit();
             }
         });
-        mBuilder.create();
         mBuilder.show();
     }
     @SuppressLint("SetTextI18n")
     private void constructPreviewLoginInfo() {
-        View titleView = View.inflate(mContext, R.layout.dialog_title, null);
         View view = View.inflate(mContext, R.layout.preview_logininfo, null);
         ContentHandler contentHandler = new ContentHandler(mContext, mDataPackage);
         //
@@ -145,8 +143,8 @@ public class DialogDataPreview {
         LinearLayout Password = view.findViewById(R.id.Password);
         LinearLayout Notes = view.findViewById(R.id.Notes);
 
-        TextView title = titleView.findViewById(R.id.tvDialogTitle);
-        TextView date = titleView.findViewById(R.id.tvDate);
+        TextView title = view.findViewById(R.id.tvDialogTitle);
+        TextView date = view.findViewById(R.id.tvDate);
 
         TextView url = view.findViewById(R.id.tvUrl);
         TextView email = view.findViewById(R.id.tvEmail);
@@ -156,7 +154,7 @@ public class DialogDataPreview {
 
         title.setText(contentHandler.mLabel);
         date.setText("Updated: " + contentHandler.mDate);
-        mutateTitle(titleView, title, date, contentHandler);
+        mutateTitle(view, title, date, contentHandler);
 
         if (ViewHandler.setLinearLayoutVisibility(Url, contentHandler.mUrl))           url.setText(contentHandler.mUrl);
         if (ViewHandler.setLinearLayoutVisibility(Email, contentHandler.mEmail))       email.setText(contentHandler.mEmail);
@@ -164,23 +162,23 @@ public class DialogDataPreview {
         if (ViewHandler.setLinearLayoutVisibility(Password, contentHandler.mPassword)) password.setText(contentHandler.mPassword);
         if (ViewHandler.setLinearLayoutVisibility(Notes, contentHandler.mNote))        notes.setText(contentHandler.mNote);
 
-        mBuilder = new AlertDialog.Builder(mContext, R.style.MyDialogStyle);
-        mBuilder.setCustomTitle(titleView);
-        mBuilder.setView(view);
-        mBuilder.setNegativeButton(R.string.btnDone, new DialogInterface.OnClickListener() {
+        this.mBuilder = new MaterialDialog.Builder(mContext);
+        mBuilder.customView(view, false);
+        mBuilder.negativeText(R.string.btnDone);
+        mBuilder.positiveText(R.string.btnEdit);
+        mBuilder.onNegative(new MaterialDialog.SingleButtonCallback() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                 dialog.dismiss();
             }
         });
-        mBuilder.setPositiveButton(R.string.btnEdit, new DialogInterface.OnClickListener() {
+        mBuilder.onPositive(new MaterialDialog.SingleButtonCallback() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                 dialog.dismiss();
                 onEdit();
             }
         });
-        mBuilder.create();
         mBuilder.show();
     }
 
@@ -195,7 +193,7 @@ public class DialogDataPreview {
             case "COL_YELLOW": color = mContext.getResources().getColor(R.color.ct_yellow); break;
             case "COL_PURPLE": color = mContext.getResources().getColor(R.color.ct_purple); break;
             case "COL_ORANGE": color = mContext.getResources().getColor(R.color.ct_orange); break;
-            default:           color = mContext.getResources().getColor(R.color.white); bool = false; break;
+            default:           color = mContext.getResources().getColor(R.color.black); break;
         }
         if (bool) {
             linearLayout.setBackgroundColor(color);

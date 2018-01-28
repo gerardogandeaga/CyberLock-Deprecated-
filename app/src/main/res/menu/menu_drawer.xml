@@ -39,7 +39,7 @@
     </item>
 
     <item
-        android:id="@+id/mnuOptions"
+        android:id="@+id/options"
         android:title="App">
 
         <menu>
