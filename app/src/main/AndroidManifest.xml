@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.gerardogandeaga.cyberlock">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gerardogandeaga.cyberlock">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
@@ -34,11 +35,11 @@
 
         <!-- MAIN ACTIVITIES -->
         <activity
-            android:name=".activities.core.ActivitySettings"
+            android:name=".activities.core.ActivityOptions"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".support.settings.ChangePasscode"
+            android:name=".utils.settings.ChangePasscode"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
@@ -47,10 +48,6 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activities.core.ActivityEdit"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity
-            android:name=".activities.core.ActivityPlayground"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
 

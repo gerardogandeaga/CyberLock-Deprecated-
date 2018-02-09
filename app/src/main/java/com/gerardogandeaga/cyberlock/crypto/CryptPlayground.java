@@ -15,9 +15,9 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import static com.gerardogandeaga.cyberlock.support.Stored.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.support.Stored.FLAGS;
-import static com.gerardogandeaga.cyberlock.support.Stored.PLAYGROUND_ALGO;
+import static com.gerardogandeaga.cyberlock.utils.Stored.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.Stored.FLAGS;
+import static com.gerardogandeaga.cyberlock.utils.Stored.PLAYGROUND_ALGO;
 
 public class CryptPlayground
 {

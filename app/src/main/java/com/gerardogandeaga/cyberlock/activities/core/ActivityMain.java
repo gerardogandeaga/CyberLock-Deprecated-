@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -17,17 +16,15 @@ import android.view.View;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
 import com.gerardogandeaga.cyberlock.activities.dialogs.DialogDataPreview;
-import com.gerardogandeaga.cyberlock.activities.dialogs.DialogOptions;
-import com.gerardogandeaga.cyberlock.sqlite.data.DBAccess;
-import com.gerardogandeaga.cyberlock.sqlite.data.DataPackage;
-import com.gerardogandeaga.cyberlock.support.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.support.Stored;
-import com.gerardogandeaga.cyberlock.support.graphics.DrawableColours;
-import com.gerardogandeaga.cyberlock.support.graphics.Themes;
-import com.gerardogandeaga.cyberlock.support.handlers.extractors.RecyclerViewItemDataHandler;
-import com.gerardogandeaga.cyberlock.support.handlers.selection.AdapterItemHandler;
-import com.gerardogandeaga.cyberlock.support.recyclerview.decorations.RecyclerViewPaddingItemDecoration;
-import com.gerardogandeaga.cyberlock.support.recyclerview.items.RecyclerViewItem;
+import com.gerardogandeaga.cyberlock.core.handlers.extractors.RecyclerViewItemDataHandler;
+import com.gerardogandeaga.cyberlock.core.handlers.selection.AdapterItemHandler;
+import com.gerardogandeaga.cyberlock.core.recyclerview.decorations.RecyclerViewPaddingItemDecoration;
+import com.gerardogandeaga.cyberlock.core.recyclerview.items.RecyclerViewItem;
+import com.gerardogandeaga.cyberlock.database.DBAccess;
+import com.gerardogandeaga.cyberlock.database.DataPackage;
+import com.gerardogandeaga.cyberlock.utils.LogoutProtocol;
+import com.gerardogandeaga.cyberlock.utils.Stored;
+import com.gerardogandeaga.cyberlock.utils.graphics.DrawableColours;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.mikepenz.fastadapter.IAdapter;
@@ -37,27 +34,12 @@ import com.mikepenz.fastadapter.listeners.OnLongClickListener;
 
 import java.util.List;
 
-import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mCountDownTimer;
-import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mIsCountDownTimerFinished;
+import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.mIsCountDownTimerFinished;
 
-public class ActivityMain extends AppCompatActivity implements View.OnClickListener, DialogOptions.OnInputListener {
-    private static final String TAG = "ActivityMain";
-
-    @Override
-    public void sendInput(boolean bool) {
-        if (bool) {
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-            removeRecyclerViewDecorations();
-            mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(8, true));
-        } else {
-            mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager( 2, GridLayoutManager.VERTICAL));
-            removeRecyclerViewDecorations();
-            mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(8, false));
-        }
-    }
-
+public class ActivityMain extends AppCompatActivity implements View.OnClickListener {
     private Context mContext = this;
 
     // Adapter
@@ -71,7 +53,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     // Initial on create methods
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Themes.setTheme(this);
+//        Themes.setTheme(this);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         ACTIVITY_INTENT = null;
         super.onCreate(savedInstanceState);
@@ -222,7 +204,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 //        if (this.mDrawerToggle.onOptionsItemSelected(item)) return true;
         switch (item.getItemId()) {
             // Options
-            case R.id.option_options: onSettings(); return true;
+            case R.id.option_options: onOptions(); return true;
 
             // Misc
             case android.R.id.home: onBackPressed(); return true;
@@ -254,20 +236,13 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         this.startActivity(ACTIVITY_INTENT);
     }
 
-    // ActivitySettings, About ##############################################
-    private void onSettings() {
-//        new DialogOptions(this);
-
-        DialogOptions dialogOptions = new DialogOptions();
-        dialogOptions.show(getFragmentManager(), "DialogOptions");
-    }
-    private void onPlayground() {
-        ACTIVITY_INTENT = new Intent(this, ActivityPlayground.class);
+    // ActivityOptions, About ##############################################
+    private void onOptions() {
+        ACTIVITY_INTENT = new Intent(this, ActivityOptions.class);
         this.finish();
         this.startActivity(ACTIVITY_INTENT);
-        overridePendingTransition(R.anim.anim_slide_inright, R.anim.anim_slide_outleft);
     }
-    // ----------------
+
 
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
     @Override public void onStart() {

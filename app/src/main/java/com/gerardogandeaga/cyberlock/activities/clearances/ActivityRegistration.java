@@ -15,25 +15,25 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.crypto.CryptKey;
-import com.gerardogandeaga.cyberlock.crypto.Hash;
-import com.gerardogandeaga.cyberlock.support.Stored;
-import com.gerardogandeaga.cyberlock.support.graphics.CustomLoadDialog;
+import com.gerardogandeaga.cyberlock.crypto.key.CryptKey;
+import com.gerardogandeaga.cyberlock.crypto.hash.Hash;
+import com.gerardogandeaga.cyberlock.utils.Stored;
+import com.gerardogandeaga.cyberlock.activities.dialogs.DialogCustomLoad;
 
-import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.support.Stored.AUTOSAVE;
-import static com.gerardogandeaga.cyberlock.support.Stored.CRYPT_KEY;
-import static com.gerardogandeaga.cyberlock.support.Stored.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.support.Stored.ENCRYPTION_ALGORITHM;
-import static com.gerardogandeaga.cyberlock.support.Stored.PASSWORD;
-import static com.gerardogandeaga.cyberlock.support.Stored.THEME;
+import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.utils.Stored.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.utils.Stored.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.utils.Stored.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.Stored.ENCRYPTION_ALGORITHM;
+import static com.gerardogandeaga.cyberlock.utils.Stored.PASSWORD;
+import static com.gerardogandeaga.cyberlock.utils.Stored.THEME;
 
 public class ActivityRegistration extends AppCompatActivity {
     private Context mContext = this;
     private SharedPreferences mSharedPreferences;
 
     // widgets
-    private CustomLoadDialog mCustomLoadDialog;
+    private DialogCustomLoad mDialogCustomLoad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +87,8 @@ public class ActivityRegistration extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                mCustomLoadDialog = new CustomLoadDialog(mContext);
-                mCustomLoadDialog.indeterminateProgress("Registering...");
+                mDialogCustomLoad = new DialogCustomLoad(mContext);
+                mDialogCustomLoad.indeterminateProgress("Registering...");
             }
 
             @Override
@@ -97,7 +97,7 @@ public class ActivityRegistration extends AppCompatActivity {
                 initialPreferences(passwords);
 
                 // end load
-                mCustomLoadDialog.dismiss();
+                mDialogCustomLoad.dismiss();
 
                 // start a new intent and exit
                 ActivityRegistration.this.startActivity(

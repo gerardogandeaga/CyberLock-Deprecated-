@@ -8,11 +8,14 @@
     <string name="titleChangeEncryptionAlgo">Change Encryption Algorithm</string>
     ------------------------------------------------------------------------------------------------
     <!-- Buttons-->
-    <!-- Negative -->
+    <!-- neutral -->
+    <string name="btnCustom">Custom</string>
+    <!-- negative -->
     <string name="btnCancel">Cancel</string>
     <string name="btnDone">Done</string>
-    <!-- Positive -->
+    <!-- positive -->
     <string name="btnEdit">Edit</string>
+    <string name="btnChoose">Choose</string>
     <string name="btnChange">Change</string>
     <string name="btnScramble">Scramble</string>
 </resources>

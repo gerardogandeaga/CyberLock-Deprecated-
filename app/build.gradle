@@ -60,4 +60,7 @@ dependencies {
     // Material Dialogs
     compile 'com.afollestad.material-dialogs:core:0.9.6.0'
     compile 'com.afollestad.material-dialogs:commons:0.9.6.0'
+
+    // Circle Images
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 }

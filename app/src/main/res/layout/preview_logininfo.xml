@@ -92,8 +92,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Email Address"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
+                        android:textAppearance="@style/myText.Edit.Hint"/>
 
                     <TextView
                         android:id="@+id/tvEmail"
@@ -101,8 +100,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"
-                        />
+                        android:textAppearance="@style/myText.Edit.Content"/>
 
                 </LinearLayout>
             </LinearLayout>

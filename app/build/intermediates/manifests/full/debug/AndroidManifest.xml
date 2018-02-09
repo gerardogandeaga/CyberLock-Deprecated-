@@ -40,11 +40,11 @@
 
         <!-- MAIN ACTIVITIES -->
         <activity
-            android:name="com.gerardogandeaga.cyberlock.activities.core.ActivitySettings"
+            android:name="com.gerardogandeaga.cyberlock.activities.core.ActivityOptions"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.gerardogandeaga.cyberlock.support.settings.ChangePasscode"
+            android:name="com.gerardogandeaga.cyberlock.utils.settings.ChangePasscode"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -53,10 +53,6 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.gerardogandeaga.cyberlock.activities.core.ActivityEdit"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="com.gerardogandeaga.cyberlock.activities.core.ActivityPlayground"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
 

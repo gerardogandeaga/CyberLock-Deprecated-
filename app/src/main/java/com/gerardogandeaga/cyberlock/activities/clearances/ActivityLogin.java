@@ -17,16 +17,16 @@ import android.widget.Toast;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.core.ActivityEdit;
 import com.gerardogandeaga.cyberlock.activities.core.ActivityMain;
-import com.gerardogandeaga.cyberlock.sqlite.data.DataPackage;
-import com.gerardogandeaga.cyberlock.support.KeyChecker;
-import com.gerardogandeaga.cyberlock.support.graphics.CustomLoadDialog;
+import com.gerardogandeaga.cyberlock.database.DataPackage;
+import com.gerardogandeaga.cyberlock.utils.KeyChecker;
+import com.gerardogandeaga.cyberlock.activities.dialogs.DialogCustomLoad;
 
-import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.support.Stored.CRYPT_KEY;
-import static com.gerardogandeaga.cyberlock.support.Stored.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.support.Stored.PASSWORD;
-import static com.gerardogandeaga.cyberlock.support.Stored.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.utils.Stored.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.utils.Stored.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.Stored.PASSWORD;
+import static com.gerardogandeaga.cyberlock.utils.Stored.TMP_PWD;
 
 // TODO refactor and improve like the registration activity!!!
 public class ActivityLogin extends AppCompatActivity {
@@ -34,7 +34,7 @@ public class ActivityLogin extends AppCompatActivity {
     private SharedPreferences mSharedPreferences;
 
     // widgets
-    private CustomLoadDialog mLoadDialog;
+    private DialogCustomLoad mLoadDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class ActivityLogin extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                mLoadDialog = new CustomLoadDialog(mContext);
+                mLoadDialog = new DialogCustomLoad(mContext);
                 mLoadDialog.indeterminateProgress("Verifying Password, Please Wait.");
             }
             @Override

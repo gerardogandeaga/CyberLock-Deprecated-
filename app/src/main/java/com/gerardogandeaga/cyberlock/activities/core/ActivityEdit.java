@@ -3,6 +3,7 @@ package com.gerardogandeaga.cyberlock.activities.core;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -18,44 +19,56 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
-import com.gerardogandeaga.cyberlock.activities.dialogs.DialogColourTag;
-import com.gerardogandeaga.cyberlock.sqlite.data.DBAccess;
-import com.gerardogandeaga.cyberlock.sqlite.data.DataPackage;
-import com.gerardogandeaga.cyberlock.support.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.support.graphics.DrawableColours;
-import com.gerardogandeaga.cyberlock.support.graphics.EditGraphics;
-import com.gerardogandeaga.cyberlock.support.graphics.Themes;
-import com.gerardogandeaga.cyberlock.support.handlers.extractors.ContentHandler;
+import com.gerardogandeaga.cyberlock.activities.dialogs.DialogFragmentTags;
+import com.gerardogandeaga.cyberlock.core.handlers.extractors.ContentHandler;
+import com.gerardogandeaga.cyberlock.database.DBAccess;
+import com.gerardogandeaga.cyberlock.database.DataPackage;
+import com.gerardogandeaga.cyberlock.utils.LogoutProtocol;
+import com.gerardogandeaga.cyberlock.utils.graphics.ColourTag;
+import com.gerardogandeaga.cyberlock.utils.graphics.DrawableColours;
+import com.gerardogandeaga.cyberlock.utils.graphics.EditGraphics;
 
-import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mCountDownTimer;
-import static com.gerardogandeaga.cyberlock.support.LogoutProtocol.mIsCountDownTimerFinished;
-import static com.gerardogandeaga.cyberlock.support.Stored.AUTOSAVE;
-import static com.gerardogandeaga.cyberlock.support.Stored.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.support.Stored.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.mIsCountDownTimerFinished;
+import static com.gerardogandeaga.cyberlock.utils.Stored.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.utils.Stored.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.Stored.TMP_PWD;
 
-public class ActivityEdit extends AppCompatActivity implements View.OnClickListener {
+public class ActivityEdit extends AppCompatActivity
+        implements View.OnClickListener, DialogFragmentTags.OnInputListener, ColorChooserDialog.ColorCallback {
+    @Override
+    public void onColorSelection(@NonNull ColorChooserDialog dialog, int selectedColor) {
+
+    }
+    @Override
+    public void onColorChooserDismissed(@NonNull ColorChooserDialog dialog) {
+
+    }
+
+    @Override
+    public void sendInput(String colour) {
+        mColour = colour;
+        setTag(mColour);
+    }
     private View mView;
-
-    // data variables
-    private boolean mIsNew = true;
-    private boolean mIsAutoSave = false;
+    // data package
     private DataPackage mDataPackage;
     private ContentHandler mContentHandler;
     private EditGraphics mEditGraphics;
-
-    private String TYPE;
+    // data vars
+    private boolean mIsNew = true;
+    private boolean mIsAutoSave = false;
+    // content vars
     private static final String[] ARGS = new String[]{ "TYPE_NOTE", "TYPE_PAYMENTINFO", "TYPE_LOGININFO" };
-
-    public static String mColour;
-
-    private DialogColourTag mDialogColourTag;
+    private String TYPE;
+    private String mColour = "#000000";
 
     // widgets
-    // global
     private EditText mEtLabel;
     private EditText mEtNotes;
     private TextView mTvDate;
@@ -75,7 +88,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Themes.setTheme(this);
+//        Themes.setTheme(this);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         ACTIVITY_INTENT = null;
         this.mIsAutoSave = getSharedPreferences(DIRECTORY, MODE_PRIVATE).getBoolean(AUTOSAVE, false);
@@ -85,8 +98,6 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
 
         // Activity creation
         extractBundle(); // Layout
-        // Create tag dialog object
-        this.mDialogColourTag = new DialogColourTag(this, mEditGraphics, mImgTag);
     }
 
     private void setupSupportActionBar() {
@@ -117,9 +128,9 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
             if (!mIsNew) {
                 this.mContentHandler = new ContentHandler(this, mDataPackage);
                 switch (mDataPackage.getType()) {
-                    case "TYPE_NOTE":        setupLayoutNote(); TYPE = ARGS[0]; break;
+                    case "TYPE_NOTE":        setupLayoutNote();        TYPE = ARGS[0]; break;
                     case "TYPE_PAYMENTINFO": setupLayoutPaymentInfo(); TYPE = ARGS[1]; break;
-                    case "TYPE_LOGININFO":   setupLayoutLoginInfo(); TYPE = ARGS[2]; break;
+                    case "TYPE_LOGININFO":   setupLayoutLoginInfo();   TYPE = ARGS[2]; break;
                 }
                 // Check if data item already exists
                 containsData(); // Will alter between STATE 2 & 3 by switching mIsNew
@@ -129,9 +140,9 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
                 }
             } else { // If data is completely new
                 switch ((String) bundle.get("type")) { // STATE 1
-                    case "TYPE_NOTE":        setupLayoutNote(); TYPE = ARGS[0]; break;
+                    case "TYPE_NOTE":        setupLayoutNote();        TYPE = ARGS[0]; break;
                     case "TYPE_PAYMENTINFO": setupLayoutPaymentInfo(); TYPE = ARGS[1]; break;
-                    case "TYPE_LOGININFO":   setupLayoutLoginInfo(); TYPE = ARGS[2]; break;
+                    case "TYPE_LOGININFO":   setupLayoutLoginInfo();   TYPE = ARGS[2]; break;
                 }
             }
             bundle.remove("data");
@@ -159,36 +170,36 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
     }
     //
     private void setupLayoutNote() {
-        mView = View.inflate(this, R.layout.activity_edit_note, null);
+        this.mView = View.inflate(this, R.layout.activity_edit_note, null);
         setContentView(mView);
         setupSupportActionBar(); // Action bar
         // Widgets
         setupMainWidgets();
-        mEtNote = findViewById(R.id.etText);
+        this.mEtNote = findViewById(R.id.etText);
 
         setupDataNote();
     }
     private void setupLayoutPaymentInfo() {
-        mView = View.inflate(this, R.layout.activity_edit_paymentinfo, null);
+        this.mView = View.inflate(this, R.layout.activity_edit_paymentinfo, null);
         setContentView(mView);
         setupSupportActionBar(); // Action bar
 
         this.mIcon = findViewById(R.id.imgIcon);
         // Widgets
         setupMainWidgets();
-        mEtCardName = findViewById(R.id.etCardName);
-        mEtCardNumber = findViewById(R.id.etCardNumber);
-        mEtCardExpire = findViewById(R.id.etCardExpire);
-        mEtCardCVV = findViewById(R.id.etCardSecCode);
-        mEtNotes = findViewById(R.id.etNotes);
+        this.mEtCardName = findViewById(R.id.etCardName);
+        this.mEtCardNumber = findViewById(R.id.etCardNumber);
+        this.mEtCardExpire = findViewById(R.id.etCardExpire);
+        this.mEtCardCVV = findViewById(R.id.etCardSecCode);
+        this.mEtNotes = findViewById(R.id.etNotes);
 
-        mSpCardSelect = findViewById(R.id.spCardSelect);
+        this.mSpCardSelect = findViewById(R.id.spCardSelect);
         //
-        mAdapter = ArrayAdapter.createFromResource(this, R.array.CardType_array, R.layout.spinner_setting_text);
-        mAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-        mSpCardSelect.setAdapter(mAdapter);
+        this.mAdapter = ArrayAdapter.createFromResource(this, R.array.CardType_array, R.layout.spinner_setting_text);
+        this.mAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+        this.mSpCardSelect.setAdapter(mAdapter);
 
-        mEtCardNumber.addTextChangedListener(new TextWatcher() {
+        this.mEtCardNumber.addTextChangedListener(new TextWatcher() {
             int prevL = 0;
 
             @Override
@@ -212,7 +223,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
-        mEtCardExpire.addTextChangedListener(new TextWatcher() {
+        this.mEtCardExpire.addTextChangedListener(new TextWatcher() {
             int prevL = 0;
 
             @Override
@@ -236,7 +247,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
-        mSpCardSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        this.mSpCardSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Object object = parent.getItemAtPosition(position);
@@ -254,16 +265,16 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         setupDataPaymentInfo();
     }
     private void setupLayoutLoginInfo() {
-        mView = View.inflate(this, R.layout.activity_edit_logininfo, null);
+        this.mView = View.inflate(this, R.layout.activity_edit_logininfo, null);
         setContentView(mView);
         setupSupportActionBar(); // Action bar
         // Widgets
         setupMainWidgets();
-        mEtUrl = findViewById(R.id.etUrl);
-        mEtUsername = findViewById(R.id.etUsername);
-        mEtEmail = findViewById(R.id.etEmail);
-        mEtPassword = findViewById(R.id.etPassword);
-        mEtNotes = findViewById(R.id.etNotes);
+        this.mEtUrl = findViewById(R.id.etUrl);
+        this.mEtUsername = findViewById(R.id.etUsername);
+        this.mEtEmail = findViewById(R.id.etEmail);
+        this.mEtPassword = findViewById(R.id.etPassword);
+        this.mEtNotes = findViewById(R.id.etNotes);
 
         setupDataLoginInfo();
     }
@@ -272,13 +283,13 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         if (mIsNew) {
             setLabel(null);
             setDate(null);
-            setTag(null);
+            setTag(mColour);
         } else {
+            mColour = mContentHandler.mTag;
             setLabel(mContentHandler.mLabel);
             setDate(mContentHandler.mDate);
             setTag(mContentHandler.mTag);
 
-            mColour = mContentHandler.mTag;
             // Set note
             mEtNote.setText(mContentHandler.mNote);
         }
@@ -287,13 +298,13 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         if (mIsNew) {
             setLabel(null);
             setDate(null);
-            setTag(null);
+            setTag(mColour);
         } else {
+            mColour = mContentHandler.mTag;
             setLabel(mContentHandler.mLabel);
             setDate(mContentHandler.mDate);
             setTag(mContentHandler.mTag);
 
-            mColour = mContentHandler.mTag;
             // Set name, number, expiry, cvv, cardType
             mEtCardName.setText(mContentHandler.mHolder);
             mEtCardNumber.setText(mContentHandler.mNumber);
@@ -311,13 +322,13 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         if (mIsNew) {
             setLabel(null);
             setDate(null);
-            setTag(null);
+            setTag(mColour);
         } else {
+            mColour = mContentHandler.mTag;
             setLabel(mContentHandler.mLabel);
             setDate(mContentHandler.mDate);
             setTag(mContentHandler.mTag);
 
-            mColour = mContentHandler.mTag;
             // Set url, email, username, password,
             mEtUrl.setText(mContentHandler.mUrl);
             mEtEmail.setText(mContentHandler.mEmail);
@@ -364,28 +375,32 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.imgTag:
-                mDialogColourTag.initializeDialog();
-                break;
+            case R.id.imgTag: DialogFragmentTags.show(this); break;
+//            case R.id.imgTag:
+//                new ColorChooserDialog.Builder(this, R.string.UpdateTitle)
+//                        .titleSub(R.string.UpdateTitle)
+//                        .accentMode(false)
+//                        .doneButton(R.string.UpdateTitle)
+//                        .backButton(R.string.UpdateTitle)
+//                        .show(this);
+//                break;
         }
     }
-    // --------
 
     // Actions
     private void onSave() {
         DBAccess dbAccess = DBAccess.getInstance(this);
         dbAccess.open();
 
+        String label = mEtLabel.getText().toString();
         String tmpContent = getViewData();
 
         // Saving
         if (!tmpContent.isEmpty()) {
             if (mIsNew) {
-                dbAccess.save(getData(
-                        mEtLabel.getText().toString(), tmpContent, mEditGraphics.getColourId(mIsNew, mDataPackage)));
+                dbAccess.save(getData(label, tmpContent, mColour));
             } else {
-                dbAccess.update(getData(
-                        mEtLabel.getText().toString(), tmpContent, mEditGraphics.getColourId(mIsNew, mDataPackage)));
+                dbAccess.update(getData(label, tmpContent, mColour));
             }
             dbAccess.close();
         } else {
@@ -398,7 +413,6 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         finish();
         startActivity(ACTIVITY_INTENT);
     }
-    // -------
 
     // Widget setters
     private void setLabel(String label) {
@@ -412,9 +426,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         }
     }
     private void setTag(String colour) {
-        if (colour != null) {
-            mEditGraphics.alterTagColour(mImgTag, colour);
-        }
+        mImgTag.setColorFilter(ColourTag.colourTag(this, mColour));
     }
 
     // Getters and setters for saving
@@ -471,14 +483,13 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
 
             return tmp;
         } else {
-            mDataPackage.setTag(mEditGraphics.getColourId(false, mDataPackage));
+            mDataPackage.setTag(tag);
             mDataPackage.setLabel(label);
             mDataPackage.setContent(content);
 
             return mDataPackage;
         }
     }
-    // ----------------------------------
 
     // THIS IS THE START OF THE SCRIPT FOR THE "TO LOGIN FUNCTIONS" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE A SECURITY "FAIL-SAFE"
     @Override protected void onStart() {
@@ -528,7 +539,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
                 ACTIVITY_INTENT.putExtra("lastDB", getData(
                         mEtLabel.getText().toString(),
                         getViewData(),
-                        mEditGraphics.getColourId(mIsNew, mDataPackage)));
+                        mColour));
                 // ---------------------
 
                 if (!getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(AUTOSAVE, false)) {

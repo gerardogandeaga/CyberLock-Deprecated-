@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- categories -->
+    <string name="Settings">Settings</string>
+    <string name="About">About</string>
+    <string name="Connect">Connect</string>
+
+    <!-- desc -->
+    <string name="AutoSave">Auto Save</string>
+    <string name="LogoutDelay">Logout Delay</string>
+    <string name="ChangePassword">Change Password</string>
+    <string name="ListFormat">List Formatting</string>
+    <string name="Git">Open Source Libraries</string>
+    <string name="AboutCL">About Cyber Lock</string>
+    <string name="Version">Version Details</string>
+    <string name="Rate">Rate Cyber Lock</string>
+    <string name="Bug">Report An Issue</string>
+
+    <!-- hints -->
+    <string name="CP">Enter Current Password</string>
+    <string name="NP">Enter New Password</string>
+    <string name="CNP">Confirm New Password</string>
+
+</resources>
