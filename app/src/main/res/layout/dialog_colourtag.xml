@@ -12,162 +12,38 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="5dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:padding="5dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgBlue"
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:src="@color/ct_blue"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:padding="5dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgRed"
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:src="@color/ct_red"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:padding="5dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgGreen"
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:src="@color/ct_green"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:padding="5dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgPurple"
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:src="@color/ct_purple"/>
-
-            </RelativeLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:padding="5dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgYellow"
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:src="@color/ct_yellow"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:padding="5dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgPurple"
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:src="@color/ct_purple"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:padding="5dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgOrange"
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:src="@color/ct_orange"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:padding="5dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgRed"
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:src="@color/ct_red"/>
-
-            </RelativeLayout>
-
-        </LinearLayout>
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:tag="tag_row_1">
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:tag="tag_row_2">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:tag="tag_row_3">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:tag="tag_row_4">
+
+    </LinearLayout>
+
 
 </LinearLayout>

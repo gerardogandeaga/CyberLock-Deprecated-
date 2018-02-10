@@ -11,7 +11,7 @@
         android:layout_height="64dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@color/ct_purple"/>
+        android:src="@color/ct_purple_1"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgPurple"
@@ -19,7 +19,7 @@
         android:layout_height="64dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@color/ct_purple"/>
+        android:src="@color/ct_purple_1"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgPurple"
@@ -27,7 +27,7 @@
         android:layout_height="64dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@color/ct_purple"/>
+        android:src="@color/ct_purple_1"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgPurple"
@@ -35,7 +35,7 @@
         android:layout_height="64dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@color/ct_purple"/>
+        android:src="@color/ct_purple_1"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgPurple"
@@ -43,7 +43,7 @@
         android:layout_height="64dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@color/ct_purple"/>
+        android:src="@color/ct_purple_1"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgPurple"
@@ -51,7 +51,7 @@
         android:layout_height="64dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@color/ct_purple"/>
+        android:src="@color/ct_purple_1"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgPurple"
@@ -59,7 +59,7 @@
         android:layout_height="64dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@color/ct_purple"/>
+        android:src="@color/ct_purple_1"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgPurple"
@@ -67,6 +67,6 @@
         android:layout_height="64dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@color/ct_purple"/>
+        android:src="@color/ct_purple_1"/>
 
 </GridLayout>

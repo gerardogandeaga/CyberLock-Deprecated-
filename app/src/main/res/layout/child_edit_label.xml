@@ -33,6 +33,6 @@
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:padding="10dp"
-        android:tint="@color/ct_red"
+        android:tint="@color/ct_red_2"
         app:srcCompat="@drawable/ic_tag"/>
 </LinearLayout>

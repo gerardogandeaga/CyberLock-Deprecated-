@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<item name="colorPrimaryDark">#ffffff</item>-->
-    <!--<item name="colorPrimary">#ffffff</item>-->
-    <!--<item name="colorAccent">#ffffff</item>-->
-    <!--<item name="colorHighlight">#ffffff</item>-->
 
     <!-- Constants -->
     <color name="white">#ffffff</color>
@@ -53,14 +49,64 @@
     <color name="c_pink_40">#ef5661</color>
     <color name="c_pink_50">#f14652</color>
 
-    <!-- Colour Tags -->
+    <!-- colour tags -->
     <color name="ct_default">#d5d5d5</color>
-    <color name="ct_blue">#3e5bfe</color>
-    <color name="ct_red">#ff1945</color>
-    <color name="ct_green">#02e677</color>
-    <color name="ct_yellow">#ffea02</color>
-    <color name="ct_purple">#d502f9</color>
-    <color name="ct_orange">#ff9202</color>
+    <color name="ct_blue_4">#3e5bfe</color>
+    <color name="ct_blue_3">#2b7aff</color>
+    <color name="ct_blue_2">#02b1ff</color>
+    <color name="ct_blue_1">#02e5ff</color>
+    <color name="ct_red_2">#ff1945</color>
+    <color name="ct_red_1">#f50258</color>
+    <color name="ct_green_3">#1fe9b7</color>
+    <color name="ct_green_2">#02e677</color>
+    <color name="ct_green_1">#77ff05</color>
+    <color name="ct_yellow_2">#c6ff02</color>
+    <color name="ct_yellow_1">#ffea02</color>
+    <color name="ct_purple_2">#6621ff</color>
+    <color name="ct_purple_1">#d502f9</color>
+    <color name="ct_orange_3">#ff3f02</color>
+    <color name="ct_orange_2">#ff9202</color>
+    <color name="ct_orange_1">#ffc402</color>
+
+    <array name="array_tag_colours">
+        <item>@color/ct_red_2</item>
+        <item>@color/ct_red_1</item>
+        <item>@color/ct_purple_1</item>
+        <item>@color/ct_purple_2</item>
+        <item>@color/ct_blue_4</item>
+        <item>@color/ct_blue_3</item>
+        <item>@color/ct_blue_2</item>
+        <item>@color/ct_blue_1</item>
+        <item>@color/ct_green_3</item>
+        <item>@color/ct_green_2</item>
+        <item>@color/ct_green_1</item>
+        <item>@color/ct_yellow_1</item>
+        <item>@color/ct_yellow_2</item>
+        <item>@color/ct_orange_1</item>
+        <item>@color/ct_orange_2</item>
+        <item>@color/ct_orange_3</item>
+    </array>
+
+    <string-array name="array_tag_colours_names">
+        <item>ct_red_2</item>
+        <item>ct_red_1</item>
+        <item>ct_purple_1</item>
+        <item>ct_purple_2</item>
+        <item>ct_blue_4</item>
+        <item>ct_blue_3</item>
+        <item>ct_blue_2</item>
+        <item>ct_blue_1</item>
+        <item>ct_green_3</item>
+        <item>ct_green_2</item>
+        <item>ct_green_1</item>
+        <item>ct_yellow_1</item>
+        <item>ct_yellow_2</item>
+        <item>ct_orange_1</item>
+        <item>ct_orange_2</item>
+        <item>ct_orange_3</item>
+    </string-array>
+
+
 
     <!--<color name="ct_default">#d5d5d5</color>-->
     <!--<color name="ct_blue">#536eb9</color>-->
