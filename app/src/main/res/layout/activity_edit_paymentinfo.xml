@@ -42,7 +42,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:elevation="4dp"
                     android:orientation="vertical">
 
@@ -84,7 +85,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:elevation="1dp"
                     android:orientation="vertical">
 
@@ -128,7 +130,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:elevation="1dp"
                     android:orientation="vertical">
 
@@ -172,7 +175,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -214,7 +218,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -261,7 +266,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tvDate"
+                android:id="@+id/tvSubTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"

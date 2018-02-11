@@ -1,39 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
     tools:context=".activities.core.ActivityEdit">
 
-    <include layout="@layout/fragment_dialog_preview_title"/>
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?attr/cardBackgroundColour"
+        android:orientation="vertical"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvNote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/cardbackgroundColour"
-            android:orientation="vertical"
-            android:paddingBottom="5dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="5dp">
+            android:gravity="top"
+            android:textAppearance="@style/myText.Edit.Content"/>
 
-            <TextView
-                android:id="@+id/tvNote"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top"
-                android:textAppearance="@style/myText.Edit.Content"/>
+    </LinearLayout>
 
-        </LinearLayout>
-
-    </ScrollView>
-
-</LinearLayout>
+</ScrollView>

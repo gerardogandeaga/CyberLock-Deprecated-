@@ -16,7 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/cardbackgroundColour"
+            android:background="?attr/cardBackgroundColour"
             android:orientation="vertical"
             android:paddingBottom="5dp"
             android:paddingLeft="15dp"

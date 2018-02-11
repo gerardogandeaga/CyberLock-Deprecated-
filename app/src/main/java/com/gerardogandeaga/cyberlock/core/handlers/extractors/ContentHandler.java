@@ -1,10 +1,13 @@
 package com.gerardogandeaga.cyberlock.core.handlers.extractors;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
+import com.gerardogandeaga.cyberlock.utils.math.Scaling;
 
 import java.util.Scanner;
 
@@ -149,16 +152,13 @@ public class ContentHandler {
 
         // Icon scaling
         if (factoryIcon != null) {
-            float x = factoryIcon.getMinimumWidth();
-            float y = factoryIcon.getMinimumHeight();
-            float scaleFactor = 0.65f;
-            int xx = (int) ((int) x - (x * scaleFactor));
-            int yy = (int) ((int) y - (y * scaleFactor));
+            int x = Scaling.dpToPx(mContext, 47);
+            int y = Scaling.dpToPx(mContext, 32);
 
-            // Apply scaling
-            factoryIcon.setBounds(0, 0, xx, yy);
+            Bitmap bitmap = ((BitmapDrawable) factoryIcon).getBitmap();
+
+            return new BitmapDrawable(mContext.getResources(), Bitmap.createScaledBitmap(bitmap, x, y, true));
         }
-
-        return factoryIcon;
+        return null;
     }
 }

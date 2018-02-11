@@ -1,264 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".activities.core.ActivityEdit">
 
-    <include layout="@layout/fragment_dialog_preview_title"/>
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?attr/cardBackgroundColour"
+        android:orientation="vertical"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp">
 
         <LinearLayout
+            android:id="@+id/Holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/cardbackgroundColour"
-            android:orientation="vertical"
-            android:paddingBottom="5dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="5dp">
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:tint="?attr/tintColour"
+                app:srcCompat="@drawable/graphic_card_holder"/>
 
             <LinearLayout
-                android:id="@+id/Holder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
-                    app:srcCompat="@drawable/graphic_card_holder"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Holder Name"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
-
-                    <TextView
-                        android:id="@+id/tvName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
-                    app:srcCompat="@drawable/graphic_card_number"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Card / Identifying Number"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
-
-                    <TextView
-                        android:id="@+id/tvNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"
-                        />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Expiry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
-                    app:srcCompat="@drawable/graphic_card_expiry"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Expiry Date"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
-
-                    <TextView
-                        android:id="@+id/tvExpiry"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"
-                        />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/CVV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
-                    app:srcCompat="@drawable/graphic_card_code"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="CVV / Security Code"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
-
-                    <TextView
-                        android:id="@+id/tvCVV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"
-                        tools:ignore="NestedWeights"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/CardType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
-                    app:srcCompat="@drawable/graphic_card_type"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Card Type"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
-
-                    <TextView
-                        android:id="@+id/tvCardType"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"
-                        />
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/imgIcon"
-                    android:layout_width="47dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/bk_outline"
-                    android:scaleType="fitEnd"
-                    app:srcCompat="@drawable/card_default"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Notes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Additional Notes"
-                    android:textAppearance="@style/myText.Edit.Hint"
-                    />
+                    android:text="Holder Name"
+                    android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <TextView
-                    android:id="@+id/tvNote"
+                    android:id="@+id/tvName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
                     android:textAppearance="@style/myText.Edit.Content"/>
             </LinearLayout>
 
         </LinearLayout>
 
-    </ScrollView>
+        <LinearLayout
+            android:id="@+id/Number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
 
-</LinearLayout>
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:tint="?attr/tintColour"
+                app:srcCompat="@drawable/graphic_card_number"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Card / Identifying Number"
+                    android:textAppearance="@style/myText.Edit.Hint"/>
+
+                <TextView
+                    android:id="@+id/tvNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textAppearance="@style/myText.Edit.Content"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Expiry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:tint="?attr/tintColour"
+                app:srcCompat="@drawable/graphic_card_expiry"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Expiry Date"
+                    android:textAppearance="@style/myText.Edit.Hint"/>
+
+                <TextView
+                    android:id="@+id/tvExpiry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:textAppearance="@style/myText.Edit.Content"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/CVV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:tint="?attr/tintColour"
+                app:srcCompat="@drawable/graphic_card_code"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CVV / Security Code"
+                    android:textAppearance="@style/myText.Edit.Hint"/>
+
+                <TextView
+                    android:id="@+id/tvCVV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:textAppearance="@style/myText.Edit.Content"
+                    tools:ignore="NestedWeights"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/CardType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:tint="?attr/tintColour"
+                app:srcCompat="@drawable/graphic_card_type"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Card Type"
+                    android:textAppearance="@style/myText.Edit.Hint"/>
+
+                <TextView
+                    android:id="@+id/tvCardType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:textAppearance="@style/myText.Edit.Content"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Additional Notes"
+                android:textAppearance="@style/myText.Edit.Hint"/>
+
+            <TextView
+                android:id="@+id/tvNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/myText.Edit.Content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

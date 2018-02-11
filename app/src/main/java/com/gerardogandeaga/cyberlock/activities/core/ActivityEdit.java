@@ -2,8 +2,8 @@ package com.gerardogandeaga.cyberlock.activities.core;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -19,7 +19,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
 import com.gerardogandeaga.cyberlock.activities.dialogs.DialogFragmentTags;
@@ -39,17 +38,7 @@ import static com.gerardogandeaga.cyberlock.utils.Stored.AUTOSAVE;
 import static com.gerardogandeaga.cyberlock.utils.Stored.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.utils.Stored.TMP_PWD;
 
-public class ActivityEdit extends AppCompatActivity
-        implements View.OnClickListener, DialogFragmentTags.OnInputListener, ColorChooserDialog.ColorCallback {
-    @Override
-    public void onColorSelection(@NonNull ColorChooserDialog dialog, int selectedColor) {
-
-    }
-    @Override
-    public void onColorChooserDismissed(@NonNull ColorChooserDialog dialog) {
-
-    }
-
+public class ActivityEdit extends AppCompatActivity implements View.OnClickListener, DialogFragmentTags.OnInputListener {
     @Override
     public void sendInput(String colour) {
         mColour = colour;
@@ -66,7 +55,7 @@ public class ActivityEdit extends AppCompatActivity
     // content vars
     private static final String[] ARGS = new String[]{ "TYPE_NOTE", "TYPE_PAYMENTINFO", "TYPE_LOGININFO" };
     private String TYPE;
-    private String mColour = "#000000";
+    private String mColour = "DEFAULT";
 
     // widgets
     private EditText mEtLabel;
@@ -163,7 +152,7 @@ public class ActivityEdit extends AppCompatActivity
     private void setupMainWidgets() {
         // Main widgets
         this.mEtLabel = findViewById(R.id.etLabel);
-        this.mTvDate = findViewById(R.id.tvDate);
+        this.mTvDate = findViewById(R.id.tvSubTitle);
         this.mImgTag = findViewById(R.id.imgTag);
 
         this.mImgTag.setOnClickListener(this);
@@ -283,7 +272,7 @@ public class ActivityEdit extends AppCompatActivity
         if (mIsNew) {
             setLabel(null);
             setDate(null);
-            setTag(mColour);
+            setTag(null);
         } else {
             mColour = mContentHandler.mTag;
             setLabel(mContentHandler.mLabel);
@@ -298,7 +287,7 @@ public class ActivityEdit extends AppCompatActivity
         if (mIsNew) {
             setLabel(null);
             setDate(null);
-            setTag(mColour);
+            setTag(null);
         } else {
             mColour = mContentHandler.mTag;
             setLabel(mContentHandler.mLabel);
@@ -322,7 +311,7 @@ public class ActivityEdit extends AppCompatActivity
         if (mIsNew) {
             setLabel(null);
             setDate(null);
-            setTag(mColour);
+            setTag(null);
         } else {
             mColour = mContentHandler.mTag;
             setLabel(mContentHandler.mLabel);
@@ -376,14 +365,6 @@ public class ActivityEdit extends AppCompatActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imgTag: DialogFragmentTags.show(this); break;
-//            case R.id.imgTag:
-//                new ColorChooserDialog.Builder(this, R.string.UpdateTitle)
-//                        .titleSub(R.string.UpdateTitle)
-//                        .accentMode(false)
-//                        .doneButton(R.string.UpdateTitle)
-//                        .backButton(R.string.UpdateTitle)
-//                        .show(this);
-//                break;
         }
     }
 
@@ -426,7 +407,7 @@ public class ActivityEdit extends AppCompatActivity
         }
     }
     private void setTag(String colour) {
-        mImgTag.setColorFilter(ColourTag.colourTag(this, mColour));
+        mImgTag.setColorFilter(ColourTag.colourTag(this, colour), PorterDuff.Mode.SRC_ATOP);
     }
 
     // Getters and setters for saving

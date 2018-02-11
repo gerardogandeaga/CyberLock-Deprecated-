@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,208 +7,198 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
     tools:context=".activities.core.ActivityEdit">
 
-    <include layout="@layout/fragment_dialog_preview_title"/>
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?attr/cardBackgroundColour"
+        android:orientation="vertical"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp"
+        android:weightSum="1">
 
         <LinearLayout
+            android:id="@+id/Url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/cardbackgroundColour"
-            android:orientation="vertical"
-            android:paddingBottom="5dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="5dp"
-            android:weightSum="1">
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:tint="?attr/tintColour"
+                app:srcCompat="@drawable/graphic_login_url"/>
 
             <LinearLayout
-                android:id="@+id/Url"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
-                    app:srcCompat="@drawable/graphic_login_url"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="URL"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
-
-                    <TextView
-                        android:id="@+id/tvUrl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"
-                        />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Email"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
-                    app:srcCompat="@drawable/graphic_login_email"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Email Address"
-                        android:textAppearance="@style/myText.Edit.Hint"/>
-
-                    <TextView
-                        android:id="@+id/tvEmail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"/>
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Username"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
-                    app:srcCompat="@drawable/graphic_login_username"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Username"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
-
-                    <TextView
-                        android:id="@+id/tvUsername"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"
-                        />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Password"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
-                    app:srcCompat="@drawable/graphic_login_password"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Password"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
-
-                    <TextView
-                        android:id="@+id/tvPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"
-                        />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Notes"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Additional Notes"
-                    android:textAppearance="@style/myText.Edit.Hint"
-                    />
+                    android:text="URL"
+                    android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <TextView
-                    android:id="@+id/tvNote"
+                    android:id="@+id/tvUrl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
                     android:textAppearance="@style/myText.Edit.Content"/>
             </LinearLayout>
 
         </LinearLayout>
 
-    </ScrollView>
+        <LinearLayout
+            android:id="@+id/Email"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
 
-</LinearLayout>
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:tint="?attr/tintColour"
+                app:srcCompat="@drawable/graphic_login_email"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email Address"
+                    android:textAppearance="@style/myText.Edit.Hint"/>
+
+                <TextView
+                    android:id="@+id/tvEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textAppearance="@style/myText.Edit.Content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Username"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:tint="?attr/tintColour"
+                app:srcCompat="@drawable/graphic_login_username"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Username"
+                    android:textAppearance="@style/myText.Edit.Hint"/>
+
+                <TextView
+                    android:id="@+id/tvUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textAppearance="@style/myText.Edit.Content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:tint="?attr/tintColour"
+                app:srcCompat="@drawable/graphic_login_password"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Password"
+                    android:textAppearance="@style/myText.Edit.Hint"/>
+
+                <TextView
+                    android:id="@+id/tvPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textAppearance="@style/myText.Edit.Content"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Notes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Additional Notes"
+                android:textAppearance="@style/myText.Edit.Hint"/>
+
+            <TextView
+                android:id="@+id/tvNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/myText.Edit.Content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
 
 

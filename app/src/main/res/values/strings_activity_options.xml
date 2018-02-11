@@ -10,6 +10,7 @@
     <string name="LogoutDelay">Logout Delay</string>
     <string name="ChangePassword">Change Password</string>
     <string name="ListFormat">List Formatting</string>
+    <string name="HeaderTags">Tagged Header</string>
     <string name="Git">Open Source Libraries</string>
     <string name="AboutCL">About Cyber Lock</string>
     <string name="Version">Version Details</string>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/Title"
+    android:id="@+id/lnTitleBackground"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/cardbackgroundColour"
+    android:background="?attr/cardBackgroundColour"
     android:orientation="vertical"
     android:paddingBottom="10dp"
     android:paddingLeft="15dp"
@@ -12,21 +12,20 @@
     android:paddingTop="10dp">
 
     <TextView
-        android:id="@+id/tvDialogTitle"
+        android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:maxLines="1"
         android:text="Title"
         android:textAppearance="@style/myText.Dialog.Title"/>
 
     <TextView
-        android:id="@+id/tvDate"
+        android:id="@+id/tvSubTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_weight="1"
-        android:text="date"
+        android:maxLines="1"
+        android:text="Subtitle"
         android:textAppearance="@style/myText.Edit.Date"/>
 
 </LinearLayout>

@@ -46,7 +46,7 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
         @BindView(R.id.loginInfo)    LinearLayout LoginInfo;
 
         @BindView(R.id.tvLabel)      TextView  Label;
-        @BindView(R.id.tvDate)       TextView  Date;
+        @BindView(R.id.tvSubTitle)       TextView  Date;
         @BindView(R.id.imgColourTag) ImageView Tag;
 
         // note
@@ -54,7 +54,7 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
         // paymentinfo
         @BindView(R.id.tvHolder)     TextView  Holder;
         @BindView(R.id.tvNumber)     TextView  Number;
-        @BindView(R.id.imgCardIcon)  ImageView CardIcon;
+        @BindView(R.id.imgCardIcon) ImageView CardIcon;
         // logininfo
         @BindView(R.id.tvUrl)        TextView  Url;
         @BindView(R.id.tvEmail)      TextView  Email;

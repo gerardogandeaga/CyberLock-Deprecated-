@@ -12,7 +12,7 @@
         <item name="colorAccent">@color/black</item>
 
         <item name="backgroundColour">@color/c_gray_0</item>
-        <item name="cardbackgroundColour">@color/white</item>
+        <item name="cardBackgroundColour">@color/white</item>
 
         <item name="tintColour">@color/black</item>
 
@@ -32,7 +32,7 @@
         <item name="colorAccent">@color/black</item>
 
         <item name="backgroundColour">@color/c_gray_0</item>
-        <item name="cardbackgroundColour">@color/white</item>
+        <item name="cardBackgroundColour">@color/white</item>
 
         <item name="tintColour">@color/black</item>
 
@@ -45,7 +45,7 @@
         <item name="colorAccent">@color/black</item>
 
         <item name="backgroundColour">@color/c_blue_90</item>
-        <item name="cardbackgroundColour">@color/c_blue_80</item>
+        <item name="cardBackgroundColour">@color/c_blue_80</item>
 
         <item name="tintColour">@color/white</item>
 
@@ -55,7 +55,7 @@
     </style>
 
     <style name="MyDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:background">?attr/cardbackgroundColour</item>
+        <item name="android:background">?attr/cardBackgroundColour</item>
         <item name="android:colorAccent" tools:targetApi="lollipop">?attr/textColourPrimary</item>
     </style>
 

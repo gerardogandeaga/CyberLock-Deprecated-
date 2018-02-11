@@ -60,8 +60,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="3"
                         android:text="Notes"
-                        android:textAppearance="@style/myText.List.Content"
-                        />
+                        android:textAppearance="@style/myText.List.Content"/>
 
                 </LinearLayout>
 
@@ -128,8 +127,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:text="Email"
-                        android:textAppearance="@style/myText.List.Content"
-                        />
+                        android:textAppearance="@style/myText.List.Content"/>
 
                     <TextView
                         android:id="@+id/tvUsername"
@@ -137,21 +135,19 @@
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:text="Username"
-                        android:textAppearance="@style/myText.List.Content"
-                        />
+                        android:textAppearance="@style/myText.List.Content"/>
 
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tvDate"
+                    android:id="@+id/tvSubTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:maxLines="1"
                     android:minLines="1"
                     android:text="Date"
-                    android:textAppearance="@style/myText.List.Date"
-                    />
+                    android:textAppearance="@style/myText.List.Date"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
