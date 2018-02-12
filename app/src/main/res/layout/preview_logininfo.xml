@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".activities.core.ActivityEdit">
+    tools:context=".activities.core.ActivityEdit"
+    tools:ignore="ContentDescription">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,7 +46,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="URL"
+                    android:text="@string/tvURL"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <TextView
@@ -84,7 +85,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Email Address"
+                    android:text="@string/tvEmail"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <TextView
@@ -124,7 +125,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Username"
+                    android:text="@string/tvUsername"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <TextView
@@ -164,7 +165,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Password"
+                    android:text="@string/tvPassword"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <TextView
@@ -187,7 +188,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Additional Notes"
+                android:text="@string/tvNotes"
                 android:textAppearance="@style/myText.Edit.Hint"/>
 
             <TextView

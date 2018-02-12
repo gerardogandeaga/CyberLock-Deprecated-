@@ -18,4 +18,9 @@
     <string name="btnChoose">Choose</string>
     <string name="btnChange">Change</string>
     <string name="btnScramble">Scramble</string>
+
+    <!-- test -->
+    <string name="btnPositive">Positive</string>
+    <string name="btnNegative">Negative</string>
+    <string name="btnNeutral">Neutral</string>
 </resources>
