@@ -137,7 +137,10 @@ public class DialogFragmentTags extends DialogFragment {
     }
 
     private void onItemClick(String name) {
-        mOnInputListener.sendInput(name);
-
+        if (mOnInputListener == null) {
+            System.out.println("listener is null!!!");
+        } else {
+            mOnInputListener.sendInput(name);
+        }
     }
 }

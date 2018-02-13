@@ -18,29 +18,27 @@
     <!-- Main Edit -->
     <style name="myText.Edit.Label" parent="TextAppearance.AppCompat">
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">?attr/textColourPrimary</item>
-        <item name="android:textColorHint">?attr/textColourHint</item>
-        <item name="android:textCursorDrawable">?attr/textColourPrimary</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/c_gray_40</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:gravity">start</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="myText.Edit.Content" parent="TextAppearance.AppCompat">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">?attr/textColourPrimary</item>
-        <item name="android:textColorHint">?attr/textColourHint</item>
-        <item name="android:textCursorDrawable">?attr/textColourPrimary</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/c_gray_40</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:gravity">start</item>
     </style>
     <style name="myText.Edit.Date" parent="TextAppearance.AppCompat">
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">?attr/textColourPrimary</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/roboto</item>
     </style>
     <style name="myText.Edit.Hint" parent="TextAppearance.AppCompat">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">?attr/textColourHint</item>
+        <item name="android:textColorHint">@color/c_gray_40</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:gravity">start</item>
     </style>
@@ -48,7 +46,7 @@
     <!-- List Items -->
     <style name="myText.List.Label" parent="TextAppearance.AppCompat">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">?attr/textColourPrimary</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:gravity">start</item>
         <item name="android:textStyle">bold</item>
@@ -61,7 +59,7 @@
     </style>
     <style name="myText.List.Date" parent="TextAppearance.AppCompat">
         <item name="android:textSize">10sp</item>
-        <item name="android:textColor">?attr/textColourSecondary</item>
+        <item name="android:textColor">@color/c_green_70</item>
         <item name="android:fontFamily">@font/roboto</item>
     </style>
 
@@ -69,7 +67,7 @@
     <style name="myText.Settings.Category" parent="TextAppearance.AppCompat">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/textColourPrimary</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/roboto</item>
     </style>
     <style name="myText.Settings.Header" parent="TextAppearance.AppCompat">
@@ -80,14 +78,14 @@
     </style>
     <style name="myText.Settings.Description" parent="TextAppearance.AppCompat">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">?attr/textColourPrimary</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/roboto</item>
     </style>
 
     <!-- Dialog -->
     <style name="myText.Dialog.Title" parent="TextAppearance.AppCompat">
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">?attr/textColourPrimary</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:gravity">start</item>
         <item name="android:textStyle">bold</item>
@@ -95,7 +93,7 @@
     </style>
     <style name="myText.Dialog.Content" parent="TextAppearance.AppCompat">
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">?attr/textColourPrimary</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:gravity">start</item>
     </style>

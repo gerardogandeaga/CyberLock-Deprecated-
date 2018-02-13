@@ -124,7 +124,7 @@
 
                         <android.support.v7.widget.AppCompatSpinner
                             android:id="@+id/spAutoLogoutDelay"
-                            style="@android:style/Widget.Material.Light.Spinner.Underlined"
+                            style="@style/Widget.AppCompat.Spinner.Underlined"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -189,7 +189,7 @@
 
                         <include
                             android:id="@+id/inputChangePassword"
-                            layout="@layout/fragment_option_changepassword"
+                            layout="@layout/child_option_changepassword"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 

@@ -2,14 +2,16 @@
 <resources>
     <declare-styleable name="ds">
 
+        <!-- backgrounds -->
+        <attr name="toolbarColour" format="color"/>
         <attr name="backgroundColour" format="color"/>
-        <attr name="cardBackgroundColour" format="color"/>
 
-        <attr name="tintColour" format="color"/>
+        <!-- items -->
+        <attr name="toolbarItemColour" format="color"/>
 
-        <attr name="textColourPrimary" format="color"/>
-        <attr name="textColourSecondary" format="color"/>
-        <attr name="textColourHint" format="color"/>
+        <!-- text -->
+        <attr name="toolbarTitleColour" format="color"/>
+        <attr name="toolbarSubTitleColour" format="color"/>
 
     </declare-styleable>
 </resources>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,9 @@ import com.gerardogandeaga.cyberlock.utils.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.utils.Stored;
 import com.gerardogandeaga.cyberlock.utils.graphics.DrawableColours;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.mCountDownTimer;
@@ -28,13 +32,20 @@ import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.mIsCountDownTim
 public class ActivityOptions extends AppCompatActivity implements View.OnClickListener {
     Context mContext = this;
 
-    // widgets
-    private android.support.v7.widget.SwitchCompat mSwAutoSave;
-    private Spinner mSpLogoutDelay;
-    private LinearLayout mInputChangePassword;
-    private ImageView mImgDirection;
-    private ImageView mImgListFormat;
+    @BindView(R.id.toolbar) Toolbar mToolbar;
 
+    @BindView(R.id.AutoSave)        LinearLayout mLinAutoSave;
+    @BindView(R.id.AutoLogoutDelay) LinearLayout mLinAutoLogoutDelay;
+    @BindView(R.id.ChangePassword)  LinearLayout mLinChangePassword;
+    @BindView(R.id.ListFormat)      LinearLayout mLinListFormat;
+    @BindView(R.id.GitHub)          LinearLayout mLinGitHub;
+    @BindView(R.id.About)           LinearLayout mLinAbout;
+
+    @BindView(R.id.swAutoSave)          SwitchCompat mSwAutoSave;
+    @BindView(R.id.spAutoLogoutDelay)   Spinner mSpLogoutDelay;
+    @BindView(R.id.inputChangePassword) LinearLayout mInputChangePassword;
+    @BindView(R.id.imgDirection)        ImageView mImgDirection;
+    @BindView(R.id.imgListFormat)       ImageView mImgListFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +56,13 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
 
         View view  = View.inflate(this, R.layout.activity_options, null);
         setContentView(view);
+        ButterKnife.bind(this);
+
         setupSupportActionBar();
-        widgets(view);
+        widgets();
     }
     private void setupSupportActionBar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Application Options");
@@ -58,39 +70,28 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
                 this, this.getResources().getDrawable(R.drawable.ic_back)));
     }
 
-    private void widgets(View view) {
-        LinearLayout linAutoSave = view.findViewById(R.id.AutoSave);
-        LinearLayout linAutoLogoutDelay = view.findViewById(R.id.AutoLogoutDelay);
-        LinearLayout linChangePassword = view.findViewById(R.id.ChangePassword);
-        LinearLayout linListFormat = view.findViewById(R.id.ListFormat);
-        LinearLayout linGitHub = view.findViewById(R.id.GitHub);
-        LinearLayout linAbout = view.findViewById(R.id.About);
+    private void widgets() {
+        mLinAutoSave.setOnClickListener(this);
+        mLinAutoLogoutDelay.setOnClickListener(this);
+        mLinChangePassword.setOnClickListener(this);
+        mLinListFormat.setOnClickListener(this);
+        mLinGitHub.setOnClickListener(this);
+        mLinAbout.setOnClickListener(this);
 
-
-        linAutoSave.setOnClickListener(this);
-        linAutoLogoutDelay.setOnClickListener(this);
-        linChangePassword.setOnClickListener(this);
-        linListFormat.setOnClickListener(this);
-        linGitHub.setOnClickListener(this);
-        linAbout.setOnClickListener(this);
-
-        savedStates(view);
+        savedStates();
     }
 
     // saved states
-    private void savedStates(View view) {
-        iniAutoSave(view);
-        iniLogoutDelay(view);
-        iniChangePassword(view);
-        iniListFormat(view);
+    private void savedStates() {
+        iniAutoSave();
+        iniLogoutDelay();
+        iniChangePassword();
+        iniListFormat();
     }
-    private void iniAutoSave(View view) {
-        this.mSwAutoSave = view.findViewById(R.id.swAutoSave);
-
-        this.mSwAutoSave.setChecked(Stored.getAutoSave(this));
+    private void iniAutoSave() {
+        mSwAutoSave.setChecked(Stored.getAutoSave(this));
     }
-    private void iniLogoutDelay(View view) {
-        this.mSpLogoutDelay = view.findViewById(R.id.spAutoLogoutDelay);
+    private void iniLogoutDelay() {
         ArrayAdapter<CharSequence> adapterLogoutDelay = ArrayAdapter.createFromResource(
                 this,
                 R.array.AutoLogoutDelay_array,
@@ -128,16 +129,11 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
         int spinnerPosition = adapterLogoutDelay.getPosition(Stored.getLogoutDelay(this));
         mSpLogoutDelay.setSelection(spinnerPosition);
     }
-    private void iniChangePassword(View view) {
-        this.mInputChangePassword = view.findViewById(R.id.inputChangePassword);
-        this.mImgDirection = view.findViewById(R.id.imgDirection);
-
+    private void iniChangePassword() {
         mInputChangePassword.setVisibility(View.GONE);
         mImgDirection.setRotation(-90);
     }
-    private void iniListFormat(View view) {
-        this.mImgListFormat = view.findViewById(R.id.imgListFormat);
-
+    private void iniListFormat() {
         if (Stored.getListFormat(this).matches("RV_STAGGEREDGRID")) {
             mImgListFormat.setImageDrawable(this.getResources().getDrawable(R.drawable.graphic_list_grid));
         } else {
@@ -159,7 +155,7 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
     // on clicks
     private void onAutoSave() {
         Stored.setAutoSave(this, !Stored.getAutoSave(this));
-        this.mSwAutoSave.setChecked(Stored.getAutoSave(this));
+        mSwAutoSave.setChecked(Stored.getAutoSave(this));
     }
     private void onLogoutDelay() {
         mSpLogoutDelay.performClick();

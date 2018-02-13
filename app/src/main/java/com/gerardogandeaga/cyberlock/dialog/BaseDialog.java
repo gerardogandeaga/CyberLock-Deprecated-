@@ -63,29 +63,29 @@ public class BaseDialog {
 
     // icon
     public void setIcon(Drawable drawable) {
-        imageviewProperties(mIcon, drawable);
+        imageviewSetProperties(mIcon, drawable);
     }
 
     // text views
     public void setTitle(String text) {
-        textviewProperties(mTitle, text);
+        textviewSetProperties(mTitle, text);
     }
 
     public void setSubTitle(String text) {
-        textviewProperties(mSubTitle, text);
+        textviewSetProperties(mSubTitle, text);
     }
 
     // buttons
     public void setPositiveButton(String text, View.OnClickListener listener) {
-        buttonProperties(mPositive, text, listener);
+        buttonSetProperties(mPositive, text, listener);
     }
 
     public void setNegativeButton(String text, View.OnClickListener listener) {
-        buttonProperties(mNegative, text, listener);
+        buttonSetProperties(mNegative, text, listener);
     }
 
     public void setNeutralButton(String text, View.OnClickListener listener) {
-        buttonProperties(mNeutral, text, listener);
+        buttonSetProperties(mNeutral, text, listener);
     }
 
     // visibility managers
@@ -118,17 +118,17 @@ public class BaseDialog {
         mNeutral.setVisibility(View.GONE);
     }
 
-    private void imageviewProperties(ImageView imageView, Drawable drawable) {
+    private void imageviewSetProperties(ImageView imageView, Drawable drawable) {
         imageView.setVisibility(View.VISIBLE);
         imageView.setImageDrawable(drawable);
     }
 
-    private void textviewProperties(TextView textView, String text) {
+    private void textviewSetProperties(TextView textView, String text) {
         textView.setVisibility(View.VISIBLE);
         textView.setText(text);
     }
 
-    private void buttonProperties(Button button, String text, View.OnClickListener listener) {
+    private void buttonSetProperties(Button button, String text, View.OnClickListener listener) {
         button.setVisibility(View.VISIBLE);
         button.setText(text);
         button.setOnClickListener(listener);

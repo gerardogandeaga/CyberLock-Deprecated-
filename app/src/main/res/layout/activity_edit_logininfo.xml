@@ -6,9 +6,9 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/backgroundColour"
     android:orientation="vertical"
-    tools:context=".activities.core.ActivityEdit">
+    tools:context=".activities.core.ActivityEdit"
+    tools:ignore="ContentDescription">
 
     <include layout="@layout/toolbar_main"/>
 
@@ -34,7 +34,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
+                    android:tint="@color/black"
                     app:srcCompat="@drawable/graphic_login_url"/>
 
                 <LinearLayout
@@ -50,8 +50,7 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="URL"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
+                        android:textAppearance="@style/myText.Edit.Hint"/>
 
                     <EditText
                         android:id="@+id/etUrl"
@@ -75,7 +74,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
+                    android:tint="@color/black"
                     app:srcCompat="@drawable/graphic_login_email"/>
 
                 <LinearLayout
@@ -91,8 +90,7 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="Email"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
+                        android:textAppearance="@style/myText.Edit.Hint"/>
 
                     <EditText
                         android:id="@+id/etEmail"
@@ -116,7 +114,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
+                    android:tint="@color/black"
                     app:srcCompat="@drawable/graphic_login_username"/>
 
                 <LinearLayout
@@ -132,8 +130,7 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="Username"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
+                        android:textAppearance="@style/myText.Edit.Hint"/>
 
                     <EditText
                         android:id="@+id/etUsername"
@@ -157,8 +154,8 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/graphic_login_password"
-                    android:tint="?attr/tintColour"/>
+                    android:tint="@color/black"
+                    app:srcCompat="@drawable/graphic_login_password"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -173,8 +170,7 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="Password"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
+                        android:textAppearance="@style/myText.Edit.Hint"/>
 
                     <EditText
                         android:id="@+id/etPassword"
@@ -199,8 +195,7 @@
                     android:layout_height="wrap_content"
                     android:padding="3dp"
                     android:text="Additional Notes"
-                    android:textAppearance="@style/myText.Edit.Hint"
-                    />
+                    android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <EditText
                     android:id="@+id/etNotes"

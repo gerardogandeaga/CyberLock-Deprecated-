@@ -7,8 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="?attr/backgroundColour"
-    tools:context=".activities.core.ActivityEdit">
+    tools:context=".activities.core.ActivityEdit"
+    tools:ignore="ContentDescription">
 
     <include layout="@layout/toolbar_paymentinfo"/>
 
@@ -35,7 +35,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
+                    android:tint="@color/black"
                     android:tintMode="src_atop"
                     app:srcCompat="@drawable/graphic_card_holder"/>
 
@@ -52,8 +52,7 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="Holder Name"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
+                        android:textAppearance="@style/myText.Edit.Hint"/>
 
                     <EditText
                         android:id="@+id/etCardName"
@@ -78,7 +77,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
+                    android:tint="@color/black"
                     android:tintMode="src_atop"
                     app:srcCompat="@drawable/graphic_card_number"/>
 
@@ -123,7 +122,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
+                    android:tint="@color/black"
                     android:tintMode="src_atop"
                     app:srcCompat="@drawable/graphic_card_expiry"/>
 
@@ -140,8 +139,7 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="Expiry Date"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
+                        android:textAppearance="@style/myText.Edit.Hint"/>
 
                     <EditText
                         android:id="@+id/etCardExpire"
@@ -168,7 +166,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
+                    android:tint="@color/black"
                     android:tintMode="src_atop"
                     app:srcCompat="@drawable/graphic_card_code"/>
 
@@ -184,8 +182,7 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="CVV / Security Code"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
+                        android:textAppearance="@style/myText.Edit.Hint"/>
 
                     <EditText
                         android:id="@+id/etCardSecCode"
@@ -211,7 +208,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="?attr/tintColour"
+                    android:tint="@color/black"
                     android:tintMode="src_atop"
                     app:srcCompat="@drawable/graphic_card_type"/>
 
@@ -227,8 +224,7 @@
                         android:layout_height="wrap_content"
                         android:padding="3dp"
                         android:text="Card Type"
-                        android:textAppearance="@style/myText.Edit.Hint"
-                        />
+                        android:textAppearance="@style/myText.Edit.Hint"/>
 
                     <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/spCardSelect"
@@ -252,8 +248,7 @@
                     android:layout_height="wrap_content"
                     android:padding="3dp"
                     android:text="Additional Notes"
-                    android:textAppearance="@style/myText.Edit.Hint"
-                    />
+                    android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <EditText
                     android:id="@+id/etNotes"

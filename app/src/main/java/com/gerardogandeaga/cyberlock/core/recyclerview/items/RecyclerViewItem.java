@@ -200,7 +200,7 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
     // The layout that will be used for item
     @Override
     public int getLayoutRes() {
-        return R.layout.recycler_list_item;
+        return R.layout.recycler_item;
     }
     @Override
     public ViewHolder getViewHolder(@NonNull View view) {

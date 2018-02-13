@@ -513,7 +513,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         if (!isFinishing()) { // HOME AND TABS AND SCREEN OFF
             if (ACTIVITY_INTENT == null) {
 
-                // Load data into intent
+                // LoadOverlay data into intent
                 ACTIVITY_INTENT = new Intent(this, ActivityLogin.class);
                 ACTIVITY_INTENT.putExtra("edit?", true);
                 ACTIVITY_INTENT.putExtra("isNew?", mIsNew);

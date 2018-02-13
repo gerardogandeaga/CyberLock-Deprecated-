@@ -13,7 +13,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/cardBackgroundColour"
         android:orientation="vertical"
         android:paddingBottom="5dp"
         android:paddingLeft="15dp"
@@ -32,7 +31,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
-                android:tint="?attr/tintColour"
+                android:tint="@color/black"
                 app:srcCompat="@drawable/graphic_login_url"/>
 
             <LinearLayout
@@ -71,7 +70,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
-                android:tint="?attr/tintColour"
+                android:tint="@color/black"
                 app:srcCompat="@drawable/graphic_login_email"/>
 
             <LinearLayout
@@ -111,7 +110,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
-                android:tint="?attr/tintColour"
+                android:tint="@color/black"
                 app:srcCompat="@drawable/graphic_login_username"/>
 
             <LinearLayout
@@ -151,7 +150,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
-                android:tint="?attr/tintColour"
+                android:tint="@color/black"
                 app:srcCompat="@drawable/graphic_login_password"/>
 
             <LinearLayout
