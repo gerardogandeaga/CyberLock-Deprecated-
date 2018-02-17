@@ -5,12 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundColour"
     android:orientation="vertical"
     tools:context=".activities.core.ActivityOptions">
 
     <include layout="@layout/toolbar_main"/>
 
     <ScrollView
+        style="@style/MyScrollbarStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -50,9 +52,9 @@
                         android:id="@+id/AutoSave"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bk_custom_default_ripple"
                         android:clickable="true"
                         android:focusable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
                         android:orientation="horizontal"
                         android:paddingBottom="10dp"
                         android:paddingLeft="15dp"
@@ -77,26 +79,119 @@
                             android:text="@string/AutoSave"
                             android:textAppearance="@style/myText.Settings.Header"/>
 
-                        <android.support.v7.widget.SwitchCompat
+                        <Switch
                             android:id="@+id/swAutoSave"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
-                            android:buttonTint="@color/c_red_80"
                             android:clickable="false"
-                            android:drawableTint="@color/c_red_80"
                             android:focusable="false"
                             tools:targetApi="m"/>
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ListFormat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bk_custom_default_ripple"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            tools:ignore="UselessParent">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_gravity="center_vertical"
+                                android:contentDescription="@string/ListFormat"
+                                android:padding="3dp"
+                                app:srcCompat="@drawable/graphic_list_format"/>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_weight="1"
+                                android:clickable="false"
+                                android:gravity="center_vertical"
+                                android:text="@string/ListFormat"
+                                android:textAppearance="@style/myText.Settings.Header"/>
+
+                            <ImageView
+                                android:id="@+id/imgListFormat"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:contentDescription="@string/ListFormat"
+                                android:padding="4dp"
+                                android:src="@drawable/graphic_list_linear"
+                                android:tint="@color/black"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/TaggedHeaders"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bk_custom_default_ripple"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="horizontal"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="10dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center_vertical"
+                            android:contentDescription="@string/AutoSave"
+                            android:padding="4dp"
+                            app:srcCompat="@drawable/graphic_tag"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="@string/HeaderTags"
+                            android:textAppearance="@style/myText.Settings.Header"/>
+
+                        <Switch
+                            android:id="@+id/swTaggedHeaders"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:clickable="false"
+                            android:focusable="false"/>
+
+                    </LinearLayout>
+
+                    <include layout="@layout/item_divider_horizontal"/>
+
+                    <LinearLayout
                         android:id="@+id/AutoLogoutDelay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bk_custom_default_ripple"
                         android:clickable="true"
                         android:focusable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
                         android:orientation="horizontal"
                         android:paddingBottom="10dp"
                         android:paddingLeft="15dp"
@@ -142,9 +237,9 @@
                         android:id="@+id/ChangePassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bk_custom_default_ripple"
                         android:clickable="true"
                         android:focusable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
                         android:orientation="vertical"
                         android:paddingBottom="10dp"
                         android:paddingLeft="15dp"
@@ -195,99 +290,6 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/ListFormat"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:orientation="vertical"
-                        android:paddingBottom="10dp"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
-                        android:paddingTop="10dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            tools:ignore="UselessParent">
-
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_gravity="center_vertical"
-                                android:contentDescription="@string/ListFormat"
-                                android:padding="3dp"
-                                app:srcCompat="@drawable/graphic_list_format"/>
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:layout_weight="1"
-                                android:clickable="false"
-                                android:gravity="center_vertical"
-                                android:text="@string/ListFormat"
-                                android:textAppearance="@style/myText.Settings.Header"/>
-
-                            <ImageView
-                                android:id="@+id/imgListFormat"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:contentDescription="@string/ListFormat"
-                                android:padding="4dp"
-                                android:src="@drawable/graphic_list_linear"
-                                android:tint="@color/black"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/Header"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:orientation="horizontal"
-                        android:paddingBottom="10dp"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
-                        android:paddingTop="10dp">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_gravity="center_vertical"
-                            android:contentDescription="@string/AutoSave"
-                            android:padding="4dp"
-                            app:srcCompat="@drawable/graphic_tag"/>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:text="@string/HeaderTags"
-                            android:textAppearance="@style/myText.Settings.Header"/>
-
-                        <CheckBox
-                            android:id="@+id/cbHeader"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:clickable="false"
-                            android:focusable="false"/>
-
-                    </LinearLayout>
-
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
@@ -322,9 +324,9 @@
                         android:id="@+id/GitHub"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bk_custom_default_ripple"
                         android:clickable="true"
                         android:focusable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
                         android:orientation="horizontal"
                         android:paddingBottom="10dp"
                         android:paddingLeft="15dp"
@@ -358,9 +360,9 @@
                         android:id="@+id/About"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bk_custom_default_ripple"
                         android:clickable="true"
                         android:focusable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
                         android:orientation="horizontal"
                         android:paddingBottom="10dp"
                         android:paddingLeft="15dp"
@@ -394,9 +396,9 @@
                         android:id="@+id/Version"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bk_custom_default_ripple"
                         android:clickable="true"
                         android:focusable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
                         android:orientation="horizontal"
                         android:paddingBottom="10dp"
                         android:paddingLeft="15dp"
@@ -460,9 +462,9 @@
                         android:id="@+id/Rate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bk_custom_default_ripple"
                         android:clickable="true"
                         android:focusable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
                         android:orientation="horizontal"
                         android:paddingBottom="10dp"
                         android:paddingLeft="15dp"
@@ -496,9 +498,9 @@
                         android:id="@+id/Report"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/bk_custom_default_ripple"
                         android:clickable="true"
                         android:focusable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
                         android:orientation="horizontal"
                         android:paddingBottom="10dp"
                         android:paddingLeft="15dp"

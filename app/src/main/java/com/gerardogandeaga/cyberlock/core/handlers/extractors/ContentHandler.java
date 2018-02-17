@@ -1,13 +1,10 @@
 package com.gerardogandeaga.cyberlock.core.handlers.extractors;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
-import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
-import com.gerardogandeaga.cyberlock.utils.math.Scaling;
+import com.gerardogandeaga.cyberlock.utils.graphics.Graphics;
 
 import java.util.Scanner;
 
@@ -136,29 +133,16 @@ public class ContentHandler {
     // Set card image
     private Drawable getCardImage(String content) {
         String cardType;
-        Drawable factoryIcon = null;
 
         Scanner scanner = new Scanner(content);
         while (scanner.hasNextLine()) {
             cardType = scanner.nextLine();
-            switch (cardType) {
-                case ("Visa"):             factoryIcon = mContext.getResources().getDrawable(R.drawable.card_visa); break;
-                case ("Master Card"):      factoryIcon = mContext.getResources().getDrawable(R.drawable.card_mastercard); break;
-                case ("American Express"): factoryIcon = mContext.getResources().getDrawable(R.drawable.card_americanexpress); break;
-                case ("Discover"):         factoryIcon = mContext.getResources().getDrawable(R.drawable.card_discover); break;
-                case ("Other"):            factoryIcon = mContext.getResources().getDrawable(R.drawable.card_default); break;
+
+            if (Graphics.CardImages.isCardType(cardType)) {
+                return Graphics.CardImages.getCardImage(mContext, cardType, 47, 32);
             }
         }
 
-        // Icon scaling
-        if (factoryIcon != null) {
-            int x = Scaling.dpToPx(mContext, 47);
-            int y = Scaling.dpToPx(mContext, 32);
-
-            Bitmap bitmap = ((BitmapDrawable) factoryIcon).getBitmap();
-
-            return new BitmapDrawable(mContext.getResources(), Bitmap.createScaledBitmap(bitmap, x, y, true));
-        }
         return null;
     }
 }

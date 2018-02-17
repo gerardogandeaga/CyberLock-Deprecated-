@@ -2,13 +2,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.core.ActivityMain">
+    tools:context=".activities.core.ActivityMain"
+    tools:ignore="AlwaysShowAction">
 
     <item
         android:id="@+id/add"
         android:layout_height="wrap_content"
         android:icon="@drawable/ic_add"
-        android:title="Add"
+        android:title="@string/mnuAdd"
         app:showAsAction="always">
 
         <menu>
@@ -16,19 +17,19 @@
                 android:id="@+id/add_note"
                 android:icon="@drawable/ic_note"
                 android:orderInCategory="0"
-                android:title="Note"
+                android:title="@string/mnuAddNote"
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/add_paymentinfo"
                 android:icon="@drawable/ic_card"
                 android:orderInCategory="0"
-                android:title="PaymentInfo"
+                android:title="@string/mnuAddPaymentInfo"
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/add_logininfo"
                 android:icon="@drawable/ic_login"
                 android:orderInCategory="0"
-                android:title="LoginInfo"
+                android:title="@string/mnuAddLoginInfo"
                 app:showAsAction="never"/>
         </menu>
 
@@ -38,7 +39,7 @@
         android:id="@+id/options"
         android:layout_height="wrap_content"
         android:icon="@drawable/ic_options"
-        android:title="Options"
+        android:title="@string/mnuOptions"
         app:showAsAction="always">
 
         <menu>
@@ -46,7 +47,7 @@
                 android:id="@+id/option_options"
                 android:icon="@drawable/ic_settings"
                 android:orderInCategory="0"
-                android:title="Options"
+                android:title="@string/mnuOptions"
                 app:showAsAction="never"/>
         </menu>
 

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="?attr/backgroundColour"
+              android:orientation="vertical">
 
     <include layout="@layout/base_dialog_title"/>
 
     <ScrollView
+        style="@style/MyScrollbarStyle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">

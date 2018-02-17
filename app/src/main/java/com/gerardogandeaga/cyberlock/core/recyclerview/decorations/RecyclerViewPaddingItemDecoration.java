@@ -8,7 +8,7 @@ public class RecyclerViewPaddingItemDecoration extends RecyclerView.ItemDecorati
     private boolean mIsLinear = false;
     private int mSpace;
 
-    public RecyclerViewPaddingItemDecoration(int space, boolean isLinear) {
+    public RecyclerViewPaddingItemDecoration( int space, boolean isLinear) {
         this.mSpace = space;
         this.mIsLinear = isLinear;
     }
@@ -20,7 +20,7 @@ public class RecyclerViewPaddingItemDecoration extends RecyclerView.ItemDecorati
         } else {
             outRect.left = mSpace;
             outRect.right = mSpace;
-            outRect.bottom = mSpace;
+            outRect.bottom = mSpace - 2;
 
             if (parent.getChildLayoutPosition(view) == 0) {
                 outRect.top = mSpace;

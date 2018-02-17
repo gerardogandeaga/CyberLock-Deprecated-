@@ -39,7 +39,7 @@
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".utils.settings.ChangePasscode"
+            android:name=".utils.settings.ChangePassword"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity

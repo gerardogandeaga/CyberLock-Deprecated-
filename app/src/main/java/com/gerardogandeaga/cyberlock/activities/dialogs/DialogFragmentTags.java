@@ -2,16 +2,15 @@ package com.gerardogandeaga.cyberlock.activities.dialogs;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.dialog.BaseDialog;
+import com.gerardogandeaga.cyberlock.utils.Res;
 import com.gerardogandeaga.cyberlock.utils.math.Scaling;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -31,6 +30,17 @@ public class DialogFragmentTags extends DialogFragment {
     private static final int ROWS = 4;
     private static final int COLUMNS = 4;
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        // callback listener
+        try {
+            this.mOnInputListener = (OnInputListener) getActivity();
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void show(AppCompatActivity context) {
         DialogFragmentTags dialogFragmentTags = new DialogFragmentTags();
         dialogFragmentTags.show(context.getFragmentManager(), TAG);
@@ -41,38 +51,15 @@ public class DialogFragmentTags extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         return buildDialog();
     }
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        try {
-            this.mOnInputListener = (OnInputListener) getActivity();
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-        }
-    }
 
     private Dialog buildDialog() {
         final BaseDialog baseDialog = new BaseDialog(getActivity());
-        baseDialog.setContentView(viewColourItems());
+        baseDialog.setContentView(buildViews());
         baseDialog.setTitle("Colour Palette");
-        baseDialog.setPositiveButton("Set", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDialog.dismiss();
-            }
-        });
         baseDialog.setNegativeButton("Cancel", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDialog.dismiss();
-            }
-        });
-        baseDialog.setNeutralButton("Custom", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDialog.dismiss();
-                Toast.makeText(getActivity(), "Hi!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -80,7 +67,7 @@ public class DialogFragmentTags extends DialogFragment {
         return mDialog;
     }
 
-    private View viewColourItems() {
+    private View buildViews() {
         final int[] colours = getResources().getIntArray(R.array.array_tag_colours);
         final String[] names = getResources().getStringArray(R.array.array_tag_colours_names);
         int offset = 0;
@@ -115,7 +102,7 @@ public class DialogFragmentTags extends DialogFragment {
                 // create colour image
                 final CircleImageView item = new CircleImageView(getActivity());
                 item.setLayoutParams(itemParams);
-                item.setImageDrawable(getResources().getDrawable(R.drawable.graphic_circle_filled));
+                item.setImageDrawable(Res.getDrawable(getActivity(), R.drawable.graphic_circle_filled));
                 item.setColorFilter(colours[finalOffset], PorterDuff.Mode.SRC_ATOP);
                 item.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -137,10 +124,11 @@ public class DialogFragmentTags extends DialogFragment {
     }
 
     private void onItemClick(String name) {
-        if (mOnInputListener == null) {
-            System.out.println("listener is null!!!");
-        } else {
+        if (mOnInputListener != null) {
             mOnInputListener.sendInput(name);
+        } else {
+            System.out.println("listener is null!!!");
         }
+        mDialog.dismiss();
     }
 }

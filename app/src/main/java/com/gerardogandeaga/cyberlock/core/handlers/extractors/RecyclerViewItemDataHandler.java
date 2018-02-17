@@ -5,10 +5,9 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.core.recyclerview.items.RecyclerViewItem;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
-import com.gerardogandeaga.cyberlock.utils.graphics.ColourTag;
+import com.gerardogandeaga.cyberlock.utils.graphics.Graphics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +15,8 @@ import java.util.Scanner;
 
 public class RecyclerViewItemDataHandler {
     private Context mContext;
+
+    private String TYPE;
 
     public List<RecyclerViewItem> getDataItems(Context context, List<DataPackage> dataPackageList) {
         this.mContext = context;
@@ -30,6 +31,7 @@ public class RecyclerViewItemDataHandler {
             recyclerViewItemArrayList.add(
                     // Get rawDataPackage from index
                     new RecyclerViewItem()
+                            .withContext(mContext)
                             .withIdentifier((long) (i + 1))
                             .withRawDataPackage(dataPackage)
                             .withType(dataPackage.getType())
@@ -49,8 +51,9 @@ public class RecyclerViewItemDataHandler {
     // Deconstruct content strings
     @Nullable
     private String getUnbindedContent(DataPackage dataPackage, String content) {
+        this.TYPE = dataPackage.getType();
         // Return content based on rawDataPackage-type
-        switch (dataPackage.getType()) {
+        switch (TYPE) {
             case "TYPE_NOTE":        return dataPackage.getShortNoteText(mContext, parseNoteContent(content));
             case "TYPE_PAYMENTINFO": return parsePaymentInfoContent(content);
             case "TYPE_LOGININFO":   return parseLoginInfoContent(content);
@@ -101,7 +104,7 @@ public class RecyclerViewItemDataHandler {
     // ---------------------------
 
     private int getColour(DataPackage dataPackage) {
-        return ColourTag.colourTagListView(mContext, dataPackage.getTag());
+        return Graphics.ColourTags.colourTagListView(mContext, dataPackage.getTag());
     }
 
     private String censorNumber(String number) {
@@ -118,33 +121,20 @@ public class RecyclerViewItemDataHandler {
     }
 
     private Drawable getCardImage(String content) {
-        String cardType;
-        Drawable factoryIcon = null;
+        if (TYPE.matches("TYPE_PAYMENTINFO")) {
+            String cardType;
 
-        Scanner scanner = new Scanner(content);
-        while (scanner.hasNextLine()) {
-            cardType = scanner.nextLine();
-            switch (cardType) {
-                case ("Visa"):             factoryIcon = mContext.getResources().getDrawable(R.drawable.card_visa); break;
-                case ("Master Card"):      factoryIcon = mContext.getResources().getDrawable(R.drawable.card_mastercard); break;
-                case ("American Express"): factoryIcon = mContext.getResources().getDrawable(R.drawable.card_americanexpress); break;
-                case ("Discover"):         factoryIcon = mContext.getResources().getDrawable(R.drawable.card_discover); break;
-                case ("Other"):            factoryIcon = mContext.getResources().getDrawable(R.drawable.card_default); break;
+            Scanner scanner = new Scanner(content);
+            while (scanner.hasNextLine()) {
+                cardType = scanner.nextLine();
+
+                if (Graphics.CardImages.isCardType(cardType)) {
+                    return Graphics.CardImages.getCardImage(mContext, cardType, .65f);
+                }
             }
         }
 
-        // Icon scaling
-        if (factoryIcon != null) {
-            float x = factoryIcon.getMinimumWidth();
-            float y = factoryIcon.getMinimumHeight();
-            float scaleFactor = 0.65f;
-            int xx = (int) ((int) x - (x * scaleFactor));
-            int yy = (int) ((int) y - (y * scaleFactor));
-
-            // Apply scaling
-            factoryIcon.setBounds(0, 0, xx, yy);
-        }
-
-        return factoryIcon;
+        // don't bother and return null if not the right type
+        return null;
     }
 }

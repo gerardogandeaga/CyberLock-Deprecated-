@@ -2,14 +2,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.core.ActivityMain">
+    tools:context=".activities.core.ActivityMain"
+    tools:ignore="AlwaysShowAction">
 
     <item
         android:id="@+id/option_save"
-        android:title="Save"
+        android:title="@string/mnuSave"
         app:showAsAction="always"/>
     <item
         android:id="@+id/option_cancel"
-        android:title="Cancel"
+        android:title="@string/mnuCancel"
         app:showAsAction="always"/>
 </menu>

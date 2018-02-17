@@ -11,6 +11,7 @@ import com.gerardogandeaga.cyberlock.database.DBAccess;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
 import com.gerardogandeaga.cyberlock.core.recyclerview.items.RecyclerViewItem;
 import com.gerardogandeaga.cyberlock.core.handlers.selection.undo.UndoHelper;
+import com.gerardogandeaga.cyberlock.utils.Res;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 
 import org.jetbrains.annotations.Contract;
@@ -117,7 +118,7 @@ public class AdapterItemHandler {
 
         // Snack bar
         Snackbar snackbar = Snackbar.make(view, mCount + s, Snackbar.LENGTH_LONG);
-        snackbar.setActionTextColor(view.getContext().getResources().getColor(R.color.white));
+        snackbar.setActionTextColor(Res.getColour(view.getContext(), R.color.white));
         snackbar.setAction("Undo", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

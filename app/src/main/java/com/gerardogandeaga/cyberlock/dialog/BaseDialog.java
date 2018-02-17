@@ -89,7 +89,7 @@ public class BaseDialog {
     }
 
     // visibility managers
-    public void checkAndSetContainerVisibility() {
+    private void checkAndSetContainerVisibility() {
         // title container
         if (mIcon.getVisibility() == View.GONE && mTitle.getVisibility() == View.GONE && mSubTitle.getVisibility() == View.GONE) {
             mTitleContainer.setVisibility(View.GONE);

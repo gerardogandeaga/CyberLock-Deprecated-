@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <declare-styleable name="ds">
+        <attr name="transparent" format="color"/>
 
         <!-- backgrounds -->
         <attr name="toolbarColour" format="color"/>
@@ -9,9 +11,18 @@
         <!-- items -->
         <attr name="toolbarItemColour" format="color"/>
 
+        <!-- ripples -->
+        <attr name="accentRipple" format="color"/>
+        <attr name="maskRipple" format="color"/>
+
+        <!-- scrollbars -->
+        <attr name="scrollbarMainColour" format="color"/>
+        <attr name="scrollbarTaggedColour" format="color"/>
+
         <!-- text -->
         <attr name="toolbarTitleColour" format="color"/>
         <attr name="toolbarSubTitleColour" format="color"/>
 
     </declare-styleable>
+
 </resources>

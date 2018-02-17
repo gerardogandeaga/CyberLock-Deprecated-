@@ -1,11 +1,13 @@
 package com.gerardogandeaga.cyberlock.crypto.hash;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.gerardogandeaga.cyberlock.crypto.key.CryptKey;
 
 public class Hash {
 
+    @Nullable
     public static String generateSecurePasscode(Context context, String passcode) {
         try {
             // hash the original passcode string

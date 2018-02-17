@@ -15,11 +15,11 @@ import com.gerardogandeaga.cyberlock.activities.dialogs.DialogCustomLoad;
 
 import java.util.List;
 
-import static com.gerardogandeaga.cyberlock.utils.Stored.CIPHER_ALGORITHM;
-import static com.gerardogandeaga.cyberlock.utils.Stored.CRYPT_KEY;
-import static com.gerardogandeaga.cyberlock.utils.Stored.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.utils.Stored.ENCRYPTION_ALGORITHM;
-import static com.gerardogandeaga.cyberlock.utils.Stored.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.Settings.CIPHER_ALGORITHM;
+import static com.gerardogandeaga.cyberlock.utils.Settings.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.utils.Settings.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.Settings.ENCRYPTION_ALGORITHM;
+import static com.gerardogandeaga.cyberlock.utils.Settings.TMP_PWD;
 
 public class ChangeCryptAlgorithm extends AsyncTask<Void, Void, Void> {
     @SuppressLint("StaticFieldLeak")

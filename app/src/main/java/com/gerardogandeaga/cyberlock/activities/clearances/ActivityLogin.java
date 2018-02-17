@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,18 +16,17 @@ import android.widget.Toast;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.core.ActivityEdit;
 import com.gerardogandeaga.cyberlock.activities.core.ActivityMain;
-import com.gerardogandeaga.cyberlock.database.DataPackage;
-import com.gerardogandeaga.cyberlock.utils.KeyChecker;
 import com.gerardogandeaga.cyberlock.activities.dialogs.DialogCustomLoad;
+import com.gerardogandeaga.cyberlock.database.DataPackage;
+import com.gerardogandeaga.cyberlock.utils.security.KeyChecker;
 
-import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.utils.Stored.CRYPT_KEY;
-import static com.gerardogandeaga.cyberlock.utils.Stored.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.utils.Stored.PASSWORD;
-import static com.gerardogandeaga.cyberlock.utils.Stored.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.utils.Settings.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.utils.Settings.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.Settings.PASSWORD;
+import static com.gerardogandeaga.cyberlock.utils.Settings.TMP_PWD;
 
-// TODO refactor and improve like the registration activity!!!
 public class ActivityLogin extends AppCompatActivity {
     private Context mContext = this;
     private SharedPreferences mSharedPreferences;
@@ -74,34 +72,27 @@ public class ActivityLogin extends AppCompatActivity {
     // login process
     @SuppressLint("StaticFieldLeak")
     private void login(final String password) {
-        new AsyncTask<Void, Void, Void>() {
+        this.mLoadDialog = new DialogCustomLoad(mContext);
+        mLoadDialog.indeterminateProgress("Verifying Password, Please Wait.");
+
+        new Thread(new Runnable() {
             @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                mLoadDialog = new DialogCustomLoad(mContext);
-                mLoadDialog.indeterminateProgress("Verifying Password, Please Wait.");
-            }
-            @Override
-            protected Void doInBackground(Void... params) {
-                try {
-                    if (KeyChecker.comparePasswords(mContext, password)) { // check if original passcode matches the one entered
-                        setGlobalVariables(password);
-                        loginIntent();
-                        mLoadDialog.dismiss();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+            public void run() {
+                if (KeyChecker.comparePasswords(mContext, password)) { // check if original passcode matches the one entered
+                    setGlobalVariables(password);
+                    loginIntent();
+                    mLoadDialog.dismiss();
+                } else {
+                    mLoadDialog.dismiss();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(mContext, "Please Try Again", Toast.LENGTH_SHORT).show(); // SOMETHING WENT WRONG WITH DATA COMPARISONS
+                            Toast.makeText(mContext, "Password Is Incorrect, Please Try Again", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
-
-                return null;
             }
-        }.execute();
+        }).start();
     }
     /*
     this function tries to pull the last edit data package that was opened and being edited

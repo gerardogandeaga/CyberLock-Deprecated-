@@ -6,20 +6,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 
 @SuppressLint("Registered")
-public class Stored extends AppCompatActivity {
+public class Settings extends AppCompatActivity {
     public static final String DIRECTORY = "com.gerardogandeaga.cyberlock";
 
     // Primitives
     private static final String IS_REGISTERED = "IS_REGISTERED";
 
-    // Settings
+    // options
     public static final String AUTOSAVE = "AUTO";
     public static final String LOGOUT_DELAY = "LOGOUT_DELAY";
     public static final String DELAY_TIME = "DELAY_TIME";
-    // Theme
-    public static final String THEME = "THEME";
-    // Content list layout
     public static final String LIST_FORMAT = "LIST_FORMAT";
+    public static final String TAGGED_HEADERS = "TAGGED_HEADERS";
+    // theme
+    public static final String THEME = "THEME";
     // --
     public static final String PLAYGROUND_ALGO = "PLAYGROUND_ALGO";
     public static final String ENCRYPTION_ALGORITHM = "ENCRYPTION_ALGORITHM";
@@ -82,5 +82,20 @@ public class Stored extends AppCompatActivity {
     }
     public static void setListFormat(Context context, String str) {
         context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().putString(LIST_FORMAT, str).apply();
+    }
+
+    // tagged headers
+    public static boolean getTaggedHeaders(Context context) {
+        return context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getBoolean(TAGGED_HEADERS, true);
+    }
+    public static void setTaggedHeaders(Context context, boolean bool) {
+        context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().putBoolean(TAGGED_HEADERS, bool).apply();
+    }
+
+    public static class Checkers {
+
+        public static boolean isLinearFormat(String format) {
+            return !format.matches("RV_STAGGEREDGRID");
+        }
     }
 }

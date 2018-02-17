@@ -8,7 +8,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-import static com.gerardogandeaga.cyberlock.utils.Stored.FLAGS;
+import static com.gerardogandeaga.cyberlock.utils.Settings.FLAGS;
 
 public class SHA256PinHash {
     @NonNull

@@ -1,10 +1,12 @@
-package com.gerardogandeaga.cyberlock.utils;
+package com.gerardogandeaga.cyberlock.utils.security;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
 
-import static com.gerardogandeaga.cyberlock.utils.Stored.TMP_PWD;
+import com.gerardogandeaga.cyberlock.utils.Settings;
+
+import static com.gerardogandeaga.cyberlock.utils.Settings.TMP_PWD;
 
 public class LogoutProtocol {
     // DATA VARIABLES
@@ -16,7 +18,7 @@ public class LogoutProtocol {
     public static boolean mIsCountDownTimerFinished = false;
 
     public void logoutExecuteAutosaveOff(final Context context) {
-        mCountDownTimer = new CountDownTimer(Stored.getLogoutDelayTime(context), 1000) {
+        mCountDownTimer = new CountDownTimer(Settings.getLogoutDelayTime(context), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 mIsCountDownTimerFinished = false;
@@ -33,7 +35,7 @@ public class LogoutProtocol {
     }
 
     public void logoutExecuteAutosaveOn(final Context context) {
-        mCountDownTimer = new CountDownTimer(Stored.getLogoutDelayTime(context), 1000) {
+        mCountDownTimer = new CountDownTimer(Settings.getLogoutDelayTime(context), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 mIsCountDownTimerFinished = false;

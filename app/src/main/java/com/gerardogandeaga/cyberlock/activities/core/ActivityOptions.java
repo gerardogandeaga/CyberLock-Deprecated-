@@ -4,30 +4,40 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
-import com.gerardogandeaga.cyberlock.utils.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.utils.Stored;
-import com.gerardogandeaga.cyberlock.utils.graphics.DrawableColours;
+import com.gerardogandeaga.cyberlock.utils.Res;
+import com.gerardogandeaga.cyberlock.utils.Settings;
+import com.gerardogandeaga.cyberlock.utils.graphics.Graphics;
+import com.gerardogandeaga.cyberlock.utils.security.KeyChecker;
+import com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol;
+import com.gerardogandeaga.cyberlock.utils.settings.ChangePassword;
+import com.mikepenz.aboutlibraries.Libs;
+import com.mikepenz.aboutlibraries.LibsBuilder;
+
+import org.jetbrains.annotations.Contract;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.mCountDownTimer;
-import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.mIsCountDownTimerFinished;
+import static com.gerardogandeaga.cyberlock.utils.Settings.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mIsCountDownTimerFinished;
 
 public class ActivityOptions extends AppCompatActivity implements View.OnClickListener {
     Context mContext = this;
@@ -35,17 +45,24 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
     @BindView(R.id.toolbar) Toolbar mToolbar;
 
     @BindView(R.id.AutoSave)        LinearLayout mLinAutoSave;
+    @BindView(R.id.ListFormat)      LinearLayout mLinListFormat;
+    @BindView(R.id.TaggedHeaders)   LinearLayout mLinTaggedHeaders;
     @BindView(R.id.AutoLogoutDelay) LinearLayout mLinAutoLogoutDelay;
     @BindView(R.id.ChangePassword)  LinearLayout mLinChangePassword;
-    @BindView(R.id.ListFormat)      LinearLayout mLinListFormat;
     @BindView(R.id.GitHub)          LinearLayout mLinGitHub;
     @BindView(R.id.About)           LinearLayout mLinAbout;
 
-    @BindView(R.id.swAutoSave)          SwitchCompat mSwAutoSave;
-    @BindView(R.id.spAutoLogoutDelay)   Spinner mSpLogoutDelay;
-    @BindView(R.id.inputChangePassword) LinearLayout mInputChangePassword;
+    @BindView(R.id.swAutoSave)          Switch mSwAutoSave;
     @BindView(R.id.imgDirection)        ImageView mImgDirection;
     @BindView(R.id.imgListFormat)       ImageView mImgListFormat;
+    @BindView(R.id.swTaggedHeaders)     Switch mSwTaggedHeaders;
+    @BindView(R.id.spAutoLogoutDelay)   Spinner mSpLogoutDelay;
+    // password change widgets
+    @BindView(R.id.inputChangePassword) LinearLayout mInputChangePassword;
+    @BindView(R.id.btnRegister)         Button mBtnRegister;
+    @BindView(R.id.etCurrent)           EditText mEtCurrentPass;
+    @BindView(R.id.etInitial)           EditText mEtInitialPass;
+    @BindView(R.id.etFinal)             EditText mEtFinalPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +83,17 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Application Options");
-        getSupportActionBar().setHomeAsUpIndicator(DrawableColours.mutateHomeAsUpIndicatorDrawable(
-                this, this.getResources().getDrawable(R.drawable.ic_back)));
+        getSupportActionBar().setHomeAsUpIndicator(Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(
+                this, Res.getDrawable(this, R.drawable.ic_back)));
     }
 
     private void widgets() {
         mLinAutoSave.setOnClickListener(this);
+        mLinListFormat.setOnClickListener(this);
+        mLinTaggedHeaders.setOnClickListener(this);
         mLinAutoLogoutDelay.setOnClickListener(this);
         mLinChangePassword.setOnClickListener(this);
-        mLinListFormat.setOnClickListener(this);
+
         mLinGitHub.setOnClickListener(this);
         mLinAbout.setOnClickListener(this);
 
@@ -87,9 +106,20 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
         iniLogoutDelay();
         iniChangePassword();
         iniListFormat();
+        iniTaggedHeaders();
     }
     private void iniAutoSave() {
-        mSwAutoSave.setChecked(Stored.getAutoSave(this));
+        mSwAutoSave.setChecked(Settings.getAutoSave(this));
+    }
+    private void iniListFormat() {
+        if (Settings.getListFormat(this).matches("RV_STAGGEREDGRID")) {
+            mImgListFormat.setImageDrawable(Res.getDrawable(this, R.drawable.graphic_list_grid));
+        } else {
+            mImgListFormat.setImageDrawable(Res.getDrawable(this, R.drawable.graphic_list_linear));
+        }
+    }
+    private void iniTaggedHeaders() {
+        mSwTaggedHeaders.setChecked(Settings.getTaggedHeaders(this));
     }
     private void iniLogoutDelay() {
         ArrayAdapter<CharSequence> adapterLogoutDelay = ArrayAdapter.createFromResource(
@@ -116,8 +146,8 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
                     }
 
                     System.out.println("Time = " + time);
-                    Stored.setLogoutDelay(mContext, logoutDelay);
-                    Stored.setLogoutDelayTime(mContext, time);
+                    Settings.setLogoutDelay(mContext, logoutDelay);
+                    Settings.setLogoutDelayTime(mContext, time);
                 }
             }
             @Override
@@ -126,41 +156,60 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
         });
 
         // saved state
-        int spinnerPosition = adapterLogoutDelay.getPosition(Stored.getLogoutDelay(this));
+        int spinnerPosition = adapterLogoutDelay.getPosition(Settings.getLogoutDelay(this));
         mSpLogoutDelay.setSelection(spinnerPosition);
     }
     private void iniChangePassword() {
+        mBtnRegister.setOnClickListener(this);
         mInputChangePassword.setVisibility(View.GONE);
         mImgDirection.setRotation(-90);
-    }
-    private void iniListFormat() {
-        if (Stored.getListFormat(this).matches("RV_STAGGEREDGRID")) {
-            mImgListFormat.setImageDrawable(this.getResources().getDrawable(R.drawable.graphic_list_grid));
-        } else {
-            mImgListFormat.setImageDrawable(this.getResources().getDrawable(R.drawable.graphic_list_linear));
-        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             // settings
-            case R.id.AutoSave: onAutoSave(); break;
+            case R.id.AutoSave:        onAutoSave(); break;
+            case R.id.ListFormat:      onListFormat(); break;
+            case R.id.TaggedHeaders:   onTaggedHeaders(); break;
             case R.id.AutoLogoutDelay: onLogoutDelay(); break;
-            case R.id.ChangePassword: onChangePassword(); break;
-            case R.id.ListFormat: onListFormat(); break;
+            // case password change
+            case R.id.ChangePassword:  onChangePasswordActivate(); break;
+            case R.id.btnRegister:     onChangePasswordRegister(); break;
+
+            case R.id.GitHub:
+                LibsBuilder libsBuilder = new LibsBuilder();
+                libsBuilder.withAboutIconShown(true);
+                libsBuilder.withActivityStyle(Libs.ActivityStyle.LIGHT);
+                libsBuilder.start(this);
+                break;
         }
     }
 
     // on clicks
     private void onAutoSave() {
-        Stored.setAutoSave(this, !Stored.getAutoSave(this));
-        mSwAutoSave.setChecked(Stored.getAutoSave(this));
+        Settings.setAutoSave(this, !Settings.getAutoSave(this));
+        mSwAutoSave.setChecked(Settings.getAutoSave(this));
+    }
+    private void onListFormat() {
+        if (Settings.getListFormat(this).matches("RV_STAGGEREDGRID")) {
+            Settings.setListFormat(this, "RV_LINEAR");
+            mImgListFormat.setImageDrawable(Res.getDrawable(this, R.drawable.graphic_list_linear));
+            Toast.makeText(this, "Linear list format", Toast.LENGTH_SHORT).show();
+        } else {
+            Settings.setListFormat(this, "RV_STAGGEREDGRID");
+            mImgListFormat.setImageDrawable(Res.getDrawable(this, R.drawable.graphic_list_grid));
+            Toast.makeText(this, "Grid list format", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void onTaggedHeaders() {
+        Settings.setTaggedHeaders(this, !Settings.getTaggedHeaders(this));
+        mSwTaggedHeaders.setChecked(Settings.getTaggedHeaders(this));
     }
     private void onLogoutDelay() {
         mSpLogoutDelay.performClick();
     }
-    private void onChangePassword() {
+    private void onChangePasswordActivate() {
         if (mInputChangePassword.getVisibility() != View.GONE) {
             mInputChangePassword.setVisibility(View.GONE);
             mImgDirection.setRotation(-90);
@@ -169,15 +218,27 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
             mImgDirection.setRotation(90);
         }
     }
-    private void onListFormat() {
-        if (Stored.getListFormat(this).matches("RV_STAGGEREDGRID")) {
-            Stored.setListFormat(this, "RV_LINEAR");
-            mImgListFormat.setImageDrawable(this.getResources().getDrawable(R.drawable.graphic_list_linear));
-            Toast.makeText(this, "Linear list format", Toast.LENGTH_SHORT).show();
+    private void onChangePasswordRegister() {
+        final String currentP = mEtCurrentPass.getText().toString();
+        final String initialP = mEtInitialPass.getText().toString();
+        final String finalP = mEtFinalPass.getText().toString();
+
+        if (!isEmpty(currentP) && !isEmpty(initialP) && !isEmpty(finalP)) {
+            if (initialP.equals(finalP)) {
+                if (KeyChecker.comparePasswords(this, currentP)) {
+                    new ChangePassword(this, this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE), currentP, initialP);
+                    mEtCurrentPass.getText().clear();
+                    mEtInitialPass.getText().clear();
+                    mEtFinalPass.getText().clear();
+                    mInputChangePassword.setVisibility(View.GONE);
+                } else {
+                    Toast.makeText(this, "Incorrect password", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Stored.setListFormat(this, "RV_STAGGEREDGRID");
-            mImgListFormat.setImageDrawable(this.getResources().getDrawable(R.drawable.graphic_list_grid));
-            Toast.makeText(this, "Grid list format", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "All fields need to be filled", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -224,4 +285,9 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
         }
     }
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    @Contract("null -> true")
+    private boolean isEmpty(String str) {
+        return str == null || str.isEmpty();
+    }
 }

@@ -23,9 +23,10 @@ import com.gerardogandeaga.cyberlock.core.recyclerview.items.RecyclerViewItem;
 import com.gerardogandeaga.cyberlock.database.DBAccess;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
 import com.gerardogandeaga.cyberlock.overlay.LoadOverlay;
-import com.gerardogandeaga.cyberlock.utils.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.utils.Stored;
-import com.gerardogandeaga.cyberlock.utils.graphics.DrawableColours;
+import com.gerardogandeaga.cyberlock.utils.Res;
+import com.gerardogandeaga.cyberlock.utils.Settings;
+import com.gerardogandeaga.cyberlock.utils.graphics.Graphics;
+import com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.listeners.OnClickListener;
@@ -36,10 +37,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.mCountDownTimer;
-import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.mIsCountDownTimerFinished;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mIsCountDownTimerFinished;
 
 public class ActivityMain extends AppCompatActivity {
     private Context mContext = this;
@@ -90,7 +91,7 @@ public class ActivityMain extends AppCompatActivity {
         }
 
         if (mMenu.hasVisibleItems()) {
-            DrawableColours.mutateMenuItems(this, menu);
+            Graphics.BasicFilter.mutateMenuItems(this, menu);
         }
 
         return true;
@@ -107,8 +108,8 @@ public class ActivityMain extends AppCompatActivity {
     private void resetSupportActionBar() {
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setSubtitle(null);
-        getSupportActionBar().setHomeAsUpIndicator(DrawableColours.mutateHomeAsUpIndicatorDrawable(
-                this, this.getResources().getDrawable(R.drawable.ic_drawer)));
+        getSupportActionBar().setHomeAsUpIndicator(Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(
+                this, Res.getDrawable(this, R.drawable.ic_drawer)));
     }
 
     private void loadAndSetDataAndViews() {
@@ -161,8 +162,8 @@ public class ActivityMain extends AppCompatActivity {
 
                             getSupportActionBar().setTitle(Integer.toString(AdapterItemHandler.getCount()));
                             getSupportActionBar().setSubtitle("Items Selected");
-                            getSupportActionBar().setHomeAsUpIndicator(DrawableColours.mutateHomeAsUpIndicatorDrawable(
-                                    mContext, mContext.getResources().getDrawable(R.drawable.ic_back)));
+                            getSupportActionBar().setHomeAsUpIndicator(Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(
+                                    mContext, Res.getDrawable(mContext, R.drawable.ic_back)));
 
                             return true;
                         }
@@ -182,13 +183,14 @@ public class ActivityMain extends AppCompatActivity {
                     public void run() {
 
                         // Set layout format
-                        switch (Stored.getListFormat(mContext)) {
+                        switch (Settings.getListFormat(mContext)) {
                             case "RV_STAGGEREDGRID":
+                                staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
                                 mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
-                                mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(8, false)); break;
+                                mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(10, false)); break;
                             default:
                                 mRecyclerView.setLayoutManager(linearLayoutManager);
-                                mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(8, true));break;
+                                mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(10, true)); break;
                         }
                         mRecyclerView.setAdapter(mFastItemAdapter); // Set adapter
 

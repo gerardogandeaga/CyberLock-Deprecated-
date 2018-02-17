@@ -9,9 +9,9 @@ import com.gerardogandeaga.cyberlock.crypto.key.CryptKey;
 import com.gerardogandeaga.cyberlock.database.DBAccess;
 import com.gerardogandeaga.cyberlock.activities.dialogs.DialogCustomLoad;
 
-import static com.gerardogandeaga.cyberlock.utils.Stored.CRYPT_KEY;
-import static com.gerardogandeaga.cyberlock.utils.Stored.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.utils.Stored.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.Settings.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.utils.Settings.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.Settings.TMP_PWD;
 
 public class ScrambleCryptKey extends AsyncTask<Void, Void, Void> {
     @SuppressLint("StaticFieldLeak")

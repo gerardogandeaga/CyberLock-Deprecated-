@@ -12,10 +12,11 @@ import com.gerardogandeaga.cyberlock.activities.core.ActivityEdit;
 import com.gerardogandeaga.cyberlock.core.handlers.extractors.ContentHandler;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
 import com.gerardogandeaga.cyberlock.dialog.BaseDialog;
-import com.gerardogandeaga.cyberlock.utils.graphics.ColourTag;
+import com.gerardogandeaga.cyberlock.utils.Res;
+import com.gerardogandeaga.cyberlock.utils.graphics.Graphics;
 import com.gerardogandeaga.cyberlock.utils.views.ViewHandler;
 
-import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
 
 public class DialogDataPreview {
     private Context mContext;
@@ -40,7 +41,7 @@ public class DialogDataPreview {
         }
     }
 
-    // Create dialog // TODO change the additional notes into an expandable layout like options change password
+    // Create dialog
     private void constructPreviewNote() {
         View view = View.inflate(mContext, R.layout.preview_note, null);
         ContentHandler contentHandler = new ContentHandler(mContext, mDataPackage);
@@ -109,8 +110,8 @@ public class DialogDataPreview {
         if (contentHandler.mCardImage != null) { baseDialog.setIcon(contentHandler.mCardImage); }
         baseDialog.setTitle(contentHandler.mLabel);
         baseDialog.setSubTitle(contentHandler.mDate);
-        baseDialog.setTitleBackgroundColour(ColourTag.colourTag(mContext, contentHandler.mTag));
-        baseDialog.setTitleColour(mContext.getResources().getColor(R.color.white));
+        baseDialog.setTitleBackgroundColour(Graphics.ColourTags.colourTagHeader(mContext, contentHandler.mTag));
+        baseDialog.setTitleColour(Res.getColour(mContext, R.color.white));
         baseDialog.setPositiveButton("Edit", new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -2,8 +2,8 @@ package com.gerardogandeaga.cyberlock.crypto.key;
 
 import android.content.Context;
 
-import static com.gerardogandeaga.cyberlock.utils.Stored.CRYPT_KEY;
-import static com.gerardogandeaga.cyberlock.utils.Stored.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.Settings.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.utils.Settings.DIRECTORY;
 
 public class CryptKeyHandler {
 

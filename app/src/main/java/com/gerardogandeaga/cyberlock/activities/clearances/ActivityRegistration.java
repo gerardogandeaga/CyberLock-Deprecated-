@@ -1,10 +1,8 @@
 package com.gerardogandeaga.cyberlock.activities.clearances;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,18 +13,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.crypto.key.CryptKey;
-import com.gerardogandeaga.cyberlock.crypto.hash.Hash;
-import com.gerardogandeaga.cyberlock.utils.Stored;
 import com.gerardogandeaga.cyberlock.activities.dialogs.DialogCustomLoad;
+import com.gerardogandeaga.cyberlock.crypto.hash.Hash;
+import com.gerardogandeaga.cyberlock.crypto.key.CryptKey;
+import com.gerardogandeaga.cyberlock.utils.Settings;
 
-import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.utils.Stored.AUTOSAVE;
-import static com.gerardogandeaga.cyberlock.utils.Stored.CRYPT_KEY;
-import static com.gerardogandeaga.cyberlock.utils.Stored.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.utils.Stored.ENCRYPTION_ALGORITHM;
-import static com.gerardogandeaga.cyberlock.utils.Stored.PASSWORD;
-import static com.gerardogandeaga.cyberlock.utils.Stored.THEME;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.utils.Settings.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.utils.Settings.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.utils.Settings.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.Settings.ENCRYPTION_ALGORITHM;
+import static com.gerardogandeaga.cyberlock.utils.Settings.PASSWORD;
+import static com.gerardogandeaga.cyberlock.utils.Settings.THEME;
 
 public class ActivityRegistration extends AppCompatActivity {
     private Context mContext = this;
@@ -81,18 +79,13 @@ public class ActivityRegistration extends AppCompatActivity {
     }
 
     // registration process
-    @SuppressLint("StaticFieldLeak")
     private void register(final String[] passwords) {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                mDialogCustomLoad = new DialogCustomLoad(mContext);
-                mDialogCustomLoad.indeterminateProgress("Registering...");
-            }
+        this.mDialogCustomLoad = new DialogCustomLoad(mContext);
+        mDialogCustomLoad.indeterminateProgress("Registering...");
 
+        new Thread(new Runnable() {
             @Override
-            protected Void doInBackground(Void... params) {
+            public void run() {
                 // do initial processes suc saving data and setting global variables
                 initialPreferences(passwords);
 
@@ -102,10 +95,8 @@ public class ActivityRegistration extends AppCompatActivity {
                 // start a new intent and exit
                 ActivityRegistration.this.startActivity(
                         new Intent(ActivityRegistration.this, ActivityLogin.class));
-
-                return null;
             }
-        }.execute();
+        }).start();
     }
     // initial preferences and global variables
     private void initialPreferences(final String[] passwords) {
@@ -123,9 +114,9 @@ public class ActivityRegistration extends AppCompatActivity {
     }
 
     private boolean isRegistered() {
-        final boolean isRegistered = Stored.getIsRegistered(this);
-        final String password = Stored.getPassword(this);
-        final String key = Stored.getMasterKey(this);
+        final boolean isRegistered = Settings.getIsRegistered(this);
+        final String password = Settings.getPassword(this);
+        final String key = Settings.getMasterKey(this);
 
         return (isRegistered && password != null && key != null);
     }

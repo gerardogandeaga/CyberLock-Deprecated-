@@ -15,6 +15,7 @@
     <include layout="@layout/child_edit_label"/>
 
     <ScrollView
+        style="@style/MyScrollbarStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

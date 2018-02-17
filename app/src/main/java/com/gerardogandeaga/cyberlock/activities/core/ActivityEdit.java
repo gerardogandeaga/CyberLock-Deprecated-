@@ -3,6 +3,7 @@ package com.gerardogandeaga.cyberlock.activities.core;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,18 +26,17 @@ import com.gerardogandeaga.cyberlock.activities.dialogs.DialogFragmentTags;
 import com.gerardogandeaga.cyberlock.core.handlers.extractors.ContentHandler;
 import com.gerardogandeaga.cyberlock.database.DBAccess;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
-import com.gerardogandeaga.cyberlock.utils.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.utils.graphics.ColourTag;
-import com.gerardogandeaga.cyberlock.utils.graphics.DrawableColours;
-import com.gerardogandeaga.cyberlock.utils.graphics.EditGraphics;
+import com.gerardogandeaga.cyberlock.utils.Res;
+import com.gerardogandeaga.cyberlock.utils.graphics.Graphics;
+import com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol;
 
-import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.mCountDownTimer;
-import static com.gerardogandeaga.cyberlock.utils.LogoutProtocol.mIsCountDownTimerFinished;
-import static com.gerardogandeaga.cyberlock.utils.Stored.AUTOSAVE;
-import static com.gerardogandeaga.cyberlock.utils.Stored.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.utils.Stored.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.Settings.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.utils.Settings.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.Settings.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.APP_LOGGED_IN;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mCountDownTimer;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mIsCountDownTimerFinished;
 
 public class ActivityEdit extends AppCompatActivity implements View.OnClickListener, DialogFragmentTags.OnInputListener {
     @Override
@@ -48,7 +48,6 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
     // data package
     private DataPackage mDataPackage;
     private ContentHandler mContentHandler;
-    private EditGraphics mEditGraphics;
     // data vars
     private boolean mIsNew = true;
     private boolean mIsAutoSave = false;
@@ -82,9 +81,6 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         ACTIVITY_INTENT = null;
         this.mIsAutoSave = getSharedPreferences(DIRECTORY, MODE_PRIVATE).getBoolean(AUTOSAVE, false);
 
-        // Edit tools
-        this.mEditGraphics = new EditGraphics(this);
-
         // Activity creation
         extractBundle(); // Layout
     }
@@ -96,8 +92,8 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setHomeButtonEnabled(false);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setTitle(null);
-        getSupportActionBar().setHomeAsUpIndicator(DrawableColours.mutateHomeAsUpIndicatorDrawable(
-                this, this.getResources().getDrawable(R.drawable.ic_back)));
+        getSupportActionBar().setHomeAsUpIndicator(Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(
+                this, Res.getDrawable(this, R.drawable.ic_back)));
     }
 
     private void extractBundle() {
@@ -242,7 +238,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
                 Object object = parent.getItemAtPosition(position);
                 if (object != null) {
                     mCardType = object.toString();
-                    mIcon.setImageDrawable(mEditGraphics.getCardImage(mCardType));
+                    mIcon.setImageDrawable(Graphics.CardImages.getCardImage(view.getContext(), mCardType));
                 }
             }
 
@@ -304,7 +300,10 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
             mSpCardSelect.setSelection(spinnerPosition);
             mEtNotes.setText(mContentHandler.mNote);
 
-            mIcon.setImageDrawable(mEditGraphics.getCardImage(mContentHandler.mCardType));
+            mIcon.setImageDrawable(Graphics.CardImages.getCardImage(this, mContentHandler.mCardType));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                mIcon.setForeground(Res.getDrawable(this, R.drawable.bk_outline_black));
+            }
         }
     }
     private void setupDataLoginInfo() {
@@ -332,7 +331,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_edit, menu);
 
-        DrawableColours.mutateMenuItems(this, menu);
+        Graphics.BasicFilter.mutateMenuItems(this, menu);
 
         return true;
     }
@@ -407,7 +406,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         }
     }
     private void setTag(String colour) {
-        mImgTag.setColorFilter(ColourTag.colourTag(this, colour), PorterDuff.Mode.SRC_ATOP);
+        mImgTag.setColorFilter(Graphics.ColourTags.colourTag(this, colour), PorterDuff.Mode.SRC_ATOP);
     }
 
     // Getters and setters for saving

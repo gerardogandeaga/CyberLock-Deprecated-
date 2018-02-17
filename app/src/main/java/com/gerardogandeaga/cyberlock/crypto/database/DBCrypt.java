@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Base64;
 
 import com.gerardogandeaga.cyberlock.crypto.key.CryptKey;
-import com.gerardogandeaga.cyberlock.utils.Stored;
+import com.gerardogandeaga.cyberlock.utils.Settings;
 
 import java.security.SecureRandom;
 import java.util.Arrays;
@@ -13,8 +13,8 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import static com.gerardogandeaga.cyberlock.utils.Stored.FLAGS;
-import static com.gerardogandeaga.cyberlock.utils.Stored.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.Settings.FLAGS;
+import static com.gerardogandeaga.cyberlock.utils.Settings.TMP_PWD;
 
 /*
 this class is meant to only encrypt and decrypt SQLite database content, only classes that are able
@@ -31,9 +31,9 @@ public class DBCrypt {
     private static void setAlgorithmPresets(Context context) {
         // since key is static it will not change, therefore we do not need to constantly decrypt
         if (mKey == null) {
-            mKey = CryptKey.decrypt(context, Stored.getMasterKey(context), TMP_PWD);
+            mKey = CryptKey.decrypt(context, Settings.getMasterKey(context), TMP_PWD);
         }
-        mEncryptionAlgorithm = Stored.getEncryptionAlgorithm(context);
+        mEncryptionAlgorithm = Settings.getEncryptionAlgorithm(context);
         mCipherAlgorithm = mEncryptionAlgorithm + "/CBC/PKCS5Padding";
 
         switch (mEncryptionAlgorithm) {

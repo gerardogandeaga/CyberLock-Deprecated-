@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.core.handlers.selection.graphic.AdapterItemBackground;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
+import com.gerardogandeaga.cyberlock.utils.Settings;
 import com.gerardogandeaga.cyberlock.utils.views.ViewHandler;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
@@ -25,6 +26,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerViewItem.ViewHolder> {
+    public Context mContext;
+
     public DataPackage mDataPackage;
     private String mType;
 
@@ -35,6 +38,11 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
 
     private StringHolder mContent;
     private Drawable mCardType;
+
+    public RecyclerViewItem withContext(Context context) {
+        this.mContext = context;
+        return this;
+    }
 
     // view holder class
     protected class ViewHolder extends FastItemAdapter.ViewHolder<RecyclerViewItem> {
@@ -72,7 +80,7 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
             //get the context
             Context context = itemView.getContext();
             UIUtils.setBackground(View, AdapterItemBackground.getItemDrawableStates(
-                    context, android.R.color.transparent, R.color.c_yellow_20, false));
+                    context, R.color.white, R.color.c_yellow_20, false));
             ViewHandler.setLinearLayoutVisibility(Note, PaymentInfo, LoginInfo, item.mType);
 
             // bind our data to the view
@@ -200,8 +208,18 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
     // The layout that will be used for item
     @Override
     public int getLayoutRes() {
-        return R.layout.recycler_item;
+        if (mContext != null) {
+            if (Settings.Checkers.isLinearFormat(Settings.getListFormat(mContext))) {
+                return R.layout.data_item_linear;
+            } else {
+                return R.layout.data_item_grid;
+            }
+        } else {
+            return R.layout.data_item_linear;
+        }
     }
+
+    @NonNull
     @Override
     public ViewHolder getViewHolder(@NonNull View view) {
         return new ViewHolder(view);

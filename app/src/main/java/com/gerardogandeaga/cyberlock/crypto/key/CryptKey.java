@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Base64;
 
-import com.gerardogandeaga.cyberlock.utils.Stored;
+import com.gerardogandeaga.cyberlock.utils.Settings;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -22,8 +22,8 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import static com.gerardogandeaga.cyberlock.utils.Stored.FLAGS;
-import static com.gerardogandeaga.cyberlock.utils.Stored.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.Settings.FLAGS;
+import static com.gerardogandeaga.cyberlock.utils.Settings.TMP_PWD;
 
 public class CryptKey {
     private static int mIvLength;
@@ -40,7 +40,7 @@ public class CryptKey {
 
     private static void setAlgorithmPresets(Context context) {
         mKey = TMP_PWD;
-        mEncryptionAlgorithm = Stored.getEncryptionAlgorithm(context);
+        mEncryptionAlgorithm = Settings.getEncryptionAlgorithm(context);
         mCipherAlgorithm = mEncryptionAlgorithm + "/CBC/PKCS5Padding";
 
         switch (mEncryptionAlgorithm) {
@@ -177,9 +177,8 @@ public class CryptKey {
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException |
                  InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
             e.printStackTrace();
+            return null;
         }
-
-        return null;
     }
 
     // TODO document this function and its details

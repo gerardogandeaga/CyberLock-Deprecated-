@@ -1,4 +1,4 @@
-package com.gerardogandeaga.cyberlock.utils;
+package com.gerardogandeaga.cyberlock.utils.security;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,9 +9,9 @@ import com.gerardogandeaga.cyberlock.crypto.hash.SHA256PinHash;
 
 import java.util.Arrays;
 
-import static com.gerardogandeaga.cyberlock.utils.Stored.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.utils.Stored.FLAGS;
-import static com.gerardogandeaga.cyberlock.utils.Stored.PASSWORD;
+import static com.gerardogandeaga.cyberlock.utils.Settings.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.Settings.FLAGS;
+import static com.gerardogandeaga.cyberlock.utils.Settings.PASSWORD;
 
 
 public class KeyChecker {
@@ -26,7 +26,8 @@ public class KeyChecker {
 
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Password is incorrect! (or null)");
+            return false;
         }
-        return false;
     }
 }
