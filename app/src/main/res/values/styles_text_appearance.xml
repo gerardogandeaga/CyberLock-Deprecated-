@@ -38,7 +38,7 @@
     </style>
     <style name="myText.Edit.Hint" parent="TextAppearance.AppCompat">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColorHint">@color/c_gray_40</item>
+        <item name="android:textColor">@color/c_gray_50</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:gravity">start</item>
     </style>

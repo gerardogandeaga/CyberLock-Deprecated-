@@ -38,8 +38,8 @@ public class Graphics {
 
         private static int baseColourSearch(Context context, String colour, boolean darkDefault) {
             if (colour != null) {
-                final int[] colours = context.getResources().getIntArray(R.array.array_tag_colours);
-                final String[] colourNames = context.getResources().getStringArray(R.array.array_tag_colours_names);
+                final int[] colours = context.getResources().getIntArray(R.array.arr_tag_colours);
+                final String[] colourNames = context.getResources().getStringArray(R.array.arr_tag_colours_names);
 
                 for (int i = 0; i < colourNames.length; i++) {
                     if (colour.matches(colourNames[i])) {

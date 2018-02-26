@@ -70,7 +70,7 @@
     <color name="ct_orange_2">#ff9202</color>
     <color name="ct_orange_1">#ffc402</color>
 
-    <array name="array_tag_colours">
+    <array name="arr_tag_colours">
         <item>@color/ct_red_2</item>
         <item>@color/ct_red_1</item>
         <item>@color/ct_purple_1</item>
@@ -89,7 +89,7 @@
         <item>@color/ct_orange_3</item>
     </array>
 
-    <string-array name="array_tag_colours_names">
+    <string-array name="arr_tag_colours_names">
         <item>ct_red_2</item>
         <item>ct_red_1</item>
         <item>ct_purple_1</item>

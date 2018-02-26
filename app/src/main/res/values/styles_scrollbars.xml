@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MyMainScrollbarStyle">
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:scrollbarSize">5dp</item>
+        <item name="android:scrollbarThumbVertical">?attr/scrollbarMainColour</item>
+    </style>
+
+
+
+    <style name="MyPreviewScrollbarStyle">
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:scrollbarSize">5dp</item>
+        <item name="android:scrollbarThumbVertical">?attr/scrollbarPreviewColour</item>
+    </style>
+
+</resources>

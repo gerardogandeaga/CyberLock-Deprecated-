@@ -16,7 +16,7 @@ public class RecyclerViewPaddingItemDecoration extends RecyclerView.ItemDecorati
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         if (mIsLinear) {
-            outRect.bottom = 1;
+            outRect.bottom = 0;
         } else {
             outRect.left = mSpace;
             outRect.right = mSpace;

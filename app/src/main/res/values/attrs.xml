@@ -17,7 +17,7 @@
 
         <!-- scrollbars -->
         <attr name="scrollbarMainColour" format="color"/>
-        <attr name="scrollbarTaggedColour" format="color"/>
+        <attr name="scrollbarPreviewColour" format="color"/>
 
         <!-- text -->
         <attr name="toolbarTitleColour" format="color"/>

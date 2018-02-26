@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
+        android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,6 +23,7 @@
         android:logo="@drawable/ic_back"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
+        android:testOnly="true"
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin"
@@ -44,7 +46,7 @@
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.gerardogandeaga.cyberlock.utils.settings.ChangePasscode"
+            android:name="com.gerardogandeaga.cyberlock.utils.settings.ChangePassword"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -59,6 +61,8 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity android:name="com.mikepenz.aboutlibraries.ui.LibsActivity" />
     </application>
 
 </manifest>

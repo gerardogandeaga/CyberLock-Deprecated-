@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    style="@style/MyScrollbarStyle"
+    style="@style/MyPreviewScrollbarStyle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/backgroundColour"
@@ -86,7 +86,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/tvEmail"
-                    android:textAppearance="@style/myText.Edit.Hint"/>
+                    android:textAppearance="@style/myText.Edit.Hint"
+                    />
 
                 <TextView
                     android:id="@+id/tvEmail"
@@ -126,7 +127,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/tvUsername"
-                    android:textAppearance="@style/myText.Edit.Hint"/>
+                    android:textAppearance="@style/myText.Edit.Hint"
+                    />
 
                 <TextView
                     android:id="@+id/tvUsername"
@@ -166,7 +168,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/tvPassword"
-                    android:textAppearance="@style/myText.Edit.Hint"/>
+                    android:textAppearance="@style/myText.Edit.Hint"
+                    />
 
                 <TextView
                     android:id="@+id/tvPassword"
@@ -189,7 +192,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/tvNotes"
-                android:textAppearance="@style/myText.Edit.Hint"/>
+                android:textAppearance="@style/myText.Edit.Hint"
+                />
 
             <TextView
                 android:id="@+id/tvNote"

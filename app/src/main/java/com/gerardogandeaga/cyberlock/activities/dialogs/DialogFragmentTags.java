@@ -68,8 +68,8 @@ public class DialogFragmentTags extends DialogFragment {
     }
 
     private View buildViews() {
-        final int[] colours = getResources().getIntArray(R.array.array_tag_colours);
-        final String[] names = getResources().getStringArray(R.array.array_tag_colours_names);
+        final int[] colours = getResources().getIntArray(R.array.arr_tag_colours);
+        final String[] names = getResources().getStringArray(R.array.arr_tag_colours_names);
         int offset = 0;
 
         // sub layout params

@@ -8,7 +8,7 @@
     <include layout="@layout/base_dialog_title"/>
 
     <ScrollView
-        style="@style/MyScrollbarStyle"
+        style="@style/MyPreviewScrollbarStyle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">

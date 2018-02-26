@@ -12,7 +12,7 @@
     <include layout="@layout/toolbar_main"/>
 
     <ScrollView
-        style="@style/MyScrollbarStyle"
+        style="@style/MyMainScrollbarStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
