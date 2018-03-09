@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -18,6 +17,7 @@ import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
 import com.gerardogandeaga.cyberlock.activities.dialogs.DialogDataPreview;
 import com.gerardogandeaga.cyberlock.core.handlers.extractors.RecyclerViewItemDataHandler;
 import com.gerardogandeaga.cyberlock.core.handlers.selection.AdapterItemHandler;
+import com.gerardogandeaga.cyberlock.core.recyclerview.CustomRecyclerView;
 import com.gerardogandeaga.cyberlock.core.recyclerview.decorations.RecyclerViewPaddingItemDecoration;
 import com.gerardogandeaga.cyberlock.core.recyclerview.items.RecyclerViewItem;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
@@ -74,7 +74,7 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
     private LoadOverlay mLoadOverlay;
 
     @BindView(R.id.toolbar)      Toolbar mToolbar;
-    @BindView(R.id.recyclerView) RecyclerView mRecyclerView;
+    @BindView(R.id.recyclerView) CustomRecyclerView mRecyclerView;
 
     // Initial on create methods
     @Override
@@ -105,7 +105,7 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
         // Item Listeners
         mFastItemAdapter.withOnClickListener(new OnClickListener<RecyclerViewItem>() {
             @Override
-            public boolean onClick(@NonNull View view, @NonNull IAdapter<RecyclerViewItem> adapter, @NonNull RecyclerViewItem item, int position) {
+            public boolean onClick(View view, @NonNull IAdapter<RecyclerViewItem> adapter, @NonNull RecyclerViewItem item, int position) {
                 // Perform normal on click if it is active and if it return false then continue to next step
                 if (!AdapterItemHandler.onClick(mFastItemAdapter, item, position)) {
                     new DialogDataPreview(mContext, item.mDataPackage).initializeDialog();
@@ -124,7 +124,7 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
         });
         mFastItemAdapter.withOnLongClickListener(new OnLongClickListener<RecyclerViewItem>() {
             @Override
-            public boolean onLongClick(View v, IAdapter<RecyclerViewItem> adapter, RecyclerViewItem item, int position) {
+            public boolean onLongClick(@NonNull View view, @NonNull IAdapter<RecyclerViewItem> adapter, @NonNull RecyclerViewItem item, int position) {
                 if (!AdapterItemHandler.isActive()) {
                 AdapterItemHandler.onLongClick(mFastItemAdapter, item, position);
                 onCreateOptionsMenu(mMenu);

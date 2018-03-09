@@ -1,16 +1,15 @@
 package com.gerardogandeaga.cyberlock.core.handlers.selection;
 
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.core.handlers.selection.undo.UndoHelper;
+import com.gerardogandeaga.cyberlock.core.recyclerview.items.RecyclerViewItem;
 import com.gerardogandeaga.cyberlock.database.DBAccess;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
-import com.gerardogandeaga.cyberlock.core.recyclerview.items.RecyclerViewItem;
-import com.gerardogandeaga.cyberlock.core.handlers.selection.undo.UndoHelper;
 import com.gerardogandeaga.cyberlock.utils.Res;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 
@@ -18,6 +17,7 @@ import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 
+// todo solidify adapter item handler
 public class AdapterItemHandler {
     private static boolean mIsActive = false;
     private static int mCount = 0;
@@ -32,6 +32,7 @@ public class AdapterItemHandler {
         onClick(fastItemAdapter, item, position);
     }
 
+    // todo refactor deprecated select and de-select
     public static boolean onClick(FastItemAdapter<RecyclerViewItem> fastItemAdapter, RecyclerViewItem item, int position) {
         if (mIsActive) {
             DataPackage dataPackage = item.mDataPackage;
@@ -109,15 +110,15 @@ public class AdapterItemHandler {
 
     // Snack bar builder
     private static void snackbarDelete(View view) {
-        String s;
+        String message;
         if (mCount == 1) {
-            s = " Item Deleted";
+            message = " Item Deleted";
         } else {
-            s = " Items Deleted";
+            message = " Items Deleted";
         }
 
         // Snack bar
-        Snackbar snackbar = Snackbar.make(view, mCount + s, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(view, mCount + message, Snackbar.LENGTH_LONG);
         snackbar.setActionTextColor(Res.getColour(view.getContext(), R.color.white));
         snackbar.setAction("Undo", new View.OnClickListener() {
             @Override
