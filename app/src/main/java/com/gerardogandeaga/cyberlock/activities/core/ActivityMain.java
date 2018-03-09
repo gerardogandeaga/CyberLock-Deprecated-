@@ -43,18 +43,25 @@ import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mIsCou
 public class ActivityMain extends AppCompatActivity implements DataLoader.OnDataPackageLoaded {
     // adapter package loading
     @Override
-    public void sendPackage(DataPackage dataPackage) {
-        if (mFastItemAdapter != null && dataPackage != null) {
-            // arrange data as a recycler view item
-            RecyclerViewItem recyclerViewItem = new RecyclerViewItemDataHandler().getDataItem(mContext, dataPackage);
-            // add to adapter
-            mFastItemAdapter.add(recyclerViewItem);
-        }
+    public void sendPackage(final DataPackage dataPackage) {
+        // arrange data as a recycler view item
+        final RecyclerViewItem item = new RecyclerViewItemDataHandler(this).getDataItem(dataPackage);
 
-        if (mLoadOverlay.isVisible()) {
-            mLoadOverlay.dismiss();
-            mRecyclerView.setVisibility(View.VISIBLE);
-        }
+        // add to adapter
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (item!= null) {
+                    mFastItemAdapter.add(item);
+                }
+
+                // dismiss load overlay and show recycler view
+                if (mLoadOverlay.isVisible()) {
+                    mLoadOverlay.dismiss();
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     private Context mContext = this;
@@ -81,17 +88,13 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
         this.mView = View.inflate(this, R.layout.activity_main, null);
         setContentView(mView);
         ButterKnife.bind(this);
+
         setupSupportActionBar();
         setupRecyclerView();
+        displayLoad();
 
         // Create the FastAdapter
         this.mFastItemAdapter = new FastItemAdapter<>();
-
-        // initialize and execute data loader task
-        DataLoader dataLoader = new DataLoader(this);
-        dataLoader.execute();
-
-        displayLoad();
 
         // Configure the FastAdapter
         mFastItemAdapter.setHasStableIds(true);
@@ -140,7 +143,11 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
         // set adapter
         mRecyclerView.setAdapter(mFastItemAdapter);
 
+        // initialize and execute data loader task
+        DataLoader dataLoader = new DataLoader(this);
+        dataLoader.execute();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.mMenu = menu;
@@ -211,9 +218,9 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
 //        if (this.mDrawerToggle.onOptionsItemSelected(item)) return true;
         switch (item.getItemId()) {
             // add
-            case R.id.add_note:        onAddClicked("TYPE_NOTE"); break;
-            case R.id.add_paymentinfo: onAddClicked("TYPE_PAYMENTINFO"); break;
-            case R.id.add_logininfo:   onAddClicked("TYPE_LOGININFO"); break;
+            case R.id.add_note:        onAddClicked(DataPackage.NOTE); break;
+            case R.id.add_paymentinfo: onAddClicked(DataPackage.PAYMENT_INFO); break;
+            case R.id.add_logininfo:   onAddClicked(DataPackage.LOGIN_INFO); break;
 
             // options
             case R.id.option_options: onOptions(); return true;

@@ -40,9 +40,9 @@ public class ContentHandler {
         // Content parsing
         String content = dataPackage.getContent();
         switch (dataPackage.getType()) {
-            case "TYPE_NOTE":        setNoteContent(content); break;
-            case "TYPE_PAYMENTINFO": setPaymentInfoContent(content); break;
-            case "TYPE_LOGININFO":   setLoginInfoContent(content); break;
+            case DataPackage.NOTE:         setNoteContent(content); break;
+            case DataPackage.PAYMENT_INFO: setPaymentInfoContent(content); break;
+            case DataPackage.LOGIN_INFO:   setLoginInfoContent(content); break;
         }
     }
 

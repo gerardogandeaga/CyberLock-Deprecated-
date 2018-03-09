@@ -18,18 +18,22 @@ public class RecyclerViewItemDataHandler {
 
     private String TYPE;
 
-    public List<RecyclerViewItem> getDataItems(Context context, List<DataPackage> dataPackageList) {
+    private static int ID = 0;
+
+    public RecyclerViewItemDataHandler(Context context) {
         this.mContext = context;
-        
-        // RecyclerViewItem list as an array
+    }
+
+    public List<RecyclerViewItem> getDataItems(List<DataPackage> dataPackageList) {
+        // recyclerViewItem list as an array
         List<RecyclerViewItem> recyclerViewItemArrayList = new ArrayList<>();
 
-        // Iterate through SQLite data list
+        // iterate through SQLite data list
         for(int i = 0; i < dataPackageList.size(); i++) {
             DataPackage dataPackage = dataPackageList.get(i);
 
             recyclerViewItemArrayList.add(
-                    // Get rawDataPackage from index
+                    // get data package from index
                     new RecyclerViewItem()
                             .withContext(mContext)
                             .withIdentifier((long) (i + 1))
@@ -40,7 +44,7 @@ public class RecyclerViewItemDataHandler {
                             .withContent(getUnbindedContent(dataPackage, dataPackage.getContent()))
                             .withDate(dataPackage.getDate())
                             .withTag(getColour(dataPackage))
-                            // If type is paymentinfo
+                            // if type is paymentinfo
                             .withCardIcon(getCardImage(dataPackage.getContent()))
             );
         }
@@ -48,10 +52,15 @@ public class RecyclerViewItemDataHandler {
         return recyclerViewItemArrayList;
     }
 
-    public RecyclerViewItem getDataItem(Context context, DataPackage dataPackage) {
+    public RecyclerViewItem getDataItem(DataPackage dataPackage) {
+        if (dataPackage == null) {
+            return null;
+        }
+
+        ID++;
         return new RecyclerViewItem()
                 .withContext(mContext)
-                .withIdentifier((long) (1))
+                .withIdentifier((long) (ID))
                 .withRawDataPackage(dataPackage)
                 .withType(dataPackage.getType())
 
@@ -59,25 +68,26 @@ public class RecyclerViewItemDataHandler {
                 .withContent(getUnbindedContent(dataPackage, dataPackage.getContent()))
                 .withDate(dataPackage.getDate())
                 .withTag(getColour(dataPackage))
-                // If type is paymentinfo
+                // if type is paymentinfo
                 .withCardIcon(getCardImage(dataPackage.getContent()));
     }
 
-    // Deconstruct content strings
+    // deconstruct content strings
     @Nullable
     private String getUnbindedContent(DataPackage dataPackage, String content) {
         this.TYPE = dataPackage.getType();
-        // Return content based on rawDataPackage-type
+        // return content based on rawDataPackage-type
         switch (TYPE) {
-            case "TYPE_NOTE":        return dataPackage.getShortNoteText(mContext, parseNoteContent(content));
-            case "TYPE_PAYMENTINFO": return parsePaymentInfoContent(content);
-            case "TYPE_LOGININFO":   return parseLoginInfoContent(content);
-            default: return null;
+            case DataPackage.NOTE:         return dataPackage.getShortNoteText(mContext, parseNoteContent(content));
+            case DataPackage.PAYMENT_INFO: return parsePaymentInfoContent(content);
+            case DataPackage.LOGIN_INFO:   return parseLoginInfoContent(content);
+            default: System.out.println("parsing note"); return null;
         }
     }
     //
     @NonNull
     private String parseNoteContent(String content) {
+
         StringBuilder note;
 
         Scanner scanner = new Scanner(content);
@@ -136,7 +146,7 @@ public class RecyclerViewItemDataHandler {
     }
 
     private Drawable getCardImage(String content) {
-        if (TYPE.matches("TYPE_PAYMENTINFO")) {
+        if (TYPE.matches(DataPackage.PAYMENT_INFO)) {
             String cardType;
 
             Scanner scanner = new Scanner(content);

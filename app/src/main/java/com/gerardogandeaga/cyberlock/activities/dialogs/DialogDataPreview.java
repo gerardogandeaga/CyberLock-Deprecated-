@@ -35,9 +35,9 @@ public class DialogDataPreview {
     // Select type
     public void initializeDialog() {
         switch (mDataPackage.getType()) {
-            case "TYPE_NOTE":        constructPreviewNote(); break;
-            case "TYPE_PAYMENTINFO": constructPreviewPaymentInfo(); break;
-            case "TYPE_LOGININFO":   constructPreviewLoginInfo(); break;
+            case DataPackage.NOTE:         constructPreviewNote(); break;
+            case DataPackage.PAYMENT_INFO: constructPreviewPaymentInfo(); break;
+            case DataPackage.LOGIN_INFO:   constructPreviewLoginInfo(); break;
         }
     }
 
@@ -108,6 +108,7 @@ public class DialogDataPreview {
         BaseDialog baseDialog = new BaseDialog(mContext);
         baseDialog.setContentView(view);
         if (contentHandler.mCardImage != null) { baseDialog.setIcon(contentHandler.mCardImage); }
+        baseDialog.setMenuIcon(mContext.getResources().getDrawable(R.drawable.ic_options), R.color.white);
         baseDialog.setTitle(contentHandler.mLabel);
         baseDialog.setSubTitle(contentHandler.mDate);
         baseDialog.setTitleBackgroundColour(Graphics.ColourTags.colourTagHeader(mContext, contentHandler.mTag));

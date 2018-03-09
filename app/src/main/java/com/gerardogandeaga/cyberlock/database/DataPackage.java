@@ -10,8 +10,8 @@ import java.util.Date;
 
 public class DataPackage implements Serializable {
     public static final String NOTE         = "TYPE_NOTE";
-    public static final String PAYMENT_INFO = "TYPE_PAYMENTINFO";
-    public static final String LOGIN_INFO   = "TYPE_LOGININFO";
+    public static final String PAYMENT_INFO = "TYPE_PAYMENT_INFO";
+    public static final String LOGIN_INFO   = "TYPE_LOGIN_INFO";
 
     private Date mDate;
     private String mType;

@@ -54,7 +54,7 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
         @BindView(R.id.loginInfo)    LinearLayout LoginInfo;
 
         @BindView(R.id.tvLabel)      TextView  Label;
-        @BindView(R.id.tvSubTitle)       TextView  Date;
+        @BindView(R.id.tvSubTitle)   TextView  Date;
         @BindView(R.id.imgColourTag) ImageView Tag;
 
         // note
@@ -140,10 +140,10 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
         private void filterContent(RecyclerViewItem item) {
             Scanner scanner = new Scanner(item.mContent.toString());
             switch(item.mType) {
-                case "TYPE_NOTE":
+                case DataPackage.NOTE:
                     ViewHandler.setOrHideTextView(item.mContent, Notes);
                     break;
-                case "TYPE_PAYMENTINFO":
+                case DataPackage.PAYMENT_INFO:
                     String holder = "", number = "";
                     if (scanner.hasNextLine()) holder = scanner.nextLine();
                     if (scanner.hasNextLine()) number = scanner.nextLine();
@@ -152,7 +152,7 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
                     ViewHandler.setOrHideTextView(number, Number);
                     ViewHandler.setOrHideImageView(item.mCardType, CardIcon);
                     break;
-                case "TYPE_LOGININFO":
+                case DataPackage.LOGIN_INFO:
                     String url = "", email = "", username = "";
                     if (scanner.hasNextLine()) url = scanner.nextLine();
                     if (scanner.hasNextLine()) email = scanner.nextLine();

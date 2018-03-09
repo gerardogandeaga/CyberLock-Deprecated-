@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gerardogandeaga.cyberlock.database.DataPackage;
 import com.mikepenz.materialize.holder.StringHolder;
 
 public class ViewHandler {
@@ -47,10 +48,11 @@ public class ViewHandler {
                 isPaymentinfo = false,
                 isLogininfo = false;
         switch (args) {
-            case "TYPE_NOTE":        isNote = true; break;
-            case "TYPE_PAYMENTINFO": isPaymentinfo = true; break;
-            case "TYPE_LOGININFO":   isLogininfo = true; break;
+            case DataPackage.NOTE:         isNote = true; break;
+            case DataPackage.PAYMENT_INFO: isPaymentinfo = true; break;
+            case DataPackage.LOGIN_INFO:   isLogininfo = true; break;
         }
+
         setLinearLayoutVisibility(note, isNote);
         setLinearLayoutVisibility(paymentinfo, isPaymentinfo);
         setLinearLayoutVisibility(logininfo, isLogininfo);

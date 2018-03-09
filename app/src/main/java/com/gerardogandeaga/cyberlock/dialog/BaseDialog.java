@@ -3,6 +3,7 @@ package com.gerardogandeaga.cyberlock.dialog;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Button;
@@ -21,8 +22,9 @@ public class BaseDialog {
 
     // views
     @BindView(R.id.lnTitleBackground) LinearLayout mTitleBackground;
-    // icon
+    // icons
     @BindView(R.id.imgIcon)           ImageView mIcon;
+    @BindView(R.id.imgMenuIcon)       ImageView mMenuIcon;
     // text views
     @BindView(R.id.tvTitle)           TextView mTitle;
     @BindView(R.id.tvSubTitle)        TextView mSubTitle;
@@ -66,6 +68,15 @@ public class BaseDialog {
         imageviewSetProperties(mIcon, drawable);
     }
 
+    // menu icon
+    public void setMenuIcon(Drawable drawable, int colourId) {
+        mMenuIcon.setColorFilter(mContext.getResources().getColor(colourId), PorterDuff.Mode.SRC_ATOP);
+        setMenuIcon(drawable);
+    }
+    public void setMenuIcon(Drawable drawable)  {
+        imageviewSetProperties(mMenuIcon, drawable);
+    }
+
     // text views
     public void setTitle(String text) {
         textviewSetProperties(mTitle, text);
@@ -107,8 +118,9 @@ public class BaseDialog {
     }
 
     private void defaultViewVisibility() {
-        // icon
+        // icons
         mIcon.setVisibility(View.GONE);
+        mMenuIcon.setVisibility(View.GONE);
         // text views
         mTitle.setVisibility(View.GONE);
         mSubTitle.setVisibility(View.GONE);

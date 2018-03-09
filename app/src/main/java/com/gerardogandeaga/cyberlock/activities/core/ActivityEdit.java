@@ -40,7 +40,7 @@ import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mIsCou
 
 
 // todo implement enum for better state control
-enum DataType {
+enum Type {
     NOTE, PAYMENT_INFO, LOGIN_INFO
 }
 
@@ -50,7 +50,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         mColour = colour;
         setTag(mColour);
     }
-    private DataType enum_type;
+    private Type enum_type;
 
     private View mView;
     // data package
@@ -104,13 +104,12 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
 
     private void extractBundle() {
         /*
-        When activating the editor there are 3 possible states in which is will enter:
-        STATE 1 : Completely new (When it is called by the ADD function and  is not a data item yet)
-        STATE 2 : Floating raw data item (When editor is suspended by the logout protocol but has
+        when activating the editor there are 3 possible states in which is will enter:
+        STATE 1 : completely new (When it is called by the ADD function and  is not a data item yet)
+        STATE 2 : floating raw data item (When editor is suspended by the logout protocol but has
                                           not been saved in the database master database accessor)
-        STATE 3 : Saved raw data item (When the data item has already been saved and is merely
-                                       going to get updated)
-        */
+        STATE 3 : saved raw data item (When the data item has already been saved and is merely
+                                       going to get updated) */
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             this.mDataPackage = (DataPackage) bundle.get("data");
@@ -119,21 +118,21 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
             if (!mIsNew) {
                 this.mContentHandler = new ContentHandler(this, mDataPackage);
                 switch (mDataPackage.getType()) {
-                    case "TYPE_NOTE":        setupLayoutNote();        this.enum_type = DataType.NOTE; break;
-                    case "TYPE_PAYMENTINFO": setupLayoutPaymentInfo(); this.enum_type = DataType.PAYMENT_INFO; break;
-                    case "TYPE_LOGININFO":   setupLayoutLoginInfo();   this.enum_type = DataType.LOGIN_INFO; break;
+                    case DataPackage.NOTE:         setupLayoutNote();        this.enum_type = Type.NOTE; break;
+                    case DataPackage.PAYMENT_INFO: setupLayoutPaymentInfo(); this.enum_type = Type.PAYMENT_INFO; break;
+                    case DataPackage.LOGIN_INFO:   setupLayoutLoginInfo();   this.enum_type = Type.LOGIN_INFO; break;
                 }
-                // Check if data item already exists
+                // check if data item already exists
                 containsData(); // Will alter between STATE 2 & 3 by switching mIsNew
-                // New data override!!!
+                // new data override!!!
                 if (!bundle.getBoolean("isNew?")) {
-                    this.mIsNew = false; // Will alter between STATE 2 & 3 by switching mIsNew
+                    this.mIsNew = false; // will alter between STATE 2 & 3 by switching mIsNew
                 }
-            } else { // If data is completely new
+            } else { // if data is completely new
                 switch ((String) bundle.get("type")) { // STATE 1
-                    case "TYPE_NOTE":        setupLayoutNote();        this.enum_type = DataType.NOTE; break;
-                    case "TYPE_PAYMENTINFO": setupLayoutPaymentInfo(); this.enum_type = DataType.PAYMENT_INFO; break;
-                    case "TYPE_LOGININFO":   setupLayoutLoginInfo();   this.enum_type = DataType.LOGIN_INFO; break;
+                    case DataPackage.NOTE:         setupLayoutNote();        this.enum_type = Type.NOTE; break;
+                    case DataPackage.PAYMENT_INFO: setupLayoutPaymentInfo(); this.enum_type = Type.PAYMENT_INFO; break;
+                    case DataPackage.LOGIN_INFO:   setupLayoutLoginInfo();   this.enum_type = Type.LOGIN_INFO; break;
                 }
             }
             bundle.remove("data");
@@ -199,9 +198,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -223,9 +220,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -460,7 +455,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         if (mIsNew) {
             DataPackage tmp = new DataPackage();
 
-            tmp.setType(enum_type.name());
+            tmp.setType("TYPE_" + enum_type.name());
             tmp.setTag(tag);
             tmp.setLabel(label);
             tmp.setContent(content);

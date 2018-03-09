@@ -16,10 +16,19 @@ public class DataLoader extends AsyncTask<Void, Void, Void> {
         // send the data package to the adapter
         void sendPackage(DataPackage dataPackage);
     }
-    public OnDataPackageLoaded mOnDataPackageLoaded;
+    private OnDataPackageLoaded mOnDataPackageLoaded;
 
     private DBAccess mDBAccess;
     private Cursor mCursor;
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        mDBAccess.open();
+        this.mCursor = mDBAccess.getQuery();
+        Log.i(TAG, "onPreExecute: opening database...");
+    }
 
     @Override
     protected Void doInBackground(Void... voids) {
@@ -29,14 +38,22 @@ public class DataLoader extends AsyncTask<Void, Void, Void> {
         while (!mCursor.isClosed()) {
             DataPackage dataPackage = getDataPackage();
             sendProcessedDataPackage(dataPackage);
+            Log.i(TAG, "doInBackground: data package : " + dataPackage);
         }
 
         return null;
     }
 
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+
+        mDBAccess.close();
+        Log.i(TAG, "onPostExecute: closing database...");
+    }
+
     public DataLoader(Context context) {
         this.mDBAccess = DBAccess.getInstance(context);
-        this.mCursor = mDBAccess.getQuery();
 
         try {
             this.mOnDataPackageLoaded = (OnDataPackageLoaded) context;
@@ -49,12 +66,8 @@ public class DataLoader extends AsyncTask<Void, Void, Void> {
         DataPackage dataPackage = null;
         if (mDBAccess != null) {
 
-            mDBAccess.open();
-
             dataPackage = mDBAccess.getDataPackage(mCursor);
             mCursor.moveToNext();
-
-            mDBAccess.close();
 
             // if the object is null then we assume we are out bounds and will close the cursor
             if (dataPackage == null) {
@@ -66,12 +79,8 @@ public class DataLoader extends AsyncTask<Void, Void, Void> {
     }
 
     private void sendProcessedDataPackage(DataPackage dataPackage) {
-        if (dataPackage != null) {
-            if (mOnDataPackageLoaded != null) {
-                mOnDataPackageLoaded.sendPackage(dataPackage);
-            }
-        } else {
-            Log.d(TAG, "sendProcessedDataPackage: data package is equal to null, not sending null object");
+        if (mOnDataPackageLoaded != null) {
+            mOnDataPackageLoaded.sendPackage(dataPackage);
         }
     }
 }
