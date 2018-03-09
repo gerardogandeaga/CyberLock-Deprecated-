@@ -13,6 +13,7 @@ class DBOpenHelper extends SQLiteOpenHelper {
         super(context, DATABASE, null, VERSION);
     }
 
+    // todo update the db to now input position
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE data(" +
@@ -24,7 +25,6 @@ class DBOpenHelper extends SQLiteOpenHelper {
                 "content TEXT" +
                 ");");
     }
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

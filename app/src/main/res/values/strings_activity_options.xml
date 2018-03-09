@@ -7,10 +7,10 @@
 
     <!-- desc -->
     <string name="AutoSave">Auto Save</string>
-    <string name="LogoutDelay">Logout Delay</string>
-    <string name="ChangePassword">Change Password</string>
     <string name="ListFormat">List Formatting</string>
     <string name="HeaderTags">Tagged Header</string>
+    <string name="LogoutDelay">Logout Delay</string>
+    <string name="ChangePassword">Change Password</string>
     <string name="Git">Open Source Libraries</string>
     <string name="AboutCL">About Cyber Lock</string>
     <string name="Version">Version Details</string>
@@ -22,4 +22,7 @@
     <string name="NP">Enter New Password</string>
     <string name="CNP">Confirm New Password</string>
 
+    <!-- development -->
+    <string name="str_programmer">Gerardo Gandeaga</string>
+    <string name="str_graphics_designer">Carolina Rocha</string>
 </resources>

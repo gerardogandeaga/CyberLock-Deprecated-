@@ -11,11 +11,16 @@ import android.widget.TextView;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.utils.math.Scaling;
 
+import org.jetbrains.annotations.Contract;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LoadOverlay {
     private Context mContext;
+
+    private boolean mIsVisible;
+
     private View mViewToOverlay;
     private View mView;
 
@@ -40,11 +45,15 @@ public class LoadOverlay {
 
         // add overlay view to main view
         ((LinearLayout) mViewToOverlay.findViewById(resId)).addView(mView);
+
+        this.mIsVisible = true;
     }
 
     public void dismiss() {
         if (mView != null) {
             mView.setVisibility(View.GONE);
+
+            this.mIsVisible = false;
         }
     }
 
@@ -59,5 +68,10 @@ public class LoadOverlay {
     private void textviewSetProperties(TextView textView, String text) {
         textView.setVisibility(View.VISIBLE);
         textView.setText(text);
+    }
+
+    @Contract(pure = true)
+    public boolean isVisible() {
+        return mIsVisible;
     }
 }

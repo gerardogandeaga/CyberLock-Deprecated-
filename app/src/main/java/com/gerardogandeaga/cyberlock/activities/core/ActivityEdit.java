@@ -38,12 +38,20 @@ import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.APP_LO
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mCountDownTimer;
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mIsCountDownTimerFinished;
 
-public class ActivityEdit extends AppCompatActivity implements View.OnClickListener, DialogFragmentTags.OnInputListener {
+
+// todo implement enum for better state control
+enum DataType {
+    NOTE, PAYMENT_INFO, LOGIN_INFO
+}
+
+public class ActivityEdit extends AppCompatActivity implements View.OnClickListener, DialogFragmentTags.OnColourSelected {
     @Override
     public void sendInput(String colour) {
         mColour = colour;
         setTag(mColour);
     }
+    private DataType enum_type;
+
     private View mView;
     // data package
     private DataPackage mDataPackage;
@@ -52,8 +60,6 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
     private boolean mIsNew = true;
     private boolean mIsAutoSave = false;
     // content vars
-    private static final String[] ARGS = new String[]{ "TYPE_NOTE", "TYPE_PAYMENTINFO", "TYPE_LOGININFO" };
-    private String TYPE;
     private String mColour = "DEFAULT";
 
     // widgets
@@ -113,9 +119,9 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
             if (!mIsNew) {
                 this.mContentHandler = new ContentHandler(this, mDataPackage);
                 switch (mDataPackage.getType()) {
-                    case "TYPE_NOTE":        setupLayoutNote();        TYPE = ARGS[0]; break;
-                    case "TYPE_PAYMENTINFO": setupLayoutPaymentInfo(); TYPE = ARGS[1]; break;
-                    case "TYPE_LOGININFO":   setupLayoutLoginInfo();   TYPE = ARGS[2]; break;
+                    case "TYPE_NOTE":        setupLayoutNote();        this.enum_type = DataType.NOTE; break;
+                    case "TYPE_PAYMENTINFO": setupLayoutPaymentInfo(); this.enum_type = DataType.PAYMENT_INFO; break;
+                    case "TYPE_LOGININFO":   setupLayoutLoginInfo();   this.enum_type = DataType.LOGIN_INFO; break;
                 }
                 // Check if data item already exists
                 containsData(); // Will alter between STATE 2 & 3 by switching mIsNew
@@ -125,9 +131,9 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
                 }
             } else { // If data is completely new
                 switch ((String) bundle.get("type")) { // STATE 1
-                    case "TYPE_NOTE":        setupLayoutNote();        TYPE = ARGS[0]; break;
-                    case "TYPE_PAYMENTINFO": setupLayoutPaymentInfo(); TYPE = ARGS[1]; break;
-                    case "TYPE_LOGININFO":   setupLayoutLoginInfo();   TYPE = ARGS[2]; break;
+                    case "TYPE_NOTE":        setupLayoutNote();        this.enum_type = DataType.NOTE; break;
+                    case "TYPE_PAYMENTINFO": setupLayoutPaymentInfo(); this.enum_type = DataType.PAYMENT_INFO; break;
+                    case "TYPE_LOGININFO":   setupLayoutLoginInfo();   this.enum_type = DataType.LOGIN_INFO; break;
                 }
             }
             bundle.remove("data");
@@ -412,51 +418,49 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
     // Getters and setters for saving
     private String getViewData() {
         // GETTING AND FORMATTING THE CONTENT CONDITIONALLY
-        if (TYPE.matches(ARGS[0])) {
-            final String note = mEtNote.getText().toString();
 
-            final String format = "%s";
+        switch (enum_type) {
+            case NOTE:
+                final String note = mEtNote.getText().toString();
 
-            return String.format(format,
-                    note);
-        } else if (TYPE.matches(ARGS[1])) {
-            final String cardName = mEtCardName.getText().toString();
-            final String cardNumber = mEtCardNumber.getText().toString();
-            final String cardType = mCardType;
-            final String cardExpire = mEtCardExpire.getText().toString();
-            final String cardSecCode = mEtCardCVV.getText().toString();
-            final String notes = mEtNotes.getText().toString();
+                final String format_note = "%s";
 
-            final String format = "%s\n%s\n%s\n%s\n%s\n%s";
+                return String.format(format_note,
+                        note);
 
-            return String.format(format,
-                    cardName, cardNumber, cardType, cardExpire, cardSecCode, notes);
-        } else if (TYPE.matches(ARGS[2])) {
-            final String url = mEtUrl.getText().toString();
-            final String email = mEtEmail.getText().toString();
-            final String username = mEtUsername.getText().toString();
-            final String password = mEtPassword.getText().toString();
-            final String notes = mEtNotes.getText().toString();
+            case PAYMENT_INFO:
+                final String cardName = mEtCardName.getText().toString();
+                final String cardNumber = mEtCardNumber.getText().toString();
+                final String cardType = mCardType;
+                final String cardExpire = mEtCardExpire.getText().toString();
+                final String cardSecCode = mEtCardCVV.getText().toString();
+                final String notes_paymentinfo = mEtNotes.getText().toString();
 
-            final String format = "%s\n%s\n%s\n%s\n%s";
+                final String format_paymentinfo = "%s\n%s\n%s\n%s\n%s\n%s";
 
-            return String.format(format,
-                    url, email, username, password, notes);
+                return String.format(format_paymentinfo,
+                        cardName, cardNumber, cardType, cardExpire, cardSecCode, notes_paymentinfo);
+
+            case LOGIN_INFO:
+                final String url = mEtUrl.getText().toString();
+                final String email = mEtEmail.getText().toString();
+                final String username = mEtUsername.getText().toString();
+                final String password = mEtPassword.getText().toString();
+                final String notes_logininfo = mEtNotes.getText().toString();
+
+                final String format_logininfo = "%s\n%s\n%s\n%s\n%s";
+
+                return String.format(format_logininfo,
+                        url, email, username, password, notes_logininfo);
+            default:
+                return "";
         }
-        return "";
     }
     private DataPackage getData(String label, String content, String tag) {
         if (mIsNew) {
             DataPackage tmp = new DataPackage();
 
-            String tmpType;
-            switch (TYPE) {
-                case ("TYPE_NOTE"):        tmpType = "TYPE_NOTE"; break;
-                case ("TYPE_PAYMENTINFO"): tmpType = "TYPE_PAYMENTINFO"; break;
-                case ("TYPE_LOGININFO"):   tmpType = "TYPE_LOGININFO"; break;
-                default:                   tmpType = "TYPE_NOTE"; break; // TODO CREATE A "COULD NOT READ TYPE" DIALOG ALLOWING FOR AN EDIT
-            }
-            tmp.setType(tmpType);
+            tmp.setType(enum_type.name());
             tmp.setTag(tag);
             tmp.setLabel(label);
             tmp.setContent(content);

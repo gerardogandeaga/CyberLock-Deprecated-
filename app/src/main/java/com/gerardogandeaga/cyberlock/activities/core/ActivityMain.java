@@ -20,8 +20,8 @@ import com.gerardogandeaga.cyberlock.core.handlers.extractors.RecyclerViewItemDa
 import com.gerardogandeaga.cyberlock.core.handlers.selection.AdapterItemHandler;
 import com.gerardogandeaga.cyberlock.core.recyclerview.decorations.RecyclerViewPaddingItemDecoration;
 import com.gerardogandeaga.cyberlock.core.recyclerview.items.RecyclerViewItem;
-import com.gerardogandeaga.cyberlock.database.DBAccess;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
+import com.gerardogandeaga.cyberlock.database.loader.DataLoader;
 import com.gerardogandeaga.cyberlock.overlay.LoadOverlay;
 import com.gerardogandeaga.cyberlock.utils.Res;
 import com.gerardogandeaga.cyberlock.utils.Settings;
@@ -32,8 +32,6 @@ import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.listeners.OnClickListener;
 import com.mikepenz.fastadapter.listeners.OnLongClickListener;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -42,15 +40,31 @@ import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.APP_LO
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mCountDownTimer;
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mIsCountDownTimerFinished;
 
-public class ActivityMain extends AppCompatActivity {
-    private Context mContext = this;
+public class ActivityMain extends AppCompatActivity implements DataLoader.OnDataPackageLoaded {
+    // adapter package loading
+    @Override
+    public void sendPackage(DataPackage dataPackage) {
+        if (mFastItemAdapter != null && dataPackage != null) {
+            // arrange data as a recycler view item
+            RecyclerViewItem recyclerViewItem = new RecyclerViewItemDataHandler().getDataItem(mContext, dataPackage);
+            // add to adapter
+            mFastItemAdapter.add(recyclerViewItem);
+        }
 
+        if (mLoadOverlay.isVisible()) {
+            mLoadOverlay.dismiss();
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private Context mContext = this;
     // Adapter
     private FastItemAdapter<RecyclerViewItem> mFastItemAdapter;
     private View mView;
-
     // Views
     private Menu mMenu;
+    // load view
+    private LoadOverlay mLoadOverlay;
 
     @BindView(R.id.toolbar)      Toolbar mToolbar;
     @BindView(R.id.recyclerView) RecyclerView mRecyclerView;
@@ -68,11 +82,64 @@ public class ActivityMain extends AppCompatActivity {
         setContentView(mView);
         ButterKnife.bind(this);
         setupSupportActionBar();
+        setupRecyclerView();
 
         // Create the FastAdapter
         this.mFastItemAdapter = new FastItemAdapter<>();
 
-        loadAndSetDataAndViews();
+        // initialize and execute data loader task
+        DataLoader dataLoader = new DataLoader(this);
+        dataLoader.execute();
+
+        displayLoad();
+
+        // Configure the FastAdapter
+        mFastItemAdapter.setHasStableIds(true);
+        mFastItemAdapter.withSelectable(true);
+        mFastItemAdapter.withMultiSelect(true);
+        mFastItemAdapter.withSelectOnLongClick(true);
+
+        // Item Listeners
+        mFastItemAdapter.withOnClickListener(new OnClickListener<RecyclerViewItem>() {
+            @Override
+            public boolean onClick(@NonNull View view, @NonNull IAdapter<RecyclerViewItem> adapter, @NonNull RecyclerViewItem item, int position) {
+                // Perform normal on click if it is active and if it return false then continue to next step
+                if (!AdapterItemHandler.onClick(mFastItemAdapter, item, position)) {
+                    new DialogDataPreview(mContext, item.mDataPackage).initializeDialog();
+                } else {
+                    getSupportActionBar().setTitle(Integer.toString(AdapterItemHandler.getCount()));
+                }
+
+                // Check if there is still data in array, if not then reset the action bar
+                if (!AdapterItemHandler.isValid()) {
+                    onCreateOptionsMenu(mMenu);
+                    resetSupportActionBar();
+                }
+
+                return true;
+            }
+        });
+        mFastItemAdapter.withOnLongClickListener(new OnLongClickListener<RecyclerViewItem>() {
+            @Override
+            public boolean onLongClick(View v, IAdapter<RecyclerViewItem> adapter, RecyclerViewItem item, int position) {
+                if (!AdapterItemHandler.isActive()) {
+                AdapterItemHandler.onLongClick(mFastItemAdapter, item, position);
+                onCreateOptionsMenu(mMenu);
+
+                getSupportActionBar().setTitle(Integer.toString(AdapterItemHandler.getCount()));
+                getSupportActionBar().setSubtitle("Items Selected");
+                getSupportActionBar().setHomeAsUpIndicator(Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(
+                        mContext, Res.getDrawable(mContext, R.drawable.ic_back)));
+
+                return true;
+            }
+                return false;
+            }
+        });
+
+        // set adapter
+        mRecyclerView.setAdapter(mFastItemAdapter);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,6 +164,31 @@ public class ActivityMain extends AppCompatActivity {
         return true;
     }
     //
+    private void setupRecyclerView() {
+        // Setup and configure RecyclerView
+        mRecyclerView.setVisibility(View.GONE);
+        final LinearLayoutManager linearLayoutManager =
+                new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        final StaggeredGridLayoutManager staggeredGridLayoutManager =
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+
+        // Set layout format
+        switch (Settings.getListFormat(mContext)) {
+            case "RV_STAGGEREDGRID":
+                staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
+                mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+                mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(10, false)); break;
+            default:
+                mRecyclerView.setLayoutManager(linearLayoutManager);
+                mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(10, true)); break;
+        }
+    }
+    private void displayLoad() {
+        this.mLoadOverlay = new LoadOverlay(this, mView);
+        mLoadOverlay.setTitle("Loading Data");
+        mLoadOverlay.show(R.id.container);
+    }
+    //
     private void setupSupportActionBar() {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false); // true
@@ -112,100 +204,6 @@ public class ActivityMain extends AppCompatActivity {
                 this, Res.getDrawable(this, R.drawable.ic_drawer)));
     }
 
-    private void loadAndSetDataAndViews() {
-        mRecyclerView.setVisibility(View.GONE);
-
-        final LoadOverlay loadOverlay = new LoadOverlay(this, mView);
-        loadOverlay.setTitle("Loading Data");
-        loadOverlay.show(R.id.container);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {// Pull data list from database
-                DBAccess dbAccess = DBAccess.getInstance(mContext);
-                dbAccess.open();
-                final List<DataPackage> dataPackageList = dbAccess.getAllData();
-                dbAccess.close();
-
-                // Configure the FastAdapter
-                mFastItemAdapter.setHasStableIds(true);
-                mFastItemAdapter.withSelectable(true);
-                mFastItemAdapter.withMultiSelect(true);
-                mFastItemAdapter.withSelectOnLongClick(true);
-
-                // Item Listeners
-                mFastItemAdapter.withOnClickListener(new OnClickListener<RecyclerViewItem>() {
-                    @Override
-                    public boolean onClick(@NonNull View view, @NonNull IAdapter<RecyclerViewItem> adapter, @NonNull RecyclerViewItem item, int position) {
-                        // Perform normal on click if it is active and if it return false then continue to next step
-                        if (!AdapterItemHandler.onClick(mFastItemAdapter, item, position)) {
-                            new DialogDataPreview(mContext, item.mDataPackage).initializeDialog();
-                        } else {
-                            getSupportActionBar().setTitle(Integer.toString(AdapterItemHandler.getCount()));
-                        }
-
-                        // Check if there is still data in array, if not then reset the action bar
-                        if (!AdapterItemHandler.isValid()) {
-                            onCreateOptionsMenu(mMenu);
-                            resetSupportActionBar();
-                        }
-
-                        return true;
-                    }
-                });
-                mFastItemAdapter.withOnLongClickListener(new OnLongClickListener<RecyclerViewItem>() {
-                    @Override
-                    public boolean onLongClick(@NonNull View view, @NonNull IAdapter<RecyclerViewItem> adapter, @NonNull RecyclerViewItem item, int position) {
-                        if (!AdapterItemHandler.isActive()) {
-                            AdapterItemHandler.onLongClick(mFastItemAdapter, item, position);
-                            onCreateOptionsMenu(mMenu);
-
-                            getSupportActionBar().setTitle(Integer.toString(AdapterItemHandler.getCount()));
-                            getSupportActionBar().setSubtitle("Items Selected");
-                            getSupportActionBar().setHomeAsUpIndicator(Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(
-                                    mContext, Res.getDrawable(mContext, R.drawable.ic_back)));
-
-                            return true;
-                        }
-                        return false;
-                    }
-                });
-
-                // Setup and configure RecyclerView
-                final LinearLayoutManager linearLayoutManager =
-                        new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-                final StaggeredGridLayoutManager staggeredGridLayoutManager =
-                        new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-
-                // set view on runnable thread
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        // Set layout format
-                        switch (Settings.getListFormat(mContext)) {
-                            case "RV_STAGGEREDGRID":
-                                staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
-                                mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
-                                mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(10, false)); break;
-                            default:
-                                mRecyclerView.setLayoutManager(linearLayoutManager);
-                                mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(10, true)); break;
-                        }
-                        mRecyclerView.setAdapter(mFastItemAdapter); // Set adapter
-
-                        // Derive adapter DataItems from rawDataPackageList
-                        List<RecyclerViewItem> recyclerViewItemList = new RecyclerViewItemDataHandler().getDataItems(mContext, dataPackageList);
-                        mFastItemAdapter.add(recyclerViewItemList);
-
-                        mRecyclerView.setVisibility(View.VISIBLE);
-
-                        loadOverlay.dismiss();
-                    }
-                });
-            }
-        }).start();
-    }
 
     // Global clicks
     @Override

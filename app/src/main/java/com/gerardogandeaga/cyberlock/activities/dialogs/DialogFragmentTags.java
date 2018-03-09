@@ -19,10 +19,10 @@ public class DialogFragmentTags extends DialogFragment {
     // fragment properties
     private static final String TAG = "DialogFragmentTags";
 
-    public interface OnInputListener {
+    public interface OnColourSelected {
         void sendInput(String colour);
     }
-    public OnInputListener mOnInputListener;
+    public OnColourSelected mOnColourSelected;
 
     // instance vars
     private Dialog mDialog;
@@ -35,7 +35,7 @@ public class DialogFragmentTags extends DialogFragment {
         super.onStart();
         // callback listener
         try {
-            this.mOnInputListener = (OnInputListener) getActivity();
+            this.mOnColourSelected = (OnColourSelected) getActivity();
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
@@ -124,8 +124,8 @@ public class DialogFragmentTags extends DialogFragment {
     }
 
     private void onItemClick(String name) {
-        if (mOnInputListener != null) {
-            mOnInputListener.sendInput(name);
+        if (mOnColourSelected != null) {
+            mOnColourSelected.sendInput(name);
         } else {
             System.out.println("listener is null!!!");
         }

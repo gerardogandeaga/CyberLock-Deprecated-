@@ -17,6 +17,8 @@ public class DBAccess {
     private DBOpenHelper mOpenHelper;
     private static volatile DBAccess INSTANCE;
 
+    private static final String SQL_QUERY = "SELECT * From data ORDER BY date DESC";
+
     private DBAccess(Context context) {
         this.mContext = context;
         this.mOpenHelper = new DBOpenHelper(context);
@@ -66,37 +68,43 @@ public class DBAccess {
         mSQLiteDatabase.delete(DBOpenHelper.TABLE, "date = ?", new String[]{date});
     }
 
-    // get all data packages
-    public List<DataPackage> getAllData() {
-        List<DataPackage> data = new ArrayList<>();
-        Cursor cursor = mSQLiteDatabase.rawQuery("SELECT * From data ORDER BY date DESC", null);
+    // data packages getters
+    // list
+    public List<DataPackage> getAllDataPackages() {
+        List<DataPackage> dataPackages = new ArrayList<>();
+        Cursor cursor = getQuery();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            long time = cursor.getLong(0);
-            String type =    getData(cursor.getString(1));
-            String colour =  getData(cursor.getString(2));
-            String label =   getData(cursor.getString(3));
-            String content = getData(cursor.getString(4));
-            data.add(new DataPackage(time, type, colour, label, content));
+            dataPackages.add(constructDataPackage(cursor));
             cursor.moveToNext();
         }
         cursor.close();
 
-        return data;
+        return dataPackages;
+    }
+    // single position
+    public DataPackage getDataPackage(Cursor cursor) {
+        if (!cursor.isAfterLast()) {
+            return constructDataPackage(cursor);
+        }
+
+        // return null for out of bounds
+        return null;
     }
 
-    // when pulling data from the database and defining the dataPackage object
-    private String getData(String data) {
-        return DBCrypt.decrypt(mContext, data);
-    }
-    // when putting data into the database
-    private String setData(String data) {
-        return DBCrypt.encrypt(mContext, data);
+    // returns a new data package from the cursor position
+    private DataPackage constructDataPackage(Cursor cursor) {
+        long time = cursor.getLong(0);
+        String type =    getData(cursor.getString(1));
+        String tag =     getData(cursor.getString(2));
+        String label =   getData(cursor.getString(3));
+        String content = getData(cursor.getString(4));
+        return new DataPackage(time, type, tag, label, content);
     }
 
     // this function checks if a specific piece of data exists in the database returning a boolean
     public boolean containsData(DataPackage dataPackage) {
-        List<DataPackage> dataPackages = getAllData();
+        List<DataPackage> dataPackages = getAllDataPackages();
         for (int i = 0; i < dataPackages.size(); i++) {
             System.out.println(dataPackage);
             System.out.println(dataPackages.get(i));
@@ -108,5 +116,19 @@ public class DBAccess {
             }
         }
         return true;
+    }
+
+    // data encryption
+    // when pulling data from the database and defining the dataPackage object
+    private String getData(String data) {
+        return DBCrypt.decrypt(mContext, data);
+    }
+    // when putting data into the database
+    private String setData(String data) {
+        return DBCrypt.encrypt(mContext, data);
+    }
+
+    public Cursor getQuery() {
+        return mSQLiteDatabase.rawQuery(SQL_QUERY, null);
     }
 }

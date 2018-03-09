@@ -48,6 +48,21 @@ public class RecyclerViewItemDataHandler {
         return recyclerViewItemArrayList;
     }
 
+    public RecyclerViewItem getDataItem(Context context, DataPackage dataPackage) {
+        return new RecyclerViewItem()
+                .withContext(mContext)
+                .withIdentifier((long) (1))
+                .withRawDataPackage(dataPackage)
+                .withType(dataPackage.getType())
+
+                .withLabel(dataPackage.getLabel())
+                .withContent(getUnbindedContent(dataPackage, dataPackage.getContent()))
+                .withDate(dataPackage.getDate())
+                .withTag(getColour(dataPackage))
+                // If type is paymentinfo
+                .withCardIcon(getCardImage(dataPackage.getContent()));
+    }
+
     // Deconstruct content strings
     @Nullable
     private String getUnbindedContent(DataPackage dataPackage, String content) {

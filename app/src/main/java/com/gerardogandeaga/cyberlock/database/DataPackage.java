@@ -9,6 +9,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DataPackage implements Serializable {
+    public static final String NOTE         = "TYPE_NOTE";
+    public static final String PAYMENT_INFO = "TYPE_PAYMENTINFO";
+    public static final String LOGIN_INFO   = "TYPE_LOGININFO";
+
     private Date mDate;
     private String mType;
     private String mTag;
@@ -16,14 +20,14 @@ public class DataPackage implements Serializable {
     private String mContent;
 
     /* constructor that builds the data from the database-accessor class when data is first loaded into memory.
-       constructor gets called when by the "getAllData" function.
+       constructor gets called when by the "getAllDataPackages" function.
      */
-    public DataPackage(long time, String type, String tag, String label, String mContent) {
+    public DataPackage(long time, String type, String tag, String label, String content) {
         this.mDate = new Date(time);
         this.mType = type;
         this.mTag = tag;
         this.mLabel = label;
-        this.mContent = mContent;
+        this.mContent = content;
     }
     /* constructor that initializes a brand new data object initialized by the AcitivtyEdit class
        when saving data for the first time.
