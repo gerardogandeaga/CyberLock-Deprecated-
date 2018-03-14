@@ -49,6 +49,12 @@
                 android:orderInCategory="0"
                 android:title="@string/mnuOptions"
                 app:showAsAction="never"/>
+            <item
+                android:id="@+id/option_import"
+                android:icon="@drawable/ic_import"
+                android:orderInCategory="0"
+                android:title="@string/mnuImport"
+                app:showAsAction="never"/>
         </menu>
 
     </item>

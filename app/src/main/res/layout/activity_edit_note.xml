@@ -8,9 +8,7 @@
     android:orientation="vertical"
     tools:context=".activities.core.ActivityEdit">
 
-    <include layout="@layout/toolbar_main"/>
-
-    <include layout="@layout/child_edit_label"/>
+    <include layout="@layout/toolbar_main_edit"/>
 
     <ScrollView
         style="@style/MyMainScrollbarStyle"
@@ -20,26 +18,36 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/etText"
-                style="@style/myText.Edit.Content"
+            <include layout="@layout/child_edit_label"/>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="top"
-                android:hint="Notes..."
-                android:inputType="textMultiLine|textAutoComplete|textAutoCorrect"/>
+                android:orientation="vertical"
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/tvSubTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/myText.Edit.Date"/>
+                <EditText
+                    android:id="@+id/etText"
+                    style="@style/myText.Edit.Content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:hint="Notes..."
+                    android:inputType="textMultiLine|textAutoComplete|textAutoCorrect"/>
+
+                <TextView
+                    android:id="@+id/tvSubTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/myText.Edit.Date"/>
+            </LinearLayout>
+
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>

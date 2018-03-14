@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Add -->
+    <!-- add -->
     <string name="mnuAdd">Add</string>
     <string name="mnuAddNote">Note</string>
     <string name="mnuAddPaymentInfo">Payment Information</string>
     <string name="mnuAddLoginInfo">Login Credentials</string>
 
-    <!-- Options -->
+    <!-- options -->
     <string name="mnuOptions">Options</string>
+    <string name="mnuImport">Import...</string>
 
-    <!-- Edit -->
+    <!-- edit -->
     <string name="mnuSave">Save</string>
     <string name="mnuCancel">Cancel</string>
 </resources>

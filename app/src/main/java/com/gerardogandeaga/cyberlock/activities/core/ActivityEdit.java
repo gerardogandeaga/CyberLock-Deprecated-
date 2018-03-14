@@ -3,7 +3,6 @@ package com.gerardogandeaga.cyberlock.activities.core;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -70,7 +69,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
     // notes
     private EditText mEtNote;
     // paymentinfo
-    private ImageView mIcon;
+    private ImageView mCardIcon;
     private EditText mEtCardName, mEtCardNumber, mEtCardExpire, mEtCardCVV;
     private Spinner mSpCardSelect;
     //
@@ -94,7 +93,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
     private void setupSupportActionBar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(false);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setTitle(null);
@@ -151,12 +150,15 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
 
     // layouts
     private void setupMainWidgets() {
-        // Main widgets
+        // main widgets
         this.mEtLabel = findViewById(R.id.etLabel);
         this.mTvDate = findViewById(R.id.tvSubTitle);
         this.mImgTag = findViewById(R.id.imgTag);
 
         this.mImgTag.setOnClickListener(this);
+        this.mCardIcon = findViewById(R.id.imgCardIcon);
+
+        mCardIcon.setVisibility(View.GONE);
     }
     //
     private void setupLayoutNote() {
@@ -174,7 +176,6 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         setContentView(mView);
         setupSupportActionBar(); // Action bar
 
-        this.mIcon = findViewById(R.id.imgIcon);
         // Widgets
         setupMainWidgets();
         this.mEtCardName = findViewById(R.id.etCardName);
@@ -239,7 +240,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
                 Object object = parent.getItemAtPosition(position);
                 if (object != null) {
                     mCardType = object.toString();
-                    mIcon.setImageDrawable(Graphics.CardImages.getCardImage(view.getContext(), mCardType));
+                    mCardIcon.setImageDrawable(Graphics.CardImages.getCardImage(view.getContext(), mCardType));
                 }
             }
 
@@ -248,6 +249,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        mCardIcon.setVisibility(View.VISIBLE);
         setupDataPaymentInfo();
     }
     private void setupLayoutLoginInfo() {
@@ -301,10 +303,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
             mSpCardSelect.setSelection(spinnerPosition);
             mEtNotes.setText(mContentHandler.mNote);
 
-            mIcon.setImageDrawable(Graphics.CardImages.getCardImage(this, mContentHandler.mCardType));
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                mIcon.setForeground(Res.getDrawable(this, R.drawable.bk_outline_black));
-            }
+            mCardIcon.setImageDrawable(Graphics.CardImages.getCardImage(this, mContentHandler.mCardType));
         }
     }
     private void setupDataLoginInfo() {
