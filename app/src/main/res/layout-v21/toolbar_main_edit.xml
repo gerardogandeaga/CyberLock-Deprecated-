@@ -26,7 +26,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:foreground="@drawable/bk_outline_black"
             android:orientation="horizontal">
 
             <ImageView
@@ -39,8 +38,6 @@
                 android:focusable="true"
                 android:tint="@color/ct_red_2"
                 app:srcCompat="@drawable/ic_tag"/>
-
-            <include layout="@layout/item_divider_vertical_black"/>
 
             <ImageView
                 android:id="@+id/imgCardIcon"

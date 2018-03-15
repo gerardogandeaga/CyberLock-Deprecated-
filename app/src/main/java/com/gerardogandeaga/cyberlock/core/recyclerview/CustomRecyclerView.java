@@ -11,6 +11,9 @@ import android.view.View;
  */
 
 public class CustomRecyclerView extends RecyclerView {
+    public static final String FORMAT_LINEAR = "RV_LINEAR";
+    public static final String FORMAT_STAGGERED_GRID = "RV_STAGGEREDGRID";
+
     private boolean mScrollable;
 
     public CustomRecyclerView(Context context) {

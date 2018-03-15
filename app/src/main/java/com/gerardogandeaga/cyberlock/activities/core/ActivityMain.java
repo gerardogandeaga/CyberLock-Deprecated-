@@ -18,7 +18,7 @@ import com.gerardogandeaga.cyberlock.activities.dialogs.DialogDataPreview;
 import com.gerardogandeaga.cyberlock.core.handlers.extractors.RecyclerViewItemDataHandler;
 import com.gerardogandeaga.cyberlock.core.handlers.selection.AdapterItemHandler;
 import com.gerardogandeaga.cyberlock.core.recyclerview.CustomRecyclerView;
-import com.gerardogandeaga.cyberlock.core.recyclerview.decorations.RecyclerViewPaddingItemDecoration;
+import com.gerardogandeaga.cyberlock.core.recyclerview.decorations.RecyclerViewItemDecoration;
 import com.gerardogandeaga.cyberlock.core.recyclerview.items.RecyclerViewItem;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
 import com.gerardogandeaga.cyberlock.database.loader.DataLoader;
@@ -65,10 +65,10 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
     }
 
     private Context mContext = this;
-    // Adapter
+    // adapter
     private FastItemAdapter<RecyclerViewItem> mFastItemAdapter;
     private View mView;
-    // Views
+    // views
     private Menu mMenu;
     // load view
     private LoadOverlay mLoadOverlay;
@@ -76,7 +76,7 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
     @BindView(R.id.toolbar)      Toolbar mToolbar;
     @BindView(R.id.recyclerView) CustomRecyclerView mRecyclerView;
 
-    // Initial on create methods
+    // initial on create methods
     @Override
     public void onCreate(Bundle savedInstanceState) {
 //        Themes.setTheme(this);
@@ -93,16 +93,16 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
         setupRecyclerView();
         displayLoad();
 
-        // Create the FastAdapter
+        // create the FastAdapter
         this.mFastItemAdapter = new FastItemAdapter<>();
 
-        // Configure the FastAdapter
+        // configure the FastAdapter
         mFastItemAdapter.setHasStableIds(true);
         mFastItemAdapter.withSelectable(true);
         mFastItemAdapter.withMultiSelect(true);
         mFastItemAdapter.withSelectOnLongClick(true);
 
-        // Item Listeners
+        // item Listeners
         mFastItemAdapter.withOnClickListener(new OnClickListener<RecyclerViewItem>() {
             @Override
             public boolean onClick(View view, @NonNull IAdapter<RecyclerViewItem> adapter, @NonNull RecyclerViewItem item, int position) {
@@ -184,10 +184,10 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
             case "RV_STAGGEREDGRID":
                 staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
                 mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
-                mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(10, false)); break;
+                mRecyclerView.addItemDecoration(new RecyclerViewItemDecoration(10, false)); break;
             default:
                 mRecyclerView.setLayoutManager(linearLayoutManager);
-                mRecyclerView.addItemDecoration(new RecyclerViewPaddingItemDecoration(10, true)); break;
+                mRecyclerView.addItemDecoration(new RecyclerViewItemDecoration(10, true)); break;
         }
     }
     private void displayLoad() {

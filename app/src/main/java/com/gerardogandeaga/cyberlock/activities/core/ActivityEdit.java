@@ -165,7 +165,8 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         this.mView = View.inflate(this, R.layout.activity_edit_note, null);
         setContentView(mView);
         setupSupportActionBar(); // Action bar
-        // Widgets
+
+        // widgets
         setupMainWidgets();
         this.mEtNote = findViewById(R.id.etText);
 
@@ -174,9 +175,9 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
     private void setupLayoutPaymentInfo() {
         this.mView = View.inflate(this, R.layout.activity_edit_paymentinfo, null);
         setContentView(mView);
-        setupSupportActionBar(); // Action bar
+        setupSupportActionBar(); // action bar
 
-        // Widgets
+        // widgets
         setupMainWidgets();
         this.mEtCardName = findViewById(R.id.etCardName);
         this.mEtCardNumber = findViewById(R.id.etCardNumber);
@@ -255,8 +256,9 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
     private void setupLayoutLoginInfo() {
         this.mView = View.inflate(this, R.layout.activity_edit_logininfo, null);
         setContentView(mView);
-        setupSupportActionBar(); // Action bar
-        // Widgets
+        setupSupportActionBar(); // action bar
+
+        // widgets
         setupMainWidgets();
         this.mEtUrl = findViewById(R.id.etUrl);
         this.mEtUsername = findViewById(R.id.etUsername);
@@ -278,7 +280,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
             setDate(mContentHandler.mDate);
             setTag(mContentHandler.mTag);
 
-            // Set note
+            // set note
             mEtNote.setText(mContentHandler.mNote);
         }
     }

@@ -10,9 +10,7 @@
     tools:context=".activities.core.ActivityEdit"
     tools:ignore="ContentDescription">
 
-    <include layout="@layout/toolbar_main"/>
-
-    <include layout="@layout/child_edit_label"/>
+    <include layout="@layout/toolbar_main_edit"/>
 
     <ScrollView
         style="@style/MyMainScrollbarStyle"
