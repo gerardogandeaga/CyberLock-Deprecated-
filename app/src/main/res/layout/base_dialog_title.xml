@@ -48,7 +48,7 @@
                 android:layout_gravity="end"
                 android:maxLines="1"
                 android:text="Subtitle"
-                android:textAppearance="@style/myText.Edit.Date"/>
+                android:textAppearance="@style/myText.Dialog.SubTitle"/>
 
         </LinearLayout>
 
@@ -57,8 +57,9 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="center"
-            android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:padding="5dp"
             android:src="@drawable/ic_options"/>
     </LinearLayout>
 

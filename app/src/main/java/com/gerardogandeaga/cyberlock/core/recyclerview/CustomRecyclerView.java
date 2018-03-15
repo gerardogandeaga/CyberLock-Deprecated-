@@ -51,6 +51,8 @@ public class CustomRecyclerView extends RecyclerView {
         }
     }
 
+
+
     private void animate(View view, final int pos) {
         view.animate().cancel();
         view.setTranslationY(100);
