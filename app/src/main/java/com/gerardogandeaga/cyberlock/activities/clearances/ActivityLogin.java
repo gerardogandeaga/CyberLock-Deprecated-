@@ -17,6 +17,7 @@ import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.core.ActivityEdit;
 import com.gerardogandeaga.cyberlock.activities.core.ActivityMain;
 import com.gerardogandeaga.cyberlock.activities.dialogs.DialogCustomLoad;
+import com.gerardogandeaga.cyberlock.android.BaseToast;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
 import com.gerardogandeaga.cyberlock.utils.security.KeyChecker;
 
@@ -87,7 +88,7 @@ public class ActivityLogin extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(mContext, "Password Is Incorrect, Please Try Again", Toast.LENGTH_SHORT).show();
+                            BaseToast.buildAndShowToast(mContext, "Password Is Incorrect, Please Try Again", BaseToast.ERROR, Toast.LENGTH_LONG);
                         }
                     });
                 }

@@ -11,10 +11,10 @@ import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.core.ActivityEdit;
 import com.gerardogandeaga.cyberlock.core.handlers.extractors.ContentHandler;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
-import com.gerardogandeaga.cyberlock.dialog.BaseDialog;
+import com.gerardogandeaga.cyberlock.android.BaseDialog;
 import com.gerardogandeaga.cyberlock.utils.Res;
 import com.gerardogandeaga.cyberlock.utils.graphics.Graphics;
-import com.gerardogandeaga.cyberlock.utils.views.ViewHandler;
+import com.gerardogandeaga.cyberlock.utils.views.ViewSetter;
 
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
 
@@ -70,12 +70,12 @@ public class DialogDataPreview {
         TextView cardType = view.findViewById(R.id.tvCardType);
         TextView notes = view.findViewById(R.id.tvNote);
 
-        if (ViewHandler.setLinearLayoutVisibility(Holder, contentHandler.mHolder))     holder.setText(contentHandler.mHolder);
-        if (ViewHandler.setLinearLayoutVisibility(Number, contentHandler.mNumber))     number.setText(contentHandler.mNumber);
-        if (ViewHandler.setLinearLayoutVisibility(Expiry, contentHandler.mExpiry))     expiry.setText(contentHandler.mExpiry);
-        if (ViewHandler.setLinearLayoutVisibility(CVV, contentHandler.mCVV))           cvv.setText(contentHandler.mCVV);
-        if (ViewHandler.setLinearLayoutVisibility(CardType, contentHandler.mCardType)) cardType.setText(contentHandler.mCardType);
-        if (ViewHandler.setLinearLayoutVisibility(Notes, contentHandler.mNote))        notes.setText(contentHandler.mNote);
+        if (ViewSetter.setLinearLayoutVisibility(Holder, contentHandler.mHolder))     holder.setText(contentHandler.mHolder);
+        if (ViewSetter.setLinearLayoutVisibility(Number, contentHandler.mNumber))     number.setText(contentHandler.mNumber);
+        if (ViewSetter.setLinearLayoutVisibility(Expiry, contentHandler.mExpiry))     expiry.setText(contentHandler.mExpiry);
+        if (ViewSetter.setLinearLayoutVisibility(CVV, contentHandler.mCVV))           cvv.setText(contentHandler.mCVV);
+        if (ViewSetter.setLinearLayoutVisibility(CardType, contentHandler.mCardType)) cardType.setText(contentHandler.mCardType);
+        if (ViewSetter.setLinearLayoutVisibility(Notes, contentHandler.mNote))        notes.setText(contentHandler.mNote);
 
         buildDialog(view, contentHandler);
     }
@@ -95,11 +95,11 @@ public class DialogDataPreview {
         TextView password = view.findViewById(R.id.tvPassword);
         TextView notes = view.findViewById(R.id.tvNote);
 
-        if (ViewHandler.setLinearLayoutVisibility(Url, contentHandler.mUrl))           url.setText(contentHandler.mUrl);
-        if (ViewHandler.setLinearLayoutVisibility(Email, contentHandler.mEmail))       email.setText(contentHandler.mEmail);
-        if (ViewHandler.setLinearLayoutVisibility(Username, contentHandler.mUsername)) username.setText(contentHandler.mUsername);
-        if (ViewHandler.setLinearLayoutVisibility(Password, contentHandler.mPassword)) password.setText(contentHandler.mPassword);
-        if (ViewHandler.setLinearLayoutVisibility(Notes, contentHandler.mNote))        notes.setText(contentHandler.mNote);
+        if (ViewSetter.setLinearLayoutVisibility(Url, contentHandler.mUrl))           url.setText(contentHandler.mUrl);
+        if (ViewSetter.setLinearLayoutVisibility(Email, contentHandler.mEmail))       email.setText(contentHandler.mEmail);
+        if (ViewSetter.setLinearLayoutVisibility(Username, contentHandler.mUsername)) username.setText(contentHandler.mUsername);
+        if (ViewSetter.setLinearLayoutVisibility(Password, contentHandler.mPassword)) password.setText(contentHandler.mPassword);
+        if (ViewSetter.setLinearLayoutVisibility(Notes, contentHandler.mNote))        notes.setText(contentHandler.mNote);
 
         buildDialog(view, contentHandler);
     }

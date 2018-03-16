@@ -33,22 +33,35 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvTitle"
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:text="Title"
-                android:textAppearance="@style/myText.Dialog.Title"/>
+                android:scrollbars="none">
 
-            <TextView
-                android:id="@+id/tvSubTitle"
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="Title"
+                    android:textAppearance="@style/myText.Dialog.Title"/>
+
+            </HorizontalScrollView>
+
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:maxLines="1"
-                android:text="Subtitle"
-                android:textAppearance="@style/myText.Dialog.SubTitle"/>
+                android:scrollbars="none">
+
+                <TextView
+                    android:id="@+id/tvSubTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="Subtitle"
+                    android:textAppearance="@style/myText.Dialog.SubTitle"/>
+
+            </HorizontalScrollView>
 
         </LinearLayout>
 
@@ -61,6 +74,7 @@
             android:layout_marginStart="10dp"
             android:padding="5dp"
             android:src="@drawable/ic_options"/>
+
     </LinearLayout>
 
     <include layout="@layout/item_divider_horizontal"/>

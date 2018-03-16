@@ -22,13 +22,6 @@ public class RecyclerViewItemDecoration extends RecyclerView.ItemDecoration {
             outRect.left = mSpace;
             outRect.right = mSpace;
             outRect.bottom = mSpace;
-
-            // for the last 2 children add margin to the bottom
-            // todo parent.getChildCount() returns the current size, because the async task loads it one by one the count does not work. so to fix this we have to load the count of items before they load
-            if (parent.getChildAdapterPosition(view) == parent.getChildCount() - 2
-                    || parent.getChildAdapterPosition(view) == parent.getChildCount() - 1) {
-//                System.out.println(parent.getChildLayoutPosition(view));
-            }
         }
     }
 }

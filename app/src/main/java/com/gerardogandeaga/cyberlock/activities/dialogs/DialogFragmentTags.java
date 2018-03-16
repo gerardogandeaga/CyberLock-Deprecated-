@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.dialog.BaseDialog;
+import com.gerardogandeaga.cyberlock.android.BaseDialog;
 import com.gerardogandeaga.cyberlock.utils.Res;
 import com.gerardogandeaga.cyberlock.utils.math.Scaling;
 

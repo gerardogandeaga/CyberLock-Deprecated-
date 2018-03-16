@@ -47,12 +47,19 @@
                     android:text="@string/tvHolder"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
-                <TextView
-                    android:id="@+id/tvName"
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:textAppearance="@style/myText.Edit.Content"/>
+                    android:scrollbars="none">
+
+                    <TextView
+                        android:id="@+id/tvName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                        android:textAppearance="@style/myText.Edit.Content"/>
+                </HorizontalScrollView>
+
             </LinearLayout>
 
         </LinearLayout>
@@ -85,12 +92,19 @@
                     android:text="@string/tvNumber"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
-                <TextView
-                    android:id="@+id/tvNumber"
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:textAppearance="@style/myText.Edit.Content"/>
+                    android:scrollbars="none">
+
+                    <TextView
+                        android:id="@+id/tvNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                        android:textAppearance="@style/myText.Edit.Content"/>
+                </HorizontalScrollView>
+
             </LinearLayout>
 
         </LinearLayout>
@@ -123,12 +137,19 @@
                     android:text="@string/tvExpiryDate"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
-                <TextView
-                    android:id="@+id/tvExpiry"
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:textAppearance="@style/myText.Edit.Content"/>
+                    android:scrollbars="none">
+
+                    <TextView
+                        android:id="@+id/tvExpiry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                        android:textAppearance="@style/myText.Edit.Content"/>
+                </HorizontalScrollView>
+
             </LinearLayout>
 
         </LinearLayout>
@@ -161,13 +182,20 @@
                     android:text="@string/tvCode"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
-                <TextView
-                    android:id="@+id/tvCVV"
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:textAppearance="@style/myText.Edit.Content"
-                    tools:ignore="NestedWeights"/>
+                    android:scrollbars="none">
+
+                    <TextView
+                        android:id="@+id/tvCVV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                        android:textAppearance="@style/myText.Edit.Content"
+                        tools:ignore="NestedWeights"/>
+                </HorizontalScrollView>
+
             </LinearLayout>
 
         </LinearLayout>
@@ -200,12 +228,19 @@
                     android:text="@string/tvCardType"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
-                <TextView
-                    android:id="@+id/tvCardType"
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:textAppearance="@style/myText.Edit.Content"/>
+                    android:scrollbars="none">
+
+                    <TextView
+                        android:id="@+id/tvCardType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:maxLines="1"
+                        android:textAppearance="@style/myText.Edit.Content"/>
+                </HorizontalScrollView>
+
             </LinearLayout>
 
         </LinearLayout>

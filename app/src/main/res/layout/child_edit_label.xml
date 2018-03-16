@@ -21,7 +21,7 @@
         android:inputType="text|textPersonName"
         android:maxLines="1"
         android:padding="10dp"
-        android:scrollbars="horizontal"
+        android:scrollbars="none"
         android:textAppearance="@style/myText.Edit.Label"/>
 
     <include layout="@layout/item_divider_horizontal"/>

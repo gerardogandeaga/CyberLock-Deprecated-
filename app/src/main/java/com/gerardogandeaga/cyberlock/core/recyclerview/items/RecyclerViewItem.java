@@ -13,7 +13,7 @@ import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.core.handlers.selection.graphic.AdapterItemBackground;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
 import com.gerardogandeaga.cyberlock.utils.Settings;
-import com.gerardogandeaga.cyberlock.utils.views.ViewHandler;
+import com.gerardogandeaga.cyberlock.utils.views.ViewSetter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.mikepenz.materialize.holder.StringHolder;
@@ -81,11 +81,11 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
             Context context = itemView.getContext();
             UIUtils.setBackground(View, AdapterItemBackground.getItemDrawableStates(
                     context, R.color.white, R.color.c_yellow_20, false));
-            ViewHandler.setLinearLayoutVisibility(Note, PaymentInfo, LoginInfo, item.mType);
+            ViewSetter.setLinearLayoutVisibility(Note, PaymentInfo, LoginInfo, item.mType);
 
             // bind our data to the view
-            ViewHandler.setOrHideTextView(item.mLabel, Label);
-            ViewHandler.setOrHideTextView(item.mDate, Date);
+            ViewSetter.setOrHideTextView(item.mLabel, Label);
+            ViewSetter.setOrHideTextView(item.mDate, Date);
             filterContent(item);
 
             // images
@@ -141,16 +141,16 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
             Scanner scanner = new Scanner(item.mContent.toString());
             switch(item.mType) {
                 case DataPackage.NOTE:
-                    ViewHandler.setOrHideTextView(item.mContent, Notes);
+                    ViewSetter.setOrHideTextView(item.mContent, Notes);
                     break;
                 case DataPackage.PAYMENT_INFO:
                     String holder = "", number = "";
                     if (scanner.hasNextLine()) holder = scanner.nextLine();
                     if (scanner.hasNextLine()) number = scanner.nextLine();
 
-                    ViewHandler.setOrHideTextView(holder, Holder);
-                    ViewHandler.setOrHideTextView(number, Number);
-                    ViewHandler.setOrHideImageView(item.mCardType, CardIcon);
+                    ViewSetter.setOrHideTextView(holder, Holder);
+                    ViewSetter.setOrHideTextView(number, Number);
+                    ViewSetter.setOrHideImageView(item.mCardType, CardIcon);
                     break;
                 case DataPackage.LOGIN_INFO:
                     String url = "", email = "", username = "";
@@ -158,9 +158,9 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
                     if (scanner.hasNextLine()) email = scanner.nextLine();
                     if (scanner.hasNextLine()) username = scanner.nextLine();
 
-                    ViewHandler.setOrHideTextView(url, Url);
-                    ViewHandler.setOrHideTextView(email, Email);
-                    ViewHandler.setOrHideTextView(username, Username);
+                    ViewSetter.setOrHideTextView(url, Url);
+                    ViewSetter.setOrHideTextView(email, Email);
+                    ViewSetter.setOrHideTextView(username, Username);
                     break;
             }
             scanner.close();

@@ -1,6 +1,7 @@
 package com.gerardogandeaga.cyberlock.utils.views;
 
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -9,20 +10,20 @@ import android.widget.TextView;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
 import com.mikepenz.materialize.holder.StringHolder;
 
-public class ViewHandler {
+public class ViewSetter {
 
     // TextView
+    public static void setOrHideTextView(StringHolder string, TextView textView) {
+        setOrHideTextView(string.toString(), textView);
+    }
     public static void setOrHideTextView(String string, TextView textView) {
+        textView.setEllipsize(TextUtils.TruncateAt.END);
         if (string == null || string.isEmpty()) {
             textView.setVisibility(View.GONE);
         } else {
             textView.setVisibility(View.VISIBLE);
             textView.setText(string);
         }
-    }
-    public static void setOrHideTextView(StringHolder string, TextView textView) {
-        String s = string.toString();
-        setOrHideTextView(s, textView);
     }
 
     // Image View

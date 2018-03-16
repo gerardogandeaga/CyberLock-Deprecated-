@@ -26,6 +26,7 @@
 
     <!-- Blue -->
     <color name="c_blue_30">#2f66fe</color>
+    <color name="c_blue_40">#2256e6</color>
     <color name="c_blue_50">#1d52b0</color>
     <color name="c_blue_60">#216ea7</color>
     <color name="c_blue_80">#0f3e61</color>
@@ -34,10 +35,11 @@
     <!-- Yellow -->
     <color name="c_yellow_20">#fffae3</color>
     <color name="c_yellow_40">#fdff9b</color>
-    <color name="c_yellow_50">#e2dcac</color>
+    <color name="c_yellow_70">#e7dc07</color>
 
     <!-- Red -->
     <color name="c_red_10">#ffcfcf</color>
+    <color name="c_red_60">#cc0101</color>
     <color name="c_red_80">#b92b3c</color>
 
     <!-- Purple -->
