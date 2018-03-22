@@ -46,7 +46,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tvURL"
+                    android:text="@string/str_tv_url"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <HorizontalScrollView
@@ -94,7 +94,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tvEmail"
+                    android:text="@string/str_tv_email"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <HorizontalScrollView
@@ -142,7 +142,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tvUsername"
+                    android:text="@string/str_tv_username"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <HorizontalScrollView
@@ -190,7 +190,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tvPassword"
+                    android:text="@string/str_tv_password"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <HorizontalScrollView
@@ -222,7 +222,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tvNotes"
+                android:text="@string/str_tv_notes"
                 android:textAppearance="@style/myText.Edit.Hint"/>
 
             <TextView

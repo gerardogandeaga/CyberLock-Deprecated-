@@ -44,7 +44,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tvHolder"
+                    android:text="@string/str_tv_holder"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <HorizontalScrollView
@@ -89,7 +89,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tvNumber"
+                    android:text="@string/str_tv_number"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <HorizontalScrollView
@@ -134,7 +134,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tvExpiryDate"
+                    android:text="@string/str_tv_expiry_date"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <HorizontalScrollView
@@ -179,7 +179,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tvCode"
+                    android:text="@string/str_tv_code"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <HorizontalScrollView
@@ -225,7 +225,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tvCardType"
+                    android:text="@string/str_tv_card_type"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
                 <HorizontalScrollView
@@ -254,7 +254,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tvNotes"
+                android:text="@string/str_tv_notes"
                 android:textAppearance="@style/myText.Edit.Hint"/>
 
             <TextView

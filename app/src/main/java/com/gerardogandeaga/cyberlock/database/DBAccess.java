@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.gerardogandeaga.cyberlock.crypto.database.DBCrypt;
 
@@ -12,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 public class DBAccess {
+    private static final String TAG = "DBAccess";
     private Context mContext;
     private SQLiteDatabase mSQLiteDatabase;
     private DBOpenHelper mOpenHelper;
@@ -34,12 +36,18 @@ public class DBAccess {
 
     // database accessor states
     public void open() {
+        Log.i(TAG, "open: Opening database...");
         mSQLiteDatabase = mOpenHelper.getWritableDatabase();
     }
     public void close() {
+            Log.i(TAG, "close: Closing database...");
         if (mSQLiteDatabase != null) {
             this.mSQLiteDatabase.close();
+            this.mSQLiteDatabase = null;
         }
+    }
+    public boolean isOpen() {
+        return mSQLiteDatabase != null;
     }
 
     // database interactions / mods
@@ -81,6 +89,16 @@ public class DBAccess {
         cursor.close();
 
         return dataPackages;
+    }
+    public int size() {
+        int size = 0;
+        Cursor cursor = getQuery();
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            size++;
+            cursor.moveToNext();
+        }
+        return size;
     }
     // single position
     public DataPackage getDataPackage(Cursor cursor) {

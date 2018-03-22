@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tvNotes">Additional Notes</string>
+    <string name="str_tv_notes">Additional Notes</string>
 
-    <string name="tvHolder">Holder Name</string>
-    <string name="tvNumber">Card / Identifying Number</string>
-    <string name="tvExpiryDate">Expiry Date</string>
-    <string name="tvCode">CVV / Security Code</string>
-    <string name="tvCardType">Card Type</string>
+    <string name="str_tv_holder">Holder Name</string>
+    <string name="str_tv_number">Card / Identifying Number</string>
+    <string name="str_tv_expiry_date">Expiry Date</string>
+    <string name="str_tv_code">CVV / Security Code</string>
+    <string name="str_tv_card_type">Card Type</string>
 
-    <string name="tvURL">URL</string>
-    <string name="tvEmail">Email Address</string>
-    <string name="tvUsername">Username</string>
-    <string name="tvPassword">Password</string>
+    <string name="str_tv_url">URL</string>
+    <string name="str_tv_email">Email Address</string>
+    <string name="str_tv_username">Username</string>
+    <string name="str_tv_password">Password</string>
 </resources>

@@ -24,10 +24,8 @@ public class DataLoader extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-
         mDBAccess.open();
         this.mCursor = mDBAccess.getQuery();
-        Log.i(TAG, "onPreExecute: opening database...");
     }
 
     @Override
@@ -38,7 +36,7 @@ public class DataLoader extends AsyncTask<Void, Void, Void> {
         while (!mCursor.isClosed()) {
             DataPackage dataPackage = getDataPackage();
             sendProcessedDataPackage(dataPackage);
-            Log.i(TAG, "doInBackground: data package : " + dataPackage);
+            Log.i(TAG, "doInBackground: Data package : " + dataPackage);
         }
 
         return null;
@@ -47,9 +45,7 @@ public class DataLoader extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-
         mDBAccess.close();
-        Log.i(TAG, "onPostExecute: closing database...");
     }
 
     public DataLoader(Context context) {
@@ -60,6 +56,17 @@ public class DataLoader extends AsyncTask<Void, Void, Void> {
         } catch (ClassCastException e) {
             Log.e(TAG, "DataLoader: Error casting context to OnDataPackageLoaded interface");
         }
+    }
+
+    public int size() {
+        int size = -1;
+        if (mDBAccess != null && !mDBAccess.isOpen()) {
+            mDBAccess.open();
+            size = mDBAccess.size();
+            mDBAccess.close();
+        }
+        Log.i(TAG, "size: Database size : " + size);
+        return size;
     }
 
     private DataPackage getDataPackage() {

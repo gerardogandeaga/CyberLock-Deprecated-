@@ -16,7 +16,7 @@
 
         <include layout="@layout/toolbar_main"/>
 
-        <com.gerardogandeaga.cyberlock.core.recyclerview.CustomRecyclerView
+        <com.gerardogandeaga.cyberlock.android.CustomRecyclerView
             android:id="@+id/recyclerView"
             style="@style/MyMainScrollbarStyle"
             android:layout_width="match_parent"

@@ -33,18 +33,21 @@ public class LoadOverlay {
         this.mView = View.inflate(mContext, R.layout.item_progress, null);
 
         ButterKnife.bind(this, mView);
+
+        defaultViewVisibility();
     }
 
-    public void show(int resId) {
-        int height = ((Scaling.pxToDp(mContext, mContext.getResources().getDisplayMetrics().heightPixels)) / 2) - Scaling.dpToPx(mContext, 56);
+    public void show(int containerId) {
+        // todo find a better way to always keep overlay in the middle, currently i'm just adding a margin... try using gravity
+        int height = ((Scaling.pxFromDp(mContext, mContext.getResources().getDisplayMetrics().heightPixels)) / 2) - Scaling.dpFromPx(mContext, 56);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
-        params.topMargin = Scaling.dpToPx(mContext, height);
+        params.topMargin = Scaling.dpFromPx(mContext, height);
         mView.setLayoutParams(params);
 
         // add overlay view to main view
-        ((LinearLayout) mViewToOverlay.findViewById(resId)).addView(mView);
+        ((LinearLayout) mViewToOverlay.findViewById(containerId)).addView(mView);
 
         this.mIsVisible = true;
     }
@@ -58,20 +61,26 @@ public class LoadOverlay {
     }
 
     public void setTitle(String text) {
-        textviewSetProperties(mTitle, text);
+        textviewSetProperties(text);
     }
 
     private void defaultViewVisibility() {
         mTitle.setVisibility(View.GONE);
     }
 
-    private void textviewSetProperties(TextView textView, String text) {
-        textView.setVisibility(View.VISIBLE);
-        textView.setText(text);
+    private void textviewSetProperties(String text) {
+        if (!isNull(text)) {
+            mTitle.setVisibility(View.VISIBLE);
+            mTitle.setText(text);
+        }
     }
 
     @Contract(pure = true)
     public boolean isVisible() {
         return mIsVisible;
+    }
+
+    private boolean isNull(String string) {
+        return string == null || string.isEmpty();
     }
 }

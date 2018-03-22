@@ -11,22 +11,21 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.core.ActivityEdit;
 import com.gerardogandeaga.cyberlock.activities.core.ActivityMain;
 import com.gerardogandeaga.cyberlock.activities.dialogs.DialogCustomLoad;
-import com.gerardogandeaga.cyberlock.android.BaseToast;
+import com.gerardogandeaga.cyberlock.android.CustomToast;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
 import com.gerardogandeaga.cyberlock.utils.security.KeyChecker;
 
-import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.utils.Settings.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.utils.Settings.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.utils.Settings.PASSWORD;
 import static com.gerardogandeaga.cyberlock.utils.Settings.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.APP_LOGGED_IN;
 
 public class ActivityLogin extends AppCompatActivity {
     private Context mContext = this;
@@ -63,7 +62,7 @@ public class ActivityLogin extends AppCompatActivity {
                     if (!password.matches("")) {
                         login(password);
                     } else {
-                        Toast.makeText(mContext, "No Passcode detected", Toast.LENGTH_SHORT).show();
+                        CustomToast.buildAndShowToast(mContext, "No Password Detected", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
                     }
                 }
             });
@@ -88,7 +87,7 @@ public class ActivityLogin extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            BaseToast.buildAndShowToast(mContext, "Password Is Incorrect, Please Try Again", BaseToast.ERROR, Toast.LENGTH_LONG);
+                            CustomToast.buildAndShowToast(mContext, "Password Is Incorrect, Please Try Again", CustomToast.ERROR, CustomToast.LENGTH_LONG);
                         }
                     });
                 }

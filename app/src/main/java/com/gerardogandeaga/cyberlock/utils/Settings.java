@@ -1,12 +1,9 @@
 package com.gerardogandeaga.cyberlock.utils;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 
-@SuppressLint("Registered")
-public class Settings extends AppCompatActivity {
+public class Settings {
     public static final String DIRECTORY = "com.gerardogandeaga.cyberlock";
 
     // Primitives
@@ -78,7 +75,7 @@ public class Settings extends AppCompatActivity {
 
     // list format
     public static String getListFormat(Context context) {
-        return context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(LIST_FORMAT, "RV_LINEAR");
+        return context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).getString(LIST_FORMAT, ListConfig.LINEAR);
     }
     public static void setListFormat(Context context, String str) {
         context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE).edit().putString(LIST_FORMAT, str).apply();
@@ -95,7 +92,7 @@ public class Settings extends AppCompatActivity {
     public static class Checkers {
 
         public static boolean isLinearFormat(String format) {
-            return !format.matches("RV_STAGGEREDGRID");
+            return !format.matches(ListConfig.GRID);
         }
     }
 }

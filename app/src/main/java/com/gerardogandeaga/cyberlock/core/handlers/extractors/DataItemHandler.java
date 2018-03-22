@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.gerardogandeaga.cyberlock.core.recyclerview.items.RecyclerViewItem;
+import com.gerardogandeaga.cyberlock.core.recyclerview.items.DataItem;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
 import com.gerardogandeaga.cyberlock.utils.graphics.Graphics;
 
@@ -13,28 +13,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class RecyclerViewItemDataHandler {
+public class DataItemHandler {
     private Context mContext;
 
     private String TYPE;
 
     private static int ID = 0;
 
-    public RecyclerViewItemDataHandler(Context context) {
+    public DataItemHandler(Context context) {
         this.mContext = context;
     }
 
-    public List<RecyclerViewItem> getDataItems(List<DataPackage> dataPackageList) {
+    public List<DataItem> getItems(List<DataPackage> dataPackageList) {
         // recyclerViewItem list as an array
-        List<RecyclerViewItem> recyclerViewItemArrayList = new ArrayList<>();
+        List<DataItem> dataItemList = new ArrayList<>();
 
         // iterate through SQLite data list
         for(int i = 0; i < dataPackageList.size(); i++) {
             DataPackage dataPackage = dataPackageList.get(i);
 
-            recyclerViewItemArrayList.add(
+            dataItemList.add(
                     // get data package from index
-                    new RecyclerViewItem()
+                    new DataItem()
                             .withContext(mContext)
                             .withIdentifier((long) (i + 1))
                             .withRawDataPackage(dataPackage)
@@ -49,16 +49,16 @@ public class RecyclerViewItemDataHandler {
             );
         }
 
-        return recyclerViewItemArrayList;
+        return dataItemList;
     }
 
-    public RecyclerViewItem getDataItem(DataPackage dataPackage) {
+    public DataItem getItem(DataPackage dataPackage) {
         if (dataPackage == null) {
             return null;
         }
 
         ID++;
-        return new RecyclerViewItem()
+        return new DataItem()
                 .withContext(mContext)
                 .withIdentifier((long) (ID))
                 .withRawDataPackage(dataPackage)

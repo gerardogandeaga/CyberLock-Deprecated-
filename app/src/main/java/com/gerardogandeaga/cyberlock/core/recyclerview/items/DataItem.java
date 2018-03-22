@@ -10,14 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.core.handlers.selection.graphic.AdapterItemBackground;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
+import com.gerardogandeaga.cyberlock.utils.Res;
 import com.gerardogandeaga.cyberlock.utils.Settings;
 import com.gerardogandeaga.cyberlock.utils.views.ViewSetter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.mikepenz.materialize.holder.StringHolder;
-import com.mikepenz.materialize.util.UIUtils;
 
 import java.util.List;
 import java.util.Scanner;
@@ -25,7 +24,7 @@ import java.util.Scanner;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerViewItem.ViewHolder> {
+public class DataItem extends AbstractItem<DataItem, DataItem.ViewHolder> {
     public Context mContext;
 
     public DataPackage mDataPackage;
@@ -39,16 +38,70 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
     private StringHolder mContent;
     private Drawable mCardType;
 
-    public RecyclerViewItem withContext(Context context) {
+    public DataItem withContext(Context context) {
         this.mContext = context;
         return this;
     }
+    // setting content information
+    public DataItem withRawDataPackage(DataPackage dataPackage) {
+        this.mDataPackage = dataPackage;
+        return this;
+    }
+    public DataItem withType(String type) {
+        this.mType = type;
+        return this;
+    }
+    public DataItem withLabel(String label) {
+        this.mLabel = new StringHolder(label);
+        return this;
+    }
+    public DataItem withDate(String date) {
+        this.mDate = new StringHolder(date);
+        return this;
+    }
+    public DataItem withTag(int tag) {
+        this.mTag = tag;
+        return this;
+    }
+    public DataItem withContent(String note) {
+        this.mContent = new StringHolder(note);
+        return this;
+    }
+    public DataItem withCardIcon(Drawable cardType) {
+        this.mCardType = cardType;
+        return this;
+    }
+
+    // the unique ID for this type of item
+    @Override
+    public int getType() {
+        return R.id.fastadapter_item;
+    }
+    // the layout that will be used for item
+    @Override
+    public int getLayoutRes() {
+        if (mContext != null) {
+            if (Settings.Checkers.isLinearFormat(Settings.getListFormat(mContext))) {
+                return R.layout.data_item_linear;
+            } else {
+                return R.layout.data_item_grid;
+            }
+        } else {
+            return R.layout.data_item_linear;
+        }
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder getViewHolder(@NonNull View view) {
+        return new ViewHolder(view);
+    }
 
     // view holder class
-    protected class ViewHolder extends FastItemAdapter.ViewHolder<RecyclerViewItem> {
+    protected class ViewHolder extends FastItemAdapter.ViewHolder<DataItem> {
         @NonNull protected View View;
 
-        @BindView(R.id.cardView)     CardView CardView;
+        @BindView(R.id.container)    CardView CardView;
         @BindView(R.id.note)         LinearLayout Note;
         @BindView(R.id.paymentInfo)  LinearLayout PaymentInfo;
         @BindView(R.id.loginInfo)    LinearLayout LoginInfo;
@@ -76,11 +129,12 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
 
         // binding and unbinding
         @Override
-        public void bindView(@NonNull RecyclerViewItem item, @NonNull List<Object> payloads) {
+        public void bindView(@NonNull DataItem item, @NonNull List<Object> payloads) {
             //get the context
             Context context = itemView.getContext();
-            UIUtils.setBackground(View, AdapterItemBackground.getItemDrawableStates(
-                    context, R.color.white, R.color.c_yellow_20, false));
+            View.setBackground(Res.getDrawable(context, R.drawable.data_item_drawable_states));
+//            UIUtils.setBackground(View, AdapterItemBackground.getItemDrawableStates(
+//                    context, R.color.white, R.color.c_yellow_20, false));
             ViewSetter.setLinearLayoutVisibility(Note, PaymentInfo, LoginInfo, item.mType);
 
             // bind our data to the view
@@ -94,8 +148,8 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
         }
 
         @Override
-        public void unbindView(@NonNull RecyclerViewItem item) {
-            // Nullify Views
+        public void unbindView(@NonNull DataItem item) {
+            // nullify views
             Label.setText(null);
             Date.setText(null);
 
@@ -109,12 +163,12 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
             Email.setText(null);
             Username.setText(null);
 
-            // Reset visibility
+            // reset visibility
             Note.setVisibility(android.view.View.GONE);
             PaymentInfo.setVisibility(android.view.View.GONE);
             LoginInfo.setVisibility(android.view.View.GONE);
 
-            // TextViews
+            // text views
             Label.setVisibility(android.view.View.GONE);
             Date.setVisibility(android.view.View.GONE);
 
@@ -127,17 +181,17 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
             Email.setVisibility(android.view.View.GONE);
             Username.setVisibility(android.view.View.GONE);
 
-            // ImageViews
+            // image views
             CardIcon.setVisibility(android.view.View.GONE);
 
             item.getViewHolder(View);
 
-            // Clear graphics
+            // clear graphics
             Tag.setVisibility(android.view.View.INVISIBLE);
         }
 
         // filter content
-        private void filterContent(RecyclerViewItem item) {
+        private void filterContent(DataItem item) {
             Scanner scanner = new Scanner(item.mContent.toString());
             switch(item.mType) {
                 case DataPackage.NOTE:
@@ -166,63 +220,4 @@ public class RecyclerViewItem extends AbstractItem<RecyclerViewItem, RecyclerVie
             scanner.close();
         }
     }
-
-    // setting content information
-    public RecyclerViewItem withRawDataPackage(DataPackage dataPackage) {
-        this.mDataPackage = dataPackage;
-        return this;
-    }
-
-    public RecyclerViewItem withType(String type) {
-        this.mType = type;
-        return this;
-    }
-    public RecyclerViewItem withLabel(String label) {
-        this.mLabel = new StringHolder(label);
-        return this;
-    }
-    public RecyclerViewItem withDate(String date) {
-        this.mDate = new StringHolder(date);
-        return this;
-    }
-    public RecyclerViewItem withTag(int tag) {
-        this.mTag = tag;
-        return this;
-    }
-
-    public RecyclerViewItem withContent(String note) {
-        this.mContent = new StringHolder(note);
-        return this;
-    }
-
-    public RecyclerViewItem withCardIcon(Drawable cardType) {
-        this.mCardType = cardType;
-        return this;
-    }
-
-    // The unique ID for this type of item
-    @Override
-    public int getType() {
-        return R.id.fastadapter_item;
-    }
-    // The layout that will be used for item
-    @Override
-    public int getLayoutRes() {
-        if (mContext != null) {
-            if (Settings.Checkers.isLinearFormat(Settings.getListFormat(mContext))) {
-                return R.layout.data_item_linear;
-            } else {
-                return R.layout.data_item_grid;
-            }
-        } else {
-            return R.layout.data_item_linear;
-        }
-    }
-
-    @NonNull
-    @Override
-    public ViewHolder getViewHolder(@NonNull View view) {
-        return new ViewHolder(view);
-    }
-    // -----------------------------------
 }

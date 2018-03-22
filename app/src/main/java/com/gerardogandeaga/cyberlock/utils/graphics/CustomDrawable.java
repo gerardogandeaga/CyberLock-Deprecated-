@@ -11,8 +11,8 @@ public class CustomDrawable {
 
     public static Drawable scaleDrawable(Context context, Drawable drawable, int widthToScale, int heightToScale) {
 
-        int w = Scaling.dpToPx(context, widthToScale);
-        int h = Scaling.dpToPx(context, heightToScale);
+        int w = Scaling.dpFromPx(context, widthToScale);
+        int h = Scaling.dpFromPx(context, heightToScale);
         Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
 
         return new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, w, h, true));

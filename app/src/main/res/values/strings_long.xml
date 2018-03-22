@@ -1,27 +1,11 @@
 <resources>
     ------------------------------------------------------------------------------------------------
-    <!-- SHORT TEXT -->
+    <!-- short text -->
     ------------------------------------------------------------------------------------------------
-    <!-- PARAGRAPHS -->
-    <!-- SETTINGS -->
-    <!-- ALERT DIALOGS -->
-    <string name="AlertDialog_ScrambleKey">
-        On selecting Scramble, ALL your content will be momentarily decrypted and re-encrypted with
-        the new key and selected algorithm. Please wait for the process to be completed and response
-        message to be successful. Once the process has started you will not be able to cancel it.
-        Additionally and most importantly, do not exit or close the application during the process
-        as it may result in data loss.
-    </string>
-    <string name="AlertDialog_EncryptionAlgorithmChange">
-        On pressing continue you content will be momentarily decrypted and re-encrypted using the
-        new encryption algorithm. Please wait for the process to be completed and response message
-        to be successful. Once the process has started you will not be able to cancel it.
-        Additionally and most importantly, do not exit or close the application during the process
-        as it may result in data loss.
-    </string>
-    <!-- ABOUT -->
-    <string name="CyberLockTechTitle">Cryptography</string>
-    <string name="CyberLockTech">
+    <!-- paragraphs -->
+    <!-- about -->
+    <string name="str_title_cyber_lock_tech">Cryptography</string>
+    <string name="str_cyber_lock_tech">
         Cyber Lock is a mobile application designed to secure and privatize your personal information.
         Cyber Lock is equipped to utilize four different symmetric Encryption Algorithms; AES, Blowfish,
         RC4 and Triple DES. Pins are protected using a salted SHA-256 algorithm, a powerful one-way
@@ -43,18 +27,6 @@
         is a one way function “encryptor” which cannot be decrypted. SHA-256 is currently one of
         the strongest functions available.
     </string>
-    <!-- BUG REPORT -->
-    <string name="WhereBRGoes">This report will be sent straight to the developer for reviewing.</string>
-    ------------------------------------------------------------------------------------------------
-    <!-- UPDATE FEED -->
-    <string name="CurrentVersion">Version 1.0.0</string>
-    <string name="UpdateTitle">Update Board</string>
-    <!-- Versions-->
-    <string name="V1_0_0">
-        <b>1.0.0v</b>\n
-        Welcome to Cyber Lock! Initial release comes outfitted with a data,
-        card info, login credential and playground encryptor. Content Algorithms
-        currently supported are AES-256 and Blowfish-448 bit.
-    </string>
-    ------------------------------------------------------------------------------------------------
+    <!-- bug report -->
+    <string name="str_where_bug_reports_go">This report will be sent straight to the developer for reviewing.</string>
 </resources>

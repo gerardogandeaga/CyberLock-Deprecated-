@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Titles-->
-    <!-- Settings -->
-    <string name="titleSelectDelayTime">Select Delay Time</string>
-    <string name="titleChangePassword">Change Password</string>
-    <string name="titleScrambleEncryptionKey">Scramble Encryption Key</string>
-    <string name="titleChangeEncryptionAlgo">Change Encryption Algorithm</string>
+    <!-- titles-->
+    <!-- settings -->
+    <string name="str_title_select_delay_time">Select Delay Time</string>
+    <string name="str_title_change_password">Change Password</string>
+    <string name="str_title_scramble_encryption_key">Scramble Encryption Key</string>
+    <string name="str_title_change_encryption_algo">Change Encryption Algorithm</string>
     ------------------------------------------------------------------------------------------------
-    <!-- Buttons-->
+    <!-- buttons-->
     <!-- neutral -->
-    <string name="btnCustom">Custom</string>
+    <string name="str_btn_custom">Custom</string>
     <!-- negative -->
-    <string name="btnCancel">Cancel</string>
-    <string name="btnDone">Done</string>
+    <string name="str_btn_cancel">Cancel</string>
+    <string name="str_btn_done">Done</string>
     <!-- positive -->
-    <string name="btnEdit">Edit</string>
-    <string name="btnChoose">Choose</string>
-    <string name="btnChange">Change</string>
-    <string name="btnScramble">Scramble</string>
+    <string name="str_btn_edit">Edit</string>
+    <string name="str_btn_choose">Choose</string>
+    <string name="str_btn_change">Change</string>
+    <string name="str_btn_scramble">Scramble</string>
 
     <!-- test -->
-    <string name="btnPositive">Positive</string>
-    <string name="btnNegative">Negative</string>
-    <string name="btnNeutral">Neutral</string>
+    <string name="str_btn_positive">Positive</string>
+    <string name="str_btn_negative">Negative</string>
+    <string name="str_btn_neutral">Neutral</string>
 </resources>

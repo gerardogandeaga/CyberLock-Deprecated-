@@ -6,12 +6,13 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.core.handlers.selection.undo.UndoHelper;
-import com.gerardogandeaga.cyberlock.core.recyclerview.items.RecyclerViewItem;
+import com.gerardogandeaga.cyberlock.core.handlers.selection.actions.UndoHelper;
+import com.gerardogandeaga.cyberlock.core.recyclerview.items.DataItem;
 import com.gerardogandeaga.cyberlock.database.DBAccess;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
 import com.gerardogandeaga.cyberlock.utils.Res;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
+import com.mikepenz.fastadapter.select.SelectExtension;
 
 import org.jetbrains.annotations.Contract;
 
@@ -26,14 +27,14 @@ public class AdapterItemHandler {
     @SuppressLint("StaticFieldLeak")
     private static UndoHelper mUndoHelper;
 
-    public static void onLongClick(FastItemAdapter<RecyclerViewItem> fastItemAdapter, RecyclerViewItem item, int position) {
+    public static void onLongClick(FastItemAdapter<DataItem> fastItemAdapter, DataItem item, int position) {
         mIsActive = true;
         mDataPackageList = new ArrayList<>();
         onClick(fastItemAdapter, item, position);
     }
 
     // todo refactor deprecated select and de-select
-    public static boolean onClick(FastItemAdapter<RecyclerViewItem> fastItemAdapter, RecyclerViewItem item, int position) {
+    public static boolean onClick(FastItemAdapter<DataItem> fastItemAdapter, DataItem item, int position) {
         if (mIsActive) {
             DataPackage dataPackage = item.mDataPackage;
 
@@ -41,6 +42,8 @@ public class AdapterItemHandler {
             if (!mDataPackageList.contains(dataPackage)) { // If item does not exist
                 mDataPackageList.add(dataPackage);
                 fastItemAdapter.select(position);
+                SelectExtension<DataItem> selectExtension = new SelectExtension<>();
+                selectExtension.select();
             } else {
                 mDataPackageList.remove(dataPackage);      // If Item does exist
                 fastItemAdapter.deselect(position);
@@ -53,9 +56,9 @@ public class AdapterItemHandler {
         return false;
     }
 
-    public static void onDelete(Context context, FastItemAdapter<RecyclerViewItem> fastItemAdapter, View view) {
+    public static void onDelete(Context context, FastItemAdapter<DataItem> fastItemAdapter, View view) {
         if (mIsActive && (!mDataPackageList.isEmpty() || mDataPackageList == null)) {
-            ArrayList<RecyclerViewItem> selectedItems = new ArrayList<>(fastItemAdapter.getSelectedItems());
+            ArrayList<DataItem> selectedItems = new ArrayList<>(fastItemAdapter.getSelectedItems());
 
             mUndoHelper = new UndoHelper(context);
             mUndoHelper.populateTempArray(fastItemAdapter, mDataPackageList, selectedItems);
@@ -77,7 +80,7 @@ public class AdapterItemHandler {
         }
     }
 
-    public static void cancel(FastItemAdapter<RecyclerViewItem> fastItemAdapter) {
+    public static void cancel(FastItemAdapter<DataItem> fastItemAdapter) {
         for (int i = 0; i < fastItemAdapter.getItemCount(); i++) {
             fastItemAdapter.deselect(i);
         }

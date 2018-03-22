@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- titles -->
+    <string-array name="str_array_external_libraries">
+        <item>Butter Knife</item>
+        <item>CircleImageView</item>
+        <item>FastAdapter</item>
+    </string-array>
+
+    <!-- author -->
+    <string-array name="str_array_external_libraries_authors">
+        <item>Jake Wharton</item>
+        <item>Henning Dodenhof</item>
+        <item>Mike Penz</item>
+    </string-array>
+
+    <!-- descriptions -->
+    <string-array name="str_array_external_libraries_descriptions">
+        <item>@string/str_lib_butter_knife</item>
+        <item>@string/str_lib_circle_imageview</item>
+        <item>@string/str_lib_fast_adapter</item>
+    </string-array>
+
+    <!-- urls -->
+    <string-array name="str_array_external_libraries_urls">
+        <item>https://github.com/JakeWharton/butterknife</item>
+        <item>https://github.com/hdodenhof/CircleImageView</item>
+        <item>https://github.com/mikepenz/FastAdapter</item>
+    </string-array>
+
+    <!-- lib descriptions -->
+    <string name="str_lib_butter_knife">Field and method binding for Android views which uses
+            annotation processing to generate boilerplate code for you.</string>
+    <string name="str_lib_circle_imageview">A fast circular ImageView perfect for profile images.</string>
+    <string name="str_lib_fast_adapter">The RecyclerView is one of the most used widgets in the Android world,
+            and with it you have to implement an Adapter which provides the items
+            for the view. Most use cases require the same base logic, but require
+            you to write everything again and again. The FastAdapter is here
+            to simplify this process. You don\'t have to worry about the adapter
+            anymore. Just write the logic for how your view/item should look like,
+            and you are done. This library has a fast and highly optimized core
+            which provides core functionality, most apps require.</string>
+
+</resources>

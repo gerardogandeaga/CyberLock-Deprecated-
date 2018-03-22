@@ -35,19 +35,19 @@
 
         <!-- MAIN ACTIVITIES -->
         <activity
-            android:name=".activities.core.ActivityOptions"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity
-            android:name=".utils.settings.ChangePassword"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity
             android:name=".activities.core.ActivityMain"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activities.core.ActivityEdit"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".activities.core.ActivityOptions"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".activities.core.ActivityExternalLibs"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
 

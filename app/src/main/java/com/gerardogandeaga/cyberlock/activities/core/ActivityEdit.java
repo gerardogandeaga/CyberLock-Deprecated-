@@ -17,11 +17,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
 import com.gerardogandeaga.cyberlock.activities.dialogs.DialogFragmentTags;
+import com.gerardogandeaga.cyberlock.android.CustomToast;
 import com.gerardogandeaga.cyberlock.core.handlers.extractors.ContentHandler;
 import com.gerardogandeaga.cyberlock.database.DBAccess;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
@@ -187,7 +187,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
 
         this.mSpCardSelect = findViewById(R.id.spCardSelect);
         //
-        this.mAdapter = ArrayAdapter.createFromResource(this, R.array.CardType_array, R.layout.spinner_setting_text);
+        this.mAdapter = ArrayAdapter.createFromResource(this, R.array.str_array_card_type, R.layout.spinner_setting_text);
         this.mAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         this.mSpCardSelect.setAdapter(mAdapter);
 
@@ -386,7 +386,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
             }
             dbAccess.close();
         } else {
-            Toast.makeText(this, "No Content To Save", Toast.LENGTH_SHORT).show();
+            CustomToast.buildAndShowToast(this, "No Content To Save", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
             dbAccess.close();
         }
     }

@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.android.BaseDialog;
+import com.gerardogandeaga.cyberlock.android.CustomDialog;
 import com.gerardogandeaga.cyberlock.utils.Res;
 import com.gerardogandeaga.cyberlock.utils.math.Scaling;
 
@@ -53,17 +53,17 @@ public class DialogFragmentTags extends DialogFragment {
     }
 
     private Dialog buildDialog() {
-        final BaseDialog baseDialog = new BaseDialog(getActivity());
-        baseDialog.setContentView(buildViews());
-        baseDialog.setTitle("Colour Palette");
-        baseDialog.setNegativeButton("Cancel", new View.OnClickListener() {
+        final CustomDialog customDialog = new CustomDialog(getActivity());
+        customDialog.setContentView(buildViews());
+        customDialog.setTitle("Colour Palette");
+        customDialog.setNegativeButton("Cancel", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDialog.dismiss();
             }
         });
 
-        this.mDialog = baseDialog.createDialog();
+        this.mDialog = customDialog.createDialog();
         return mDialog;
     }
 
@@ -87,7 +87,7 @@ public class DialogFragmentTags extends DialogFragment {
 
         // iterate per row -> 4
         for (int i = 0; i < ROWS; i++) {
-            int padding = Scaling.dpToPx(getActivity(), 10);
+            int padding = Scaling.dpFromPx(getActivity(), 10);
 
             // sub/row layout
             LinearLayout subLayout = new LinearLayout(getActivity());

@@ -10,21 +10,21 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.dialogs.DialogCustomLoad;
+import com.gerardogandeaga.cyberlock.android.CustomToast;
 import com.gerardogandeaga.cyberlock.crypto.hash.Hash;
 import com.gerardogandeaga.cyberlock.crypto.key.CryptKey;
 import com.gerardogandeaga.cyberlock.utils.Settings;
 
-import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.utils.Settings.AUTOSAVE;
 import static com.gerardogandeaga.cyberlock.utils.Settings.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.utils.Settings.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.utils.Settings.ENCRYPTION_ALGORITHM;
 import static com.gerardogandeaga.cyberlock.utils.Settings.PASSWORD;
 import static com.gerardogandeaga.cyberlock.utils.Settings.THEME;
+import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
 
 public class ActivityRegistration extends AppCompatActivity {
     private Context mContext = this;
@@ -68,10 +68,10 @@ public class ActivityRegistration extends AppCompatActivity {
                         if (passwords[0].equals(passwords[1])) {
                             register(passwords);
                         } else {
-                            Toast.makeText(mContext, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                            CustomToast.buildAndShowToast(mContext, "Passwords Do Not Match", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
                         }
                     } else {
-                        Toast.makeText(mContext, "One or more fields are missing", Toast.LENGTH_SHORT).show();
+                        CustomToast.buildAndShowToast(mContext, "On Or More Fields Are Missing", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
                     }
                 }
             });

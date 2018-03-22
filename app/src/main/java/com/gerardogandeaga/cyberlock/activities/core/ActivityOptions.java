@@ -15,18 +15,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
+import com.gerardogandeaga.cyberlock.android.CustomToast;
+import com.gerardogandeaga.cyberlock.utils.ListConfig;
 import com.gerardogandeaga.cyberlock.utils.Res;
 import com.gerardogandeaga.cyberlock.utils.Settings;
 import com.gerardogandeaga.cyberlock.utils.graphics.Graphics;
 import com.gerardogandeaga.cyberlock.utils.security.KeyChecker;
 import com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol;
 import com.gerardogandeaga.cyberlock.utils.settings.ChangePassword;
-import com.mikepenz.aboutlibraries.Libs;
-import com.mikepenz.aboutlibraries.LibsBuilder;
 
 import org.jetbrains.annotations.Contract;
 
@@ -107,12 +106,13 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
         iniChangePassword();
         iniListFormat();
         iniTaggedHeaders();
+        iniOpenSourceLibraries();
     }
     private void iniAutoSave() {
         mSwAutoSave.setChecked(Settings.getAutoSave(this));
     }
     private void iniListFormat() {
-        if (Settings.getListFormat(this).matches("RV_STAGGEREDGRID")) {
+        if (Settings.getListFormat(this).matches(ListConfig.GRID)) {
             mImgListFormat.setImageDrawable(Res.getDrawable(this, R.drawable.graphic_list_grid));
         } else {
             mImgListFormat.setImageDrawable(Res.getDrawable(this, R.drawable.graphic_list_linear));
@@ -124,7 +124,7 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
     private void iniLogoutDelay() {
         ArrayAdapter<CharSequence> adapterLogoutDelay = ArrayAdapter.createFromResource(
                 this,
-                R.array.AutoLogoutDelay_array,
+                R.array.str_array_auto_logout_delay,
                 R.layout.spinner_setting_text);
         adapterLogoutDelay.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         mSpLogoutDelay.setAdapter(adapterLogoutDelay);
@@ -164,6 +164,9 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
         mInputChangePassword.setVisibility(View.GONE);
         mImgDirection.setRotation(-90);
     }
+    private void iniOpenSourceLibraries() {
+        mLinGitHub.setOnClickListener(this);
+    }
 
     @Override
     public void onClick(View v) {
@@ -176,13 +179,8 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
             // case password change
             case R.id.ChangePassword:  onChangePasswordActivate(); break;
             case R.id.btnRegister:     onChangePasswordRegister(); break;
-
-            case R.id.GitHub:
-                LibsBuilder libsBuilder = new LibsBuilder();
-                libsBuilder.withAboutIconShown(true);
-                libsBuilder.withActivityStyle(Libs.ActivityStyle.LIGHT);
-                libsBuilder.start(this);
-                break;
+            //
+            case R.id.GitHub: onOpenSourceLibraries(); break;
         }
     }
 
@@ -192,14 +190,14 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
         mSwAutoSave.setChecked(Settings.getAutoSave(this));
     }
     private void onListFormat() {
-        if (Settings.getListFormat(this).matches("RV_STAGGEREDGRID")) {
-            Settings.setListFormat(this, "RV_LINEAR");
+        if (Settings.getListFormat(this).matches(ListConfig.GRID)) {
+            Settings.setListFormat(this, ListConfig.LINEAR);
             mImgListFormat.setImageDrawable(Res.getDrawable(this, R.drawable.graphic_list_linear));
-            Toast.makeText(this, "Linear list format", Toast.LENGTH_SHORT).show();
+            CustomToast.buildAndShowToast(this, "Linear List Format", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
         } else {
-            Settings.setListFormat(this, "RV_STAGGEREDGRID");
+            Settings.setListFormat(this, ListConfig.GRID);
             mImgListFormat.setImageDrawable(Res.getDrawable(this, R.drawable.graphic_list_grid));
-            Toast.makeText(this, "Grid list format", Toast.LENGTH_SHORT).show();
+            CustomToast.buildAndShowToast(this, "Grid List Format", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
         }
     }
     private void onTaggedHeaders() {
@@ -232,14 +230,19 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
                     mEtFinalPass.getText().clear();
                     mInputChangePassword.setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(this, "Incorrect password", Toast.LENGTH_SHORT).show();
+                    CustomToast.buildAndShowToast(this, "Incorrect Password", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
                 }
             } else {
-                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                CustomToast.buildAndShowToast(this, "Passwords Do Not Match", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
             }
         } else {
-            Toast.makeText(this, "All fields need to be filled", Toast.LENGTH_SHORT).show();
+            CustomToast.buildAndShowToast(this, "All Fields Need To Be Filled", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
         }
+    }
+    private void onOpenSourceLibraries() {
+        ACTIVITY_INTENT = new Intent(this, ActivityExternalLibs.class);
+        this.finish();
+        this.startActivity(ACTIVITY_INTENT);
     }
 
     @Override

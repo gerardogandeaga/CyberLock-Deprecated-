@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Main -->
-    <!-- Drawer States -->
+    <!-- main -->
+    <!-- drawer states -->
     <string name="DRAWER_OPEN">Open</string>
     <string name="DRAWER_CLOSE">Close</string>
     ------------------------------------------------------------------------------------------------
-    <!-- Notes -->
-    <!-- Recycler View Item -->
-    <!-- Payment Information -->
-    <string name="cName"><b>Holder Name: </b></string>
-    <string name="cNumber"><b>Number: </b></string>
-    <string name="cExpire"><b>Expiry Date: </b></string>
-    <string name="cCVV"><b>CVV: </b></string>
-    <string name="cType"><b>Card Type: </b></string>
+    <!-- notes -->
+    <!-- recycler view item -->
+    <!-- payment information -->
+    <string name="str_c_name"><b>Holder Name: </b></string>
+    <string name="str_c_number"><b>Number: </b></string>
+    <string name="str_c_expire"><b>Expiry Date: </b></string>
+    <string name="str_c_cvv"><b>CVV: </b></string>
+    <string name="str_c_type"><b>Card Type: </b></string>
     ------------------------------------------------------------------------------------------------
-    <!-- Settings -->
-    <!-- Auto Logout Delay -->
-    <string-array name="AutoLogoutDelay_array">
+    <!-- settings -->
+    <!-- auto logout delay -->
+    <string-array name="str_array_auto_logout_delay">
         <item>Immediate</item>
         <item>1 Minute</item>
         <item>2 Minutes</item>
@@ -25,8 +25,8 @@
         <item>15 Minutes</item>
         <item>30 Minutes</item>
     </string-array>
-    <!-- Encryption Algorithms -->
-    <string-array name="CryptALGO_array">
+    <!-- encryption algorithms -->
+    <string-array name="str_array_crypt_algorithm">
         <item>AES - 256</item>
         <item>Blowfish - 448</item>
         <!-- Rest of the encryption features
@@ -35,8 +35,8 @@
         -->
     </string-array>
     ------------------------------------------------------------------------------------------------
-    <!-- Edit Activity -->
-    <string-array name="CardType_array">
+    <!-- edit activity -->
+    <string-array name="str_array_card_type">
         <item>Other</item>
         <item>Visa</item>
         <item>Master Card</item>
@@ -44,7 +44,7 @@
         <item>Discover</item>
     </string-array>
     ------------------------------------------------------------------------------------------------
-    <!-- TEXT INPUT LAYOUT FIX -->
+    <!-- text input layout fix -->
     <item name="visible" type="id"/>
     <item name="masked" type="id"/>
 </resources>

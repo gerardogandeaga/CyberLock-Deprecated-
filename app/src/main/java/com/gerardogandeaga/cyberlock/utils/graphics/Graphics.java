@@ -85,8 +85,8 @@ public class Graphics {
         public static Drawable getCardImage(Context context, String cardType, int newWidth, int newHeight) {
             Drawable factoryDrawable = getCardImage(context, cardType);
 
-            int w = Scaling.dpToPx(context, newWidth);
-            int h = Scaling.dpToPx(context, newHeight);
+            int w = Scaling.dpFromPx(context, newWidth);
+            int h = Scaling.dpFromPx(context, newHeight);
             Bitmap bitmap = ((BitmapDrawable) factoryDrawable).getBitmap();
 
             return new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, w, h, true));

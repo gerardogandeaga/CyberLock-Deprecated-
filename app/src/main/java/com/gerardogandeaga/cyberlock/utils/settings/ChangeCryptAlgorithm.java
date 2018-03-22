@@ -5,13 +5,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.widget.Toast;
 
-import com.gerardogandeaga.cyberlock.crypto.key.CryptKey;
+import com.gerardogandeaga.cyberlock.activities.dialogs.DialogCustomLoad;
+import com.gerardogandeaga.cyberlock.android.CustomToast;
 import com.gerardogandeaga.cyberlock.crypto.database.DBCrypt;
+import com.gerardogandeaga.cyberlock.crypto.key.CryptKey;
 import com.gerardogandeaga.cyberlock.database.DBAccess;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
-import com.gerardogandeaga.cyberlock.activities.dialogs.DialogCustomLoad;
 
 import java.util.List;
 
@@ -63,7 +63,7 @@ public class ChangeCryptAlgorithm extends AsyncTask<Void, Void, Void> {
         new Handler(mContext.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(mContext, "Encryption Algorithm Changed Successfully", Toast.LENGTH_SHORT).show();
+                    CustomToast.buildAndShowToast(mContext, "Encryption Algorithm Successfully Changed", CustomToast.SUCCESS, CustomToast.LENGTH_SHORT);
                 }
             });
 

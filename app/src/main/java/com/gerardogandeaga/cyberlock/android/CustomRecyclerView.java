@@ -1,4 +1,4 @@
-package com.gerardogandeaga.cyberlock.core.recyclerview;
+package com.gerardogandeaga.cyberlock.android;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,15 +6,11 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-/**
- * @author gerardogandeaga on 2018-03-09.
- */
-
 public class CustomRecyclerView extends RecyclerView {
-    public static final String FORMAT_LINEAR = "RV_LINEAR";
-    public static final String FORMAT_STAGGERED_GRID = "RV_STAGGEREDGRID";
-
-    private boolean mScrollable;
+    private boolean mIsScrollable;
+    private boolean mIsAnimatable;
+    private int mCurrentCount;
+    private int mItemCountExpectancy; // how ever many items are expected to come into the view
 
     public CustomRecyclerView(Context context) {
         this(context, null);
@@ -26,12 +22,16 @@ public class CustomRecyclerView extends RecyclerView {
 
     public CustomRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        this.mScrollable = false;
+        this.mIsScrollable = false;
+        this.mIsAnimatable = true;
+
+        this.mCurrentCount = 0;
+        this.mItemCountExpectancy = -1;
     }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent motionEvent) {
-        return !mScrollable || super.dispatchTouchEvent(motionEvent);
+        return !mIsScrollable || super.dispatchTouchEvent(motionEvent);
     }
 
     @Override
@@ -44,19 +44,24 @@ public class CustomRecyclerView extends RecyclerView {
                 getHandler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mScrollable = true;
+                        mIsScrollable = true;
                     }
                 }, i * 100);
             }
+            this.mCurrentCount++;
         }
     }
 
-
-
     private void animate(View view, final int pos) {
-        view.animate().cancel();
-        view.setTranslationY(100);
-        view.setAlpha(0);
-        view.animate().alpha(1.0f).translationY(0).setDuration(300).setStartDelay(pos * 100);
+        if (mIsAnimatable) {
+            view.animate().cancel();
+            view.setTranslationY(100);
+            view.setAlpha(0);
+            view.animate().alpha(1.0f).translationY(0).setDuration(300).setStartDelay(pos * 100);
+        }
+    }
+
+    public void endAnimations() {
+        this.mIsAnimatable = false;
     }
 }

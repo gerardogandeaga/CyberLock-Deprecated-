@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.core.ActivityEdit;
+import com.gerardogandeaga.cyberlock.android.CustomDialog;
 import com.gerardogandeaga.cyberlock.core.handlers.extractors.ContentHandler;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
-import com.gerardogandeaga.cyberlock.android.BaseDialog;
 import com.gerardogandeaga.cyberlock.utils.Res;
 import com.gerardogandeaga.cyberlock.utils.graphics.Graphics;
 import com.gerardogandeaga.cyberlock.utils.views.ViewSetter;
@@ -105,28 +105,28 @@ public class DialogDataPreview {
     }
 
     private void buildDialog(View view, ContentHandler contentHandler) {
-        BaseDialog baseDialog = new BaseDialog(mContext);
-        baseDialog.setContentView(view);
-        if (contentHandler.mCardImage != null) { baseDialog.setIcon(contentHandler.mCardImage); }
-        baseDialog.setMenuIcon(mContext.getResources().getDrawable(R.drawable.ic_options), R.color.white);
-        baseDialog.setTitle(contentHandler.mLabel);
-        baseDialog.setSubTitle(contentHandler.mDate);
-        baseDialog.setTitleBackgroundColour(Graphics.ColourTags.colourTagHeader(mContext, contentHandler.mTag));
-        baseDialog.setTitleColour(Res.getColour(mContext, R.color.white));
-        baseDialog.setPositiveButton("Edit", new View.OnClickListener() {
+        CustomDialog customDialog = new CustomDialog(mContext);
+        customDialog.setContentView(view);
+        if (contentHandler.mCardImage != null) { customDialog.setIcon(contentHandler.mCardImage); }
+        customDialog.setMenuIcon(mContext.getResources().getDrawable(R.drawable.ic_options), R.color.white);
+        customDialog.setTitle(contentHandler.mLabel);
+        customDialog.setSubTitle(contentHandler.mDate);
+        customDialog.setTitleBackgroundColour(Graphics.ColourTags.colourTagHeader(mContext, contentHandler.mTag));
+        customDialog.setTitleColour(Res.getColour(mContext, R.color.white));
+        customDialog.setPositiveButton("Edit", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDialog.dismiss();
                 onEdit();
             }
         });
-        baseDialog.setNegativeButton("Done", new View.OnClickListener() {
+        customDialog.setNegativeButton("Done", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDialog.dismiss();
             }
         });
-        this.mDialog = baseDialog.createDialog();
+        this.mDialog = customDialog.createDialog();
         mDialog.show();
     }
 

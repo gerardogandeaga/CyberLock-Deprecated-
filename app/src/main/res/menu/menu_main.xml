@@ -9,7 +9,7 @@
         android:id="@+id/add"
         android:layout_height="wrap_content"
         android:icon="@drawable/ic_add"
-        android:title="@string/mnuAdd"
+        android:title="@string/str_mnu_add"
         app:showAsAction="always">
 
         <menu>
@@ -17,19 +17,19 @@
                 android:id="@+id/add_note"
                 android:icon="@drawable/ic_note"
                 android:orderInCategory="0"
-                android:title="@string/mnuAddNote"
+                android:title="@string/str_mnu_add_note"
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/add_paymentinfo"
                 android:icon="@drawable/ic_card"
                 android:orderInCategory="0"
-                android:title="@string/mnuAddPaymentInfo"
+                android:title="@string/str_mnu_add_payment_info"
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/add_logininfo"
                 android:icon="@drawable/ic_login"
                 android:orderInCategory="0"
-                android:title="@string/mnuAddLoginInfo"
+                android:title="@string/str_mnu_add_login_info"
                 app:showAsAction="never"/>
         </menu>
 
@@ -39,7 +39,7 @@
         android:id="@+id/options"
         android:layout_height="wrap_content"
         android:icon="@drawable/ic_options"
-        android:title="@string/mnuOptions"
+        android:title="@string/str_mnu_options"
         app:showAsAction="always">
 
         <menu>
@@ -47,13 +47,13 @@
                 android:id="@+id/option_options"
                 android:icon="@drawable/ic_settings"
                 android:orderInCategory="0"
-                android:title="@string/mnuOptions"
+                android:title="@string/str_mnu_options"
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/option_import"
                 android:icon="@drawable/ic_import"
                 android:orderInCategory="0"
-                android:title="@string/mnuImport"
+                android:title="@string/str_mnu_import"
                 app:showAsAction="never"/>
         </menu>
 

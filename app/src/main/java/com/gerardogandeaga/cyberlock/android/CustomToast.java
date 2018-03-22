@@ -7,23 +7,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.utils.Res;
 
-public class BaseToast {
+public class CustomToast {
     /*
     default = 1
     Alert state conditions :
     1 = information / notification
     2 = warning -> something potentially went wrong or can go wrong
-    3 = error -> incorrect input or data lose */
+    3 = error -> incorrect input or data lose
+    4 = success -> when a task has been successfully completed*/
     public static final int INFORMATION = 1;
     public static final int WARNING = 2;
     public static final int ERROR = 3;
+    public static final int SUCCESS = 4;
+
+    public static final int LENGTH_SHORT = Toast.LENGTH_SHORT;
+    public static final int LENGTH_LONG = Toast.LENGTH_LONG;
 
     public static void buildAndShowToast(Context context, String message, int priority, int duration) {
-        Toast toast = initializeToast(context, priority, duration);
+        Toast toast = initializeToast(context, duration);
 
         // custom toast view
-        View view = View.inflate(context, R.layout.base_toast_view, null);
+        View view = View.inflate(context, R.layout.custom_toast_view, null);
         TextView msg = view.findViewById(R.id.tvMessage);
 
         ((CardView) view.findViewById(R.id.container)).setCardBackgroundColor(priorityColour(context, priority));
@@ -33,7 +39,7 @@ public class BaseToast {
         toast.show();
     }
 
-    private static Toast initializeToast(Context context, int priority, int duration) {
+    private static Toast initializeToast(Context context, int duration) {
         Toast toast = new Toast(context);
         toast.setDuration(duration);
 
@@ -43,13 +49,15 @@ public class BaseToast {
     private static int priorityColour(Context context, int  priority) {
         switch (priority) {
             case INFORMATION:
-                return context.getResources().getColor(R.color.c_blue_40);
+                return Res.getColour(context, R.color.black);
             case WARNING:
-                return context.getResources().getColor(R.color.c_yellow_70);
+                return Res.getColour(context, R.color.c_yellow_70);
             case ERROR:
-                return context.getResources().getColor(R.color.c_red_60);
+                return Res.getColour(context, R.color.c_red_60);
+            case SUCCESS:
+                return Res.getColour(context, R.color.c_green_30);
             default:
-                return context.getResources().getColor(R.color.c_blue_40);
+                return Res.getColour(context, R.color.c_blue_40);
         }
     }
 }

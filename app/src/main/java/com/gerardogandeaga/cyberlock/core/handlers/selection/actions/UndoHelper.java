@@ -1,20 +1,20 @@
-package com.gerardogandeaga.cyberlock.core.handlers.selection.undo;
+package com.gerardogandeaga.cyberlock.core.handlers.selection.actions;
 
 import android.content.Context;
 import android.os.CountDownTimer;
 
+import com.gerardogandeaga.cyberlock.core.recyclerview.items.DataItem;
 import com.gerardogandeaga.cyberlock.database.DBAccess;
 import com.gerardogandeaga.cyberlock.database.DataPackage;
-import com.gerardogandeaga.cyberlock.core.recyclerview.items.RecyclerViewItem;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 
 import java.util.ArrayList;
 
 public class UndoHelper {
     private Context mContext;
-    private FastItemAdapter<RecyclerViewItem> mFastItemAdapter;
+    private FastItemAdapter<DataItem> mFastItemAdapter;
     private ArrayList<DataPackage> mTempDataPackageArray;
-    private ArrayList<RecyclerViewItem> mItemViewArray;
+    private ArrayList<DataItem> mItemViewArray;
 
     private CountDownTimer mCountDownTimer;
 
@@ -22,7 +22,7 @@ public class UndoHelper {
         this.mContext = context;
     }
 
-    public void populateTempArray(FastItemAdapter<RecyclerViewItem> fastItemAdapter, ArrayList<DataPackage> dataPackages, ArrayList<RecyclerViewItem> items) {
+    public void populateTempArray(FastItemAdapter<DataItem> fastItemAdapter, ArrayList<DataPackage> dataPackages, ArrayList<DataItem> items) {
         this.mFastItemAdapter = fastItemAdapter;
         this.mTempDataPackageArray = dataPackages;
         this.mItemViewArray = items;
@@ -40,7 +40,7 @@ public class UndoHelper {
                 dbAccess.save(mTempDataPackageArray.get(i));
 
                 // Re-input into adapter
-                RecyclerViewItem item = mItemViewArray.get(i);
+                DataItem item = mItemViewArray.get(i);
                 item.withSetSelected(false);
                 int index = (int) (item.getIdentifier() - 1L);
                 mFastItemAdapter.add(index, item);
@@ -65,7 +65,6 @@ public class UndoHelper {
 
             @Override
             public void onFinish() {
-//                Toast.makeText(mContext, "Done!", Toast.LENGTH_SHORT).show();
                 deleteData();
             }
         }.start();

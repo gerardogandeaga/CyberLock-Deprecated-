@@ -30,7 +30,7 @@
                 android:layout_marginTop="15dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="2dp"
-                app:cardElevation="2dp">
+                app:cardElevation="3dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="@string/Settings"
+                        android:text="@string/str_settings"
                         android:textAppearance="@style/myText.Settings.Category"/>
 
                     <LinearLayout
@@ -65,7 +65,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
-                            android:contentDescription="@string/AutoSave"
+                            android:contentDescription="@string/str_auto_save"
                             android:padding="4dp"
                             app:srcCompat="@drawable/graphic_save"/>
 
@@ -76,7 +76,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="@string/AutoSave"
+                            android:text="@string/str_auto_save"
                             android:textAppearance="@style/myText.Settings.Header"/>
 
                         <Switch
@@ -113,7 +113,7 @@
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:layout_gravity="center_vertical"
-                                android:contentDescription="@string/ListFormat"
+                                android:contentDescription="@string/str_list_format"
                                 android:padding="3dp"
                                 app:srcCompat="@drawable/graphic_list_format"/>
 
@@ -126,14 +126,14 @@
                                 android:layout_weight="1"
                                 android:clickable="false"
                                 android:gravity="center_vertical"
-                                android:text="@string/ListFormat"
+                                android:text="@string/str_list_format"
                                 android:textAppearance="@style/myText.Settings.Header"/>
 
                             <ImageView
                                 android:id="@+id/imgListFormat"
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
-                                android:contentDescription="@string/ListFormat"
+                                android:contentDescription="@string/str_list_format"
                                 android:padding="4dp"
                                 android:src="@drawable/graphic_list_linear"
                                 android:tint="@color/black"/>
@@ -159,7 +159,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
-                            android:contentDescription="@string/AutoSave"
+                            android:contentDescription="@string/str_auto_save"
                             android:padding="4dp"
                             app:srcCompat="@drawable/graphic_tag"/>
 
@@ -170,7 +170,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="@string/HeaderTags"
+                            android:text="@string/str_header_tags"
                             android:textAppearance="@style/myText.Settings.Header"/>
 
                         <Switch
@@ -202,7 +202,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
-                            android:contentDescription="@string/LogoutDelay"
+                            android:contentDescription="@string/str_logout_delay"
                             android:padding="3dp"
                             app:srcCompat="@drawable/graphic_timer"/>
 
@@ -214,7 +214,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="@string/LogoutDelay"
+                            android:text="@string/str_logout_delay"
                             android:textAppearance="@style/myText.Settings.Header"/>
 
                         <android.support.v7.widget.AppCompatSpinner
@@ -227,7 +227,7 @@
                             android:clickable="false"
                             android:focusable="false"
                             android:popupBackground="@color/white"
-                            android:prompt="@string/titleSelectDelayTime"
+                            android:prompt="@string/str_title_select_delay_time"
                             android:spinnerMode="dropdown"
                             tools:targetApi="lollipop"/>
 
@@ -255,7 +255,7 @@
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:layout_gravity="center_vertical"
-                                android:contentDescription="@string/ChangePassword"
+                                android:contentDescription="@string/str_change_password"
                                 android:padding="3dp"
                                 app:srcCompat="@drawable/graphic_login_password"/>
 
@@ -268,14 +268,14 @@
                                 android:layout_weight="1"
                                 android:clickable="false"
                                 android:gravity="center_vertical"
-                                android:text="@string/ChangePassword"
+                                android:text="@string/str_change_password"
                                 android:textAppearance="@style/myText.Settings.Header"/>
 
                             <ImageView
                                 android:id="@+id/imgDirection"
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
-                                android:contentDescription="@string/ChangePassword"
+                                android:contentDescription="@string/str_change_password"
                                 android:padding="10dp"
                                 android:rotation="-90"
                                 android:src="@drawable/graphic_back"/>
@@ -302,7 +302,7 @@
                 android:layout_marginRight="15dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="2dp"
-                app:cardElevation="2dp">
+                app:cardElevation="3dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -317,7 +317,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="@string/About"
+                        android:text="@string/str_about"
                         android:textAppearance="@style/myText.Settings.Category"/>
 
                     <LinearLayout
@@ -338,7 +338,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
-                            android:contentDescription="@string/Git"
+                            android:contentDescription="@string/str_git"
                             android:padding="3dp"
                             app:srcCompat="@drawable/graphic_github"/>
 
@@ -351,7 +351,7 @@
                             android:layout_weight="1"
                             android:clickable="false"
                             android:gravity="center_vertical"
-                            android:text="@string/Git"
+                            android:text="@string/str_git"
                             android:textAppearance="@style/myText.Settings.Header"/>
 
                     </LinearLayout>
@@ -374,7 +374,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
-                            android:contentDescription="@string/AboutCL"
+                            android:contentDescription="@string/str_about_cyber_lock"
                             android:padding="3dp"
                             app:srcCompat="@drawable/graphic_about"/>
 
@@ -387,7 +387,7 @@
                             android:layout_weight="1"
                             android:clickable="false"
                             android:gravity="center_vertical"
-                            android:text="@string/AboutCL"
+                            android:text="@string/str_about_cyber_lock"
                             android:textAppearance="@style/myText.Settings.Header"/>
 
                     </LinearLayout>
@@ -410,7 +410,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
-                            android:contentDescription="@string/Version"
+                            android:contentDescription="@string/str_version"
                             android:padding="3dp"
                             app:srcCompat="@drawable/graphic_about"/>
 
@@ -423,7 +423,7 @@
                             android:layout_weight="1"
                             android:clickable="false"
                             android:gravity="center_vertical"
-                            android:text="@string/Version"
+                            android:text="@string/str_version"
                             android:textAppearance="@style/myText.Settings.Header"/>
 
                     </LinearLayout>
@@ -440,7 +440,7 @@
                 android:layout_marginRight="15dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="2dp"
-                app:cardElevation="2dp">
+                app:cardElevation="3dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -455,7 +455,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="@string/Connect"
+                        android:text="@string/str_connect"
                         android:textAppearance="@style/myText.Settings.Category"/>
 
                     <LinearLayout
@@ -476,7 +476,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
-                            android:contentDescription="@string/Rate"
+                            android:contentDescription="@string/str_rate"
                             android:padding="3dp"
                             app:srcCompat="@drawable/graphic_github"/>
 
@@ -489,7 +489,7 @@
                             android:layout_weight="1"
                             android:clickable="false"
                             android:gravity="center_vertical"
-                            android:text="@string/Rate"
+                            android:text="@string/str_rate"
                             android:textAppearance="@style/myText.Settings.Header"/>
 
                     </LinearLayout>
@@ -512,7 +512,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
-                            android:contentDescription="@string/Bug"
+                            android:contentDescription="@string/str_bug"
                             android:padding="3dp"
                             app:srcCompat="@drawable/graphic_login_email"/>
 
@@ -525,7 +525,107 @@
                             android:layout_weight="1"
                             android:clickable="false"
                             android:gravity="center_vertical"
-                            android:text="@string/Bug"
+                            android:text="@string/str_bug"
+                            android:textAppearance="@style/myText.Settings.Header"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/str_developers"
+                        android:textAppearance="@style/myText.Settings.Category"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bk_custom_default_ripple"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="horizontal"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="10dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center_vertical"
+                            android:contentDescription="@string/str_rate"
+                            android:padding="3dp"
+                            app:srcCompat="@drawable/graphic_github"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:clickable="false"
+                            android:gravity="center_vertical"
+                            android:text="@string/str_role_gerardo"
+                            android:textAppearance="@style/myText.Settings.Header"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bk_custom_default_ripple"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="horizontal"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="10dp"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center_vertical"
+                            android:contentDescription="@string/str_bug"
+                            android:padding="3dp"
+                            app:srcCompat="@drawable/graphic_login_email"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:clickable="false"
+                            android:gravity="center_vertical"
+                            android:text="@string/str_role_carol"
                             android:textAppearance="@style/myText.Settings.Header"/>
 
                     </LinearLayout>

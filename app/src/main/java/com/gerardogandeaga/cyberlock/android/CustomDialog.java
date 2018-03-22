@@ -6,17 +6,20 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.utils.Res;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BaseDialog {
+public class CustomDialog {
     private Context mContext;
     private View mView;
 
@@ -37,9 +40,9 @@ public class BaseDialog {
     @BindView(R.id.buttonContainer)   LinearLayout mButtonContainer;
     @BindView(R.id.container)         LinearLayout mContainer;
 
-    public BaseDialog(Context context) {
+    public CustomDialog(Context context) {
         this.mContext = context;
-        this.mView = View.inflate(context, R.layout.base_dialog_view, null);
+        this.mView = View.inflate(context, R.layout.custom_dialog_view, null);
         ButterKnife.bind(this, mView);
 
         // on create
@@ -48,8 +51,15 @@ public class BaseDialog {
 
     public Dialog createDialog() {
         checkAndSetContainerVisibility();
+
+        // wrapper keeps the dimensions consistent in the dialog view
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        RelativeLayout wrapper = new RelativeLayout(mContext);
+        wrapper.setLayoutParams(params);
+        wrapper.addView(mView);
+
         return new AlertDialog.Builder(mContext)
-                .setView(mView)
+                .setView(wrapper)
                 .create();
     }
 
@@ -70,7 +80,7 @@ public class BaseDialog {
 
     // menu icon
     public void setMenuIcon(Drawable drawable, int colourId) {
-        mMenuIcon.setColorFilter(mContext.getResources().getColor(colourId), PorterDuff.Mode.SRC_ATOP);
+        mMenuIcon.setColorFilter(Res.getColour(mContext, colourId), PorterDuff.Mode.SRC_ATOP);
         setMenuIcon(drawable);
     }
     public void setMenuIcon(Drawable drawable)  {
