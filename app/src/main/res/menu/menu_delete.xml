@@ -6,6 +6,7 @@
 
     <item
         android:id="@+id/option_delete"
+        android:icon="@drawable/ic_test_trash"
         android:title="Delete"
         app:showAsAction="always"/>
 

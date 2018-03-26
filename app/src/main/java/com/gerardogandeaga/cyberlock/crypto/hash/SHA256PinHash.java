@@ -8,8 +8,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-import static com.gerardogandeaga.cyberlock.utils.Settings.FLAGS;
-
 public class SHA256PinHash {
     @NonNull
     public static String hashEncode(String string)
@@ -27,7 +25,7 @@ public class SHA256PinHash {
         System.arraycopy(salt, 0, combinedByteVal, 0, salt.length);
         System.arraycopy(pinHash, 0, combinedByteVal, salt.length, pinHash.length);
 
-        return Base64.encodeToString(combinedByteVal, FLAGS);
+        return Base64.encodeToString(combinedByteVal, Base64.DEFAULT);
     }
     public static String hashEncode(String string, byte[] salt)
             throws NoSuchAlgorithmException, UnsupportedEncodingException, NegativeArraySizeException {
@@ -43,7 +41,7 @@ public class SHA256PinHash {
         System.arraycopy(salt, 0, combinedByteVal, 0, salt.length);
         System.arraycopy(pinHash, 0, combinedByteVal, salt.length, pinHash.length);
 
-        return Base64.encodeToString(combinedByteVal, FLAGS);
+        return Base64.encodeToString(combinedByteVal, Base64.DEFAULT);
     }
 
     public static byte[] generateSalt() {

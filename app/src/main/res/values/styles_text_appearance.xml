@@ -64,20 +64,20 @@
         <item name="android:fontFamily">@font/roboto</item>
     </style>
 
-    <!-- Settings -->
-    <style name="myText.Settings.Category" parent="TextAppearance.AppCompat">
+    <!-- Option -->
+    <style name="myText.Options.Category" parent="TextAppearance.AppCompat">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/roboto</item>
     </style>
-    <style name="myText.Settings.Header" parent="TextAppearance.AppCompat">
+    <style name="myText.Options.Header" parent="TextAppearance.AppCompat">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/roboto</item>
     </style>
-    <style name="myText.Settings.Description" parent="TextAppearance.AppCompat">
+    <style name="myText.Options.Description" parent="TextAppearance.AppCompat">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/roboto</item>

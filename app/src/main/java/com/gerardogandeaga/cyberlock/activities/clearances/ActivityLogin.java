@@ -17,13 +17,13 @@ import com.gerardogandeaga.cyberlock.activities.core.ActivityEdit;
 import com.gerardogandeaga.cyberlock.activities.core.ActivityMain;
 import com.gerardogandeaga.cyberlock.activities.dialogs.DialogCustomLoad;
 import com.gerardogandeaga.cyberlock.android.CustomToast;
-import com.gerardogandeaga.cyberlock.database.DataPackage;
+import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
 import com.gerardogandeaga.cyberlock.utils.security.KeyChecker;
 
-import static com.gerardogandeaga.cyberlock.utils.Settings.CRYPT_KEY;
-import static com.gerardogandeaga.cyberlock.utils.Settings.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.utils.Settings.PASSWORD;
-import static com.gerardogandeaga.cyberlock.utils.Settings.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.PASSWORD;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.TMP_PWD;
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.APP_LOGGED_IN;
 
@@ -109,7 +109,7 @@ public class ActivityLogin extends AppCompatActivity {
             // pull isNew boolean from previous intent and place into new intent to set edit state
             intent.putExtra("isNew?", (boolean) bundle.get("isNew?"));
             // pull the data package from previous intent and place into new intent to resume edit
-            intent.putExtra("data", (DataPackage) bundle.get("lastDB"));
+            intent.putExtra("data", (NoteObject) bundle.get("lastDB"));
 
             // clean up by removing extras
             intent.removeExtra("edit?");

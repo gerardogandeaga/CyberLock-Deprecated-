@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.gerardogandeaga.cyberlock.database.DataPackage;
+import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
 import com.mikepenz.materialize.holder.StringHolder;
 
 public class ViewSetter {
@@ -49,9 +49,9 @@ public class ViewSetter {
                 isPaymentinfo = false,
                 isLogininfo = false;
         switch (args) {
-            case DataPackage.NOTE:         isNote = true; break;
-            case DataPackage.PAYMENT_INFO: isPaymentinfo = true; break;
-            case DataPackage.LOGIN_INFO:   isLogininfo = true; break;
+            case NoteObject.NOTE:         isNote = true; break;
+            case NoteObject.PAYMENT_INFO: isPaymentinfo = true; break;
+            case NoteObject.LOGIN_INFO:   isLogininfo = true; break;
         }
 
         setLinearLayoutVisibility(note, isNote);

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+// todo remove this DialogLoad class and replace with a dialog wrapper that has a custom load inside of it
 public class DialogCustomLoad {
     private Context mContext;
 

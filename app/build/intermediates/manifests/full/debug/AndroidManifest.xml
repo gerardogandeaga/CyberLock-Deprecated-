@@ -23,7 +23,6 @@
         android:logo="@drawable/ic_back"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:testOnly="true"
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin"
@@ -42,14 +41,6 @@
 
         <!-- MAIN ACTIVITIES -->
         <activity
-            android:name="com.gerardogandeaga.cyberlock.activities.core.ActivityOptions"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="com.gerardogandeaga.cyberlock.utils.settings.ChangePassword"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
             android:name="com.gerardogandeaga.cyberlock.activities.core.ActivityMain"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
@@ -57,12 +48,18 @@
             android:name="com.gerardogandeaga.cyberlock.activities.core.ActivityEdit"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.gerardogandeaga.cyberlock.activities.core.ActivityOptions"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.gerardogandeaga.cyberlock.activities.core.ActivityExternalLibs"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
-        <activity android:name="com.mikepenz.aboutlibraries.ui.LibsActivity" />
     </application>
 
 </manifest>

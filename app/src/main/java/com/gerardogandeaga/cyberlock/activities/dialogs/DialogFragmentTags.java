@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.android.CustomDialog;
-import com.gerardogandeaga.cyberlock.utils.Res;
+import com.gerardogandeaga.cyberlock.utils.Resources;
 import com.gerardogandeaga.cyberlock.utils.math.Scaling;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -102,7 +102,7 @@ public class DialogFragmentTags extends DialogFragment {
                 // create colour image
                 final CircleImageView item = new CircleImageView(getActivity());
                 item.setLayoutParams(itemParams);
-                item.setImageDrawable(Res.getDrawable(getActivity(), R.drawable.graphic_circle_filled));
+                item.setImageDrawable(Resources.getDrawable(getActivity(), R.drawable.graphic_circle_filled));
                 item.setColorFilter(colours[finalOffset], PorterDuff.Mode.SRC_ATOP);
                 item.setOnClickListener(new View.OnClickListener() {
                     @Override

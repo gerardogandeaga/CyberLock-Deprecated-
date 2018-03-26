@@ -2,7 +2,6 @@ package com.gerardogandeaga.cyberlock.activities.clearances;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,19 +15,19 @@ import com.gerardogandeaga.cyberlock.activities.dialogs.DialogCustomLoad;
 import com.gerardogandeaga.cyberlock.android.CustomToast;
 import com.gerardogandeaga.cyberlock.crypto.hash.Hash;
 import com.gerardogandeaga.cyberlock.crypto.key.CryptKey;
-import com.gerardogandeaga.cyberlock.utils.Settings;
+import com.gerardogandeaga.cyberlock.utils.SharedPreferences;
 
-import static com.gerardogandeaga.cyberlock.utils.Settings.AUTOSAVE;
-import static com.gerardogandeaga.cyberlock.utils.Settings.CRYPT_KEY;
-import static com.gerardogandeaga.cyberlock.utils.Settings.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.utils.Settings.ENCRYPTION_ALGORITHM;
-import static com.gerardogandeaga.cyberlock.utils.Settings.PASSWORD;
-import static com.gerardogandeaga.cyberlock.utils.Settings.THEME;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.ENCRYPTION_ALGORITHM;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.PASSWORD;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.THEME;
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
 
 public class ActivityRegistration extends AppCompatActivity {
     private Context mContext = this;
-    private SharedPreferences mSharedPreferences;
+    private android.content.SharedPreferences mSharedPreferences;
 
     // widgets
     private DialogCustomLoad mDialogCustomLoad;
@@ -114,9 +113,9 @@ public class ActivityRegistration extends AppCompatActivity {
     }
 
     private boolean isRegistered() {
-        final boolean isRegistered = Settings.getIsRegistered(this);
-        final String password = Settings.getPassword(this);
-        final String key = Settings.getMasterKey(this);
+        final boolean isRegistered = SharedPreferences.getIsRegistered(this);
+        final String password = SharedPreferences.getPassword(this);
+        final String key = SharedPreferences.getMasterKey(this);
 
         return (isRegistered && password != null && key != null);
     }

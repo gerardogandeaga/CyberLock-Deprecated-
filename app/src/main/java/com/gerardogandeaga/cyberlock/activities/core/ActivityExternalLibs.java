@@ -12,10 +12,10 @@ import android.view.View;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
-import com.gerardogandeaga.cyberlock.core.handlers.extractors.ExternalLibItemHandler;
+import com.gerardogandeaga.cyberlock.core.handlers.extractors.ExternalLibItemContentHandler;
 import com.gerardogandeaga.cyberlock.core.recyclerview.decorations.ExternalLibItemDecoration;
 import com.gerardogandeaga.cyberlock.core.recyclerview.items.ExternalLibItem;
-import com.gerardogandeaga.cyberlock.utils.Res;
+import com.gerardogandeaga.cyberlock.utils.Resources;
 import com.gerardogandeaga.cyberlock.utils.graphics.Graphics;
 import com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
@@ -63,7 +63,7 @@ public class ActivityExternalLibs extends AppCompatActivity {
         // adapter
         mRecyclerView.setAdapter(mFastItemAdapter);
 
-        List<ExternalLibItem> externalLibItemList = new ExternalLibItemHandler(this).getItems();
+        List<ExternalLibItem> externalLibItemList = new ExternalLibItemContentHandler(this).getItems();
 
         mFastItemAdapter.add(externalLibItemList);
 
@@ -79,7 +79,7 @@ public class ActivityExternalLibs extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Open Source Libraries");
         getSupportActionBar().setHomeAsUpIndicator(Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(
-                this, Res.getDrawable(this, R.drawable.ic_back)));
+                this, Resources.getDrawable(this, R.drawable.ic_back)));
     }
 
     @Override

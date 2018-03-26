@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.utils.Res;
+import com.gerardogandeaga.cyberlock.utils.Resources;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -80,7 +80,7 @@ public class CustomDialog {
 
     // menu icon
     public void setMenuIcon(Drawable drawable, int colourId) {
-        mMenuIcon.setColorFilter(Res.getColour(mContext, colourId), PorterDuff.Mode.SRC_ATOP);
+        mMenuIcon.setColorFilter(Resources.getColour(mContext, colourId), PorterDuff.Mode.SRC_ATOP);
         setMenuIcon(drawable);
     }
     public void setMenuIcon(Drawable drawable)  {

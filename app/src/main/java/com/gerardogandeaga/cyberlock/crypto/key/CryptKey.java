@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Base64;
 
-import com.gerardogandeaga.cyberlock.utils.Settings;
+import com.gerardogandeaga.cyberlock.utils.SharedPreferences;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -22,9 +22,9 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import static com.gerardogandeaga.cyberlock.utils.Settings.FLAGS;
-import static com.gerardogandeaga.cyberlock.utils.Settings.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.TMP_PWD;
 
+// todo java docs this class
 public class CryptKey {
     private static int mIvLength;
     private static String mEncryptionAlgorithm;
@@ -40,7 +40,7 @@ public class CryptKey {
 
     private static void setAlgorithmPresets(Context context) {
         mKey = TMP_PWD;
-        mEncryptionAlgorithm = Settings.getEncryptionAlgorithm(context);
+        mEncryptionAlgorithm = SharedPreferences.getEncryptionAlgorithm(context);
         mCipherAlgorithm = mEncryptionAlgorithm + "/CBC/PKCS5Padding";
 
         switch (mEncryptionAlgorithm) {
@@ -75,7 +75,7 @@ public class CryptKey {
     public static String generateNewMasterEncryptionKey(Context context, String password) {
         setAlgorithmPresets(context);
 
-        String secretKey = Base64.encodeToString(randomBytes(mKeyByteLength), FLAGS);
+        String secretKey = Base64.encodeToString(randomBytes(mKeyByteLength), Base64.DEFAULT);
         // generate new random secret key
         String cryptKeyStringVal = generateSecretKey(secretKey);
         // encrypt key with user inputted password
@@ -93,7 +93,7 @@ public class CryptKey {
             KeySpec pbeKeySpec = new PBEKeySpec(password.toCharArray(), generateSalt(), mIterations, mKeyLength);
             SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(mKeyAlgorithm);
 
-            return Base64.encodeToString(secretKeyFactory.generateSecret(pbeKeySpec).getEncoded(), FLAGS);
+            return Base64.encodeToString(secretKeyFactory.generateSecret(pbeKeySpec).getEncoded(), Base64.DEFAULT);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -113,7 +113,7 @@ public class CryptKey {
 
             // generate secret key
             byte[] secretKey = generateSecretKey(mKey, saltByteVal, mIterations, mKeyLength);
-            System.out.println("GENERATED SECRET KEY - ENCRYPTION MODE: " + Base64.encodeToString(secretKey, FLAGS));
+            System.out.println("GENERATED SECRET KEY - ENCRYPTION MODE: " + Base64.encodeToString(secretKey, Base64.DEFAULT));
             // generate symmetric key
             SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey, mEncryptionAlgorithm);
 
@@ -132,7 +132,7 @@ public class CryptKey {
             System.arraycopy(encryptedStringByteVal, 0, combinedByteVal, ivByteVal.length + saltByteVal.length, encryptedStringByteVal.length);
 
             // encode to string with Base64
-            return Base64.encodeToString(combinedByteVal, FLAGS);
+            return Base64.encodeToString(combinedByteVal, Base64.DEFAULT);
 
             // catching and handling exceptions
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException |
@@ -149,7 +149,7 @@ public class CryptKey {
 
         try {
             // decode encrypted string to encrypted bytes
-            byte[] encryptedCombinedBytes = Base64.decode(string, FLAGS);
+            byte[] encryptedCombinedBytes = Base64.decode(string, Base64.DEFAULT);
 
             // strip the bytes down, recovering the iv, salt and encrypted bytes
             byte[] ivByteVal = Arrays.copyOfRange(encryptedCombinedBytes, 0, mIvLength);
@@ -158,7 +158,7 @@ public class CryptKey {
 
             // generate parallel(same key as used for encryption) secret key
             byte[] secretKey = generateSecretKey(mKey, saltByteVal, mIterations, mKeyLength);
-            System.out.println("GENERATED SECRET KEY - DECRYPTION MODE: " + Base64.encodeToString(secretKey, FLAGS));
+            System.out.println("GENERATED SECRET KEY - DECRYPTION MODE: " + Base64.encodeToString(secretKey, Base64.DEFAULT));
             // generate parallel(same key as used for encryption) symmetric key
             SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey, mEncryptionAlgorithm);
 
@@ -181,7 +181,6 @@ public class CryptKey {
         }
     }
 
-    // TODO document this function and its details
     @Nullable
     private static byte[] generateSecretKey(String password, byte[] salt, int iterations, int derivedKeyLength) {
         try {

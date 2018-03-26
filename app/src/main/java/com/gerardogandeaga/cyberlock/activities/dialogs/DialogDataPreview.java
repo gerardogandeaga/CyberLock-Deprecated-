@@ -10,9 +10,9 @@ import android.widget.TextView;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.core.ActivityEdit;
 import com.gerardogandeaga.cyberlock.android.CustomDialog;
-import com.gerardogandeaga.cyberlock.core.handlers.extractors.ContentHandler;
-import com.gerardogandeaga.cyberlock.database.DataPackage;
-import com.gerardogandeaga.cyberlock.utils.Res;
+import com.gerardogandeaga.cyberlock.core.handlers.extractors.NoteContentHandler;
+import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.utils.Resources;
 import com.gerardogandeaga.cyberlock.utils.graphics.Graphics;
 import com.gerardogandeaga.cyberlock.utils.views.ViewSetter;
 
@@ -22,39 +22,39 @@ public class DialogDataPreview {
     private Context mContext;
 
     // Data variables
-    private DataPackage mDataPackage;
+    private NoteObject mNoteObject;
 
     // Views
     private Dialog mDialog;
 
-    public DialogDataPreview(Context context, DataPackage dataPackage) {
+    public DialogDataPreview(Context context, NoteObject noteObject) {
         this.mContext = context;
-        this.mDataPackage = dataPackage;
+        this.mNoteObject = noteObject;
     }
 
     // Select type
     public void initializeDialog() {
-        switch (mDataPackage.getType()) {
-            case DataPackage.NOTE:         constructPreviewNote(); break;
-            case DataPackage.PAYMENT_INFO: constructPreviewPaymentInfo(); break;
-            case DataPackage.LOGIN_INFO:   constructPreviewLoginInfo(); break;
+        switch (mNoteObject.getType()) {
+            case NoteObject.NOTE:         constructPreviewNote(); break;
+            case NoteObject.PAYMENT_INFO: constructPreviewPaymentInfo(); break;
+            case NoteObject.LOGIN_INFO:   constructPreviewLoginInfo(); break;
         }
     }
 
     // Create dialog
     private void constructPreviewNote() {
         View view = View.inflate(mContext, R.layout.preview_note, null);
-        ContentHandler contentHandler = new ContentHandler(mContext, mDataPackage);
+        NoteContentHandler noteContentHandler = new NoteContentHandler(mContext, mNoteObject);
         //
         TextView note = view.findViewById(R.id.tvNote);
 
-        note.setText(contentHandler.mNote);
+        note.setText(noteContentHandler.mNote);
 
-        buildDialog(view, contentHandler);
+        buildDialog(view, noteContentHandler);
     }
     private void constructPreviewPaymentInfo() {
         View view = View.inflate(mContext, R.layout.preview_paymentinfo, null);
-        ContentHandler contentHandler = new ContentHandler(mContext, mDataPackage);
+        NoteContentHandler noteContentHandler = new NoteContentHandler(mContext, mNoteObject);
         //
         LinearLayout Holder = view.findViewById(R.id.Holder);
         LinearLayout Number = view.findViewById(R.id.Number);
@@ -70,18 +70,18 @@ public class DialogDataPreview {
         TextView cardType = view.findViewById(R.id.tvCardType);
         TextView notes = view.findViewById(R.id.tvNote);
 
-        if (ViewSetter.setLinearLayoutVisibility(Holder, contentHandler.mHolder))     holder.setText(contentHandler.mHolder);
-        if (ViewSetter.setLinearLayoutVisibility(Number, contentHandler.mNumber))     number.setText(contentHandler.mNumber);
-        if (ViewSetter.setLinearLayoutVisibility(Expiry, contentHandler.mExpiry))     expiry.setText(contentHandler.mExpiry);
-        if (ViewSetter.setLinearLayoutVisibility(CVV, contentHandler.mCVV))           cvv.setText(contentHandler.mCVV);
-        if (ViewSetter.setLinearLayoutVisibility(CardType, contentHandler.mCardType)) cardType.setText(contentHandler.mCardType);
-        if (ViewSetter.setLinearLayoutVisibility(Notes, contentHandler.mNote))        notes.setText(contentHandler.mNote);
+        if (ViewSetter.setLinearLayoutVisibility(Holder, noteContentHandler.mHolder))     holder.setText(noteContentHandler.mHolder);
+        if (ViewSetter.setLinearLayoutVisibility(Number, noteContentHandler.mNumber))     number.setText(noteContentHandler.mNumber);
+        if (ViewSetter.setLinearLayoutVisibility(Expiry, noteContentHandler.mExpiry))     expiry.setText(noteContentHandler.mExpiry);
+        if (ViewSetter.setLinearLayoutVisibility(CVV, noteContentHandler.mCVV))           cvv.setText(noteContentHandler.mCVV);
+        if (ViewSetter.setLinearLayoutVisibility(CardType, noteContentHandler.mCardType)) cardType.setText(noteContentHandler.mCardType);
+        if (ViewSetter.setLinearLayoutVisibility(Notes, noteContentHandler.mNote))        notes.setText(noteContentHandler.mNote);
 
-        buildDialog(view, contentHandler);
+        buildDialog(view, noteContentHandler);
     }
     private void constructPreviewLoginInfo() {
         View view = View.inflate(mContext, R.layout.preview_logininfo, null);
-        ContentHandler contentHandler = new ContentHandler(mContext, mDataPackage);
+        NoteContentHandler noteContentHandler = new NoteContentHandler(mContext, mNoteObject);
         //
         LinearLayout Url = view.findViewById(R.id.Url);
         LinearLayout Email = view.findViewById(R.id.Email);
@@ -95,24 +95,24 @@ public class DialogDataPreview {
         TextView password = view.findViewById(R.id.tvPassword);
         TextView notes = view.findViewById(R.id.tvNote);
 
-        if (ViewSetter.setLinearLayoutVisibility(Url, contentHandler.mUrl))           url.setText(contentHandler.mUrl);
-        if (ViewSetter.setLinearLayoutVisibility(Email, contentHandler.mEmail))       email.setText(contentHandler.mEmail);
-        if (ViewSetter.setLinearLayoutVisibility(Username, contentHandler.mUsername)) username.setText(contentHandler.mUsername);
-        if (ViewSetter.setLinearLayoutVisibility(Password, contentHandler.mPassword)) password.setText(contentHandler.mPassword);
-        if (ViewSetter.setLinearLayoutVisibility(Notes, contentHandler.mNote))        notes.setText(contentHandler.mNote);
+        if (ViewSetter.setLinearLayoutVisibility(Url, noteContentHandler.mUrl))           url.setText(noteContentHandler.mUrl);
+        if (ViewSetter.setLinearLayoutVisibility(Email, noteContentHandler.mEmail))       email.setText(noteContentHandler.mEmail);
+        if (ViewSetter.setLinearLayoutVisibility(Username, noteContentHandler.mUsername)) username.setText(noteContentHandler.mUsername);
+        if (ViewSetter.setLinearLayoutVisibility(Password, noteContentHandler.mPassword)) password.setText(noteContentHandler.mPassword);
+        if (ViewSetter.setLinearLayoutVisibility(Notes, noteContentHandler.mNote))        notes.setText(noteContentHandler.mNote);
 
-        buildDialog(view, contentHandler);
+        buildDialog(view, noteContentHandler);
     }
 
-    private void buildDialog(View view, ContentHandler contentHandler) {
+    private void buildDialog(View view, NoteContentHandler noteContentHandler) {
         CustomDialog customDialog = new CustomDialog(mContext);
         customDialog.setContentView(view);
-        if (contentHandler.mCardImage != null) { customDialog.setIcon(contentHandler.mCardImage); }
+        if (noteContentHandler.mCardImage != null) { customDialog.setIcon(noteContentHandler.mCardImage); }
         customDialog.setMenuIcon(mContext.getResources().getDrawable(R.drawable.ic_options), R.color.white);
-        customDialog.setTitle(contentHandler.mLabel);
-        customDialog.setSubTitle(contentHandler.mDate);
-        customDialog.setTitleBackgroundColour(Graphics.ColourTags.colourTagHeader(mContext, contentHandler.mTag));
-        customDialog.setTitleColour(Res.getColour(mContext, R.color.white));
+        customDialog.setTitle(noteContentHandler.mLabel);
+        customDialog.setSubTitle(noteContentHandler.mDate);
+        customDialog.setTitleBackgroundColour(Graphics.ColourTags.colourTagHeader(mContext, noteContentHandler.mTag));
+        customDialog.setTitleColour(Resources.getColour(mContext, R.color.white));
         customDialog.setPositiveButton("Edit", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,7 +133,7 @@ public class DialogDataPreview {
     // Edit data package
     private void onEdit() {
         ACTIVITY_INTENT = new Intent(mContext, ActivityEdit.class);
-        ACTIVITY_INTENT.putExtra("data", mDataPackage);
+        ACTIVITY_INTENT.putExtra("data", mNoteObject);
         mContext.startActivity(ACTIVITY_INTENT);
     }
 }

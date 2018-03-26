@@ -10,21 +10,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.utils.Res;
-import com.gerardogandeaga.cyberlock.utils.Settings;
+import com.gerardogandeaga.cyberlock.utils.Resources;
+import com.gerardogandeaga.cyberlock.utils.SharedPreferences;
 import com.gerardogandeaga.cyberlock.utils.math.Scaling;
 
 import org.jetbrains.annotations.Contract;
 
+// todo move the BasicFilter class to a new general graphics class and make this class specific to Notes
 public class Graphics {
 
     public static class ColourTags {
 
         public static int colourTagHeader(Context context, String colour) {
-            if (Settings.getTaggedHeaders(context)) {
+            if (SharedPreferences.getTaggedHeaders(context)) {
                 return colourTag(context, colour);
             } else {
-                return Res.getColour(context, R.color.black);
+                return Resources.getColour(context, R.color.black);
             }
         }
 
@@ -49,9 +50,9 @@ public class Graphics {
             }
             // light or dark default colour
             if (darkDefault) {
-                return Res.getColour(context, R.color.black);
+                return Resources.getColour(context, R.color.black);
             } else {
-                return Res.getColour(context, R.color.ct_default);
+                return Resources.getColour(context, R.color.ct_default);
             }
         }
     }
@@ -73,11 +74,11 @@ public class Graphics {
 
         public static Drawable getCardImage(Context context, String cardType) {
             switch (cardType) {
-                case ("Visa"):             return Res.getDrawable(context, R.drawable.card_visa);
-                case ("Master Card"):      return Res.getDrawable(context, R.drawable.card_mastercard);
-                case ("American Express"): return Res.getDrawable(context, R.drawable.card_americanexpress);
-                case ("Discover"):         return Res.getDrawable(context, R.drawable.card_discover);
-                default:                   return Res.getDrawable(context, R.drawable.card_default);
+                case ("Visa"):             return Resources.getDrawable(context, R.drawable.card_visa);
+                case ("Master Card"):      return Resources.getDrawable(context, R.drawable.card_mastercard);
+                case ("American Express"): return Resources.getDrawable(context, R.drawable.card_americanexpress);
+                case ("Discover"):         return Resources.getDrawable(context, R.drawable.card_discover);
+                default:                   return Resources.getDrawable(context, R.drawable.card_default);
             }
         }
 
@@ -125,7 +126,7 @@ public class Graphics {
         }
 
         private static int getColour(Context context) {
-            return Res.getColour(context, R.color.black);
+            return Resources.getColour(context, R.color.black);
         }
 
         @Contract(pure = true)

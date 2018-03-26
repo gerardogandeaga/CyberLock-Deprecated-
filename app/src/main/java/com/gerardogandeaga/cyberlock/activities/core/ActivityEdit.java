@@ -22,23 +22,21 @@ import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
 import com.gerardogandeaga.cyberlock.activities.dialogs.DialogFragmentTags;
 import com.gerardogandeaga.cyberlock.android.CustomToast;
-import com.gerardogandeaga.cyberlock.core.handlers.extractors.ContentHandler;
-import com.gerardogandeaga.cyberlock.database.DBAccess;
-import com.gerardogandeaga.cyberlock.database.DataPackage;
-import com.gerardogandeaga.cyberlock.utils.Res;
+import com.gerardogandeaga.cyberlock.core.handlers.extractors.NoteContentHandler;
+import com.gerardogandeaga.cyberlock.database.DBNoteAccessor;
+import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.utils.Resources;
 import com.gerardogandeaga.cyberlock.utils.graphics.Graphics;
 import com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol;
 
-import static com.gerardogandeaga.cyberlock.utils.Settings.AUTOSAVE;
-import static com.gerardogandeaga.cyberlock.utils.Settings.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.utils.Settings.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.TMP_PWD;
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mCountDownTimer;
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mIsCountDownTimerFinished;
 
-
-// todo implement enum for better state control
 enum Type {
     NOTE, PAYMENT_INFO, LOGIN_INFO
 }
@@ -53,8 +51,8 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
 
     private View mView;
     // data package
-    private DataPackage mDataPackage;
-    private ContentHandler mContentHandler;
+    private NoteObject mNoteObject;
+    private NoteContentHandler mNoteContentHandler;
     // data vars
     private boolean mIsNew = true;
     private boolean mIsAutoSave = false;
@@ -98,7 +96,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setHomeAsUpIndicator(Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(
-                this, Res.getDrawable(this, R.drawable.ic_back)));
+                this, Resources.getDrawable(this, R.drawable.ic_back)));
     }
 
     private void extractBundle() {
@@ -106,20 +104,20 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         when activating the editor there are 3 possible states in which is will enter:
         STATE 1 : completely new (When it is called by the ADD function and  is not a data item yet)
         STATE 2 : floating raw data item (When editor is suspended by the logout protocol but has
-                                          not been saved in the database master database accessor)
+                                          not been saved in the database master database accessoror)
         STATE 3 : saved raw data item (When the data item has already been saved and is merely
                                        going to get updated) */
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            this.mDataPackage = (DataPackage) bundle.get("data");
-            this.mIsNew = (mDataPackage == null);
+            this.mNoteObject = (NoteObject) bundle.get("data");
+            this.mIsNew = (mNoteObject == null);
 
             if (!mIsNew) {
-                this.mContentHandler = new ContentHandler(this, mDataPackage);
-                switch (mDataPackage.getType()) {
-                    case DataPackage.NOTE:         setupLayoutNote();        this.enum_type = Type.NOTE; break;
-                    case DataPackage.PAYMENT_INFO: setupLayoutPaymentInfo(); this.enum_type = Type.PAYMENT_INFO; break;
-                    case DataPackage.LOGIN_INFO:   setupLayoutLoginInfo();   this.enum_type = Type.LOGIN_INFO; break;
+                this.mNoteContentHandler = new NoteContentHandler(this, mNoteObject);
+                switch (mNoteObject.getType()) {
+                    case NoteObject.NOTE:         setupLayoutNote();        this.enum_type = Type.NOTE; break;
+                    case NoteObject.PAYMENT_INFO: setupLayoutPaymentInfo(); this.enum_type = Type.PAYMENT_INFO; break;
+                    case NoteObject.LOGIN_INFO:   setupLayoutLoginInfo();   this.enum_type = Type.LOGIN_INFO; break;
                 }
                 // check if data item already exists
                 containsData(); // Will alter between STATE 2 & 3 by switching mIsNew
@@ -129,9 +127,9 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
                 }
             } else { // if data is completely new
                 switch ((String) bundle.get("type")) { // STATE 1
-                    case DataPackage.NOTE:         setupLayoutNote();        this.enum_type = Type.NOTE; break;
-                    case DataPackage.PAYMENT_INFO: setupLayoutPaymentInfo(); this.enum_type = Type.PAYMENT_INFO; break;
-                    case DataPackage.LOGIN_INFO:   setupLayoutLoginInfo();   this.enum_type = Type.LOGIN_INFO; break;
+                    case NoteObject.NOTE:         setupLayoutNote();        this.enum_type = Type.NOTE; break;
+                    case NoteObject.PAYMENT_INFO: setupLayoutPaymentInfo(); this.enum_type = Type.PAYMENT_INFO; break;
+                    case NoteObject.LOGIN_INFO:   setupLayoutLoginInfo();   this.enum_type = Type.LOGIN_INFO; break;
                 }
             }
             bundle.remove("data");
@@ -140,12 +138,12 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
     }
 
     private void containsData() {
-        DBAccess dbAccess = DBAccess.getInstance(this);
-        dbAccess.open();
+        DBNoteAccessor accessor = DBNoteAccessor.getInstance(this);
+        accessor.open();
         System.out.println("Is New ? 1 : " + mIsNew);
-        this.mIsNew = dbAccess.containsData(this.mDataPackage);
+        this.mIsNew = accessor.containsData(this.mNoteObject);
         System.out.println("Is New ? 2 : " + mIsNew);
-        dbAccess.close();
+        accessor.close();
     }
 
     // layouts
@@ -275,13 +273,13 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
             setDate(null);
             setTag(null);
         } else {
-            mColour = mContentHandler.mTag;
-            setLabel(mContentHandler.mLabel);
-            setDate(mContentHandler.mDate);
-            setTag(mContentHandler.mTag);
+            mColour = mNoteContentHandler.mTag;
+            setLabel(mNoteContentHandler.mLabel);
+            setDate(mNoteContentHandler.mDate);
+            setTag(mNoteContentHandler.mTag);
 
             // set note
-            mEtNote.setText(mContentHandler.mNote);
+            mEtNote.setText(mNoteContentHandler.mNote);
         }
     }
     private void setupDataPaymentInfo() {
@@ -290,22 +288,22 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
             setDate(null);
             setTag(null);
         } else {
-            mColour = mContentHandler.mTag;
-            setLabel(mContentHandler.mLabel);
-            setDate(mContentHandler.mDate);
-            setTag(mContentHandler.mTag);
+            mColour = mNoteContentHandler.mTag;
+            setLabel(mNoteContentHandler.mLabel);
+            setDate(mNoteContentHandler.mDate);
+            setTag(mNoteContentHandler.mTag);
 
             // Set name, number, expiry, cvv, cardType
-            mEtCardName.setText(mContentHandler.mHolder);
-            mEtCardNumber.setText(mContentHandler.mNumber);
-            mEtCardExpire.setText(mContentHandler.mExpiry);
-            mEtCardCVV.setText(mContentHandler.mCVV);
+            mEtCardName.setText(mNoteContentHandler.mHolder);
+            mEtCardNumber.setText(mNoteContentHandler.mNumber);
+            mEtCardExpire.setText(mNoteContentHandler.mExpiry);
+            mEtCardCVV.setText(mNoteContentHandler.mCVV);
             //
-            int spinnerPosition = mAdapter.getPosition(mContentHandler.mCardType);
+            int spinnerPosition = mAdapter.getPosition(mNoteContentHandler.mCardType);
             mSpCardSelect.setSelection(spinnerPosition);
-            mEtNotes.setText(mContentHandler.mNote);
+            mEtNotes.setText(mNoteContentHandler.mNote);
 
-            mCardIcon.setImageDrawable(Graphics.CardImages.getCardImage(this, mContentHandler.mCardType));
+            mCardIcon.setImageDrawable(Graphics.CardImages.getCardImage(this, mNoteContentHandler.mCardType));
         }
     }
     private void setupDataLoginInfo() {
@@ -314,17 +312,17 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
             setDate(null);
             setTag(null);
         } else {
-            mColour = mContentHandler.mTag;
-            setLabel(mContentHandler.mLabel);
-            setDate(mContentHandler.mDate);
-            setTag(mContentHandler.mTag);
+            mColour = mNoteContentHandler.mTag;
+            setLabel(mNoteContentHandler.mLabel);
+            setDate(mNoteContentHandler.mDate);
+            setTag(mNoteContentHandler.mTag);
 
             // Set url, email, username, password,
-            mEtUrl.setText(mContentHandler.mUrl);
-            mEtEmail.setText(mContentHandler.mEmail);
-            mEtUsername.setText(mContentHandler.mUsername);
-            mEtPassword.setText(mContentHandler.mPassword);
-            mEtNotes.setText(mContentHandler.mNote);
+            mEtUrl.setText(mNoteContentHandler.mUrl);
+            mEtEmail.setText(mNoteContentHandler.mEmail);
+            mEtUsername.setText(mNoteContentHandler.mUsername);
+            mEtPassword.setText(mNoteContentHandler.mPassword);
+            mEtNotes.setText(mNoteContentHandler.mNote);
         }
     }
 
@@ -371,8 +369,8 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
 
     // Actions
     private void onSave() {
-        DBAccess dbAccess = DBAccess.getInstance(this);
-        dbAccess.open();
+        DBNoteAccessor accessor = DBNoteAccessor.getInstance(this);
+        accessor.open();
 
         String label = mEtLabel.getText().toString();
         String tmpContent = getViewData();
@@ -380,14 +378,14 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         // Saving
         if (!tmpContent.isEmpty()) {
             if (mIsNew) {
-                dbAccess.save(getData(label, tmpContent, mColour));
+                accessor.save(getData(label, tmpContent, mColour));
             } else {
-                dbAccess.update(getData(label, tmpContent, mColour));
+                accessor.update(getData(label, tmpContent, mColour));
             }
-            dbAccess.close();
+            accessor.close();
         } else {
             CustomToast.buildAndShowToast(this, "No Content To Save", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
-            dbAccess.close();
+            accessor.close();
         }
     }
     private void onCancel() {
@@ -413,7 +411,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
 
     // Getters and setters for saving
     private String getViewData() {
-        // GETTING AND FORMATTING THE CONTENT CONDITIONALLY
+        // GETTING AND FORMATTING THE COLOUR_TAGS CONDITIONALLY
 
         switch (enum_type) {
             case NOTE:
@@ -452,9 +450,9 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
                 return "";
         }
     }
-    private DataPackage getData(String label, String content, String tag) {
+    private NoteObject getData(String label, String content, String tag) {
         if (mIsNew) {
-            DataPackage tmp = new DataPackage();
+            NoteObject tmp = new NoteObject();
 
             tmp.setType("TYPE_" + enum_type.name());
             tmp.setTag(tag);
@@ -463,11 +461,11 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
 
             return tmp;
         } else {
-            mDataPackage.setTag(tag);
-            mDataPackage.setLabel(label);
-            mDataPackage.setContent(content);
+            mNoteObject.setTag(tag);
+            mNoteObject.setLabel(label);
+            mNoteObject.setContent(content);
 
-            return mDataPackage;
+            return mNoteObject;
         }
     }
 
@@ -512,7 +510,7 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         if (!isFinishing()) { // HOME AND TABS AND SCREEN OFF
             if (ACTIVITY_INTENT == null) {
 
-                // LoadOverlay data into intent
+                // CustomLoad data into intent
                 ACTIVITY_INTENT = new Intent(this, ActivityLogin.class);
                 ACTIVITY_INTENT.putExtra("edit?", true);
                 ACTIVITY_INTENT.putExtra("isNew?", mIsNew);

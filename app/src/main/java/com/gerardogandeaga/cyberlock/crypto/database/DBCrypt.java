@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Base64;
 
 import com.gerardogandeaga.cyberlock.crypto.key.CryptKey;
-import com.gerardogandeaga.cyberlock.utils.Settings;
+import com.gerardogandeaga.cyberlock.utils.SharedPreferences;
 
 import java.security.SecureRandom;
 import java.util.Arrays;
@@ -13,12 +13,11 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import static com.gerardogandeaga.cyberlock.utils.Settings.FLAGS;
-import static com.gerardogandeaga.cyberlock.utils.Settings.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.TMP_PWD;
 
 /*
 this class is meant to only encrypt and decrypt SQLite database content, only classes that are able
-to access this class is the databaseAccess class and DataPackage class.
+to accessor this class is the databaseAccess class and NoteObject class.
 */
 
 public class DBCrypt {
@@ -31,9 +30,9 @@ public class DBCrypt {
     private static void setAlgorithmPresets(Context context) {
         // since key is static it will not change, therefore we do not need to constantly decrypt
         if (mKey == null) {
-            mKey = CryptKey.decrypt(context, Settings.getMasterKey(context), TMP_PWD);
+            mKey = CryptKey.decrypt(context, SharedPreferences.getMasterKey(context), TMP_PWD);
         }
-        mEncryptionAlgorithm = Settings.getEncryptionAlgorithm(context);
+        mEncryptionAlgorithm = SharedPreferences.getEncryptionAlgorithm(context);
         mCipherAlgorithm = mEncryptionAlgorithm + "/CBC/PKCS5Padding";
 
         switch (mEncryptionAlgorithm) {
@@ -56,7 +55,7 @@ public class DBCrypt {
             byte[] ivByteVal = generateIV();
 
             // decode master key to bytes
-            byte[] keyByteVal = Base64.decode(mKey, FLAGS);
+            byte[] keyByteVal = Base64.decode(mKey, Base64.DEFAULT);
             // generate symmetric key from master key bytes
             SecretKeySpec secretKeySpec = new SecretKeySpec(keyByteVal, mEncryptionAlgorithm);
 
@@ -74,7 +73,7 @@ public class DBCrypt {
             System.arraycopy(encryptedStringByteVal, 0, combinedByteVal, ivByteVal.length, encryptedStringByteVal.length);
 
             // encode to string with Base64
-            return Base64.encodeToString(combinedByteVal, FLAGS);
+            return Base64.encodeToString(combinedByteVal, Base64.DEFAULT);
 
             // catching and handling exceptions
         } catch (Exception e) {
@@ -93,14 +92,14 @@ public class DBCrypt {
             setAlgorithmPresets(context);
 
             // decode encrypted string to encrypted bytes
-            byte[] encryptedCombinedBytes = Base64.decode(string, FLAGS);
+            byte[] encryptedCombinedBytes = Base64.decode(string, Base64.DEFAULT);
 
             // strip the bytes down, recovering the iv and encrypted bytes
             byte[] ivByteVal = Arrays.copyOfRange(encryptedCombinedBytes, 0, mIvLength); // "Break" bytes to get IV
             byte[] encryptedStringByteVal = Arrays.copyOfRange(encryptedCombinedBytes, mIvLength, encryptedCombinedBytes.length); // "Break" Bytes to get cipher text only
 
             // decode key to bytes
-            byte[] keyByteVal = Base64.decode(mKey, FLAGS);
+            byte[] keyByteVal = Base64.decode(mKey, Base64.DEFAULT);
             // generate parallel symmetric key used for encrypting
             SecretKeySpec secretKeySpec = new SecretKeySpec(keyByteVal, mEncryptionAlgorithm);
 

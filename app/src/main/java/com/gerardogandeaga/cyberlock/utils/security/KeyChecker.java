@@ -9,9 +9,8 @@ import com.gerardogandeaga.cyberlock.crypto.hash.SHA256PinHash;
 
 import java.util.Arrays;
 
-import static com.gerardogandeaga.cyberlock.utils.Settings.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.utils.Settings.FLAGS;
-import static com.gerardogandeaga.cyberlock.utils.Settings.PASSWORD;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.PASSWORD;
 
 
 public class KeyChecker {
@@ -20,7 +19,7 @@ public class KeyChecker {
         SharedPreferences sharedPreferences = context.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
         try {
             final String decryptedPulledPin = CryptKey.decrypt(context, sharedPreferences.getString(PASSWORD, null), password);
-            final String loginPinHash = SHA256PinHash.hashEncode(password, Arrays.copyOfRange(Base64.decode(decryptedPulledPin, FLAGS), 0, 128));
+            final String loginPinHash = SHA256PinHash.hashEncode(password, Arrays.copyOfRange(Base64.decode(decryptedPulledPin, Base64.DEFAULT), 0, 128));
 
             return loginPinHash.equals(decryptedPulledPin);
 

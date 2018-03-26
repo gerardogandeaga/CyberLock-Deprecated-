@@ -14,18 +14,20 @@ import android.view.View;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
+import com.gerardogandeaga.cyberlock.activities.dialogs.DialogDataPreview;
 import com.gerardogandeaga.cyberlock.android.CustomRecyclerView;
-import com.gerardogandeaga.cyberlock.core.handlers.extractors.DataItemHandler;
+import com.gerardogandeaga.cyberlock.android.CustomSnackBar;
+import com.gerardogandeaga.cyberlock.android.CustomLoad;
+import com.gerardogandeaga.cyberlock.core.handlers.extractors.NoteItemContentHandler;
 import com.gerardogandeaga.cyberlock.core.handlers.selection.AdapterActionHandler;
-import com.gerardogandeaga.cyberlock.core.handlers.selection.AdapterItemHandler;
-import com.gerardogandeaga.cyberlock.core.recyclerview.decorations.DataItemDecoration;
-import com.gerardogandeaga.cyberlock.core.recyclerview.items.DataItem;
-import com.gerardogandeaga.cyberlock.database.DataPackage;
-import com.gerardogandeaga.cyberlock.database.loader.DataLoader;
-import com.gerardogandeaga.cyberlock.overlay.LoadOverlay;
-import com.gerardogandeaga.cyberlock.utils.ListConfig;
-import com.gerardogandeaga.cyberlock.utils.Res;
-import com.gerardogandeaga.cyberlock.utils.Settings;
+import com.gerardogandeaga.cyberlock.core.handlers.selection.actions.DataObjectDeleter;
+import com.gerardogandeaga.cyberlock.core.recyclerview.decorations.NoteItemDecoration;
+import com.gerardogandeaga.cyberlock.core.recyclerview.items.NoteItem;
+import com.gerardogandeaga.cyberlock.database.loaders.NoteLoader;
+import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.utils.ListFormat;
+import com.gerardogandeaga.cyberlock.utils.SharedPreferences;
+import com.gerardogandeaga.cyberlock.utils.Resources;
 import com.gerardogandeaga.cyberlock.utils.graphics.Graphics;
 import com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol;
 import com.mikepenz.fastadapter.IAdapter;
@@ -41,12 +43,12 @@ import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.APP_LO
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mCountDownTimer;
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mIsCountDownTimerFinished;
 
-public class ActivityMain extends AppCompatActivity implements DataLoader.OnDataPackageLoaded {
+public class ActivityMain extends AppCompatActivity implements NoteLoader.OnDataPackageLoaded {
     // adapter package loading
     @Override
-    public void sendPackage(final DataPackage dataPackage) {
+    public void sendPackage(final NoteObject noteObject) {
         // arrange data as a recycler view item
-        final DataItem item = new DataItemHandler(this).getItem(dataPackage);
+        final NoteItem item = new NoteItemContentHandler(this).getItem(noteObject);
 
         // add to adapter
         runOnUiThread(new Runnable() {
@@ -57,8 +59,8 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
                 }
 
                 // dismiss load overlay and show recycler view
-                if (mLoadOverlay.isVisible()) {
-                    mLoadOverlay.dismiss();
+                if (mCustomLoad.isVisible()) {
+                    mCustomLoad.dismiss();
                     mRecyclerView.setVisibility(View.VISIBLE);
                 }
 
@@ -72,13 +74,13 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
     private Context mContext = this;
     // adapter
     private int mSize;
-    private FastItemAdapter<DataItem> mFastItemAdapter;
-    private AdapterActionHandler<DataItem> mAdapterActionHandler;
+    private FastItemAdapter<NoteItem> mFastItemAdapter;
+    private AdapterActionHandler<NoteItem> mAdapterActionHandler;
     // views
     private View mView;
     private Menu mMenu;
     // load view
-    private LoadOverlay mLoadOverlay;
+    private CustomLoad mCustomLoad;
 
     @BindView(R.id.toolbar)      Toolbar mToolbar;
     @BindView(R.id.recyclerView) CustomRecyclerView mRecyclerView;
@@ -112,44 +114,44 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
         mFastItemAdapter.withSelectOnLongClick(false);
 
         // item Listeners
-        mFastItemAdapter.withOnClickListener(new OnClickListener<DataItem>() {
+        mFastItemAdapter.withOnClickListener(new OnClickListener<NoteItem>() {
             @Override
-            public boolean onClick(View view, @NonNull IAdapter<DataItem> adapter, @NonNull DataItem item, int position) {
-                // perform normal on click if it is active and if it return false then continue to next step
-//                new DialogDataPreview(mContext, item.mDataPackage).initializeDialog();
-//                if (!AdapterItemHandler.onClick(mFastItemAdapter, item, position)) {
-//
-//                } else {
-//                    getSupportActionBar().setTitle(Integer.toString(AdapterItemHandler.getCount()));
-//                }
-//
-//                // check if there is still data in array, if not then reset the action bar
-//                if (!AdapterItemHandler.isValid()) {
-//                    onCreateOptionsMenu(mMenu);
-//                    resetSupportActionBar();
-//                }
-                if (!mAdapterActionHandler.isActive()) {
-                    mAdapterActionHandler.activate();
+            public boolean onClick(View view, @NonNull IAdapter<NoteItem> adapter, @NonNull NoteItem item, int position) {
+                if (mAdapterActionHandler.isActive()) {
+                    // selection mode
+                    mAdapterActionHandler.toggle(position);
+                    setTitleCount(mAdapterActionHandler.selectedCount());
+
+                    if (mAdapterActionHandler.noneAreSelected()) {
+                        mAdapterActionHandler.deactivate();
+                        getSupportActionBar().setTitle(null);
+                        getSupportActionBar().setSubtitle(null);
+                    }
+
+                    updateMenu();
+
+                } else {
+                    // preview data
+                    new DialogDataPreview(mContext, item.getNoteObject()).initializeDialog();
                 }
-                mAdapterActionHandler.toggle(position);
 
                 return true;
             }
         });
-        mFastItemAdapter.withOnLongClickListener(new OnLongClickListener<DataItem>() {
+        mFastItemAdapter.withOnLongClickListener(new OnLongClickListener<NoteItem>() {
             @Override
-            public boolean onLongClick(@NonNull View view, @NonNull IAdapter<DataItem> adapter, @NonNull DataItem item, int position) {
-//                if (!AdapterItemHandler.isActive()) {
-//                    AdapterItemHandler.onLongClick(mFastItemAdapter, item, position);
-//                    onCreateOptionsMenu(mMenu);
-//
-//                    getSupportActionBar().setTitle(Integer.toString(AdapterItemHandler.getCount()));
-//                    getSupportActionBar().setSubtitle("Items Selected");
-//                    getSupportActionBar().setHomeAsUpIndicator(Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(
-//                            mContext, Res.getDrawable(mContext, R.drawable.ic_back)));
-//
-//                    return true;
-//                }
+            public boolean onLongClick(@NonNull View view, @NonNull IAdapter<NoteItem> adapter, @NonNull NoteItem item, int position) {
+                if (!mAdapterActionHandler.isActive()) {
+                    mAdapterActionHandler.activate();
+                    mAdapterActionHandler.toggle(position);
+                    setTitleCount(mAdapterActionHandler.selectedCount());
+
+                } else if (mAdapterActionHandler.isActive()) {
+                    mAdapterActionHandler.toggle(position);
+                    setTitleCount(mAdapterActionHandler.selectedCount());
+                }
+
+                updateMenu();
 
                 return false;
             }
@@ -159,33 +161,34 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
         mRecyclerView.setAdapter(mFastItemAdapter);
 
         // initialize and execute data loader task
-        DataLoader dataLoader = new DataLoader(this);
-        this.mSize = dataLoader.size();
+        NoteLoader noteLoader = new NoteLoader(this);
+        this.mSize = noteLoader.size();
         // now start the new task
-        dataLoader.execute();
+        noteLoader.execute();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
         this.mMenu = menu;
 
-        // Clear menus
-        if (mMenu != null && mMenu.hasVisibleItems()) {
-            mMenu.clear();
-        }
-
-        // Check is multi select mode is active
-        if (!AdapterItemHandler.isActive()) { // If not in multi select mode
-            getMenuInflater().inflate(R.menu.menu_main, mMenu);         // Inflate main menu
-        } else { // If multi select mode is active
-            getMenuInflater().inflate(R.menu.menu_delete, mMenu);  // Inflate multi select menu
-        }
-
-        if (mMenu.hasVisibleItems()) {
-            Graphics.BasicFilter.mutateMenuItems(this, menu);
-        }
+        updateMenu();
 
         return true;
+    }
+    private void updateMenu() {
+        mMenu.clear();
+        if (mAdapterActionHandler.isActive()) {
+            getMenuInflater().inflate(R.menu.menu_delete, mMenu);
+        } else {
+            getMenuInflater().inflate(R.menu.menu_main, mMenu);
+        }
+
+        // tint menu colour
+        if (mMenu.hasVisibleItems()) {
+            Graphics.BasicFilter.mutateMenuItems(this, mMenu);
+        }
     }
     //
     private void setupRecyclerView() {
@@ -197,21 +200,21 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
         // Set layout format
-        switch (Settings.getListFormat(mContext)) {
-            case ListConfig.GRID:
+        switch (SharedPreferences.getListFormat(mContext)) {
+            case ListFormat.GRID:
                 staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
                 mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
-                mRecyclerView.addItemDecoration(new DataItemDecoration(this, false));
+                mRecyclerView.addItemDecoration(new NoteItemDecoration(this, false));
                 break;
             default:
                 mRecyclerView.setLayoutManager(linearLayoutManager);
-                mRecyclerView.addItemDecoration(new DataItemDecoration(this, true));
+                mRecyclerView.addItemDecoration(new NoteItemDecoration(this, true));
                 break;
         }
     }
     private void displayLoad() {
-        this.mLoadOverlay = new LoadOverlay(this, mView);
-        mLoadOverlay.show(R.id.container);
+        this.mCustomLoad = new CustomLoad(this, mView);
+        mCustomLoad.show(R.id.container);
     }
     //
     private void setupSupportActionBar() {
@@ -226,9 +229,16 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setSubtitle(null);
         getSupportActionBar().setHomeAsUpIndicator(Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(
-                this, Res.getDrawable(this, R.drawable.ic_drawer)));
+                this, Resources.getDrawable(this, R.drawable.ic_drawer)));
     }
-
+    private void setTitleCount(int i) {
+        getSupportActionBar().setTitle(Integer.toString(i));
+        if (i == 1) {
+            getSupportActionBar().setSubtitle("Item Selected");
+        } else {
+            getSupportActionBar().setSubtitle("Items Selected");
+        }
+    }
 
     // Global clicks
     @Override
@@ -236,20 +246,48 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
 //        if (this.mDrawerToggle.onOptionsItemSelected(item)) return true;
         switch (item.getItemId()) {
             // add
-            case R.id.add_note:        onAddClicked(DataPackage.NOTE); break;
-            case R.id.add_paymentinfo: onAddClicked(DataPackage.PAYMENT_INFO); break;
-            case R.id.add_logininfo:   onAddClicked(DataPackage.LOGIN_INFO); break;
+            case R.id.add_note:
+                onAddClicked(NoteObject.NOTE);
+                break;
+            case R.id.add_paymentinfo:
+                onAddClicked(NoteObject.PAYMENT_INFO);
+                break;
+            case R.id.add_logininfo:
+                onAddClicked(NoteObject.LOGIN_INFO);
+                break;
 
             // options
-            case R.id.option_options: onOptions(); return true;
+            case R.id.option_options:
+                onOptions();
+                return true;
 
             // misc
-            case android.R.id.home: onBackPressed(); return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
 
             // on multi select mode
             case R.id.option_delete:
-                AdapterItemHandler.onDelete(this, mFastItemAdapter, mView);
-                onCreateOptionsMenu(mMenu);
+                // deleter
+                final DataObjectDeleter deleter = new DataObjectDeleter(this, mFastItemAdapter, mAdapterActionHandler.removeItemsFromAdapter());
+                deleter.deleteItems();
+                // snackbar
+                CustomSnackBar.buildAndShowSnackBar(
+                        mView,
+                        deleter.getDeletedCount() + (deleter.getDeletedCount() > 1 ? " Items Deleted" : " Item Deleted"),
+                        CustomSnackBar.LENGTH_LONG,
+                        "Undo",
+                        new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // undo deleter
+                        deleter.undoDeletion();
+                    }
+                },
+                        R.color.white);
+                // finish
+                mAdapterActionHandler.finish();
+                updateMenu();
                 resetSupportActionBar();
                 return true;
         }
@@ -272,7 +310,6 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
         this.startActivity(ACTIVITY_INTENT);
     }
 
-
     // THIS IS THE START OF THE SCRIPT FOR *** THE "TO LOGIN FUNCTION" THIS DETECTS THE ON PRESSED, START, TABS AND HOME BUTTONS IN ORDER TO INITIALIZE SECURITY "FAIL-SAFE"
     @Override public void onStart() {
         super.onStart();
@@ -290,16 +327,16 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
         }
     }
     @Override public void onBackPressed() {
-        if (!AdapterItemHandler.isActive()) {
-            if (ACTIVITY_INTENT == null) { // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
-                new LogoutProtocol().logoutImmediate(this);
-            }
-        } else {
-            AdapterItemHandler.cancel(mFastItemAdapter);
-            onCreateOptionsMenu(mMenu);
+        if (mAdapterActionHandler.isActive()) {
+            mAdapterActionHandler.deactivate();
+            updateMenu();
             resetSupportActionBar();
 
             return;
+        } else {
+            if (ACTIVITY_INTENT == null) { // NO PENDING ACTIVITIES ???(MAIN)--->(EDIT)???
+                new LogoutProtocol().logoutImmediate(this);
+            }
         }
 
         super.onBackPressed();
@@ -314,6 +351,4 @@ public class ActivityMain extends AppCompatActivity implements DataLoader.OnData
         }
     }
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-    // TODO Pull up panel android
 }

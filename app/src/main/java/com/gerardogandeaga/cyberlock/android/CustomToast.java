@@ -7,7 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.utils.Res;
+import com.gerardogandeaga.cyberlock.utils.Resources;
 
 public class CustomToast {
     /*
@@ -49,15 +49,15 @@ public class CustomToast {
     private static int priorityColour(Context context, int  priority) {
         switch (priority) {
             case INFORMATION:
-                return Res.getColour(context, R.color.black);
+                return Resources.getColour(context, R.color.black);
             case WARNING:
-                return Res.getColour(context, R.color.c_yellow_70);
+                return Resources.getColour(context, R.color.c_yellow_70);
             case ERROR:
-                return Res.getColour(context, R.color.c_red_60);
+                return Resources.getColour(context, R.color.c_red_60);
             case SUCCESS:
-                return Res.getColour(context, R.color.c_green_30);
+                return Resources.getColour(context, R.color.c_green_30);
             default:
-                return Res.getColour(context, R.color.c_blue_40);
+                return Resources.getColour(context, R.color.c_blue_40);
         }
     }
 }

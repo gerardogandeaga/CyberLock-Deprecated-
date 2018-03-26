@@ -19,20 +19,20 @@ import android.widget.Switch;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin;
 import com.gerardogandeaga.cyberlock.android.CustomToast;
-import com.gerardogandeaga.cyberlock.utils.ListConfig;
-import com.gerardogandeaga.cyberlock.utils.Res;
-import com.gerardogandeaga.cyberlock.utils.Settings;
+import com.gerardogandeaga.cyberlock.utils.ListFormat;
+import com.gerardogandeaga.cyberlock.utils.SharedPreferences;
+import com.gerardogandeaga.cyberlock.utils.Resources;
 import com.gerardogandeaga.cyberlock.utils.graphics.Graphics;
 import com.gerardogandeaga.cyberlock.utils.security.KeyChecker;
 import com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol;
-import com.gerardogandeaga.cyberlock.utils.settings.ChangePassword;
+import com.gerardogandeaga.cyberlock.utils.security.options.ChangePassword;
 
 import org.jetbrains.annotations.Contract;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.gerardogandeaga.cyberlock.utils.Settings.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.APP_LOGGED_IN;
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mCountDownTimer;
@@ -81,9 +81,9 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
         setSupportActionBar(mToolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Application Options");
+        getSupportActionBar().setTitle("Application SharedPreferences");
         getSupportActionBar().setHomeAsUpIndicator(Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(
-                this, Res.getDrawable(this, R.drawable.ic_back)));
+                this, Resources.getDrawable(this, R.drawable.ic_test_back1)));
     }
 
     private void widgets() {
@@ -109,17 +109,17 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
         iniOpenSourceLibraries();
     }
     private void iniAutoSave() {
-        mSwAutoSave.setChecked(Settings.getAutoSave(this));
+        mSwAutoSave.setChecked(SharedPreferences.getAutoSave(this));
     }
     private void iniListFormat() {
-        if (Settings.getListFormat(this).matches(ListConfig.GRID)) {
-            mImgListFormat.setImageDrawable(Res.getDrawable(this, R.drawable.graphic_list_grid));
+        if (SharedPreferences.getListFormat(this).matches(ListFormat.GRID)) {
+            mImgListFormat.setImageDrawable(Resources.getDrawable(this, R.drawable.graphic_list_grid));
         } else {
-            mImgListFormat.setImageDrawable(Res.getDrawable(this, R.drawable.graphic_list_linear));
+            mImgListFormat.setImageDrawable(Resources.getDrawable(this, R.drawable.graphic_list_linear));
         }
     }
     private void iniTaggedHeaders() {
-        mSwTaggedHeaders.setChecked(Settings.getTaggedHeaders(this));
+        mSwTaggedHeaders.setChecked(SharedPreferences.getTaggedHeaders(this));
     }
     private void iniLogoutDelay() {
         ArrayAdapter<CharSequence> adapterLogoutDelay = ArrayAdapter.createFromResource(
@@ -146,8 +146,8 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
                     }
 
                     System.out.println("Time = " + time);
-                    Settings.setLogoutDelay(mContext, logoutDelay);
-                    Settings.setLogoutDelayTime(mContext, time);
+                    SharedPreferences.setLogoutDelay(mContext, logoutDelay);
+                    SharedPreferences.setLogoutDelayTime(mContext, time);
                 }
             }
             @Override
@@ -156,7 +156,7 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
         });
 
         // saved state
-        int spinnerPosition = adapterLogoutDelay.getPosition(Settings.getLogoutDelay(this));
+        int spinnerPosition = adapterLogoutDelay.getPosition(SharedPreferences.getLogoutDelay(this));
         mSpLogoutDelay.setSelection(spinnerPosition);
     }
     private void iniChangePassword() {
@@ -186,23 +186,23 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
 
     // on clicks
     private void onAutoSave() {
-        Settings.setAutoSave(this, !Settings.getAutoSave(this));
-        mSwAutoSave.setChecked(Settings.getAutoSave(this));
+        SharedPreferences.setAutoSave(this, !SharedPreferences.getAutoSave(this));
+        mSwAutoSave.setChecked(SharedPreferences.getAutoSave(this));
     }
     private void onListFormat() {
-        if (Settings.getListFormat(this).matches(ListConfig.GRID)) {
-            Settings.setListFormat(this, ListConfig.LINEAR);
-            mImgListFormat.setImageDrawable(Res.getDrawable(this, R.drawable.graphic_list_linear));
+        if (SharedPreferences.getListFormat(this).matches(ListFormat.GRID)) {
+            SharedPreferences.setListFormat(this, ListFormat.LINEAR);
+            mImgListFormat.setImageDrawable(Resources.getDrawable(this, R.drawable.graphic_list_linear));
             CustomToast.buildAndShowToast(this, "Linear List Format", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
         } else {
-            Settings.setListFormat(this, ListConfig.GRID);
-            mImgListFormat.setImageDrawable(Res.getDrawable(this, R.drawable.graphic_list_grid));
+            SharedPreferences.setListFormat(this, ListFormat.GRID);
+            mImgListFormat.setImageDrawable(Resources.getDrawable(this, R.drawable.graphic_list_grid));
             CustomToast.buildAndShowToast(this, "Grid List Format", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
         }
     }
     private void onTaggedHeaders() {
-        Settings.setTaggedHeaders(this, !Settings.getTaggedHeaders(this));
-        mSwTaggedHeaders.setChecked(Settings.getTaggedHeaders(this));
+        SharedPreferences.setTaggedHeaders(this, !SharedPreferences.getTaggedHeaders(this));
+        mSwTaggedHeaders.setChecked(SharedPreferences.getTaggedHeaders(this));
     }
     private void onLogoutDelay() {
         mSpLogoutDelay.performClick();
