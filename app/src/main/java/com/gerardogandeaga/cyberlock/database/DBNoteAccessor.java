@@ -14,8 +14,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DBNoteAccessor {
+public class DBNoteAccessor implements DBNoteConstants {
     private static final String TAG = "DBNoteAccessor";
+
     private Context mContext;
     private SQLiteDatabase mSQLiteDatabase;
     private DBNoteOpenHelper mOpenHelper;
@@ -57,31 +58,33 @@ public class DBNoteAccessor {
         try {
             ContentValues values = new ContentValues();
 
-            values.put(DBNoteOpenHelper.DATE, noteObject.getTime());
-            values.put(DBNoteOpenHelper.TYPE, setData(noteObject.getType()));
-            values.put(DBNoteOpenHelper.COLOUR_TAG, setData(noteObject.getTag()));
-            values.put(DBNoteOpenHelper.LABEL, setData(noteObject.getLabel()));
-            values.put(DBNoteOpenHelper.CONTENT, setData(noteObject.getContent()));
+            values.put(DATE,       noteObject.getTime());
+            values.put(FOLDER,     setData(noteObject.getFolder()));
+            values.put(TYPE,       setData(noteObject.getType()));
+            values.put(COLOUR_TAG, setData(noteObject.getTag()));
+            values.put(LABEL,      setData(noteObject.getLabel()));
+            values.put(CONTENT,    setData(noteObject.getContent()));
 
             mSQLiteDatabase.insert(DBNoteOpenHelper.TABLE, null, values);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            System.out.println("error saving note!");
         }
     }
     public void update(NoteObject noteObject) {
         try {
             ContentValues values = new ContentValues();
 
-            values.put(DBNoteOpenHelper.DATE, new Date().getTime());
-            values.put(DBNoteOpenHelper.TYPE, setData(noteObject.getType()));
-            values.put(DBNoteOpenHelper.COLOUR_TAG, setData(noteObject.getTag()));
-            values.put(DBNoteOpenHelper.LABEL, setData(noteObject.getLabel()));
-            values.put(DBNoteOpenHelper.CONTENT, setData(noteObject.getContent()));
+            values.put(DATE,       new Date().getTime());
+            values.put(FOLDER,     setData(noteObject.getFolder()));
+            values.put(TYPE,       setData(noteObject.getType()));
+            values.put(COLOUR_TAG, setData(noteObject.getTag()));
+            values.put(LABEL,      setData(noteObject.getLabel()));
+            values.put(CONTENT,    setData(noteObject.getContent()));
 
             String date = Long.toString(noteObject.getTime());
             mSQLiteDatabase.update(DBNoteOpenHelper.TABLE, values, "date = ?", new String[]{date});
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            System.out.println("error updating note!");
         }
     }
     public void delete(NoteObject noteObject) {
@@ -126,12 +129,14 @@ public class DBNoteAccessor {
     // returns a new data package from the cursor position
     private NoteObject constructDataPackage(Cursor cursor) {
         try {
-            long time = cursor.getLong(0);
-            String type = getData(cursor.getBlob(1));
-            String tag = getData(cursor.getBlob(2));
-            String label = getData(cursor.getBlob(3));
-            String content = getData(cursor.getBlob(4));
-            return new NoteObject(time, type, tag, label, content);
+            long time =         cursor.getLong(POS_DATE);
+            String folder =     getData(cursor.getBlob(POS_FOLDER));
+            String type =       getData(cursor.getBlob(POS_TYPE));
+            String colour_tag = getData(cursor.getBlob(POS_COLOUR_TAG));
+            String label =      getData(cursor.getBlob(POS_LABEL));
+            String content =    getData(cursor.getBlob(POS_CONTENT));
+            // create new note object
+            return new NoteObject(time, folder, type, colour_tag, label, content);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return null;
@@ -157,7 +162,9 @@ public class DBNoteAccessor {
     // data encryption
     // when pulling data from the database and defining the dataPackage object
     private String getData(byte[] data) throws UnsupportedEncodingException {
-        return DBCrypt.decrypt(mContext, new String(data, "UTF-8"));
+        String note = DBCrypt.decrypt(mContext, new String(data, "UTF-8"));
+        System.out.println("content = " + note);
+        return note;
     }
     // when putting data into the database
     private byte[] setData(String data) throws UnsupportedEncodingException {

@@ -9,11 +9,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class NoteObject implements Serializable {
+    // global constants
     public static final String NOTE         = "TYPE_NOTE";
     public static final String PAYMENT_INFO = "TYPE_PAYMENT_INFO";
     public static final String LOGIN_INFO   = "TYPE_LOGIN_INFO";
 
+    // instance vars
     private Date mDate;
+    private String mFolder;
     private String mType;
     private String mTag;
     private String mLabel;
@@ -22,15 +25,21 @@ public class NoteObject implements Serializable {
     /*
     constructor that builds the data from the database-accessor class when data is first loaded into memory.
     constructor gets called when by the "getAllDataPackages" function. */
-    public NoteObject(long time, String type, String tag, String label, String content) {
+    public NoteObject(long time,
+                      String folder,
+                      String type,
+                      String tag,
+                      String label,
+                      String content) {
         this.mDate = new Date(time);
+        this.mFolder = folder;
         this.mType = type;
         this.mTag = tag;
         this.mLabel = label;
         this.mContent = content;
     }
     /*
-    constructor that initializes a brand new data object initialized by the AcitivtyEdit class
+    constructor that initializes a brand new data object initialized by the ActivityEdit class
     when saving data for the first time. */
     public NoteObject() {
         this.mDate = new Date();
@@ -46,6 +55,9 @@ public class NoteObject implements Serializable {
     // getters
     public long getTime() {
         return mDate.getTime();
+    }
+    public String getFolder() {
+        return this.mFolder;
     }
     public String getType() {
         return this.mType;
@@ -63,6 +75,10 @@ public class NoteObject implements Serializable {
     // setters
     public void setTime(long time) {
         this.mDate = new Date(time);
+    }
+    public void setFolder(String folder) {
+        System.out.println(folder);
+        this.mFolder = folder;
     }
     public void setType(String type) {
         System.out.println(type);
@@ -94,8 +110,8 @@ public class NoteObject implements Serializable {
         }
     }
 
-    @Override
-    public String toString() {
-        return "type : " + mType + " label : " + mLabel;
-    }
+//    @Override
+//    public String toString() {
+//        return "type : " + mType + " label : " + mLabel;
+//    }
 }

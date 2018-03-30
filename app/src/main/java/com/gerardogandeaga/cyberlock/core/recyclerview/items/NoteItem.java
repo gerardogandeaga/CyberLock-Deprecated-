@@ -211,7 +211,7 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
 
         // filter content
         private void filterContent(NoteItem item) {
-            Scanner scanner = new Scanner(item.mContent.toString());
+            Scanner scanner = new Scanner(item.mContent);
             switch(item.mType) {
                 case NoteObject.NOTE:
                     ViewSetter.setOrHideTextView(item.mContent, Notes);

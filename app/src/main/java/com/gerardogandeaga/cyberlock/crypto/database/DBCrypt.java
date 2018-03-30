@@ -15,11 +15,10 @@ import javax.crypto.spec.SecretKeySpec;
 
 import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.TMP_PWD;
 
-/*
-this class is meant to only encrypt and decrypt SQLite database content, only classes that are able
-to accessor this class is the databaseAccess class and NoteObject class.
-*/
-
+/**
+ * this class is meant to only encrypt and decrypt SQLite database content, only classes that are able
+ * to accessor this class is the databaseAccess class and NoteObject class.
+ */
 public class DBCrypt {
     private static int mIvLength;
     private static String mEncryptionAlgorithm;

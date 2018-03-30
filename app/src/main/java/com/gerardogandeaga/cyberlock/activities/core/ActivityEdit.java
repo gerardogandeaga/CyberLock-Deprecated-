@@ -451,9 +451,11 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
         }
     }
     private NoteObject getData(String label, String content, String tag) {
+        // if note object is new (note found in the database)
         if (mIsNew) {
             NoteObject tmp = new NoteObject();
 
+            tmp.setFolder("MAIN");
             tmp.setType("TYPE_" + enum_type.name());
             tmp.setTag(tag);
             tmp.setLabel(label);
@@ -461,6 +463,8 @@ public class ActivityEdit extends AppCompatActivity implements View.OnClickListe
 
             return tmp;
         } else {
+            // update
+            mNoteObject.setFolder("MAIN");
             mNoteObject.setTag(tag);
             mNoteObject.setLabel(label);
             mNoteObject.setContent(content);
