@@ -81,9 +81,9 @@ public class ActivityOptions extends AppCompatActivity implements View.OnClickLi
         setSupportActionBar(mToolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Application SharedPreferences");
+        getSupportActionBar().setTitle("Application Options");
         getSupportActionBar().setHomeAsUpIndicator(Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(
-                this, Resources.getDrawable(this, R.drawable.ic_test_back1)));
+                this, Resources.getDrawable(this, R.drawable.ic_back)));
     }
 
     private void widgets() {

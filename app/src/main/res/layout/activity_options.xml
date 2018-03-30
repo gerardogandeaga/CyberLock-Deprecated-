@@ -204,7 +204,7 @@
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_logout_delay"
                             android:padding="0dp"
-                            app:srcCompat="@drawable/ic_test_clock"/>
+                            app:srcCompat="@drawable/ic_timer"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -257,7 +257,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:contentDescription="@string/str_change_password"
                                 android:padding="3dp"
-                                app:srcCompat="@drawable/graphic_login_password"/>
+                                app:srcCompat="@drawable/graphic_password"/>
 
                             <TextView
                                 android:layout_width="0dp"
@@ -514,7 +514,7 @@
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_bug"
                             android:padding="3dp"
-                            app:srcCompat="@drawable/graphic_login_email"/>
+                            app:srcCompat="@drawable/graphic_email"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -614,7 +614,7 @@
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_bug"
                             android:padding="3dp"
-                            app:srcCompat="@drawable/graphic_login_email"/>
+                            app:srcCompat="@drawable/graphic_email"/>
 
                         <TextView
                             android:layout_width="0dp"

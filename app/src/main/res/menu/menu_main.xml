@@ -45,13 +45,13 @@
         <menu>
             <item
                 android:id="@+id/option_options"
-                android:icon="@drawable/ic_test_settings"
+                android:icon="@drawable/ic_cog"
                 android:orderInCategory="0"
                 android:title="@string/str_mnu_options"
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/option_import"
-                android:icon="@drawable/ic_test_import"
+                android:icon="@drawable/ic_save"
                 android:orderInCategory="0"
                 android:title="@string/str_mnu_import"
                 app:showAsAction="never"/>

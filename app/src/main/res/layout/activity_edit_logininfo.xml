@@ -41,7 +41,7 @@
                         android:layout_height="32dp"
                         android:layout_gravity="center_vertical"
                         android:tint="@color/black"
-                        app:srcCompat="@drawable/graphic_login_url"/>
+                        app:srcCompat="@drawable/graphic_url"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -81,7 +81,7 @@
                         android:layout_height="32dp"
                         android:layout_gravity="center_vertical"
                         android:tint="@color/black"
-                        app:srcCompat="@drawable/graphic_login_email"/>
+                        app:srcCompat="@drawable/graphic_email"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -121,7 +121,7 @@
                         android:layout_height="32dp"
                         android:layout_gravity="center_vertical"
                         android:tint="@color/black"
-                        app:srcCompat="@drawable/graphic_login_username"/>
+                        app:srcCompat="@drawable/graphic_username"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -161,7 +161,7 @@
                         android:layout_height="32dp"
                         android:layout_gravity="center_vertical"
                         android:tint="@color/black"
-                        app:srcCompat="@drawable/graphic_login_password"/>
+                        app:srcCompat="@drawable/graphic_password"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
