@@ -8,6 +8,9 @@ import com.gerardogandeaga.cyberlock.utils.SharedPreferences;
 
 import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.TMP_PWD;
 
+/**
+ * @author gerardogandeaga
+ */
 public class LogoutProtocol {
     // DATA VARIABLES
     // APP STATE

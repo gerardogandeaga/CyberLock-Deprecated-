@@ -4,9 +4,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * @author gerardogandeaga
+ */
 class DBNoteOpenHelper extends SQLiteOpenHelper implements DBNoteConstants {
-    private static final String DATABASE = "data.db";
-    static final String TABLE = "data";
+    private static final String DATABASE = TABLE + ".db";
     private static final int VERSION = 1;
 
     DBNoteOpenHelper(Context context) {

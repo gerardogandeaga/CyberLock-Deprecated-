@@ -2,16 +2,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.core.ActivityMain"
+    tools:context=".core.main.ActivityMain"
     tools:ignore="AlwaysShowAction">
 
     <item
-        android:id="@+id/option_save"
-        android:title="@string/str_mnu_save"
+        android:id="@+id/menu_tag"
+        android:title="@string/str_menu_tag"
+        android:icon="@drawable/ic_tag"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_save"
+        android:title="@string/str_menu_save"
         android:icon="@drawable/ic_save"
         app:showAsAction="always"/>
+
     <item
-        android:id="@+id/option_cancel"
-        android:title="@string/str_mnu_cancel"
+        android:id="@+id/menu_cancel"
+        android:title="@string/str_menu_cancel"
         app:showAsAction="always"/>
 </menu>

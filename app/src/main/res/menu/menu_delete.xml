@@ -2,12 +2,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.core.ActivityMain">
+    tools:context=".core.main.ActivityMain">
 
     <item
-        android:id="@+id/option_delete"
+        android:id="@+id/menu_delete"
         android:icon="@drawable/ic_trash"
-        android:title="Delete"
+        android:title="@string/str_menu_delete"
         app:showAsAction="always"/>
 
 </menu>

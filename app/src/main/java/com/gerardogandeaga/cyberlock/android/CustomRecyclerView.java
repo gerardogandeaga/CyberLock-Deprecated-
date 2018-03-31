@@ -6,6 +6,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+/**
+ * @author gerardogandeaga
+ */
 public class CustomRecyclerView extends RecyclerView {
     private boolean mIsScrollable;
     private boolean mIsAnimatable;

@@ -8,11 +8,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * @author gerardogandeaga
+ */
 public class NoteObject implements Serializable {
     // global constants
-    public static final String NOTE         = "TYPE_NOTE";
-    public static final String PAYMENT_INFO = "TYPE_PAYMENT_INFO";
-    public static final String LOGIN_INFO   = "TYPE_LOGIN_INFO";
+    public static final String NOTE  = "TYPE_NOTE";
+    public static final String CARD  = "TYPE_CARD";
+    public static final String LOGIN = "TYPE_LOGIN";
 
     // instance vars
     private Date mDate;

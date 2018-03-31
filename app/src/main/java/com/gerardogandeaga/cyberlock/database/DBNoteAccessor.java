@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.gerardogandeaga.cyberlock.crypto.database.DBCrypt;
+import com.gerardogandeaga.cyberlock.crypto.DBCrypt;
 import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
 
 import java.io.UnsupportedEncodingException;
@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author gerardogandeaga
+ *
+ * accessor to the Note database
+ */
 public class DBNoteAccessor implements DBNoteConstants {
     private static final String TAG = "DBNoteAccessor";
 
@@ -22,7 +27,7 @@ public class DBNoteAccessor implements DBNoteConstants {
     private DBNoteOpenHelper mOpenHelper;
     private static volatile DBNoteAccessor INSTANCE;
 
-    private static final String SQL_QUERY = "SELECT * From data ORDER BY date DESC";
+    private static final String SQL_QUERY = "SELECT * From " + TABLE + " ORDER BY " + DATE + " DESC";
 
     private DBNoteAccessor(Context context) {
         this.mContext = context;
@@ -160,15 +165,13 @@ public class DBNoteAccessor implements DBNoteConstants {
     }
 
     // data encryption
-    // when pulling data from the database and defining the dataPackage object
-    private String getData(byte[] data) throws UnsupportedEncodingException {
-        String note = DBCrypt.decrypt(mContext, new String(data, "UTF-8"));
-        System.out.println("content = " + note);
-        return note;
-    }
     // when putting data into the database
     private byte[] setData(String data) throws UnsupportedEncodingException {
-        return (DBCrypt.encrypt(mContext, data)).getBytes("UTF-8");
+        return DBCrypt.encrypt(mContext, data);
+    }
+    // when pulling data from the database and defining the dataPackage object
+    private String getData(byte[] data) throws UnsupportedEncodingException {
+        return DBCrypt.decrypt(mContext, data);
     }
 
     public Cursor getQuery() {

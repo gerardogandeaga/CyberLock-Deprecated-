@@ -3,6 +3,9 @@ package com.gerardogandeaga.cyberlock.utils;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+/**
+ * @author gerardogandeaga
+ */
 public class Resources {
 
     public static int getColour(Context context, int id) {

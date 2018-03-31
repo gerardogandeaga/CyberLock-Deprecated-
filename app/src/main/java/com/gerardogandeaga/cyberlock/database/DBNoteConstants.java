@@ -1,12 +1,17 @@
 package com.gerardogandeaga.cyberlock.database;
 
 /**
- * @author gerardogandeaga on 2018-03-30.
+ * @author gerardogandeaga
  *
  * interface of constant that hold the database keys and positions.
  * String values are database keys, the integer values are their position
  */
 public interface DBNoteConstants {
+
+    /**
+     * table name for database fil
+     */
+    String TABLE = "notes";
 
     /**
      * date is the main key for the note database, it organizes the db by most recently updates;

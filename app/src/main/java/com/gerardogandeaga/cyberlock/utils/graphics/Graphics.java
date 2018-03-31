@@ -17,6 +17,9 @@ import com.gerardogandeaga.cyberlock.utils.math.Scaling;
 import org.jetbrains.annotations.Contract;
 
 // todo move the BasicFilter class to a new general graphics class and make this class specific to Notes
+/**
+ * @author gerardogandeaga
+ */
 public class Graphics {
 
     public static class ColourTags {

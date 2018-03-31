@@ -3,7 +3,7 @@ package com.gerardogandeaga.cyberlock.utils.security.options;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.gerardogandeaga.cyberlock.activities.dialogs.DialogCustomLoad;
+import com.gerardogandeaga.cyberlock.core.dialogs.DialogCustomLoad;
 import com.gerardogandeaga.cyberlock.crypto.hash.Hash;
 import com.gerardogandeaga.cyberlock.crypto.key.CryptKeyHandler;
 
@@ -11,6 +11,9 @@ import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.PASSWORD;
 import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.TMP_PWD;
 
+/**
+ * @author gerardogandeaga
+ */
 public class ChangePassword {
     private Context mContext;
     private SharedPreferences mSharedPreferences;

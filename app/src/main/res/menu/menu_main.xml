@@ -2,58 +2,58 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.core.ActivityMain"
+    tools:context=".core.main.ActivityMain"
     tools:ignore="AlwaysShowAction">
 
     <item
-        android:id="@+id/add"
+        android:id="@+id/menu_add"
         android:layout_height="wrap_content"
         android:icon="@drawable/ic_add"
-        android:title="@string/str_mnu_add"
+        android:title="@string/str_menu_add"
         app:showAsAction="always">
 
         <menu>
             <item
-                android:id="@+id/add_note"
+                android:id="@+id/menu_add_note"
                 android:icon="@drawable/ic_test_note"
                 android:orderInCategory="0"
-                android:title="@string/str_mnu_add_note"
+                android:title="@string/str_menu_add_note"
                 app:showAsAction="never"/>
             <item
-                android:id="@+id/add_paymentinfo"
+                android:id="@+id/menu_add_card"
                 android:icon="@drawable/ic_test_wallet"
                 android:orderInCategory="0"
-                android:title="@string/str_mnu_add_payment_info"
+                android:title="@string/str_menu_add_payment_info"
                 app:showAsAction="never"/>
             <item
-                android:id="@+id/add_logininfo"
+                android:id="@+id/menu_add_login"
                 android:icon="@drawable/ic_test_login"
                 android:orderInCategory="0"
-                android:title="@string/str_mnu_add_login_info"
+                android:title="@string/str_menu_add_login_info"
                 app:showAsAction="never"/>
         </menu>
 
     </item>
 
     <item
-        android:id="@+id/options"
+        android:id="@+id/menu_options"
         android:layout_height="wrap_content"
         android:icon="@drawable/ic_options"
-        android:title="@string/str_mnu_options"
+        android:title="@string/str_menu_options"
         app:showAsAction="always">
 
         <menu>
             <item
-                android:id="@+id/option_options"
+                android:id="@+id/menu_option_options"
                 android:icon="@drawable/ic_cog"
                 android:orderInCategory="0"
-                android:title="@string/str_mnu_options"
+                android:title="@string/str_menu_options"
                 app:showAsAction="never"/>
             <item
-                android:id="@+id/option_import"
+                android:id="@+id/menu_option_import"
                 android:icon="@drawable/ic_save"
                 android:orderInCategory="0"
-                android:title="@string/str_mnu_import"
+                android:title="@string/str_menu_import"
                 app:showAsAction="never"/>
         </menu>
 

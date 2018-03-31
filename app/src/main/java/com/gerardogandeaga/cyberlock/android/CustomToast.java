@@ -9,6 +9,9 @@ import android.widget.Toast;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.utils.Resources;
 
+/**
+ * @author gerardogandeaga
+ */
 public class CustomToast {
     /*
     default = 1

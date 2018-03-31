@@ -3,6 +3,9 @@ package com.gerardogandeaga.cyberlock.utils.math;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
+/**
+ * @author gerardogandeaga
+ */
 public class Scaling {
 
     public static int dpFromPx(Context context, int dp) {

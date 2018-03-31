@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activities.clearances.ActivityLogin"
+            android:name=".core.clearances.ActivityLogin"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -29,25 +29,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.clearances.ActivityRegistration"
+            android:name=".core.clearances.ActivityRegistration"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
 
         <!-- MAIN ACTIVITIES -->
         <activity
-            android:name=".activities.core.ActivityMain"
+            android:name=".core.main.ActivityMain"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".activities.core.ActivityEdit"
+            android:name=".core.main.ActivityEdit"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".activities.core.ActivityOptions"
+            android:name=".core.TempEdit"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".activities.core.ActivityExternalLibs"
+            android:name=".core.main.ActivityOptions"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".core.main.ActivityExternalLibs"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
 

@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="?attr/backgroundColour"
     android:orientation="vertical"
-    tools:context=".activities.core.ActivityMain">
+    tools:context=".core.main.ActivityMain">
 
     <include layout="@layout/toolbar_main"/>
 

@@ -5,6 +5,9 @@ import android.support.annotation.Nullable;
 
 import com.gerardogandeaga.cyberlock.crypto.key.CryptKey;
 
+/**
+ * @author gerardogandeaga
+ */
 public class Hash {
 
     @Nullable

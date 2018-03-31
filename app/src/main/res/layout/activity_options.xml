@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="?attr/backgroundColour"
     android:orientation="vertical"
-    tools:context=".activities.core.ActivityOptions">
+    tools:context=".core.main.ActivityOptions">
 
     <include layout="@layout/toolbar_main"/>
 

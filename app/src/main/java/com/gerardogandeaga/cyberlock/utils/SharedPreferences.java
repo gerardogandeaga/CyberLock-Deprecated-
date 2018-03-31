@@ -2,6 +2,9 @@ package com.gerardogandeaga.cyberlock.utils;
 
 import android.content.Context;
 
+/**
+ * @author gerardogandeaga
+ */
 public class SharedPreferences {
     public static final String DIRECTORY = "com.gerardogandeaga.cyberlock";
 

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * @author gerardogandeaga
+ */
 public class DBFolderOpenHelper extends SQLiteOpenHelper {
     private static final String DB = "folders.db";
     static final String TABLE = "folders";

@@ -8,6 +8,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+/**
+ * @author gerardogandeaga
+ */
 public class SHA256PinHash {
     @NonNull
     public static String hashEncode(String string)

@@ -25,6 +25,9 @@ import javax.crypto.spec.SecretKeySpec;
 import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.TMP_PWD;
 
 // todo java docs this class
+/**
+ * @author gerardogandeaga
+ */
 public class CryptKey {
     private static int mIvLength;
     private static String mEncryptionAlgorithm;

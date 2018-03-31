@@ -8,6 +8,9 @@ import android.util.Log;
 import com.gerardogandeaga.cyberlock.database.DBNoteAccessor;
 import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
 
+/**
+ * @author gerardogandeaga
+ */
 public class NoteLoader extends AsyncTask<Void, Void, Void> {
     private static final String TAG = "NoteLoader";
 

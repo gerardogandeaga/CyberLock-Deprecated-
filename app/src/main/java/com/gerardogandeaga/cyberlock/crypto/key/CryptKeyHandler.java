@@ -5,6 +5,9 @@ import android.content.Context;
 import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.CRYPT_KEY;
 import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.DIRECTORY;
 
+/**
+ * @author gerardogandeaga
+ */
 public class CryptKeyHandler {
 
     // decrypts key with old password and encrypt it with the new one

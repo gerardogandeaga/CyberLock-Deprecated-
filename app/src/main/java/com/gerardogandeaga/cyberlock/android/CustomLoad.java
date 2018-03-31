@@ -17,6 +17,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 // todo make the load view more customizable
+/**
+ * @author gerardogandeaga
+ */
 public class CustomLoad {
     private Context mContext;
 

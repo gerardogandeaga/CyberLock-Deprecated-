@@ -12,7 +12,9 @@ import java.util.Arrays;
 import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.PASSWORD;
 
-
+/**
+ * @author gerardogandeaga
+ */
 public class KeyChecker {
 
     public static boolean comparePasswords(Context context, String password) {

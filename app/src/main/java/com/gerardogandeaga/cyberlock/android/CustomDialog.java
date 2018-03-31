@@ -19,6 +19,9 @@ import com.gerardogandeaga.cyberlock.utils.Resources;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author gerardogandeaga
+ */
 public class CustomDialog {
     private Context mContext;
     private View mView;

@@ -2,16 +2,18 @@
 <resources>
 
     <!-- add -->
-    <string name="str_mnu_add">Add</string>
-    <string name="str_mnu_add_note">Note</string>
-    <string name="str_mnu_add_payment_info">Payment Information</string>
-    <string name="str_mnu_add_login_info">Login Credentials</string>
+    <string name="str_menu_add">Add</string>
+    <string name="str_menu_add_note">Note</string>
+    <string name="str_menu_add_payment_info">Payment Information</string>
+    <string name="str_menu_add_login_info">Login Credentials</string>
 
     <!-- options -->
-    <string name="str_mnu_options">Options</string>
-    <string name="str_mnu_import">Import</string>
+    <string name="str_menu_delete">Delete</string>
+    <string name="str_menu_options">Options</string>
+    <string name="str_menu_import">Import</string>
 
     <!-- edit -->
-    <string name="str_mnu_save">Save</string>
-    <string name="str_mnu_cancel">Cancel</string>
+    <string name="str_menu_tag">Colour Tag</string>
+    <string name="str_menu_save">Save</string>
+    <string name="str_menu_cancel">Cancel</string>
 </resources>

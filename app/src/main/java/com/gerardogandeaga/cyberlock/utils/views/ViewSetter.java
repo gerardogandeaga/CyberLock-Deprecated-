@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
 import com.mikepenz.materialize.holder.StringHolder;
 
+/**
+ * @author gerardogandeaga
+ */
 public class ViewSetter {
 
     // TextView
@@ -50,8 +53,8 @@ public class ViewSetter {
                 isLogininfo = false;
         switch (args) {
             case NoteObject.NOTE:         isNote = true; break;
-            case NoteObject.PAYMENT_INFO: isPaymentinfo = true; break;
-            case NoteObject.LOGIN_INFO:   isLogininfo = true; break;
+            case NoteObject.CARD: isPaymentinfo = true; break;
+            case NoteObject.LOGIN:   isLogininfo = true; break;
         }
 
         setLinearLayoutVisibility(note, isNote);

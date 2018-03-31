@@ -6,6 +6,9 @@ import android.view.View;
 
 import com.gerardogandeaga.cyberlock.utils.Resources;
 
+/**
+ * @author gerardogandeaga
+ */
 public class CustomSnackBar {
     public static int LENGTH_SHORT = Snackbar.LENGTH_SHORT;
     public static int LENGTH_LONG = Snackbar.LENGTH_LONG;
