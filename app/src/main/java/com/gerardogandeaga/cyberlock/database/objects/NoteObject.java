@@ -42,7 +42,7 @@ public class NoteObject implements Serializable {
         this.mContent = content;
     }
     /*
-    constructor that initializes a brand new data object initialized by the ActivityEdit class
+    constructor that initializes a brand new data object initialized by the EditActivity class
     when saving data for the first time. */
     public NoteObject() {
         this.mDate = new Date();

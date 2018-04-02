@@ -16,28 +16,25 @@ import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.core.fragments.CardEditFragment;
 import com.gerardogandeaga.cyberlock.core.fragments.LoginEditFragment;
 import com.gerardogandeaga.cyberlock.core.fragments.NoteEditFragment;
-import com.gerardogandeaga.cyberlock.core.main.ActivityMain;
+import com.gerardogandeaga.cyberlock.core.activities.NoteListActivity;
 import com.gerardogandeaga.cyberlock.database.DBNoteAccessor;
 import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.enums.NoteEditTypes;
+import com.gerardogandeaga.cyberlock.interfaces.SaveResponder;
 import com.gerardogandeaga.cyberlock.utils.SharedPreferences;
-import com.gerardogandeaga.cyberlock.utils.graphics.Graphics;
+import com.gerardogandeaga.cyberlock.utils.Graphics;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
 
-/**
- * @author gerardogandeaga
- */
-enum Type {
-    NOTE,
-    CARD,
-    LOGIN
-}
 
 // todo java docs the class
 // todo add the colour tags selector
+/**
+ * @author gerardogandeaga
+ */
 public class TempEdit extends AppCompatActivity implements SaveResponder {
     private static final String TAG = "TempEdit";
 
@@ -51,7 +48,7 @@ public class TempEdit extends AppCompatActivity implements SaveResponder {
     private boolean mSaveFlag;
     private boolean mIsNew;
     private boolean mIsAutoSave;
-    private Type enum_type;
+    private NoteEditTypes enum_type;
     private NoteObject mNoteObject;
 
     @BindView(R.id.toolbar) Toolbar mToolBar;
@@ -117,6 +114,8 @@ public class TempEdit extends AppCompatActivity implements SaveResponder {
             this.mNoteObject = (NoteObject) bundle.get("data");
             this.mIsNew = (mNoteObject == null);
 
+
+
             // fragment transaction "manager"
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
 
@@ -125,15 +124,15 @@ public class TempEdit extends AppCompatActivity implements SaveResponder {
                 noteBundle.putSerializable("data", mNoteObject);
                 switch (mNoteObject.getType()) {
                     case NoteObject.NOTE:
-                        this.enum_type = Type.NOTE;
+                        this.enum_type = NoteEditTypes.NOTE;
                         fragmentTransaction.add(R.id.fragment_container, newFragment(mNoteEditFragment, noteBundle));
                         break;
                     case NoteObject.CARD:
-                        this.enum_type = Type.CARD;
+                        this.enum_type = NoteEditTypes.CARD;
                         fragmentTransaction.add(R.id.fragment_container, newFragment(mCardEditFragment, noteBundle));
                         break;
                     case NoteObject.LOGIN:
-                        this.enum_type = Type.LOGIN;
+                        this.enum_type = NoteEditTypes.LOGIN;
                         fragmentTransaction.add(R.id.fragment_container, newFragment(mLoginEditFragment, noteBundle));
                         break;
                 }
@@ -148,15 +147,15 @@ public class TempEdit extends AppCompatActivity implements SaveResponder {
                 assert type != null;
                 switch (type) { // STATE 1
                     case NoteObject.NOTE:
-                        this.enum_type = Type.NOTE;
+                        this.enum_type = NoteEditTypes.NOTE;
                         fragmentTransaction.add(R.id.fragment_container, mNoteEditFragment);
                         break;
                     case NoteObject.CARD:
-                        this.enum_type = Type.CARD;
+                        this.enum_type = NoteEditTypes.CARD;
                         fragmentTransaction.add(R.id.fragment_container, mCardEditFragment);
                         break;
                     case NoteObject.LOGIN:
-                        this.enum_type = Type.LOGIN;
+                        this.enum_type = NoteEditTypes.LOGIN;
                         fragmentTransaction.add(R.id.fragment_container, mLoginEditFragment);
                         break;
                 }
@@ -285,7 +284,7 @@ public class TempEdit extends AppCompatActivity implements SaveResponder {
                 requestSave();
             }
 
-            ACTIVITY_INTENT = new Intent(this, ActivityMain.class);
+            ACTIVITY_INTENT = new Intent(this, NoteListActivity.class);
             this.finish();
             this.startActivity(ACTIVITY_INTENT);
         }

@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".core.clearances.ActivityLogin"
+            android:name=".core.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -29,17 +29,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".core.clearances.ActivityRegistration"
+            android:name=".core.activities.RegisterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
 
         <!-- MAIN ACTIVITIES -->
         <activity
-            android:name=".core.main.ActivityMain"
+            android:name=".core.activities.CoreActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".core.main.ActivityEdit"
+            android:name=".core.activities.NoteListActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".core.activities.EditActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
@@ -47,11 +51,11 @@
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".core.main.ActivityOptions"
+            android:name=".core.activities.OptionsActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".core.main.ActivityExternalLibs"
+            android:name=".core.activities.ExternalLibsActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
 

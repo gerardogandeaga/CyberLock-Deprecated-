@@ -99,7 +99,7 @@
                     android:layout_width="56dp"
                     android:layout_height="37dp"
                     android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/card_default"/>
+                    android:src="@drawable/card_default"/>
 
             </LinearLayout>
 

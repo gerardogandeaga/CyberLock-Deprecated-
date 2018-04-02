@@ -96,7 +96,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     android:layout_marginStart="5dp"
-                    app:srcCompat="@drawable/card_default"/>
+                    android:src="@drawable/card_default"/>
 
             </LinearLayout>
 

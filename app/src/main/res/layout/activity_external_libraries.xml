@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="?attr/backgroundColour"
     android:orientation="vertical"
-    tools:context=".core.main.ActivityMain">
+    tools:context=".core.activities.NoteListActivity">
 
     <include layout="@layout/toolbar_main"/>
 

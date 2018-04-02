@@ -3,7 +3,7 @@ package com.gerardogandeaga.cyberlock.utils.security.options;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.gerardogandeaga.cyberlock.core.dialogs.DialogCustomLoad;
+import com.gerardogandeaga.cyberlock.core.dialogs.LoadDialog;
 import com.gerardogandeaga.cyberlock.crypto.hash.Hash;
 import com.gerardogandeaga.cyberlock.crypto.key.CryptKeyHandler;
 
@@ -19,7 +19,7 @@ public class ChangePassword {
     private SharedPreferences mSharedPreferences;
 
     // widgets
-    private DialogCustomLoad mDialogCustomLoad;
+    private LoadDialog mLoadDialog;
 
     public ChangePassword(Context context, SharedPreferences sharedPreferences, String currentPassword, String newPassword) {
         this.mContext = context;
@@ -29,8 +29,8 @@ public class ChangePassword {
     }
 
     private void onPasswordComplete(final String currentPassword, final String newPassword) {
-        mDialogCustomLoad = new DialogCustomLoad(mContext);
-        mDialogCustomLoad.indeterminateProgress("Changing Password");
+        mLoadDialog = new LoadDialog(mContext);
+        mLoadDialog.indeterminateProgress("Changing Password");
 
         new Thread(new Runnable() {
             @Override
@@ -38,7 +38,7 @@ public class ChangePassword {
                 // save password, re-encrypt key, set tmp_pwd.
                 savePassword(currentPassword, newPassword);
                 // end load
-                mDialogCustomLoad.dismiss();
+                mLoadDialog.dismiss();
             }
         }).start();
     }

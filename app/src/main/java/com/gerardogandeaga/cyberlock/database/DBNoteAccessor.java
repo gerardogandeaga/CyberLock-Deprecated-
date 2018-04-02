@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.gerardogandeaga.cyberlock.crypto.DBCrypt;
 import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.interfaces.DBNoteConstants;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;

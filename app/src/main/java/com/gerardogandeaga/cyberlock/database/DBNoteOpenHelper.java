@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.gerardogandeaga.cyberlock.interfaces.DBNoteConstants;
+
 /**
  * @author gerardogandeaga
  */

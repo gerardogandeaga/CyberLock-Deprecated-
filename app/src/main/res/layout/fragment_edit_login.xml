@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".core.main.ActivityEdit"
+    tools:context=".core.activities.EditActivity"
     tools:ignore="ContentDescription">
 
     <LinearLayout
@@ -35,7 +35,7 @@
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
                     android:tint="@color/black"
-                    app:srcCompat="@drawable/graphic_url"/>
+                    android:src="@drawable/graphic_url"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -75,7 +75,7 @@
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
                     android:tint="@color/black"
-                    app:srcCompat="@drawable/graphic_email"/>
+                    android:src="@drawable/graphic_email"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -115,7 +115,7 @@
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
                     android:tint="@color/black"
-                    app:srcCompat="@drawable/graphic_username"/>
+                    android:src="@drawable/graphic_username"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -155,7 +155,7 @@
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
                     android:tint="@color/black"
-                    app:srcCompat="@drawable/graphic_password"/>
+                    android:src="@drawable/graphic_password"/>
 
                 <LinearLayout
                     android:layout_width="0dp"

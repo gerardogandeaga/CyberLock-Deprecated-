@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="?attr/backgroundColour"
     android:orientation="vertical"
-    tools:context=".core.main.ActivityOptions">
+    tools:context=".core.activities.OptionsActivity">
 
     <include layout="@layout/toolbar_main"/>
 
@@ -67,7 +67,7 @@
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_auto_save"
                             android:padding="4dp"
-                            app:srcCompat="@drawable/graphic_save"/>
+                            android:src="@drawable/graphic_save"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -115,7 +115,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:contentDescription="@string/str_list_format"
                                 android:padding="3dp"
-                                app:srcCompat="@drawable/graphic_list_format"/>
+                                android:src="@drawable/graphic_list_format"/>
 
                             <TextView
                                 android:layout_width="0dp"
@@ -161,7 +161,7 @@
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_auto_save"
                             android:padding="4dp"
-                            app:srcCompat="@drawable/graphic_tag"/>
+                            android:src="@drawable/graphic_tag"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -199,12 +199,12 @@
                         android:paddingTop="10dp">
 
                         <ImageView
-                            android:layout_width="wrap_content"
+                            android:layout_width="32dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_logout_delay"
                             android:padding="0dp"
-                            app:srcCompat="@drawable/ic_timer"/>
+                            android:src="@drawable/ic_timer"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -257,7 +257,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:contentDescription="@string/str_change_password"
                                 android:padding="3dp"
-                                app:srcCompat="@drawable/graphic_password"/>
+                                android:src="@drawable/graphic_password"/>
 
                             <TextView
                                 android:layout_width="0dp"
@@ -340,7 +340,7 @@
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_git"
                             android:padding="3dp"
-                            app:srcCompat="@drawable/graphic_github"/>
+                            android:src="@drawable/graphic_github"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -376,7 +376,7 @@
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_about_cyber_lock"
                             android:padding="3dp"
-                            app:srcCompat="@drawable/graphic_about"/>
+                            android:src="@drawable/graphic_about"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -412,7 +412,7 @@
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_version"
                             android:padding="3dp"
-                            app:srcCompat="@drawable/graphic_about"/>
+                            android:src="@drawable/graphic_about"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -478,7 +478,7 @@
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_rate"
                             android:padding="3dp"
-                            app:srcCompat="@drawable/graphic_github"/>
+                            android:src="@drawable/graphic_github"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -514,7 +514,7 @@
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_bug"
                             android:padding="3dp"
-                            app:srcCompat="@drawable/graphic_email"/>
+                            android:src="@drawable/graphic_email"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -579,7 +579,7 @@
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_rate"
                             android:padding="3dp"
-                            app:srcCompat="@drawable/graphic_github"/>
+                            android:src="@drawable/graphic_github"/>
 
                         <TextView
                             android:layout_width="0dp"
@@ -614,7 +614,7 @@
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_bug"
                             android:padding="3dp"
-                            app:srcCompat="@drawable/graphic_email"/>
+                            android:src="@drawable/graphic_email"/>
 
                         <TextView
                             android:layout_width="0dp"

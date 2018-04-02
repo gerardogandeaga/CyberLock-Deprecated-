@@ -36,7 +36,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:tint="@color/ct_red_2"
-                app:srcCompat="@drawable/ic_tag"/>
+                android:src="@drawable/ic_tag"/>
 
             <ImageView
                 android:id="@+id/imgCardIcon"

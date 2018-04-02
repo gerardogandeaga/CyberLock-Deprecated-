@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/backgroundColour"
-    tools:context=".core.main.ActivityMain">
+    tools:context=".core.activities.NoteListActivity">
 
     <LinearLayout
         android:id="@+id/container"
@@ -16,7 +16,7 @@
 
         <include layout="@layout/toolbar_main"/>
 
-        <com.gerardogandeaga.cyberlock.android.CustomRecyclerView
+        <com.gerardogandeaga.cyberlock.views.CustomRecyclerView
             android:id="@+id/recyclerView"
             style="@style/MyMainScrollbarStyle"
             android:layout_width="match_parent"

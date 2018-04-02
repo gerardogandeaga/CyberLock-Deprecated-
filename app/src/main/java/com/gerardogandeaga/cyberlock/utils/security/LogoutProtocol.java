@@ -20,7 +20,7 @@ public class LogoutProtocol {
     public static CountDownTimer mCountDownTimer;
     public static boolean mIsCountDownTimerFinished = false;
 
-    public void logoutExecuteAutosaveOff(final Context context) {
+    public void logoutExecuteAutoSaveOff(final Context context) {
         mCountDownTimer = new CountDownTimer(SharedPreferences.getLogoutDelayTime(context), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -37,7 +37,7 @@ public class LogoutProtocol {
         }.start();
     }
 
-    public void logoutExecuteAutosaveOn(final Context context) {
+    public void logoutExecuteAutoSaveOn(final Context context) {
         mCountDownTimer = new CountDownTimer(SharedPreferences.getLogoutDelayTime(context), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
