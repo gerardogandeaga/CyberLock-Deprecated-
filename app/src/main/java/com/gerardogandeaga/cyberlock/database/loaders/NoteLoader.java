@@ -11,6 +11,7 @@ import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
 /**
  * @author gerardogandeaga
  */
+// todo convert to runnable or simpler class than async
 public class NoteLoader extends AsyncTask<Void, Void, Void> {
     private static final String TAG = "NoteLoader";
 

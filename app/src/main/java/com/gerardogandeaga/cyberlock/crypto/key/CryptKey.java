@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Base64;
 
-import com.gerardogandeaga.cyberlock.utils.SharedPreferences;
+import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -22,7 +22,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.TMP_PWD;
 
 // todo java docs this class
 /**
@@ -43,7 +43,7 @@ public class CryptKey {
 
     private static void setAlgorithmPresets(Context context) {
         mKey = TMP_PWD;
-        mEncryptionAlgorithm = SharedPreferences.getEncryptionAlgorithm(context);
+        mEncryptionAlgorithm = PreferencesAccessor.getEncryptionAlgorithm(context);
         mCipherAlgorithm = mEncryptionAlgorithm + "/CBC/PKCS5Padding";
 
         switch (mEncryptionAlgorithm) {

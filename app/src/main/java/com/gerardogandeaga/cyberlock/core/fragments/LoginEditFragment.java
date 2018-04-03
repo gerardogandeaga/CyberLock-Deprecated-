@@ -1,6 +1,5 @@
 package com.gerardogandeaga.cyberlock.core.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,9 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.interfaces.SaveResponder;
 import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
 import com.gerardogandeaga.cyberlock.helpers.content.NoteContentHandler;
+import com.gerardogandeaga.cyberlock.interfaces.RequestResponder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,11 +20,11 @@ import butterknife.ButterKnife;
 /**
  * @author gerardogandeaga
  */
-public class LoginEditFragment extends Fragment {
+public class LoginEditFragment extends EditFragment {
     private static final String TAG = "LoginEditFragment";
 
     // response interface
-    private SaveResponder mSaveResponder;
+    private RequestResponder mRequestResponder;
 
     private NoteObject mNoteObject;
     private NoteContentHandler mNoteContentHandler;
@@ -45,9 +44,9 @@ public class LoginEditFragment extends Fragment {
 
         // instantiate interface
         try {
-            this.mSaveResponder = (SaveResponder) getActivity();
+            this.mRequestResponder = (RequestResponder) getActivity();
         } catch (ClassCastException e) {
-            Log.e(TAG, "onCreate: could not cast " + TAG + " to SaveResponder class");
+            Log.e(TAG, "onCreate: could not cast " + TAG + " to RequestResponder class");
         }
 
         // get note object
@@ -91,9 +90,9 @@ public class LoginEditFragment extends Fragment {
         }
     }
 
-    public void save() {
-        Log.i(TAG, "onSaveRequest: save requested");
-        // todo compile note object here
+    @Override
+    protected void compileObject() {
+        Log.i(TAG, "compileObject: compiling note object...");
         final String label = mEtLabel.getText().toString();
         final String url = mEtUrl.getText().toString();
         final String email = mEtEmail.getText().toString();
@@ -114,7 +113,20 @@ public class LoginEditFragment extends Fragment {
 
         mNoteObject.setLabel(label);
         mNoteObject.setContent(content);
+        Log.i(TAG, "compileObject: done compiling");
+    }
 
-        mSaveResponder.onSaveResponse(mNoteObject);
+    @Override
+    public void updateObject() {
+        Log.i(TAG, "updateObject: updated object requested");
+        compileObject();
+        mRequestResponder.onUpdateObjectResponse(mNoteObject);
+        Log.i(TAG, "updateObject: updated object sent");
+    }
+
+    public void save() {
+        Log.i(TAG, "onSaveRequest: save requested");
+        compileObject();
+        mRequestResponder.onSaveResponse(mNoteObject);
     }
 }

@@ -2,37 +2,41 @@ package com.gerardogandeaga.cyberlock.core.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.views.CustomDialog;
-import com.gerardogandeaga.cyberlock.core.TempEdit;
 import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
 import com.gerardogandeaga.cyberlock.helpers.content.NoteContentHandler;
-import com.gerardogandeaga.cyberlock.utils.Resources;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
+import com.gerardogandeaga.cyberlock.utils.Resources;
+import com.gerardogandeaga.cyberlock.views.CustomDialog;
 import com.gerardogandeaga.cyberlock.views.handlers.TextViews;
-
-import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
 
 /**
  * @author gerardogandeaga
  */
+// todo possible dialog fragment
 public class NotePreviewDialog {
+    public interface EditSelectedPreview {
+        void onEdit(NoteObject noteObject);
+    }
+    private EditSelectedPreview mEditSelectedPreview;
+
     private Context mContext;
-
-    // Data variables
     private NoteObject mNoteObject;
-
-    // Views
     private Dialog mDialog;
 
     public NotePreviewDialog(Context context, NoteObject noteObject) {
         this.mContext = context;
         this.mNoteObject = noteObject;
+
+        try {
+            this.mEditSelectedPreview = (EditSelectedPreview) context;
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
     }
 
     // Select type
@@ -133,10 +137,13 @@ public class NotePreviewDialog {
         mDialog.show();
     }
 
-    // Edit data package
+    /**
+     * sends a call to the main activity sending the note object to be
+     * put into and intent and then started by the activity
+     */
     private void onEdit() {
-        ACTIVITY_INTENT = new Intent(mContext, TempEdit.class);
-        ACTIVITY_INTENT.putExtra("data", mNoteObject);
-        mContext.startActivity(ACTIVITY_INTENT);
+        if (mEditSelectedPreview != null) {
+            mEditSelectedPreview.onEdit(mNoteObject);
+        }
     }
 }

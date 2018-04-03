@@ -17,7 +17,7 @@ import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.views.CustomToast;
 import com.gerardogandeaga.cyberlock.utils.ListFormat;
 import com.gerardogandeaga.cyberlock.utils.Resources;
-import com.gerardogandeaga.cyberlock.utils.SharedPreferences;
+import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
 import com.gerardogandeaga.cyberlock.utils.security.KeyChecker;
 import com.gerardogandeaga.cyberlock.utils.security.options.ChangePassword;
 
@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Contract;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.DIRECTORY;
 
 /**
  * @author gerardogandeaga
@@ -90,17 +90,17 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
         iniOpenSourceLibraries();
     }
     private void iniAutoSave() {
-        mSwAutoSave.setChecked(SharedPreferences.getAutoSave(this));
+        mSwAutoSave.setChecked(PreferencesAccessor.getAutoSave(this));
     }
     private void iniListFormat() {
-        if (SharedPreferences.getListFormat(this).matches(ListFormat.GRID)) {
+        if (PreferencesAccessor.getListFormat(this).matches(ListFormat.GRID)) {
             mImgListFormat.setImageDrawable(Resources.getDrawable(this, R.drawable.graphic_list_grid));
         } else {
             mImgListFormat.setImageDrawable(Resources.getDrawable(this, R.drawable.graphic_list_linear));
         }
     }
     private void iniTaggedHeaders() {
-        mSwTaggedHeaders.setChecked(SharedPreferences.getTaggedHeaders(this));
+        mSwTaggedHeaders.setChecked(PreferencesAccessor.getTaggedHeaders(this));
     }
     private void iniLogoutDelay() {
         ArrayAdapter<CharSequence> adapterLogoutDelay = ArrayAdapter.createFromResource(
@@ -127,8 +127,8 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
                     }
 
                     System.out.println("Time = " + time);
-                    SharedPreferences.setLogoutDelay(mContext, logoutDelay);
-                    SharedPreferences.setLogoutDelayTime(mContext, time);
+                    PreferencesAccessor.setLogoutDelay(mContext, logoutDelay);
+                    PreferencesAccessor.setLogoutDelayTime(mContext, time);
                 }
             }
             @Override
@@ -137,7 +137,7 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
         });
 
         // saved state
-        int spinnerPosition = adapterLogoutDelay.getPosition(SharedPreferences.getLogoutDelay(this));
+        int spinnerPosition = adapterLogoutDelay.getPosition(PreferencesAccessor.getLogoutDelay(this));
         mSpLogoutDelay.setSelection(spinnerPosition);
     }
     private void iniChangePassword() {
@@ -167,23 +167,23 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
 
     // on clicks
     private void onAutoSave() {
-        SharedPreferences.setAutoSave(this, !SharedPreferences.getAutoSave(this));
-        mSwAutoSave.setChecked(SharedPreferences.getAutoSave(this));
+        PreferencesAccessor.setAutoSave(this, !PreferencesAccessor.getAutoSave(this));
+        mSwAutoSave.setChecked(PreferencesAccessor.getAutoSave(this));
     }
     private void onListFormat() {
-        if (SharedPreferences.getListFormat(this).matches(ListFormat.GRID)) {
-            SharedPreferences.setListFormat(this, ListFormat.LINEAR);
+        if (PreferencesAccessor.getListFormat(this).matches(ListFormat.GRID)) {
+            PreferencesAccessor.setListFormat(this, ListFormat.LINEAR);
             mImgListFormat.setImageDrawable(Resources.getDrawable(this, R.drawable.graphic_list_linear));
             CustomToast.buildAndShowToast(this, "Linear List Format", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
         } else {
-            SharedPreferences.setListFormat(this, ListFormat.GRID);
+            PreferencesAccessor.setListFormat(this, ListFormat.GRID);
             mImgListFormat.setImageDrawable(Resources.getDrawable(this, R.drawable.graphic_list_grid));
             CustomToast.buildAndShowToast(this, "Grid List Format", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
         }
     }
     private void onTaggedHeaders() {
-        SharedPreferences.setTaggedHeaders(this, !SharedPreferences.getTaggedHeaders(this));
-        mSwTaggedHeaders.setChecked(SharedPreferences.getTaggedHeaders(this));
+        PreferencesAccessor.setTaggedHeaders(this, !PreferencesAccessor.getTaggedHeaders(this));
+        mSwTaggedHeaders.setChecked(PreferencesAccessor.getTaggedHeaders(this));
     }
     private void onLogoutDelay() {
         mSpLogoutDelay.performClick();
@@ -221,7 +221,7 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
         }
     }
     private void onOpenSourceLibraries() {
-        intentGoTo(ExternalLibsActivity.class);
+        newIntentGoTo(ExternalLibsActivity.class);
     }
 
     @Override
@@ -237,12 +237,6 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
     public void onBackPressed() {
         newIntent(NoteListActivity.class);
         super.onBackPressed();
-    }
-
-    @Override
-    protected void onStart() {
-        newIntent(LoginActivity.class);
-        super.onStart();
     }
 
     @Contract("null -> true")

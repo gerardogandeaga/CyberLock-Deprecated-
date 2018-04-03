@@ -5,7 +5,7 @@ import android.content.Context;
 /**
  * @author gerardogandeaga
  */
-public class SharedPreferences {
+public class PreferencesAccessor {
     public static final String DIRECTORY = "com.gerardogandeaga.cyberlock";
 
     // shared preferences keys

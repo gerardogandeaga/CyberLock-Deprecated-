@@ -15,14 +15,14 @@ import com.gerardogandeaga.cyberlock.core.dialogs.LoadDialog;
 import com.gerardogandeaga.cyberlock.views.CustomToast;
 import com.gerardogandeaga.cyberlock.crypto.hash.Hash;
 import com.gerardogandeaga.cyberlock.crypto.key.CryptKey;
-import com.gerardogandeaga.cyberlock.utils.SharedPreferences;
+import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
 
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.AUTOSAVE;
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.CRYPT_KEY;
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.ENCRYPTION_ALGORITHM;
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.PASSWORD;
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.THEME;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.AUTOSAVE;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.ENCRYPTION_ALGORITHM;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.PASSWORD;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.THEME;
 import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
 
 /**
@@ -116,9 +116,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean isRegistered() {
-        final boolean isRegistered = SharedPreferences.getIsRegistered(this);
-        final String password = SharedPreferences.getPassword(this);
-        final String key = SharedPreferences.getMasterKey(this);
+        final boolean isRegistered = PreferencesAccessor.getIsRegistered(this);
+        final String password = PreferencesAccessor.getPassword(this);
+        final String key = PreferencesAccessor.getMasterKey(this);
 
         return (isRegistered && password != null && key != null);
     }

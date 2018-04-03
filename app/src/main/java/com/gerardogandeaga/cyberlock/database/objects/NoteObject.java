@@ -21,7 +21,7 @@ public class NoteObject implements Serializable {
     private Date mDate;
     private String mFolder;
     private String mType;
-    private String mTag;
+    private String mColourTag;
     private String mLabel;
     private String mContent;
 
@@ -31,13 +31,13 @@ public class NoteObject implements Serializable {
     public NoteObject(long time,
                       String folder,
                       String type,
-                      String tag,
+                      String colour_tag,
                       String label,
                       String content) {
         this.mDate = new Date(time);
         this.mFolder = folder;
         this.mType = type;
-        this.mTag = tag;
+        this.mColourTag = colour_tag;
         this.mLabel = label;
         this.mContent = content;
     }
@@ -65,8 +65,8 @@ public class NoteObject implements Serializable {
     public String getType() {
         return this.mType;
     }
-    public String getTag() {
-        return this.mTag;
+    public String getColourTag() {
+        return this.mColourTag;
     }
     public String getLabel() {
         return this.mLabel;
@@ -87,9 +87,9 @@ public class NoteObject implements Serializable {
         System.out.println(type);
         this.mType = type;
     }
-    public void setTag(String tag) {
-        System.out.println(tag);
-        this.mTag = tag;
+    public void setColourTag(String colourTag) {
+        System.out.println(colourTag);
+        this.mColourTag = colourTag;
     }
     public void setLabel(String label) {
         System.out.println(label);

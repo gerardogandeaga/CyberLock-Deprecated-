@@ -23,7 +23,7 @@ public class Graphics {
     public static class ColourTags {
 
         public static int colourTagHeader(Context context, String colour) {
-            if (SharedPreferences.getTaggedHeaders(context)) {
+            if (PreferencesAccessor.getTaggedHeaders(context)) {
                 return colourTag(context, colour);
             } else {
                 return Resources.getColour(context, R.color.black);

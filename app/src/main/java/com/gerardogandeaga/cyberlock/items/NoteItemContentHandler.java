@@ -139,7 +139,7 @@ public class NoteItemContentHandler {
     // ---------------------------
 
     private int getColour(NoteObject noteObject) {
-        return Graphics.ColourTags.colourTagListView(mContext, noteObject.getTag());
+        return Graphics.ColourTags.colourTagListView(mContext, noteObject.getColourTag());
     }
 
     private String censorNumber(String number) {

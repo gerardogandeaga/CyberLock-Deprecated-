@@ -1,42 +1,46 @@
-package com.gerardogandeaga.cyberlock.core;
+package com.gerardogandeaga.cyberlock.core.activities;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.core.dialogs.ColourPaletteFragmentDialog;
 import com.gerardogandeaga.cyberlock.core.fragments.CardEditFragment;
 import com.gerardogandeaga.cyberlock.core.fragments.LoginEditFragment;
 import com.gerardogandeaga.cyberlock.core.fragments.NoteEditFragment;
-import com.gerardogandeaga.cyberlock.core.activities.NoteListActivity;
 import com.gerardogandeaga.cyberlock.database.DBNoteAccessor;
 import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
 import com.gerardogandeaga.cyberlock.enums.NoteEditTypes;
-import com.gerardogandeaga.cyberlock.interfaces.SaveResponder;
-import com.gerardogandeaga.cyberlock.utils.SharedPreferences;
+import com.gerardogandeaga.cyberlock.interfaces.RequestResponder;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
+import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
 
 
 // todo java docs the class
 // todo add the colour tags selector
 /**
  * @author gerardogandeaga
+ *
+ * streamlined edit class that contains 3 fragments for the note, card and login info edit.
+ * this class handle the global variables between all types, as well as saving to the db.
+ * this class extends the core activity meaning all major security features come with
+ * this class
  */
-public class TempEdit extends AppCompatActivity implements SaveResponder {
-    private static final String TAG = "TempEdit";
+public class NoteEditActivity extends CoreActivity implements RequestResponder, ColourPaletteFragmentDialog.ColourSelector {
+    private static final String TAG = "NoteEditActivity";
+
+    private Menu mMenu;
 
     // fragments
     private FragmentManager mFragmentManager;
@@ -45,21 +49,22 @@ public class TempEdit extends AppCompatActivity implements SaveResponder {
     private CardEditFragment mCardEditFragment;
     private LoginEditFragment mLoginEditFragment;
 
+    // edit
     private boolean mSaveFlag;
     private boolean mIsNew;
     private boolean mIsAutoSave;
     private NoteEditTypes enum_type;
     private NoteObject mNoteObject;
 
+    // note object
+    private String mColourTag;
+
     @BindView(R.id.toolbar) Toolbar mToolBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // todo create a parent class that will execute ACTIVITY_INTENT = null and other directives automatically
-        ACTIVITY_INTENT = null;
         setContentView(R.layout.activity_edit);
-        ButterKnife.bind(this);
+        bindView();
 
         // fragments
         this.mFragmentManager = getFragmentManager();
@@ -71,31 +76,44 @@ public class TempEdit extends AppCompatActivity implements SaveResponder {
         // edit variables
         this.mSaveFlag = true;
         this.mIsNew = true;
-        this.mIsAutoSave = SharedPreferences.getAutoSave(this);
+        this.mIsAutoSave = PreferencesAccessor.getAutoSave(this);
 
-        setupSupportActionBar();
         // launch the fragment
         startEditor();
+
+        if (mNoteObject != null) {
+            this.mColourTag = mNoteObject.getColourTag();
+        }
+
+        setupActionBar(null, null, NO_ICON);
+        super.onCreate(savedInstanceState);
     }
 
-    private void setupSupportActionBar() {
-        setSupportActionBar(mToolBar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setHomeButtonEnabled(false);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setTitle(null);
-//        getSupportActionBar().setHomeAsUpIndicator(Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(
-//                this, Resources.getDrawable(this, R.drawable.ic_back)));
+    @Override
+    protected void bindView() {
+        ButterKnife.bind(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_edit, menu);
+        this.mMenu = menu;
 
         // change colour filter of icons
         Graphics.BasicFilter.mutateMenuItems(this, menu);
 
+        mutateMenuTagIcon();
+
         return true;
+    }
+
+    private void mutateMenuTagIcon() {
+        if (mColourTag != null) {
+            mMenu.findItem(R.id.menu_colour_tag)
+                    .getIcon()
+                    .mutate()
+                    .setColorFilter(Graphics.ColourTags.colourTagHeader(this, mColourTag), PorterDuff.Mode.SRC_ATOP);
+        }
     }
 
     /**
@@ -108,13 +126,10 @@ public class TempEdit extends AppCompatActivity implements SaveResponder {
      * then finally starts the fragment editor
      */
     private void startEditor() {
-
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             this.mNoteObject = (NoteObject) bundle.get("data");
             this.mIsNew = (mNoteObject == null);
-
-
 
             // fragment transaction "manager"
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
@@ -195,10 +210,12 @@ public class TempEdit extends AppCompatActivity implements SaveResponder {
         accessor.close();
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menu_colour_tag:
+                ColourPaletteFragmentDialog.show(this);
+                break;
             // send save request to fragment
             case R.id.menu_save:
                 requestSave();
@@ -208,6 +225,12 @@ public class TempEdit extends AppCompatActivity implements SaveResponder {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onColorSelected(String colour) {
+        this.mColourTag = colour;
+        mutateMenuTagIcon();
     }
 
     /**
@@ -243,32 +266,64 @@ public class TempEdit extends AppCompatActivity implements SaveResponder {
         onBackPressed();
     }
 
+    private void requestUpdatedNoteObject() {
+        switch (enum_type) {
+            case NOTE:
+                mNoteEditFragment.updateObject();
+                break;
+            case CARD:
+                mCardEditFragment.updateObject();
+                break;
+            case LOGIN:
+                mLoginEditFragment.updateObject();
+                break;
+            default:
+                // todo idea - throw a possible exception
+                Log.e(TAG, "requestSave: edit type was not properly specified");
+                break;
+        }
+    }
+
     /**
      * saves or updates
-     * @param noteObject filled note
+     * @param object filled note
      */
     @Override
-    public void onSaveResponse(NoteObject noteObject) {
+    public void onSaveResponse(Object object) {
         if (mSaveFlag) {
-            this.mSaveFlag = false;
-            Log.i(TAG, "onSaveResponse: responded to save request");
-            // todo save here
-            // global not configs
-            noteObject.setTag("default");
+            if (object instanceof NoteObject) {
+                NoteObject noteObject = (NoteObject) object;
+                this.mSaveFlag = false;
+                Log.i(TAG, "onSaveResponse: responded to save request");
+                // todo save here
+                // global not configs
+                noteObject.setColourTag(mColourTag);
 
-            DBNoteAccessor accessor = DBNoteAccessor.getInstance(this);
-            accessor.open();
-            if (mIsNew) {
-                accessor.save(noteObject);
-                Log.i(TAG, "onSaveResponse: note has been saved");
+                DBNoteAccessor accessor = DBNoteAccessor.getInstance(this);
+                accessor.open();
+                if (mIsNew) {
+                    accessor.save(noteObject);
+                    Log.i(TAG, "onSaveResponse: note has been saved");
+                } else {
+                    accessor.update(noteObject);
+                    Log.i(TAG, "onSaveResponse: note has been updated");
+                }
+                accessor.close();
+
+                // exit
+                onBackPressed();
             } else {
-                accessor.update(noteObject);
-                Log.i(TAG, "onSaveResponse: note has been updated");
+                Log.e(TAG, "onSaveResponse: object cannot be casted to note object");
             }
-            accessor.close();
+        }
+    }
 
-            // exit
-            onBackPressed();
+    @Override
+    public void onUpdateObjectResponse(Object object) {
+        if (object instanceof NoteObject) {
+            this.mNoteObject = (NoteObject) object;
+        } else {
+            Log.e(TAG, "onSaveResponse: object cannot be casted to note object");
         }
     }
 
@@ -278,15 +333,39 @@ public class TempEdit extends AppCompatActivity implements SaveResponder {
      */
     @Override
     public void onBackPressed() {
+        // if auto save is on then we must save first then leave
+        if (mIsAutoSave) {
+            requestSave();
+        }
+        newIntent(NoteListActivity.class);
         super.onBackPressed();
-        if (ACTIVITY_INTENT == null) {
-            if (mIsAutoSave) {
+    }
+
+    @Override protected void onStart() {
+        if (!isAppLoggedIn()) {
+            if (PreferencesAccessor.getAutoSave(this)) {
                 requestSave();
             }
-
-            ACTIVITY_INTENT = new Intent(this, NoteListActivity.class);
-            this.finish();
-            this.startActivity(ACTIVITY_INTENT);
         }
+        super.onStart();
+    }
+
+    @Override
+    protected void onPause() {
+        if (!isFinishing()) {
+            if (secureIntentIsNull()) {
+                requestUpdatedNoteObject();
+                newIntent(LoginActivity.class);
+                getNewIntent().putExtra("edit?", true);
+                getNewIntent().putExtra("isNew?", mIsNew);
+                getNewIntent().putExtra("lastDB", mNoteObject);
+
+                /*
+                we must call the timer here on our own because our intent is not null
+                therefore the super class onPause commands will not execute */
+                startLogoutTimer(PreferencesAccessor.getAutoSave(this));
+            }
+        }
+        super.onPause();
     }
 }

@@ -67,7 +67,7 @@ public class DBNoteAccessor implements DBNoteConstants {
             values.put(DATE,       noteObject.getTime());
             values.put(FOLDER,     setData(noteObject.getFolder()));
             values.put(TYPE,       setData(noteObject.getType()));
-            values.put(COLOUR_TAG, setData(noteObject.getTag()));
+            values.put(COLOUR_TAG, setData(noteObject.getColourTag()));
             values.put(LABEL,      setData(noteObject.getLabel()));
             values.put(CONTENT,    setData(noteObject.getContent()));
 
@@ -83,7 +83,7 @@ public class DBNoteAccessor implements DBNoteConstants {
             values.put(DATE,       new Date().getTime());
             values.put(FOLDER,     setData(noteObject.getFolder()));
             values.put(TYPE,       setData(noteObject.getType()));
-            values.put(COLOUR_TAG, setData(noteObject.getTag()));
+            values.put(COLOUR_TAG, setData(noteObject.getColourTag()));
             values.put(LABEL,      setData(noteObject.getLabel()));
             values.put(CONTENT,    setData(noteObject.getContent()));
 

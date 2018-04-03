@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.core.TempEdit;
 import com.gerardogandeaga.cyberlock.core.dialogs.NotePreviewDialog;
 import com.gerardogandeaga.cyberlock.database.loaders.NoteLoader;
 import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
@@ -20,7 +19,7 @@ import com.gerardogandeaga.cyberlock.items.NoteItem;
 import com.gerardogandeaga.cyberlock.items.NoteItemContentHandler;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
 import com.gerardogandeaga.cyberlock.utils.ListFormat;
-import com.gerardogandeaga.cyberlock.utils.SharedPreferences;
+import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
 import com.gerardogandeaga.cyberlock.views.CustomLoad;
 import com.gerardogandeaga.cyberlock.views.CustomRecyclerView;
 import com.gerardogandeaga.cyberlock.views.CustomSnackBar;
@@ -36,7 +35,7 @@ import butterknife.ButterKnife;
 /**
  * @author gerardogandeaga on 2018-03-30.
  */
-public class NoteListActivity extends CoreActivity implements NoteLoader.OnDataPackageLoaded {
+public class NoteListActivity extends CoreActivity implements NoteLoader.OnDataPackageLoaded, NotePreviewDialog.EditSelectedPreview {
     // adapter package loading
     @Override
     public void sendPackage(final NoteObject noteObject) {
@@ -64,6 +63,13 @@ public class NoteListActivity extends CoreActivity implements NoteLoader.OnDataP
         });
     }
 
+    @Override
+    public void onEdit(NoteObject noteObject) {
+        newIntent(NoteEditActivity.class);
+        getNewIntent().putExtra("data", noteObject);
+        newIntentGoTo();
+    }
+
     private Context mContext = this;
     // adapter
     private int mSize;
@@ -80,9 +86,6 @@ public class NoteListActivity extends CoreActivity implements NoteLoader.OnDataP
     // initial on create methods
     @Override
     public void onCreate(Bundle savedInstanceState) {
-//        Themes.setTheme(this);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-
         // set view
         this.mView = View.inflate(this, R.layout.activity_main, null);
         setContentView(mView);
@@ -196,7 +199,7 @@ public class NoteListActivity extends CoreActivity implements NoteLoader.OnDataP
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
         // Set layout format
-        switch (SharedPreferences.getListFormat(mContext)) {
+        switch (PreferencesAccessor.getListFormat(mContext)) {
             case ListFormat.GRID:
                 staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
                 mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
@@ -218,7 +221,6 @@ public class NoteListActivity extends CoreActivity implements NoteLoader.OnDataP
         actionBarSubTitle(selectedCount > 0 ? "Items Selected" : "Item Selected");
     }
 
-    // Global clicks
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 //        if (this.mDrawerToggle.onOptionsItemSelected(item)) return true;
@@ -236,7 +238,7 @@ public class NoteListActivity extends CoreActivity implements NoteLoader.OnDataP
 
             // options
             case R.id.menu_option_options:
-                intentGoTo(OptionsActivity.class);
+                newIntentGoTo(OptionsActivity.class);
                 return true;
 
             // misc
@@ -272,18 +274,10 @@ public class NoteListActivity extends CoreActivity implements NoteLoader.OnDataP
         return super.onOptionsItemSelected(item);
     }
 
-    // Menu options functions
-    // Notes, PaymentInfo, LoginInfo ################################
     public void onAddClicked(String noteType) {
-        newIntent(TempEdit.class);
+        newIntent(NoteEditActivity.class);
         getNewIntent().putExtra("type", noteType);
-        intentGoTo();
-    }
-
-    @Override
-    public void onStart() {
-        newIntent(LoginActivity.class);
-        super.onStart();
+        newIntentGoTo();
     }
 
     @Override

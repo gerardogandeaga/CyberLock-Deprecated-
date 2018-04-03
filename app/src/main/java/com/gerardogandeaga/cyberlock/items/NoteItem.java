@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
-import com.gerardogandeaga.cyberlock.utils.SharedPreferences;
+import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
 import com.gerardogandeaga.cyberlock.views.handlers.TextViews;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
@@ -101,7 +101,7 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
     @Override
     public int getLayoutRes() {
         if (mContext != null) {
-            if (SharedPreferences.Checkers.isLinearFormat(SharedPreferences.getListFormat(mContext))) {
+            if (PreferencesAccessor.Checkers.isLinearFormat(PreferencesAccessor.getListFormat(mContext))) {
                 return R.layout.data_item_linear;
             } else {
                 return R.layout.data_item_grid;

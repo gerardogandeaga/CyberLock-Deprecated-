@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Base64;
 
 import com.gerardogandeaga.cyberlock.crypto.key.CryptKey;
-import com.gerardogandeaga.cyberlock.utils.SharedPreferences;
+import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
 
 import java.security.SecureRandom;
 import java.util.Arrays;
@@ -13,7 +13,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.TMP_PWD;
 
 /**
  * @author gerardogandeaga
@@ -30,9 +30,9 @@ public class BaseCrypt {
     private static void setAlgorithmPresets(Context context) {
         // since key is static it will not change, therefore we do not need to constantly decrypt
         if (mKey == null) {
-            mKey = CryptKey.decrypt(context, SharedPreferences.getMasterKey(context), TMP_PWD);
+            mKey = CryptKey.decrypt(context, PreferencesAccessor.getMasterKey(context), TMP_PWD);
         }
-        mEncryptionAlgorithm = SharedPreferences.getEncryptionAlgorithm(context);
+        mEncryptionAlgorithm = PreferencesAccessor.getEncryptionAlgorithm(context);
         mCipherAlgorithm = mEncryptionAlgorithm + "/CBC/PKCS5Padding";
 
         switch (mEncryptionAlgorithm) {

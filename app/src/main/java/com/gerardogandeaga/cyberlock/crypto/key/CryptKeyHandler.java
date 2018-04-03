@@ -2,8 +2,8 @@ package com.gerardogandeaga.cyberlock.crypto.key;
 
 import android.content.Context;
 
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.CRYPT_KEY;
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.DIRECTORY;
 
 /**
  * @author gerardogandeaga

@@ -18,14 +18,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * @author gerardogandeaga
  */
-public class TagsFragmentDialog extends DialogFragment {
+public class ColourPaletteFragmentDialog extends DialogFragment {
     // fragment properties
-    private static final String TAG = "TagsFragmentDialog";
+    private static final String TAG = "ColourPaletteFragmentDialog";
 
-    public interface OnColourSelected {
-        void sendInput(String colour);
+    public interface ColourSelector {
+        void onColorSelected(String colour);
     }
-    public OnColourSelected mOnColourSelected;
+    private ColourSelector mColourSelector;
 
     // instance vars
     private Dialog mDialog;
@@ -38,15 +38,15 @@ public class TagsFragmentDialog extends DialogFragment {
         super.onStart();
         // callback listener
         try {
-            this.mOnColourSelected = (OnColourSelected) getActivity();
+            this.mColourSelector = (ColourSelector) getActivity();
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
     }
 
     public static void show(AppCompatActivity context) {
-        TagsFragmentDialog tagsFragmentDialog = new TagsFragmentDialog();
-        tagsFragmentDialog.show(context.getFragmentManager(), TAG);
+        ColourPaletteFragmentDialog colourPaletteFragmentDialog = new ColourPaletteFragmentDialog();
+        colourPaletteFragmentDialog.show(context.getFragmentManager(), TAG);
     }
 
     // fragment methods
@@ -127,8 +127,8 @@ public class TagsFragmentDialog extends DialogFragment {
     }
 
     private void onItemClick(String name) {
-        if (mOnColourSelected != null) {
-            mOnColourSelected.sendInput(name);
+        if (mColourSelector != null) {
+            mColourSelector.onColorSelected(name);
         } else {
             System.out.println("listener is null!!!");
         }

@@ -18,8 +18,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
-
 /**
  * @author gerardogandeaga on 2018-03-30.
  */
@@ -30,9 +28,6 @@ public class ExternalLibsActivity extends CoreActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        System.out.println("subclass called");
-        ACTIVITY_INTENT = null;
-
         View view = View.inflate(this, R.layout.activity_external_libraries, null);
         setContentView(view);
         bindView();
@@ -72,12 +67,6 @@ public class ExternalLibsActivity extends CoreActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onStart() {
-        newIntent(LoginActivity.class);
-        super.onStart();
     }
 
     @Override

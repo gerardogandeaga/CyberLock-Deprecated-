@@ -35,7 +35,7 @@
 
         <!-- MAIN ACTIVITIES -->
         <activity
-            android:name=".core.activities.CoreActivity"
+            android:name=".core.activities.SecureActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
@@ -43,11 +43,7 @@
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".core.activities.EditActivity"
-            android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity
-            android:name=".core.TempEdit"
+            android:name=".core.activities.NoteEditActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity

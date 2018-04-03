@@ -1,6 +1,5 @@
 package com.gerardogandeaga.cyberlock.core.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.interfaces.SaveResponder;
 import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
 import com.gerardogandeaga.cyberlock.helpers.content.NoteContentHandler;
 
@@ -21,11 +19,8 @@ import butterknife.ButterKnife;
 /**
  * @author gerardogandeaga
  */
-public class NoteEditFragment extends Fragment {
+public class NoteEditFragment extends EditFragment {
     private static final String TAG = "NoteEditFragment";
-
-    // response interface
-    private SaveResponder mSaveResponder;
 
     private NoteObject mNoteObject;
     private NoteContentHandler mNoteContentHandler;
@@ -38,13 +33,6 @@ public class NoteEditFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // instantiate interface
-        try {
-            this.mSaveResponder = (SaveResponder) getActivity();
-        } catch (ClassCastException e) {
-            Log.e(TAG, "onCreate: could not cast " + TAG + " to SaveResponder class");
-        }
 
         // get note object
         Bundle bundle = this.getArguments();
@@ -79,9 +67,9 @@ public class NoteEditFragment extends Fragment {
         }
     }
 
-    public void save() {
-        Log.i(TAG, "onSaveRequest: save requested");
-        // todo compile note object here
+    @Override
+    protected void compileObject() {
+        Log.i(TAG, "compileObject: compiling note object...");
         final String label = mEtLabel.getText().toString();
         final String note = mEtNotes.getText().toString();
 
@@ -98,7 +86,21 @@ public class NoteEditFragment extends Fragment {
 
         mNoteObject.setLabel(label);
         mNoteObject.setContent(content);
+        Log.i(TAG, "compileObject: done compiling");
+    }
 
-        mSaveResponder.onSaveResponse(mNoteObject);
+    @Override
+    public void updateObject() {
+        Log.i(TAG, "updateObject: updated object requested");
+        compileObject();
+        mRequestResponder.onUpdateObjectResponse(mNoteObject);
+        Log.i(TAG, "updateObject: updated object sent");
+    }
+
+    @Override
+    public void save() {
+        Log.i(TAG, "onSaveRequest: save requested");
+        compileObject();
+        mRequestResponder.onSaveResponse(mNoteObject);
     }
 }

@@ -9,8 +9,8 @@ import com.gerardogandeaga.cyberlock.crypto.hash.SHA256PinHash;
 
 import java.util.Arrays;
 
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.DIRECTORY;
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.PASSWORD;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.DIRECTORY;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.PASSWORD;
 
 /**
  * @author gerardogandeaga

@@ -7,9 +7,9 @@ import com.gerardogandeaga.cyberlock.core.dialogs.LoadDialog;
 import com.gerardogandeaga.cyberlock.crypto.hash.Hash;
 import com.gerardogandeaga.cyberlock.crypto.key.CryptKeyHandler;
 
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.CRYPT_KEY;
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.PASSWORD;
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.CRYPT_KEY;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.PASSWORD;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.TMP_PWD;
 
 /**
  * @author gerardogandeaga

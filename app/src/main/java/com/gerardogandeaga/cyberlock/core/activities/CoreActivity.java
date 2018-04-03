@@ -4,21 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.WindowManager;
+import android.util.Log;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
 import com.gerardogandeaga.cyberlock.utils.Resources;
-import com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol;
 
 import butterknife.BindView;
-
-import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
-import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.APP_LOGGED_IN;
-import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mCountDownTimer;
-import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mIsCountDownTimerFinished;
 
 /**
  * @author gerardogandeaga
@@ -26,8 +19,10 @@ import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.mIsCou
  * base activity which mosly control application security by ensuring logouts and as well
  * implifying the creation of fucture activities.
  */
-// todo manke the activity intent an instance variable and more private
-public abstract class CoreActivity extends AppCompatActivity {
+// todo make the activity intent an instance variable and more private
+public abstract class CoreActivity extends SecureActivity {
+    private static final String TAG = "CoreActivity";
+
     // no icon flag
     protected static final int NO_ICON = 0;
 
@@ -36,9 +31,7 @@ public abstract class CoreActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         super.onCreate(savedInstanceState);
-        ACTIVITY_INTENT = null;
     }
 
     /**
@@ -58,8 +51,8 @@ public abstract class CoreActivity extends AppCompatActivity {
         }
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
             actionBarTitle(title);
             actionBarSubTitle(subTitle);
@@ -96,7 +89,6 @@ public abstract class CoreActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * set supportActionBar icon
      * @param icon drawable Res to be passed in and turned into a drawable
@@ -104,6 +96,9 @@ public abstract class CoreActivity extends AppCompatActivity {
     protected void actionBarIcon(@DrawableRes int icon) {
         if (icon != NO_ICON) {
             if (getSupportActionBar() != null) {
+                getSupportActionBar().setHomeButtonEnabled(true);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
                 getSupportActionBar().setHomeAsUpIndicator(
                         Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(this,
                                 Resources.getDrawable(this, icon)));
@@ -112,66 +107,59 @@ public abstract class CoreActivity extends AppCompatActivity {
     }
 
     /**
-     * starts a new activity
-     * @param cls activity class that we be opened
-     */
-    protected void intentGoTo(Class<?> cls) {
-        newIntent(cls);
-        intentGoTo();
-    }
-
-    protected void intentGoTo() {
-        finish();
-        startActivity(ACTIVITY_INTENT);
-    }
-
-    protected Intent getNewIntent() {
-        return ACTIVITY_INTENT;
-    }
-
-    /**
-     * set ACTIVITY_INTENT
+     * set SECURE_INTENT
      * @param cls activity class that we be opened
      */
     protected void newIntent(Class<?> cls) {
-        ACTIVITY_INTENT = new Intent(this, cls);
+        setSecureIntent(new Intent(this, cls));
+    }
+
+    /**
+     * starts a new activity
+     * @param cls activity class that we be opened
+     */
+    protected void newIntentGoTo(Class<?> cls) {
+        newIntent(cls);
+        newIntentGoTo();
+    }
+
+    protected void newIntentGoTo() {
+        startActivity(getSecureIntent());
+    }
+
+    protected Intent getNewIntent() {
+        return getSecureIntent();
     }
 
     @Override
     public void onBackPressed() {
-        if (ACTIVITY_INTENT != null) {
-            finish();
-            startActivity(ACTIVITY_INTENT);
-            System.out.println("exit");
-        }
+        startActivity(getSecureIntent());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        if (mIsCountDownTimerFinished) {
-            if (!APP_LOGGED_IN) {
-                startActivity(ACTIVITY_INTENT);
-            } else {
-                if (mCountDownTimer != null) {
-                    mCountDownTimer.cancel();
-                    ACTIVITY_INTENT = null;
-                }
+        if (!isAppLoggedIn()) {
+            if (secureIntentIsNull()) {
+                newIntent(LoginActivity.class);
             }
+            startActivity(getSecureIntent());
+        } else {
+            cancelLogoutTimer();
+            Log.i(TAG, "onStart: logout timer cancelled!");
         }
     }
 
-    /**
-     * this is activated when either the home or tab button is pressed
-     * or when the screen turns off
-     */
     @Override
-    public boolean isFinishing() {
-        if (ACTIVITY_INTENT == null) {
-            new LogoutProtocol().logoutImmediate(this);
-        }
+    protected void onPause() {
+        super.onPause();
 
-        return super.isFinishing();
+        if (!isFinishing()) {
+            if (secureIntentIsNull()) {
+                startLogoutTimer(false);
+                Log.i(TAG, "onPause: starting logout timer");
+            }
+        }
     }
 }

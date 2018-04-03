@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
 
-import com.gerardogandeaga.cyberlock.utils.SharedPreferences;
+import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
 
-import static com.gerardogandeaga.cyberlock.utils.SharedPreferences.TMP_PWD;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.TMP_PWD;
 
 /**
  * @author gerardogandeaga
@@ -21,7 +21,7 @@ public class LogoutProtocol {
     public static boolean mIsCountDownTimerFinished = false;
 
     public void logoutExecuteAutoSaveOff(final Context context) {
-        mCountDownTimer = new CountDownTimer(SharedPreferences.getLogoutDelayTime(context), 1000) {
+        mCountDownTimer = new CountDownTimer(PreferencesAccessor.getLogoutDelayTime(context), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 mIsCountDownTimerFinished = false;
@@ -38,7 +38,7 @@ public class LogoutProtocol {
     }
 
     public void logoutExecuteAutoSaveOn(final Context context) {
-        mCountDownTimer = new CountDownTimer(SharedPreferences.getLogoutDelayTime(context), 1000) {
+        mCountDownTimer = new CountDownTimer(PreferencesAccessor.getLogoutDelayTime(context), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 mIsCountDownTimerFinished = false;

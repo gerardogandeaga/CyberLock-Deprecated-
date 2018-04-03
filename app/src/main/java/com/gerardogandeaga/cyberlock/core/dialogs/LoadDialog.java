@@ -33,7 +33,6 @@ public class LoadDialog {
 
         if (mDialog != null) {
             mDialog.dismiss();
-
         }
     }
 }

@@ -38,7 +38,7 @@ public class NoteContentHandler {
         // Primitive string data
         mLabel = noteObject.getLabel();
         mDate = noteObject.getDate();
-        mTag = noteObject.getTag();
+        mTag = noteObject.getColourTag();
 
         // Content parsing
         String content = noteObject.getContent();
