@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.mikepenz.materialize.holder.StringHolder;
 
 
@@ -54,9 +54,9 @@ public class TextViews {
                 isPaymentinfo = false,
                 isLogininfo = false;
         switch (args) {
-            case NoteObject.NOTE:         isNote = true; break;
-            case NoteObject.CARD: isPaymentinfo = true; break;
-            case NoteObject.LOGIN:   isLogininfo = true; break;
+            case Note.NOTE:         isNote = true; break;
+            case Note.CARD: isPaymentinfo = true; break;
+            case Note.LOGIN:   isLogininfo = true; break;
         }
 
         setLinearLayoutVisibility(note, isNote);

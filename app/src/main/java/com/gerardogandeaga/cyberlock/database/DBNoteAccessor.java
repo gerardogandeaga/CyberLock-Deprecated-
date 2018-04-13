@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.gerardogandeaga.cyberlock.crypto.DBCrypt;
-import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.interfaces.DBNoteConstants;
 
 import java.io.UnsupportedEncodingException;
@@ -46,12 +46,12 @@ public class DBNoteAccessor implements DBNoteConstants {
     // database accessor states
     public void open() {
         Log.i(TAG, "open: Opening database...");
-        mSQLiteDatabase = mOpenHelper.getWritableDatabase();
+        this.mSQLiteDatabase = mOpenHelper.getWritableDatabase();
     }
     public void close() {
-            Log.i(TAG, "close: Closing database...");
+        Log.i(TAG, "close: Closing database...");
         if (mSQLiteDatabase != null) {
-            this.mSQLiteDatabase.close();
+            mSQLiteDatabase.close();
             this.mSQLiteDatabase = null;
         }
     }
@@ -60,58 +60,93 @@ public class DBNoteAccessor implements DBNoteConstants {
     }
 
     // database interactions / mods
-    public void save(NoteObject noteObject) {
+    public void save(Note note) {
         try {
             ContentValues values = new ContentValues();
 
-            values.put(DATE,       noteObject.getTime());
-            values.put(FOLDER,     setData(noteObject.getFolder()));
-            values.put(TYPE,       setData(noteObject.getType()));
-            values.put(COLOUR_TAG, setData(noteObject.getColourTag()));
-            values.put(LABEL,      setData(noteObject.getLabel()));
-            values.put(CONTENT,    setData(noteObject.getContent()));
+            values.put(DATE,       note.getTime());
+            values.put(FOLDER,     setData(note.getFolder()));
+            values.put(TYPE,       setData(note.getType()));
+            values.put(COLOUR_TAG, setData(note.getColourTag()));
+            values.put(LABEL,      setData(note.getLabel()));
+            values.put(CONTENT,    setData(note.getContent()));
 
-            mSQLiteDatabase.insert(DBNoteOpenHelper.TABLE, null, values);
+            mSQLiteDatabase.insert(TABLE, null, values);
         } catch (UnsupportedEncodingException e) {
             System.out.println("error saving note!");
         }
     }
-    public void update(NoteObject noteObject) {
+    public void update(Note note) {
         try {
             ContentValues values = new ContentValues();
 
             values.put(DATE,       new Date().getTime());
-            values.put(FOLDER,     setData(noteObject.getFolder()));
-            values.put(TYPE,       setData(noteObject.getType()));
-            values.put(COLOUR_TAG, setData(noteObject.getColourTag()));
-            values.put(LABEL,      setData(noteObject.getLabel()));
-            values.put(CONTENT,    setData(noteObject.getContent()));
+            values.put(FOLDER,     setData(note.getFolder()));
+            values.put(TYPE,       setData(note.getType()));
+            values.put(COLOUR_TAG, setData(note.getColourTag()));
+            values.put(LABEL,      setData(note.getLabel()));
+            values.put(CONTENT,    setData(note.getContent()));
 
-            String date = Long.toString(noteObject.getTime());
-            mSQLiteDatabase.update(DBNoteOpenHelper.TABLE, values, "date = ?", new String[]{date});
+            String date = Long.toString(note.getTime());
+            mSQLiteDatabase.update(TABLE, values, "date = ?", new String[]{date});
         } catch (UnsupportedEncodingException e) {
             System.out.println("error updating note!");
         }
     }
-    public void delete(NoteObject noteObject) {
-        String date = Long.toString(noteObject.getTime());
-        mSQLiteDatabase.delete(DBNoteOpenHelper.TABLE, "date = ?", new String[]{date});
+    public void delete(Note note) {
+        String date = Long.toString(note.getTime());
+        mSQLiteDatabase.delete(TABLE, "date = ?", new String[]{date});
     }
 
-    // data packages getters
-    // list
-    public List<NoteObject> getAllDataPackages() {
-        List<NoteObject> noteObjects = new ArrayList<>();
+    public Note getNote(Cursor cursor) {
+        if (!cursor.isAfterLast()) {
+            return constructNote(cursor);
+        }
+
+        // return null for out of bounds
+        return null;
+    }
+
+    public Note getNote(Cursor cursor, String folder) {
+        if (!cursor.isAfterLast()) {
+            Note note = constructNote(cursor);
+            if (note != null) {
+                if (folder.equals(note.getFolder())) {
+                    return note;
+                } else {
+                    return new Note();
+                }
+            }
+        }
+        return null;
+    }
+
+    public List<Note> getAllNotes() {
+        List<Note> notes = new ArrayList<>();
         Cursor cursor = getQuery();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            noteObjects.add(constructDataPackage(cursor));
+            notes.add(getNote(cursor));
             cursor.moveToNext();
         }
         cursor.close();
 
-        return noteObjects;
+        return notes;
     }
+
+    public List<Note> getAllNotes(String folder) {
+        List<Note> notes = new ArrayList<>();
+        Cursor cursor = getQuery();
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            notes.add(getNote(cursor, folder));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return notes;
+    }
+
     public int size() {
         int size = 0;
         Cursor cursor = getQuery();
@@ -122,18 +157,9 @@ public class DBNoteAccessor implements DBNoteConstants {
         }
         return size;
     }
-    // single position
-    public NoteObject getDataPackage(Cursor cursor) {
-        if (!cursor.isAfterLast()) {
-            return constructDataPackage(cursor);
-        }
-
-        // return null for out of bounds
-        return null;
-    }
 
     // returns a new data package from the cursor position
-    private NoteObject constructDataPackage(Cursor cursor) {
+    private Note constructNote(Cursor cursor) {
         try {
             long time =         cursor.getLong(POS_DATE);
             String folder =     getData(cursor.getBlob(POS_FOLDER));
@@ -142,7 +168,7 @@ public class DBNoteAccessor implements DBNoteConstants {
             String label =      getData(cursor.getBlob(POS_LABEL));
             String content =    getData(cursor.getBlob(POS_CONTENT));
             // create new note object
-            return new NoteObject(time, folder, type, colour_tag, label, content);
+            return new Note(time, folder, type, colour_tag, label, content);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return null;
@@ -150,15 +176,10 @@ public class DBNoteAccessor implements DBNoteConstants {
     }
 
     // this function checks if a specific piece of data exists in the database returning a boolean
-    public boolean containsData(NoteObject noteObject) {
-        List<NoteObject> noteObjects = getAllDataPackages();
-        for (int i = 0; i < noteObjects.size(); i++) {
-            System.out.println(noteObject);
-            System.out.println(noteObjects.get(i));
-            if (noteObject.toString().equals(noteObjects.get(i).toString())) {
-                System.out.println(noteObject.toString());
-                System.out.println(noteObjects.get(i).toString());
-
+    public boolean containsNote(Note note) {
+        List<Note> notes = getAllNotes();
+        for (int i = 0; i < notes.size(); i++) {
+            if (note.toString().equals(notes.get(i).toString())) {
                 return false;
             }
         }

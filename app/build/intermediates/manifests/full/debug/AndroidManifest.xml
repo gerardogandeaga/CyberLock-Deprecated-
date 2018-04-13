@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.gerardogandeaga.cyberlock.activities.clearances.ActivityLogin"
+            android:name="com.gerardogandeaga.cyberlock.core.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" >
             <intent-filter>
@@ -35,25 +35,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.gerardogandeaga.cyberlock.activities.clearances.ActivityRegistration"
+            android:name="com.gerardogandeaga.cyberlock.core.activities.RegisterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <!-- MAIN ACTIVITIES -->
         <activity
-            android:name="com.gerardogandeaga.cyberlock.activities.core.ActivityMain"
+            android:name="com.gerardogandeaga.cyberlock.core.activities.SecureActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.gerardogandeaga.cyberlock.activities.core.ActivityEdit"
+            android:name="com.gerardogandeaga.cyberlock.core.activities.NoteListActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.gerardogandeaga.cyberlock.activities.core.ActivityOptions"
+            android:name="com.gerardogandeaga.cyberlock.core.activities.NoteEditActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.gerardogandeaga.cyberlock.activities.core.ActivityExternalLibs"
+            android:name="com.gerardogandeaga.cyberlock.core.activities.OptionsActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.gerardogandeaga.cyberlock.core.activities.ExternalLibsActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
 

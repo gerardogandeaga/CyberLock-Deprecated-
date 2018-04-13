@@ -3,19 +3,19 @@ package com.gerardogandeaga.cyberlock.core.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.gerardogandeaga.cyberlock.Initial;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.core.dialogs.LoadDialog;
-import com.gerardogandeaga.cyberlock.views.CustomToast;
 import com.gerardogandeaga.cyberlock.crypto.hash.Hash;
 import com.gerardogandeaga.cyberlock.crypto.key.CryptKey;
 import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
+import com.gerardogandeaga.cyberlock.views.CustomToast;
 
 import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.AUTOSAVE;
 import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.CRYPT_KEY;
@@ -23,12 +23,12 @@ import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.DIRECTORY;
 import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.ENCRYPTION_ALGORITHM;
 import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.PASSWORD;
 import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.THEME;
-import static com.gerardogandeaga.cyberlock.utils.security.LogoutProtocol.ACTIVITY_INTENT;
+import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.TMP_PWD;
 
 /**
  * @author gerardogandeaga
  */
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends SecureActivity {
     private Context mContext = this;
     private android.content.SharedPreferences mSharedPreferences;
 
@@ -37,19 +37,16 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         // fullscreen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        ACTIVITY_INTENT = null;
+
         this.mSharedPreferences = getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE);
         super.onCreate(savedInstanceState);
 
         // check is user is already registered
         if (isRegistered()) {
-            ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
-            this.finish();
-            this.startActivity(ACTIVITY_INTENT);
+            secureIntentGoTo(new Intent(this, LoginActivity.class));
         } else {
             setContentView(View.inflate(this, R.layout.activity_register, null));
             final EditText tvInput1 = findViewById(R.id.etInitial);
@@ -113,6 +110,11 @@ public class RegisterActivity extends AppCompatActivity {
                 .putBoolean(AUTOSAVE, false)
                 .putString(THEME, "THEME_LIGHT")
                 .apply();
+
+        // todo fix this quick saver
+        TMP_PWD = password;
+        new Initial(this).setupFolder();
+        TMP_PWD = null;
     }
 
     private boolean isRegistered() {
@@ -121,16 +123,5 @@ public class RegisterActivity extends AppCompatActivity {
         final String key = PreferencesAccessor.getMasterKey(this);
 
         return (isRegistered && password != null && key != null);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if (isRegistered()) {
-            ACTIVITY_INTENT = new Intent(this, LoginActivity.class);
-            this.finish();
-            this.startActivity(ACTIVITY_INTENT);
-        }
     }
 }

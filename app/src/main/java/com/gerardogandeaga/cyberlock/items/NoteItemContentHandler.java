@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
 
 import java.util.ArrayList;
@@ -26,36 +26,36 @@ public class NoteItemContentHandler {
         this.mContext = context;
     }
 
-    public List<NoteItem> getItems(List<NoteObject> noteObjectList) {
+    public List<NoteItem> getItems(List<Note> noteList) {
         // recyclerViewItem list as an array
         List<NoteItem> noteItemList = new ArrayList<>();
 
         // iterate through SQLite data list
-        for (int i = 0; i < noteObjectList.size(); i++) {
-            NoteObject noteObject = noteObjectList.get(i);
+        for (int i = 0; i < noteList.size(); i++) {
+            Note note = noteList.get(i);
 
             noteItemList.add(
                     // get data package from index
                     new NoteItem()
                             .withContext(mContext)
                             .withIdentifier((long) (i))
-                            .withDataObject(noteObject)
-                            .withType(noteObject.getType())
+                            .withDataObject(note)
+                            .withType(note.getType())
 
-                            .withLabel(noteObject.getLabel())
-                            .withContent(getUnbindedContent(noteObject, noteObject.getContent()))
-                            .withDate(noteObject.getDate())
-                            .withTag(getColour(noteObject))
+                            .withLabel(note.getLabel())
+                            .withContent(getUnbindedContent(note, note.getContent()))
+                            .withDate(note.getDate())
+                            .withTag(getColour(note))
                             // if type is paymentinfo
-                            .withCardIcon(getCardImage(noteObject.getContent()))
+                            .withCardIcon(getCardImage(note.getContent()))
             );
         }
 
         return noteItemList;
     }
 
-    public NoteItem getItem(NoteObject noteObject) {
-        if (noteObject == null) {
+    public NoteItem getItem(Note note) {
+        if (note == null) {
             mPosition = 0;
             return null;
         }
@@ -63,28 +63,28 @@ public class NoteItemContentHandler {
         return new NoteItem()
                 .withContext(mContext)
                 .withIdentifier((long) (mPosition++))
-                .withDataObject(noteObject)
-                .withType(noteObject.getType())
+                .withDataObject(note)
+                .withType(note.getType())
 
-                .withLabel(noteObject.getLabel())
-                .withContent(getUnbindedContent(noteObject, noteObject.getContent()))
-                .withDate(noteObject.getDate())
-                .withTag(getColour(noteObject))
+                .withLabel(note.getLabel())
+                .withContent(getUnbindedContent(note, note.getContent()))
+                .withDate(note.getDate())
+                .withTag(getColour(note))
                 // if type is paymentinfo
-                .withCardIcon(getCardImage(noteObject.getContent()));
+                .withCardIcon(getCardImage(note.getContent()));
     }
 
     // deconstruct content strings
     @Nullable
-    private String getUnbindedContent(NoteObject noteObject, String content) {
-        this.TYPE = noteObject.getType();
+    private String getUnbindedContent(Note note, String content) {
+        this.TYPE = note.getType();
         // return content based on rawDataPackage-type
         switch (TYPE) {
-            case NoteObject.NOTE:
-                return noteObject.getShortNoteText(mContext, parseNoteContent(content));
-            case NoteObject.CARD:
+            case Note.NOTE:
+                return parseNoteContent(content);
+            case Note.CARD:
                 return parsePaymentInfoContent(content);
-            case NoteObject.LOGIN:
+            case Note.LOGIN:
                 return parseLoginInfoContent(content);
             default:
                 System.out.println("parsing note");
@@ -138,8 +138,8 @@ public class NoteItemContentHandler {
     }
     // ---------------------------
 
-    private int getColour(NoteObject noteObject) {
-        return Graphics.ColourTags.colourTagListView(mContext, noteObject.getColourTag());
+    private int getColour(Note note) {
+        return Graphics.ColourTags.colourTagListView(mContext, note.getColourTag());
     }
 
     private String censorNumber(String number) {
@@ -156,7 +156,7 @@ public class NoteItemContentHandler {
     }
 
     private Drawable getCardImage(String content) {
-        if (TYPE.matches(NoteObject.CARD)) {
+        if (TYPE.matches(Note.CARD)) {
             String cardType;
 
             Scanner scanner = new Scanner(content);

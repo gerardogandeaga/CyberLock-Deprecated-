@@ -23,6 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
+                                                <entry key="paddingPercent" value="5" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -34,8 +35,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\gerardogandeaga\Google Drive\CyberLock\MODED ICONS\save_mod_3.png" />
-                                      <entry key="outputName" value="ic_save" />
+                                      <entry key="imageAsset" value="C:\Users\gerardogandeaga\Google Drive\CyberLock\MODED ICONS\cancel_mod_1.png" />
+                                      <entry key="outputName" value="ic_cancel" />
                                       <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="000000" />
                                     </map>

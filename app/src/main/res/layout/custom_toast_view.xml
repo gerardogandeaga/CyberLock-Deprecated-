@@ -18,7 +18,7 @@
         android:id="@+id/tvMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Custom Toast Text"
+        android:text="Custom Toast Message "
         android:textAppearance="@style/myText.Toast.Text"/>
 
 </android.support.v7.widget.CardView>

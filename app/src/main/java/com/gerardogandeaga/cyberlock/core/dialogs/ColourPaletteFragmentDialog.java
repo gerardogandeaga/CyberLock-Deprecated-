@@ -45,8 +45,7 @@ public class ColourPaletteFragmentDialog extends DialogFragment {
     }
 
     public static void show(AppCompatActivity context) {
-        ColourPaletteFragmentDialog colourPaletteFragmentDialog = new ColourPaletteFragmentDialog();
-        colourPaletteFragmentDialog.show(context.getFragmentManager(), TAG);
+        new ColourPaletteFragmentDialog().show(context.getFragmentManager(), TAG);
     }
 
     // fragment methods

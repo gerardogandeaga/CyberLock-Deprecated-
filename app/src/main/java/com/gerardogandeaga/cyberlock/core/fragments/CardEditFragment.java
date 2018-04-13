@@ -15,7 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.helpers.content.NoteContentHandler;
 import com.gerardogandeaga.cyberlock.interfaces.RequestResponder;
 
@@ -31,7 +31,7 @@ public class CardEditFragment extends EditFragment {
     // response interface
     private RequestResponder mRequestResponder;
 
-    private NoteObject mNoteObject;
+    private Note mNote;
     private NoteContentHandler mNoteContentHandler;
     private ArrayAdapter<CharSequence> mArrayAdapter;
     private String mCardType;
@@ -39,7 +39,7 @@ public class CardEditFragment extends EditFragment {
     // view
     @BindView(R.id.tvDate)       TextView mTvDate;
     @BindView(R.id.etLabel)      EditText mEtLabel;
-    @BindView(R.id.etCardName)   EditText mEtCardName;
+    @BindView(R.id.etCardHolder) EditText mEtCardHolder;
     @BindView(R.id.etCardNumber) EditText mEtCardNumber;
     @BindView(R.id.etCardExpire) EditText mEtCardExpire;
     @BindView(R.id.etCardCVV)    EditText mEtCardCVV;
@@ -60,8 +60,8 @@ public class CardEditFragment extends EditFragment {
         // get note object
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            this.mNoteObject = (NoteObject) bundle.get("data");
-            this.mNoteContentHandler = new NoteContentHandler(getActivity(), mNoteObject);
+            this.mNote = (Note) bundle.get("data");
+            this.mNoteContentHandler = new NoteContentHandler(getActivity(), mNote);
         }
 
         // spinner array adapter
@@ -144,13 +144,13 @@ public class CardEditFragment extends EditFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // if data is not null then we set our stored data onto
-        if (mNoteObject != null) {
+        if (mNote != null) {
             mTvDate.setText(mNoteContentHandler.mDate);
             mEtLabel.setText(mNoteContentHandler.mLabel);
-            mEtCardName.setText(mNoteContentHandler.mHolder);
-            mEtCardNumber.setText(mNoteContentHandler.mHolder);
-            mEtCardExpire.setText(mNoteContentHandler.mHolder);
-            mEtCardCVV.setText(mNoteContentHandler.mHolder);
+            mEtCardHolder.setText(mNoteContentHandler.mHolder);
+            mEtCardNumber.setText(mNoteContentHandler.mNumber);
+            mEtCardExpire.setText(mNoteContentHandler.mExpiry);
+            mEtCardCVV.setText(mNoteContentHandler.mCVV);
             mEtNotes.setText(mNoteContentHandler.mNotes);
 
             // spinner
@@ -158,7 +158,7 @@ public class CardEditFragment extends EditFragment {
         } else {
             mTvDate.setText(null);
             mEtLabel.setText(null);
-            mEtCardName.setText(null);
+            mEtCardHolder.setText(null);
             mEtCardNumber.setText(null);
             mEtCardExpire.setText(null);
             mEtCardCVV.setText(null);
@@ -170,26 +170,25 @@ public class CardEditFragment extends EditFragment {
     protected void compileObject() {
         Log.i(TAG, "compileObject: compiling note object...");
         final String label = mEtLabel.getText().toString();
-        final String cardName = mEtCardName.getText().toString();
-        final String cardNumber = mEtCardNumber.getText().toString();
-        final String cardType = mCardType;
-        final String cardExpire = mEtCardExpire.getText().toString();
-        final String cardCVV = mEtCardCVV.getText().toString();
+        final String holder = mEtCardHolder.getText().toString();
+        final String number = mEtCardNumber.getText().toString();
+        final String type = mCardType;
+        final String expiry = mEtCardExpire.getText().toString();
+        final String cvv = mEtCardCVV.getText().toString();
         final String notes = mEtNotes.getText().toString();
 
         // format content
         final String format = "%s\n%s\n%s\n%s\n%s\n%s";
-        final String content = String.format(format, cardName, cardNumber, cardType, cardExpire, cardCVV, notes);
+        final String content = String.format(format, holder, number, type, expiry, cvv, notes);
 
-        if (mNoteObject == null) {
-            this.mNoteObject = new NoteObject();
+        if (mNote == null) {
+            this.mNote = new Note();
 
-            mNoteObject.setFolder("MAIN");
-            mNoteObject.setType(NoteObject.CARD);
+            mNote.setType(Note.CARD);
         }
 
-        mNoteObject.setLabel(label);
-        mNoteObject.setContent(content);
+        mNote.setLabel(label);
+        mNote.setContent(content);
         Log.i(TAG, "compileObject: done compiling");
     }
 
@@ -197,13 +196,13 @@ public class CardEditFragment extends EditFragment {
     public void updateObject() {
         Log.i(TAG, "updateObject: updated object requested");
         compileObject();
-        mRequestResponder.onUpdateObjectResponse(mNoteObject);
+        mRequestResponder.onUpdateObjectResponse(mNote);
         Log.i(TAG, "updateObject: updated object sent");
     }
 
     public void save() {
         Log.i(TAG, "onSaveRequest: save requested");
         compileObject();
-        mRequestResponder.onSaveResponse(mNoteObject);
+        mRequestResponder.onSaveResponse(mNote);
     }
 }

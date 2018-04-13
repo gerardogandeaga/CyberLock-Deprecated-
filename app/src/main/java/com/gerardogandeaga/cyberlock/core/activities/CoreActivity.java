@@ -78,7 +78,6 @@ public abstract class CoreActivity extends SecureActivity {
         }
     }
 
-
     /**
      * set supportActionBar sub title
      * @param subTitle string subTitle
@@ -104,6 +103,10 @@ public abstract class CoreActivity extends SecureActivity {
                                 Resources.getDrawable(this, icon)));
             }
         }
+    }
+
+    protected void setActionBarBackgroundColour(int colour) {
+        mToolbar.setBackgroundColor(colour);
     }
 
     /**

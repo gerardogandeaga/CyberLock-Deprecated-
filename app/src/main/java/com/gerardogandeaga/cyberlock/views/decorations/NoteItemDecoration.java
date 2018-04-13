@@ -11,21 +11,22 @@ import com.gerardogandeaga.cyberlock.utils.math.Scaling;
  * @author gerardogandeaga
  */
 public class NoteItemDecoration extends RecyclerView.ItemDecoration {
+    private static final int SPACE_DP = 12;
     private boolean mIsLinear = false;
     private int mSpace;
 
     public NoteItemDecoration(Context context, boolean isLinear) {
-        this.mSpace = Scaling.dpFromPx(context, 4);
+        this.mSpace = Scaling.dpFromPx(context, SPACE_DP);
         this.mIsLinear = isLinear;
     }
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        if (!mIsLinear) {
+        if (parent.getChildAdapterPosition(view) == 0) {
             outRect.top = mSpace;
-            outRect.left = mSpace;
-            outRect.right = mSpace;
-            outRect.bottom = mSpace;
         }
+        outRect.left = mSpace;
+        outRect.right = mSpace;
+        outRect.bottom = mSpace;
     }
 }

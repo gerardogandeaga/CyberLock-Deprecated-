@@ -22,7 +22,19 @@ public class Graphics {
 
     public static class ColourTags {
 
+        public static int colourTagToolbar(Context context, String colour) {
+            int col = colourTagHeader(context, colour);
+            if (col == Resources.getColour(context, R.color.black)) {
+                return Resources.getColour(context, R.color.white);
+            }
+            return col;
+        }
+
         public static int colourTagHeader(Context context, String colour) {
+            if (colour == null) {
+                return Resources.getColour(context, R.color.black);
+            }
+
             if (PreferencesAccessor.getTaggedHeaders(context)) {
                 return colourTag(context, colour);
             } else {
@@ -114,6 +126,16 @@ public class Graphics {
         public static Drawable mutateHomeAsUpIndicatorDrawable(Context context, Drawable drawable) {
             drawable.mutate().setColorFilter(getColour(context), getMode());
             return drawable;
+        }
+
+        public static void mutateMenuItems(Context context, Menu menu, int colour) {
+            for (int i = 0; i < menu.size(); i++) {
+                MenuItem item = menu.getItem(i);
+
+                if (item.getIcon() != null) {
+                    item.getIcon().mutate().setColorFilter(Resources.getColour(context, colour), getMode());
+                }
+            }
         }
 
         public static void mutateMenuItems(Context context, Menu menu) {

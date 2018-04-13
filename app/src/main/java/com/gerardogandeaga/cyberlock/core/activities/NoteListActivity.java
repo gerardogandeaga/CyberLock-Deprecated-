@@ -11,12 +11,13 @@ import android.view.View;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.core.dialogs.NotePreviewDialog;
-import com.gerardogandeaga.cyberlock.database.loaders.NoteLoader;
-import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.database.loaders.AdapterLoader;
+import com.gerardogandeaga.cyberlock.database.objects.Folder;
+import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.helpers.AdapterActionManager;
 import com.gerardogandeaga.cyberlock.helpers.DataObjectDeleter;
+import com.gerardogandeaga.cyberlock.interfaces.AdapterLoaderCallback;
 import com.gerardogandeaga.cyberlock.items.NoteItem;
-import com.gerardogandeaga.cyberlock.items.NoteItemContentHandler;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
 import com.gerardogandeaga.cyberlock.utils.ListFormat;
 import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
@@ -35,51 +36,31 @@ import butterknife.ButterKnife;
 /**
  * @author gerardogandeaga on 2018-03-30.
  */
-public class NoteListActivity extends CoreActivity implements NoteLoader.OnDataPackageLoaded, NotePreviewDialog.EditSelectedPreview {
-    // adapter package loading
+public class NoteListActivity extends CoreActivity implements AdapterLoaderCallback, NotePreviewDialog.EditSelectedPreview {
     @Override
-    public void sendPackage(final NoteObject noteObject) {
-        // arrange data as a recycler view item
-        final NoteItem item = new NoteItemContentHandler(this).getItem(noteObject);
-
-        // add to adapter
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (item != null) {
-                    mFastItemAdapter.add(item);
-                }
-
-                // dismiss load overlay and show recycler view
-                if (mCustomLoad.isVisible()) {
-                    mCustomLoad.dismiss();
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                }
-
-                if (mFastItemAdapter.getItemCount() == mSize) {
-                    mRecyclerView.endAnimations();
-                }
-            }
-        });
+    public void onLoaded(Folder folder) {
+        mRecyclerView.setVisibility(View.VISIBLE);
+        this.mCurrentFolder = folder;
+        setupActionBar((folder == null || folder.getName().equals("MAIN") ? "All Notes" : folder.getName()), null, NO_ICON);
     }
 
     @Override
-    public void onEdit(NoteObject noteObject) {
+    public void onEdit(Note note) {
         newIntent(NoteEditActivity.class);
-        getNewIntent().putExtra("data", noteObject);
+        getNewIntent().putExtra("data", note);
         newIntentGoTo();
     }
 
     private Context mContext = this;
+
     // adapter
-    private int mSize;
     private FastItemAdapter<NoteItem> mFastItemAdapter;
     private AdapterActionManager<NoteItem> mAdapterActionManager;
+    private Folder mCurrentFolder;
+
     // views
     private View mView;
     private Menu mMenu;
-    // load view
-    private CustomLoad mCustomLoad;
 
     @BindView(R.id.recyclerView) CustomRecyclerView mRecyclerView;
 
@@ -123,7 +104,7 @@ public class NoteListActivity extends CoreActivity implements NoteLoader.OnDataP
 
                 } else {
                     // preview data
-                    new NotePreviewDialog(mContext, item.getNoteObject()).initializeDialog();
+                    new NotePreviewDialog(mContext, item.getNote()).initializeDialog();
                 }
 
                 return true;
@@ -151,11 +132,8 @@ public class NoteListActivity extends CoreActivity implements NoteLoader.OnDataP
         // set adapter
         mRecyclerView.setAdapter(mFastItemAdapter);
 
-        // initialize and execute data loader task
-        NoteLoader noteLoader = new NoteLoader(this);
-        this.mSize = noteLoader.size();
-        // now start the new task
-        noteLoader.execute();
+        // start the adapter loader
+        new AdapterLoader(this, mFastItemAdapter, true).execute();
 
         setupActionBar(null, null, NO_ICON);
         super.onCreate(savedInstanceState);
@@ -212,8 +190,8 @@ public class NoteListActivity extends CoreActivity implements NoteLoader.OnDataP
         }
     }
     private void displayLoad() {
-        this.mCustomLoad = new CustomLoad(this, mView);
-        mCustomLoad.show(R.id.container);
+        CustomLoad customLoad = new CustomLoad(this, mView);
+        customLoad.show(R.id.container);
     }
     //
     private void setActionBarTitleCount(int selectedCount) {
@@ -227,13 +205,13 @@ public class NoteListActivity extends CoreActivity implements NoteLoader.OnDataP
         switch (item.getItemId()) {
             // add
             case R.id.menu_add_note:
-                onAddClicked(NoteObject.NOTE);
+                onAddClicked(Note.NOTE);
                 break;
             case R.id.menu_add_card:
-                onAddClicked(NoteObject.CARD);
+                onAddClicked(Note.CARD);
                 break;
             case R.id.menu_add_login:
-                onAddClicked(NoteObject.LOGIN);
+                onAddClicked(Note.LOGIN);
                 break;
 
             // options
@@ -277,6 +255,7 @@ public class NoteListActivity extends CoreActivity implements NoteLoader.OnDataP
     public void onAddClicked(String noteType) {
         newIntent(NoteEditActivity.class);
         getNewIntent().putExtra("type", noteType);
+        getNewIntent().putExtra("folder", mCurrentFolder.getName());
         newIntentGoTo();
     }
 

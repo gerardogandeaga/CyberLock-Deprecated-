@@ -13,7 +13,7 @@ import android.widget.EditText;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.core.dialogs.LoadDialog;
-import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.utils.security.KeyChecker;
 import com.gerardogandeaga.cyberlock.views.CustomToast;
 
@@ -96,12 +96,12 @@ public class LoginActivity extends SecureActivity {
 
         // if bundle is not null and last activity was edit then pull the last data package
         if (bundle != null && bundle.getBoolean("edit?", false)) {
-            setSecureIntent(new Intent(LoginActivity.this, NoteEditActivity.class));
+            setSecureIntent(new Intent(this, NoteEditActivity.class));
 
             // pull isNew boolean from previous intent and place into new intent to set edit state
             getSecureIntent().putExtra("isNew?", (boolean) bundle.get("isNew?"));
             // pull the data package from previous intent and place into new intent to resume edit
-            getSecureIntent().putExtra("data", (NoteObject) bundle.get("lastDB"));
+            getSecureIntent().putExtra("data", (Note) bundle.get("lastDB"));
 
             // clean up by removing extras
             getSecureIntent().removeExtra("edit?");

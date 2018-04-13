@@ -11,8 +11,7 @@ import java.util.Date;
 /**
  * @author gerardogandeaga
  */
-public class NoteObject implements Serializable {
-    // global constants
+public class Note extends SavableObject implements Serializable {
     public static final String NOTE  = "TYPE_NOTE";
     public static final String CARD  = "TYPE_CARD";
     public static final String LOGIN = "TYPE_LOGIN";
@@ -25,15 +24,18 @@ public class NoteObject implements Serializable {
     private String mLabel;
     private String mContent;
 
+    @SuppressLint("SimpleDateFormat")
+    private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy 'at' hh:mm aaa");
+
     /*
     constructor that builds the data from the database-accessor class when data is first loaded into memory.
-    constructor gets called when by the "getAllDataPackages" function. */
-    public NoteObject(long time,
-                      String folder,
-                      String type,
-                      String colour_tag,
-                      String label,
-                      String content) {
+    constructor gets called when by the "getAllNotes" function. */
+    public Note(long time,
+                String folder,
+                String type,
+                String colour_tag,
+                String label,
+                String content) {
         this.mDate = new Date(time);
         this.mFolder = folder;
         this.mType = type;
@@ -42,40 +44,39 @@ public class NoteObject implements Serializable {
         this.mContent = content;
     }
     /*
-    constructor that initializes a brand new data object initialized by the EditActivity class
+    constructor that initializes a brand new note initialized by the EditActivity class
     when saving data for the first time. */
-    public NoteObject() {
+    public Note() {
         this.mDate = new Date();
     }
-
-    @SuppressLint("SimpleDateFormat")
-    private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy 'at' hh:mm aaa");
 
     public String getDate() {
         return dateFormat.format(mDate);
     }
 
     // getters
+
     public long getTime() {
         return mDate.getTime();
     }
     public String getFolder() {
-        return this.mFolder;
+        return mFolder;
     }
     public String getType() {
-        return this.mType;
+        return mType;
     }
     public String getColourTag() {
-        return this.mColourTag;
+        return mColourTag;
     }
     public String getLabel() {
-        return this.mLabel;
+        return mLabel;
     }
     public String getContent() {
-        return this.mContent;
+        return mContent;
     }
 
     // setters
+
     public void setTime(long time) {
         this.mDate = new Date(time);
     }
@@ -113,8 +114,8 @@ public class NoteObject implements Serializable {
         }
     }
 
-//    @Override
-//    public String toString() {
-//        return "type : " + mType + " label : " + mLabel;
-//    }
+    @Override
+    public boolean isEmpty() {
+        return (mFolder == null && mType == null && mColourTag == null && mLabel == null && mContent == null);
+    }
 }

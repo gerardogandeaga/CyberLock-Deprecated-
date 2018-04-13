@@ -8,7 +8,7 @@ import java.io.UnsupportedEncodingException;
  * @author gerardogandeaga
  *
  * this class is meant to only encrypt and decrypt SQLite database content, only classes that are able
- * to accessor this class is the databaseAccess class and NoteObject class.
+ * to accessor this class is the databaseAccess class and Note class.
  */
 public class DBCrypt {
 

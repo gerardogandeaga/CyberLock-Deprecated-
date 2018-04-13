@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.helpers.content.NoteContentHandler;
 
 import butterknife.BindView;
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 public class NoteEditFragment extends EditFragment {
     private static final String TAG = "NoteEditFragment";
 
-    private NoteObject mNoteObject;
+    private Note mNote;
     private NoteContentHandler mNoteContentHandler;
 
     // view
@@ -37,8 +37,8 @@ public class NoteEditFragment extends EditFragment {
         // get note object
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            this.mNoteObject = (NoteObject) bundle.get("data");
-            this.mNoteContentHandler = new NoteContentHandler(getActivity(), mNoteObject);
+            this.mNote = (Note) bundle.get("data");
+            this.mNoteContentHandler = new NoteContentHandler(getActivity(), mNote);
         }
     }
 
@@ -56,7 +56,7 @@ public class NoteEditFragment extends EditFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // if data is not null then we set our stored data onto
-        if (mNoteObject != null) {
+        if (mNote != null) {
             mTvDate.setText(mNoteContentHandler.mDate);
             mEtLabel.setText(mNoteContentHandler.mLabel);
             mEtNotes.setText(mNoteContentHandler.mNotes);
@@ -77,15 +77,14 @@ public class NoteEditFragment extends EditFragment {
         final String format = "%s";
         final String content = String.format(format, note);
 
-        if (mNoteObject == null) {
-            this.mNoteObject = new NoteObject();
+        if (mNote == null) {
+            this.mNote = new Note();
 
-            mNoteObject.setFolder("MAIN");
-            mNoteObject.setType(NoteObject.NOTE);
+            mNote.setType(Note.NOTE);
         }
 
-        mNoteObject.setLabel(label);
-        mNoteObject.setContent(content);
+        mNote.setLabel(label);
+        mNote.setContent(content);
         Log.i(TAG, "compileObject: done compiling");
     }
 
@@ -93,7 +92,7 @@ public class NoteEditFragment extends EditFragment {
     public void updateObject() {
         Log.i(TAG, "updateObject: updated object requested");
         compileObject();
-        mRequestResponder.onUpdateObjectResponse(mNoteObject);
+        mRequestResponder.onUpdateObjectResponse(mNote);
         Log.i(TAG, "updateObject: updated object sent");
     }
 
@@ -101,6 +100,6 @@ public class NoteEditFragment extends EditFragment {
     public void save() {
         Log.i(TAG, "onSaveRequest: save requested");
         compileObject();
-        mRequestResponder.onSaveResponse(mNoteObject);
+        mRequestResponder.onSaveResponse(mNote);
     }
 }

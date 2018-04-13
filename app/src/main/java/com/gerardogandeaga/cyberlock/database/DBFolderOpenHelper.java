@@ -4,19 +4,14 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.gerardogandeaga.cyberlock.interfaces.DBFolderConstants;
+
 /**
  * @author gerardogandeaga
  */
-public class DBFolderOpenHelper extends SQLiteOpenHelper {
-    private static final String DB = "folders.db";
-    static final String TABLE = "folders";
+public class DBFolderOpenHelper extends SQLiteOpenHelper implements DBFolderConstants {
+    private static final String DB = TABLE + ".db";
     private static final int VERSION = 1;
-
-    // values
-    static final String DATE = "date";
-    static final String FOLDER_TYPE = "type";
-    static final String NAME = "name";
-    static final String SIZE = "size";
 
     DBFolderOpenHelper(Context context) {
         super(context, DB, null, VERSION);
@@ -26,11 +21,11 @@ public class DBFolderOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE + "(" +
 
-//              KEY             DATA TYPE
-                DATE +        " INTEGER PRIMARY KEY, " +
-                FOLDER_TYPE + " BLOB, " +
-                NAME +        " BLOB, " +
-                SIZE +        " BLOB" +
+//              KEY            DATA TYPE
+                DATE +       " INTEGER PRIMARY KEY, " +
+                COLOUR_TAG + " BLOB, " +
+                NAME +       " BLOB, " +
+                SIZE +       " BLOB" +
 
                 ");");
     }

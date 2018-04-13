@@ -17,22 +17,22 @@ public class AdapterActionManager<Item extends IItem> {
 
     private int mSelectedCount;
     private boolean mActive;
-    private FastItemAdapter<Item> mFastItemAdapter;
+    private FastItemAdapter<Item> mItemAdapter;
     private SelectExtension<Item> mItemSelectExtension;
     private ArrayList<Item> mItemList;
 
     /**
      * @param context calling class context
-     * @param fastItemAdapter arbitrary item adapter
+     * @param itemAdapter arbitrary item adapter
      */
-    public AdapterActionManager(Context context, FastItemAdapter<Item> fastItemAdapter) {
+    public AdapterActionManager(Context context, FastItemAdapter<Item> itemAdapter) {
         this.mContext = context;
 
-        this.mFastItemAdapter = fastItemAdapter;
+        this.mItemAdapter = itemAdapter;
         this.mItemSelectExtension = new SelectExtension<>();
 
         // configure select extension
-        mItemSelectExtension.init(mFastItemAdapter);
+        mItemSelectExtension.init(mItemAdapter);
         mItemSelectExtension.withSelectable(false);
         mItemSelectExtension.withMultiSelect(false);
         mItemSelectExtension.withAllowDeselection(false);
@@ -76,7 +76,7 @@ public class AdapterActionManager<Item extends IItem> {
     }
 
     public void toggle(int position) {
-        if (mFastItemAdapter.getItem(position).isSelected()) {
+        if (mItemAdapter.getItem(position).isSelected()) {
             deselect(position);
         } else {
             select(position);
@@ -91,7 +91,7 @@ public class AdapterActionManager<Item extends IItem> {
 
         // select
         mItemSelectExtension.select(position);
-        mItemList.add(mFastItemAdapter.getItem(position));
+        mItemList.add(mItemAdapter.getItem(position));
 
         mSelectedCount++;
     }
@@ -99,7 +99,7 @@ public class AdapterActionManager<Item extends IItem> {
     public void deselect(int position) {
         // deselect
         mItemSelectExtension.deselect(position);
-        mItemList.remove(mFastItemAdapter.getItem(position));
+        mItemList.remove(mItemAdapter.getItem(position));
 
         mSelectedCount--;
 
@@ -112,7 +112,7 @@ public class AdapterActionManager<Item extends IItem> {
     public void deselectAll() {
         if (mItemSelectExtension.getSelectedItems() != null) {
             for (Item item : mItemSelectExtension.getSelectedItems()) {
-                deselect(mFastItemAdapter.getPosition(item));
+                deselect(mItemAdapter.getPosition(item));
             }
         }
     }
@@ -126,7 +126,7 @@ public class AdapterActionManager<Item extends IItem> {
         mItemSelectExtension.deleteAllSelectedItems();
         // trim and return item list
         mItemList.trimToSize();
-        mFastItemAdapter.notifyDataSetChanged();
+        mItemAdapter.notifyDataSetChanged();
         return mItemList;
     }
 }

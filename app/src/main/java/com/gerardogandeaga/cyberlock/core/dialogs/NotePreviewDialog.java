@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.helpers.content.NoteContentHandler;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
 import com.gerardogandeaga.cyberlock.utils.Resources;
@@ -20,17 +20,17 @@ import com.gerardogandeaga.cyberlock.views.handlers.TextViews;
 // todo possible dialog fragment
 public class NotePreviewDialog {
     public interface EditSelectedPreview {
-        void onEdit(NoteObject noteObject);
+        void onEdit(Note note);
     }
     private EditSelectedPreview mEditSelectedPreview;
 
     private Context mContext;
-    private NoteObject mNoteObject;
+    private Note mNote;
     private Dialog mDialog;
 
-    public NotePreviewDialog(Context context, NoteObject noteObject) {
+    public NotePreviewDialog(Context context, Note note) {
         this.mContext = context;
-        this.mNoteObject = noteObject;
+        this.mNote = note;
 
         try {
             this.mEditSelectedPreview = (EditSelectedPreview) context;
@@ -41,17 +41,17 @@ public class NotePreviewDialog {
 
     // Select type
     public void initializeDialog() {
-        switch (mNoteObject.getType()) {
-            case NoteObject.NOTE:         constructPreviewNote(); break;
-            case NoteObject.CARD: constructPreviewPaymentInfo(); break;
-            case NoteObject.LOGIN:   constructPreviewLoginInfo(); break;
+        switch (mNote.getType()) {
+            case Note.NOTE:         constructPreviewNote(); break;
+            case Note.CARD: constructPreviewPaymentInfo(); break;
+            case Note.LOGIN:   constructPreviewLoginInfo(); break;
         }
     }
 
     // Create dialog
     private void constructPreviewNote() {
         View view = View.inflate(mContext, R.layout.preview_note, null);
-        NoteContentHandler noteContentHandler = new NoteContentHandler(mContext, mNoteObject);
+        NoteContentHandler noteContentHandler = new NoteContentHandler(mContext, mNote);
         //
         TextView note = view.findViewById(R.id.tvNote);
 
@@ -61,7 +61,7 @@ public class NotePreviewDialog {
     }
     private void constructPreviewPaymentInfo() {
         View view = View.inflate(mContext, R.layout.preview_paymentinfo, null);
-        NoteContentHandler noteContentHandler = new NoteContentHandler(mContext, mNoteObject);
+        NoteContentHandler noteContentHandler = new NoteContentHandler(mContext, mNote);
         //
         LinearLayout Holder = view.findViewById(R.id.Holder);
         LinearLayout Number = view.findViewById(R.id.Number);
@@ -82,13 +82,13 @@ public class NotePreviewDialog {
         if (TextViews.setLinearLayoutVisibility(Expiry, noteContentHandler.mExpiry))     expiry.setText(noteContentHandler.mExpiry);
         if (TextViews.setLinearLayoutVisibility(CVV, noteContentHandler.mCVV))           cvv.setText(noteContentHandler.mCVV);
         if (TextViews.setLinearLayoutVisibility(CardType, noteContentHandler.mCardType)) cardType.setText(noteContentHandler.mCardType);
-        if (TextViews.setLinearLayoutVisibility(Notes, noteContentHandler.mNotes))        notes.setText(noteContentHandler.mNotes);
+        if (TextViews.setLinearLayoutVisibility(Notes, noteContentHandler.mNotes))       notes.setText(noteContentHandler.mNotes);
 
         buildDialog(view, noteContentHandler);
     }
     private void constructPreviewLoginInfo() {
         View view = View.inflate(mContext, R.layout.preview_logininfo, null);
-        NoteContentHandler noteContentHandler = new NoteContentHandler(mContext, mNoteObject);
+        NoteContentHandler noteContentHandler = new NoteContentHandler(mContext, mNote);
         //
         LinearLayout Url = view.findViewById(R.id.Url);
         LinearLayout Email = view.findViewById(R.id.Email);
@@ -115,7 +115,7 @@ public class NotePreviewDialog {
         CustomDialog customDialog = new CustomDialog(mContext);
         customDialog.setContentView(view);
         if (noteContentHandler.mCardImage != null) { customDialog.setIcon(noteContentHandler.mCardImage); }
-        customDialog.setMenuIcon(mContext.getResources().getDrawable(R.drawable.ic_options), R.color.white);
+//        customDialog.setMenuIcon(mContext.getResources().getDrawable(R.drawable.ic_options), R.color.white);
         customDialog.setTitle(noteContentHandler.mLabel);
         customDialog.setSubTitle(noteContentHandler.mDate);
         customDialog.setTitleBackgroundColour(Graphics.ColourTags.colourTagHeader(mContext, noteContentHandler.mTag));
@@ -143,7 +143,7 @@ public class NotePreviewDialog {
      */
     private void onEdit() {
         if (mEditSelectedPreview != null) {
-            mEditSelectedPreview.onEdit(mNoteObject);
+            mEditSelectedPreview.onEdit(mNote);
         }
     }
 }

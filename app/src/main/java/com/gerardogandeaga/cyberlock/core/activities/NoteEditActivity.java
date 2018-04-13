@@ -3,7 +3,6 @@ package com.gerardogandeaga.cyberlock.core.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +16,7 @@ import com.gerardogandeaga.cyberlock.core.fragments.CardEditFragment;
 import com.gerardogandeaga.cyberlock.core.fragments.LoginEditFragment;
 import com.gerardogandeaga.cyberlock.core.fragments.NoteEditFragment;
 import com.gerardogandeaga.cyberlock.database.DBNoteAccessor;
-import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.enums.NoteEditTypes;
 import com.gerardogandeaga.cyberlock.interfaces.RequestResponder;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
@@ -26,9 +25,6 @@ import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
-// todo java docs the class
-// todo add the colour tags selector
 /**
  * @author gerardogandeaga
  *
@@ -54,9 +50,10 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
     private boolean mIsNew;
     private boolean mIsAutoSave;
     private NoteEditTypes enum_type;
-    private NoteObject mNoteObject;
+    private Note mNote;
 
     // note object
+    private String mFolder;
     private String mColourTag;
 
     @BindView(R.id.toolbar) Toolbar mToolBar;
@@ -81,8 +78,11 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
         // launch the fragment
         startEditor();
 
-        if (mNoteObject != null) {
-            this.mColourTag = mNoteObject.getColourTag();
+        this.mColourTag = "default";
+
+        if (mNote != null) {
+            this.mFolder = mNote.getFolder();
+            this.mColourTag = mNote.getColourTag();
         }
 
         setupActionBar(null, null, NO_ICON);
@@ -102,18 +102,16 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
         // change colour filter of icons
         Graphics.BasicFilter.mutateMenuItems(this, menu);
 
-        mutateMenuTagIcon();
+        if (!mColourTag.equals("default")) {
+            mutateMenuTagIcon();
+        }
 
         return true;
     }
 
     private void mutateMenuTagIcon() {
-        if (mColourTag != null) {
-            mMenu.findItem(R.id.menu_colour_tag)
-                    .getIcon()
-                    .mutate()
-                    .setColorFilter(Graphics.ColourTags.colourTagHeader(this, mColourTag), PorterDuff.Mode.SRC_ATOP);
-        }
+        setActionBarBackgroundColour(Graphics.ColourTags.colourTagToolbar(this, mColourTag));
+        Graphics.BasicFilter.mutateMenuItems(this, mMenu, R.color.white);
     }
 
     /**
@@ -128,25 +126,27 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
     private void startEditor() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            this.mNoteObject = (NoteObject) bundle.get("data");
-            this.mIsNew = (mNoteObject == null);
+            this.mNote = (Note) bundle.get("data");
+            this.mIsNew = (mNote == null);
+            // folder
+            this.mFolder = (String) bundle.get("folder");
 
             // fragment transaction "manager"
             FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
 
             if (!mIsNew) {
                 Bundle noteBundle = new Bundle();
-                noteBundle.putSerializable("data", mNoteObject);
-                switch (mNoteObject.getType()) {
-                    case NoteObject.NOTE:
+                noteBundle.putSerializable("data", mNote);
+                switch (mNote.getType()) {
+                    case Note.NOTE:
                         this.enum_type = NoteEditTypes.NOTE;
                         fragmentTransaction.add(R.id.fragment_container, newFragment(mNoteEditFragment, noteBundle));
                         break;
-                    case NoteObject.CARD:
+                    case Note.CARD:
                         this.enum_type = NoteEditTypes.CARD;
                         fragmentTransaction.add(R.id.fragment_container, newFragment(mCardEditFragment, noteBundle));
                         break;
-                    case NoteObject.LOGIN:
+                    case Note.LOGIN:
                         this.enum_type = NoteEditTypes.LOGIN;
                         fragmentTransaction.add(R.id.fragment_container, newFragment(mLoginEditFragment, noteBundle));
                         break;
@@ -161,15 +161,15 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
                 String type = (String) bundle.get("type");
                 assert type != null;
                 switch (type) { // STATE 1
-                    case NoteObject.NOTE:
+                    case Note.NOTE:
                         this.enum_type = NoteEditTypes.NOTE;
                         fragmentTransaction.add(R.id.fragment_container, mNoteEditFragment);
                         break;
-                    case NoteObject.CARD:
+                    case Note.CARD:
                         this.enum_type = NoteEditTypes.CARD;
                         fragmentTransaction.add(R.id.fragment_container, mCardEditFragment);
                         break;
-                    case NoteObject.LOGIN:
+                    case Note.LOGIN:
                         this.enum_type = NoteEditTypes.LOGIN;
                         fragmentTransaction.add(R.id.fragment_container, mLoginEditFragment);
                         break;
@@ -178,6 +178,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
             // remove bundles
             bundle.remove("data");
             bundle.remove("type");
+            bundle.remove("folder");
 
             // start fragment
             fragmentTransaction.commit();
@@ -205,7 +206,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
         DBNoteAccessor accessor = DBNoteAccessor.getInstance(this);
         accessor.open();
         System.out.println("Is New ? 1 : " + mIsNew);
-        this.mIsNew = accessor.containsData(this.mNoteObject);
+        this.mIsNew = accessor.containsNote(this.mNote);
         System.out.println("Is New ? 2 : " + mIsNew);
         accessor.close();
     }
@@ -261,6 +262,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
      */
     private void cancelNote() {
         this.mSaveFlag = false;
+        this.mNote = null;
 
         // exit
         onBackPressed();
@@ -291,21 +293,22 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
     @Override
     public void onSaveResponse(Object object) {
         if (mSaveFlag) {
-            if (object instanceof NoteObject) {
-                NoteObject noteObject = (NoteObject) object;
+            if (object instanceof Note) {
+                Note note = (Note) object;
                 this.mSaveFlag = false;
                 Log.i(TAG, "onSaveResponse: responded to save request");
                 // todo save here
-                // global not configs
-                noteObject.setColourTag(mColourTag);
+                // global note configs
+                note.setFolder(mFolder);
+                note.setColourTag(mColourTag);
 
                 DBNoteAccessor accessor = DBNoteAccessor.getInstance(this);
                 accessor.open();
                 if (mIsNew) {
-                    accessor.save(noteObject);
+                    accessor.save(note);
                     Log.i(TAG, "onSaveResponse: note has been saved");
                 } else {
-                    accessor.update(noteObject);
+                    accessor.update(note);
                     Log.i(TAG, "onSaveResponse: note has been updated");
                 }
                 accessor.close();
@@ -320,8 +323,8 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
 
     @Override
     public void onUpdateObjectResponse(Object object) {
-        if (object instanceof NoteObject) {
-            this.mNoteObject = (NoteObject) object;
+        if (object instanceof Note) {
+            this.mNote = (Note) object;
         } else {
             Log.e(TAG, "onSaveResponse: object cannot be casted to note object");
         }
@@ -341,7 +344,8 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
         super.onBackPressed();
     }
 
-    @Override protected void onStart() {
+    @Override
+    protected void onStart() {
         if (!isAppLoggedIn()) {
             if (PreferencesAccessor.getAutoSave(this)) {
                 requestSave();
@@ -358,7 +362,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
                 newIntent(LoginActivity.class);
                 getNewIntent().putExtra("edit?", true);
                 getNewIntent().putExtra("isNew?", mIsNew);
-                getNewIntent().putExtra("lastDB", mNoteObject);
+                getNewIntent().putExtra("lastDB", mNote);
 
                 /*
                 we must call the timer here on our own because our intent is not null

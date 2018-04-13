@@ -6,7 +6,7 @@ import android.os.CountDownTimer;
 import com.gerardogandeaga.cyberlock.views.CustomToast;
 import com.gerardogandeaga.cyberlock.items.NoteItem;
 import com.gerardogandeaga.cyberlock.database.DBNoteAccessor;
-import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class DataObjectDeleter {
     private int mCount;
     private FastItemAdapter<NoteItem> mFastItemAdapter;
     private ArrayList<NoteItem> mNoteItemList;
-    private ArrayList<NoteObject> mNoteObjectList;
+    private ArrayList<Note> mNoteList;
 
     public DataObjectDeleter(Context context, FastItemAdapter<NoteItem> fastItemAdapter, ArrayList<NoteItem> noteItemList) {
         System.out.println("data item list : " + noteItemList);
@@ -32,13 +32,13 @@ public class DataObjectDeleter {
         this.mCount = 0;
         this.mFastItemAdapter = fastItemAdapter;
         this.mNoteItemList = noteItemList;
-        this.mNoteObjectList = new ArrayList<>();
+        this.mNoteList = new ArrayList<>();
 
         // get all data items from recycler view item
         for (int i = 0; i < mNoteItemList.size(); i++) {
             NoteItem item = noteItemList.get(i);
             // get data object
-            mNoteObjectList.add(item.getNoteObject());
+            mNoteList.add(item.getNote());
         }
     }
 
@@ -46,9 +46,9 @@ public class DataObjectDeleter {
         DBNoteAccessor accessor = DBNoteAccessor.getInstance(mContext);
         accessor.open();
 
-        for (NoteObject noteObject : mNoteObjectList) {
+        for (Note note : mNoteList) {
             // delete object from the database
-            accessor.delete(noteObject);
+            accessor.delete(note);
 
             mCount++;
         }
@@ -65,12 +65,12 @@ public class DataObjectDeleter {
         mUndoHelper.getTimer().cancel();
 
         // recover data
-        if (!mNoteObjectList.isEmpty()) {
+        if (!mNoteList.isEmpty()) {
             DBNoteAccessor accessor = DBNoteAccessor.getInstance(mContext);
             accessor.open();
             // insert into the database
-            for (int i = 0; i < mNoteObjectList.size(); i++) {
-                accessor.save(mNoteObjectList.get(i));
+            for (int i = 0; i < mNoteList.size(); i++) {
+                accessor.save(mNoteList.get(i));
 
                 // re-input item into the adapter
                 NoteItem item = mNoteItemList.get(i).withSetSelected(false);
@@ -93,7 +93,7 @@ public class DataObjectDeleter {
     public void finish() {
         this.mFastItemAdapter = null;
         this.mNoteItemList = null;
-        this.mNoteObjectList = null;
+        this.mNoteList = null;
     }
 
     public int getDeletedCount() {

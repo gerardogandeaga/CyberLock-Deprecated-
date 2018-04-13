@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="5dp"
+    app:contentPadding="8dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgColourTag"
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:background="?attr/transparent"
+                android:src="@color/black"/>
+
+            <TextView
+                android:id="@+id/tvLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:minLines="1"
+                android:text="Label"
+                android:textAppearance="@style/myText.List.Label"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="5"
+                android:text="Note"
+                android:textAppearance="@style/myText.List.Content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/paymentInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvHolder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="Holder"
+                    android:textAppearance="@style/myText.List.Content"/>
+
+                <TextView
+                    android:id="@+id/tvNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="Number"
+                    android:textAppearance="@style/myText.List.Content"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imgCardIcon"
+                android:layout_width="56dp"
+                android:layout_height="37dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/card_default"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/loginInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="Url"
+                android:textAppearance="@style/myText.List.Content"/>
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="Email"
+                android:textAppearance="@style/myText.List.Content"/>
+
+            <TextView
+                android:id="@+id/tvUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="Username"
+                android:textAppearance="@style/myText.List.Content"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvSubTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:maxLines="1"
+            android:minLines="1"
+            android:text="Date"
+            android:textAppearance="@style/myText.List.Date"/>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

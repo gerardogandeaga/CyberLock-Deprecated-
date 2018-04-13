@@ -9,7 +9,7 @@ package com.gerardogandeaga.cyberlock.interfaces;
 public interface DBNoteConstants {
 
     /**
-     * table name for database fil
+     * table name for database file
      */
     String TABLE = "notes";
 
@@ -18,7 +18,6 @@ public interface DBNoteConstants {
      * date is updated when the note is initially created and whenever it's modified
      */
     String DATE = "date";
-
     int POS_DATE = 0;
 
     /**
@@ -26,34 +25,29 @@ public interface DBNoteConstants {
      * rather than an actual folder structure
      */
     String FOLDER = "folder";
-
     int POS_FOLDER = 1;
 
     /**
      * type of note that is stores ie. TYPE_NOTE, TYPE_PAYMENTINFO, TYPE_LOGININFO
      */
     String TYPE = "type";
-
     int POS_TYPE = 2;
 
     /**
      * colour that the note is tagged under
      */
     String COLOUR_TAG = "colour_tag";
-
     int POS_COLOUR_TAG = 3;
 
     /**
      * title of the note determined by manual input
      */
     String LABEL = "label";
-
     int POS_LABEL = 4;
 
     /**
      * content holds all the text values as a result of manual input
      */
     String CONTENT = "content";
-
     int POS_CONTENT = 5;
 }

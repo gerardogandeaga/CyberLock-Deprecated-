@@ -8,7 +8,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".core.activities.EditActivity"
     tools:ignore="ContentDescription">
 
     <LinearLayout
@@ -55,7 +54,7 @@
                         android:textAppearance="@style/myText.Edit.Hint"/>
 
                     <EditText
-                        android:id="@+id/etCardName"
+                        android:id="@+id/etCardHolder"
                         style="@style/myText.Edit.Content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

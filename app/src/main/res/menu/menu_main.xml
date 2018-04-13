@@ -23,13 +23,13 @@
                 android:id="@+id/menu_add_card"
                 android:icon="@drawable/ic_test_wallet"
                 android:orderInCategory="0"
-                android:title="@string/str_menu_add_payment_info"
+                android:title="@string/str_menu_add_card"
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/menu_add_login"
                 android:icon="@drawable/ic_test_login"
                 android:orderInCategory="0"
-                android:title="@string/str_menu_add_login_info"
+                android:title="@string/str_menu_add_login"
                 app:showAsAction="never"/>
         </menu>
 

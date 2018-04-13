@@ -3,7 +3,7 @@ package com.gerardogandeaga.cyberlock.helpers.content;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
-import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
 
 import java.util.Scanner;
@@ -11,6 +11,7 @@ import java.util.Scanner;
 /**
  * @author gerardogandeaga
  */
+// todo create getter methods for the note variables
 public class NoteContentHandler {
     private Context mContext;
 
@@ -32,20 +33,20 @@ public class NoteContentHandler {
     public String mUsername;
     public String mPassword;
 
-    public NoteContentHandler(Context context, NoteObject noteObject) {
+    public NoteContentHandler(Context context, Note note) {
         this.mContext = context;
 
         // Primitive string data
-        mLabel = noteObject.getLabel();
-        mDate = noteObject.getDate();
-        mTag = noteObject.getColourTag();
+        mLabel = note.getLabel();
+        mDate = note.getDate();
+        mTag = note.getColourTag();
 
         // Content parsing
-        String content = noteObject.getContent();
-        switch (noteObject.getType()) {
-            case NoteObject.NOTE:         setNoteContent(content); break;
-            case NoteObject.CARD: setPaymentInfoContent(content); break;
-            case NoteObject.LOGIN:   setLoginInfoContent(content); break;
+        String content = note.getContent();
+        switch (note.getType()) {
+            case Note.NOTE:         setNoteContent(content); break;
+            case Note.CARD: setPaymentInfoContent(content); break;
+            case Note.LOGIN:   setLoginInfoContent(content); break;
         }
     }
 

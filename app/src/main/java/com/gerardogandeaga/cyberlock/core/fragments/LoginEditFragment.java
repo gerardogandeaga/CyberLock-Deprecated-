@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.helpers.content.NoteContentHandler;
 import com.gerardogandeaga.cyberlock.interfaces.RequestResponder;
 
@@ -26,7 +26,7 @@ public class LoginEditFragment extends EditFragment {
     // response interface
     private RequestResponder mRequestResponder;
 
-    private NoteObject mNoteObject;
+    private Note mNote;
     private NoteContentHandler mNoteContentHandler;
 
     // view
@@ -52,8 +52,8 @@ public class LoginEditFragment extends EditFragment {
         // get note object
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            this.mNoteObject = (NoteObject) bundle.get("data");
-            this.mNoteContentHandler = new NoteContentHandler(getActivity(), mNoteObject);
+            this.mNote = (Note) bundle.get("data");
+            this.mNoteContentHandler = new NoteContentHandler(getActivity(), mNote);
         }
     }
 
@@ -71,7 +71,7 @@ public class LoginEditFragment extends EditFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // if data is not null then we set our stored data onto
-        if (mNoteObject != null) {
+        if (mNote != null) {
             mTvDate.setText(mNoteContentHandler.mDate);
             mEtLabel.setText(mNoteContentHandler.mLabel);
             mEtUrl.setText(mNoteContentHandler.mUrl);
@@ -104,15 +104,13 @@ public class LoginEditFragment extends EditFragment {
         final String format = "%s\n%s\n%s\n%s\n%s";
         final String content = String.format(format, url, email, username, password, notes);
 
-        if (mNoteObject == null) {
-            this.mNoteObject = new NoteObject();
-
-            mNoteObject.setFolder("MAIN");
-            mNoteObject.setType(NoteObject.LOGIN);
+        if (mNote == null) {
+            this.mNote = new Note();
+            mNote.setType(Note.LOGIN);
         }
 
-        mNoteObject.setLabel(label);
-        mNoteObject.setContent(content);
+        mNote.setLabel(label);
+        mNote.setContent(content);
         Log.i(TAG, "compileObject: done compiling");
     }
 
@@ -120,13 +118,13 @@ public class LoginEditFragment extends EditFragment {
     public void updateObject() {
         Log.i(TAG, "updateObject: updated object requested");
         compileObject();
-        mRequestResponder.onUpdateObjectResponse(mNoteObject);
+        mRequestResponder.onUpdateObjectResponse(mNote);
         Log.i(TAG, "updateObject: updated object sent");
     }
 
     public void save() {
         Log.i(TAG, "onSaveRequest: save requested");
         compileObject();
-        mRequestResponder.onSaveResponse(mNoteObject);
+        mRequestResponder.onSaveResponse(mNote);
     }
 }

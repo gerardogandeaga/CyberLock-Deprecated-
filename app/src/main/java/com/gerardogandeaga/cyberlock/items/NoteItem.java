@@ -1,6 +1,7 @@
 package com.gerardogandeaga.cyberlock.items;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -10,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.database.objects.NoteObject;
+import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
 import com.gerardogandeaga.cyberlock.views.handlers.TextViews;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
@@ -22,6 +23,7 @@ import java.util.Scanner;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * @author gerardogandeaga
@@ -31,7 +33,7 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
 
     // recycler item info
     private int mPosition;
-    private NoteObject mNoteObject;
+    private Note mNote;
     private String mType;
     // data
     private int mTag;
@@ -45,8 +47,8 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
     public int getPosition() {
         return mPosition;
     }
-    public NoteObject getNoteObject() {
-        return mNoteObject;
+    public Note getNote() {
+        return mNote;
     }
 
     public NoteItem withContext(Context context) {
@@ -54,8 +56,8 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
         return this;
     }
     // setting content information
-    public NoteItem withDataObject(NoteObject noteObject) {
-        this.mNoteObject = noteObject;
+    public NoteItem withDataObject(Note note) {
+        this.mNote = note;
         return this;
     }
     public NoteItem withType(String type) {
@@ -102,12 +104,12 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
     public int getLayoutRes() {
         if (mContext != null) {
             if (PreferencesAccessor.Checkers.isLinearFormat(PreferencesAccessor.getListFormat(mContext))) {
-                return R.layout.data_item_linear;
+                return R.layout.note_item_linear;
             } else {
-                return R.layout.data_item_grid;
+                return R.layout.note_item_grid;
             }
         } else {
-            return R.layout.data_item_linear;
+            return R.layout.note_item_linear;
         }
     }
 
@@ -128,7 +130,7 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
 
         @BindView(R.id.tvLabel)      TextView  Label;
         @BindView(R.id.tvSubTitle)   TextView  Date;
-        @BindView(R.id.imgColourTag) ImageView Tag;
+        @BindView(R.id.imgColourTag) CircleImageView ColourTag;
 
         // note
         @BindView(R.id.tvNote)       TextView Notes;
@@ -165,8 +167,8 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
             filterContent(item);
 
             // images
-            Tag.setVisibility(android.view.View.VISIBLE);
-            Tag.setBackgroundColor(item.mTag);
+            ColourTag.setVisibility(android.view.View.VISIBLE);
+            ColourTag.setColorFilter(item.mTag, PorterDuff.Mode.SRC_ATOP);
         }
 
         @Override
@@ -209,17 +211,17 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
             item.getViewHolder(View);
 
             // clear graphics
-            Tag.setVisibility(android.view.View.INVISIBLE);
+            ColourTag.setVisibility(android.view.View.INVISIBLE);
         }
 
         // filter content
         private void filterContent(NoteItem item) {
             Scanner scanner = new Scanner(item.mContent);
             switch(item.mType) {
-                case NoteObject.NOTE:
+                case com.gerardogandeaga.cyberlock.database.objects.Note.NOTE:
                     TextViews.setOrHideTextView(item.mContent, Notes);
                     break;
-                case NoteObject.CARD:
+                case com.gerardogandeaga.cyberlock.database.objects.Note.CARD:
                     String holder = "", number = "";
                     if (scanner.hasNextLine()) holder = scanner.nextLine();
                     if (scanner.hasNextLine()) number = scanner.nextLine();
@@ -228,7 +230,7 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
                     TextViews.setOrHideTextView(number, Number);
                     TextViews.setOrHideImageView(item.mCardType, CardIcon);
                     break;
-                case NoteObject.LOGIN:
+                case com.gerardogandeaga.cyberlock.database.objects.Note.LOGIN:
                     String url = "", email = "", username = "";
                     if (scanner.hasNextLine()) url = scanner.nextLine();
                     if (scanner.hasNextLine()) email = scanner.nextLine();
@@ -245,6 +247,6 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
 
     @Override
     public String toString() {
-        return "position : " + mPosition + " " + mNoteObject;
+        return "position : " + mPosition + " " + mNote;
     }
 }
