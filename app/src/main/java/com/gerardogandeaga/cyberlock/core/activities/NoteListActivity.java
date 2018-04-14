@@ -3,6 +3,7 @@ package com.gerardogandeaga.cyberlock.core.activities;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import android.view.View;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.core.dialogs.NotePreviewDialog;
+import com.gerardogandeaga.cyberlock.core.fragments.DrawerFragment;
 import com.gerardogandeaga.cyberlock.database.loaders.AdapterLoader;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
@@ -40,6 +42,7 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
     @Override
     public void onLoaded(Folder folder) {
         mRecyclerView.setVisibility(View.VISIBLE);
+
         this.mCurrentFolder = folder;
         setupActionBar((folder == null || folder.getName().equals("MAIN") ? "All Notes" : folder.getName()), null, NO_ICON);
     }
@@ -73,7 +76,7 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
         bindView();
 
         setupRecyclerView();
-        displayLoad();
+//        displayLoad();
 
         // create the FastAdapter
         this.mFastItemAdapter = new FastItemAdapter<>();
@@ -137,6 +140,9 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
 
         setupActionBar(null, null, NO_ICON);
         super.onCreate(savedInstanceState);
+
+        Fragment fragment = DrawerFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
     @Override
@@ -191,7 +197,7 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
     }
     private void displayLoad() {
         CustomLoad customLoad = new CustomLoad(this, mView);
-        customLoad.show(R.id.container);
+        customLoad.show(R.id.fragment_container);
     }
     //
     private void setActionBarTitleCount(int selectedCount) {
