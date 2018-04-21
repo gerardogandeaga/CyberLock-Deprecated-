@@ -14,7 +14,6 @@ import com.gerardogandeaga.cyberlock.interfaces.DBFolderConstants;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,7 +64,6 @@ public class DBFolderAccessor implements DBFolderConstants {
             values.put(DATE,       folder.getTime());
             values.put(COLOUR_TAG, setData(folder.getColourTag()));
             values.put(NAME,       setData(folder.getName()));
-            values.put(SIZE,       setData(folder.getSize()));
 
             mSQLiteDatabase.insert(TABLE, null, values);
         } catch (UnsupportedEncodingException e) {
@@ -76,10 +74,8 @@ public class DBFolderAccessor implements DBFolderConstants {
         try {
             ContentValues values = new ContentValues();
 
-            values.put(DATE,       new Date().getTime());
             values.put(COLOUR_TAG, setData(folder.getColourTag()));
             values.put(NAME,       setData(folder.getName()));
-            values.put(SIZE,       setData(folder.getSize()));
 
             String date = Long.toString(folder.getTime());
             mSQLiteDatabase.update(TABLE, values, DATE + " = ?", new String[]{date});
@@ -136,9 +132,8 @@ public class DBFolderAccessor implements DBFolderConstants {
             long time =         cursor.getLong(POS_DATE);
             String colour_tag = getData(cursor.getBlob(POS_COLOUR_TAG));
             String name =       getData(cursor.getBlob(POS_NAME));
-            String size =       getData(cursor.getBlob(POS_SIZE));
             // create new note object
-            return new Folder(time, colour_tag, name, size);
+            return new Folder(time, colour_tag, name);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return null;

@@ -66,16 +66,16 @@
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_auto_save"
-                            android:padding="4dp"
-                            android:src="@drawable/graphic_save"/>
+                            android:padding="2dp"
+                            android:src="@drawable/ic_save"/>
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
-                            android:gravity="center_vertical"
                             android:text="@string/str_auto_save"
                             android:textAppearance="@style/myText.Options.Header"/>
 
@@ -97,48 +97,40 @@
                         android:background="@drawable/bk_custom_default_ripple"
                         android:clickable="true"
                         android:focusable="true"
-                        android:orientation="vertical"
+                        android:orientation="horizontal"
                         android:paddingBottom="10dp"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:paddingTop="10dp">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center_vertical"
+                            android:contentDescription="@string/str_list_format"
+                            android:padding="2dp"
+                            android:src="@drawable/ic_list_format"/>
+
+                        <TextView
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            tools:ignore="UselessParent">
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:clickable="false"
+                            android:gravity="center_vertical"
+                            android:text="@string/str_list_format"
+                            android:textAppearance="@style/myText.Options.Header"/>
 
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_gravity="center_vertical"
-                                android:contentDescription="@string/str_list_format"
-                                android:padding="3dp"
-                                android:src="@drawable/graphic_list_format"/>
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:layout_weight="1"
-                                android:clickable="false"
-                                android:gravity="center_vertical"
-                                android:text="@string/str_list_format"
-                                android:textAppearance="@style/myText.Options.Header"/>
-
-                            <ImageView
-                                android:id="@+id/imgListFormat"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:contentDescription="@string/str_list_format"
-                                android:padding="4dp"
-                                android:src="@drawable/graphic_list_linear"
-                                android:tint="@color/black"/>
-
-                        </LinearLayout>
+                        <ImageView
+                            android:id="@+id/imgListFormat"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:contentDescription="@string/str_list_format"
+                            android:padding="4dp"
+                            android:src="@drawable/graphic_list_linear"
+                            android:tint="@color/black"/>
 
                     </LinearLayout>
 
@@ -160,12 +152,12 @@
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_auto_save"
-                            android:padding="4dp"
-                            android:src="@drawable/graphic_tag"/>
+                            android:padding="2dp"
+                            android:src="@drawable/ic_tag"/>
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
@@ -200,15 +192,15 @@
 
                         <ImageView
                             android:layout_width="32dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_logout_delay"
-                            android:padding="0dp"
+                            android:padding="2dp"
                             android:src="@drawable/ic_timer"/>
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
@@ -256,12 +248,12 @@
                                 android:layout_height="32dp"
                                 android:layout_gravity="center_vertical"
                                 android:contentDescription="@string/str_change_password"
-                                android:padding="3dp"
-                                android:src="@drawable/graphic_password"/>
+                                android:padding="2dp"
+                                android:src="@drawable/ic_lock"/>
 
                             <TextView
                                 android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
@@ -339,12 +331,12 @@
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_git"
-                            android:padding="3dp"
-                            android:src="@drawable/graphic_github"/>
+                            android:padding="2dp"
+                            android:src="@drawable/ic_github"/>
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
@@ -375,12 +367,12 @@
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_about_cyber_lock"
-                            android:padding="3dp"
-                            android:src="@drawable/graphic_about"/>
+                            android:padding="2dp"
+                            android:src="@drawable/ic_about"/>
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
@@ -411,12 +403,12 @@
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_version"
-                            android:padding="3dp"
-                            android:src="@drawable/graphic_about"/>
+                            android:padding="2dp"
+                            android:src="@drawable/ic_version"/>
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
@@ -477,12 +469,12 @@
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_rate"
-                            android:padding="3dp"
-                            android:src="@drawable/graphic_github"/>
+                            android:padding="2dp"
+                            android:src="@drawable/ic_rate"/>
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
@@ -513,12 +505,12 @@
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_bug"
-                            android:padding="3dp"
-                            android:src="@drawable/graphic_email"/>
+                            android:padding="2dp"
+                            android:src="@drawable/ic_bug"/>
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
@@ -578,12 +570,12 @@
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_rate"
-                            android:padding="3dp"
-                            android:src="@drawable/graphic_github"/>
+                            android:padding="2dp"
+                            android:src="@drawable/ic_code"/>
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
@@ -613,12 +605,12 @@
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_bug"
-                            android:padding="3dp"
-                            android:src="@drawable/graphic_email"/>
+                            android:padding="2dp"
+                            android:src="@drawable/ic_paint"/>
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"

@@ -113,7 +113,7 @@ public class RegisterActivity extends SecureActivity {
 
         // todo fix this quick saver
         TMP_PWD = password;
-        new Initial(this).setupFolder();
+        new Initial(this).setupFolders();
         TMP_PWD = null;
     }
 

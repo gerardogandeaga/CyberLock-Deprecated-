@@ -3,7 +3,6 @@ package com.gerardogandeaga.cyberlock.core.activities;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
@@ -11,9 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.core.FolderDrawer;
 import com.gerardogandeaga.cyberlock.core.dialogs.NotePreviewDialog;
-import com.gerardogandeaga.cyberlock.core.fragments.DrawerFragment;
-import com.gerardogandeaga.cyberlock.database.loaders.AdapterLoader;
+import com.gerardogandeaga.cyberlock.database.loaders.NoteAdapterLoader;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.helpers.AdapterActionManager;
@@ -44,7 +43,8 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
         mRecyclerView.setVisibility(View.VISIBLE);
 
         this.mCurrentFolder = folder;
-        setupActionBar((folder == null || folder.getName().equals("MAIN") ? "All Notes" : folder.getName()), null, NO_ICON);
+
+        actionbarFolderTitle();
     }
 
     @Override
@@ -100,7 +100,8 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
 
                     if (mAdapterActionManager.noneAreSelected()) {
                         mAdapterActionManager.deactivate();
-                        resetActionBar(null, null, NO_ICON);
+                        // resets titles to current folder name and size
+                        actionbarFolderTitle();
                     }
 
                     updateMenu();
@@ -136,13 +137,12 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
         mRecyclerView.setAdapter(mFastItemAdapter);
 
         // start the adapter loader
-        new AdapterLoader(this, mFastItemAdapter, true).execute();
+        new NoteAdapterLoader(this, mFastItemAdapter, true).execute();
+
+        new FolderDrawer(this).createDrawer();
 
         setupActionBar(null, null, NO_ICON);
         super.onCreate(savedInstanceState);
-
-        Fragment fragment = DrawerFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
     @Override
@@ -159,50 +159,6 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
         updateMenu();
 
         return true;
-    }
-    private void updateMenu() {
-        mMenu.clear();
-        if (mAdapterActionManager.isActive()) {
-            getMenuInflater().inflate(R.menu.menu_delete, mMenu);
-        } else {
-            getMenuInflater().inflate(R.menu.menu_main, mMenu);
-        }
-
-        // tint menu colour
-        if (mMenu.hasVisibleItems()) {
-            Graphics.BasicFilter.mutateMenuItems(this, mMenu);
-        }
-    }
-    //
-    private void setupRecyclerView() {
-        // Setup and configure RecyclerView
-        mRecyclerView.setVisibility(View.GONE);
-        final LinearLayoutManager linearLayoutManager =
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        final StaggeredGridLayoutManager staggeredGridLayoutManager =
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-
-        // Set layout format
-        switch (PreferencesAccessor.getListFormat(mContext)) {
-            case ListFormat.GRID:
-                staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
-                mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
-                mRecyclerView.addItemDecoration(new NoteItemDecoration(this, false));
-                break;
-            default:
-                mRecyclerView.setLayoutManager(linearLayoutManager);
-                mRecyclerView.addItemDecoration(new NoteItemDecoration(this, true));
-                break;
-        }
-    }
-    private void displayLoad() {
-        CustomLoad customLoad = new CustomLoad(this, mView);
-        customLoad.show(R.id.fragment_container);
-    }
-    //
-    private void setActionBarTitleCount(int selectedCount) {
-        actionBarTitle(Integer.toString(selectedCount));
-        actionBarSubTitle(selectedCount > 0 ? "Items Selected" : "Item Selected");
     }
 
     @Override
@@ -242,20 +198,71 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
                         CustomSnackBar.LENGTH_LONG,
                         "Undo",
                         new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        // undo deleter
-                        deleter.undoDeletion();
-                    }
-                },
+                            @Override
+                            public void onClick(View view) {
+                                // undo deleter
+                                deleter.undoDeletion();
+                            }
+                        },
                         R.color.white);
                 // finish
                 mAdapterActionManager.finish();
                 updateMenu();
-                resetActionBar(null, null, NO_ICON);
+                actionBarTitles(null, null, NO_ICON);
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void updateMenu() {
+        mMenu.clear();
+        if (mAdapterActionManager.isActive()) {
+            getMenuInflater().inflate(R.menu.menu_delete, mMenu);
+        } else {
+            getMenuInflater().inflate(R.menu.menu_main, mMenu);
+        }
+
+        // tint menu colour
+        if (mMenu.hasVisibleItems()) {
+            Graphics.BasicFilter.mutateMenuItems(this, mMenu);
+        }
+    }
+    //
+    private void setupRecyclerView() {
+        // Setup and configure RecyclerView
+        mRecyclerView.setVisibility(View.GONE);
+        final LinearLayoutManager linearLayoutManager =
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        final StaggeredGridLayoutManager staggeredGridLayoutManager =
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+
+        // Set layout format
+        switch (PreferencesAccessor.getListFormat(mContext)) {
+            case ListFormat.GRID:
+                staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
+                mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+                mRecyclerView.addItemDecoration(new NoteItemDecoration(this, false));
+                break;
+            default:
+                mRecyclerView.setLayoutManager(linearLayoutManager);
+                mRecyclerView.addItemDecoration(new NoteItemDecoration(this, true));
+                break;
+        }
+    }
+    private void displayLoad() {
+        CustomLoad customLoad = new CustomLoad(this, mView);
+        customLoad.show(R.id.container);
+    }
+    //
+    private void actionbarFolderTitle() {
+        actionBarTitles(
+                (mCurrentFolder.getName().equals("MAIN") ? "All Notes" : mCurrentFolder.getName()),
+                (Integer.toString(mCurrentFolder.getSize()) + (mCurrentFolder.getSize() == 1 ? " Item" : " Items")),
+                NO_ICON);
+    }
+    private void setActionBarTitleCount(int selectedCount) {
+        actionBarTitle(Integer.toString(selectedCount));
+        actionBarSubTitle(selectedCount > 0 ? "Items Selected" : "Item Selected");
     }
 
     public void onAddClicked(String noteType) {
@@ -271,7 +278,7 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
         if (mAdapterActionManager.isActive()) {
             mAdapterActionManager.deactivate();
             updateMenu();
-            resetActionBar(null, null, NO_ICON);
+            actionBarTitles(null, null, NO_ICON);
         } else {
             super.onBackPressed();
         }

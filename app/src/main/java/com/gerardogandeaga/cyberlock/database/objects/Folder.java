@@ -16,19 +16,17 @@ public class Folder extends SavableObject implements Serializable {
     private Date mDate;
     private String mColourTag;
     private String mName;
-    private String mSize;
+    private int mSize;
 
     @SuppressLint("SimpleDateFormat")
     private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy 'at' hh:mm aaa");
 
     public Folder(long time,
                   String colour_tag,
-                  String name,
-                  String size) {
+                  String name) {
         this.mDate = new Date(time);
         this.mColourTag = colour_tag;
         this.mName = name;
-        this.mSize = size;
     }
 
     public Folder() {
@@ -50,31 +48,51 @@ public class Folder extends SavableObject implements Serializable {
     public String getName() {
         return mName;
     }
-    public String getSize() {
+    public int getSize() {
         return mSize;
     }
 
     // setters
 
-    public Folder setTime(long time) {
+    public Folder withTime(long time) {
         this.mDate = new Date(time);
         return this;
     }
-    public Folder setColourTag(String colourTag) {
+    public Folder withColourTag(String colourTag) {
         this.mColourTag = colourTag;
         return this;
     }
-    public Folder setName(String name) {
+    public Folder withName(String name) {
         this.mName = name;
         return this;
     }
-    public Folder setSize(String size) {
+    public Folder withSize(int size) {
         this.mSize = size;
         return this;
     }
 
     @Override
     public boolean isEmpty() {
-        return (mColourTag == null && mName == null && mSize == null);
+        return (mColourTag == null && mName == null);
+    }
+
+
+    public static class Constants {
+        public static final String TRASH = "Trash";
+        public static final String ARCHIVE = "Archive";
+        public static final String ALL_NOTES = "All Notes";
+
+        public static final Folder TRASH_FOLDER = new Folder()
+                .withColourTag("DEFUALT")
+                .withName(TRASH);
+
+        public static final Folder ARCHIVE_FOLDER = new Folder()
+                .withColourTag("DEFAULT")
+                .withName(ARCHIVE);
+
+        public static final Folder ALL_NOTES_FOLDER = new Folder()
+                .withColourTag("DEFAULT")
+                .withName(ALL_NOTES);
+
     }
 }

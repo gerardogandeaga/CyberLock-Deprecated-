@@ -20,7 +20,7 @@
     <item
         android:id="@+id/menu_cancel"
         android:title="@string/str_menu_cancel"
-        android:icon="@drawable/ic_cancel"
+        android:icon="@drawable/ic_cancel_edit"
         app:showAsAction="always"/>
 
 </menu>

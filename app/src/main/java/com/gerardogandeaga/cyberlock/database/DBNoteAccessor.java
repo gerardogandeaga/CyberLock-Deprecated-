@@ -65,6 +65,7 @@ public class DBNoteAccessor implements DBNoteConstants {
             ContentValues values = new ContentValues();
 
             values.put(DATE,       note.getTime());
+            values.put(TRASHED,    note.isTrashed());
             values.put(FOLDER,     setData(note.getFolder()));
             values.put(TYPE,       setData(note.getType()));
             values.put(COLOUR_TAG, setData(note.getColourTag()));
@@ -81,6 +82,7 @@ public class DBNoteAccessor implements DBNoteConstants {
             ContentValues values = new ContentValues();
 
             values.put(DATE,       new Date().getTime());
+            values.put(TRASHED,    note.isTrashed());
             values.put(FOLDER,     setData(note.getFolder()));
             values.put(TYPE,       setData(note.getType()));
             values.put(COLOUR_TAG, setData(note.getColourTag()));
@@ -98,6 +100,10 @@ public class DBNoteAccessor implements DBNoteConstants {
         mSQLiteDatabase.delete(TABLE, "date = ?", new String[]{date});
     }
 
+    /**
+     * @param cursor position in db
+     * @return regular unfiltered note
+     */
     public Note getNote(Cursor cursor) {
         if (!cursor.isAfterLast()) {
             return constructNote(cursor);
@@ -107,6 +113,11 @@ public class DBNoteAccessor implements DBNoteConstants {
         return null;
     }
 
+    /**
+     * @param cursor position in db
+     * @param folder folder filter
+     * @return note that pertains to a particular folder
+     */
     public Note getNote(Cursor cursor, String folder) {
         if (!cursor.isAfterLast()) {
             Note note = constructNote(cursor);
@@ -134,6 +145,10 @@ public class DBNoteAccessor implements DBNoteConstants {
         return notes;
     }
 
+    /**
+     * @param folder filter
+     * @return list of notes in a particular folder
+     */
     public List<Note> getAllNotes(String folder) {
         List<Note> notes = new ArrayList<>();
         Cursor cursor = getQuery();
@@ -145,6 +160,19 @@ public class DBNoteAccessor implements DBNoteConstants {
         cursor.close();
 
         return notes;
+    }
+
+    public List<Note> getTrashedNotes() {
+        List<Note> trashedNotes = new ArrayList<>();
+        Cursor cursor = getQuery();
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Note note = constructNote(cursor);
+            if (note.isTrashed()) {
+                trashedNotes.add(note);
+            }
+        }
+        return trashedNotes;
     }
 
     public int size() {
@@ -162,20 +190,24 @@ public class DBNoteAccessor implements DBNoteConstants {
     private Note constructNote(Cursor cursor) {
         try {
             long time =         cursor.getLong(POS_DATE);
+            boolean isTrashed = cursor.getShort(POS_TRASHED) == 1;
             String folder =     getData(cursor.getBlob(POS_FOLDER));
             String type =       getData(cursor.getBlob(POS_TYPE));
             String colour_tag = getData(cursor.getBlob(POS_COLOUR_TAG));
             String label =      getData(cursor.getBlob(POS_LABEL));
             String content =    getData(cursor.getBlob(POS_CONTENT));
             // create new note object
-            return new Note(time, folder, type, colour_tag, label, content);
+            return new Note(time, isTrashed, folder, type, colour_tag, label, content);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    // this function checks if a specific piece of data exists in the database returning a boolean
+    /**
+     * this function checks if a specific piece of data exists in the
+     * database returning a boolean
+     */
     public boolean containsNote(Note note) {
         List<Note> notes = getAllNotes();
         for (int i = 0; i < notes.size(); i++) {

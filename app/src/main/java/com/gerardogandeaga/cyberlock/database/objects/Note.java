@@ -18,6 +18,7 @@ public class Note extends SavableObject implements Serializable {
 
     // instance vars
     private Date mDate;
+    private boolean mIsTrashed;
     private String mFolder;
     private String mType;
     private String mColourTag;
@@ -31,12 +32,14 @@ public class Note extends SavableObject implements Serializable {
     constructor that builds the data from the database-accessor class when data is first loaded into memory.
     constructor gets called when by the "getAllNotes" function. */
     public Note(long time,
+                boolean isTrashed,
                 String folder,
                 String type,
                 String colour_tag,
                 String label,
                 String content) {
         this.mDate = new Date(time);
+        this.mIsTrashed = isTrashed;
         this.mFolder = folder;
         this.mType = type;
         this.mColourTag = colour_tag;
@@ -59,6 +62,9 @@ public class Note extends SavableObject implements Serializable {
     public long getTime() {
         return mDate.getTime();
     }
+    public boolean isTrashed() {
+        return mIsTrashed;
+    }
     public String getFolder() {
         return mFolder;
     }
@@ -79,6 +85,9 @@ public class Note extends SavableObject implements Serializable {
 
     public void setTime(long time) {
         this.mDate = new Date(time);
+    }
+    public void setIsTrashed(boolean isTrashed) {
+        this.mIsTrashed = isTrashed;
     }
     public void setFolder(String folder) {
         System.out.println(folder);

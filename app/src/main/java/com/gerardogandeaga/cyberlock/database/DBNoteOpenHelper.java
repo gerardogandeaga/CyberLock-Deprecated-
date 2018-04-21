@@ -23,6 +23,7 @@ class DBNoteOpenHelper extends SQLiteOpenHelper implements DBNoteConstants {
 
 //              KEY            DATA TYPE
                 DATE +       " INTEGER PRIMARY KEY, " +
+                TRASHED +    " INTEGER, " +
                 FOLDER +     " BLOB, " +
                 TYPE +       " BLOB, " +
                 COLOUR_TAG + " BLOB, " +

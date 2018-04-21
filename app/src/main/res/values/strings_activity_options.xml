@@ -24,6 +24,6 @@
     <string name="str_confirm_new_password">Confirm New Password</string>
 
     <!-- development -->
-    <string name="str_role_gerardo">Gerardo Gandeaga ( Author )</string>
-    <string name="str_role_carol">Carolina Rocha ( Icon Design Artist )</string>
+    <string name="str_role_gerardo">Gerardo Gandeaga</string>
+    <string name="str_role_carol">Carolina Rocha</string>
 </resources>

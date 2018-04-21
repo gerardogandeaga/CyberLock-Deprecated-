@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -45,13 +45,13 @@ public class CustomLoad {
         // todo find a better way to always keep overlay in the middle, currently i'm just adding a margin... try using gravity
         int height = ((Scaling.pxFromDp(mContext, mContext.getResources().getDisplayMetrics().heightPixels)) / 2) - Scaling.dpFromPx(mContext, 56);
 
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
         params.topMargin = Scaling.dpFromPx(mContext, height);
         mView.setLayoutParams(params);
 
         // add overlay view to main view
-        ((FrameLayout) mViewToOverlay.findViewById(containerId)).addView(mView);
+        ((LinearLayout) mViewToOverlay.findViewById(containerId)).addView(mView);
 
         this.mIsVisible = true;
     }

@@ -32,9 +32,4 @@ public interface DBFolderConstants {
     String NAME = "name";
     int POS_NAME = 2;
 
-    /**
-     * space in MB that the folder takes
-     */
-    String SIZE = "size";
-    int POS_SIZE = 3;
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_folder_rename"
+        android:title="@string/str_menu_drawer_folder_rename"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_folder_colour"
+        android:title="@string/str_menu_drawer_folder_colour"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_folder_delete"
+        android:title="@string/str_menu_drawer_folder_delete"
+        app:showAsAction="never"/>
+
+</menu>

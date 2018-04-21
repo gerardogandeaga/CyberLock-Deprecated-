@@ -24,8 +24,7 @@ public class DBFolderOpenHelper extends SQLiteOpenHelper implements DBFolderCons
 //              KEY            DATA TYPE
                 DATE +       " INTEGER PRIMARY KEY, " +
                 COLOUR_TAG + " BLOB, " +
-                NAME +       " BLOB, " +
-                SIZE +       " BLOB" +
+                NAME +       " BLOB" +
 
                 ");");
     }

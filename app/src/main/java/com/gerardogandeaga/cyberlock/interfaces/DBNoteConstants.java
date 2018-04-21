@@ -21,33 +21,39 @@ public interface DBNoteConstants {
     int POS_DATE = 0;
 
     /**
+     * numeric boolean for the item being trashed or not
+     */
+    String TRASHED = "trashed";
+    int POS_TRASHED = 1;
+
+    /**
      * folder it is tagged under. the folder system for the time being it more of a filter
      * rather than an actual folder structure
      */
     String FOLDER = "folder";
-    int POS_FOLDER = 1;
+    int POS_FOLDER = 2;
 
     /**
      * type of note that is stores ie. TYPE_NOTE, TYPE_PAYMENTINFO, TYPE_LOGININFO
      */
     String TYPE = "type";
-    int POS_TYPE = 2;
+    int POS_TYPE = 3;
 
     /**
      * colour that the note is tagged under
      */
     String COLOUR_TAG = "colour_tag";
-    int POS_COLOUR_TAG = 3;
+    int POS_COLOUR_TAG = 4;
 
     /**
      * title of the note determined by manual input
      */
     String LABEL = "label";
-    int POS_LABEL = 4;
+    int POS_LABEL = 5;
 
     /**
      * content holds all the text values as a result of manual input
      */
     String CONTENT = "content";
-    int POS_CONTENT = 5;
+    int POS_CONTENT = 6;
 }

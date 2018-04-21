@@ -64,7 +64,7 @@ public abstract class CoreActivity extends SecureActivity {
      * calls the setupActionBar() method with the expectancy that the action bar will
      * not rebind to the toolbar
      */
-    protected void resetActionBar(@Nullable String title, @Nullable String subTitle, @DrawableRes int icon) {
+    protected void actionBarTitles(@Nullable String title, @Nullable String subTitle, @DrawableRes int icon) {
         setupActionBar(title, subTitle, icon);
     }
 

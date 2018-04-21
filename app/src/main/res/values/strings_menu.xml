@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- drawer items -->
+    <string name="str_menu_drawer_folder_rename">Rename</string>
+    <string name="str_menu_drawer_folder_colour">Change Colour Tag</string>
+    <string name="str_menu_drawer_folder_delete">Delete</string>
+
     <!-- add -->
     <string name="str_menu_add">Add</string>
     <string name="str_menu_add_note">Note</string>

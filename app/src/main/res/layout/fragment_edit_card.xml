@@ -36,7 +36,7 @@
                     android:layout_gravity="center_vertical"
                     android:tint="@color/black"
                     android:tintMode="src_atop"
-                    android:src="@drawable/graphic_card_holder"/>
+                    android:src="@drawable/ic_username"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -123,7 +123,7 @@
                     android:layout_gravity="center_vertical"
                     android:tint="@color/black"
                     android:tintMode="src_atop"
-                    android:src="@drawable/graphic_card_expiry"/>
+                    android:src="@drawable/ic_expiry"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
