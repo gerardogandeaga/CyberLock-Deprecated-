@@ -7,7 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.utils.Resources;
+import com.gerardogandeaga.cyberlock.utils.Res;
 
 /**
  * @author gerardogandeaga
@@ -35,7 +35,7 @@ public class CustomToast {
         View view = View.inflate(context, R.layout.custom_toast_view, null);
         TextView msg = view.findViewById(R.id.tvMessage);
 
-        ((CardView) view.findViewById(R.id.container)).setCardBackgroundColor(priorityColour(context, priority));
+        ((CardView) view.findViewById(R.id.container)).setCardBackgroundColor(priorityColour(priority));
         msg.setText(message);
 
         toast.setView(view);
@@ -49,18 +49,18 @@ public class CustomToast {
         return toast;
     }
 
-    private static int priorityColour(Context context, int  priority) {
+    private static int priorityColour(int priority) {
         switch (priority) {
             case INFORMATION:
-                return Resources.getColour(context, R.color.black);
+                return Res.getColour(R.color.black);
             case WARNING:
-                return Resources.getColour(context, R.color.c_yellow_70);
+                return Res.getColour(R.color.c_yellow_70);
             case ERROR:
-                return Resources.getColour(context, R.color.c_red_60);
+                return Res.getColour(R.color.c_red_60);
             case SUCCESS:
-                return Resources.getColour(context, R.color.c_green_30);
+                return Res.getColour(R.color.c_green_30);
             default:
-                return Resources.getColour(context, R.color.c_blue_40);
+                return Res.getColour(R.color.c_blue_40);
         }
     }
 }

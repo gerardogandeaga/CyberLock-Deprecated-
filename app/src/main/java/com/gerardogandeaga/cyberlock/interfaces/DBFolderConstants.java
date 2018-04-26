@@ -14,22 +14,27 @@ public interface DBFolderConstants {
     String TABLE = "folders";
 
     /**
-     * date is the main key for the note database, it organizes the db by most recently updates;
-     * date is updated when the note is initially created and whenever it's modified
+     * date when the note was initially is created
      */
-    String DATE = "date";
-    int POS_DATE = 0;
+    String DATE_CREATED = "date_created";
+    int POS_DATE_CREATED = 0;
+
+    /**
+     * date and time when the note was created. this is also the PRIMARY KEY
+     */
+    String DATE_MODIFIED = "date_modified";
+    int POS_DATE_MODIFIED = 1;
 
     /**
      * colour that the note is tagged under
      */
     String COLOUR_TAG = "colour_tag";
-    int POS_COLOUR_TAG = 1;
+    int POS_COLOUR_TAG = 2;
 
     /**
      * name of the folder
      */
     String NAME = "name";
-    int POS_NAME = 2;
+    int POS_NAME = 3;
 
 }

@@ -10,11 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.core.FolderDrawer;
 import com.gerardogandeaga.cyberlock.core.dialogs.NotePreviewDialog;
+import com.gerardogandeaga.cyberlock.core.drawers.FolderDrawer;
 import com.gerardogandeaga.cyberlock.database.loaders.NoteAdapterLoader;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
+import com.gerardogandeaga.cyberlock.handlers.FolderDrawerHandler;
 import com.gerardogandeaga.cyberlock.helpers.AdapterActionManager;
 import com.gerardogandeaga.cyberlock.helpers.DataObjectDeleter;
 import com.gerardogandeaga.cyberlock.interfaces.AdapterLoaderCallback;
@@ -30,6 +31,7 @@ import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.listeners.OnClickListener;
 import com.mikepenz.fastadapter.listeners.OnLongClickListener;
+import com.mikepenz.materialdrawer.Drawer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,13 +59,15 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
     private Context mContext = this;
 
     // adapter
-    private FastItemAdapter<NoteItem> mFastItemAdapter;
+    private FastItemAdapter<NoteItem> mItemAdapter;
     private AdapterActionManager<NoteItem> mAdapterActionManager;
+    private FolderDrawerHandler mFolderDrawerHandler;
     private Folder mCurrentFolder;
 
     // views
     private View mView;
     private Menu mMenu;
+    private Drawer mDrawer;
 
     @BindView(R.id.recyclerView) CustomRecyclerView mRecyclerView;
 
@@ -76,21 +80,20 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
         bindView();
 
         setupRecyclerView();
-//        displayLoad();
 
         // create the FastAdapter
-        this.mFastItemAdapter = new FastItemAdapter<>();
-        this.mAdapterActionManager = new AdapterActionManager<>(this, mFastItemAdapter);
+        this.mItemAdapter = new FastItemAdapter<>();
+        this.mAdapterActionManager = new AdapterActionManager<>(this, mItemAdapter);
 
         // configure the FastAdapter
-        mFastItemAdapter.setHasStableIds(true);
-        mFastItemAdapter.withSelectable(false);
-        mFastItemAdapter.withMultiSelect(false);
-        mFastItemAdapter.withAllowDeselection(false);
-        mFastItemAdapter.withSelectOnLongClick(false);
+        mItemAdapter.setHasStableIds(true);
+        mItemAdapter.withSelectable(false);
+        mItemAdapter.withMultiSelect(false);
+        mItemAdapter.withAllowDeselection(false);
+        mItemAdapter.withSelectOnLongClick(false);
 
         // item Listeners
-        mFastItemAdapter.withOnClickListener(new OnClickListener<NoteItem>() {
+        mItemAdapter.withOnClickListener(new OnClickListener<NoteItem>() {
             @Override
             public boolean onClick(View view, @NonNull IAdapter<NoteItem> adapter, @NonNull NoteItem item, int position) {
                 if (mAdapterActionManager.isActive()) {
@@ -114,7 +117,7 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
                 return true;
             }
         });
-        mFastItemAdapter.withOnLongClickListener(new OnLongClickListener<NoteItem>() {
+        mItemAdapter.withOnLongClickListener(new OnLongClickListener<NoteItem>() {
             @Override
             public boolean onLongClick(@NonNull View view, @NonNull IAdapter<NoteItem> adapter, @NonNull NoteItem item, int position) {
                 if (!mAdapterActionManager.isActive()) {
@@ -134,12 +137,14 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
         });
 
         // set adapter
-        mRecyclerView.setAdapter(mFastItemAdapter);
+        mRecyclerView.setAdapter(mItemAdapter);
 
         // start the adapter loader
-        new NoteAdapterLoader(this, mFastItemAdapter, true).execute();
+        new NoteAdapterLoader(this, mItemAdapter, true).execute();
 
-        new FolderDrawer(this).createDrawer();
+        // create the folder drawer
+        this.mDrawer = new FolderDrawer(this).createDrawer();
+        this.mFolderDrawerHandler = new FolderDrawerHandler(this, mDrawer, mItemAdapter);
 
         setupActionBar(null, null, NO_ICON);
         super.onCreate(savedInstanceState);
@@ -152,13 +157,11 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-
         this.mMenu = menu;
 
         updateMenu();
 
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -189,7 +192,7 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
             // on multi select mode
             case R.id.menu_delete:
                 // deleter
-                final DataObjectDeleter deleter = new DataObjectDeleter(this, mFastItemAdapter, mAdapterActionManager.removeItemsFromAdapter());
+                final DataObjectDeleter deleter = new DataObjectDeleter(this, mItemAdapter, mAdapterActionManager.removeItemsFromAdapter());
                 deleter.deleteItems();
                 // snackbar
                 CustomSnackBar.buildAndShowSnackBar(
@@ -224,7 +227,7 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
 
         // tint menu colour
         if (mMenu.hasVisibleItems()) {
-            Graphics.BasicFilter.mutateMenuItems(this, mMenu);
+            Graphics.BasicFilter.mutateMenuItems(mMenu);
         }
     }
     //

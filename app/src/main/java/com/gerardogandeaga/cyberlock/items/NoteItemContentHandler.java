@@ -164,7 +164,7 @@ public class NoteItemContentHandler {
                 cardType = scanner.nextLine();
 
                 if (Graphics.CardImages.isCardType(cardType)) {
-                    return Graphics.CardImages.getCardImage(mContext, cardType, .65f);
+                    return Graphics.CardImages.getCardImage(cardType, .65f);
                 }
             }
         }

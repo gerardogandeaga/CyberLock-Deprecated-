@@ -21,6 +21,7 @@ import com.gerardogandeaga.cyberlock.enums.NoteEditTypes;
 import com.gerardogandeaga.cyberlock.interfaces.RequestResponder;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
 import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
+import com.gerardogandeaga.cyberlock.views.CustomToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -100,7 +101,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
         this.mMenu = menu;
 
         // change colour filter of icons
-        Graphics.BasicFilter.mutateMenuItems(this, menu);
+        Graphics.BasicFilter.mutateMenuItems(menu);
 
         if (!mColourTag.equals("default")) {
             mutateMenuTagIcon();
@@ -111,7 +112,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
 
     private void mutateMenuTagIcon() {
         setActionBarBackgroundColour(Graphics.ColourTags.colourTagToolbar(this, mColourTag));
-        Graphics.BasicFilter.mutateMenuItems(this, mMenu, R.color.white);
+        Graphics.BasicFilter.mutateMenuItems(mMenu, R.color.white);
     }
 
     /**
@@ -297,6 +298,13 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
                 Note note = (Note) object;
                 this.mSaveFlag = false;
                 Log.i(TAG, "onSaveResponse: responded to save request");
+
+                if (note.getTimeModified() == 0) {
+                    CustomToast.buildAndShowToast(this, "No Content To Save", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
+                    onBackPressed();
+                    return;
+                }
+
                 // todo save here
                 // global note configs
                 note.setFolder(mFolder);

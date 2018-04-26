@@ -14,46 +14,51 @@ public interface DBNoteConstants {
     String TABLE = "notes";
 
     /**
-     * date is the main key for the note database, it organizes the db by most recently updates;
-     * date is updated when the note is initially created and whenever it's modified
+     * date when the note was initially is created
      */
-    String DATE = "date";
-    int POS_DATE = 0;
+    String DATE_CREATED = "date_created";
+    int POS_DATE_CREATED = 0;
+
+    /**
+     * date and time when the note was created. this is also the PRIMARY KEY
+     */
+    String DATE_MODIFIED = "date_modified";
+    int POS_DATE_MODIFIED = 1;
 
     /**
      * numeric boolean for the item being trashed or not
      */
     String TRASHED = "trashed";
-    int POS_TRASHED = 1;
+    int POS_TRASHED = 2;
 
     /**
      * folder it is tagged under. the folder system for the time being it more of a filter
      * rather than an actual folder structure
      */
     String FOLDER = "folder";
-    int POS_FOLDER = 2;
+    int POS_FOLDER = 3;
 
     /**
      * type of note that is stores ie. TYPE_NOTE, TYPE_PAYMENTINFO, TYPE_LOGININFO
      */
     String TYPE = "type";
-    int POS_TYPE = 3;
+    int POS_TYPE = 4;
 
     /**
      * colour that the note is tagged under
      */
     String COLOUR_TAG = "colour_tag";
-    int POS_COLOUR_TAG = 4;
+    int POS_COLOUR_TAG = 5;
 
     /**
      * title of the note determined by manual input
      */
     String LABEL = "label";
-    int POS_LABEL = 5;
+    int POS_LABEL = 6;
 
     /**
      * content holds all the text values as a result of manual input
      */
     String CONTENT = "content";
-    int POS_CONTENT = 6;
+    int POS_CONTENT = 7;
 }

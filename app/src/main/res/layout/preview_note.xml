@@ -6,8 +6,7 @@
     style="@style/MyPreviewScrollbarStyle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/backgroundColour"
-    tools:context=".core.activities.EditActivity">
+    android:background="?attr/backgroundColour">
 
     <LinearLayout
         android:layout_width="match_parent"

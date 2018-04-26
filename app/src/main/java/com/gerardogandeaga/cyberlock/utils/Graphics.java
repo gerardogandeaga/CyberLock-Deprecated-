@@ -24,21 +24,21 @@ public class Graphics {
 
         public static int colourTagToolbar(Context context, String colour) {
             int col = colourTagHeader(context, colour);
-            if (col == Resources.getColour(context, R.color.black)) {
-                return Resources.getColour(context, R.color.white);
+            if (col == Res.getColour(R.color.black)) {
+                return Res.getColour(R.color.white);
             }
             return col;
         }
 
         public static int colourTagHeader(Context context, String colour) {
             if (colour == null) {
-                return Resources.getColour(context, R.color.black);
+                return Res.getColour(R.color.black);
             }
 
             if (PreferencesAccessor.getTaggedHeaders(context)) {
                 return colourTag(context, colour);
             } else {
-                return Resources.getColour(context, R.color.black);
+                return Res.getColour(R.color.black);
             }
         }
 
@@ -63,9 +63,9 @@ public class Graphics {
             }
             // light or dark default colour
             if (darkDefault) {
-                return Resources.getColour(context, R.color.black);
+                return Res.getColour(R.color.black);
             } else {
-                return Resources.getColour(context, R.color.ct_default);
+                return Res.getColour(R.color.ct_default);
             }
         }
     }
@@ -85,19 +85,19 @@ public class Graphics {
             return false;
         }
 
-        public static Drawable getCardImage(Context context, String cardType) {
+        public static Drawable getCardImage(String cardType) {
             switch (cardType) {
-                case ("Visa"):             return Resources.getDrawable(context, R.drawable.card_visa);
-                case ("Master Card"):      return Resources.getDrawable(context, R.drawable.card_mastercard);
-                case ("American Express"): return Resources.getDrawable(context, R.drawable.card_americanexpress);
-                case ("Discover"):         return Resources.getDrawable(context, R.drawable.card_discover);
-                default:                   return Resources.getDrawable(context, R.drawable.card_default);
+                case ("Visa"):             return Res.getDrawable(R.drawable.card_visa);
+                case ("Master Card"):      return Res.getDrawable(R.drawable.card_mastercard);
+                case ("American Express"): return Res.getDrawable(R.drawable.card_americanexpress);
+                case ("Discover"):         return Res.getDrawable(R.drawable.card_discover);
+                default:                   return Res.getDrawable(R.drawable.card_default);
             }
         }
 
         @NonNull
         public static Drawable getCardImage(Context context, String cardType, int newWidth, int newHeight) {
-            Drawable factoryDrawable = getCardImage(context, cardType);
+            Drawable factoryDrawable = getCardImage(cardType);
 
             int w = Scaling.dpFromPx(context, newWidth);
             int h = Scaling.dpFromPx(context, newHeight);
@@ -106,8 +106,8 @@ public class Graphics {
             return new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, w, h, true));
         }
 
-        public static Drawable getCardImage(Context context, String cardType, float scalePercentage) {
-            Drawable factoryDrawable = getCardImage(context, cardType);
+        public static Drawable getCardImage(String cardType, float scalePercentage) {
+            Drawable factoryDrawable = getCardImage(cardType);
 
             float w = factoryDrawable.getMinimumWidth();
             float h = factoryDrawable.getMinimumHeight();
@@ -123,33 +123,33 @@ public class Graphics {
     public static class BasicFilter {
 
         @NonNull
-        public static Drawable mutateHomeAsUpIndicatorDrawable(Context context, Drawable drawable) {
-            drawable.mutate().setColorFilter(getColour(context), getMode());
+        public static Drawable mutateHomeAsUpIndicatorDrawable(Drawable drawable) {
+            drawable.mutate().setColorFilter(getColour(), getMode());
             return drawable;
         }
 
-        public static void mutateMenuItems(Context context, Menu menu, int colour) {
+        public static void mutateMenuItems(Menu menu, int colour) {
             for (int i = 0; i < menu.size(); i++) {
                 MenuItem item = menu.getItem(i);
 
                 if (item.getIcon() != null) {
-                    item.getIcon().mutate().setColorFilter(Resources.getColour(context, colour), getMode());
+                    item.getIcon().mutate().setColorFilter(Res.getColour(colour), getMode());
                 }
             }
         }
 
-        public static void mutateMenuItems(Context context, Menu menu) {
+        public static void mutateMenuItems(Menu menu) {
             for (int i = 0; i < menu.size(); i++) {
                 MenuItem item = menu.getItem(i);
 
                 if (item.getIcon() != null) {
-                    item.getIcon().mutate().setColorFilter(getColour(context), getMode());
+                    item.getIcon().mutate().setColorFilter(getColour(), getMode());
                 }
             }
         }
 
-        private static int getColour(Context context) {
-            return Resources.getColour(context, R.color.black);
+        private static int getColour() {
+            return Res.getColour(R.color.black);
         }
 
         @Contract(pure = true)

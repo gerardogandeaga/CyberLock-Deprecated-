@@ -21,14 +21,15 @@ class DBNoteOpenHelper extends SQLiteOpenHelper implements DBNoteConstants {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE + "(" +
 
-//              KEY            DATA TYPE
-                DATE +       " INTEGER PRIMARY KEY, " +
-                TRASHED +    " INTEGER, " +
-                FOLDER +     " BLOB, " +
-                TYPE +       " BLOB, " +
-                COLOUR_TAG + " BLOB, " +
-                LABEL +      " BLOB, " +
-                CONTENT +    " BLOB" +
+//              KEY               DATA TYPE
+                DATE_CREATED +  " INTEGER, " +
+                DATE_MODIFIED + " INTEGER PRIMARY KEY, " +
+                TRASHED +       " INTEGER, " +
+                FOLDER +        " BLOB, " +
+                TYPE +          " BLOB, " +
+                COLOUR_TAG +    " BLOB, " +
+                LABEL +         " BLOB, " +
+                CONTENT +       " BLOB" +
 
                 ");");
     }

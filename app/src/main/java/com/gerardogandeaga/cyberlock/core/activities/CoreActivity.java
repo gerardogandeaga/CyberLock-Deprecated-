@@ -6,10 +6,14 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
-import com.gerardogandeaga.cyberlock.utils.Resources;
+import com.gerardogandeaga.cyberlock.utils.Icon;
+import com.gerardogandeaga.cyberlock.utils.Res;
+import com.gerardogandeaga.cyberlock.utils.math.Scaling;
 
 import butterknife.BindView;
 
@@ -32,6 +36,26 @@ public abstract class CoreActivity extends SecureActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    /**
+     * this super class onCreateOptionsMenu scales the icons
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // get icons
+        MenuItem[] menuItems = new MenuItem[menu.size()];
+        for (int i = 0; i < menu.size(); i++) {
+            menuItems[i] = menu.getItem(i);
+        }
+
+        // scale icons in menu
+        for (MenuItem item : menuItems) {
+            Icon icon = new Icon(item.getIcon());
+            item.setIcon(icon.resize(Scaling.dpFromPx(this, 32)));
+        }
+
+        return true;
     }
 
     /**
@@ -99,8 +123,7 @@ public abstract class CoreActivity extends SecureActivity {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
                 getSupportActionBar().setHomeAsUpIndicator(
-                        Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(this,
-                                Resources.getDrawable(this, icon)));
+                        Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(Res.getDrawable(icon)));
             }
         }
     }

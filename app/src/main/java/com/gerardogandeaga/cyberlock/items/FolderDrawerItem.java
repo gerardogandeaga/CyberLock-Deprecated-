@@ -11,28 +11,27 @@ import android.widget.ImageButton;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
-import com.gerardogandeaga.cyberlock.utils.Resources;
-import com.gerardogandeaga.cyberlock.views.CustomToast;
-import com.mikepenz.materialdrawer.Drawer;
+import com.gerardogandeaga.cyberlock.utils.Res;
 import com.mikepenz.materialdrawer.model.BaseDescribeableDrawerItem;
 import com.mikepenz.materialdrawer.model.BaseViewHolder;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author gerardogandeaga
- *
- * custom drawer folder item for easy folder item integration in the
- * navigation drawer
- *
  * todo create a advanced drawer menu item parent class
  */
 public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerItem, FolderDrawerItem.ViewHolder> {
-    private Context mContext;
+    private static final String TAG = "FolderDrawerItem";
+    private PopupMenu.OnDismissListener mOnDismissListener;
+
+    private boolean mHasMenu;
     private int mMenu;
 
-    public FolderDrawerItem(@NonNull final Folder folder) {
+    public FolderDrawerItem(@NonNull final Folder folder, boolean withMenu) {
         super();
 
         // configure drawer item with default settings
@@ -40,16 +39,16 @@ public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerIte
 
         withIcon(R.drawable.ic_folder);
         withName(folder.getName());
-        withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-            @Override
-            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                CustomToast.buildAndShowToast(view.getContext(), folder.getName(), CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
-                return false;
-            }
-        });
 
         // menu
-        withMenu(R.menu.menu_drawer_item);
+        this.mHasMenu = withMenu;
+        if (withMenu) {
+            withMenu(R.menu.menu_drawer_item);
+        }
+    }
+
+    public FolderDrawerItem withMenu(int menu) {
+        this.mMenu = menu;
         withOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -67,17 +66,6 @@ public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerIte
                 return false;
             }
         });
-    }
-
-
-
-
-
-
-
-
-    public FolderDrawerItem withMenu(int menu) {
-        this.mMenu = menu;
         return this;
     }
 
@@ -95,9 +83,6 @@ public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerIte
     public PopupMenu.OnMenuItemClickListener getOnMenuItemClickListener() {
         return mOnMenuItemClickListener;
     }
-
-    private PopupMenu.OnDismissListener mOnDismissListener;
-
 
     public FolderDrawerItem withOnDismissListener(PopupMenu.OnDismissListener onDismissListener) {
         this.mOnDismissListener = onDismissListener;
@@ -120,6 +105,21 @@ public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerIte
     }
 
     @Override
+    public ViewHolder getViewHolder(View view) {
+        return new ViewHolder(view);
+    }
+
+    static class ViewHolder extends BaseViewHolder {
+        @BindView(R.id.material_drawer_menu_overflow)
+        ImageButton Menu;
+
+        ViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    @Override
     public void bindView(ViewHolder viewHolder, List payloads) {
         super.bindView(viewHolder, payloads);
 
@@ -128,41 +128,29 @@ public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerIte
         //bind the basic view parts
         bindViewHelper(viewHolder);
 
-        //handle menu click
-        viewHolder.menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popup = new PopupMenu(view.getContext(), view);
-                MenuInflater inflater = popup.getMenuInflater();
-                inflater.inflate(mMenu, popup.getMenu());
+        if (mHasMenu) {
+            //handle menu click
+            viewHolder.Menu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popup = new PopupMenu(view.getContext(), view);
+                    MenuInflater inflater = popup.getMenuInflater();
+                    inflater.inflate(mMenu, popup.getMenu());
 
-                popup.setOnMenuItemClickListener(mOnMenuItemClickListener);
-                popup.setOnDismissListener(mOnDismissListener);
+                    popup.setOnMenuItemClickListener(mOnMenuItemClickListener);
+                    popup.setOnDismissListener(mOnDismissListener);
 
-                popup.show();
-            }
-        });
+                    popup.show();
+                }
+            });
 
-        //handle image
-        viewHolder.menu.setImageDrawable(Resources.getDrawable(context, R.drawable.ic_small_options));
+            //handle image
+            viewHolder.Menu.setImageDrawable(Res.getDrawable(R.drawable.ic_small_options));
+        } else {
+            viewHolder.Menu.setVisibility(View.GONE);
+        }
 
         //call the onPostBindView method to trigger post bind view actions (like the listener to modify the item if required)
         onPostBindView(this, viewHolder.itemView);
-    }
-
-    @Override
-    public ViewHolder getViewHolder(View view) {
-        this.mContext = view.getContext();
-        return new ViewHolder(view);
-    }
-
-    public static class ViewHolder extends BaseViewHolder {
-        //protected ImageButton ibOverflow;
-        private ImageButton menu;
-
-        public ViewHolder(View view) {
-            super(view);
-            this.menu = (ImageButton) view.findViewById(R.id.material_drawer_menu_overflow);
-        }
     }
 }

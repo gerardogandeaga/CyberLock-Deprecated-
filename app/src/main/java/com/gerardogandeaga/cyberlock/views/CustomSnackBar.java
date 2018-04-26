@@ -4,7 +4,7 @@ import android.support.annotation.ColorRes;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
-import com.gerardogandeaga.cyberlock.utils.Resources;
+import com.gerardogandeaga.cyberlock.utils.Res;
 
 /**
  * @author gerardogandeaga
@@ -32,7 +32,7 @@ public class CustomSnackBar {
 
             // colour of action text
             if (color != COLOUR_NONE) {
-                snackbar.setActionTextColor(Resources.getColour(view.getContext(), color));
+                snackbar.setActionTextColor(Res.getColour(color));
             }
         }
 

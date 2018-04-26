@@ -27,7 +27,7 @@ public class DBFolderAccessor implements DBFolderConstants {
     private DBFolderOpenHelper mOpenHelper;
     private static volatile DBFolderAccessor INSTANCE;
 
-    private static final String SQL_QUERY = "SELECT * From " + TABLE + " ORDER BY " + DATE + " DESC";
+    private static final String SQL_QUERY = "SELECT * From " + TABLE + " ORDER BY " + DATE_CREATED + " DESC";
 
     private DBFolderAccessor(Context context) {
         this.mContext = context;
@@ -58,34 +58,36 @@ public class DBFolderAccessor implements DBFolderConstants {
 
     // database interactions / mode
     public void save(Folder folder) {
-        try {
+//        try {
             ContentValues values = new ContentValues();
 
-            values.put(DATE,       folder.getTime());
-            values.put(COLOUR_TAG, setData(folder.getColourTag()));
-            values.put(NAME,       setData(folder.getName()));
+            values.put(DATE_CREATED,  folder.getTimeCreated());
+            values.put(DATE_MODIFIED, folder.getTimeCreated());
+            values.put(COLOUR_TAG,    folder.getColourTag());
+            values.put(NAME,          folder.getName());
 
             mSQLiteDatabase.insert(TABLE, null, values);
-        } catch (UnsupportedEncodingException e) {
-            System.out.println("error saving folder!");
-        }
+//        } catch (UnsupportedEncodingException e) {
+//            System.out.println("error saving folder!");
+//        }
     }
     public void update(Folder folder) {
-        try {
+//        try {
             ContentValues values = new ContentValues();
 
-            values.put(COLOUR_TAG, setData(folder.getColourTag()));
-            values.put(NAME,       setData(folder.getName()));
+            values.put(DATE_MODIFIED, folder.getTimeModified());
+            values.put(COLOUR_TAG,    folder.getColourTag());
+            values.put(NAME,          folder.getName());
 
-            String date = Long.toString(folder.getTime());
-            mSQLiteDatabase.update(TABLE, values, DATE + " = ?", new String[]{date});
-        } catch (UnsupportedEncodingException e) {
-            System.out.println("error updating folder!");
-        }
+            String date = Long.toString(folder.getTimeCreated());
+            mSQLiteDatabase.update(TABLE, values, DATE_MODIFIED + " = ?", new String[]{date});
+//        } catch (UnsupportedEncodingException e) {
+//            System.out.println("error updating folder!");
+//        }
     }
     public void delete(Folder folder) {
-        String date = Long.toString(folder.getTime());
-        mSQLiteDatabase.delete(TABLE, DATE + " = ?", new String[]{date});
+        String date = Long.toString(folder.getTimeCreated());
+        mSQLiteDatabase.delete(TABLE, DATE_MODIFIED + " = ?", new String[]{date});
     }
 
     public Folder getFolder(Cursor cursor) {
@@ -129,11 +131,12 @@ public class DBFolderAccessor implements DBFolderConstants {
     // returns a new folder from the cursor position
     private Folder constructFolder(Cursor cursor) {
         try {
-            long time =         cursor.getLong(POS_DATE);
+            long created =      cursor.getLong(POS_DATE_CREATED);
+            long modded =       cursor.getLong(POS_DATE_MODIFIED);
             String colour_tag = getData(cursor.getBlob(POS_COLOUR_TAG));
             String name =       getData(cursor.getBlob(POS_NAME));
             // create new note object
-            return new Folder(time, colour_tag, name);
+            return new Folder(created, modded, colour_tag, name);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return null;

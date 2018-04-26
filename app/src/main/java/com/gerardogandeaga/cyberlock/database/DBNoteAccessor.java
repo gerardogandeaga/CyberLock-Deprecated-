@@ -28,7 +28,7 @@ public class DBNoteAccessor implements DBNoteConstants {
     private DBNoteOpenHelper mOpenHelper;
     private static volatile DBNoteAccessor INSTANCE;
 
-    private static final String SQL_QUERY = "SELECT * From " + TABLE + " ORDER BY " + DATE + " DESC";
+    private static final String SQL_QUERY = "SELECT * From " + TABLE + " ORDER BY " + DATE_CREATED + " DESC";
 
     private DBNoteAccessor(Context context) {
         this.mContext = context;
@@ -64,13 +64,14 @@ public class DBNoteAccessor implements DBNoteConstants {
         try {
             ContentValues values = new ContentValues();
 
-            values.put(DATE,       note.getTime());
-            values.put(TRASHED,    note.isTrashed());
-            values.put(FOLDER,     setData(note.getFolder()));
-            values.put(TYPE,       setData(note.getType()));
-            values.put(COLOUR_TAG, setData(note.getColourTag()));
-            values.put(LABEL,      setData(note.getLabel()));
-            values.put(CONTENT,    setData(note.getContent()));
+            values.put(DATE_CREATED,  note.getTimeCreated());
+            values.put(DATE_MODIFIED, note.getTimeCreated());
+            values.put(TRASHED,       note.isTrashed());
+            values.put(FOLDER,        setData(note.getFolder()));
+            values.put(TYPE,          setData(note.getType()));
+            values.put(COLOUR_TAG,    setData(note.getColourTag()));
+            values.put(LABEL,         setData(note.getLabel()));
+            values.put(CONTENT,       setData(note.getContent()));
 
             mSQLiteDatabase.insert(TABLE, null, values);
         } catch (UnsupportedEncodingException e) {
@@ -81,23 +82,23 @@ public class DBNoteAccessor implements DBNoteConstants {
         try {
             ContentValues values = new ContentValues();
 
-            values.put(DATE,       new Date().getTime());
-            values.put(TRASHED,    note.isTrashed());
-            values.put(FOLDER,     setData(note.getFolder()));
-            values.put(TYPE,       setData(note.getType()));
-            values.put(COLOUR_TAG, setData(note.getColourTag()));
-            values.put(LABEL,      setData(note.getLabel()));
-            values.put(CONTENT,    setData(note.getContent()));
+            values.put(DATE_MODIFIED, new Date().getTime());
+            values.put(TRASHED,       note.isTrashed());
+            values.put(FOLDER,        setData(note.getFolder()));
+            values.put(TYPE,          setData(note.getType()));
+            values.put(COLOUR_TAG,    setData(note.getColourTag()));
+            values.put(LABEL,         setData(note.getLabel()));
+            values.put(CONTENT,       setData(note.getContent()));
 
-            String date = Long.toString(note.getTime());
-            mSQLiteDatabase.update(TABLE, values, "date = ?", new String[]{date});
+            String date = Long.toString(note.getTimeCreated());
+            mSQLiteDatabase.update(TABLE, values, DATE_MODIFIED + " = ?", new String[]{date});
         } catch (UnsupportedEncodingException e) {
             System.out.println("error updating note!");
         }
     }
     public void delete(Note note) {
-        String date = Long.toString(note.getTime());
-        mSQLiteDatabase.delete(TABLE, "date = ?", new String[]{date});
+        String date = Long.toString(note.getTimeCreated());
+        mSQLiteDatabase.delete(TABLE, DATE_MODIFIED + " = ?", new String[]{date});
     }
 
     /**
@@ -189,7 +190,8 @@ public class DBNoteAccessor implements DBNoteConstants {
     // returns a new data package from the cursor position
     private Note constructNote(Cursor cursor) {
         try {
-            long time =         cursor.getLong(POS_DATE);
+            long created =      cursor.getLong(POS_DATE_CREATED);
+            long modded =       cursor.getLong(POS_DATE_MODIFIED);
             boolean isTrashed = cursor.getShort(POS_TRASHED) == 1;
             String folder =     getData(cursor.getBlob(POS_FOLDER));
             String type =       getData(cursor.getBlob(POS_TYPE));
@@ -197,7 +199,7 @@ public class DBNoteAccessor implements DBNoteConstants {
             String label =      getData(cursor.getBlob(POS_LABEL));
             String content =    getData(cursor.getBlob(POS_CONTENT));
             // create new note object
-            return new Note(time, isTrashed, folder, type, colour_tag, label, content);
+            return new Note(created, modded, isTrashed, folder, type, colour_tag, label, content);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return null;

@@ -14,17 +14,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.utils.Resources;
+import com.gerardogandeaga.cyberlock.utils.Res;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * @author gerardogandeaga
+ *
+ * todo add final dialog object with respect to the dialog builder
  */
 public class CustomDialog {
     private Context mContext;
     private View mView;
+    private Dialog mDialog; // <-- to do goes here
 
     // views
     @BindView(R.id.lnTitleBackground) LinearLayout mTitleBackground;
@@ -83,7 +86,7 @@ public class CustomDialog {
 
     // menu icon
     public void setMenuIcon(Drawable drawable, int colourId) {
-        mMenuIcon.setColorFilter(Resources.getColour(mContext, colourId), PorterDuff.Mode.SRC_ATOP);
+        mMenuIcon.setColorFilter(Res.getColour(colourId), PorterDuff.Mode.SRC_ATOP);
         setMenuIcon(drawable);
     }
     public void setMenuIcon(Drawable drawable)  {

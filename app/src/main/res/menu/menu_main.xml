@@ -16,19 +16,19 @@
 
             <item
                 android:id="@+id/menu_add_note"
-                android:icon="@drawable/ic_ab_note"
+                android:icon="@drawable/ic_note"
                 android:orderInCategory="0"
                 android:title="@string/str_menu_add_note"
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/menu_add_card"
-                android:icon="@drawable/ic_ab_card"
+                android:icon="@drawable/ic_card"
                 android:orderInCategory="0"
                 android:title="@string/str_menu_add_card"
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/menu_add_login"
-                android:icon="@drawable/ic_ab_login"
+                android:icon="@drawable/ic_login"
                 android:orderInCategory="0"
                 android:title="@string/str_menu_add_login"
                 app:showAsAction="never"/>
@@ -46,13 +46,13 @@
         <menu>
             <item
                 android:id="@+id/menu_option_options"
-                android:icon="@drawable/ic_ab_cog"
+                android:icon="@drawable/ic_cog"
                 android:orderInCategory="0"
                 android:title="@string/str_menu_options"
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/menu_option_import"
-                android:icon="@drawable/ic_ab_import"
+                android:icon="@drawable/ic_import"
                 android:orderInCategory="0"
                 android:title="@string/str_menu_import"
                 app:showAsAction="never"/>

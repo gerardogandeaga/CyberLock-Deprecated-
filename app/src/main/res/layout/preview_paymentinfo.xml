@@ -29,8 +29,8 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
-                android:tint="@color/black"
-                android:src="@drawable/graphic_card_holder"/>
+                android:src="@drawable/ic_username"
+                android:tint="@color/black"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,8 +74,8 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
-                android:tint="@color/black"
-                android:src="@drawable/graphic_card_number"/>
+                android:src="@drawable/graphic_card_number"
+                android:tint="@color/black"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -119,8 +119,8 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
-                android:tint="@color/black"
-                android:src="@drawable/graphic_card_expiry"/>
+                android:src="@drawable/ic_expiry"
+                android:tint="@color/black"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -164,8 +164,8 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
-                android:tint="@color/black"
-                android:src="@drawable/graphic_card_code"/>
+                android:src="@drawable/graphic_card_code"
+                android:tint="@color/black"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -210,8 +210,8 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
-                android:tint="@color/black"
-                android:src="@drawable/graphic_card_type"/>
+                android:src="@drawable/graphic_card_type"
+                android:tint="@color/black"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

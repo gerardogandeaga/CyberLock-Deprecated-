@@ -13,7 +13,8 @@ import java.util.Date;
  * @author gerardogandeaga
  */
 public class Folder extends SavableObject implements Serializable {
-    private Date mDate;
+    private Date mDateCreated;
+    private Date mDateModified;
     private String mColourTag;
     private String mName;
     private int mSize;
@@ -21,26 +22,31 @@ public class Folder extends SavableObject implements Serializable {
     @SuppressLint("SimpleDateFormat")
     private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy 'at' hh:mm aaa");
 
-    public Folder(long time,
+    public Folder(long created,
+                  long modded,
                   String colour_tag,
                   String name) {
-        this.mDate = new Date(time);
+        this.mDateCreated = new Date(created);
+        this.mDateModified = new Date(modded);
         this.mColourTag = colour_tag;
         this.mName = name;
     }
 
     public Folder() {
-        this.mDate = new Date();
+        this.mDateCreated = new Date();
     }
 
     public String getDate() {
-        return dateFormat.format(mDate);
+        return dateFormat.format(mDateCreated);
     }
 
     // getters
 
-    public long getTime() {
-        return mDate.getTime();
+    public long getTimeCreated() {
+        return mDateCreated.getTime();
+    }
+    public long getTimeModified() {
+        return mDateModified.getTime();
     }
     public String getColourTag() {
         return mColourTag;
@@ -54,8 +60,12 @@ public class Folder extends SavableObject implements Serializable {
 
     // setters
 
-    public Folder withTime(long time) {
-        this.mDate = new Date(time);
+    public Folder withTimeCreated(long time) {
+        this.mDateCreated = new Date(time);
+        return this;
+    }
+    public Folder withTimeModded(long time) {
+        this.mDateModified = new Date(time);
         return this;
     }
     public Folder withColourTag(String colourTag) {

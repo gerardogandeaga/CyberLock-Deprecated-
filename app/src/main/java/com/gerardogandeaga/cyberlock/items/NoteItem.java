@@ -42,8 +42,9 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
     private String mContent;
     private Drawable mCardType;
 
-
-    // return recycler item info
+    /**
+     * return recycler item info
+     */
     public int getPosition() {
         return mPosition;
     }
@@ -92,14 +93,17 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
         return super.withIdentifier(identifier);
     }
 
-    // the unique ID for this type of item
+    /**
+     * the unique ID for this type of item
+     */
     @Override
     public int getType() {
         return R.id.fastadapter_item;
     }
 
-    // todo split the item layouts into 6 layouts, 3 linear and 3 grid
-    // the layout that will be used for item
+    /**
+     * the layout that will be used for item
+     */
     @Override
     public int getLayoutRes() {
         if (mContext != null) {
@@ -119,7 +123,9 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
         return new ViewHolder(view);
     }
 
-    // view holder class
+    /**
+     * view holder class
+     */
     protected class ViewHolder extends FastItemAdapter.ViewHolder<NoteItem> {
         @NonNull protected View View;
 

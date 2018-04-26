@@ -5,12 +5,14 @@
         <item>Butter Knife</item>
         <item>CircleImageView</item>
         <item>FastAdapter</item>
+        <item>MaterialDrawer</item>
     </string-array>
 
     <!-- author -->
     <string-array name="str_array_external_libraries_authors">
         <item>Jake Wharton</item>
         <item>Henning Dodenhof</item>
+        <item>Mike Penz</item>
         <item>Mike Penz</item>
     </string-array>
 
@@ -19,6 +21,7 @@
         <item>@string/str_lib_butter_knife</item>
         <item>@string/str_lib_circle_imageview</item>
         <item>@string/str_lib_fast_adapter</item>
+        <item>@string/str_lib_material_drawer</item>
     </string-array>
 
     <!-- urls -->
@@ -26,6 +29,7 @@
         <item>https://github.com/JakeWharton/butterknife</item>
         <item>https://github.com/hdodenhof/CircleImageView</item>
         <item>https://github.com/mikepenz/FastAdapter</item>
+        <item>https://github.com/mikepenz/MaterialDrawer</item>
     </string-array>
 
     <!-- lib descriptions -->
@@ -40,5 +44,8 @@
             anymore. Just write the logic for how your view/item should look like,
             and you are done. This library has a fast and highly optimized core
             which provides core functionality, most apps require.</string>
+    <string name="str_lib_material_drawer">The MaterialDrawer library provides you with the easiest possible
+            implementation of a navigation drawer for your application. Just Provide custom DrawerItems, custom colors,
+            custom themes, etc. No limits for customizations.</string>
 
 </resources>

@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
-import com.gerardogandeaga.cyberlock.helpers.content.NoteContentHandler;
+import com.gerardogandeaga.cyberlock.handlers.NoteContentHandler;
 import com.gerardogandeaga.cyberlock.interfaces.RequestResponder;
 
 import butterknife.BindView;

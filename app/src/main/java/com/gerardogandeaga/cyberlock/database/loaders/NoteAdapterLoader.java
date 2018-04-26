@@ -39,6 +39,11 @@ public class NoteAdapterLoader extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPreExecute() {
+        // remove for refreshing
+        if (mItemAdapter.getItemCount() != 0) {
+            mItemAdapter.removeItemRange(0, mItemAdapter.getItemCount());
+        }
+
         if (mFolderAccessor != null) {
             // open folders
             mFolderAccessor.open();

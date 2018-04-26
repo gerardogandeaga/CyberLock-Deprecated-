@@ -606,7 +606,7 @@
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_bug"
                             android:padding="2dp"
-                            android:src="@drawable/ic_paint"/>
+                            android:src="@drawable/ic_pallet"/>
 
                         <TextView
                             android:layout_width="0dp"

@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
-import com.gerardogandeaga.cyberlock.helpers.content.NoteContentHandler;
+import com.gerardogandeaga.cyberlock.handlers.NoteContentHandler;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
-import com.gerardogandeaga.cyberlock.utils.Resources;
+import com.gerardogandeaga.cyberlock.utils.Res;
 import com.gerardogandeaga.cyberlock.views.CustomDialog;
 import com.gerardogandeaga.cyberlock.views.handlers.TextViews;
 
@@ -119,7 +119,7 @@ public class NotePreviewDialog {
         customDialog.setTitle(noteContentHandler.mLabel);
         customDialog.setSubTitle(noteContentHandler.mDate);
         customDialog.setTitleBackgroundColour(Graphics.ColourTags.colourTagHeader(mContext, noteContentHandler.mTag));
-        customDialog.setTitleColour(Resources.getColour(mContext, R.color.white));
+        customDialog.setTitleColour(Res.getColour(R.color.white));
         customDialog.setPositiveButton("Edit", new View.OnClickListener() {
             @Override
             public void onClick(View view) {

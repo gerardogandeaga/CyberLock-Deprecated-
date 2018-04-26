@@ -1,7 +1,6 @@
 package com.gerardogandeaga.cyberlock.database.objects;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -17,7 +16,8 @@ public class Note extends SavableObject implements Serializable {
     public static final String LOGIN = "TYPE_LOGIN";
 
     // instance vars
-    private Date mDate;
+    private Date mDateCreated;
+    private Date mDateModified;
     private boolean mIsTrashed;
     private String mFolder;
     private String mType;
@@ -31,14 +31,16 @@ public class Note extends SavableObject implements Serializable {
     /*
     constructor that builds the data from the database-accessor class when data is first loaded into memory.
     constructor gets called when by the "getAllNotes" function. */
-    public Note(long time,
+    public Note(long created,
+                long modded,
                 boolean isTrashed,
                 String folder,
                 String type,
                 String colour_tag,
                 String label,
                 String content) {
-        this.mDate = new Date(time);
+        this.mDateCreated = new Date(created);
+        this.mDateModified = new Date(modded);
         this.mIsTrashed = isTrashed;
         this.mFolder = folder;
         this.mType = type;
@@ -50,17 +52,20 @@ public class Note extends SavableObject implements Serializable {
     constructor that initializes a brand new note initialized by the EditActivity class
     when saving data for the first time. */
     public Note() {
-        this.mDate = new Date();
+        this.mDateCreated = new Date();
     }
 
     public String getDate() {
-        return dateFormat.format(mDate);
+        return dateFormat.format(mDateCreated);
     }
 
     // getters
 
-    public long getTime() {
-        return mDate.getTime();
+    public long getTimeCreated() {
+        return mDateCreated.getTime();
+    }
+    public long getTimeModified() {
+        return mDateModified.getTime();
     }
     public boolean isTrashed() {
         return mIsTrashed;
@@ -83,44 +88,37 @@ public class Note extends SavableObject implements Serializable {
 
     // setters
 
-    public void setTime(long time) {
-        this.mDate = new Date(time);
+    public Note setTimeCreated(long time) {
+        this.mDateCreated = new Date(time);
+        return this;
     }
-    public void setIsTrashed(boolean isTrashed) {
+    public Note setTimeModified(long time) {
+        this.mDateModified = new Date(time);
+        return this;
+    }
+    public Note setIsTrashed(boolean isTrashed) {
         this.mIsTrashed = isTrashed;
+        return this;
     }
-    public void setFolder(String folder) {
-        System.out.println(folder);
+    public Note setFolder(String folder) {
         this.mFolder = folder;
+        return this;
     }
-    public void setType(String type) {
-        System.out.println(type);
+    public Note setType(String type) {
         this.mType = type;
+        return this;
     }
-    public void setColourTag(String colourTag) {
-        System.out.println(colourTag);
+    public Note setColourTag(String colourTag) {
         this.mColourTag = colourTag;
+        return this;
     }
-    public void setLabel(String label) {
-        System.out.println(label);
+    public Note setLabel(String label) {
         this.mLabel = label;
+        return this;
     }
-    public void setContent(String content) {
-        System.out.println(content);
+    public Note setContent(String content) {
         this.mContent = content;
-    }
-
-    // short text view in the recycler list to load less memory onto a individual textview
-    public String getShortNoteText(Context context, String text) {
-        float widthSp = (context.getResources().getDisplayMetrics().widthPixels / (((int) 3.5) * context.getResources().getDisplayMetrics().scaledDensity));
-        int finalWidth = (int) widthSp;
-
-        String temp = text.replaceAll("\n", " ");
-        if (temp.length() > finalWidth) {
-            return temp.substring(0, finalWidth) + "...";
-        } else {
-            return temp;
-        }
+        return this;
     }
 
     @Override

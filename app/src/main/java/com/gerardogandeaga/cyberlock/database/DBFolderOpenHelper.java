@@ -21,10 +21,11 @@ public class DBFolderOpenHelper extends SQLiteOpenHelper implements DBFolderCons
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE + "(" +
 
-//              KEY            DATA TYPE
-                DATE +       " INTEGER PRIMARY KEY, " +
-                COLOUR_TAG + " BLOB, " +
-                NAME +       " BLOB" +
+//              KEY               DATA TYPE
+                DATE_CREATED +  " INTEGER, " +
+                DATE_MODIFIED + " INTEGER PRIMARY KEY, " +
+                COLOUR_TAG +    " BLOB, " +
+                NAME +          " BLOB" +
 
                 ");");
     }
