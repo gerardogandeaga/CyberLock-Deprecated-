@@ -14,12 +14,11 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.views.CustomToast;
 import com.gerardogandeaga.cyberlock.utils.ListFormat;
-import com.gerardogandeaga.cyberlock.utils.Res;
 import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
 import com.gerardogandeaga.cyberlock.utils.security.KeyChecker;
 import com.gerardogandeaga.cyberlock.utils.security.options.ChangePassword;
+import com.gerardogandeaga.cyberlock.views.CustomToast;
 
 import org.jetbrains.annotations.Contract;
 
@@ -94,9 +93,9 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
     }
     private void iniListFormat() {
         if (PreferencesAccessor.getListFormat(this).matches(ListFormat.GRID)) {
-            mImgListFormat.setImageDrawable(Res.getDrawable(R.drawable.graphic_list_grid));
+//            mImgListFormat.setImageDrawable(Res.getDrawable(R.drawable.graphic_list_grid));
         } else {
-            mImgListFormat.setImageDrawable(Res.getDrawable(R.drawable.graphic_list_linear));
+//            mImgListFormat.setImageDrawable(Res.getDrawable(R.drawable.graphic_list_linear));
         }
     }
     private void iniTaggedHeaders() {
@@ -173,11 +172,11 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
     private void onListFormat() {
         if (PreferencesAccessor.getListFormat(this).matches(ListFormat.GRID)) {
             PreferencesAccessor.setListFormat(this, ListFormat.LINEAR);
-            mImgListFormat.setImageDrawable(Res.getDrawable(R.drawable.graphic_list_linear));
+//            mImgListFormat.setImageDrawable(Res.getDrawable(R.drawable.graphic_list_linear));
             CustomToast.buildAndShowToast(this, "Linear List Format", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
         } else {
             PreferencesAccessor.setListFormat(this, ListFormat.GRID);
-            mImgListFormat.setImageDrawable(Res.getDrawable(R.drawable.graphic_list_grid));
+//            mImgListFormat.setImageDrawable(Res.getDrawable(R.drawable.graphic_list_grid));
             CustomToast.buildAndShowToast(this, "Grid List Format", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
         }
     }

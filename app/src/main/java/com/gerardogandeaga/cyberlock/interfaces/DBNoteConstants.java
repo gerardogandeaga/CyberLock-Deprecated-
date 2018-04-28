@@ -14,16 +14,17 @@ public interface DBNoteConstants {
     String TABLE = "notes";
 
     /**
-     * date when the note was initially is created
-     */
-    String DATE_CREATED = "date_created";
-    int POS_DATE_CREATED = 0;
-
-    /**
      * date and time when the note was created. this is also the PRIMARY KEY
      */
     String DATE_MODIFIED = "date_modified";
-    int POS_DATE_MODIFIED = 1;
+    int POS_DATE_MODIFIED = 0;
+
+    /**
+     * date when the note was initially is created
+     */
+    String DATE_CREATED = "date_created";
+    int POS_DATE_CREATED = 1;
+
 
     /**
      * numeric boolean for the item being trashed or not

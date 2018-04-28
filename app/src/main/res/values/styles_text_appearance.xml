@@ -60,7 +60,7 @@
     </style>
     <style name="myText.List.Date" parent="TextAppearance.AppCompat">
         <item name="android:textSize">10sp</item>
-        <item name="android:textColor">@color/c_green_70</item>
+        <item name="android:textColor">@color/c_green_50</item>
         <item name="android:fontFamily">@font/roboto</item>
     </style>
 

@@ -9,16 +9,33 @@
     android:layout_marginEnd="100dp"
     android:layout_marginStart="100dp"
     android:orientation="vertical"
-    app:cardElevation="0dp"
     app:cardBackgroundColor="@color/c_red_60"
     app:cardCornerRadius="15dp"
+    app:cardElevation="0dp"
     app:contentPadding="10dp">
 
-    <TextView
-        android:id="@+id/tvMessage"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Custom Toast Message "
-        android:textAppearance="@style/myText.Toast.Text"/>
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_error"
+            android:tint="@color/white"/>
+
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Custom Toast Message"
+            android:textAppearance="@style/myText.Toast.Text"/>
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

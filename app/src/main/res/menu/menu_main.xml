@@ -7,7 +7,6 @@
 
     <item
         android:id="@+id/menu_add"
-        android:layout_height="wrap_content"
         android:icon="@drawable/ic_add"
         android:title="@string/str_menu_add"
         app:showAsAction="always">
@@ -38,7 +37,6 @@
 
     <item
         android:id="@+id/menu_options"
-        android:layout_height="wrap_content"
         android:icon="@drawable/ic_options"
         android:title="@string/str_menu_options"
         app:showAsAction="always">

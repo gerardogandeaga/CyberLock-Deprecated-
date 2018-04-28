@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.gerardogandeaga.cyberlock.R;
@@ -17,6 +18,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * @author gerardogandeaga
+ *
+ * colour picker dialog fragment
  */
 public class ColourPaletteFragmentDialog extends DialogFragment {
     // fragment properties
@@ -27,7 +30,6 @@ public class ColourPaletteFragmentDialog extends DialogFragment {
     }
     private ColourSelector mColourSelector;
 
-    // instance vars
     private Dialog mDialog;
 
     private static final int ROWS = 4;
@@ -79,7 +81,7 @@ public class ColourPaletteFragmentDialog extends DialogFragment {
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         // circle item params
         LinearLayout.LayoutParams itemParams = new LinearLayout.LayoutParams(
-                0, LinearLayout.LayoutParams.WRAP_CONTENT);
+                0, ViewGroup.LayoutParams.WRAP_CONTENT);
         itemParams.weight = 1f;
 
         // master layout to be returned
@@ -104,7 +106,7 @@ public class ColourPaletteFragmentDialog extends DialogFragment {
                 // create colour image
                 final CircleImageView item = new CircleImageView(getActivity());
                 item.setLayoutParams(itemParams);
-                item.setImageDrawable(Res.getDrawable(R.drawable.graphic_circle_filled));
+                item.setImageDrawable(Res.getDrawable(R.drawable.ic_circle_filled));
                 item.setColorFilter(colours[finalOffset], PorterDuff.Mode.SRC_ATOP);
                 item.setOnClickListener(new View.OnClickListener() {
                     @Override

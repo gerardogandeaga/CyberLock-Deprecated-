@@ -5,5 +5,7 @@ package com.gerardogandeaga.cyberlock.database.objects;
  */
 public abstract class SavableObject {
 
+    public abstract boolean isNew();
+
     public abstract boolean isEmpty();
 }

@@ -25,47 +25,53 @@ public class Note extends SavableObject implements Serializable {
     private String mLabel;
     private String mContent;
 
+    private boolean mIsNew;
+
     @SuppressLint("SimpleDateFormat")
     private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy 'at' hh:mm aaa");
 
     /*
     constructor that builds the data from the database-accessor class when data is first loaded into memory.
     constructor gets called when by the "getAllNotes" function. */
-    public Note(long created,
-                long modded,
+    public Note(long modded,
+                long created,
                 boolean isTrashed,
                 String folder,
                 String type,
                 String colour_tag,
                 String label,
                 String content) {
-        this.mDateCreated = new Date(created);
         this.mDateModified = new Date(modded);
+        this.mDateCreated = new Date(created);
         this.mIsTrashed = isTrashed;
         this.mFolder = folder;
         this.mType = type;
         this.mColourTag = colour_tag;
         this.mLabel = label;
         this.mContent = content;
+
+        this.mIsNew = false;
     }
     /*
     constructor that initializes a brand new note initialized by the EditActivity class
     when saving data for the first time. */
     public Note() {
         this.mDateCreated = new Date();
+        this.mIsNew = true;
+        this.mColourTag = "default";
     }
 
     public String getDate() {
-        return dateFormat.format(mDateCreated);
+        return (mDateModified == null ? dateFormat.format(mDateCreated) : dateFormat.format(mDateModified));
     }
 
     // getters
 
-    public long getTimeCreated() {
-        return mDateCreated.getTime();
-    }
     public long getTimeModified() {
         return mDateModified.getTime();
+    }
+    public long getTimeCreated() {
+        return mDateCreated.getTime();
     }
     public boolean isTrashed() {
         return mIsTrashed;
@@ -88,12 +94,12 @@ public class Note extends SavableObject implements Serializable {
 
     // setters
 
-    public Note setTimeCreated(long time) {
-        this.mDateCreated = new Date(time);
-        return this;
-    }
     public Note setTimeModified(long time) {
         this.mDateModified = new Date(time);
+        return this;
+    }
+    public Note setTimeCreated(long time) {
+        this.mDateCreated = new Date(time);
         return this;
     }
     public Note setIsTrashed(boolean isTrashed) {
@@ -119,6 +125,11 @@ public class Note extends SavableObject implements Serializable {
     public Note setContent(String content) {
         this.mContent = content;
         return this;
+    }
+
+    @Override
+    public boolean isNew() {
+        return mIsNew;
     }
 
     @Override

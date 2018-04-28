@@ -74,7 +74,7 @@ public class FolderDrawer {
                         new SecondaryDrawerItem()
                                 .withSelectable(false)
                                 .withName("Create New Folder")
-                                .withIcon(R.drawable.ic_add_folder)
+                                .withIcon(R.drawable.ic_create_folder)
                                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                                     @Override
                                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {

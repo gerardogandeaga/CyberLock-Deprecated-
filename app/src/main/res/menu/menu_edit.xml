@@ -6,20 +6,26 @@
     tools:ignore="AlwaysShowAction">
 
     <item
+        android:id="@+id/menu_information"
+        android:title="@string/str_menu_information"
+        android:icon="@drawable/ic_info"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/menu_folder"
-        android:title="@string/str_menu_tag"
+        android:title="@string/str_menu_note_folder"
         android:icon="@drawable/ic_folder"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/menu_colour_tag"
-        android:title="@string/str_menu_tag"
+        android:title="@string/str_menu_note_tag"
         android:icon="@drawable/ic_tag"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/menu_save"
-        android:title="@string/str_menu_save"
+        android:title="@string/str_menu_note_save"
         android:icon="@drawable/ic_save"
         app:showAsAction="always"/>
 

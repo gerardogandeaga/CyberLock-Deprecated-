@@ -25,4 +25,5 @@
     </ScrollView>
 
     <include layout="@layout/custom_dialog_buttons"/>
+
 </LinearLayout>

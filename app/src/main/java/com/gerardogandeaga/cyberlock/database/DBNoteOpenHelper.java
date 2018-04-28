@@ -22,8 +22,8 @@ class DBNoteOpenHelper extends SQLiteOpenHelper implements DBNoteConstants {
         db.execSQL("CREATE TABLE " + TABLE + "(" +
 
 //              KEY               DATA TYPE
-                DATE_CREATED +  " INTEGER, " +
                 DATE_MODIFIED + " INTEGER PRIMARY KEY, " +
+                DATE_CREATED +  " INTEGER, " +
                 TRASHED +       " INTEGER, " +
                 FOLDER +        " BLOB, " +
                 TYPE +          " BLOB, " +

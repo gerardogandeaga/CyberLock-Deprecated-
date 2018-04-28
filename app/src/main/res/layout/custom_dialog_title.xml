@@ -77,6 +77,6 @@
 
     </LinearLayout>
 
-    <include layout="@layout/item_divider_horizontal"/>
+    <!--<include layout="@layout/item_divider_horizontal"/>-->
 
 </LinearLayout>

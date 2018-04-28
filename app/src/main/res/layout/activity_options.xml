@@ -129,7 +129,7 @@
                             android:layout_height="32dp"
                             android:contentDescription="@string/str_list_format"
                             android:padding="4dp"
-                            android:src="@drawable/graphic_list_linear"
+                            android:src="@drawable/ic_list_format"
                             android:tint="@color/black"/>
 
                     </LinearLayout>
@@ -268,9 +268,8 @@
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:contentDescription="@string/str_change_password"
-                                android:padding="10dp"
                                 android:rotation="-90"
-                                android:src="@drawable/graphic_back"/>
+                                android:src="@drawable/ic_navigate_back"/>
 
                         </LinearLayout>
 
@@ -368,7 +367,7 @@
                             android:layout_gravity="center_vertical"
                             android:contentDescription="@string/str_about_cyber_lock"
                             android:padding="2dp"
-                            android:src="@drawable/ic_about"/>
+                            android:src="@drawable/ic_info"/>
 
                         <TextView
                             android:layout_width="0dp"

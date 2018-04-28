@@ -158,18 +158,13 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
         // binding and unbinding
         @Override
         public void bindView(@NonNull NoteItem item, @NonNull List<Object> payloads) {
-            //get the context
-            Context context = itemView.getContext();
-
-//            UIUtils.setBackground(View, AdapterItemBackground.getSelectableBackground(context, Color.YELLOW, true));
-//            UIUtils.setBackground(View, R.drawable.data_item_drawable_states);
             UIUtils.setBackground(View, R.drawable.data_item_drawable_states);
 
             TextViews.setLinearLayoutVisibility(Note, PaymentInfo, LoginInfo, item.mType);
 
             // bind our data to the view
             TextViews.setOrHideTextView(item.mLabel, Label);
-            TextViews.setOrHideTextView(item.mDate, Date);
+            TextViews.setOrHideTextView("Updated on " + item.mDate, Date);
             filterContent(item);
 
             // images

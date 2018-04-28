@@ -19,6 +19,8 @@ public class Folder extends SavableObject implements Serializable {
     private String mName;
     private int mSize;
 
+    private boolean mIsNew;
+
     @SuppressLint("SimpleDateFormat")
     private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy 'at' hh:mm aaa");
 
@@ -79,6 +81,11 @@ public class Folder extends SavableObject implements Serializable {
     public Folder withSize(int size) {
         this.mSize = size;
         return this;
+    }
+
+    @Override
+    public boolean isNew() {
+        return mIsNew;
     }
 
     @Override

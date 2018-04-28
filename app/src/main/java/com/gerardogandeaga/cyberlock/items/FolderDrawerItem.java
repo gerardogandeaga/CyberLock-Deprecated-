@@ -43,7 +43,7 @@ public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerIte
         // menu
         this.mHasMenu = withMenu;
         if (withMenu) {
-            withMenu(R.menu.menu_drawer_item);
+            withMenu(R.menu.menu_folder_drawer);
         }
     }
 
@@ -145,7 +145,7 @@ public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerIte
             });
 
             //handle image
-            viewHolder.Menu.setImageDrawable(Res.getDrawable(R.drawable.ic_small_options));
+            viewHolder.Menu.setImageDrawable(Res.getDrawable(R.drawable.ic_options));
         } else {
             viewHolder.Menu.setVisibility(View.GONE);
         }

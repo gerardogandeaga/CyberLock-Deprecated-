@@ -53,7 +53,11 @@ public class LoginEditFragment extends EditFragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             this.mNote = (Note) bundle.get("data");
-            this.mNoteContentHandler = new NoteContentHandler(getActivity(), mNote);
+
+            assert mNote != null;
+            if (mNote.getContent() != null) {
+                this.mNoteContentHandler = new NoteContentHandler(getActivity(), mNote);
+            }
         }
     }
 
@@ -71,7 +75,7 @@ public class LoginEditFragment extends EditFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // if data is not null then we set our stored data onto
-        if (mNote != null) {
+        if (!mNote.isNew()) {
             mTvDate.setText(mNoteContentHandler.mDate);
             mEtLabel.setText(mNoteContentHandler.mLabel);
             mEtUrl.setText(mNoteContentHandler.mUrl);

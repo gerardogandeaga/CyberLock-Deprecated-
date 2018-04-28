@@ -44,9 +44,9 @@ public class NoteContentHandler {
         // Content parsing
         String content = note.getContent();
         switch (note.getType()) {
-            case Note.NOTE:         setNoteContent(content); break;
-            case Note.CARD: setPaymentInfoContent(content); break;
-            case Note.LOGIN:   setLoginInfoContent(content); break;
+            case Note.NOTE:  setNoteContent(content); break;
+            case Note.CARD:  setPaymentInfoContent(content); break;
+            case Note.LOGIN: setLoginInfoContent(content); break;
         }
     }
 

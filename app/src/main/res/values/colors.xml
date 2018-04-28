@@ -22,7 +22,8 @@
 
     <!-- Green -->
     <color name="c_green_30">#31c748</color>
-    <color name="c_green_70">#218330</color>
+    <color name="c_green_40">#0ca624</color>
+    <color name="c_green_50">#218330</color>
 
     <!-- Blue -->
     <color name="c_blue_30">#2f66fe</color>
@@ -45,6 +46,7 @@
     <!-- Purple -->
 
     <!-- Orange -->
+    <color name="c_orange_50">#fbae18</color>
     <color name="c_orange_60">#e2903d</color>
     <color name="c_orange_70">#bf6f1f</color>
     <color name="c_orange_80">#cf4301</color>
