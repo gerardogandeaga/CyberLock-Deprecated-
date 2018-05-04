@@ -6,6 +6,7 @@
         <item>CircleImageView</item>
         <item>FastAdapter</item>
         <item>MaterialDrawer</item>
+        <item>SQLCipher</item>
     </string-array>
 
     <!-- author -->
@@ -14,6 +15,7 @@
         <item>Henning Dodenhof</item>
         <item>Mike Penz</item>
         <item>Mike Penz</item>
+        <item>Zetetic, LLC</item>
     </string-array>
 
     <!-- descriptions -->
@@ -22,6 +24,7 @@
         <item>@string/str_lib_circle_imageview</item>
         <item>@string/str_lib_fast_adapter</item>
         <item>@string/str_lib_material_drawer</item>
+        <item>@string/str_lib_sqlcipher</item>
     </string-array>
 
     <!-- urls -->
@@ -30,6 +33,7 @@
         <item>https://github.com/hdodenhof/CircleImageView</item>
         <item>https://github.com/mikepenz/FastAdapter</item>
         <item>https://github.com/mikepenz/MaterialDrawer</item>
+        <item>https://www.zetetic.net/sqlcipher</item>
     </string-array>
 
     <!-- lib descriptions -->
@@ -47,5 +51,12 @@
     <string name="str_lib_material_drawer">The MaterialDrawer library provides you with the easiest possible
             implementation of a navigation drawer for your application. Just Provide custom DrawerItems, custom colors,
             custom themes, etc. No limits for customizations.</string>
+    <string name="str_lib_sqlcipher">
+            SQLCipher extends the SQLite database library to add security enhancements
+            that make it more suitable for encrypted local data storage such as on-the-fly encryption, tamper evidence,
+            and key derivation. Based on SQLite, SQLCipher closely tracks SQLite and
+            periodically integrates stable SQLite release features.
+
+            SQLCipher is maintained by Zetetic, LLC, the official site can be found below</string>
 
 </resources>

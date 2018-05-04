@@ -43,8 +43,7 @@ public class DataObjectDeleter {
     }
 
     public void deleteItems() {
-        DBNoteAccessor accessor = DBNoteAccessor.getInstance(mContext);
-        accessor.open();
+        DBNoteAccessor accessor = DBNoteAccessor.getInstance();
 
         for (Note note : mNoteList) {
             // delete object from the database
@@ -52,8 +51,6 @@ public class DataObjectDeleter {
 
             mCount++;
         }
-
-        accessor.close();
 
         // start undo timer
         this.mUndoHelper = new UndoHelper();
@@ -66,8 +63,7 @@ public class DataObjectDeleter {
 
         // recover data
         if (!mNoteList.isEmpty()) {
-            DBNoteAccessor accessor = DBNoteAccessor.getInstance(mContext);
-            accessor.open();
+            DBNoteAccessor accessor = DBNoteAccessor.getInstance();
             // insert into the database
             for (int i = 0; i < mNoteList.size(); i++) {
                 accessor.save(mNoteList.get(i));
@@ -85,7 +81,7 @@ public class DataObjectDeleter {
                 // update the adapter
                 mFastItemAdapter.notifyAdapterDataSetChanged();
             }
-            accessor.close();
+
             finish();
         }
     }

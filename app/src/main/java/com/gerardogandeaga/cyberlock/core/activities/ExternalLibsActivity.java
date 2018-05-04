@@ -51,7 +51,7 @@ public class ExternalLibsActivity extends CoreActivity {
 
         mFastItemAdapter.add(externalLibItemList);
 
-        setupActionBar("Open Source Libraries", null, R.drawable.ic_back);
+        setupActionBar("Libraries And Licences", null, R.drawable.ic_back);
         super.onCreate(savedInstanceState);
     }
 

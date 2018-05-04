@@ -73,7 +73,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:padding="5dp"
-            android:src="@drawable/ic_options"/>
+            android:src="@drawable/ic_options_hor"/>
 
     </LinearLayout>
 

@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +21,6 @@ import com.gerardogandeaga.cyberlock.interfaces.RequestResponder;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
 import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -53,12 +51,11 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
 
     // note object
     private String mFolder;
-
-    @BindView(R.id.toolbar) Toolbar mToolBar;
+    private String mColourTag;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setContentView(R.layout.activity_edit);
+        setContentView(R.layout.activity_container_static_toolbar);
         bindView();
 
         // fragments
@@ -102,7 +99,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
     }
 
     private void mutateMenuTagIcon() {
-        setActionBarBackgroundColour(Graphics.ColourTags.colourTagToolbar(this, mNote.getColourTag()));
+        setActionBarBackgroundColour(Graphics.ColourTags.colourTagToolbar(this, mColourTag));
         Graphics.BasicFilter.mutateMenuItems(mMenu, R.color.white);
     }
 
@@ -112,15 +109,16 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
             // if the the note is already saved the db and being edited
             this.mNote = (Note) bundle.get("data");
 
+
             // if the note is new
             if (mNote == null) { // *** because note object bundle is null
-                this.mNote = new Note();
-                this.mNote.setType(bundle.getString("type"));
+                this.mNote = new Note().withType(bundle.getString("type"));
             }
 
             // general properties
             // folder
             this.mFolder = (mNote.isNew() ? bundle.getString("folder") : mNote.getFolder());
+            this.mColourTag = mNote.getColourTag();
 
             // remove bundles
             bundle.remove("data");
@@ -138,7 +136,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
         noteBundle.putSerializable("data", mNote);
 
         switch (mNote.getType()) {
-            case Note.NOTE:
+            case Note.GENERIC:
                 this.enum_type = NoteEditTypes.NOTE;
                 fragmentTransaction.add(R.id.fragment_container, newFragment(mNoteEditFragment, noteBundle));
                 break;
@@ -186,7 +184,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
 
     @Override
     public void onColorSelected(String colour) {
-        this.mNote.setColourTag(colour);
+        this.mColourTag = colour;
         mutateMenuTagIcon();
     }
 
@@ -216,13 +214,13 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
     private void requestUpdatedNoteObject() {
         switch (enum_type) {
             case NOTE:
-                mNoteEditFragment.updateObject();
+                mNoteEditFragment.update();
                 break;
             case CARD:
-                mCardEditFragment.updateObject();
+                mCardEditFragment.update();
                 break;
             case LOGIN:
-                mLoginEditFragment.updateObject();
+                mLoginEditFragment.update();
                 break;
             default:
                 // todo idea - throw a possible exception
@@ -251,16 +249,14 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
         if (mSaveFlag) {
             if (object instanceof Note) {
                 Log.i(TAG, "onSaveResponse: responded to save request");
-                this.mNote = (Note) object;
                 this.mSaveFlag = false;
 
-                // todo save here
                 // global note configs
-                System.out.println("folder = "+ mFolder);
-                mNote.setFolder(mFolder);
+                this.mNote = ((Note) object)
+                        .withFolder(mFolder)
+                        .withColourTag(mColourTag);
 
-                DBNoteAccessor accessor = DBNoteAccessor.getInstance(this);
-                accessor.open();
+                DBNoteAccessor accessor = DBNoteAccessor.getInstance();
                 if (mNote.isNew()) {
                     accessor.save(mNote);
                     Log.i(TAG, "onSaveResponse: note has been saved");
@@ -268,7 +264,6 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
                     accessor.update(mNote);
                     Log.i(TAG, "onSaveResponse: note has been updated");
                 }
-                accessor.close();
 
                 // exit
                 onBackPressed();

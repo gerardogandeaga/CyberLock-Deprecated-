@@ -2,12 +2,11 @@ package com.gerardogandeaga.cyberlock.core.drawers;
 
 import android.app.Activity;
 import android.content.Context;
-import android.view.View;
+import android.support.v7.widget.Toolbar;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.DBFolderAccessor;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
-import com.gerardogandeaga.cyberlock.handlers.FolderDrawerHandler;
 import com.gerardogandeaga.cyberlock.items.FolderDrawerItem;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -24,6 +23,7 @@ import java.util.List;
 public class FolderDrawer {
     private Context mContext;
     private Activity mActivity;
+    private Toolbar mToolbar;
 
     private Drawer mDrawer;
     private List<Folder> mFolders;
@@ -32,17 +32,14 @@ public class FolderDrawer {
      * access list of folders
      * @param activity calling activity
      */
-    public FolderDrawer(Activity activity) {
+    public FolderDrawer(Activity activity, Toolbar toolbar) {
         this.mActivity = activity;
         this.mContext = activity;
+        this.mToolbar = toolbar;
 
         // get folder list
-        DBFolderAccessor folderAccessor = DBFolderAccessor.getInstance(mActivity);
-        if (!folderAccessor.isOpen()) {
-            folderAccessor.open();
-        }
+        DBFolderAccessor folderAccessor = DBFolderAccessor.getInstance();
         this.mFolders = folderAccessor.getAllFolders();
-        folderAccessor.close();
     }
 
     /**
@@ -59,6 +56,7 @@ public class FolderDrawer {
         // drawer
         this.mDrawer = new DrawerBuilder()
                 .withActivity(mActivity)
+                .withToolbar(mToolbar)
                 .withDisplayBelowStatusBar(false)
                 .withTranslucentStatusBar(false)
                 .withDrawerLayout(R.layout.drawer_container)
@@ -75,15 +73,6 @@ public class FolderDrawer {
                                 .withSelectable(false)
                                 .withName("Create New Folder")
                                 .withIcon(R.drawable.ic_create_folder)
-                                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                                    @Override
-                                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                                        // create folders
-                                        FolderDrawerHandler.createFolder(mContext);
-
-                                        return false;
-                                    }
-                                })
                 )
                 .withCloseOnClick(false)
                 .withSelectedItem(-1)

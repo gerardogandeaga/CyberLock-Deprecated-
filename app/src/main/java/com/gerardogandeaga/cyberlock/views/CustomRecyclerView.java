@@ -5,6 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+
+import com.gerardogandeaga.cyberlock.R;
 
 /**
  * @author gerardogandeaga
@@ -20,16 +23,16 @@ public class CustomRecyclerView extends RecyclerView {
     }
 
     public CustomRecyclerView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public CustomRecyclerView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+        super(context, attrs, R.style.MyMainScrollbarStyle);
         this.mIsScrollable = false;
         this.mIsAnimatable = true;
 
         this.mCurrentCount = 0;
         this.mItemCountExpectancy = -1;
+
+        // properties
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        setLayoutParams(params);
     }
 
     @Override

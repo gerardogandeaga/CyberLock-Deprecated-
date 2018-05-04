@@ -27,9 +27,9 @@ public abstract class EditFragment extends Fragment {
         }
     }
 
-    protected abstract void compileObject();
+    protected abstract void compile();
 
-    public abstract void updateObject();
+    public abstract void update();
 
     public abstract void save();
 }

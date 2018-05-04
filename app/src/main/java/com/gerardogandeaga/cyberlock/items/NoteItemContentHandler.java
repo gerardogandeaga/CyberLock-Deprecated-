@@ -80,7 +80,7 @@ public class NoteItemContentHandler {
         this.TYPE = note.getType();
         // return content based on rawDataPackage-type
         switch (TYPE) {
-            case Note.NOTE:
+            case Note.GENERIC:
                 return parseNoteContent(content);
             case Note.CARD:
                 return parsePaymentInfoContent(content);

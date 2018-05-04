@@ -2,62 +2,80 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="wallpaper"
-        android:scaleType="centerCrop"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/preview6"/>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-        android:id="@+id/InputField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="128dp"
-        android:alpha="1"
-        android:orientation="vertical"
-        android:padding="40dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_marginBottomPercent="30%">
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:text="Login"
+            android:textAppearance="@style/myText.Clearance.Header"/>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/Login"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:hintTextAppearance="@style/myText.Clearance.Header">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            tools:layout_editor_absoluteY="502dp">
 
             <EditText
-                android:id="@+id/etPasscode"
+                android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Enter Passcode"
+                android:drawableLeft="@drawable/ic_lock"
+                android:drawableStart="@drawable/ic_lock"
+                android:hint="Enter Password"
                 android:inputType="textPassword"
-                android:maxLength="16"
-                android:maxLines="1"
-                android:textColor="@color/white"
-                android:textSize="20sp"/>
+                android:textAppearance="@style/myText.Clearance.Hint"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/Register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            tools:layout_editor_absoluteY="502dp">
+
+            <EditText
+                android:id="@+id/etRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_done"
+                android:drawableStart="@drawable/ic_done"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:textAppearance="@style/myText.Clearance.Hint"/>
 
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnEnter"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:background="@drawable/bk_outline_black_ripple"
-            android:text="Login"
-            android:textAppearance="@style/myText.Dialog.Buttons"/>
+            android:text="Enter"
+            android:textAppearance="@style/myText.Clearance.Hint"/>
 
     </LinearLayout>
 

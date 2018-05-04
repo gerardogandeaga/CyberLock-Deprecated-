@@ -10,9 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.core.fragments.EditFragment;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
-import com.gerardogandeaga.cyberlock.handlers.NoteContentHandler;
-import com.gerardogandeaga.cyberlock.interfaces.RequestResponder;
+import com.gerardogandeaga.cyberlock.database.objects.notes.LoginNote;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,11 +23,8 @@ import butterknife.ButterKnife;
 public class LoginEditFragment extends EditFragment {
     private static final String TAG = "LoginEditFragment";
 
-    // response interface
-    private RequestResponder mRequestResponder;
-
     private Note mNote;
-    private NoteContentHandler mNoteContentHandler;
+    private LoginNote mLoginNote;
 
     // view
     @BindView(R.id.tvDate)     TextView mTvDate;
@@ -42,23 +39,12 @@ public class LoginEditFragment extends EditFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // instantiate interface
-        try {
-            this.mRequestResponder = (RequestResponder) getActivity();
-        } catch (ClassCastException e) {
-            Log.e(TAG, "onCreate: could not cast " + TAG + " to RequestResponder class");
-        }
-
         // get note object
         Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            this.mNote = (Note) bundle.get("data");
+        this.mNote = (Note) bundle.get("data");
 
-            assert mNote != null;
-            if (mNote.getContent() != null) {
-                this.mNoteContentHandler = new NoteContentHandler(getActivity(), mNote);
-            }
-        }
+        assert mNote != null;
+        this.mLoginNote = mNote.getLoginNote();
     }
 
     /**
@@ -76,13 +62,13 @@ public class LoginEditFragment extends EditFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // if data is not null then we set our stored data onto
         if (!mNote.isNew()) {
-            mTvDate.setText(mNoteContentHandler.mDate);
-            mEtLabel.setText(mNoteContentHandler.mLabel);
-            mEtUrl.setText(mNoteContentHandler.mUrl);
-            mEtEmail.setText(mNoteContentHandler.mEmail);
-            mEtUsername.setText(mNoteContentHandler.mUsername);
-            mEtPassword.setText(mNoteContentHandler.mPassword);
-            mEtNotes.setText(mNoteContentHandler.mNotes);
+            mTvDate.setText(mLoginNote.getDate());
+            mEtLabel.setText(mLoginNote.getLabel());
+            mEtUrl.setText(mLoginNote.getUrl());
+            mEtEmail.setText(mLoginNote.getEmail());
+            mEtUsername.setText(mLoginNote.getUsername());
+            mEtPassword.setText(mLoginNote.getPassword());
+            mEtNotes.setText(mLoginNote.getNotes());
         } else {
             mTvDate.setText(null);
             mEtLabel.setText(null);
@@ -95,40 +81,32 @@ public class LoginEditFragment extends EditFragment {
     }
 
     @Override
-    protected void compileObject() {
-        Log.i(TAG, "compileObject: compiling note object...");
-        final String label = mEtLabel.getText().toString();
-        final String url = mEtUrl.getText().toString();
-        final String email = mEtEmail.getText().toString();
-        final String username = mEtUsername.getText().toString();
-        final String password = mEtPassword.getText().toString();
-        final String notes = mEtNotes.getText().toString();
+    protected void compile() {
+        Log.i(TAG, "compile: compiling note object...");
 
-        // format content
-        final String format = "%s\n%s\n%s\n%s\n%s";
-        final String content = String.format(format, url, email, username, password, notes);
+        mLoginNote.withUrl(mEtUrl.getText().toString())
+                .withEmail(mEtEmail.getText().toString())
+                .withUsername(mEtUsername.getText().toString())
+                .withPassword(mEtPassword.getText().toString())
+                .withNotes(mEtNotes.getText().toString());
+        mLoginNote.withLabel(mEtLabel.getText().toString());
+        // create note
+        this.mNote = mLoginNote.compile();
 
-        if (mNote == null) {
-            this.mNote = new Note();
-            mNote.setType(Note.LOGIN);
-        }
-
-        mNote.setLabel(label);
-        mNote.setContent(content);
-        Log.i(TAG, "compileObject: done compiling");
+        Log.i(TAG, "compile: done compiling");
     }
 
     @Override
-    public void updateObject() {
-        Log.i(TAG, "updateObject: updated object requested");
-        compileObject();
+    public void update() {
+        Log.i(TAG, "update: updated object requested");
+        compile();
         mRequestResponder.onUpdateObjectResponse(mNote);
-        Log.i(TAG, "updateObject: updated object sent");
+        Log.i(TAG, "update: updated object sent");
     }
 
     public void save() {
         Log.i(TAG, "onSaveRequest: save requested");
-        compileObject();
+        compile();
         mRequestResponder.onSaveResponse(mNote);
     }
 }

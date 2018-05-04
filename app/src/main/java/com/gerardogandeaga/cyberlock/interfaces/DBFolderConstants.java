@@ -11,7 +11,7 @@ public interface DBFolderConstants {
     /**
      * table name for the database file
      */
-    String TABLE = "folders";
+    String TABLE_FOLDERS = "folders";
 
     /**
      * date when the note was initially is created

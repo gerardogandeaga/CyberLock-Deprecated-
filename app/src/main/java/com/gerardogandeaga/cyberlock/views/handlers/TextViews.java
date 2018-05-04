@@ -54,9 +54,15 @@ public class TextViews {
                 isPaymentinfo = false,
                 isLogininfo = false;
         switch (args) {
-            case Note.NOTE:         isNote = true; break;
-            case Note.CARD: isPaymentinfo = true; break;
-            case Note.LOGIN:   isLogininfo = true; break;
+            case Note.GENERIC:
+                isNote = true;
+                break;
+            case Note.CARD:
+                isPaymentinfo = true;
+                break;
+            case Note.LOGIN:
+                isLogininfo = true;
+                break;
         }
 
         setLinearLayoutVisibility(note, isNote);

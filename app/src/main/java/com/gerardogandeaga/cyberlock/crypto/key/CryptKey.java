@@ -72,7 +72,7 @@ public class CryptKey {
     these 2 functions can only be called by the registration, key scramble and algorithm change classes
 
 
-    NOTE: generateNewMasterKey function's output key is completely irrelevant to the rest of this class and is only
+    GENERIC: generateNewMasterKey function's output key is completely irrelevant to the rest of this class and is only
     stored in shared preferences to later be applied by the DBCrypt class
     */
     public static String generateNewMasterEncryptionKey(Context context, String password) {

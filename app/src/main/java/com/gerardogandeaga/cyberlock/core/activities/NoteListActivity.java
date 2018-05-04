@@ -8,6 +8,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.core.dialogs.NotePreviewDialog;
@@ -66,16 +67,17 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
 
     // views
     private View mView;
+    private CustomRecyclerView mRecyclerView;
     private Menu mMenu;
     private Drawer mDrawer;
 
-    @BindView(R.id.recyclerView) CustomRecyclerView mRecyclerView;
+    @BindView(R.id.fragment_container) FrameLayout mContainer;
 
     // initial on create methods
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // set view
-        this.mView = View.inflate(this, R.layout.activity_main, null);
+        this.mView = View.inflate(this, R.layout.activity_container_static_toolbar, null);
         setContentView(mView);
         bindView();
 
@@ -143,10 +145,10 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
         new NoteAdapterLoader(this, mItemAdapter, true).execute();
 
         // create the folder drawer
-        this.mDrawer = new FolderDrawer(this).createDrawer();
+        this.mDrawer = new FolderDrawer(this, mToolbar).createDrawer();
         this.mFolderDrawerHandler = new FolderDrawerHandler(this, mDrawer, mItemAdapter);
 
-        setupActionBar(null, null, NO_ICON);
+        setupActionBar(null, null, R.drawable.ic_menu);
         super.onCreate(savedInstanceState);
     }
 
@@ -170,7 +172,7 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
         switch (item.getItemId()) {
             // add
             case R.id.menu_add_note:
-                onAddClicked(Note.NOTE);
+                onAddClicked(Note.GENERIC);
                 break;
             case R.id.menu_add_card:
                 onAddClicked(Note.CARD);
@@ -184,9 +186,11 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
                 newIntentGoTo(OptionsActivity.class);
                 return true;
 
-            // misc
+            // open the drawer
             case android.R.id.home:
-                onBackPressed();
+                if (mDrawer != null) {
+                    mDrawer.openDrawer();
+                }
                 return true;
 
             // on multi select mode
@@ -232,6 +236,9 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
     }
     //
     private void setupRecyclerView() {
+        this.mRecyclerView = new CustomRecyclerView(this);
+        mContainer.addView(mRecyclerView);
+
         // Setup and configure RecyclerView
         mRecyclerView.setVisibility(View.GONE);
         final LinearLayoutManager linearLayoutManager =
@@ -258,10 +265,8 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
     }
     //
     private void actionbarFolderTitle() {
-        actionBarTitles(
-                (mCurrentFolder.getName().equals("MAIN") ? "All Notes" : mCurrentFolder.getName()),
-                (Integer.toString(mCurrentFolder.getSize()) + (mCurrentFolder.getSize() == 1 ? " Item" : " Items")),
-                NO_ICON);
+        actionBarTitle((mCurrentFolder.getName().equals("MAIN") ? "All Notes" : mCurrentFolder.getName()));
+        actionBarSubTitle(Integer.toString(mCurrentFolder.getSize()) + (mCurrentFolder.getSize() == 1 ? " Item" : " Items"));
     }
     private void setActionBarTitleCount(int selectedCount) {
         actionBarTitle(Integer.toString(selectedCount));

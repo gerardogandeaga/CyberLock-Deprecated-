@@ -56,7 +56,7 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_options);
+        setContentView(R.layout.view_options);
         bindView();
 
         mLinAutoSave.setOnClickListener(this);

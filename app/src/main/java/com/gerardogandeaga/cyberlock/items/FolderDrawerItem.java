@@ -8,10 +8,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.gerardogandeaga.cyberlock.utils.Res;
+import com.gerardogandeaga.cyberlock.utils.math.Scaling;
 import com.mikepenz.materialdrawer.model.BaseDescribeableDrawerItem;
 import com.mikepenz.materialdrawer.model.BaseViewHolder;
 
@@ -22,7 +24,6 @@ import butterknife.ButterKnife;
 
 /**
  * @author gerardogandeaga
- * todo create a advanced drawer menu item parent class
  */
 public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerItem, FolderDrawerItem.ViewHolder> {
     private static final String TAG = "FolderDrawerItem";
@@ -53,15 +54,12 @@ public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerIte
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-//                    case R.id.menu_folder_rename:
-//                        CustomToast.buildAndShowToast(mContext, "Rename Folder", CustomToast.INFORMATION, CustomToast.LENGTH_LONG);
-//                        break;
-//                    case R.id.menu_folder_colour:
-//                        CustomToast.buildAndShowToast(mContext, "Change Colour Tag", CustomToast.INFORMATION, CustomToast.LENGTH_LONG);
-//                        break;
-//                    case R.id.menu_folder_delete:
-//                        CustomToast.buildAndShowToast(mContext, "Delete Folder", CustomToast.INFORMATION, CustomToast.LENGTH_LONG);
-//                        break;
+                    case R.id.menu_folder_rename:
+                        break;
+                    case R.id.menu_folder_colour:
+                        break;
+                    case R.id.menu_folder_delete:
+                        break;
                 }
                 return false;
             }
@@ -110,8 +108,7 @@ public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerIte
     }
 
     static class ViewHolder extends BaseViewHolder {
-        @BindView(R.id.material_drawer_menu_overflow)
-        ImageButton Menu;
+        @BindView(R.id.material_drawer_menu_overflow) ImageButton Menu;
 
         ViewHolder(View view) {
             super(view);
@@ -145,7 +142,9 @@ public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerIte
             });
 
             //handle image
-            viewHolder.Menu.setImageDrawable(Res.getDrawable(R.drawable.ic_options));
+            viewHolder.Menu.setLayoutParams(new LinearLayout.LayoutParams(Scaling.dpFromPx(context, 40), Scaling.dpFromPx(context, 40)));
+            viewHolder.Menu.setRotation(90f);
+            viewHolder.Menu.setImageDrawable(Res.getDrawable(R.drawable.ic_options_hor));
         } else {
             viewHolder.Menu.setVisibility(View.GONE);
         }

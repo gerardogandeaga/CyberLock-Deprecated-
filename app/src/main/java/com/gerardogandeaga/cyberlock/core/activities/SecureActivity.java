@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.gerardogandeaga.cyberlock.App;
 import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
 
 import org.jetbrains.annotations.NotNull;
@@ -85,6 +86,9 @@ public class SecureActivity extends AppCompatActivity {
         if (!autoSave) {
             TMP_PWD = null;
         }
+
+        // remove password from db
+        App.getDatabase().setPassword(null);
 
         IsCountDownTimerFinished = true;
         IS_APP_LOGGED_IN = false;

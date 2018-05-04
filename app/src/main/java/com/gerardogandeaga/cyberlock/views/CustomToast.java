@@ -84,7 +84,7 @@ public class CustomToast {
             case SUCCESS:
                 return Res.getDrawable(R.drawable.ic_check);
             default:
-                return Res.getDrawable(R.drawable.ic_options);
+                return Res.getDrawable(R.drawable.ic_options_hor);
         }
     }
 }

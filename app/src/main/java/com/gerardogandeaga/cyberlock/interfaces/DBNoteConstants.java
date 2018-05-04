@@ -11,7 +11,7 @@ public interface DBNoteConstants {
     /**
      * table name for database file
      */
-    String TABLE = "notes";
+    String TABLE_NOTES = "notes";
 
     /**
      * date and time when the note was created. this is also the PRIMARY KEY

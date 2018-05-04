@@ -44,13 +44,6 @@ public class NoteAdapterLoader extends AsyncTask<Void, Void, Void> {
             mItemAdapter.removeItemRange(0, mItemAdapter.getItemCount());
         }
 
-        if (mFolderAccessor != null) {
-            // open folders
-            mFolderAccessor.open();
-        }
-        // open notes
-        mNoteAccessor.open();
-
         super.onPreExecute();
     }
 
@@ -80,17 +73,14 @@ public class NoteAdapterLoader extends AsyncTask<Void, Void, Void> {
             return null;
         }
 
-        // if we are "pulling" notes from a custom folder + archived
-        if (mFolderAccessor.isOpen()) {
-            // get top folder
-            this.mFolder = mFolderAccessor.getTopFolder();
-            // get notes with this folder
-            this.mNotes = mNoteAccessor.getAllNotes(mFolder.getName());
+        // get top folder
+        this.mFolder = mFolderAccessor.getTopFolder();
+        // get notes with this folder
+        this.mNotes = mNoteAccessor.getAllNotes(mFolder.getName());
 
-            // construct note items from notes list
-            if (mNotes != null) {
-                this.mNoteItems = new NoteItemContentHandler(mContext).getItems(mNotes);
-            }
+        // construct note items from notes list
+        if (mNotes != null) {
+            this.mNoteItems = new NoteItemContentHandler(mContext).getItems(mNotes);
         }
 
         return null;
@@ -98,13 +88,6 @@ public class NoteAdapterLoader extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        if (mFolderAccessor != null) {
-            // close folders
-            mFolderAccessor.close();
-        }
-        // close notes
-        mNoteAccessor.close();
-
         // load notes into the adapter
         if (mNotes != null) {
             mItemAdapter.add(mNoteItems);
@@ -123,14 +106,10 @@ public class NoteAdapterLoader extends AsyncTask<Void, Void, Void> {
 
     public NoteAdapterLoader(Context context, FastItemAdapter<NoteItem> itemAdapter, boolean withLastFolder) {
         this.mContext = context;
-
-        if (withLastFolder) {
-//            this.mFolderAccessor = DBFolderAccessor.getInstance(context);
-        }
-        this.mNoteAccessor = DBNoteAccessor.getInstance(context);
+        this.mNoteAccessor = DBNoteAccessor.getInstance();
         this.mItemAdapter = itemAdapter;
 
-        // init the callback interface instance
+        // recycle the callback interface instance
         try {
             this.mAdapterLoaderCallback = (AdapterLoaderCallback) context;
         } catch (ClassCastException e) {
@@ -141,7 +120,7 @@ public class NoteAdapterLoader extends AsyncTask<Void, Void, Void> {
     public NoteAdapterLoader(Context context, FastItemAdapter<NoteItem> itemAdapter, Folder constantFolder) {
         this.mContext = context;
         this.mFolder = constantFolder;
-        this.mNoteAccessor = DBNoteAccessor.getInstance(context);
+        this.mNoteAccessor = DBNoteAccessor.getInstance();
         this.mItemAdapter = itemAdapter;
 
         try {

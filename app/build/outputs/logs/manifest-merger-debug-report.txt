@@ -1,259 +1,256 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-64:12
-INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-64:12
-INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-64:12
-INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-64:12
-MERGED from [com.android.support:multidex:1.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\multidex-1.0.2.aar\44d169cc695d58f539240ac02deac7d4\AndroidManifest.xml:17:1-22:12
-MERGED from [com.afollestad.material-dialogs:commons:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\commons-0.9.6.0.aar\40084063657026c737eb46911874d670\AndroidManifest.xml:2:1-14:12
-MERGED from [com.afollestad.material-dialogs:core:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\core-0.9.6.0.aar\dafdaf807584ba371aa793eccef86569\AndroidManifest.xml:2:1-15:12
-MERGED from [com.mikepenz:materialdrawer:6.0.7] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\materialdrawer-6.0.7.aar\423cb6e62efae8e8b29ec37688c370e9\AndroidManifest.xml:2:1-11:12
-MERGED from [me.zhanghai.android.materialprogressbar:library:1.4.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\library-1.4.2.aar\515becef00db99a23774d11c30b27413\AndroidManifest.xml:6:1-16:12
-MERGED from [com.android.support:design:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-27.1.1.aar\12efcc0b35a24dc14dbe91ce823703eb\AndroidManifest.xml:17:1-22:12
-MERGED from [com.android.support:appcompat-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\appcompat-v7-27.1.1.aar\6585ea3393b01c4e23d806bfb8274052\AndroidManifest.xml:17:1-22:12
-MERGED from [com.android.support:percent:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\percent-27.1.1.aar\4850eb47e2e07b5586ebc08f0a8be66f\AndroidManifest.xml:17:1-22:12
-MERGED from [com.android.support.constraint:constraint-layout:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.0.aar\7a68a7e2f6ddfdb25268a152dd07918e\AndroidManifest.xml:2:1-11:12
-MERGED from [com.android.support:gridlayout-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\gridlayout-v7-27.1.1.aar\16a23f7154a3157a25cd27133ce3d775\AndroidManifest.xml:17:1-22:12
-MERGED from [com.android.support:cardview-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\cardview-v7-27.1.1.aar\eecd6e28ea409eebe1764e3065e4deae\AndroidManifest.xml:17:1-22:12
-MERGED from [com.android.support:recyclerview-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-27.1.1.aar\15c615dd3b8673eca8277f937f47092f\AndroidManifest.xml:17:1-22:12
-MERGED from [com.jakewharton:butterknife:8.8.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\butterknife-8.8.1.aar\c1f05fe6e2eb24400790173a51fb17bd\AndroidManifest.xml:2:1-7:12
-MERGED from [com.android.support:support-v4:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-v4-27.1.1.aar\39d7ce0815df884b32b148e7a8550410\AndroidManifest.xml:17:1-22:12
-MERGED from [com.android.support:support-fragment:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-fragment-27.1.1.aar\fbf4874e6e0a484fa1f15d97e0876863\AndroidManifest.xml:17:1-22:12
-MERGED from [com.android.support:animated-vector-drawable:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-27.1.1.aar\3cb378c397ffccc145291c154d645ba5\AndroidManifest.xml:17:1-22:12
-MERGED from [com.android.support:support-core-ui:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-ui-27.1.1.aar\a3ffc4d25cbe12de759a7277c2caeb06\AndroidManifest.xml:17:1-22:12
-MERGED from [com.android.support:support-core-utils:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-utils-27.1.1.aar\4cf5f30d49e2456c991d03b979519e4a\AndroidManifest.xml:17:1-22:12
-MERGED from [com.android.support:support-vector-drawable:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-27.1.1.aar\cd76456f3a85d07114c5dc0f0113e7c9\AndroidManifest.xml:17:1-22:12
-MERGED from [com.android.support:transition:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\transition-27.1.1.aar\87bfb25a5bb54579058f8e80791bf15b\AndroidManifest.xml:17:1-22:12
-MERGED from [com.android.support:support-media-compat:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-media-compat-27.1.1.aar\fb2cf51aa55d9e1460a1b6578e4df928\AndroidManifest.xml:17:1-22:12
-MERGED from [com.android.support:support-compat:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-compat-27.1.1.aar\40a994a027e156fe072ebd60e0b01b48\AndroidManifest.xml:17:1-22:12
-MERGED from [com.mikepenz:fastadapter:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-3.2.4.aar\a4efdfce641c06ff26b64b490c6ec3bf\AndroidManifest.xml:2:1-12:12
-MERGED from [com.mikepenz:fastadapter-commons:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-commons-3.2.4.aar\081ec058c6bbfa7434cfa93ba7a484f5\AndroidManifest.xml:2:1-12:12
-MERGED from [com.mikepenz:fastadapter-extensions-expandable:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-extensions-expandable-3.2.4.aar\ce97427c995566f3d1024646ca10b2c0\AndroidManifest.xml:2:1-12:12
-MERGED from [com.mikepenz:fastadapter-extensions:3.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-extensions-3.0.3.aar\a44f8ad841eded82630fde68a9961a13\AndroidManifest.xml:2:1-12:12
-MERGED from [com.mikepenz:materialize:1.1.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\materialize-1.1.2.aar\8eb26a61addecbbf0786021339ca6494\AndroidManifest.xml:2:1-12:12
-MERGED from [com.github.clans:fab:1.6.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\66767e64d377381405c0f303bb5b986e\AndroidManifest.xml:2:1-14:12
-MERGED from [de.hdodenhof:circleimageview:2.2.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\circleimageview-2.2.0.aar\fbb9e468a90993fb38ed9fe02ca7401b\AndroidManifest.xml:2:1-11:12
-MERGED from [com.mikepenz:iconics-core:3.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\iconics-core-3.0.3.aar\a592d94dc16ad060fc493ae089d46f76\AndroidManifest.xml:2:1-12:12
-MERGED from [android.arch.lifecycle:runtime:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\runtime-1.1.0.aar\5b5955b34cd13e2b5d7f4c7d35b35725\AndroidManifest.xml:17:1-22:12
-MERGED from [android.arch.lifecycle:livedata-core:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.0.aar\4d4791c0d5f33a514b93f4ecf9f5a551\AndroidManifest.xml:17:1-22:12
-MERGED from [android.arch.core:runtime:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\runtime-1.1.0.aar\faa81f75c5f630237a1748143fc37b92\AndroidManifest.xml:17:1-22:12
-MERGED from [android.arch.lifecycle:viewmodel:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.0.aar\4447081f01d0bf284bb98dd0edd83b82\AndroidManifest.xml:17:1-22:12
-INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-64:12
-INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-64:12
-INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-64:12
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-61:12
+INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-61:12
+INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-61:12
+INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-61:12
+MERGED from [com.android.support:multidex:1.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\multidex-1.0.2.aar\e7fb03cdc1d385e5da35cfd5c886557d\AndroidManifest.xml:17:1-22:12
+MERGED from [com.afollestad.material-dialogs:commons:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\commons-0.9.6.0.aar\0faf75cb30dc241b99b8c78f7567ec8c\AndroidManifest.xml:2:1-14:12
+MERGED from [com.afollestad.material-dialogs:core:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\core-0.9.6.0.aar\01215b7a462cfc183e775a0e701e11a2\AndroidManifest.xml:2:1-15:12
+MERGED from [com.mikepenz:materialdrawer:6.0.7] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\materialdrawer-6.0.7.aar\7c2a90482bbc0a7e91617acc0443c0ad\AndroidManifest.xml:2:1-11:12
+MERGED from [me.zhanghai.android.materialprogressbar:library:1.4.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\library-1.4.2.aar\2b6d86f1aa4c87c5399c9e2d7da01ae6\AndroidManifest.xml:6:1-16:12
+MERGED from [com.android.support:design:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-27.1.1.aar\1a394528c7cc959b38979979b08a0ebd\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:appcompat-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\appcompat-v7-27.1.1.aar\e875ce3004efaa074d251de918d865a4\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:percent:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\percent-27.1.1.aar\9679e5c7dea1a4fcb28ca93b71fbf189\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.0.aar\60b3ece0460588a299e4a748d89b48cd\AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:gridlayout-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\gridlayout-v7-27.1.1.aar\63d646a9e0eae2d3b543e770719ac727\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:cardview-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\cardview-v7-27.1.1.aar\ab30e24610a5256a2831eee4d89b68fe\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:recyclerview-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-27.1.1.aar\c00f916b75bb48f2e7a25e7d10f5239a\AndroidManifest.xml:17:1-22:12
+MERGED from [com.jakewharton:butterknife:8.8.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\butterknife-8.8.1.aar\76811410b49a4f48fcf60d575cca40a5\AndroidManifest.xml:2:1-7:12
+MERGED from [com.android.support:support-v4:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-v4-27.1.1.aar\632099d041ae3abb44a463f2cd5bb460\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-fragment:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-fragment-27.1.1.aar\65f62a0d7c86ed37650c4f7e6d349a87\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-27.1.1.aar\0974f7606ffb49d734463a23957a8245\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-ui-27.1.1.aar\90f06dd6425e234f4fd5f03d4c0d2a34\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-utils-27.1.1.aar\be8c7979b4a11c6a03ef2e50d1adb4eb\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-27.1.1.aar\18730c3a5dce03be60b4a943bba92486\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:transition:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\transition-27.1.1.aar\304c8cc50046b78523af256e0b189b4c\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-media-compat:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-media-compat-27.1.1.aar\475c24d41703d9c74a8c720fee38231e\AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-compat-27.1.1.aar\ca6f0c47c1bee67c176e9be850642352\AndroidManifest.xml:17:1-22:12
+MERGED from [com.mikepenz:fastadapter:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-3.2.4.aar\cf74f953f9644b95cd28408f7f85e04d\AndroidManifest.xml:2:1-12:12
+MERGED from [com.mikepenz:fastadapter-commons:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-commons-3.2.4.aar\1089b5c6bfefa4822ffffeebabb3033f\AndroidManifest.xml:2:1-12:12
+MERGED from [com.mikepenz:fastadapter-extensions-expandable:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-extensions-expandable-3.2.4.aar\6019fab70a46bc5f5cdc48761b52858b\AndroidManifest.xml:2:1-12:12
+MERGED from [com.mikepenz:fastadapter-extensions:3.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-extensions-3.0.3.aar\c57136d80c89e1ace83bdf618c5ca82d\AndroidManifest.xml:2:1-12:12
+MERGED from [com.mikepenz:materialize:1.1.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\materialize-1.1.2.aar\46d00b533f92ed4d7880b85b4f223c65\AndroidManifest.xml:2:1-12:12
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\acfd2351baf053124d686a594d70d437\AndroidManifest.xml:2:1-14:12
+MERGED from [de.hdodenhof:circleimageview:2.2.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\circleimageview-2.2.0.aar\c82460df72a4f0859afa43981b6fe719\AndroidManifest.xml:2:1-11:12
+MERGED from [net.zetetic:android-database-sqlcipher:3.5.9] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\android-database-sqlcipher-3.5.9.aar\f7a03a27e3000a3f2bc9eb842ca283a3\AndroidManifest.xml:2:1-11:12
+MERGED from [com.mikepenz:iconics-core:3.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\iconics-core-3.0.3.aar\53e1d3bf397515f08a888f3d334d943d\AndroidManifest.xml:2:1-12:12
+MERGED from [android.arch.lifecycle:runtime:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\runtime-1.1.0.aar\af8b5f4a0ddbea36e242bfa955f7043a\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.0.aar\94ace6200dd1cf98481e0b1791096086\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\runtime-1.1.0.aar\994e312e41c1cb3c34a4e6a6d493f85e\AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.0.aar\a74aa56b090977796469504a0c577294\AndroidManifest.xml:17:1-22:12
+INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-61:12
+INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-61:12
+INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-61:12
 	package
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:4:5-44
-		INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:4:5-44
+		INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-64:12
-		INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-61:12
+		INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
 	android:versionCode
-		INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-64:12
-		INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:2:1-61:12
+		INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:3:5-63
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:3:5-63
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:6:5-80
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:6:5-80
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:6:22-78
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:6:22-78
 uses-permission#android.permission.READ_PHONE_STATE
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:7:5-74
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:7:5-74
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:7:22-72
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:7:22-72
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:8:5-79
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:8:5-79
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:8:22-77
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:8:22-77
 uses-permission#android.permission.INTERNET
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:9:5-66
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:9:5-66
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:9:22-64
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:9:22-64
 uses-permission#android.permission.GET_TASKS
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:10:5-67
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:10:5-67
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:10:22-65
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:10:22-65
 application
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:12:5-62:19
-MERGED from [com.afollestad.material-dialogs:commons:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\commons-0.9.6.0.aar\40084063657026c737eb46911874d670\AndroidManifest.xml:12:5-20
-MERGED from [com.afollestad.material-dialogs:commons:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\commons-0.9.6.0.aar\40084063657026c737eb46911874d670\AndroidManifest.xml:12:5-20
-MERGED from [com.afollestad.material-dialogs:core:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\core-0.9.6.0.aar\dafdaf807584ba371aa793eccef86569\AndroidManifest.xml:13:5-20
-MERGED from [com.afollestad.material-dialogs:core:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\core-0.9.6.0.aar\dafdaf807584ba371aa793eccef86569\AndroidManifest.xml:13:5-20
-MERGED from [com.android.support.constraint:constraint-layout:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.0.aar\7a68a7e2f6ddfdb25268a152dd07918e\AndroidManifest.xml:9:5-20
-MERGED from [com.android.support.constraint:constraint-layout:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.0.aar\7a68a7e2f6ddfdb25268a152dd07918e\AndroidManifest.xml:9:5-20
-MERGED from [com.github.clans:fab:1.6.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\66767e64d377381405c0f303bb5b986e\AndroidManifest.xml:12:5-20
-MERGED from [com.github.clans:fab:1.6.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\66767e64d377381405c0f303bb5b986e\AndroidManifest.xml:12:5-20
-MERGED from [de.hdodenhof:circleimageview:2.2.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\circleimageview-2.2.0.aar\fbb9e468a90993fb38ed9fe02ca7401b\AndroidManifest.xml:9:5-20
-MERGED from [de.hdodenhof:circleimageview:2.2.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\circleimageview-2.2.0.aar\fbb9e468a90993fb38ed9fe02ca7401b\AndroidManifest.xml:9:5-20
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:12:5-59:19
+MERGED from [com.afollestad.material-dialogs:commons:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\commons-0.9.6.0.aar\0faf75cb30dc241b99b8c78f7567ec8c\AndroidManifest.xml:12:5-20
+MERGED from [com.afollestad.material-dialogs:commons:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\commons-0.9.6.0.aar\0faf75cb30dc241b99b8c78f7567ec8c\AndroidManifest.xml:12:5-20
+MERGED from [com.afollestad.material-dialogs:core:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\core-0.9.6.0.aar\01215b7a462cfc183e775a0e701e11a2\AndroidManifest.xml:13:5-20
+MERGED from [com.afollestad.material-dialogs:core:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\core-0.9.6.0.aar\01215b7a462cfc183e775a0e701e11a2\AndroidManifest.xml:13:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.0.aar\60b3ece0460588a299e4a748d89b48cd\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.0.aar\60b3ece0460588a299e4a748d89b48cd\AndroidManifest.xml:9:5-20
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\acfd2351baf053124d686a594d70d437\AndroidManifest.xml:12:5-20
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\acfd2351baf053124d686a594d70d437\AndroidManifest.xml:12:5-20
+MERGED from [de.hdodenhof:circleimageview:2.2.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\circleimageview-2.2.0.aar\c82460df72a4f0859afa43981b6fe719\AndroidManifest.xml:9:5-20
+MERGED from [de.hdodenhof:circleimageview:2.2.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\circleimageview-2.2.0.aar\c82460df72a4f0859afa43981b6fe719\AndroidManifest.xml:9:5-20
 	android:supportsRtl
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:18:9-35
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:19:9-35
 	android:label
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:15:9-35
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:16:9-35
 	android:roundIcon
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:17:9-48
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:18:9-48
 	android:icon
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:14:9-43
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:15:9-43
 	android:allowBackup
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:13:9-35
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:14:9-35
 	android:theme
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:19:9-40
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:20:9-40
 	android:logo
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:16:9-41
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:17:9-41
+	android:name
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:13:9-28
 activity#com.gerardogandeaga.cyberlock.core.activities.LoginActivity
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:21:9-30:20
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:22:9-31:20
 	android:screenOrientation
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:23:13-49
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:24:13-49
 	android:windowSoftInputMode
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:24:13-55
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:25:13-55
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:22:13-58
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:23:13-58
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:25:13-29:29
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:26:13-30:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:26:17-68
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:27:17-68
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:26:25-66
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:27:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:28:17-76
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:29:17-76
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:28:27-74
-activity#com.gerardogandeaga.cyberlock.core.activities.RegisterActivity
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:31:9-34:57
-	android:screenOrientation
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:33:13-49
-	android:windowSoftInputMode
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:34:13-55
-	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:32:13-61
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:29:27-74
 activity#com.gerardogandeaga.cyberlock.core.activities.SecureActivity
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:37:9-40:57
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:34:9-37:57
 	android:windowSoftInputMode
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:40:13-55
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:37:13-55
 	android:configChanges
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:39:13-59
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:36:13-59
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:38:13-59
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:35:13-59
 activity#com.gerardogandeaga.cyberlock.core.activities.NoteListActivity
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:41:9-44:57
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:38:9-41:57
 	android:windowSoftInputMode
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:44:13-55
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:41:13-55
 	android:configChanges
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:43:13-59
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:40:13-59
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:42:13-61
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:39:13-61
 activity#com.gerardogandeaga.cyberlock.core.activities.NoteEditActivity
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:45:9-48:57
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:42:9-45:57
 	android:windowSoftInputMode
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:48:13-55
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:45:13-55
 	android:configChanges
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:47:13-59
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:44:13-59
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:46:13-61
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:43:13-61
 activity#com.gerardogandeaga.cyberlock.core.activities.OptionsActivity
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:49:9-52:57
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:46:9-49:57
 	android:windowSoftInputMode
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:52:13-55
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:49:13-55
 	android:configChanges
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:51:13-59
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:48:13-59
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:50:13-60
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:47:13-60
 activity#com.gerardogandeaga.cyberlock.core.activities.ExternalLibsActivity
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:53:9-56:57
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:50:9-53:57
 	android:windowSoftInputMode
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:56:13-55
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:53:13-55
 	android:configChanges
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:55:13-59
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:52:13-59
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:54:13-65
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:51:13-65
 meta-data#preloaded_fonts
-ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:58:9-60:56
+ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:55:9-57:56
 	android:resource
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:60:13-54
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:57:13-54
 	android:name
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:59:13-43
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml:56:13-43
 uses-sdk
-INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
-INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
-MERGED from [com.android.support:multidex:1.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\multidex-1.0.2.aar\44d169cc695d58f539240ac02deac7d4\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:multidex:1.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\multidex-1.0.2.aar\44d169cc695d58f539240ac02deac7d4\AndroidManifest.xml:20:5-43
-MERGED from [com.afollestad.material-dialogs:commons:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\commons-0.9.6.0.aar\40084063657026c737eb46911874d670\AndroidManifest.xml:8:5-10:41
-MERGED from [com.afollestad.material-dialogs:commons:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\commons-0.9.6.0.aar\40084063657026c737eb46911874d670\AndroidManifest.xml:8:5-10:41
-MERGED from [com.afollestad.material-dialogs:core:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\core-0.9.6.0.aar\dafdaf807584ba371aa793eccef86569\AndroidManifest.xml:8:5-11:75
-MERGED from [com.afollestad.material-dialogs:core:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\core-0.9.6.0.aar\dafdaf807584ba371aa793eccef86569\AndroidManifest.xml:8:5-11:75
-MERGED from [com.mikepenz:materialdrawer:6.0.7] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\materialdrawer-6.0.7.aar\423cb6e62efae8e8b29ec37688c370e9\AndroidManifest.xml:7:5-9:41
-MERGED from [com.mikepenz:materialdrawer:6.0.7] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\materialdrawer-6.0.7.aar\423cb6e62efae8e8b29ec37688c370e9\AndroidManifest.xml:7:5-9:41
-MERGED from [me.zhanghai.android.materialprogressbar:library:1.4.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\library-1.4.2.aar\515becef00db99a23774d11c30b27413\AndroidManifest.xml:12:5-14:41
-MERGED from [me.zhanghai.android.materialprogressbar:library:1.4.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\library-1.4.2.aar\515becef00db99a23774d11c30b27413\AndroidManifest.xml:12:5-14:41
-MERGED from [com.android.support:design:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-27.1.1.aar\12efcc0b35a24dc14dbe91ce823703eb\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:design:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-27.1.1.aar\12efcc0b35a24dc14dbe91ce823703eb\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:appcompat-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\appcompat-v7-27.1.1.aar\6585ea3393b01c4e23d806bfb8274052\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:appcompat-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\appcompat-v7-27.1.1.aar\6585ea3393b01c4e23d806bfb8274052\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:percent:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\percent-27.1.1.aar\4850eb47e2e07b5586ebc08f0a8be66f\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:percent:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\percent-27.1.1.aar\4850eb47e2e07b5586ebc08f0a8be66f\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support.constraint:constraint-layout:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.0.aar\7a68a7e2f6ddfdb25268a152dd07918e\AndroidManifest.xml:5:5-7:41
-MERGED from [com.android.support.constraint:constraint-layout:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.0.aar\7a68a7e2f6ddfdb25268a152dd07918e\AndroidManifest.xml:5:5-7:41
-MERGED from [com.android.support:gridlayout-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\gridlayout-v7-27.1.1.aar\16a23f7154a3157a25cd27133ce3d775\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:gridlayout-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\gridlayout-v7-27.1.1.aar\16a23f7154a3157a25cd27133ce3d775\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:cardview-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\cardview-v7-27.1.1.aar\eecd6e28ea409eebe1764e3065e4deae\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:cardview-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\cardview-v7-27.1.1.aar\eecd6e28ea409eebe1764e3065e4deae\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:recyclerview-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-27.1.1.aar\15c615dd3b8673eca8277f937f47092f\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:recyclerview-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-27.1.1.aar\15c615dd3b8673eca8277f937f47092f\AndroidManifest.xml:20:5-44
-MERGED from [com.jakewharton:butterknife:8.8.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\butterknife-8.8.1.aar\c1f05fe6e2eb24400790173a51fb17bd\AndroidManifest.xml:5:5-43
-MERGED from [com.jakewharton:butterknife:8.8.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\butterknife-8.8.1.aar\c1f05fe6e2eb24400790173a51fb17bd\AndroidManifest.xml:5:5-43
-MERGED from [com.android.support:support-v4:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-v4-27.1.1.aar\39d7ce0815df884b32b148e7a8550410\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-v4:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-v4-27.1.1.aar\39d7ce0815df884b32b148e7a8550410\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-fragment:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-fragment-27.1.1.aar\fbf4874e6e0a484fa1f15d97e0876863\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-fragment:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-fragment-27.1.1.aar\fbf4874e6e0a484fa1f15d97e0876863\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:animated-vector-drawable:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-27.1.1.aar\3cb378c397ffccc145291c154d645ba5\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:animated-vector-drawable:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-27.1.1.aar\3cb378c397ffccc145291c154d645ba5\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-core-ui:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-ui-27.1.1.aar\a3ffc4d25cbe12de759a7277c2caeb06\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-core-ui:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-ui-27.1.1.aar\a3ffc4d25cbe12de759a7277c2caeb06\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-core-utils:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-utils-27.1.1.aar\4cf5f30d49e2456c991d03b979519e4a\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-core-utils:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-utils-27.1.1.aar\4cf5f30d49e2456c991d03b979519e4a\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-vector-drawable:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-27.1.1.aar\cd76456f3a85d07114c5dc0f0113e7c9\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-vector-drawable:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-27.1.1.aar\cd76456f3a85d07114c5dc0f0113e7c9\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:transition:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\transition-27.1.1.aar\87bfb25a5bb54579058f8e80791bf15b\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:transition:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\transition-27.1.1.aar\87bfb25a5bb54579058f8e80791bf15b\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-media-compat:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-media-compat-27.1.1.aar\fb2cf51aa55d9e1460a1b6578e4df928\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-media-compat:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-media-compat-27.1.1.aar\fb2cf51aa55d9e1460a1b6578e4df928\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-compat:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-compat-27.1.1.aar\40a994a027e156fe072ebd60e0b01b48\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-compat:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-compat-27.1.1.aar\40a994a027e156fe072ebd60e0b01b48\AndroidManifest.xml:20:5-44
-MERGED from [com.mikepenz:fastadapter:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-3.2.4.aar\a4efdfce641c06ff26b64b490c6ec3bf\AndroidManifest.xml:8:5-10:41
-MERGED from [com.mikepenz:fastadapter:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-3.2.4.aar\a4efdfce641c06ff26b64b490c6ec3bf\AndroidManifest.xml:8:5-10:41
-MERGED from [com.mikepenz:fastadapter-commons:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-commons-3.2.4.aar\081ec058c6bbfa7434cfa93ba7a484f5\AndroidManifest.xml:8:5-10:41
-MERGED from [com.mikepenz:fastadapter-commons:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-commons-3.2.4.aar\081ec058c6bbfa7434cfa93ba7a484f5\AndroidManifest.xml:8:5-10:41
-MERGED from [com.mikepenz:fastadapter-extensions-expandable:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-extensions-expandable-3.2.4.aar\ce97427c995566f3d1024646ca10b2c0\AndroidManifest.xml:8:5-10:41
-MERGED from [com.mikepenz:fastadapter-extensions-expandable:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-extensions-expandable-3.2.4.aar\ce97427c995566f3d1024646ca10b2c0\AndroidManifest.xml:8:5-10:41
-MERGED from [com.mikepenz:fastadapter-extensions:3.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-extensions-3.0.3.aar\a44f8ad841eded82630fde68a9961a13\AndroidManifest.xml:8:5-10:41
-MERGED from [com.mikepenz:fastadapter-extensions:3.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-extensions-3.0.3.aar\a44f8ad841eded82630fde68a9961a13\AndroidManifest.xml:8:5-10:41
-MERGED from [com.mikepenz:materialize:1.1.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\materialize-1.1.2.aar\8eb26a61addecbbf0786021339ca6494\AndroidManifest.xml:8:5-10:41
-MERGED from [com.mikepenz:materialize:1.1.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\materialize-1.1.2.aar\8eb26a61addecbbf0786021339ca6494\AndroidManifest.xml:8:5-10:41
-MERGED from [com.github.clans:fab:1.6.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\66767e64d377381405c0f303bb5b986e\AndroidManifest.xml:8:5-10:41
-MERGED from [com.github.clans:fab:1.6.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\66767e64d377381405c0f303bb5b986e\AndroidManifest.xml:8:5-10:41
-MERGED from [de.hdodenhof:circleimageview:2.2.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\circleimageview-2.2.0.aar\fbb9e468a90993fb38ed9fe02ca7401b\AndroidManifest.xml:5:5-7:41
-MERGED from [de.hdodenhof:circleimageview:2.2.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\circleimageview-2.2.0.aar\fbb9e468a90993fb38ed9fe02ca7401b\AndroidManifest.xml:5:5-7:41
-MERGED from [com.mikepenz:iconics-core:3.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\iconics-core-3.0.3.aar\a592d94dc16ad060fc493ae089d46f76\AndroidManifest.xml:8:5-10:41
-MERGED from [com.mikepenz:iconics-core:3.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\iconics-core-3.0.3.aar\a592d94dc16ad060fc493ae089d46f76\AndroidManifest.xml:8:5-10:41
-MERGED from [android.arch.lifecycle:runtime:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\runtime-1.1.0.aar\5b5955b34cd13e2b5d7f4c7d35b35725\AndroidManifest.xml:20:5-44
-MERGED from [android.arch.lifecycle:runtime:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\runtime-1.1.0.aar\5b5955b34cd13e2b5d7f4c7d35b35725\AndroidManifest.xml:20:5-44
-MERGED from [android.arch.lifecycle:livedata-core:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.0.aar\4d4791c0d5f33a514b93f4ecf9f5a551\AndroidManifest.xml:20:5-44
-MERGED from [android.arch.lifecycle:livedata-core:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.0.aar\4d4791c0d5f33a514b93f4ecf9f5a551\AndroidManifest.xml:20:5-44
-MERGED from [android.arch.core:runtime:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\runtime-1.1.0.aar\faa81f75c5f630237a1748143fc37b92\AndroidManifest.xml:20:5-44
-MERGED from [android.arch.core:runtime:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\runtime-1.1.0.aar\faa81f75c5f630237a1748143fc37b92\AndroidManifest.xml:20:5-44
-MERGED from [android.arch.lifecycle:viewmodel:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.0.aar\4447081f01d0bf284bb98dd0edd83b82\AndroidManifest.xml:20:5-44
-MERGED from [android.arch.lifecycle:viewmodel:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.0.aar\4447081f01d0bf284bb98dd0edd83b82\AndroidManifest.xml:20:5-44
-INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
-INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
+MERGED from [com.android.support:multidex:1.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\multidex-1.0.2.aar\e7fb03cdc1d385e5da35cfd5c886557d\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:multidex:1.0.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\multidex-1.0.2.aar\e7fb03cdc1d385e5da35cfd5c886557d\AndroidManifest.xml:20:5-43
+MERGED from [com.afollestad.material-dialogs:commons:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\commons-0.9.6.0.aar\0faf75cb30dc241b99b8c78f7567ec8c\AndroidManifest.xml:8:5-10:41
+MERGED from [com.afollestad.material-dialogs:commons:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\commons-0.9.6.0.aar\0faf75cb30dc241b99b8c78f7567ec8c\AndroidManifest.xml:8:5-10:41
+MERGED from [com.afollestad.material-dialogs:core:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\core-0.9.6.0.aar\01215b7a462cfc183e775a0e701e11a2\AndroidManifest.xml:8:5-11:75
+MERGED from [com.afollestad.material-dialogs:core:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\core-0.9.6.0.aar\01215b7a462cfc183e775a0e701e11a2\AndroidManifest.xml:8:5-11:75
+MERGED from [com.mikepenz:materialdrawer:6.0.7] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\materialdrawer-6.0.7.aar\7c2a90482bbc0a7e91617acc0443c0ad\AndroidManifest.xml:7:5-9:41
+MERGED from [com.mikepenz:materialdrawer:6.0.7] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\materialdrawer-6.0.7.aar\7c2a90482bbc0a7e91617acc0443c0ad\AndroidManifest.xml:7:5-9:41
+MERGED from [me.zhanghai.android.materialprogressbar:library:1.4.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\library-1.4.2.aar\2b6d86f1aa4c87c5399c9e2d7da01ae6\AndroidManifest.xml:12:5-14:41
+MERGED from [me.zhanghai.android.materialprogressbar:library:1.4.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\library-1.4.2.aar\2b6d86f1aa4c87c5399c9e2d7da01ae6\AndroidManifest.xml:12:5-14:41
+MERGED from [com.android.support:design:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-27.1.1.aar\1a394528c7cc959b38979979b08a0ebd\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:design:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\design-27.1.1.aar\1a394528c7cc959b38979979b08a0ebd\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\appcompat-v7-27.1.1.aar\e875ce3004efaa074d251de918d865a4\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\appcompat-v7-27.1.1.aar\e875ce3004efaa074d251de918d865a4\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:percent:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\percent-27.1.1.aar\9679e5c7dea1a4fcb28ca93b71fbf189\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:percent:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\percent-27.1.1.aar\9679e5c7dea1a4fcb28ca93b71fbf189\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.0.aar\60b3ece0460588a299e4a748d89b48cd\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.1.0.aar\60b3ece0460588a299e4a748d89b48cd\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:gridlayout-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\gridlayout-v7-27.1.1.aar\63d646a9e0eae2d3b543e770719ac727\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:gridlayout-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\gridlayout-v7-27.1.1.aar\63d646a9e0eae2d3b543e770719ac727\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\cardview-v7-27.1.1.aar\ab30e24610a5256a2831eee4d89b68fe\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\cardview-v7-27.1.1.aar\ab30e24610a5256a2831eee4d89b68fe\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-27.1.1.aar\c00f916b75bb48f2e7a25e7d10f5239a\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\recyclerview-v7-27.1.1.aar\c00f916b75bb48f2e7a25e7d10f5239a\AndroidManifest.xml:20:5-44
+MERGED from [com.jakewharton:butterknife:8.8.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\butterknife-8.8.1.aar\76811410b49a4f48fcf60d575cca40a5\AndroidManifest.xml:5:5-43
+MERGED from [com.jakewharton:butterknife:8.8.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\butterknife-8.8.1.aar\76811410b49a4f48fcf60d575cca40a5\AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-v4-27.1.1.aar\632099d041ae3abb44a463f2cd5bb460\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-v4-27.1.1.aar\632099d041ae3abb44a463f2cd5bb460\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-fragment-27.1.1.aar\65f62a0d7c86ed37650c4f7e6d349a87\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-fragment-27.1.1.aar\65f62a0d7c86ed37650c4f7e6d349a87\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-27.1.1.aar\0974f7606ffb49d734463a23957a8245\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-27.1.1.aar\0974f7606ffb49d734463a23957a8245\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-ui-27.1.1.aar\90f06dd6425e234f4fd5f03d4c0d2a34\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-ui-27.1.1.aar\90f06dd6425e234f4fd5f03d4c0d2a34\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-utils-27.1.1.aar\be8c7979b4a11c6a03ef2e50d1adb4eb\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-core-utils-27.1.1.aar\be8c7979b4a11c6a03ef2e50d1adb4eb\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-27.1.1.aar\18730c3a5dce03be60b4a943bba92486\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-27.1.1.aar\18730c3a5dce03be60b4a943bba92486\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\transition-27.1.1.aar\304c8cc50046b78523af256e0b189b4c\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\transition-27.1.1.aar\304c8cc50046b78523af256e0b189b4c\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-media-compat-27.1.1.aar\475c24d41703d9c74a8c720fee38231e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-media-compat-27.1.1.aar\475c24d41703d9c74a8c720fee38231e\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-compat-27.1.1.aar\ca6f0c47c1bee67c176e9be850642352\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.1.1] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\support-compat-27.1.1.aar\ca6f0c47c1bee67c176e9be850642352\AndroidManifest.xml:20:5-44
+MERGED from [com.mikepenz:fastadapter:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-3.2.4.aar\cf74f953f9644b95cd28408f7f85e04d\AndroidManifest.xml:8:5-10:41
+MERGED from [com.mikepenz:fastadapter:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-3.2.4.aar\cf74f953f9644b95cd28408f7f85e04d\AndroidManifest.xml:8:5-10:41
+MERGED from [com.mikepenz:fastadapter-commons:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-commons-3.2.4.aar\1089b5c6bfefa4822ffffeebabb3033f\AndroidManifest.xml:8:5-10:41
+MERGED from [com.mikepenz:fastadapter-commons:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-commons-3.2.4.aar\1089b5c6bfefa4822ffffeebabb3033f\AndroidManifest.xml:8:5-10:41
+MERGED from [com.mikepenz:fastadapter-extensions-expandable:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-extensions-expandable-3.2.4.aar\6019fab70a46bc5f5cdc48761b52858b\AndroidManifest.xml:8:5-10:41
+MERGED from [com.mikepenz:fastadapter-extensions-expandable:3.2.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-extensions-expandable-3.2.4.aar\6019fab70a46bc5f5cdc48761b52858b\AndroidManifest.xml:8:5-10:41
+MERGED from [com.mikepenz:fastadapter-extensions:3.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-extensions-3.0.3.aar\c57136d80c89e1ace83bdf618c5ca82d\AndroidManifest.xml:8:5-10:41
+MERGED from [com.mikepenz:fastadapter-extensions:3.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fastadapter-extensions-3.0.3.aar\c57136d80c89e1ace83bdf618c5ca82d\AndroidManifest.xml:8:5-10:41
+MERGED from [com.mikepenz:materialize:1.1.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\materialize-1.1.2.aar\46d00b533f92ed4d7880b85b4f223c65\AndroidManifest.xml:8:5-10:41
+MERGED from [com.mikepenz:materialize:1.1.2] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\materialize-1.1.2.aar\46d00b533f92ed4d7880b85b4f223c65\AndroidManifest.xml:8:5-10:41
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\acfd2351baf053124d686a594d70d437\AndroidManifest.xml:8:5-10:41
+MERGED from [com.github.clans:fab:1.6.4] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\fab-1.6.4.aar\acfd2351baf053124d686a594d70d437\AndroidManifest.xml:8:5-10:41
+MERGED from [de.hdodenhof:circleimageview:2.2.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\circleimageview-2.2.0.aar\c82460df72a4f0859afa43981b6fe719\AndroidManifest.xml:5:5-7:41
+MERGED from [de.hdodenhof:circleimageview:2.2.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\circleimageview-2.2.0.aar\c82460df72a4f0859afa43981b6fe719\AndroidManifest.xml:5:5-7:41
+MERGED from [net.zetetic:android-database-sqlcipher:3.5.9] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\android-database-sqlcipher-3.5.9.aar\f7a03a27e3000a3f2bc9eb842ca283a3\AndroidManifest.xml:7:5-9:41
+MERGED from [net.zetetic:android-database-sqlcipher:3.5.9] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\android-database-sqlcipher-3.5.9.aar\f7a03a27e3000a3f2bc9eb842ca283a3\AndroidManifest.xml:7:5-9:41
+MERGED from [com.mikepenz:iconics-core:3.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\iconics-core-3.0.3.aar\53e1d3bf397515f08a888f3d334d943d\AndroidManifest.xml:8:5-10:41
+MERGED from [com.mikepenz:iconics-core:3.0.3] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\iconics-core-3.0.3.aar\53e1d3bf397515f08a888f3d334d943d\AndroidManifest.xml:8:5-10:41
+MERGED from [android.arch.lifecycle:runtime:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\runtime-1.1.0.aar\af8b5f4a0ddbea36e242bfa955f7043a\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\runtime-1.1.0.aar\af8b5f4a0ddbea36e242bfa955f7043a\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.0.aar\94ace6200dd1cf98481e0b1791096086\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\livedata-core-1.1.0.aar\94ace6200dd1cf98481e0b1791096086\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\runtime-1.1.0.aar\994e312e41c1cb3c34a4e6a6d493f85e\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\runtime-1.1.0.aar\994e312e41c1cb3c34a4e6a6d493f85e\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.0.aar\a74aa56b090977796469504a0c577294\AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\viewmodel-1.1.0.aar\a74aa56b090977796469504a0c577294\AndroidManifest.xml:20:5-44
+INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
 	tools:overrideLibrary
-		ADDED from [com.afollestad.material-dialogs:core:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\core-0.9.6.0.aar\dafdaf807584ba371aa793eccef86569\AndroidManifest.xml:11:9-72
+		ADDED from [com.afollestad.material-dialogs:core:0.9.6.0] C:\Users\gerardogandeaga\.gradle\caches\transforms-1\files-1.1\core-0.9.6.0.aar\01215b7a462cfc183e775a0e701e11a2\AndroidManifest.xml:11:9-72
 	android:targetSdkVersion
-		INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\gerardogandeaga\Documents\Personal\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\gerardogandeaga\Documents\Projects\Android Studio\Project Files\CyberLock\app\src\main\AndroidManifest.xml

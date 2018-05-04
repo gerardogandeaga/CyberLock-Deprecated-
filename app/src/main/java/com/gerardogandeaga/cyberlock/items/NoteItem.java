@@ -139,7 +139,7 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
         @BindView(R.id.imgColourTag) CircleImageView ColourTag;
 
         // note
-        @BindView(R.id.tvNote)       TextView Notes;
+        @BindView(R.id.tvNotes)       TextView Notes;
         // paymentinfo
         @BindView(R.id.tvHolder)     TextView  Holder;
         @BindView(R.id.tvNumber)     TextView  Number;
@@ -219,7 +219,7 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
         private void filterContent(NoteItem item) {
             Scanner scanner = new Scanner(item.mContent);
             switch(item.mType) {
-                case com.gerardogandeaga.cyberlock.database.objects.Note.NOTE:
+                case com.gerardogandeaga.cyberlock.database.objects.Note.GENERIC:
                     TextViews.setOrHideTextView(item.mContent, Notes);
                     break;
                 case com.gerardogandeaga.cyberlock.database.objects.Note.CARD:

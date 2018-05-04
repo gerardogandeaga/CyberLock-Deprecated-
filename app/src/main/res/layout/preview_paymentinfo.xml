@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    style="@style/MyPreviewScrollbarStyle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:ignore="ContentDescription">
@@ -12,32 +11,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="5dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="5dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/Holder"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_username"
-                android:tint="@color/black"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_username"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -46,18 +39,11 @@
                     android:text="@string/str_tv_holder"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
-                <HorizontalScrollView
+                <TextView
+                    android:id="@+id/tvHolder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbars="none">
-
-                    <TextView
-                        android:id="@+id/tvName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"/>
-                </HorizontalScrollView>
+                    android:textAppearance="@style/myText.Dialog.Content"/>
 
             </LinearLayout>
 
@@ -66,23 +52,21 @@
         <LinearLayout
             android:id="@+id/Number"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_card"
-                android:tint="@color/black"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_card"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -91,18 +75,11 @@
                     android:text="@string/str_tv_number"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
-                <HorizontalScrollView
+                <TextView
+                    android:id="@+id/tvNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbars="none">
-
-                    <TextView
-                        android:id="@+id/tvNumber"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"/>
-                </HorizontalScrollView>
+                    android:textAppearance="@style/myText.Dialog.Content"/>
 
             </LinearLayout>
 
@@ -111,23 +88,21 @@
         <LinearLayout
             android:id="@+id/Expiry"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_expiry"
-                android:tint="@color/black"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_expiry"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -136,18 +111,11 @@
                     android:text="@string/str_tv_expiry_date"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
-                <HorizontalScrollView
+                <TextView
+                    android:id="@+id/tvExpiry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbars="none">
-
-                    <TextView
-                        android:id="@+id/tvExpiry"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"/>
-                </HorizontalScrollView>
+                    android:textAppearance="@style/myText.Dialog.Content"/>
 
             </LinearLayout>
 
@@ -156,44 +124,34 @@
         <LinearLayout
             android:id="@+id/CVV"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_card"
-                android:tint="@color/black"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_card"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/str_tv_code"
+                    android:text="@string/str_tv_cvv"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
-                <HorizontalScrollView
+                <TextView
+                    android:id="@+id/tvCVV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbars="none">
-
-                    <TextView
-                        android:id="@+id/tvCVV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"
-                        tools:ignore="NestedWeights"/>
-                </HorizontalScrollView>
+                    android:textAppearance="@style/myText.Dialog.Content"/>
 
             </LinearLayout>
 
@@ -202,23 +160,21 @@
         <LinearLayout
             android:id="@+id/CardType"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_card"
-                android:tint="@color/black"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_card"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -227,18 +183,11 @@
                     android:text="@string/str_tv_card_type"
                     android:textAppearance="@style/myText.Edit.Hint"/>
 
-                <HorizontalScrollView
+                <TextView
+                    android:id="@+id/tvCardType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbars="none">
-
-                    <TextView
-                        android:id="@+id/tvCardType"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:maxLines="1"
-                        android:textAppearance="@style/myText.Edit.Content"/>
-                </HorizontalScrollView>
+                    android:textAppearance="@style/myText.Dialog.Content"/>
 
             </LinearLayout>
 
@@ -248,19 +197,21 @@
             android:id="@+id/Notes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/str_tv_notes"
+                android:text="@string/str_tv_holder"
                 android:textAppearance="@style/myText.Edit.Hint"/>
 
             <TextView
-                android:id="@+id/tvNote"
+                android:id="@+id/tvNotes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/myText.Edit.Content"/>
+                android:textAppearance="@style/myText.Dialog.Content"/>
+
         </LinearLayout>
 
     </LinearLayout>

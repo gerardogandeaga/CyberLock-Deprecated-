@@ -12,7 +12,6 @@ import java.io.UnsupportedEncodingException;
  */
 public class DBCrypt {
 
-    // todo idea - implement compression and decompression
     public static byte[] encrypt(Context context, String string) throws UnsupportedEncodingException {
         String encrypted = BaseCrypt.encrypt(context, string);
         return encrypted.getBytes("UTF-8");

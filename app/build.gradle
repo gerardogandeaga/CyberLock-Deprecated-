@@ -67,4 +67,7 @@ dependencies {
     implementation("com.mikepenz:materialdrawer:6.0.7@aar") {
         transitive = true
     }
+
+    // SQLCipher
+    implementation "net.zetetic:android-database-sqlcipher:3.5.9@aar"
 }

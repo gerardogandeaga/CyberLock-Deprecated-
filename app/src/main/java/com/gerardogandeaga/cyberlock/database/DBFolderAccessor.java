@@ -3,17 +3,17 @@ package com.gerardogandeaga.cyberlock.database;
 // todo create the folder accessor
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
-import com.gerardogandeaga.cyberlock.crypto.DBCrypt;
+import com.gerardogandeaga.cyberlock.App;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.interfaces.DBFolderConstants;
 
-import java.io.UnsupportedEncodingException;
+import net.sqlcipher.database.SQLiteDatabase;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,75 +22,65 @@ import java.util.List;
 public class DBFolderAccessor implements DBFolderConstants {
     private static final String TAG = "DBFolderAccessor";
 
-    private Context mContext;
-    private SQLiteDatabase mSQLiteDatabase;
-    private DBFolderOpenHelper mOpenHelper;
+    private DatabaseOpenHelper mOpenHelper;
     private static volatile DBFolderAccessor INSTANCE;
 
-    private static final String SQL_QUERY = "SELECT * From " + TABLE + " ORDER BY " + DATE_CREATED + " DESC";
+    private static final String SQL_QUERY = "SELECT * From " + TABLE_FOLDERS + " ORDER BY " + DATE_CREATED + " DESC";
 
-    private DBFolderAccessor(Context context) {
-        this.mContext = context;
-        this.mOpenHelper = new DBFolderOpenHelper(context);
+    private DBFolderAccessor() {
+        this.mOpenHelper = App.getDatabase();
     }
 
     // class INSTANCE manager
-    public static synchronized DBFolderAccessor getInstance(Context context) {
+    public static synchronized DBFolderAccessor getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new DBFolderAccessor(context);
+            INSTANCE = new DBFolderAccessor();
         }
         return INSTANCE;
     }
 
-    // database accessor states
-    public void open() {
-        this.mSQLiteDatabase = mOpenHelper.getWritableDatabase();
-    }
-    public void close() {
-        if (mSQLiteDatabase != null) {
-            mSQLiteDatabase.close();
-            this.mSQLiteDatabase = null;
-        }
-    }
-    public boolean isOpen() {
-        return mSQLiteDatabase != null;
-    }
-
     // database interactions / mode
     public void save(Folder folder) {
-//        try {
-            ContentValues values = new ContentValues();
+        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
-            values.put(DATE_CREATED,  folder.getTimeCreated());
-            values.put(DATE_MODIFIED, folder.getTimeCreated());
-            values.put(COLOUR_TAG,    folder.getColourTag());
-            values.put(NAME,          folder.getName());
+        values.put(DATE_MODIFIED, folder.getTimeCreated());
+        values.put(DATE_CREATED,  folder.getTimeCreated());
+        values.put(COLOUR_TAG,    folder.getColourTag());
+        values.put(NAME,          folder.getName());
 
-            mSQLiteDatabase.insert(TABLE, null, values);
-//        } catch (UnsupportedEncodingException e) {
-//            System.out.println("error saving folder!");
-//        }
+        db.beginTransaction();
+        db.insert(TABLE_FOLDERS, null, values);
+        db.setTransactionSuccessful();
+        db.endTransaction();
     }
+
     public void update(Folder folder) {
-//        try {
-            ContentValues values = new ContentValues();
+        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
-            values.put(DATE_MODIFIED, folder.getTimeModified());
-            values.put(COLOUR_TAG,    folder.getColourTag());
-            values.put(NAME,          folder.getName());
+        values.put(DATE_MODIFIED, new Date().getTime());
+        values.put(COLOUR_TAG,    folder.getColourTag());
+        values.put(NAME,          folder.getName());
 
-            String date = Long.toString(folder.getTimeCreated());
-            mSQLiteDatabase.update(TABLE, values, DATE_MODIFIED + " = ?", new String[]{date});
-//        } catch (UnsupportedEncodingException e) {
-//            System.out.println("error updating folder!");
-//        }
+        String date = Long.toString(folder.getTimeCreated());
+
+        db.beginTransaction();
+        db.update(TABLE_FOLDERS, values, DATE_MODIFIED + " = ?", new String[]{date});
+        db.setTransactionSuccessful();
+        db.endTransaction();
     }
     public void delete(Folder folder) {
+        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         String date = Long.toString(folder.getTimeCreated());
-        mSQLiteDatabase.delete(TABLE, DATE_MODIFIED + " = ?", new String[]{date});
+
+        db.beginTransaction();
+        db.delete(TABLE_FOLDERS, DATE_MODIFIED + " = ?", new String[]{date});
+        db.setTransactionSuccessful();
+        db.endTransaction();
     }
 
-    public Folder getFolder(Cursor cursor) {
+    private Folder getFolder(Cursor cursor) {
         if (!cursor.isAfterLast()) {
             return constructFolder(cursor);
         }
@@ -99,8 +89,10 @@ public class DBFolderAccessor implements DBFolderConstants {
     }
 
     public List<Folder> getAllFolders() {
+        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
         List<Folder> folders = new ArrayList<>();
-        Cursor cursor = getQuery();
+        Cursor cursor = getQuery(db);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             folders.add(constructFolder(cursor));
@@ -112,35 +104,36 @@ public class DBFolderAccessor implements DBFolderConstants {
     }
 
     public Folder getTopFolder() {
-        Cursor cursor = getQuery();
+        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
+        Cursor cursor = getQuery(db);
         cursor.moveToFirst();
+
         return getFolder(cursor);
     }
 
     public int size() {
+        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
         int size = 0;
-        Cursor cursor = getQuery();
+        Cursor cursor = getQuery(db);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             size++;
             cursor.moveToNext();
         }
+
         return size;
     }
 
     // returns a new folder from the cursor position
     private Folder constructFolder(Cursor cursor) {
-        try {
-            long created =      cursor.getLong(POS_DATE_CREATED);
-            long modded =       cursor.getLong(POS_DATE_MODIFIED);
-            String colour_tag = getData(cursor.getBlob(POS_COLOUR_TAG));
-            String name =       getData(cursor.getBlob(POS_NAME));
-            // create new note object
-            return new Folder(created, modded, colour_tag, name);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return null;
-        }
+        long modded =       cursor.getLong(POS_DATE_MODIFIED);
+        long created =      cursor.getLong(POS_DATE_CREATED);
+        String colour_tag = cursor.getString(POS_COLOUR_TAG);
+        String name =       cursor.getString(POS_NAME);
+        // create new note object
+        return new Folder(modded, created, colour_tag, name);
     }
 
     // this function checks if a specific piece of data exists in the database returning a boolean
@@ -154,17 +147,7 @@ public class DBFolderAccessor implements DBFolderConstants {
         return true;
     }
 
-    // data encryption
-    // when putting data into the database
-    private byte[] setData(String data) throws UnsupportedEncodingException {
-        return DBCrypt.encrypt(mContext, data);
-    }
-    // when pulling data from the database and defining the dataPackage object
-    private String getData(byte[] data) throws UnsupportedEncodingException {
-        return DBCrypt.decrypt(mContext, data);
-    }
-
-    private Cursor getQuery() {
-        return mSQLiteDatabase.rawQuery(SQL_QUERY, null);
+    private Cursor getQuery(SQLiteDatabase db) {
+        return db.rawQuery(SQL_QUERY, null);
     }
 }

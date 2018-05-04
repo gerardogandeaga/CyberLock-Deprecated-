@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
-import com.gerardogandeaga.cyberlock.handlers.NoteContentHandler;
+import com.gerardogandeaga.cyberlock.database.objects.notes.GenericNote;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +23,7 @@ public class NoteEditFragment extends EditFragment {
     private static final String TAG = "NoteEditFragment";
 
     private Note mNote;
-    private NoteContentHandler mNoteContentHandler;
+    private GenericNote mGenericNote;
 
     // view
     @BindView(R.id.tvDate)  TextView mTvDate;
@@ -36,15 +36,11 @@ public class NoteEditFragment extends EditFragment {
 
         // get note object
         Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            this.mNote = (Note) bundle.get("data");
+        this.mNote = (Note) bundle.get("data");
 
-            // note should never equal null at this point
-            assert mNote != null;
-            if (mNote.getContent() != null) {
-                this.mNoteContentHandler = new NoteContentHandler(getActivity(), mNote);
-            }
-        }
+        // note should never equal null at this point coming form the main container activity
+        assert mNote != null;
+        this.mGenericNote = mNote.getGenericNote();
     }
 
     /**
@@ -60,11 +56,11 @@ public class NoteEditFragment extends EditFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        // if data is not null then we set our stored data onto
+        // if is not null then we set our stored data onto
         if (!mNote.isNew()) {
-            mTvDate.setText(mNoteContentHandler.mDate);
-            mEtLabel.setText(mNoteContentHandler.mLabel);
-            mEtNotes.setText(mNoteContentHandler.mNotes);
+            mTvDate.setText(mGenericNote.getDate());
+            mEtLabel.setText(mGenericNote.getLabel());
+            mEtNotes.setText(mGenericNote.getNotes());
         } else {
             mTvDate.setText(null);
             mEtLabel.setText(null);
@@ -73,38 +69,29 @@ public class NoteEditFragment extends EditFragment {
     }
 
     @Override
-    protected void compileObject() {
-        Log.i(TAG, "compileObject: compiling note object...");
-        final String label = mEtLabel.getText().toString();
-        final String note = mEtNotes.getText().toString();
+    protected void compile() {
+        Log.i(TAG, "compile: compiling note object...");
 
-        // format content
-        final String format = "%s";
-        final String content = String.format(format, note);
+        mGenericNote.withNotes(mEtNotes.getText().toString());
+        mGenericNote.withLabel(mEtLabel.getText().toString());
+        // create note
+        this.mNote = mGenericNote.compile();
 
-        if (mNote == null) {
-            this.mNote = new Note();
-
-            mNote.setType(Note.NOTE);
-        }
-
-        mNote.setLabel(label);
-        mNote.setContent(content);
-        Log.i(TAG, "compileObject: done compiling");
+        Log.i(TAG, "compile: done compiling");
     }
 
     @Override
-    public void updateObject() {
-        Log.i(TAG, "updateObject: updated object requested");
-        compileObject();
+    public void update() {
+        Log.i(TAG, "update: updated object requested");
+        compile();
         mRequestResponder.onUpdateObjectResponse(mNote);
-        Log.i(TAG, "updateObject: updated object sent");
+        Log.i(TAG, "update: updated object sent");
     }
 
     @Override
     public void save() {
         Log.i(TAG, "onSaveRequest: save requested");
-        compileObject();
+        compile();
         mRequestResponder.onSaveResponse(mNote);
     }
 }

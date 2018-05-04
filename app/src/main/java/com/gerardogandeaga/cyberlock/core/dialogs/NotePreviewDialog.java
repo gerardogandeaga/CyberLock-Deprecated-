@@ -3,21 +3,21 @@ package com.gerardogandeaga.cyberlock.core.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.Views;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
-import com.gerardogandeaga.cyberlock.handlers.NoteContentHandler;
+import com.gerardogandeaga.cyberlock.database.objects.notes.CardNote;
+import com.gerardogandeaga.cyberlock.database.objects.notes.GenericNote;
+import com.gerardogandeaga.cyberlock.database.objects.notes.LoginNote;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
 import com.gerardogandeaga.cyberlock.utils.Res;
 import com.gerardogandeaga.cyberlock.views.CustomDialog;
-import com.gerardogandeaga.cyberlock.views.handlers.TextViews;
 
 /**
  * @author gerardogandeaga
  */
-// todo possible dialog fragment
 public class NotePreviewDialog {
     public interface EditSelectedPreview {
         void onEdit(Note note);
@@ -42,83 +42,62 @@ public class NotePreviewDialog {
     // Select type
     public void initializeDialog() {
         switch (mNote.getType()) {
-            case Note.NOTE:         constructPreviewNote(); break;
-            case Note.CARD: constructPreviewPaymentInfo(); break;
-            case Note.LOGIN:   constructPreviewLoginInfo(); break;
+            case Note.GENERIC:
+                constructPreviewNote();
+                break;
+            case Note.CARD:
+                constructPreviewPaymentInfo();
+                break;
+            case Note.LOGIN:
+                constructPreviewLoginInfo();
+                break;
         }
     }
 
     // Create dialog
     private void constructPreviewNote() {
         View view = View.inflate(mContext, R.layout.preview_note, null);
-        NoteContentHandler noteContentHandler = new NoteContentHandler(mContext, mNote);
+        GenericNote genericNote = mNote.getGenericNote();
         //
-        TextView note = view.findViewById(R.id.tvNote);
+        TextView note = view.findViewById(R.id.tvNotes);
 
-        note.setText(noteContentHandler.mNotes);
+        note.setText(genericNote.getNotes());
 
-        buildDialog(view, noteContentHandler);
+        buildDialog(view);
     }
     private void constructPreviewPaymentInfo() {
-        View view = View.inflate(mContext, R.layout.preview_paymentinfo, null);
-        NoteContentHandler noteContentHandler = new NoteContentHandler(mContext, mNote);
+        View v = View.inflate(mContext, R.layout.preview_paymentinfo, null);
+        CardNote cardNote = mNote.getCardNote();
         //
-        LinearLayout Holder = view.findViewById(R.id.Holder);
-        LinearLayout Number = view.findViewById(R.id.Number);
-        LinearLayout Expiry = view.findViewById(R.id.Expiry);
-        LinearLayout CVV = view.findViewById(R.id.CVV);
-        LinearLayout CardType = view.findViewById(R.id.CardType);
-        LinearLayout Notes = view.findViewById(R.id.Notes);
+        Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.Holder), (TextView) v.findViewById(R.id.tvHolder), cardNote.getHolder());
+        Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.Number), (TextView) v.findViewById(R.id.tvNumber), cardNote.getNumber());
+        Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.Expiry), (TextView) v.findViewById(R.id.tvExpiry), cardNote.getExpiry());
+        Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.CVV), (TextView) v.findViewById(R.id.tvCVV), cardNote.getCVV());
+        Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.CardType), (TextView) v.findViewById(R.id.tvCardType), cardNote.getCardType());
+        Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.Notes), (TextView) v.findViewById(R.id.tvNotes), cardNote.getNotes());
 
-        TextView holder = view.findViewById(R.id.tvName);
-        TextView number = view.findViewById(R.id.tvNumber);
-        TextView expiry = view.findViewById(R.id.tvExpiry);
-        TextView cvv = view.findViewById(R.id.tvCVV);
-        TextView cardType = view.findViewById(R.id.tvCardType);
-        TextView notes = view.findViewById(R.id.tvNote);
-
-        if (TextViews.setLinearLayoutVisibility(Holder, noteContentHandler.mHolder))     holder.setText(noteContentHandler.mHolder);
-        if (TextViews.setLinearLayoutVisibility(Number, noteContentHandler.mNumber))     number.setText(noteContentHandler.mNumber);
-        if (TextViews.setLinearLayoutVisibility(Expiry, noteContentHandler.mExpiry))     expiry.setText(noteContentHandler.mExpiry);
-        if (TextViews.setLinearLayoutVisibility(CVV, noteContentHandler.mCVV))           cvv.setText(noteContentHandler.mCVV);
-        if (TextViews.setLinearLayoutVisibility(CardType, noteContentHandler.mCardType)) cardType.setText(noteContentHandler.mCardType);
-        if (TextViews.setLinearLayoutVisibility(Notes, noteContentHandler.mNotes))       notes.setText(noteContentHandler.mNotes);
-
-        buildDialog(view, noteContentHandler);
+        buildDialog(v);
     }
     private void constructPreviewLoginInfo() {
-        View view = View.inflate(mContext, R.layout.preview_logininfo, null);
-        NoteContentHandler noteContentHandler = new NoteContentHandler(mContext, mNote);
+        View v = View.inflate(mContext, R.layout.preview_logininfo, null);
+        LoginNote loginNote = mNote.getLoginNote();
         //
-        LinearLayout Url = view.findViewById(R.id.Url);
-        LinearLayout Email = view.findViewById(R.id.Email);
-        LinearLayout Username = view.findViewById(R.id.Username);
-        LinearLayout Password = view.findViewById(R.id.Password);
-        LinearLayout Notes = view.findViewById(R.id.Notes);
+        Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.Url), (TextView) v.findViewById(R.id.tvUrl), loginNote.getUrl());
+        Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.Email), (TextView) v.findViewById(R.id.tvEmail), loginNote.getEmail());
+        Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.Username), (TextView) v.findViewById(R.id.tvUsername), loginNote.getUsername());
+        Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.Password), (TextView) v.findViewById(R.id.tvPassword), loginNote.getPassword());
+        Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.Notes), (TextView) v.findViewById(R.id.tvNotes), loginNote.getNotes());
 
-        TextView url = view.findViewById(R.id.tvUrl);
-        TextView email = view.findViewById(R.id.tvEmail);
-        TextView username = view.findViewById(R.id.tvUsername);
-        TextView password = view.findViewById(R.id.tvPassword);
-        TextView notes = view.findViewById(R.id.tvNote);
-
-        if (TextViews.setLinearLayoutVisibility(Url, noteContentHandler.mUrl))           url.setText(noteContentHandler.mUrl);
-        if (TextViews.setLinearLayoutVisibility(Email, noteContentHandler.mEmail))       email.setText(noteContentHandler.mEmail);
-        if (TextViews.setLinearLayoutVisibility(Username, noteContentHandler.mUsername)) username.setText(noteContentHandler.mUsername);
-        if (TextViews.setLinearLayoutVisibility(Password, noteContentHandler.mPassword)) password.setText(noteContentHandler.mPassword);
-        if (TextViews.setLinearLayoutVisibility(Notes, noteContentHandler.mNotes))        notes.setText(noteContentHandler.mNotes);
-
-        buildDialog(view, noteContentHandler);
+        buildDialog(v);
     }
 
-    private void buildDialog(View view, NoteContentHandler noteContentHandler) {
+    private void buildDialog(View view) {
         CustomDialog customDialog = new CustomDialog(mContext);
         customDialog.setContentView(view);
-        if (noteContentHandler.mCardImage != null) { customDialog.setIcon(noteContentHandler.mCardImage); }
-//        customDialog.setMenuIcon(mContext.getResources().getDrawable(R.drawable.ic_options), R.color.white);
-        customDialog.setTitle(noteContentHandler.mLabel);
-        customDialog.setSubTitle(noteContentHandler.mDate);
-        customDialog.setTitleBackgroundColour(Graphics.ColourTags.colourTagHeader(mContext, noteContentHandler.mTag));
+//        if (noteContentHandler.mCardImage != null) { customDialog.setIcon(noteContentHandler.mCardImage); }
+        customDialog.setTitle(mNote.getLabel());
+        customDialog.setSubTitle(mNote.getDate());
+        customDialog.setTitleBackgroundColour(Graphics.ColourTags.colourTagHeader(mContext, mNote.getColourTag()));
         customDialog.setTitleColour(Res.getColour(R.color.white));
         customDialog.setPositiveButton("Edit", new View.OnClickListener() {
             @Override

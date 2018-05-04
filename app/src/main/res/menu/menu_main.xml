@@ -37,11 +37,13 @@
 
     <item
         android:id="@+id/menu_options"
-        android:icon="@drawable/ic_options"
+        android:icon="@drawable/ic_options_vert"
         android:title="@string/str_menu_options"
         app:showAsAction="always">
 
         <menu>
+
+
             <item
                 android:id="@+id/menu_option_options"
                 android:icon="@drawable/ic_cog"
