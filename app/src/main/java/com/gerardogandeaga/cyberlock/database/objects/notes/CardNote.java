@@ -3,6 +3,7 @@ package com.gerardogandeaga.cyberlock.database.objects.notes;
 import android.graphics.drawable.Drawable;
 
 import com.gerardogandeaga.cyberlock.App;
+import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
 
@@ -12,6 +13,12 @@ import java.util.Scanner;
  * @author gerardogandeaga
  */
 public class CardNote extends Note {
+    public static final String OTHER =      App.getContext().getString(R.string.str_cardtype_other);
+    public static final String VISA =       App.getContext().getString(R.string.str_cardtype_visa);
+    public static final String MASTERCARD = App.getContext().getString(R.string.str_cardtype_mastercard);
+    public static final String AMEX =       App.getContext().getString(R.string.str_cardtype_amex);
+    public static final String DISCOVER =   App.getContext().getString(R.string.str_cardtype_discover);
+
     private String mHolder;
     private String mNumber;
     private String mCardType;
@@ -32,7 +39,6 @@ public class CardNote extends Note {
             StringBuilder notes = new StringBuilder();
             //
             Scanner scanner = new Scanner(getContent());
-
             try {
                 name = scanner.nextLine();
                 number = scanner.nextLine();
@@ -55,7 +61,7 @@ public class CardNote extends Note {
             this.mExpiry = expiry;
             this.mCVV = cvv;
             this.mNotes = notes.toString();
-            this.mCardImage = getCardImage(getContent());
+            this.mCardImage = getIcon(getContent());
         }
     }
 
@@ -68,7 +74,7 @@ public class CardNote extends Note {
         return mNumber;
     }
     public String getCardType() {
-        return mCardType;
+        return (mCardType == null || mCardType.isEmpty() ? OTHER : mCardType);
     }
     public String getExpiry() {
         return mExpiry;
@@ -79,7 +85,7 @@ public class CardNote extends Note {
     public String getNotes() {
         return mNotes;
     }
-    public Drawable getCardImage() {
+    public Drawable getIcon() {
         return mCardImage;
     }
 
@@ -115,7 +121,7 @@ public class CardNote extends Note {
     }
 
     // Set card image
-    private Drawable getCardImage(String content) {
+    private Drawable getIcon(String content) {
         String cardType;
 
         Scanner scanner = new Scanner(content);
@@ -123,7 +129,7 @@ public class CardNote extends Note {
             cardType = scanner.nextLine();
 
             if (Graphics.CardImages.isCardType(cardType)) {
-                return Graphics.CardImages.getCardImage(App.getContext(), cardType, 47, 32);
+                return Graphics.CardImages.getCardImage(cardType);
             }
         }
 

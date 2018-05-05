@@ -8,12 +8,12 @@ import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.App;
 import com.gerardogandeaga.cyberlock.Initial;
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.core.dialogs.LoadDialog;
 import com.gerardogandeaga.cyberlock.database.DatabaseOpenHelper;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
@@ -33,13 +33,13 @@ public class LoginActivity extends SecureActivity {
     private LoginStates state;
 
     private boolean mButtonFlag;
-    private LoadDialog mLoadDialog;
 
-    @BindView(R.id.tvTitle)    TextView mTitle;
-    @BindView(R.id.etPassword) EditText mEtPassword;
-    @BindView(R.id.etRegister) EditText mEtRegister;
-    @BindView(R.id.Register)   TextInputLayout mRegister;
-    @BindView(R.id.btnEnter)   Button mBtnEnter;
+    @BindView(R.id.tvTitle)     TextView mTitle;
+    @BindView(R.id.etPassword)  EditText mEtPassword;
+    @BindView(R.id.etRegister)  EditText mEtRegister;
+    @BindView(R.id.Register)    TextInputLayout mRegister;
+    @BindView(R.id.btnEnter)    Button mBtnEnter;
+    @BindView(R.id.progressbar) ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,7 @@ public class LoginActivity extends SecureActivity {
     }
 
     private void beginRegister() {
+        mProgressBar.setVisibility(View.GONE);
         mEtPassword.getText().clear();
         mEtRegister.getText().clear();
         this.mButtonFlag = true;
@@ -96,6 +97,7 @@ public class LoginActivity extends SecureActivity {
     }
 
     private void beginLogin() {
+        mProgressBar.setVisibility(View.GONE);
         mEtPassword.getText().clear();
         mEtRegister.getText().clear();
         this.mButtonFlag = true;
@@ -131,8 +133,7 @@ public class LoginActivity extends SecureActivity {
     // runCredentialTask process
     @SuppressLint("StaticFieldLeak")
     private void runCredentialTask(final String password) {
-        this.mLoadDialog = new LoadDialog(mContext);
-        mLoadDialog.indeterminateProgress("Verifying Password, Please Wait.");
+        mProgressBar.setVisibility(View.VISIBLE);
 
         new Thread(new Runnable() {
             @Override
@@ -148,7 +149,6 @@ public class LoginActivity extends SecureActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                mLoadDialog.dismiss();
                                 initialPreferences();
                                 // switch to runCredentialTask
                                 beginLogin();
@@ -163,9 +163,9 @@ public class LoginActivity extends SecureActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            mLoadDialog.dismiss();
                             // if incorrect password
                             if (state == LoginStates.LOGIN) {
+                                mProgressBar.setVisibility(View.GONE);
                                 CustomToast.buildAndShowToast(mContext, "Incorrect Password, Please Try Again", CustomToast.ERROR, CustomToast.LENGTH_SHORT);
                                 mButtonFlag = true;
                             }
@@ -196,9 +196,8 @@ public class LoginActivity extends SecureActivity {
             getSecureIntent().removeExtra("lastDB");
         } else {
             // empty intent to the main activity
-            setSecureIntent(new Intent(this, NoteListActivity.class));
+            setSecureIntent(new Intent(this, NoteActivity.class));
         }
-        mLoadDialog.dismiss();
         secureIntentGoTo();
     }
 

@@ -76,7 +76,7 @@ public class Graphics {
         public static boolean isCardType(String str) {
             switch (str) {
                 case ("Visa"):             return true;
-                case ("Master CardNote"):      return true;
+                case ("Master Card"):      return true;
                 case ("American Express"): return true;
                 case ("Discover"):         return true;
                 case ("Other"):            return true;
@@ -88,8 +88,8 @@ public class Graphics {
         public static Drawable getCardImage(String cardType) {
             switch (cardType) {
                 case ("Visa"):             return Res.getDrawable(R.drawable.card_visa);
-                case ("Master CardNote"):      return Res.getDrawable(R.drawable.card_mastercard);
-                case ("American Express"): return Res.getDrawable(R.drawable.card_americanexpress);
+                case ("Master Card"):      return Res.getDrawable(R.drawable.card_mastercard);
+                case ("American Express"): return Res.getDrawable(R.drawable.card_amex);
                 case ("Discover"):         return Res.getDrawable(R.drawable.card_discover);
                 default:                   return Res.getDrawable(R.drawable.card_default);
             }

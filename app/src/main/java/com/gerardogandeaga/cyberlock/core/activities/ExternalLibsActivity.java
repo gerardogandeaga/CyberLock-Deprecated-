@@ -3,19 +3,19 @@ package com.gerardogandeaga.cyberlock.core.activities;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.items.ExternalLibItem;
 import com.gerardogandeaga.cyberlock.items.ExternalLibItemContentHandler;
+import com.gerardogandeaga.cyberlock.views.CustomRecyclerView;
 import com.gerardogandeaga.cyberlock.views.decorations.ExternalLibItemDecoration;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -24,11 +24,11 @@ import butterknife.ButterKnife;
 public class ExternalLibsActivity extends CoreActivity {
     FastItemAdapter<ExternalLibItem> mFastItemAdapter;
 
-    @BindView(R.id.recyclerView) RecyclerView mRecyclerView;
+    private CustomRecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        View view = View.inflate(this, R.layout.activity_external_libraries, null);
+        View view = View.inflate(this, R.layout.activity_container_static_toolbar, null);
         setContentView(view);
         bindView();
 
@@ -57,6 +57,8 @@ public class ExternalLibsActivity extends CoreActivity {
 
     @Override
     protected void bindView() {
+        this.mRecyclerView = new CustomRecyclerView(this);
+        ((FrameLayout) findViewById(R.id.fragment_container)).addView(mRecyclerView);
         ButterKnife.bind(this);
     }
 

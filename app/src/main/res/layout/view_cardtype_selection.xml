@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="none"
+    tools:ignore="ContentDescription"
+    tools:targetApi="lollipop">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/Default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="@string/str_cardtype_other">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:padding="2dp"
+                android:src="@drawable/card_default"/>
+
+            <RadioButton
+                android:id="@+id/rbDefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/white"
+                android:clickable="false"
+                android:focusable="false"
+                android:tag="@string/str_cardtype_other"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/Visa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="@string/str_cardtype_visa">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:padding="2dp"
+                android:src="@drawable/card_visa"/>
+
+            <RadioButton
+                android:id="@+id/rbVisa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/white"
+                android:clickable="false"
+                android:focusable="false"
+                android:tag="@string/str_cardtype_visa"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/MasterCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="@string/str_cardtype_mastercard">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:padding="2dp"
+                android:src="@drawable/card_mastercard"/>
+
+            <RadioButton
+                android:id="@+id/rbMasterCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/white"
+                android:clickable="false"
+                android:focusable="false"
+                android:tag="@string/str_cardtype_mastercard"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/Amex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="@string/str_cardtype_amex">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:padding="2dp"
+                android:src="@drawable/card_amex"/>
+
+            <RadioButton
+                android:id="@+id/rbAmex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/white"
+                android:clickable="false"
+                android:focusable="false"
+                android:tag="@string/str_cardtype_amex"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/Discover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="@string/str_cardtype_discover">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:padding="2dp"
+                android:src="@drawable/card_discover"/>
+
+            <RadioButton
+                android:id="@+id/rbDiscover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/white"
+                android:clickable="false"
+                android:focusable="false"
+                android:tag="@string/str_cardtype_discover"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</HorizontalScrollView>

@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -56,7 +57,7 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.view_options);
+        setContentView(R.layout.activity_container_static_toolbar);
         bindView();
 
         mLinAutoSave.setOnClickListener(this);
@@ -76,6 +77,7 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
 
     @Override
     protected void bindView() {
+        ((FrameLayout) findViewById(R.id.fragment_container)).addView(View.inflate(this, R.layout.view_options, null));
         ButterKnife.bind(this);
     }
 
@@ -234,7 +236,7 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
 
     @Override
     public void onBackPressed() {
-        newIntent(NoteListActivity.class);
+        newIntent(NoteActivity.class);
         super.onBackPressed();
     }
 

@@ -3,6 +3,7 @@ package com.gerardogandeaga.cyberlock.core.activities;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
@@ -40,9 +41,10 @@ import butterknife.ButterKnife;
 /**
  * @author gerardogandeaga on 2018-03-30.
  */
-public class NoteListActivity extends CoreActivity implements AdapterLoaderCallback, NotePreviewDialog.EditSelectedPreview {
+public class NoteActivity extends CoreActivity implements AdapterLoaderCallback, NotePreviewDialog.EditSelectedPreview {
     @Override
     public void onLoaded(Folder folder) {
+        mLoad.dismiss();
         mRecyclerView.setVisibility(View.VISIBLE);
 
         this.mCurrentFolder = folder;
@@ -67,6 +69,7 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
 
     // views
     private View mView;
+    private CustomLoad mLoad;
     private CustomRecyclerView mRecyclerView;
     private Menu mMenu;
     private Drawer mDrawer;
@@ -82,6 +85,7 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
         bindView();
 
         setupRecyclerView();
+        displayLoad();
 
         // create the FastAdapter
         this.mItemAdapter = new FastItemAdapter<>();
@@ -104,9 +108,8 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
                     setActionBarTitleCount(mAdapterActionManager.selectedCount());
 
                     if (mAdapterActionManager.noneAreSelected()) {
-                        mAdapterActionManager.deactivate();
-                        // resets titles to current folder name and size
-                        actionbarFolderTitle();
+                        // this back pressed will handle our deactivation
+                        onBackPressed();
                     }
 
                     updateMenu();
@@ -127,6 +130,10 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
                     mAdapterActionManager.toggle(position);
                     setActionBarTitleCount(mAdapterActionManager.selectedCount());
 
+                    // actionbar icon
+                    actionBarIcon(R.drawable.ic_back);
+                    // disable drawer
+                    mDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 } else if (mAdapterActionManager.isActive()) {
                     mAdapterActionManager.toggle(position);
                     setActionBarTitleCount(mAdapterActionManager.selectedCount());
@@ -148,7 +155,7 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
         this.mDrawer = new FolderDrawer(this, mToolbar).createDrawer();
         this.mFolderDrawerHandler = new FolderDrawerHandler(this, mDrawer, mItemAdapter);
 
-        setupActionBar(null, null, R.drawable.ic_menu);
+        setupActionBar(null, null, R.drawable.ic_drawer);
         super.onCreate(savedInstanceState);
     }
 
@@ -188,6 +195,10 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
 
             // open the drawer
             case android.R.id.home:
+                if (mAdapterActionManager.isActive()) {
+                    onBackPressed();
+                    return true;
+                }
                 if (mDrawer != null) {
                     mDrawer.openDrawer();
                 }
@@ -260,11 +271,12 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
         }
     }
     private void displayLoad() {
-        CustomLoad customLoad = new CustomLoad(this, mView);
-        customLoad.show(R.id.container);
+        this.mLoad = new CustomLoad(this, mView);
+        mLoad.show(mContainer);
     }
     //
     private void actionbarFolderTitle() {
+        actionBarIcon(R.drawable.ic_drawer);
         actionBarTitle((mCurrentFolder.getName().equals("MAIN") ? "All Notes" : mCurrentFolder.getName()));
         actionBarSubTitle(Integer.toString(mCurrentFolder.getSize()) + (mCurrentFolder.getSize() == 1 ? " Item" : " Items"));
     }
@@ -282,13 +294,25 @@ public class NoteListActivity extends CoreActivity implements AdapterLoaderCallb
 
     @Override
     public void onBackPressed() {
+        // close drawer
+        if (mDrawer.isDrawerOpen()) {
+            mDrawer.closeDrawer();
+            return;
+        }
+
         // end the multi adapter action manager
         if (mAdapterActionManager.isActive()) {
             mAdapterActionManager.deactivate();
             updateMenu();
-            actionBarTitles(null, null, NO_ICON);
+            actionbarFolderTitle();
+
+            // unlock drawer again
+            mDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            return;
         } else {
+            newIntent(LoginActivity.class);
             super.onBackPressed();
+            return;
         }
     }
 }

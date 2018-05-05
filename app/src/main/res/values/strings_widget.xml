@@ -36,13 +36,11 @@
     </string-array>
     ------------------------------------------------------------------------------------------------
     <!-- edit activity -->
-    <string-array name="str_array_card_type">
-        <item>Other</item>
-        <item>Visa</item>
-        <item>Master Card</item>
-        <item>American Express</item>
-        <item>Discover</item>
-    </string-array>
+    <string name="str_cardtype_other">Other</string>
+    <string name="str_cardtype_visa">Visa</string>
+    <string name="str_cardtype_mastercard">Master Card</string>
+    <string name="str_cardtype_amex">American Express</string>
+    <string name="str_cardtype_discover">Discover</string>
     ------------------------------------------------------------------------------------------------
     <!-- text input layout fix -->
     <item name="visible" type="id"/>

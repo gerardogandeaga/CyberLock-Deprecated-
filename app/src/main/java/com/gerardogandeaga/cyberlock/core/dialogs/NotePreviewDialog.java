@@ -2,6 +2,7 @@ package com.gerardogandeaga.cyberlock.core.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -63,10 +64,10 @@ public class NotePreviewDialog {
 
         note.setText(genericNote.getNotes());
 
-        buildDialog(view);
+        buildDialog(view, null);
     }
     private void constructPreviewPaymentInfo() {
-        View v = View.inflate(mContext, R.layout.preview_paymentinfo, null);
+        View v = View.inflate(mContext, R.layout.preview_card, null);
         CardNote cardNote = mNote.getCardNote();
         //
         Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.Holder), (TextView) v.findViewById(R.id.tvHolder), cardNote.getHolder());
@@ -76,10 +77,10 @@ public class NotePreviewDialog {
         Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.CardType), (TextView) v.findViewById(R.id.tvCardType), cardNote.getCardType());
         Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.Notes), (TextView) v.findViewById(R.id.tvNotes), cardNote.getNotes());
 
-        buildDialog(v);
+        buildDialog(v, cardNote.getIcon());
     }
     private void constructPreviewLoginInfo() {
-        View v = View.inflate(mContext, R.layout.preview_logininfo, null);
+        View v = View.inflate(mContext, R.layout.preview_login, null);
         LoginNote loginNote = mNote.getLoginNote();
         //
         Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.Url), (TextView) v.findViewById(R.id.tvUrl), loginNote.getUrl());
@@ -88,13 +89,13 @@ public class NotePreviewDialog {
         Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.Password), (TextView) v.findViewById(R.id.tvPassword), loginNote.getPassword());
         Views.TextViews.setOrHideTextOnNestedView(v.findViewById(R.id.Notes), (TextView) v.findViewById(R.id.tvNotes), loginNote.getNotes());
 
-        buildDialog(v);
+        buildDialog(v, null);
     }
 
-    private void buildDialog(View view) {
+    private void buildDialog(View view, Drawable icon) {
         CustomDialog customDialog = new CustomDialog(mContext);
         customDialog.setContentView(view);
-//        if (noteContentHandler.mCardImage != null) { customDialog.setIcon(noteContentHandler.mCardImage); }
+        if (icon != null) { customDialog.setMenuIcon(icon); }
         customDialog.setTitle(mNote.getLabel());
         customDialog.setSubTitle(mNote.getDate());
         customDialog.setTitleBackgroundColour(Graphics.ColourTags.colourTagHeader(mContext, mNote.getColourTag()));

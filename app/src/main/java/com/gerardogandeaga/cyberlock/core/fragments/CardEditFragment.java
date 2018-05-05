@@ -8,15 +8,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.database.objects.notes.CardNote;
+import com.gerardogandeaga.cyberlock.views.CustomToast;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,12 +26,11 @@ import butterknife.ButterKnife;
 /**
  * @author gerardogandeaga
  */
-public class CardEditFragment extends EditFragment {
+public class CardEditFragment extends EditFragment implements View.OnClickListener {
     private static final String TAG = "CardEditFragment";
 
     private Note mNote;
     private CardNote mCardNote;
-    private ArrayAdapter<CharSequence> mArrayAdapter;
     private String mCardType;
 
     // view
@@ -40,7 +41,20 @@ public class CardEditFragment extends EditFragment {
     @BindView(R.id.etCardExpire) EditText mEtCardExpire;
     @BindView(R.id.etCardCVV)    EditText mEtCardCVV;
     @BindView(R.id.etNotes)      EditText mEtNotes;
-    @BindView(R.id.spCardSelect) Spinner mSpCardSelect;
+
+    // containers
+    @BindView(R.id.Default)    RelativeLayout mDefault;
+    @BindView(R.id.Visa)       RelativeLayout mVisa;
+    @BindView(R.id.MasterCard) RelativeLayout mMastercard;
+    @BindView(R.id.Amex)       RelativeLayout mAmex;
+    @BindView(R.id.Discover)   RelativeLayout mDiscover;
+    // radio buttons
+    @BindView(R.id.rbDefault)    RadioButton mRbDefault;
+    @BindView(R.id.rbVisa)       RadioButton mRbVisa;
+    @BindView(R.id.rbMasterCard) RadioButton mRbMastercard;
+    @BindView(R.id.rbAmex)       RadioButton mRbAmex;
+    @BindView(R.id.rbDiscover)   RadioButton mRbDiscover;
+    private RadioGroupSelector mRadioSelector;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,9 +67,7 @@ public class CardEditFragment extends EditFragment {
         assert mNote != null;
         this.mCardNote = mNote.getCardNote();
 
-        // spinner array adapter
-        this.mArrayAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.str_array_card_type, R.layout.spinner_setting_text);
-        this.mArrayAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+        this.mCardType = mCardNote.getCardType();
     }
 
     /**
@@ -66,6 +78,21 @@ public class CardEditFragment extends EditFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_card, container, false);
         ButterKnife.bind(this, view);
+
+        // set click listeners
+        mDefault.setOnClickListener(this);
+        mVisa.setOnClickListener(this);
+        mMastercard.setOnClickListener(this);
+        mAmex.setOnClickListener(this);
+        mDiscover.setOnClickListener(this);
+
+        // bundle radio buttons into a group for easy selection
+        this.mRadioSelector = new RadioGroupSelector();
+        mRadioSelector.add(mRbDefault);
+        mRadioSelector.add(mRbVisa);
+        mRadioSelector.add(mRbMastercard);
+        mRadioSelector.add(mRbAmex);
+        mRadioSelector.add(mRbDiscover);
 
         // configure views
         mEtCardNumber.addTextChangedListener(new TextWatcher() {
@@ -112,20 +139,6 @@ public class CardEditFragment extends EditFragment {
                 }
             }
         });
-        mSpCardSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Object object = parent.getItemAtPosition(position);
-                if (object != null) {
-                    mCardType = object.toString();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-        mSpCardSelect.setAdapter(mArrayAdapter);
 
         return view;
     }
@@ -141,9 +154,7 @@ public class CardEditFragment extends EditFragment {
             mEtCardExpire.setText(mCardNote.getExpiry());
             mEtCardCVV.setText(mCardNote.getCVV());
             mEtNotes.setText(mCardNote.getNotes());
-
-            // spinner
-            mSpCardSelect.setSelection(mArrayAdapter.getPosition(mCardNote.getCardType()));
+            mRadioSelector.clicked(mRadioSelector.getTagged(mCardNote.getCardType()));
         } else {
             mTvDate.setText(null);
             mEtLabel.setText(null);
@@ -152,6 +163,7 @@ public class CardEditFragment extends EditFragment {
             mEtCardExpire.setText(null);
             mEtCardCVV.setText(null);
             mEtNotes.setText(null);
+            mRadioSelector.clicked(mRbDefault);
         }
     }
 
@@ -184,5 +196,68 @@ public class CardEditFragment extends EditFragment {
         Log.i(TAG, "onSaveRequest: save requested");
         compile();
         mRequestResponder.onSaveResponse(mNote);
+    }
+
+    @Override
+    public void onClick(View v) {
+        // get card type to string
+        this.mCardType = (String) v.getTag();
+        CustomToast.buildAndShowToast(getActivity(), mCardType + " Selected", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
+
+        // radio button toggle
+        switch (v.getId()) {
+            case R.id.Default:
+                mRadioSelector.clicked(mRbDefault);
+                break;
+            case R.id.Visa:
+                mRadioSelector.clicked(mRbVisa);
+                break;
+            case R.id.MasterCard:
+                mRadioSelector.clicked(mRbMastercard);
+                break;
+            case R.id.Amex:
+                mRadioSelector.clicked(mRbAmex);
+                break;
+            case R.id.Discover:
+                mRadioSelector.clicked(mRbDiscover);
+                break;
+        }
+    }
+
+    private class RadioGroupSelector {
+        private ArrayList<RadioButton> mRadioButtons;
+
+        RadioGroupSelector() {
+            this.mRadioButtons = new ArrayList<>();
+        }
+
+        void add(RadioButton radioButton) {
+            mRadioButtons.add(radioButton);
+        }
+
+        /**
+         * get button with specific tag
+         * @param tag card type
+         * @return radio button with that card type
+         */
+        RadioButton getTagged(String tag) {
+            for (RadioButton button : mRadioButtons) {
+                if (button.getTag().equals(tag)) {
+                    return button;
+                }
+            }
+            return null;
+        }
+
+        /**
+         * deselects all other radio buttons other the one selected
+         * @param selectedButton clicked button
+         */
+        void clicked(RadioButton selectedButton) {
+            for (RadioButton button : mRadioButtons) {
+                // deselect all other buttons
+                button.setChecked(button == selectedButton);
+            }
+        }
     }
 }

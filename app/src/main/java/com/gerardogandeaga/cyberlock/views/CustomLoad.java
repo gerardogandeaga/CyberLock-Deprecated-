@@ -1,15 +1,12 @@
 package com.gerardogandeaga.cyberlock.views;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.utils.math.Scaling;
 
 import org.jetbrains.annotations.Contract;
 
@@ -34,25 +31,16 @@ public class CustomLoad {
     public CustomLoad(Context context, View viewToOverLay) {
         this.mContext = context;
         this.mViewToOverlay = viewToOverLay;
-        this.mView = View.inflate(mContext, R.layout.item_progress, null);
+        this.mView = View.inflate(mContext, R.layout.fragment_load, null);
 
         ButterKnife.bind(this, mView);
 
         defaultViewVisibility();
     }
 
-    public void show(int containerId) {
-        // todo find a better way to always keep overlay in the middle, currently i'm just adding a margin... try using gravity
-        int height = ((Scaling.pxFromDp(mContext, mContext.getResources().getDisplayMetrics().heightPixels)) / 2) - Scaling.dpFromPx(mContext, 56);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.CENTER;
-        params.topMargin = Scaling.dpFromPx(mContext, height);
-        mView.setLayoutParams(params);
-
+    public void show(View container) {
         // add overlay view to main view
-        ((LinearLayout) mViewToOverlay.findViewById(containerId)).addView(mView);
-
+        ((FrameLayout) container).addView(mView);
         this.mIsVisible = true;
     }
 

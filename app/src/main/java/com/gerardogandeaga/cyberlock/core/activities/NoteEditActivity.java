@@ -292,7 +292,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
         if (mIsAutoSave) {
             requestSave();
         }
-        newIntent(NoteListActivity.class);
+        newIntent(NoteActivity.class);
         super.onBackPressed();
     }
 
