@@ -1,6 +1,8 @@
 package com.gerardogandeaga.cyberlock;
 
+import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -22,23 +24,36 @@ public class Views {
          * custom definition for empty string]
          */
         private static boolean isEmpty(String string) {
-            return (string == null || string.isEmpty());
+            return string == null || string.isEmpty();
         }
 
         public static void setOrHideText(TextView textView, String string) {
-            if (!isEmpty(string)) {
-                textView.setText(string);
-            } else {
+            if (isEmpty(string)) {
                 setVisibility(textView, false);
             }
+            textView.setText(string);
         }
 
-        public static void setOrHideTextOnNestedView(View view, TextView textView, String string) {
+        public static void setOrHideTextOnNestedView(View parent, TextView textView, String string) {
             setOrHideText(textView, string);
 
             // if string is empty then hide nested view
             if (isEmpty(string)) {
-                setVisibility(view, false);
+                setVisibility(parent, false);
+            }
+        }
+    }
+
+    public static class ImageViews {
+
+        public static void setOrHideImage(ImageView imageView, Drawable drawable) {
+            imageView.setImageDrawable(drawable);
+            if (drawable != null) {
+                if (imageView.getVisibility() != View.VISIBLE) {
+                    imageView.setVisibility(View.VISIBLE);
+                }
+            } else {
+                imageView.setVisibility(View.GONE);
             }
         }
     }

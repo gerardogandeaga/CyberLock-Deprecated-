@@ -31,6 +31,7 @@
                 android:orderInCategory="0"
                 android:title="@string/str_menu_add_login"
                 app:showAsAction="never"/>
+
         </menu>
 
     </item>
@@ -43,19 +44,20 @@
 
         <menu>
 
-
             <item
                 android:id="@+id/menu_option_options"
                 android:icon="@drawable/ic_cog"
                 android:orderInCategory="0"
                 android:title="@string/str_menu_options"
                 app:showAsAction="never"/>
+
             <item
                 android:id="@+id/menu_option_import"
                 android:icon="@drawable/ic_import"
                 android:orderInCategory="0"
                 android:title="@string/str_menu_import"
                 app:showAsAction="never"/>
+
         </menu>
 
     </item>

@@ -7,7 +7,6 @@ import android.database.Cursor;
 
 import com.gerardogandeaga.cyberlock.App;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
-import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.interfaces.DBFolderConstants;
 
 import net.sqlcipher.database.SQLiteDatabase;
@@ -132,19 +131,19 @@ public class DBFolderAccessor implements DBFolderConstants {
         long created =      cursor.getLong(POS_DATE_CREATED);
         String colour_tag = cursor.getString(POS_COLOUR_TAG);
         String name =       cursor.getString(POS_NAME);
-        // create new note object
+        // create new folder object
         return new Folder(modded, created, colour_tag, name);
     }
 
     // this function checks if a specific piece of data exists in the database returning a boolean
-    public boolean containsNote(Note note) {
+    public boolean containsFolder(Folder folder) {
         List<Folder> folders = getAllFolders();
         for (int i = 0; i < folders.size(); i++) {
-            if (note.toString().equals(folders.get(i).toString())) {
-                return false;
+            if (folder.equals(folders.get(i))) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     private Cursor getQuery(SQLiteDatabase db) {

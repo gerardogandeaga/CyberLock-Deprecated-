@@ -1,64 +1,64 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="MaterialTheme.Light">
         <!-- primitives, do not touch!-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!---->
-        
-        <!-- custom colours -->
-        <item name="transparent">@android:color/transparent</item>
 
+
+        <!-- customizations -->
+        <!-- action bar overlay -->
+        <item name="windowActionModeOverlay">true</item>
+
+        <!-- custom specific colours -->
+        <item name="transparent">@android:color/transparent</item>
+        <!-- ripple -->
         <item name="accentRipple">@color/c_gray_20</item>
         <item name="maskRipple">@color/white</item>
-
+        <!-- scrollbars -->
         <item name="scrollbarMainColour">@color/black</item>
         <item name="scrollbarPreviewColour">@color/c_gray_30</item>
-
+        <!-- toolbar -->
         <item name="toolbarColour">@color/white</item>
         <item name="toolbarItemColour">@color/black</item>
-        <item name="toolbarTitleColour">@color/black</item>
-        <item name="toolbarSubTitleColour">@color/black</item>
-
+        <item name="titleColour">@color/black</item>
+        <item name="subtitleColour">@color/black</item>
+        <!-- backgrounds -->
         <item name="backgroundColour">@color/white</item>
+        <!-- text -->
+        <item name="android:textColorPrimary">?attr/titleColour</item>
+        <item name="actionMenuTextColor">?attr/titleColour</item>
 
-
-        <item name="android:textColorPrimary">?attr/toolbarTitleColour</item>
-        <item name="actionMenuTextColor">?attr/toolbarTitleColour</item>
-
-        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <!-- main colours -->
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorPrimary">@color/white</item>
         <item name="colorAccent">@color/black</item>
 
+
+        <item name="android:actionModeCloseDrawable">@drawable/ic_back</item>
+        <item name="actionModeStyle">@style/MyActionMode</item>
     </style>
 
-    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/black</item>
-
-        <item name="backgroundColour">@color/c_gray_0</item>
-
-    </style>
-
-    <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">@color/c_orange_70</item>
-        <item name="colorAccent">@color/black</item>
-
-        <item name="backgroundColour">@color/c_blue_90</item>
-
-    </style>
-
-    <style name="MyDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
-    </style>
-
-    <style name="MyToolbarStyle" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    <!-- toolbar -->
+    <style name="MyToolbarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="colorControlHighlight">@color/c_gray_30</item>
+        <item name="titleTextColor">?attr/titleColour</item>
+        <item name="subtitleTextColor">?attr/subtitleColour</item>
+    </style>
+
+    <!-- ActionMode -->
+    <!-- during action mode -> this is displayed on the action bar -->
+    <style name="MyActionMode" parent="Base.Widget.AppCompat.ActionMode">
+        <item name="titleTextStyle">@style/MyActionModeTitle</item>
+    </style>
+    <style name="MyActionModeTitle" parent="TextAppearance.AppCompat.Widget.ActionMode.Title">
+        <!-- action mode title colour -->
+        <item name="android:textColor">@color/black</item>
     </style>
 
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark"/>
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
 </resources>

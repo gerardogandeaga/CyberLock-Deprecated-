@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="false">
+        <ripple android:color="@color/ct_default">
+
+            <item>
+                <shape>
+                    <solid android:color="@color/white"/>
+
+                </shape>
+
+            </item>
+
+            <item android:id="@android:id/mask">
+                <shape>
+                    <solid android:color="@color/white"/>
+                    <stroke android:width="2dp" android:color="@color/black"/>
+                </shape>
+
+            </item>
+
+        </ripple>
+
+    </item>
+
+    <item android:state_selected="true">
+        <shape>
+            <solid android:color="@color/white"/>
+            <stroke android:color="@color/black" android:width="2dp"/>
+
+        </shape>
+
+    </item>
+
+</selector>

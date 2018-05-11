@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.items.ExternalLibItem;
+import com.gerardogandeaga.cyberlock.items.LibItem;
 import com.gerardogandeaga.cyberlock.items.ExternalLibItemContentHandler;
 import com.gerardogandeaga.cyberlock.views.CustomRecyclerView;
 import com.gerardogandeaga.cyberlock.views.decorations.ExternalLibItemDecoration;
@@ -21,8 +21,8 @@ import butterknife.ButterKnife;
 /**
  * @author gerardogandeaga on 2018-03-30.
  */
-public class ExternalLibsActivity extends CoreActivity {
-    FastItemAdapter<ExternalLibItem> mFastItemAdapter;
+public class LibActivity extends CoreActivity {
+    FastItemAdapter<LibItem> mItemAdapter;
 
     private CustomRecyclerView mRecyclerView;
 
@@ -32,12 +32,12 @@ public class ExternalLibsActivity extends CoreActivity {
         setContentView(view);
         bindView();
 
-        this.mFastItemAdapter = new FastItemAdapter<>();
+        this.mItemAdapter = new FastItemAdapter<>();
 
-        mFastItemAdapter.setHasStableIds(true);
-        mFastItemAdapter.withSelectable(true);
-        mFastItemAdapter.withMultiSelect(true);
-        mFastItemAdapter.withSelectOnLongClick(true);
+        mItemAdapter.setHasStableIds(true);
+        mItemAdapter.withSelectable(true);
+        mItemAdapter.withMultiSelect(true);
+        mItemAdapter.withSelectOnLongClick(true);
 
         // linear layout
         mRecyclerView.setLayoutManager(
@@ -45,11 +45,11 @@ public class ExternalLibsActivity extends CoreActivity {
         // decoration
         mRecyclerView.addItemDecoration(new ExternalLibItemDecoration(this));
         // adapter
-        mRecyclerView.setAdapter(mFastItemAdapter);
+        mRecyclerView.setAdapter(mItemAdapter);
 
-        List<ExternalLibItem> externalLibItemList = new ExternalLibItemContentHandler(this).getItems();
+        List<LibItem> libItems = new ExternalLibItemContentHandler(this).getItems();
 
-        mFastItemAdapter.add(externalLibItemList);
+        mItemAdapter.add(libItems);
 
         setupActionBar("Libraries And Licences", null, R.drawable.ic_back);
         super.onCreate(savedInstanceState);

@@ -1,31 +1,38 @@
 package com.gerardogandeaga.cyberlock.core.dialogs;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.widget.ProgressBar;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.gerardogandeaga.cyberlock.views.CustomDialog;
 
-// todo remove this DialogLoad class and replace with a dialog wrapper that has a custom load inside of it
 /**
  * @author gerardogandeaga
+ *
+ * quick dirty class to show load widgets anywhere
  */
 public class LoadDialog {
     private Context mContext;
 
-    private MaterialDialog mDialog;
+    private Dialog mDialog;
 
     public LoadDialog(Context context) {
         this.mContext = context;
     }
 
-    public void indeterminateProgress(String str) {
+    /**
+     * horizontal load bar
+     */
+    public void indeterminateProgress(String title) {
+        // create indeterminate load widget
+        final ProgressBar progressBar = new ProgressBar(mContext);
+        progressBar.setIndeterminate(true);
 
-        final MaterialDialog.Builder builder = new MaterialDialog.Builder(mContext);
-        builder.content(str);
-        builder.progress(true, 0);
-        builder.progressIndeterminateStyle(true);
-        builder.cancelable(false);
+        CustomDialog dialogBuilder = new CustomDialog(mContext);
+        dialogBuilder.setTitle(title);
+        dialogBuilder.setContentView(progressBar);
 
-        this.mDialog = builder.build();
+        this.mDialog = dialogBuilder.createDialog();
         mDialog.show();
     }
 

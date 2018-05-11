@@ -22,9 +22,6 @@ import com.gerardogandeaga.cyberlock.views.CustomToast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * @author gerardogandeaga
- */
 enum LoginStates {
     LOGIN, REGISTER
 }
@@ -209,7 +206,7 @@ public class LoginActivity extends SecureActivity {
     private void initialPreferences() {
         PreferencesAccessor.setAutoSave(this, false);
 
-        // todo fix this quick saver
+        // quick create/saves initial folders and other foundations
         new Initial(this).setupFolders();
     }
 

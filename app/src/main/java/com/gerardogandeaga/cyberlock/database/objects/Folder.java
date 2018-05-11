@@ -59,6 +59,16 @@ public class Folder extends SavableObject implements Serializable {
         return (mColourTag == null && mName == null);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Folder) {
+            Folder folder = (Folder) obj;
+            // we compare just by name by simple lower case text
+            return folder.getName().toLowerCase().equals(mName.toLowerCase());
+        }
+        return false;
+    }
+
     // default drawer folders
     public static class Constants {
         public static final String TRASH = "Trash";

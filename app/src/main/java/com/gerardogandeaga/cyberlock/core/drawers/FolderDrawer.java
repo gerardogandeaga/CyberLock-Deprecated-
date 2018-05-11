@@ -64,7 +64,8 @@ public class FolderDrawer {
                 .addDrawerItems(
                         new FolderDrawerItem(Folder.Constants.ALL_NOTES_FOLDER, false),
                         new FolderDrawerItem(Folder.Constants.TRASH_FOLDER, false).withIcon(R.drawable.ic_trash),
-                        new FolderDrawerItem(Folder.Constants.ARCHIVE_FOLDER, false).withIcon(R.drawable.ic_archive)
+                        new FolderDrawerItem(Folder.Constants.ARCHIVE_FOLDER, false).withIcon(R.drawable.ic_archive),
+                        new DividerDrawerItem()
                 )
                 // add custom folders
                 .addDrawerItems(drawerItems)
@@ -98,8 +99,6 @@ public class FolderDrawer {
             // add to list
             drawerItems.add(new FolderDrawerItem(folder, true));
         }
-
-        drawerItems.add(new DividerDrawerItem());
 
         return drawerItems;
     }

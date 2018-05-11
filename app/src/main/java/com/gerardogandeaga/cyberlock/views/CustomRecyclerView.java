@@ -43,6 +43,9 @@ public class CustomRecyclerView extends RecyclerView {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
+
+        this.mIsAnimatable = mCurrentCount < getAdapter().getItemCount();
+
         for (int i = 0; i < getChildCount(); i++) {
             animate(getChildAt(i), i);
 
@@ -65,9 +68,5 @@ public class CustomRecyclerView extends RecyclerView {
             view.setAlpha(0);
             view.animate().alpha(1.0f).translationY(0).setDuration(300).setStartDelay(pos * 100);
         }
-    }
-
-    public void endAnimations() {
-        this.mIsAnimatable = false;
     }
 }

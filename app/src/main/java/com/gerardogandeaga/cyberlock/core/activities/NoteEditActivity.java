@@ -10,11 +10,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.core.dialogs.ColourPaletteFragmentDialog;
+import com.gerardogandeaga.cyberlock.core.dialogs.ColourPaletteDialogFragment;
+import com.gerardogandeaga.cyberlock.core.dialogs.FolderSelectDialogFragment;
 import com.gerardogandeaga.cyberlock.core.fragments.CardEditFragment;
 import com.gerardogandeaga.cyberlock.core.fragments.LoginEditFragment;
 import com.gerardogandeaga.cyberlock.core.fragments.NoteEditFragment;
 import com.gerardogandeaga.cyberlock.database.DBNoteAccessor;
+import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.enums.NoteEditTypes;
 import com.gerardogandeaga.cyberlock.interfaces.RequestResponder;
@@ -31,7 +33,7 @@ import butterknife.ButterKnife;
  * this class extends the core activity meaning all major security features come with
  * this class
  */
-public class NoteEditActivity extends CoreActivity implements RequestResponder, ColourPaletteFragmentDialog.ColourSelector {
+public class NoteEditActivity extends CoreActivity implements RequestResponder, ColourPaletteDialogFragment.ColourSelectionCallback, FolderSelectDialogFragment.FolderSelectionCallback {
     private static final String TAG = "NoteEditActivity";
 
     private Menu mMenu;
@@ -50,7 +52,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
     private Note mNote;
 
     // note object
-    private String mFolder;
+    private String mCurrentFolder;
     private String mColourTag;
 
     @Override
@@ -117,7 +119,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
 
             // general properties
             // folder
-            this.mFolder = (mNote.isNew() ? bundle.getString("folder") : mNote.getFolder());
+            this.mCurrentFolder = (mNote.isNew() ? bundle.getString("folder") : mNote.getFolder());
             this.mColourTag = mNote.getColourTag();
 
             // remove bundles
@@ -168,8 +170,11 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menu_folder:
+                FolderSelectDialogFragment.show(this, mCurrentFolder);
+                break;
             case R.id.menu_colour_tag:
-                ColourPaletteFragmentDialog.show(this);
+                ColourPaletteDialogFragment.show(this);
                 break;
             // send save request to fragment
             case R.id.menu_save:
@@ -180,12 +185,6 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
                 break;
         }
         return true;
-    }
-
-    @Override
-    public void onColorSelected(String colour) {
-        this.mColourTag = colour;
-        mutateMenuTagIcon();
     }
 
     /**
@@ -240,6 +239,17 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
         onBackPressed();
     }
 
+    @Override
+    public void onColorSelected(String colour) {
+        this.mColourTag = colour;
+        mutateMenuTagIcon();
+    }
+
+    @Override
+    public void onFolderSelected(Folder folder) {
+        this.mCurrentFolder = folder.getName();
+    }
+
     /**
      * saves or updates
      * @param object filled note
@@ -253,7 +263,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
 
                 // global note configs
                 this.mNote = ((Note) object)
-                        .withFolder(mFolder)
+                        .withFolder(mCurrentFolder)
                         .withColourTag(mColourTag);
 
                 DBNoteAccessor accessor = DBNoteAccessor.getInstance();

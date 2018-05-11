@@ -29,23 +29,29 @@ public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerIte
     private static final String TAG = "FolderDrawerItem";
     private PopupMenu.OnDismissListener mOnDismissListener;
 
+    private Folder mFolder;
     private boolean mHasMenu;
     private int mMenu;
 
     public FolderDrawerItem(@NonNull final Folder folder, boolean withMenu) {
         super();
+        this.mFolder = folder;
 
         // configure drawer item with default settings
         withSelectable(false);
 
         withIcon(R.drawable.ic_folder);
-        withName(folder.getName());
+        withName(mFolder.getName());
 
         // menu
         this.mHasMenu = withMenu;
         if (withMenu) {
             withMenu(R.menu.menu_folder_drawer);
         }
+    }
+
+    public Folder getFolder() {
+        return mFolder;
     }
 
     public FolderDrawerItem withMenu(int menu) {

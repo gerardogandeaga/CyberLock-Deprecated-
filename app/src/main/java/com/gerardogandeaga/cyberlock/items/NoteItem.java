@@ -11,15 +11,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.Views;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
-import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
-import com.gerardogandeaga.cyberlock.views.handlers.TextViews;
+import com.gerardogandeaga.cyberlock.database.objects.notes.CardNote;
+import com.gerardogandeaga.cyberlock.database.objects.notes.GenericNote;
+import com.gerardogandeaga.cyberlock.database.objects.notes.LoginNote;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.mikepenz.materialize.util.UIUtils;
 
 import java.util.List;
-import java.util.Scanner;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +37,7 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
     private Note mNote;
     private String mType;
     // data
-    private int mTag;
+    private int mColourTag;
     private String mDate;
     private String mLabel;
     private String mContent;
@@ -66,8 +67,8 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
         return this;
     }
     //
-    public NoteItem withTag(int tag) {
-        this.mTag = tag;
+    public NoteItem withColourTag(int colourTag) {
+        this.mColourTag = colourTag;
         return this;
     }
     public NoteItem withDate(String date) {
@@ -106,15 +107,7 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
      */
     @Override
     public int getLayoutRes() {
-        if (mContext != null) {
-            if (PreferencesAccessor.Checkers.isLinearFormat(PreferencesAccessor.getListFormat(mContext))) {
-                return R.layout.note_item_linear;
-            } else {
-                return R.layout.note_item_grid;
-            }
-        } else {
-            return R.layout.note_item_linear;
-        }
+        return R.layout.item_note;
     }
 
     @NonNull
@@ -131,15 +124,15 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
 
         @BindView(R.id.container)    CardView CardView;
         @BindView(R.id.note)         LinearLayout Note;
-        @BindView(R.id.paymentInfo)  LinearLayout PaymentInfo;
-        @BindView(R.id.loginInfo)    LinearLayout LoginInfo;
+        @BindView(R.id.paymentInfo)  LinearLayout Card;
+        @BindView(R.id.loginInfo)    LinearLayout Login;
 
         @BindView(R.id.tvLabel)      TextView  Label;
         @BindView(R.id.tvSubTitle)   TextView  Date;
         @BindView(R.id.imgColourTag) CircleImageView ColourTag;
 
         // note
-        @BindView(R.id.tvNotes)       TextView Notes;
+        @BindView(R.id.tvNotes)      TextView Notes;
         // paymentinfo
         @BindView(R.id.tvHolder)     TextView  Holder;
         @BindView(R.id.tvNumber)     TextView  Number;
@@ -155,94 +148,78 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
             this.View = view;
         }
 
-        // binding and unbinding
         @Override
         public void bindView(@NonNull NoteItem item, @NonNull List<Object> payloads) {
-            UIUtils.setBackground(View, R.drawable.data_item_drawable_states);
+            // first we need to justq quickly hide all the sections
+            Views.setVisibility(Note, false);
+            Views.setVisibility(Card, false);
+            Views.setVisibility(Login, false);
 
-            TextViews.setLinearLayoutVisibility(Note, PaymentInfo, LoginInfo, item.mType);
+            // container background
+            UIUtils.setBackground(View, R.drawable.note_item_background);
 
             // bind our data to the view
-            TextViews.setOrHideTextView(item.mLabel, Label);
-            TextViews.setOrHideTextView("Updated on " + item.mDate, Date);
-            filterContent(item);
+            Views.TextViews.setOrHideText(Label, item.mLabel);
+            Views.TextViews.setOrHideText(Date, "Updated on " + item.mDate);
+            // set the content according to the note
+            setContent(item);
 
             // images
             ColourTag.setVisibility(android.view.View.VISIBLE);
-            ColourTag.setColorFilter(item.mTag, PorterDuff.Mode.SRC_ATOP);
+            ColourTag.setColorFilter(item.mColourTag, PorterDuff.Mode.SRC_ATOP);
         }
 
         @Override
         public void unbindView(@NonNull NoteItem item) {
-            // nullify views
-            Label.setText(null);
-            Date.setText(null);
-
-            Notes.setText(null);
-
-            Holder.setText(null);
-            Number.setText(null);
-            CardIcon.setImageDrawable(null);
-
-            Url.setText(null);
-            Email.setText(null);
-            Username.setText(null);
-
-            // reset visibility
-            Note.setVisibility(android.view.View.GONE);
-            PaymentInfo.setVisibility(android.view.View.GONE);
-            LoginInfo.setVisibility(android.view.View.GONE);
-
-            // text views
-            Label.setVisibility(android.view.View.GONE);
-            Date.setVisibility(android.view.View.GONE);
-
-            Notes.setVisibility(android.view.View.GONE);
-
-            Holder.setVisibility(android.view.View.GONE);
-            Number.setVisibility(android.view.View.GONE);
-
-            Url.setVisibility(android.view.View.GONE);
-            Email.setVisibility(android.view.View.GONE);
-            Username.setVisibility(android.view.View.GONE);
-
-            // image views
-            CardIcon.setVisibility(android.view.View.GONE);
+            // hide everything
+            Views.TextViews.setOrHideText(Label, null);
+            Views.TextViews.setOrHideText(Date, null);
+            Views.ImageViews.setOrHideImage(ColourTag, null);
+            // note
+            Views.TextViews.setOrHideText(Notes, null);
+            // card
+            Views.TextViews.setOrHideText(Holder, null);
+            Views.TextViews.setOrHideText(Number, null);
+            Views.ImageViews.setOrHideImage(CardIcon, null);
+            // login
+            Views.TextViews.setOrHideText(Url, null);
+            Views.TextViews.setOrHideText(Email, null);
+            Views.TextViews.setOrHideText(Username, null);
 
             item.getViewHolder(View);
-
-            // clear graphics
-            ColourTag.setVisibility(android.view.View.INVISIBLE);
         }
 
-        // filter content
-        private void filterContent(NoteItem item) {
-            Scanner scanner = new Scanner(item.mContent);
-            switch(item.mType) {
+        /**
+         * filters the type of note the note is and sets the views accordingly
+         * @param item list item which contains a Note object
+         */
+        private void setContent(NoteItem item) {
+            final Note note = item.getNote();
+
+            switch(note.getType()) {
                 case com.gerardogandeaga.cyberlock.database.objects.Note.GENERIC:
-                    TextViews.setOrHideTextView(item.mContent, Notes);
+                    GenericNote genericNote = new GenericNote(note);
+                    Views.TextViews.setOrHideText(Notes, genericNote.getNotes());
+                    // expand the parent view
+                    Note.setVisibility(android.view.View.VISIBLE);
                     break;
                 case com.gerardogandeaga.cyberlock.database.objects.Note.CARD:
-                    String holder = "", number = "";
-                    if (scanner.hasNextLine()) holder = scanner.nextLine();
-                    if (scanner.hasNextLine()) number = scanner.nextLine();
-
-                    TextViews.setOrHideTextView(holder, Holder);
-                    TextViews.setOrHideTextView(number, Number);
-                    TextViews.setOrHideImageView(item.mCardType, CardIcon);
+                    CardNote cardNote = new CardNote(note);
+                    Views.TextViews.setOrHideText(Holder, cardNote.getHolder());
+                    Views.TextViews.setOrHideText(Number, cardNote.getNumber());
+                    Views.ImageViews.setOrHideImage(CardIcon, cardNote.getIcon());
+                    // expand the parent view
+                    Card.setVisibility(android.view.View.VISIBLE);
                     break;
                 case com.gerardogandeaga.cyberlock.database.objects.Note.LOGIN:
-                    String url = "", email = "", username = "";
-                    if (scanner.hasNextLine()) url = scanner.nextLine();
-                    if (scanner.hasNextLine()) email = scanner.nextLine();
-                    if (scanner.hasNextLine()) username = scanner.nextLine();
-
-                    TextViews.setOrHideTextView(url, Url);
-                    TextViews.setOrHideTextView(email, Email);
-                    TextViews.setOrHideTextView(username, Username);
+                    LoginNote loginNote = new LoginNote(note);
+                    Views.TextViews.setOrHideText(Url, loginNote.getUrl());
+                    Views.TextViews.setOrHideText(Email, loginNote.getEmail());
+                    Views.TextViews.setOrHideText(Username, loginNote.getUsername());
+                    // expand the parent view
+                    Login.setVisibility(android.view.View.VISIBLE);
                     break;
             }
-            scanner.close();
         }
     }
 

@@ -98,6 +98,7 @@ public class AdapterActionManager<Item extends IItem> {
 
     public void deselect(int position) {
         // deselect
+
         mItemSelectExtension.deselect(position);
         mItemList.remove(mItemAdapter.getItem(position));
 

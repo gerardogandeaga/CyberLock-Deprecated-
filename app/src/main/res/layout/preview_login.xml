@@ -167,7 +167,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/str_tv_holder"
+                android:text="@string/str_tv_notes"
                 android:textAppearance="@style/myText.Edit.Hint"/>
 
             <TextView

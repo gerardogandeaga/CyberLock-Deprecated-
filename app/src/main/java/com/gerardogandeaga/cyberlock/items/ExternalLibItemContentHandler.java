@@ -38,12 +38,12 @@ public class ExternalLibItemContentHandler {
         Log.i(TAG, "ExternalLibItemContentHandler Length : " + mLength);
     }
 
-    public List<ExternalLibItem> getItems() {
-        List<ExternalLibItem> externalLibItemList = new ArrayList<>();
+    public List<LibItem> getItems() {
+        List<LibItem> libItemList = new ArrayList<>();
 
         for (int i = 0; i < mLength; i++) {
-            externalLibItemList.add(
-                    new ExternalLibItem()
+            libItemList.add(
+                    new LibItem()
                             .withIdentifier((long) (i + 1))
                             .withTitle(getTitle(i))
                             .withAuthor(getAuthor(i))
@@ -52,7 +52,7 @@ public class ExternalLibItemContentHandler {
             );
         }
 
-        return externalLibItemList;
+        return libItemList;
     }
 
     private String getTitle(int i) {

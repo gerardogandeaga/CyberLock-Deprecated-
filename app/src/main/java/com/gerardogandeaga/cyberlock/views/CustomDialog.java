@@ -44,7 +44,7 @@ public class CustomDialog {
     // containers
     @BindView(R.id.titleContainer)    LinearLayout mTitleContainer;
     @BindView(R.id.buttonContainer)   LinearLayout mButtonContainer;
-    @BindView(R.id.container)         LinearLayout mContainer;
+    @BindView(R.id.container)         RelativeLayout mContainer;
 
     public CustomDialog(Context context) {
         this.mContext = context;

@@ -15,14 +15,14 @@ import java.util.Scanner;
 /**
  * @author gerardogandeaga on 2018-03-30.
  */
-public class NoteItemContentHandler {
+public class NoteItemBuilder {
     private Context mContext;
 
     private String TYPE;
 
     private static int mPosition = 0;
 
-    public NoteItemContentHandler(Context context) {
+    public NoteItemBuilder(Context context) {
         this.mContext = context;
     }
 
@@ -45,7 +45,7 @@ public class NoteItemContentHandler {
                             .withLabel(note.getLabel())
                             .withContent(getUnbindedContent(note, note.getContent()))
                             .withDate(note.getDate())
-                            .withTag(getColour(note))
+                            .withColourTag(getColour(note))
                             // if type is paymentinfo
                             .withCardIcon(getCardImage(note.getContent()))
             );
@@ -69,7 +69,7 @@ public class NoteItemContentHandler {
                 .withLabel(note.getLabel())
                 .withContent(getUnbindedContent(note, note.getContent()))
                 .withDate(note.getDate())
-                .withTag(getColour(note))
+                .withColourTag(getColour(note))
                 // if type is paymentinfo
                 .withCardIcon(getCardImage(note.getContent()));
     }

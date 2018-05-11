@@ -3,7 +3,7 @@ package com.gerardogandeaga.cyberlock.core.activities;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.DrawerLayout;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
@@ -18,8 +18,7 @@ import com.gerardogandeaga.cyberlock.database.loaders.NoteAdapterLoader;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.handlers.FolderDrawerHandler;
-import com.gerardogandeaga.cyberlock.helpers.AdapterActionManager;
-import com.gerardogandeaga.cyberlock.helpers.DataObjectDeleter;
+import com.gerardogandeaga.cyberlock.helpers.ActionModeManager;
 import com.gerardogandeaga.cyberlock.interfaces.AdapterLoaderCallback;
 import com.gerardogandeaga.cyberlock.items.NoteItem;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
@@ -27,7 +26,6 @@ import com.gerardogandeaga.cyberlock.utils.ListFormat;
 import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
 import com.gerardogandeaga.cyberlock.views.CustomLoad;
 import com.gerardogandeaga.cyberlock.views.CustomRecyclerView;
-import com.gerardogandeaga.cyberlock.views.CustomSnackBar;
 import com.gerardogandeaga.cyberlock.views.decorations.NoteItemDecoration;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
@@ -61,17 +59,16 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
 
     private Context mContext = this;
 
+    private ActionModeManager<NoteItem> mActionModeManager;
+
     // adapter
     private FastItemAdapter<NoteItem> mItemAdapter;
-    private AdapterActionManager<NoteItem> mAdapterActionManager;
-    private FolderDrawerHandler mFolderDrawerHandler;
     private Folder mCurrentFolder;
 
     // views
     private View mView;
     private CustomLoad mLoad;
     private CustomRecyclerView mRecyclerView;
-    private Menu mMenu;
     private Drawer mDrawer;
 
     @BindView(R.id.fragment_container) FrameLayout mContainer;
@@ -79,6 +76,7 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
     // initial on create methods
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         // set view
         this.mView = View.inflate(this, R.layout.activity_container_static_toolbar, null);
         setContentView(mView);
@@ -89,86 +87,61 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
 
         // create the FastAdapter
         this.mItemAdapter = new FastItemAdapter<>();
-        this.mAdapterActionManager = new AdapterActionManager<>(this, mItemAdapter);
 
         // configure the FastAdapter
         mItemAdapter.setHasStableIds(true);
-        mItemAdapter.withSelectable(false);
-        mItemAdapter.withMultiSelect(false);
-        mItemAdapter.withAllowDeselection(false);
-        mItemAdapter.withSelectOnLongClick(false);
-
-        // item Listeners
-        mItemAdapter.withOnClickListener(new OnClickListener<NoteItem>() {
-            @Override
-            public boolean onClick(View view, @NonNull IAdapter<NoteItem> adapter, @NonNull NoteItem item, int position) {
-                if (mAdapterActionManager.isActive()) {
-                    // selection mode
-                    mAdapterActionManager.toggle(position);
-                    setActionBarTitleCount(mAdapterActionManager.selectedCount());
-
-                    if (mAdapterActionManager.noneAreSelected()) {
-                        // this back pressed will handle our deactivation
-                        onBackPressed();
-                    }
-
-                    updateMenu();
-
-                } else {
-                    // preview data
-                    new NotePreviewDialog(mContext, item.getNote()).initializeDialog();
-                }
-
-                return true;
-            }
-        });
-        mItemAdapter.withOnLongClickListener(new OnLongClickListener<NoteItem>() {
-            @Override
-            public boolean onLongClick(@NonNull View view, @NonNull IAdapter<NoteItem> adapter, @NonNull NoteItem item, int position) {
-                if (!mAdapterActionManager.isActive()) {
-                    mAdapterActionManager.activate();
-                    mAdapterActionManager.toggle(position);
-                    setActionBarTitleCount(mAdapterActionManager.selectedCount());
-
-                    // actionbar icon
-                    actionBarIcon(R.drawable.ic_back);
-                    // disable drawer
-                    mDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                } else if (mAdapterActionManager.isActive()) {
-                    mAdapterActionManager.toggle(position);
-                    setActionBarTitleCount(mAdapterActionManager.selectedCount());
-                }
-
-                updateMenu();
-
-                return false;
-            }
-        });
+        mItemAdapter.withSelectable(true);
+        mItemAdapter.withMultiSelect(true);
+        mItemAdapter.withSelectOnLongClick(true);
 
         // set adapter
         mRecyclerView.setAdapter(mItemAdapter);
 
-        // start the adapter loader
-        new NoteAdapterLoader(this, mItemAdapter, true).execute();
+        // initialize action mode manager
+        this.mActionModeManager = new ActionModeManager<>(this, mItemAdapter);
+
+        // click listeners
+
+        mItemAdapter.withOnPreClickListener(new OnClickListener<NoteItem>() {
+            @Override
+            public boolean onClick(@Nullable View v, @NonNull IAdapter<NoteItem> adapter, @NonNull NoteItem item, int position) {
+                // try to select the item, it will be false if nothing was selected
+                if (!mActionModeManager.isActive()) {
+                    new NotePreviewDialog(mContext, item.getNote()).initializeDialog();
+                }
+                return mActionModeManager.onClick(item);
+            }
+        });
+
+        mItemAdapter.withOnPreLongClickListener(new OnLongClickListener<NoteItem>() {
+            @Override
+            public boolean onLongClick(@NonNull View view, @NonNull IAdapter<NoteItem> adapter, @NonNull NoteItem item, int position) {
+                return mActionModeManager.onLongClick(position);
+            }
+        });
 
         // create the folder drawer
         this.mDrawer = new FolderDrawer(this, mToolbar).createDrawer();
-        this.mFolderDrawerHandler = new FolderDrawerHandler(this, mDrawer, mItemAdapter);
+        FolderDrawerHandler folderDrawerHandler = new FolderDrawerHandler(this, mDrawer, mItemAdapter);
 
-        setupActionBar(null, null, R.drawable.ic_drawer);
+        // start fetching the notes
+        new NoteAdapterLoader(this, mItemAdapter).execute();
+
         super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void bindView() {
         ButterKnife.bind(this);
+        setupActionBar(null, null, R.drawable.ic_drawer);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.mMenu = menu;
+        getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        updateMenu();
+        // tint menu colour
+        Graphics.BasicFilter.mutateMenuItems(menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -195,56 +168,14 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
 
             // open the drawer
             case android.R.id.home:
-                if (mAdapterActionManager.isActive()) {
-                    onBackPressed();
-                    return true;
-                }
                 if (mDrawer != null) {
                     mDrawer.openDrawer();
                 }
-                return true;
-
-            // on multi select mode
-            case R.id.menu_delete:
-                // deleter
-                final DataObjectDeleter deleter = new DataObjectDeleter(this, mItemAdapter, mAdapterActionManager.removeItemsFromAdapter());
-                deleter.deleteItems();
-                // snackbar
-                CustomSnackBar.buildAndShowSnackBar(
-                        mView,
-                        deleter.getDeletedCount() + (deleter.getDeletedCount() > 1 ? " Items Deleted" : " Item Deleted"),
-                        CustomSnackBar.LENGTH_LONG,
-                        "Undo",
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                // undo deleter
-                                deleter.undoDeletion();
-                            }
-                        },
-                        R.color.white);
-                // finish
-                mAdapterActionManager.finish();
-                updateMenu();
-                actionBarTitles(null, null, NO_ICON);
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void updateMenu() {
-        mMenu.clear();
-        if (mAdapterActionManager.isActive()) {
-            getMenuInflater().inflate(R.menu.menu_delete, mMenu);
-        } else {
-            getMenuInflater().inflate(R.menu.menu_main, mMenu);
-        }
-
-        // tint menu colour
-        if (mMenu.hasVisibleItems()) {
-            Graphics.BasicFilter.mutateMenuItems(mMenu);
-        }
-    }
     //
     private void setupRecyclerView() {
         this.mRecyclerView = new CustomRecyclerView(this);
@@ -300,19 +231,7 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
             return;
         }
 
-        // end the multi adapter action manager
-        if (mAdapterActionManager.isActive()) {
-            mAdapterActionManager.deactivate();
-            updateMenu();
-            actionbarFolderTitle();
-
-            // unlock drawer again
-            mDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-            return;
-        } else {
-            newIntent(LoginActivity.class);
-            super.onBackPressed();
-            return;
-        }
+        newIntent(LoginActivity.class);
+        super.onBackPressed();
     }
 }

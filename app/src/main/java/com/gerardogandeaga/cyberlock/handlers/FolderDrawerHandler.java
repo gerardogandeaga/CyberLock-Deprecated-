@@ -2,6 +2,7 @@ package com.gerardogandeaga.cyberlock.handlers;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -9,7 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.core.drawers.FolderDrawer;
+import com.gerardogandeaga.cyberlock.database.DBFolderAccessor;
+import com.gerardogandeaga.cyberlock.database.loaders.NoteAdapterLoader;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.gerardogandeaga.cyberlock.items.FolderDrawerItem;
 import com.gerardogandeaga.cyberlock.items.NoteItem;
@@ -28,23 +30,24 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
  * todo handle drawer click listeners. ie... folder creation, folder selection
  */
 public class FolderDrawerHandler {
+    private static final String TAG = "FolderDrawerHandler";
+
     private Context mContext;
 
     private Drawer mDrawer;
-    private FastItemAdapter<NoteItem> mItemAdapter;
     private static Dialog mDialog;
 
-    public FolderDrawerHandler(Context context, final Drawer drawer, FastItemAdapter<NoteItem> itemAdapter) {
+    public FolderDrawerHandler(Context context, final Drawer drawer, final FastItemAdapter<NoteItem> itemAdapter) {
         this.mContext = context;
         this.mDrawer = drawer;
-        this.mItemAdapter = itemAdapter;
 
         mDrawer.setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem item) {
                 // if folder item
-                if (item instanceof FolderDrawer) {
+                if (item instanceof FolderDrawerItem) {
                     mDrawer.closeDrawer();
+                    new NoteAdapterLoader(mContext, itemAdapter, ((FolderDrawerItem) item).getFolder()).execute();
                 }
 
                 // if create folder item
@@ -57,6 +60,9 @@ public class FolderDrawerHandler {
         });
     }
 
+    /**
+     * creates a "create folder" dialog which asks for generic user input to create a basic folder
+     */
     public void createFolder() {
         // name input field
         final RelativeLayout wrapper = new RelativeLayout(mContext);
@@ -96,11 +102,17 @@ public class FolderDrawerHandler {
             @Override
             public void onClick(View v) {
                 if (!folderName.getText().toString().isEmpty()) {
-                    CustomToast.buildAndShowToast(mContext, "\"" + folderName.getText().toString() + "\" Created", CustomToast.SUCCESS, CustomToast.LENGTH_SHORT);
                     Folder folder = new Folder()
                             .withColourTag("default")
                             .withName(folderName.getText().toString());
-                    mDrawer.addItem(new FolderDrawerItem(folder, true));
+
+                    // now we try to save the folder and if it's successful the drawer item will be created
+                    if (saveFolder(folder)) {
+                        mDrawer.addItem(new FolderDrawerItem(folder, true));
+                        CustomToast.buildAndShowToast(mContext, "\"" + folderName.getText().toString() + "\" Created", CustomToast.SUCCESS, CustomToast.LENGTH_SHORT);
+                    } else {
+                        CustomToast.buildAndShowToast(mContext, "Folder Already Exists", CustomToast.WARNING, CustomToast.LENGTH_SHORT);
+                    }
                 } else {
                     CustomToast.buildAndShowToast(mContext, "No Inputted Name, Folder Was Not Created", CustomToast.WARNING, CustomToast.LENGTH_SHORT);
                 }
@@ -110,5 +122,21 @@ public class FolderDrawerHandler {
 
         mDialog = dialog.createDialog();
         mDialog.show();
+    }
+
+    /**
+     * saves folder to the db and sends back a response code to whether save was successful or not
+     * @return if save was successfully completed
+     */
+    private boolean saveFolder(Folder folder) {
+        DBFolderAccessor accessor = DBFolderAccessor.getInstance();
+        // first we check if the db already contains the folder
+        if (accessor.containsFolder(folder)) {
+            Log.i(TAG, "saveFolder: folder already exists");
+            return false;
+        } else {
+            accessor.save(folder);
+            return true;
+        }
     }
 }

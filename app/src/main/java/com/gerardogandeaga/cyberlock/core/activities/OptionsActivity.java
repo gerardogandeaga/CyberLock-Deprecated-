@@ -222,7 +222,7 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
         }
     }
     private void onOpenSourceLibraries() {
-        newIntentGoTo(ExternalLibsActivity.class);
+        newIntentGoTo(LibActivity.class);
     }
 
     @Override

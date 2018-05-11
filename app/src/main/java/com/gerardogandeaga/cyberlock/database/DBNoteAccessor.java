@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.gerardogandeaga.cyberlock.App;
+import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.interfaces.DBNoteConstants;
 
@@ -107,19 +108,28 @@ public class DBNoteAccessor implements DBNoteConstants {
      * get list of notes in a particular folder
      * @param folder filter
      */
-    public List<Note> getAllNotes(String folder) {
+    public List<Note> getAllNotes(Folder folder) {
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
 
         List<Note> notes = new ArrayList<>();
         Cursor cursor = getQuery(db);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            notes.add(getNote(cursor, folder));
+            Note note = getNote(cursor);
+            if (note.getFolder() != null) {
+                if (note.getFolder().equals(folder.getName())) {
+                    notes.add(note);
+                }
+            }
             cursor.moveToNext();
         }
         cursor.close();
 
-        return notes;
+        if (notes.size() > 0) {
+            return notes;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -132,24 +142,6 @@ public class DBNoteAccessor implements DBNoteConstants {
         }
 
         // return null for out of bounds
-        return null;
-    }
-
-    /**
-     * @param cursor position in db
-     * @param folder folder filter
-     * @return note that pertains to a particular folder
-     */
-    private Note getNote(Cursor cursor, String folder) {
-        if (!cursor.isAfterLast()) {
-            Note note = constructNote(cursor);
-            if (folder.equals(note.getFolder())) {
-                return note;
-            } else {
-                return new Note();
-            }
-        }
-
         return null;
     }
 

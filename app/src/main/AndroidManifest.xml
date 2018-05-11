@@ -48,7 +48,7 @@
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".core.activities.ExternalLibsActivity"
+            android:name=".core.activities.LibActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustResize"/>
 

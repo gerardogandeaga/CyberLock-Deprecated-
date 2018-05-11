@@ -18,8 +18,10 @@
     <string name="str_menu_import">Import</string>
 
     <!-- edit -->
-    <string name="str_menu_information">Information</string>
-    <string name="str_menu_note_folder">Edit Folder</string>
+    <string name="str_menu_archive">Archive</string>
+    <string name="str_menu_trash">Send To Trash</string>
+    <string name="str_menu_details">Details</string>
+    <string name="str_menu_note_folder">Select Folder</string>
     <string name="str_menu_note_tag">Colour Tag</string>
     <string name="str_menu_note_save">Save</string>
     <string name="str_menu_cancel">Cancel</string>

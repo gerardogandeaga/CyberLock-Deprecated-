@@ -5,6 +5,7 @@
     android:id="@+id/appbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize"
     android:orientation="vertical"
     android:theme="@style/AppTheme.AppBarOverlay"
     app:layout_collapseParallaxMultiplier="0">
@@ -22,9 +23,7 @@
             android:theme="@style/MyToolbarStyle"
             app:contentInsetStartWithNavigation="0dp"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:subtitleTextColor="?attr/toolbarSubTitleColour"
-            app:titleTextColor="?attr/toolbarTitleColour"/>
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
         <include layout="@layout/item_divider_horizontal"/>
 

@@ -2,26 +2,23 @@
 <resources>
 
     <declare-styleable name="ds">
+        <!-- transparent here for an easy reference -->
         <attr name="transparent" format="color"/>
 
         <!-- backgrounds -->
         <attr name="toolbarColour" format="color"/>
         <attr name="backgroundColour" format="color"/>
-
+        <!-- text -->
+        <attr name="titleColour" format="color"/>
+        <attr name="subtitleColour" format="color"/>
         <!-- items -->
         <attr name="toolbarItemColour" format="color"/>
-
         <!-- ripples -->
         <attr name="accentRipple" format="color"/>
         <attr name="maskRipple" format="color"/>
-
         <!-- scrollbars -->
         <attr name="scrollbarMainColour" format="color"/>
         <attr name="scrollbarPreviewColour" format="color"/>
-
-        <!-- text -->
-        <attr name="toolbarTitleColour" format="color"/>
-        <attr name="toolbarSubTitleColour" format="color"/>
 
     </declare-styleable>
 

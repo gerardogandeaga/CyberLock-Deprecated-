@@ -21,16 +21,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
  *
  * colour picker dialog fragment
  */
-public class ColourPaletteFragmentDialog extends DialogFragment {
+public class ColourPaletteDialogFragment extends DialogFragment {
     // fragment properties
-    private static final String TAG = "ColourPaletteFragmentDialog";
+    private static final String TAG = "ColourPaletteDialogFragment";
 
-    public interface ColourSelector {
+    /**
+     * interface that sends colour selection callbacks
+     */
+    public interface ColourSelectionCallback {
         void onColorSelected(String colour);
     }
-    private ColourSelector mColourSelector;
-
-    private Dialog mDialog;
+    private ColourSelectionCallback mColourSelectionCallback;
 
     private static final int ROWS = 4;
     private static final int COLUMNS = 4;
@@ -40,38 +41,33 @@ public class ColourPaletteFragmentDialog extends DialogFragment {
         super.onStart();
         // callback listener
         try {
-            this.mColourSelector = (ColourSelector) getActivity();
+            this.mColourSelectionCallback = (ColourSelectionCallback) getActivity();
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
     }
 
-    public static void show(AppCompatActivity context) {
-        new ColourPaletteFragmentDialog().show(context.getFragmentManager(), TAG);
+    public static void show(AppCompatActivity activity) {
+        new ColourPaletteDialogFragment().show(activity.getFragmentManager(), TAG);
     }
 
     // fragment methods
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return buildDialog();
-    }
-
-    private Dialog buildDialog() {
         final CustomDialog customDialog = new CustomDialog(getActivity());
-        customDialog.setContentView(buildViews());
+        customDialog.setContentView(buildPaletteView());
         customDialog.setTitle("Colour Palette");
         customDialog.setNegativeButton("Cancel", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mDialog.dismiss();
+                dismiss();
             }
         });
 
-        this.mDialog = customDialog.createDialog();
-        return mDialog;
+        return customDialog.createDialog();
     }
 
-    private View buildViews() {
+    private View buildPaletteView() {
         final int[] colours = getResources().getIntArray(R.array.arr_tag_colours);
         final String[] names = getResources().getStringArray(R.array.arr_tag_colours_names);
         int offset = 0;
@@ -128,11 +124,11 @@ public class ColourPaletteFragmentDialog extends DialogFragment {
     }
 
     private void onItemClick(String name) {
-        if (mColourSelector != null) {
-            mColourSelector.onColorSelected(name);
+        if (mColourSelectionCallback != null) {
+            mColourSelectionCallback.onColorSelected(name);
         } else {
             System.out.println("listener is null!!!");
         }
-        mDialog.dismiss();
+        dismiss();
     }
 }

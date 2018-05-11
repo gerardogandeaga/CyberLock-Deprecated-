@@ -11,8 +11,8 @@ import java.util.Date;
  */
 public class Note extends SavableObject {
     public static final String GENERIC = "TYPE_NOTE";
-    public static final String CARD  = "TYPE_CARD";
-    public static final String LOGIN = "TYPE_LOGIN";
+    public static final String CARD  =   "TYPE_CARD";
+    public static final String LOGIN =   "TYPE_LOGIN";
 
     // instance vars
     private boolean mIsTrashed;

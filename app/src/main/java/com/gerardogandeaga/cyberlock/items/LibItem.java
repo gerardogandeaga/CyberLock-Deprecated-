@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.views.handlers.TextViews;
+import com.gerardogandeaga.cyberlock.Views;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.mikepenz.materialize.holder.StringHolder;
@@ -19,25 +19,25 @@ import butterknife.ButterKnife;
 /**
  * @author gerardogandeaga
  */
-public class ExternalLibItem extends AbstractItem<ExternalLibItem, ExternalLibItem.ViewHolder> {
+public class LibItem extends AbstractItem<LibItem, LibItem.ViewHolder> {
     private StringHolder mTitle;
     private StringHolder mAuthor;
     private StringHolder mDescription;
     private StringHolder mUrl;
 
-    public ExternalLibItem withTitle(String title) {
+    public LibItem withTitle(String title) {
         this.mTitle = new StringHolder(title);
         return this;
     }
-    public ExternalLibItem withAuthor(String subTitle) {
+    public LibItem withAuthor(String subTitle) {
         this.mAuthor = new StringHolder(subTitle);
         return this;
     }
-    public ExternalLibItem withDescription(String description) {
+    public LibItem withDescription(String description) {
         this.mDescription = new StringHolder(description);
         return this;
     }
-    public ExternalLibItem withUrl(String url) {
+    public LibItem withUrl(String url) {
         this.mUrl = new StringHolder(url);
         return this;
     }
@@ -50,7 +50,7 @@ public class ExternalLibItem extends AbstractItem<ExternalLibItem, ExternalLibIt
     // the layout that will be used for item
     @Override
     public int getLayoutRes() {
-        return R.layout.external_library_item;
+        return R.layout.lib_list_item;
     }
 
     @NonNull
@@ -59,7 +59,7 @@ public class ExternalLibItem extends AbstractItem<ExternalLibItem, ExternalLibIt
         return new ViewHolder(view);
     }
 
-    protected class ViewHolder extends FastItemAdapter.ViewHolder<ExternalLibItem> {
+    protected class ViewHolder extends FastItemAdapter.ViewHolder<LibItem> {
         @NonNull protected View View;
 
         @BindView(R.id.container)     CardView CardView;
@@ -75,15 +75,15 @@ public class ExternalLibItem extends AbstractItem<ExternalLibItem, ExternalLibIt
         }
 
         @Override
-        public void bindView(@NonNull ExternalLibItem item, @NonNull List<Object> payloads) {
-            TextViews.setOrHideTextView(item.mTitle, Title);
-            TextViews.setOrHideTextView(item.mAuthor, Author);
-            TextViews.setOrHideTextView(item.mDescription, Description);
-            TextViews.setOrHideTextView(item.mUrl, Url);
+        public void bindView(@NonNull LibItem item, @NonNull List<Object> payloads) {
+            Views.TextViews.setOrHideText(Title, item.mTitle.toString());
+            Views.TextViews.setOrHideText(Author, item.mAuthor.toString());
+            Views.TextViews.setOrHideText(Description, item.mDescription.toString());
+            Views.TextViews.setOrHideText(Url, item.mUrl.toString());
         }
 
         @Override
-        public void unbindView(@NonNull ExternalLibItem item) {
+        public void unbindView(@NonNull LibItem item) {
             Title.setText(null);
             Author.setText(null);
             Description.setText(null);
