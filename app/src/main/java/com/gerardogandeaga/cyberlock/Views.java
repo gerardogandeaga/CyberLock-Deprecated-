@@ -18,6 +18,12 @@ public class Views {
         }
     }
 
+    public static void setVisibility(boolean visible, View ...views) {
+        for (View view : views) {
+            setVisibility(view, visible);
+        }
+    }
+
     public static class TextViews {
 
         /**
@@ -28,10 +34,12 @@ public class Views {
         }
 
         public static void setOrHideText(TextView textView, String string) {
+            textView.setText(string);
             if (isEmpty(string)) {
                 setVisibility(textView, false);
+            } else {
+                setVisibility(textView, true);
             }
-            textView.setText(string);
         }
 
         public static void setOrHideTextOnNestedView(View parent, TextView textView, String string) {

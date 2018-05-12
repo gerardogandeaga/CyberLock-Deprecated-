@@ -16,6 +16,7 @@ import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.database.objects.notes.CardNote;
 import com.gerardogandeaga.cyberlock.database.objects.notes.GenericNote;
 import com.gerardogandeaga.cyberlock.database.objects.notes.LoginNote;
+import com.gerardogandeaga.cyberlock.utils.Res;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.mikepenz.materialize.util.UIUtils;
@@ -150,31 +151,25 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
 
         @Override
         public void bindView(@NonNull NoteItem item, @NonNull List<Object> payloads) {
-            // first we need to justq quickly hide all the sections
-            Views.setVisibility(Note, false);
-            Views.setVisibility(Card, false);
-            Views.setVisibility(Login, false);
-
             // container background
             UIUtils.setBackground(View, R.drawable.note_item_background);
 
             // bind our data to the view
             Views.TextViews.setOrHideText(Label, item.mLabel);
-            Views.TextViews.setOrHideText(Date, "Updated on " + item.mDate);
+            Views.TextViews.setOrHideText(Date, "Updated : " + item.mDate);
             // set the content according to the note
             setContent(item);
 
             // images
-            ColourTag.setVisibility(android.view.View.VISIBLE);
+            Views.ImageViews.setOrHideImage(ColourTag, Res.getDrawable(R.drawable.ic_dot));
             ColourTag.setColorFilter(item.mColourTag, PorterDuff.Mode.SRC_ATOP);
         }
 
         @Override
         public void unbindView(@NonNull NoteItem item) {
-            // hide everything
-            Views.TextViews.setOrHideText(Label, null);
-            Views.TextViews.setOrHideText(Date, null);
-            Views.ImageViews.setOrHideImage(ColourTag, null);
+            // first we need to just quickly hide all the sections
+            Views.setVisibility(false, Note, Card, Login);
+
             // note
             Views.TextViews.setOrHideText(Notes, null);
             // card
@@ -201,26 +196,54 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
                     GenericNote genericNote = new GenericNote(note);
                     Views.TextViews.setOrHideText(Notes, genericNote.getNotes());
                     // expand the parent view
-                    Note.setVisibility(android.view.View.VISIBLE);
+                    Views.setVisibility(false, Card, Login);
+                    Views.setVisibility(Note, true);
                     break;
+
                 case com.gerardogandeaga.cyberlock.database.objects.Note.CARD:
                     CardNote cardNote = new CardNote(note);
                     Views.TextViews.setOrHideText(Holder, cardNote.getHolder());
-                    Views.TextViews.setOrHideText(Number, cardNote.getNumber());
+                    Views.TextViews.setOrHideText(Number, formatCardNumber(cardNote.getNumber()));
                     Views.ImageViews.setOrHideImage(CardIcon, cardNote.getIcon());
                     // expand the parent view
-                    Card.setVisibility(android.view.View.VISIBLE);
+                    Views.setVisibility(false, Note, Login);
+                    Views.setVisibility(Card, true);
                     break;
+
                 case com.gerardogandeaga.cyberlock.database.objects.Note.LOGIN:
                     LoginNote loginNote = new LoginNote(note);
                     Views.TextViews.setOrHideText(Url, loginNote.getUrl());
                     Views.TextViews.setOrHideText(Email, loginNote.getEmail());
                     Views.TextViews.setOrHideText(Username, loginNote.getUsername());
                     // expand the parent view
-                    Login.setVisibility(android.view.View.VISIBLE);
+                    Views.setVisibility(false, Note, Card);
+                    Views.setVisibility(Login, true);
                     break;
             }
         }
+    }
+
+    private String formatCardNumber(String number) {
+        number = number.trim();
+
+        if (number.length() <= 4) {
+            return number;
+        }
+
+        StringBuilder formatted = new StringBuilder();
+        for (int i = 0; i < (number.length() - 4); i++) {
+            char c = number.charAt(i);
+
+            if (c == ' ') {
+                formatted.append(" ");
+            } else {
+                formatted.append("*");
+            }
+        }
+
+        number = number.substring(formatted.length() - 1, number.length());
+
+        return formatted + number;
     }
 
     @Override

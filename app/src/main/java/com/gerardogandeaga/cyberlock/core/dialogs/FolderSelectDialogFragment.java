@@ -8,7 +8,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,7 +20,6 @@ import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
 import com.gerardogandeaga.cyberlock.utils.Res;
 import com.gerardogandeaga.cyberlock.views.CustomDialog;
-import com.gerardogandeaga.cyberlock.views.CustomRecyclerView;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
@@ -42,7 +43,7 @@ public class FolderSelectDialogFragment extends DialogFragment {
     private FolderSelectionCallback mFolderSelectionCallback;
 
     private static String CurrentFolder;
-    private CustomRecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView;
 
     @Override
     public void onStart() {
@@ -73,7 +74,8 @@ public class FolderSelectDialogFragment extends DialogFragment {
             }
         });
 
-        this.mRecyclerView = new CustomRecyclerView(getActivity());
+        this.mRecyclerView = new RecyclerView(getActivity());
+        mRecyclerView.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(itemAdapter);
 

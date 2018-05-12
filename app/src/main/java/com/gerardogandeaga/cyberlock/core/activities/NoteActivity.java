@@ -61,8 +61,6 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
 
     private ActionModeManager<NoteItem> mActionModeManager;
 
-    // adapter
-    private FastItemAdapter<NoteItem> mItemAdapter;
     private Folder mCurrentFolder;
 
     // views
@@ -76,7 +74,6 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
     // initial on create methods
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         // set view
         this.mView = View.inflate(this, R.layout.activity_container_static_toolbar, null);
         setContentView(mView);
@@ -86,25 +83,29 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
         displayLoad();
 
         // create the FastAdapter
-        this.mItemAdapter = new FastItemAdapter<>();
+        FastItemAdapter<NoteItem> itemAdapter = new FastItemAdapter<>();
 
         // configure the FastAdapter
-        mItemAdapter.setHasStableIds(true);
-        mItemAdapter.withSelectable(true);
-        mItemAdapter.withMultiSelect(true);
-        mItemAdapter.withSelectOnLongClick(true);
+        itemAdapter.setHasStableIds(true);
+        itemAdapter.withSelectable(true);
+        itemAdapter.withMultiSelect(true);
+        itemAdapter.withSelectOnLongClick(true);
 
         // set adapter
-        mRecyclerView.setAdapter(mItemAdapter);
+        mRecyclerView.setAdapter(itemAdapter);
+
+        // create the folder drawer
+        this.mDrawer = new FolderDrawer(this, mToolbar).createDrawer();
+        new FolderDrawerHandler(this, mDrawer, itemAdapter);
 
         // initialize action mode manager
-        this.mActionModeManager = new ActionModeManager<>(this, mItemAdapter);
+        this.mActionModeManager = new ActionModeManager<>(this, itemAdapter, mDrawer);
 
         // click listeners
 
-        mItemAdapter.withOnPreClickListener(new OnClickListener<NoteItem>() {
+        itemAdapter.withOnPreClickListener(new OnClickListener<NoteItem>() {
             @Override
-            public boolean onClick(@Nullable View v, @NonNull IAdapter<NoteItem> adapter, @NonNull NoteItem item, int position) {
+            public boolean onClick(@Nullable View view, @NonNull IAdapter<NoteItem> adapter, @NonNull NoteItem item, int position) {
                 // try to select the item, it will be false if nothing was selected
                 if (!mActionModeManager.isActive()) {
                     new NotePreviewDialog(mContext, item.getNote()).initializeDialog();
@@ -113,19 +114,15 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
             }
         });
 
-        mItemAdapter.withOnPreLongClickListener(new OnLongClickListener<NoteItem>() {
+        itemAdapter.withOnPreLongClickListener(new OnLongClickListener<NoteItem>() {
             @Override
             public boolean onLongClick(@NonNull View view, @NonNull IAdapter<NoteItem> adapter, @NonNull NoteItem item, int position) {
                 return mActionModeManager.onLongClick(position);
             }
         });
 
-        // create the folder drawer
-        this.mDrawer = new FolderDrawer(this, mToolbar).createDrawer();
-        FolderDrawerHandler folderDrawerHandler = new FolderDrawerHandler(this, mDrawer, mItemAdapter);
-
         // start fetching the notes
-        new NoteAdapterLoader(this, mItemAdapter).execute();
+        new NoteAdapterLoader(this, itemAdapter).execute();
 
         super.onCreate(savedInstanceState);
     }
@@ -210,10 +207,6 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
         actionBarIcon(R.drawable.ic_drawer);
         actionBarTitle((mCurrentFolder.getName().equals("MAIN") ? "All Notes" : mCurrentFolder.getName()));
         actionBarSubTitle(Integer.toString(mCurrentFolder.getSize()) + (mCurrentFolder.getSize() == 1 ? " Item" : " Items"));
-    }
-    private void setActionBarTitleCount(int selectedCount) {
-        actionBarTitle(Integer.toString(selectedCount));
-        actionBarSubTitle(selectedCount > 0 ? "Items Selected" : "Item Selected");
     }
 
     public void onAddClicked(String noteType) {

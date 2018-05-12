@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="top"
                 android:hint="Notes..."
-                android:inputType="textMultiLine|textAutoComplete|textAutoCorrect"/>
+                android:inputType="textMultiLine|textAutoComplete|textAutoCorrect|textLongMessage"/>
 
             <TextView
                 android:id="@+id/tvDate"

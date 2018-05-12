@@ -1,11 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- base application theme. -->
-    <style name="AppTheme" parent="MaterialTheme.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- primitives, do not touch!-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!---->
-
 
         <!-- customizations -->
         <!-- action bar overlay -->
@@ -41,7 +40,7 @@
     </style>
 
     <!-- toolbar -->
-    <style name="MyToolbarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    <style name="MyToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlHighlight">@color/c_gray_30</item>
         <item name="titleTextColor">?attr/titleColour</item>
         <item name="subtitleTextColor">?attr/subtitleColour</item>

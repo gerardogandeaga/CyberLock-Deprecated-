@@ -64,7 +64,7 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -106,12 +106,11 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:clickable="false"
-                        android:gravity="center_vertical"
                         android:text="@string/str_list_format"
                         android:textAppearance="@style/myText.Options.Header"/>
 
@@ -150,10 +149,10 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
-                        android:gravity="center_vertical"
                         android:text="@string/str_header_tags"
                         android:textAppearance="@style/myText.Options.Header"/>
 
@@ -193,11 +192,10 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
-                        android:gravity="center_vertical"
                         android:text="@string/str_logout_delay"
                         android:textAppearance="@style/myText.Options.Header"/>
 
@@ -251,7 +249,6 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             android:clickable="false"
-                            android:gravity="center_vertical"
                             android:text="@string/str_change_password"
                             android:textAppearance="@style/myText.Options.Header"/>
 
@@ -328,12 +325,11 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:clickable="false"
-                        android:gravity="center_vertical"
                         android:text="@string/str_git"
                         android:textAppearance="@style/myText.Options.Header"/>
 
@@ -364,12 +360,11 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:clickable="false"
-                        android:gravity="center_vertical"
                         android:text="@string/str_about_cyber_lock"
                         android:textAppearance="@style/myText.Options.Header"/>
 
@@ -400,12 +395,11 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:clickable="false"
-                        android:gravity="center_vertical"
                         android:text="@string/str_version"
                         android:textAppearance="@style/myText.Options.Header"/>
 
@@ -466,12 +460,11 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:clickable="false"
-                        android:gravity="center_vertical"
                         android:text="@string/str_rate"
                         android:textAppearance="@style/myText.Options.Header"/>
 
@@ -502,12 +495,11 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:clickable="false"
-                        android:gravity="center_vertical"
                         android:text="@string/str_bug"
                         android:textAppearance="@style/myText.Options.Header"/>
 
@@ -567,12 +559,11 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:clickable="false"
-                        android:gravity="center_vertical"
                         android:text="@string/str_role_gerardo"
                         android:textAppearance="@style/myText.Options.Header"/>
 
@@ -602,12 +593,11 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:clickable="false"
-                        android:gravity="center_vertical"
                         android:text="@string/str_role_carol"
                         android:textAppearance="@style/myText.Options.Header"/>
 

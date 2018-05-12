@@ -61,6 +61,12 @@ public class CustomRecyclerView extends RecyclerView {
         }
     }
 
+    // properties
+
+    private void animate(boolean isAnimatable) {
+        this.mIsAnimatable = isAnimatable;
+    }
+
     private void animate(View view, final int pos) {
         if (mIsAnimatable) {
             view.animate().cancel();
