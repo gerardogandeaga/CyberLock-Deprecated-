@@ -20,8 +20,6 @@ import java.util.List;
  * accessor to the Note database
  */
 public class DBNoteAccessor implements DBNoteConstants {
-    private static final String TAG = "DBNoteAccessor";
-
     private DatabaseOpenHelper mOpenHelper;
     private static volatile DBNoteAccessor INSTANCE;
 
@@ -44,7 +42,7 @@ public class DBNoteAccessor implements DBNoteConstants {
 
         values.put(DATE_MODIFIED, note.getTimeCreated());
         values.put(DATE_CREATED,  note.getTimeCreated());
-        values.put(TRASHED,       note.isTrashed());
+        values.put(TRASHED,       note.isTrashed() ? 1 : 0);
         values.put(FOLDER,        note.getFolder());
         values.put(TYPE,          note.getType());
         values.put(COLOUR_TAG,    note.getColourTag());
@@ -62,7 +60,7 @@ public class DBNoteAccessor implements DBNoteConstants {
         ContentValues values = new ContentValues();
 
         values.put(DATE_MODIFIED, new Date().getTime());
-        values.put(TRASHED,       note.isTrashed());
+        values.put(TRASHED,       note.isTrashed() ? 1 : 0);
         values.put(FOLDER,        note.getFolder());
         values.put(TYPE,          note.getType());
         values.put(COLOUR_TAG,    note.getColourTag());
@@ -96,7 +94,16 @@ public class DBNoteAccessor implements DBNoteConstants {
         Cursor cursor = getQuery(db);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            notes.add(getNote(cursor));
+            Note note = getNote(cursor);
+            assert note != null; // we just need the compiler to be happy
+
+
+            // ignore note if it trashed
+            if (!note.isTrashed()) {
+                // add to list
+                notes.add(note);
+            }
+
             cursor.moveToNext();
         }
         cursor.close();
@@ -116,9 +123,14 @@ public class DBNoteAccessor implements DBNoteConstants {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Note note = getNote(cursor);
+            assert note != null; // compiler happiness
+
             if (note.getFolder() != null) {
-                if (note.getFolder().equals(folder.getName())) {
-                    notes.add(note);
+                // ignore the note if it is trashed
+                if (!note.isTrashed()) {
+                    if (note.getFolder().equals(folder.getName())) {
+                        notes.add(note);
+                    }
                 }
             }
             cursor.moveToNext();
@@ -145,6 +157,7 @@ public class DBNoteAccessor implements DBNoteConstants {
         return null;
     }
 
+    // todo for all get notes simply while loop to do-while
     public List<Note> getTrashedNotes() {
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
 
@@ -153,9 +166,11 @@ public class DBNoteAccessor implements DBNoteConstants {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Note note = constructNote(cursor);
+            // only add notes that are flagged as trashed
             if (note.isTrashed()) {
                 trashedNotes.add(note);
             }
+            cursor.moveToNext();
         }
 
         return trashedNotes;

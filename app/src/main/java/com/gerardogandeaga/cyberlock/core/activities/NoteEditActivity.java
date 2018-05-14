@@ -170,6 +170,9 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menu_trash:
+                trashNote();
+                break;
             case R.id.menu_folder:
                 FolderSelectDialogFragment.show(this, mCurrentFolder);
                 break;
@@ -204,7 +207,6 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
                 mLoginEditFragment.save();
                 break;
             default:
-                // todo idea - throw a possible exception
                 Log.e(TAG, "requestSave: edit type was not properly specified");
                 break;
         }
@@ -222,7 +224,6 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
                 mLoginEditFragment.update();
                 break;
             default:
-                // todo idea - throw a possible exception
                 Log.e(TAG, "requestSave: edit type was not properly specified");
                 break;
         }
@@ -236,6 +237,23 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
         this.mNote = null;
 
         // exit
+        onBackPressed();
+    }
+
+    private void trashNote() {
+        this.mSaveFlag = false;
+
+        // note will not be save dialog
+        mNote.withTrashed(true);
+
+        Log.i(TAG, "trashNote: trashing note");
+        DBNoteAccessor accessor = DBNoteAccessor.getInstance();
+        if (mNote.isNew()) {
+            accessor.save(mNote);
+        } else {
+            accessor.update(mNote);
+        }
+
         onBackPressed();
     }
 

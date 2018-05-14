@@ -15,7 +15,7 @@ public class Note extends SavableObject {
     public static final String LOGIN =   "TYPE_LOGIN";
 
     // instance vars
-    private boolean mIsTrashed;
+    private boolean mIsTrashed; // trashed is a boolean rather than a folder for easy recovery purposes
     private String mFolder;
     private String mType;
     private String mColourTag;
@@ -95,7 +95,7 @@ public class Note extends SavableObject {
 
     // setters
 
-    public Note withIsTrashed(boolean isTrashed) {
+    public Note withTrashed(boolean isTrashed) {
         this.mIsTrashed = isTrashed;
         return this;
     }

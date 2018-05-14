@@ -23,6 +23,8 @@ import java.util.Set;
 
 /**
  * @author gerardogandeaga
+ *
+ * simple generic action mode for ItemAdapters
  */
 public class ActionModeManager<Item extends IItem> {
     private Activity mActivity;

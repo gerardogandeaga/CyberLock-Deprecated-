@@ -117,6 +117,8 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
         return new ViewHolder(view);
     }
 
+
+
     /**
      * view holder class
      */

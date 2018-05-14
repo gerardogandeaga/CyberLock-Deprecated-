@@ -30,7 +30,6 @@ import com.gerardogandeaga.cyberlock.views.decorations.NoteItemDecoration;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.listeners.OnClickListener;
-import com.mikepenz.fastadapter.listeners.OnLongClickListener;
 import com.mikepenz.materialdrawer.Drawer;
 
 import butterknife.BindView;
@@ -47,6 +46,7 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
 
         this.mCurrentFolder = folder;
 
+        // only change action bar when adapter is finished
         actionbarFolderTitle();
     }
 
@@ -111,13 +111,6 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
                     new NotePreviewDialog(mContext, item.getNote()).initializeDialog();
                 }
                 return mActionModeManager.onClick(item);
-            }
-        });
-
-        itemAdapter.withOnPreLongClickListener(new OnLongClickListener<NoteItem>() {
-            @Override
-            public boolean onLongClick(@NonNull View view, @NonNull IAdapter<NoteItem> adapter, @NonNull NoteItem item, int position) {
-                return mActionModeManager.onLongClick(position);
             }
         });
 
