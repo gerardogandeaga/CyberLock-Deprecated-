@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.widget.ProgressBar;
 
-import com.gerardogandeaga.cyberlock.views.CustomDialog;
+import com.gerardogandeaga.cyberlock.custom.CustomDialog;
 
 /**
  * @author gerardogandeaga

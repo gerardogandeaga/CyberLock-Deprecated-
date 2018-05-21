@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,19 +16,17 @@ import com.gerardogandeaga.cyberlock.core.drawers.FolderDrawer;
 import com.gerardogandeaga.cyberlock.database.loaders.NoteAdapterLoader;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
-import com.gerardogandeaga.cyberlock.handlers.FolderDrawerHandler;
 import com.gerardogandeaga.cyberlock.helpers.ActionModeManager;
 import com.gerardogandeaga.cyberlock.interfaces.AdapterLoaderCallback;
 import com.gerardogandeaga.cyberlock.items.NoteItem;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
-import com.gerardogandeaga.cyberlock.utils.ListFormat;
-import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
-import com.gerardogandeaga.cyberlock.views.CustomLoad;
-import com.gerardogandeaga.cyberlock.views.CustomRecyclerView;
-import com.gerardogandeaga.cyberlock.views.decorations.NoteItemDecoration;
+import com.gerardogandeaga.cyberlock.custom.CustomLoad;
+import com.gerardogandeaga.cyberlock.custom.CustomRecyclerView;
+import com.gerardogandeaga.cyberlock.custom.decorations.NoteItemDecoration;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.listeners.OnClickListener;
+import com.mikepenz.fastadapter.listeners.OnLongClickListener;
 import com.mikepenz.materialdrawer.Drawer;
 
 import butterknife.BindView;
@@ -60,9 +57,7 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
     private Context mContext = this;
 
     private ActionModeManager<NoteItem> mActionModeManager;
-
     private Folder mCurrentFolder;
-
     // views
     private View mView;
     private CustomLoad mLoad;
@@ -95,8 +90,7 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
         mRecyclerView.setAdapter(itemAdapter);
 
         // create the folder drawer
-        this.mDrawer = new FolderDrawer(this, mToolbar).createDrawer();
-        new FolderDrawerHandler(this, mDrawer, itemAdapter);
+        this.mDrawer = new FolderDrawer(this, mToolbar, itemAdapter).createDrawer();
 
         // initialize action mode manager
         this.mActionModeManager = new ActionModeManager<>(this, itemAdapter, mDrawer);
@@ -111,6 +105,14 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
                     new NotePreviewDialog(mContext, item.getNote()).initializeDialog();
                 }
                 return mActionModeManager.onClick(item);
+            }
+        });
+
+        // starts the action mode manager in selection mode
+        itemAdapter.withOnPreLongClickListener(new OnLongClickListener<NoteItem>() {
+            @Override
+            public boolean onLongClick(@NonNull View view, @NonNull IAdapter<NoteItem> adapter, @NonNull NoteItem item, int position) {
+                return mActionModeManager.onLongClick(position);
             }
         });
 
@@ -138,9 +140,8 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        if (this.mDrawerToggle.onOptionsItemSelected(item)) return true;
         switch (item.getItemId()) {
-            // add
+            // add notes
             case R.id.menu_add_note:
                 onAddClicked(Note.GENERIC);
                 break;
@@ -150,11 +151,6 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
             case R.id.menu_add_login:
                 onAddClicked(Note.LOGIN);
                 break;
-
-            // options
-            case R.id.menu_option_options:
-                newIntentGoTo(OptionsActivity.class);
-                return true;
 
             // open the drawer
             case android.R.id.home:
@@ -166,36 +162,23 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
         return super.onOptionsItemSelected(item);
     }
 
-    //
     private void setupRecyclerView() {
         this.mRecyclerView = new CustomRecyclerView(this);
         mContainer.addView(mRecyclerView);
-
-        // Setup and configure RecyclerView
         mRecyclerView.setVisibility(View.GONE);
-        final LinearLayoutManager linearLayoutManager =
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        final StaggeredGridLayoutManager staggeredGridLayoutManager =
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
-        // Set layout format
-        switch (PreferencesAccessor.getListFormat(mContext)) {
-            case ListFormat.GRID:
-                staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
-                mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
-                mRecyclerView.addItemDecoration(new NoteItemDecoration(this, false));
-                break;
-            default:
-                mRecyclerView.setLayoutManager(linearLayoutManager);
-                mRecyclerView.addItemDecoration(new NoteItemDecoration(this, true));
-                break;
-        }
+        // recyclerView decorations
+        mRecyclerView.setLayoutManager(
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        );
+        mRecyclerView.addItemDecoration(new NoteItemDecoration(this, true));
     }
+
     private void displayLoad() {
         this.mLoad = new CustomLoad(this, mView);
         mLoad.show(mContainer);
     }
-    //
+
     private void actionbarFolderTitle() {
         actionBarIcon(R.drawable.ic_drawer);
         actionBarTitle((mCurrentFolder.getName().equals("MAIN") ? "All Notes" : mCurrentFolder.getName()));

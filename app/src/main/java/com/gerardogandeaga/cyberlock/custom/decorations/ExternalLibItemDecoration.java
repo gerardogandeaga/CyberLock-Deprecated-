@@ -1,23 +1,20 @@
-package com.gerardogandeaga.cyberlock.views.decorations;
+package com.gerardogandeaga.cyberlock.custom.decorations;
 
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.gerardogandeaga.cyberlock.utils.math.Scaling;
+import com.gerardogandeaga.cyberlock.utils.Scale;
 
 /**
  * @author gerardogandeaga
  */
-public class NoteItemDecoration extends RecyclerView.ItemDecoration {
-    private static final int SPACE_DP = 12;
-    private boolean mIsLinear = false;
+public class ExternalLibItemDecoration extends RecyclerView.ItemDecoration {
     private int mSpace;
 
-    public NoteItemDecoration(Context context, boolean isLinear) {
-        this.mSpace = Scaling.dpFromPx(context, SPACE_DP);
-        this.mIsLinear = isLinear;
+    public ExternalLibItemDecoration(Context context) {
+        this.mSpace = Scale.dpFromPx(context, 15);
     }
 
     @Override

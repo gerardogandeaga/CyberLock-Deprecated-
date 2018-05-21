@@ -18,10 +18,9 @@ import com.gerardogandeaga.cyberlock.core.fragments.NoteEditFragment;
 import com.gerardogandeaga.cyberlock.database.DBNoteAccessor;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
-import com.gerardogandeaga.cyberlock.enums.NoteEditTypes;
 import com.gerardogandeaga.cyberlock.interfaces.RequestResponder;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
-import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
+import com.gerardogandeaga.cyberlock.utils.Pref;
 
 import butterknife.ButterKnife;
 
@@ -33,6 +32,9 @@ import butterknife.ButterKnife;
  * this class extends the core activity meaning all major security features come with
  * this class
  */
+enum NoteType {
+    NOTE, CARD, LOGIN
+}
 public class NoteEditActivity extends CoreActivity implements RequestResponder, ColourPaletteDialogFragment.ColourSelectionCallback, FolderSelectDialogFragment.FolderSelectionCallback {
     private static final String TAG = "NoteEditActivity";
 
@@ -48,7 +50,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
     // edit
     private boolean mSaveFlag;
     private boolean mIsAutoSave;
-    private NoteEditTypes enum_type;
+    private NoteType enum_type;
     private Note mNote;
 
     // note object
@@ -69,7 +71,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
 
         // edit variables
         this.mSaveFlag = true;
-        this.mIsAutoSave = PreferencesAccessor.getAutoSave(this);
+        this.mIsAutoSave = Pref.getAutoSave(this);
 
         initializeNoteObject();
 
@@ -139,15 +141,15 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
 
         switch (mNote.getType()) {
             case Note.GENERIC:
-                this.enum_type = NoteEditTypes.NOTE;
+                this.enum_type = NoteType.NOTE;
                 fragmentTransaction.add(R.id.fragment_container, newFragment(mNoteEditFragment, noteBundle));
                 break;
             case Note.CARD:
-                this.enum_type = NoteEditTypes.CARD;
+                this.enum_type = NoteType.CARD;
                 fragmentTransaction.add(R.id.fragment_container, newFragment(mCardEditFragment, noteBundle));
                 break;
             case Note.LOGIN:
-                this.enum_type = NoteEditTypes.LOGIN;
+                this.enum_type = NoteType.LOGIN;
                 fragmentTransaction.add(R.id.fragment_container, newFragment(mLoginEditFragment, noteBundle));
                 break;
         }
@@ -327,7 +329,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
     @Override
     protected void onStart() {
         if (!isAppLoggedIn()) {
-            if (PreferencesAccessor.getAutoSave(this)) {
+            if (Pref.getAutoSave(this)) {
                 requestSave();
             }
         }
@@ -347,7 +349,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
                 /*
                 we must call the timer here on our own because our intent is not null
                 therefore the super class onPause commands will not execute */
-                startLogoutTimer(PreferencesAccessor.getAutoSave(this));
+                startLogoutTimer(Pref.getAutoSave(this));
             }
         }
         super.onPause();

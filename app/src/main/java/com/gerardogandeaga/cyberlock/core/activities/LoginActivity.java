@@ -12,12 +12,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.App;
-import com.gerardogandeaga.cyberlock.Initial;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.DatabaseOpenHelper;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
-import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
-import com.gerardogandeaga.cyberlock.views.CustomToast;
+import com.gerardogandeaga.cyberlock.utils.Pref;
+import com.gerardogandeaga.cyberlock.custom.CustomToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -204,10 +203,7 @@ public class LoginActivity extends SecureActivity {
 
     // initial registration preferences and global variables
     private void initialPreferences() {
-        PreferencesAccessor.setAutoSave(this, false);
-
-        // quick create/saves initial folders and other foundations
-        new Initial(this).setupFolders();
+        Pref.setAutoSave(this, false);
     }
 
     @Override

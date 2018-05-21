@@ -10,11 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.utils.math.Scaling;
 
 import org.jetbrains.annotations.Contract;
 
-// todo move the BasicFilter class to a new general graphics class and make this class specific to Notes
 /**
  * @author gerardogandeaga
  */
@@ -35,7 +33,7 @@ public class Graphics {
                 return Res.getColour(R.color.black);
             }
 
-            if (PreferencesAccessor.getTaggedHeaders(context)) {
+            if (Pref.getTaggedHeaders(context)) {
                 return colourTag(context, colour);
             } else {
                 return Res.getColour(R.color.black);
@@ -99,8 +97,8 @@ public class Graphics {
         public static Drawable getCardImage(Context context, String cardType, int newWidth, int newHeight) {
             Drawable factoryDrawable = getCardImage(cardType);
 
-            int w = Scaling.dpFromPx(context, newWidth);
-            int h = Scaling.dpFromPx(context, newHeight);
+            int w = Scale.dpFromPx(context, newWidth);
+            int h = Scale.dpFromPx(context, newHeight);
             Bitmap bitmap = ((BitmapDrawable) factoryDrawable).getBitmap();
 
             return new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, w, h, true));

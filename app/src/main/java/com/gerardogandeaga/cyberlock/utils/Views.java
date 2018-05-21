@@ -1,4 +1,4 @@
-package com.gerardogandeaga.cyberlock;
+package com.gerardogandeaga.cyberlock.utils;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;

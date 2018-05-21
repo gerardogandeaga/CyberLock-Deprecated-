@@ -7,11 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.gerardogandeaga.cyberlock.App;
-import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
+import com.gerardogandeaga.cyberlock.utils.Pref;
 
 import org.jetbrains.annotations.NotNull;
-
-import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.TMP_PWD;
 
 /**
  * @author gerardogandeaga
@@ -58,8 +56,8 @@ public class SecureActivity extends AppCompatActivity {
     }
 
     protected void startLogoutTimer(final boolean autoSave) {
-        if (PreferencesAccessor.getLogoutDelayTime(this) > 0) {
-            CountDownTimer = new CountDownTimer(PreferencesAccessor.getLogoutDelayTime(this), 10000) {
+        if (Pref.getLogoutDelayTime(this) > 0) {
+            CountDownTimer = new CountDownTimer(Pref.getLogoutDelayTime(this), 10000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     IsCountDownTimerFinished = false;
@@ -83,10 +81,6 @@ public class SecureActivity extends AppCompatActivity {
     }
 
     protected void logout(boolean autoSave) {
-        if (!autoSave) {
-            TMP_PWD = null;
-        }
-
         // remove password from db
         App.getDatabase().setPassword(null);
 

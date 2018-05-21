@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/MyMainScrollbarStyle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/backgroundColour">
+    android:background="?attr/backgroundColour"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                     android:id="@+id/AutoSave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bk_custom_default_ripple"
+                    android:background="@drawable/bk_default_ripple"
                     android:clickable="true"
                     android:focusable="true"
                     android:orientation="horizontal"
@@ -83,53 +83,10 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ListFormat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bk_custom_default_ripple"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:orientation="horizontal"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingTop="10dp">
-
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="center_vertical"
-                        android:contentDescription="@string/str_list_format"
-                        android:padding="2dp"
-                        android:src="@drawable/ic_list_format"/>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:clickable="false"
-                        android:text="@string/str_list_format"
-                        android:textAppearance="@style/myText.Options.Header"/>
-
-                    <ImageView
-                        android:id="@+id/imgListFormat"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:contentDescription="@string/str_list_format"
-                        android:padding="4dp"
-                        android:src="@drawable/ic_list_format"
-                        android:tint="@color/black"/>
-
-                </LinearLayout>
-
-                <LinearLayout
                     android:id="@+id/TaggedHeaders"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bk_custom_default_ripple"
+                    android:background="@drawable/bk_default_ripple"
                     android:clickable="true"
                     android:focusable="true"
                     android:orientation="horizontal"
@@ -166,13 +123,11 @@
 
                 </LinearLayout>
 
-                <include layout="@layout/item_divider_horizontal"/>
-
                 <LinearLayout
                     android:id="@+id/AutoLogoutDelay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bk_custom_default_ripple"
+                    android:background="@drawable/bk_default_ripple"
                     android:clickable="true"
                     android:focusable="true"
                     android:orientation="horizontal"
@@ -219,7 +174,7 @@
                     android:id="@+id/ChangePassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bk_custom_default_ripple"
+                    android:background="@drawable/bk_default_ripple"
                     android:clickable="true"
                     android:focusable="true"
                     android:orientation="vertical"
@@ -304,7 +259,7 @@
                     android:id="@+id/GitHub"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bk_custom_default_ripple"
+                    android:background="@drawable/bk_default_ripple"
                     android:clickable="true"
                     android:focusable="true"
                     android:orientation="horizontal"
@@ -339,7 +294,7 @@
                     android:id="@+id/About"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bk_custom_default_ripple"
+                    android:background="@drawable/bk_default_ripple"
                     android:clickable="true"
                     android:focusable="true"
                     android:orientation="horizontal"
@@ -374,7 +329,7 @@
                     android:id="@+id/Version"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bk_custom_default_ripple"
+                    android:background="@drawable/bk_default_ripple"
                     android:clickable="true"
                     android:focusable="true"
                     android:orientation="horizontal"
@@ -439,7 +394,7 @@
                     android:id="@+id/Rate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bk_custom_default_ripple"
+                    android:background="@drawable/bk_default_ripple"
                     android:clickable="true"
                     android:focusable="true"
                     android:orientation="horizontal"
@@ -474,7 +429,7 @@
                     android:id="@+id/Report"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bk_custom_default_ripple"
+                    android:background="@drawable/bk_default_ripple"
                     android:clickable="true"
                     android:focusable="true"
                     android:orientation="horizontal"
@@ -538,7 +493,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bk_custom_default_ripple"
+                    android:background="@drawable/bk_default_ripple"
                     android:clickable="true"
                     android:focusable="true"
                     android:orientation="horizontal"
@@ -572,7 +527,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bk_custom_default_ripple"
+                    android:background="@drawable/bk_default_ripple"
                     android:clickable="true"
                     android:focusable="true"
                     android:orientation="horizontal"

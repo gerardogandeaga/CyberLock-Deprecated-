@@ -1,4 +1,4 @@
-package com.gerardogandeaga.cyberlock.views;
+package com.gerardogandeaga.cyberlock.custom;
 
 import android.content.Context;
 import android.view.View;
@@ -13,7 +13,6 @@ import org.jetbrains.annotations.Contract;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-// todo make the load view more customizable
 /**
  * @author gerardogandeaga
  */
@@ -53,14 +52,14 @@ public class CustomLoad {
     }
 
     public void setTitle(String text) {
-        textviewSetProperties(text);
+        textViewSetProperties(text);
     }
 
     private void defaultViewVisibility() {
         mTitle.setVisibility(View.GONE);
     }
 
-    private void textviewSetProperties(String text) {
+    private void textViewSetProperties(String text) {
         if (!isNull(text)) {
             mTitle.setVisibility(View.VISIBLE);
             mTitle.setText(text);

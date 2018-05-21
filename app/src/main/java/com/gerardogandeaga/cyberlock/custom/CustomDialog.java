@@ -1,4 +1,4 @@
-package com.gerardogandeaga.cyberlock.views;
+package com.gerardogandeaga.cyberlock.custom;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

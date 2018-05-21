@@ -1,4 +1,4 @@
-package com.gerardogandeaga.cyberlock.utils.math;
+package com.gerardogandeaga.cyberlock.utils;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
@@ -6,7 +6,7 @@ import android.util.DisplayMetrics;
 /**
  * @author gerardogandeaga
  */
-public class Scaling {
+public class Scale {
 
     public static int dpFromPx(Context context, int dp) {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();

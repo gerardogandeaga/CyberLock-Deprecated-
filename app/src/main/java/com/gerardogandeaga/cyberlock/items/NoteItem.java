@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.Views;
+import com.gerardogandeaga.cyberlock.utils.Views;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.database.objects.notes.CardNote;
 import com.gerardogandeaga.cyberlock.database.objects.notes.GenericNote;
@@ -158,7 +158,7 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
 
             // bind our data to the view
             Views.TextViews.setOrHideText(Label, item.mLabel);
-            Views.TextViews.setOrHideText(Date, "Updated : " + item.mDate);
+            Views.TextViews.setOrHideText(Date, "Modified on " + item.mDate);
             // set the content according to the note
             setContent(item);
 

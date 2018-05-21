@@ -1,4 +1,4 @@
-package com.gerardogandeaga.cyberlock.views;
+package com.gerardogandeaga.cyberlock.custom;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -14,9 +14,6 @@ import com.gerardogandeaga.cyberlock.R;
  */
 public class CustomRecyclerView extends RecyclerView {
     private boolean mIsScrollable;
-    private boolean mIsAnimatable;
-    private int mCurrentCount;
-    private int mItemCountExpectancy; // how ever many items are expected to come into the view
 
     public CustomRecyclerView(Context context) {
         this(context, null);
@@ -25,10 +22,6 @@ public class CustomRecyclerView extends RecyclerView {
     public CustomRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs, R.style.MyMainScrollbarStyle);
         this.mIsScrollable = false;
-        this.mIsAnimatable = true;
-
-        this.mCurrentCount = 0;
-        this.mItemCountExpectancy = -1;
 
         // properties
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -44,8 +37,7 @@ public class CustomRecyclerView extends RecyclerView {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
 
-        this.mIsAnimatable = mCurrentCount < getAdapter().getItemCount();
-
+        // animate recycler items
         for (int i = 0; i < getChildCount(); i++) {
             animate(getChildAt(i), i);
 
@@ -57,22 +49,16 @@ public class CustomRecyclerView extends RecyclerView {
                     }
                 }, i * 100);
             }
-            this.mCurrentCount++;
         }
     }
 
-    // properties
-
-    private void animate(boolean isAnimatable) {
-        this.mIsAnimatable = isAnimatable;
-    }
-
+    /**
+     * simple animation logic
+     */
     private void animate(View view, final int pos) {
-        if (mIsAnimatable) {
-            view.animate().cancel();
-            view.setTranslationY(100);
-            view.setAlpha(0);
-            view.animate().alpha(1.0f).translationY(0).setDuration(300).setStartDelay(pos * 100);
-        }
+        view.animate().cancel();
+        view.setTranslationY(100);
+        view.setAlpha(0);
+        view.animate().alpha(1.0f).translationY(0).setDuration(300).setStartDelay(pos * 100);
     }
 }

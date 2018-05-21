@@ -1,41 +1,39 @@
 package com.gerardogandeaga.cyberlock.items;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.PopupMenu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
+import com.gerardogandeaga.cyberlock.utils.Graphics;
 import com.gerardogandeaga.cyberlock.utils.Res;
-import com.gerardogandeaga.cyberlock.utils.math.Scaling;
+import com.gerardogandeaga.cyberlock.utils.Views;
 import com.mikepenz.materialdrawer.model.BaseDescribeableDrawerItem;
 import com.mikepenz.materialdrawer.model.BaseViewHolder;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * @author gerardogandeaga
  */
 public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerItem, FolderDrawerItem.ViewHolder> {
-    private static final String TAG = "FolderDrawerItem";
-    private PopupMenu.OnDismissListener mOnDismissListener;
-
     private Folder mFolder;
+    // menu
     private boolean mHasMenu;
     private int mMenu;
+    // set outside of class
+    private PopupMenu.OnMenuItemClickListener mMenuItemClickListener;
+    private PopupMenu.OnDismissListener mOnDismissListener;
 
-    public FolderDrawerItem(@NonNull final Folder folder, boolean withMenu) {
+    public FolderDrawerItem(@NonNull final Folder folder, boolean hasMenu) {
         super();
         this.mFolder = folder;
+        this.mHasMenu = hasMenu;
 
         // configure drawer item with default settings
         withSelectable(false);
@@ -43,10 +41,9 @@ public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerIte
         withIcon(R.drawable.ic_folder);
         withName(mFolder.getName());
 
-        // menu
-        this.mHasMenu = withMenu;
-        if (withMenu) {
-            withMenu(R.menu.menu_folder_drawer);
+        // extras
+        if (hasMenu) {
+            withMenu();
         }
     }
 
@@ -54,48 +51,23 @@ public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerIte
         return mFolder;
     }
 
-    public FolderDrawerItem withMenu(int menu) {
-        this.mMenu = menu;
-        withOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_folder_rename:
-                        break;
-                    case R.id.menu_folder_colour:
-                        break;
-                    case R.id.menu_folder_delete:
-                        break;
-                }
-                return false;
-            }
-        });
-        return this;
+    // menu
+
+    public boolean hasMenu() {
+        return mHasMenu;
     }
 
-    public int getMenu() {
-        return mMenu;
+    private void withMenu() {
+        this.mMenu = R.menu.popup_folder_drawer_item;
     }
 
-    private PopupMenu.OnMenuItemClickListener mOnMenuItemClickListener;
+    // menu listeners
 
-    public FolderDrawerItem withOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener onMenuItemClickListener) {
-        this.mOnMenuItemClickListener = onMenuItemClickListener;
-        return this;
+    public void setMenuItemClickListener(PopupMenu.OnMenuItemClickListener onMenuItemClickListener) {
+        this.mMenuItemClickListener = onMenuItemClickListener;
     }
 
-    public PopupMenu.OnMenuItemClickListener getOnMenuItemClickListener() {
-        return mOnMenuItemClickListener;
-    }
-
-    public FolderDrawerItem withOnDismissListener(PopupMenu.OnDismissListener onDismissListener) {
-        this.mOnDismissListener = onDismissListener;
-        return this;
-    }
-
-    public PopupMenu.OnDismissListener getOnDismissListener() {
-        return mOnDismissListener;
-    }
+    // view binding and layout manager
 
     @Override
     public int getType() {
@@ -103,9 +75,44 @@ public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerIte
     }
 
     @Override
-    @LayoutRes
     public int getLayoutRes() {
         return R.layout.material_drawer_item_overflow_menu_primary;
+    }
+
+    @Override
+    public void bindView(final ViewHolder viewHolder, List<Object> payloads) {
+        super.bindView(viewHolder, payloads);
+
+        final Context context = viewHolder.itemView.getContext();
+
+        // bind the basic view parts
+        bindViewHelper(viewHolder);
+
+        if (mHasMenu) {
+            // handle menu clicks
+            viewHolder.menu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+                    MenuInflater menuInflater = popupMenu.getMenuInflater();
+                    menuInflater.inflate(mMenu, popupMenu.getMenu());
+                    // menu item click
+                    popupMenu.setOnMenuItemClickListener(mMenuItemClickListener);
+                    popupMenu.setOnDismissListener(mOnDismissListener);
+                    popupMenu.show();
+                }
+            });
+
+            // handle folder colour
+            viewHolder.icon.setColorFilter(Graphics.ColourTags.colourTag(context, mFolder.getColourTag()));
+            // handle menu image
+            Views.setVisibility(viewHolder.menu, true);
+            viewHolder.menu.setImageDrawable(Res.getDrawable(R.drawable.ic_options_vert));
+        } else {
+            Views.setVisibility(viewHolder.menu, false);
+        }
+        // call the onPostBindView to trigger post bind view actions (like the listener to modify the item if required)
+        onPostBindView(this, viewHolder.itemView);
     }
 
     @Override
@@ -114,48 +121,13 @@ public class FolderDrawerItem extends BaseDescribeableDrawerItem<FolderDrawerIte
     }
 
     static class ViewHolder extends BaseViewHolder {
-        @BindView(R.id.material_drawer_menu_overflow) ImageButton Menu;
+        private ImageButton menu;
+        private ImageView icon;
 
         ViewHolder(View view) {
             super(view);
-            ButterKnife.bind(this, view);
+            this.menu = view.findViewById(R.id.material_drawer_menu_overflow);
+            this.icon = view.findViewById(R.id.material_drawer_icon);
         }
-    }
-
-    @Override
-    public void bindView(ViewHolder viewHolder, List payloads) {
-        super.bindView(viewHolder, payloads);
-
-        Context context = viewHolder.itemView.getContext();
-
-        //bind the basic view parts
-        bindViewHelper(viewHolder);
-
-        if (mHasMenu) {
-            //handle menu click
-            viewHolder.Menu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    PopupMenu popup = new PopupMenu(view.getContext(), view);
-                    MenuInflater inflater = popup.getMenuInflater();
-                    inflater.inflate(mMenu, popup.getMenu());
-
-                    popup.setOnMenuItemClickListener(mOnMenuItemClickListener);
-                    popup.setOnDismissListener(mOnDismissListener);
-
-                    popup.show();
-                }
-            });
-
-            //handle image
-            viewHolder.Menu.setLayoutParams(new LinearLayout.LayoutParams(Scaling.dpFromPx(context, 40), Scaling.dpFromPx(context, 40)));
-            viewHolder.Menu.setRotation(90f);
-            viewHolder.Menu.setImageDrawable(Res.getDrawable(R.drawable.ic_options_hor));
-        } else {
-            viewHolder.Menu.setVisibility(View.GONE);
-        }
-
-        //call the onPostBindView method to trigger post bind view actions (like the listener to modify the item if required)
-        onPostBindView(this, viewHolder.itemView);
     }
 }

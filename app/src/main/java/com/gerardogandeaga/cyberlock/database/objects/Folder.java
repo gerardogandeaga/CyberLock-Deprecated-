@@ -1,7 +1,5 @@
 package com.gerardogandeaga.cyberlock.database.objects;
 
-// todo create Folder Object like Note Object
-
 import java.io.Serializable;
 import java.util.Date;
 

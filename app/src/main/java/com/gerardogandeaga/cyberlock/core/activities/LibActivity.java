@@ -10,8 +10,8 @@ import android.widget.FrameLayout;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.items.LibItem;
 import com.gerardogandeaga.cyberlock.items.ExternalLibItemContentHandler;
-import com.gerardogandeaga.cyberlock.views.CustomRecyclerView;
-import com.gerardogandeaga.cyberlock.views.decorations.ExternalLibItemDecoration;
+import com.gerardogandeaga.cyberlock.custom.CustomRecyclerView;
+import com.gerardogandeaga.cyberlock.custom.decorations.ExternalLibItemDecoration;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 
 import java.util.List;

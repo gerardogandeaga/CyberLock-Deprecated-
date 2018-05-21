@@ -7,14 +7,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.Views;
+import com.gerardogandeaga.cyberlock.utils.Views;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.database.objects.notes.CardNote;
 import com.gerardogandeaga.cyberlock.database.objects.notes.GenericNote;
 import com.gerardogandeaga.cyberlock.database.objects.notes.LoginNote;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
 import com.gerardogandeaga.cyberlock.utils.Res;
-import com.gerardogandeaga.cyberlock.views.CustomDialog;
+import com.gerardogandeaga.cyberlock.custom.CustomDialog;
 
 /**
  * @author gerardogandeaga

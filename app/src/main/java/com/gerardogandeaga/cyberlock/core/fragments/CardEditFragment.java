@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.database.objects.notes.CardNote;
-import com.gerardogandeaga.cyberlock.views.CustomToast;
+import com.gerardogandeaga.cyberlock.custom.CustomToast;
 
 import java.util.ArrayList;
 

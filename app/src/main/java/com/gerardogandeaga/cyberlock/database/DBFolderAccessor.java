@@ -1,7 +1,5 @@
 package com.gerardogandeaga.cyberlock.database;
 
-// todo create the folder accessor
-
 import android.content.ContentValues;
 import android.database.Cursor;
 

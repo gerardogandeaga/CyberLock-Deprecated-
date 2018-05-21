@@ -3,7 +3,7 @@
 
     <!-- drawer items -->
     <string name="str_menu_drawer_folder_rename">Rename</string>
-    <string name="str_menu_drawer_folder_colour">Change Colour Tag</string>
+    <string name="str_menu_drawer_folder_colour">Colour Tag</string>
     <string name="str_menu_drawer_folder_delete">Delete</string>
 
     <!-- add -->

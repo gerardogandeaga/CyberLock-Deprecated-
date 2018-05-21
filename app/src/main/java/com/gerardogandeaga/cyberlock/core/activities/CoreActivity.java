@@ -112,7 +112,7 @@ public abstract class CoreActivity extends SecureActivity {
      * set SECURE_INTENT
      * @param cls activity class that we be opened
      */
-    protected void newIntent(Class<?> cls) {
+    public void newIntent(Class<?> cls) {
         setSecureIntent(new Intent(this, cls));
     }
 
@@ -120,16 +120,16 @@ public abstract class CoreActivity extends SecureActivity {
      * starts a new activity
      * @param cls activity class that we be opened
      */
-    protected void newIntentGoTo(Class<?> cls) {
+    public void newIntentGoTo(Class<?> cls) {
         newIntent(cls);
         newIntentGoTo();
     }
 
-    protected void newIntentGoTo() {
+    public void newIntentGoTo() {
         startActivity(getSecureIntent());
     }
 
-    protected Intent getNewIntent() {
+    public Intent getNewIntent() {
         return getSecureIntent();
     }
 

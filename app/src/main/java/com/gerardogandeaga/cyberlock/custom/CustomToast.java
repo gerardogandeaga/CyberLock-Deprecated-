@@ -1,4 +1,4 @@
-package com.gerardogandeaga.cyberlock.views;
+package com.gerardogandeaga.cyberlock.custom;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -49,6 +49,14 @@ public class CustomToast {
         });
         toast.setView(view);
         toast.show();
+    }
+
+    public static void buildAndShowToast(Context context, String message, int duration) {
+        buildAndShowToast(context, message, INFORMATION, duration);
+    }
+
+    public static void buildAndShowToast(Context context, String message) {
+        buildAndShowToast(context, message, INFORMATION, LENGTH_SHORT);
     }
 
     private static Toast initializeToast(Context context, int duration) {

@@ -56,13 +56,14 @@
     <ImageButton
         android:id="@+id/material_drawer_menu_overflow"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
         android:background="@android:color/transparent"
         android:gravity="center_vertical"
         android:paddingEnd="0dp"
         android:paddingLeft="@dimen/material_drawer_vertical_padding"
         android:paddingRight="0dp"
         android:paddingStart="@dimen/material_drawer_vertical_padding"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter"/>
 
 </LinearLayout>

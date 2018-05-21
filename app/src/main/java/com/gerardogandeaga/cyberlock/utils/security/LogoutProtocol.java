@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
 
-import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
-
-import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.TMP_PWD;
+import com.gerardogandeaga.cyberlock.utils.Pref;
 
 /**
  * @author gerardogandeaga
@@ -21,7 +19,7 @@ public class LogoutProtocol {
     public static boolean mIsCountDownTimerFinished = false;
 
     public void logoutExecuteAutoSaveOff(final Context context) {
-        mCountDownTimer = new CountDownTimer(PreferencesAccessor.getLogoutDelayTime(context), 1000) {
+        mCountDownTimer = new CountDownTimer(Pref.getLogoutDelayTime(context), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 mIsCountDownTimerFinished = false;
@@ -31,14 +29,13 @@ public class LogoutProtocol {
             public void onFinish() {
                 mIsCountDownTimerFinished = true;
 
-                TMP_PWD = null;
                 APP_LOGGED_IN = false;
             }
         }.start();
     }
 
     public void logoutExecuteAutoSaveOn(final Context context) {
-        mCountDownTimer = new CountDownTimer(PreferencesAccessor.getLogoutDelayTime(context), 1000) {
+        mCountDownTimer = new CountDownTimer(Pref.getLogoutDelayTime(context), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 mIsCountDownTimerFinished = false;
@@ -53,8 +50,7 @@ public class LogoutProtocol {
         }.start();
     }
 
-    public void logoutImmediate(final Context context) {
-        TMP_PWD = null;
+    public void logoutImmediate() {
         APP_LOGGED_IN = false;
     }
 }

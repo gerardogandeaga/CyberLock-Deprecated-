@@ -21,6 +21,7 @@
                 app:showAsAction="never"/>
             <item
                 android:id="@+id/menu_add_card"
+                android:layout_height="wrap_content"
                 android:icon="@drawable/ic_card"
                 android:orderInCategory="0"
                 android:title="@string/str_menu_add_card"
@@ -30,32 +31,6 @@
                 android:icon="@drawable/ic_login"
                 android:orderInCategory="0"
                 android:title="@string/str_menu_add_login"
-                app:showAsAction="never"/>
-
-        </menu>
-
-    </item>
-
-    <item
-        android:id="@+id/menu_options"
-        android:icon="@drawable/ic_options_vert"
-        android:title="@string/str_menu_options"
-        app:showAsAction="always">
-
-        <menu>
-
-            <item
-                android:id="@+id/menu_option_options"
-                android:icon="@drawable/ic_cog"
-                android:orderInCategory="0"
-                android:title="@string/str_menu_options"
-                app:showAsAction="never"/>
-
-            <item
-                android:id="@+id/menu_option_import"
-                android:icon="@drawable/ic_import"
-                android:orderInCategory="0"
-                android:title="@string/str_menu_import"
                 app:showAsAction="never"/>
 
         </menu>

@@ -1,18 +1,18 @@
 package com.gerardogandeaga.cyberlock.core.dialogs;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.views.CustomDialog;
+import com.gerardogandeaga.cyberlock.custom.CustomDialog;
 import com.gerardogandeaga.cyberlock.utils.Res;
-import com.gerardogandeaga.cyberlock.utils.math.Scaling;
+import com.gerardogandeaga.cyberlock.utils.Scale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -47,7 +47,7 @@ public class ColourPaletteDialogFragment extends DialogFragment {
         }
     }
 
-    public static void show(AppCompatActivity activity) {
+    public static void show(Activity activity) {
         new ColourPaletteDialogFragment().show(activity.getFragmentManager(), TAG);
     }
 
@@ -87,7 +87,7 @@ public class ColourPaletteDialogFragment extends DialogFragment {
 
         // iterate per row -> 4
         for (int i = 0; i < ROWS; i++) {
-            int padding = Scaling.dpFromPx(getActivity(), 10);
+            int padding = Scale.dpFromPx(getActivity(), 10);
 
             // sub/row layout
             LinearLayout subLayout = new LinearLayout(getActivity());

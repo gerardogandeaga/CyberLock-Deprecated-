@@ -8,6 +8,8 @@ import com.gerardogandeaga.cyberlock.App;
 
 /**
  * @author gerardogandeaga
+ *
+ * easy reasource class
  */
 public class Res {
 

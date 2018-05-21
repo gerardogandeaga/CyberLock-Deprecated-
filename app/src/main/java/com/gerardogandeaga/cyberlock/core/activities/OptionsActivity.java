@@ -15,18 +15,12 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.utils.ListFormat;
-import com.gerardogandeaga.cyberlock.utils.PreferencesAccessor;
-import com.gerardogandeaga.cyberlock.utils.security.KeyChecker;
-import com.gerardogandeaga.cyberlock.utils.security.options.ChangePassword;
-import com.gerardogandeaga.cyberlock.views.CustomToast;
+import com.gerardogandeaga.cyberlock.utils.Pref;
 
 import org.jetbrains.annotations.Contract;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.gerardogandeaga.cyberlock.utils.PreferencesAccessor.DIRECTORY;
 
 /**
  * @author gerardogandeaga
@@ -35,7 +29,6 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
     Context mContext = this;
 
     @BindView(R.id.AutoSave)        LinearLayout mLinAutoSave;
-    @BindView(R.id.ListFormat)      LinearLayout mLinListFormat;
     @BindView(R.id.TaggedHeaders)   LinearLayout mLinTaggedHeaders;
     @BindView(R.id.AutoLogoutDelay) LinearLayout mLinAutoLogoutDelay;
     @BindView(R.id.ChangePassword)  LinearLayout mLinChangePassword;
@@ -44,7 +37,6 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
 
     @BindView(R.id.swAutoSave)          Switch mSwAutoSave;
     @BindView(R.id.imgDirection)        ImageView mImgDirection;
-    @BindView(R.id.imgListFormat)       ImageView mImgListFormat;
     @BindView(R.id.swTaggedHeaders)     Switch mSwTaggedHeaders;
     @BindView(R.id.spAutoLogoutDelay)   Spinner mSpLogoutDelay;
 
@@ -61,7 +53,6 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
         bindView();
 
         mLinAutoSave.setOnClickListener(this);
-        mLinListFormat.setOnClickListener(this);
         mLinTaggedHeaders.setOnClickListener(this);
         mLinAutoLogoutDelay.setOnClickListener(this);
         mLinChangePassword.setOnClickListener(this);
@@ -86,22 +77,14 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
         iniAutoSave();
         iniLogoutDelay();
         iniChangePassword();
-        iniListFormat();
         iniTaggedHeaders();
         iniOpenSourceLibraries();
     }
     private void iniAutoSave() {
-        mSwAutoSave.setChecked(PreferencesAccessor.getAutoSave(this));
-    }
-    private void iniListFormat() {
-        if (PreferencesAccessor.getListFormat(this).matches(ListFormat.GRID)) {
-//            mImgListFormat.setImageDrawable(Res.getDrawable(R.drawable.graphic_list_grid));
-        } else {
-//            mImgListFormat.setImageDrawable(Res.getDrawable(R.drawable.graphic_list_linear));
-        }
-    }
+        mSwAutoSave.setChecked(Pref.getAutoSave(this));
+}
     private void iniTaggedHeaders() {
-        mSwTaggedHeaders.setChecked(PreferencesAccessor.getTaggedHeaders(this));
+        mSwTaggedHeaders.setChecked(Pref.getTaggedHeaders(this));
     }
     private void iniLogoutDelay() {
         ArrayAdapter<CharSequence> adapterLogoutDelay = ArrayAdapter.createFromResource(
@@ -128,8 +111,8 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
                     }
 
                     System.out.println("Time = " + time);
-                    PreferencesAccessor.setLogoutDelay(mContext, logoutDelay);
-                    PreferencesAccessor.setLogoutDelayTime(mContext, time);
+                    Pref.setLogoutDelay(mContext, logoutDelay);
+                    Pref.setLogoutDelayTime(mContext, time);
                 }
             }
             @Override
@@ -138,7 +121,7 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
         });
 
         // saved state
-        int spinnerPosition = adapterLogoutDelay.getPosition(PreferencesAccessor.getLogoutDelay(this));
+        int spinnerPosition = adapterLogoutDelay.getPosition(Pref.getLogoutDelay(this));
         mSpLogoutDelay.setSelection(spinnerPosition);
     }
     private void iniChangePassword() {
@@ -154,37 +137,37 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             // settings
-            case R.id.AutoSave:        onAutoSave(); break;
-            case R.id.ListFormat:      onListFormat(); break;
-            case R.id.TaggedHeaders:   onTaggedHeaders(); break;
-            case R.id.AutoLogoutDelay: onLogoutDelay(); break;
+            case R.id.AutoSave:
+                onAutoSave();
+                break;
+            case R.id.TaggedHeaders:
+                onTaggedHeaders();
+                break;
+            case R.id.AutoLogoutDelay:
+                onLogoutDelay();
+                break;
             // case password change
-            case R.id.ChangePassword:  onChangePasswordActivate(); break;
-            case R.id.btnRegister:     onChangePasswordRegister(); break;
+            case R.id.ChangePassword:
+                onChangePasswordActivate();
+                break;
+            case R.id.btnRegister:
+                onChangePasswordRegister();
+                break;
             //
-            case R.id.GitHub: onOpenSourceLibraries(); break;
+            case R.id.GitHub:
+                onOpenSourceLibraries();
+                break;
         }
     }
 
     // on clicks
     private void onAutoSave() {
-        PreferencesAccessor.setAutoSave(this, !PreferencesAccessor.getAutoSave(this));
-        mSwAutoSave.setChecked(PreferencesAccessor.getAutoSave(this));
-    }
-    private void onListFormat() {
-        if (PreferencesAccessor.getListFormat(this).matches(ListFormat.GRID)) {
-            PreferencesAccessor.setListFormat(this, ListFormat.LINEAR);
-//            mImgListFormat.setImageDrawable(Res.getDrawable(R.drawable.graphic_list_linear));
-            CustomToast.buildAndShowToast(this, "Linear List Format", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
-        } else {
-            PreferencesAccessor.setListFormat(this, ListFormat.GRID);
-//            mImgListFormat.setImageDrawable(Res.getDrawable(R.drawable.graphic_list_grid));
-            CustomToast.buildAndShowToast(this, "Grid List Format", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
-        }
+        Pref.setAutoSave(this, !Pref.getAutoSave(this));
+        mSwAutoSave.setChecked(Pref.getAutoSave(this));
     }
     private void onTaggedHeaders() {
-        PreferencesAccessor.setTaggedHeaders(this, !PreferencesAccessor.getTaggedHeaders(this));
-        mSwTaggedHeaders.setChecked(PreferencesAccessor.getTaggedHeaders(this));
+        Pref.setTaggedHeaders(this, !Pref.getTaggedHeaders(this));
+        mSwTaggedHeaders.setChecked(Pref.getTaggedHeaders(this));
     }
     private void onLogoutDelay() {
         mSpLogoutDelay.performClick();
@@ -202,24 +185,6 @@ public class OptionsActivity extends CoreActivity implements View.OnClickListene
         final String currentP = mEtCurrentPass.getText().toString();
         final String initialP = mEtInitialPass.getText().toString();
         final String finalP = mEtFinalPass.getText().toString();
-
-        if (!isEmpty(currentP) && !isEmpty(initialP) && !isEmpty(finalP)) {
-            if (initialP.equals(finalP)) {
-                if (KeyChecker.comparePasswords(this, currentP)) {
-                    new ChangePassword(this, this.getSharedPreferences(DIRECTORY, Context.MODE_PRIVATE), currentP, initialP);
-                    mEtCurrentPass.getText().clear();
-                    mEtInitialPass.getText().clear();
-                    mEtFinalPass.getText().clear();
-                    mInputChangePassword.setVisibility(View.GONE);
-                } else {
-                    CustomToast.buildAndShowToast(this, "Incorrect Password", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
-                }
-            } else {
-                CustomToast.buildAndShowToast(this, "Passwords Do Not Match", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
-            }
-        } else {
-            CustomToast.buildAndShowToast(this, "All Fields Need To Be Filled", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
-        }
     }
     private void onOpenSourceLibraries() {
         newIntentGoTo(LibActivity.class);
