@@ -46,7 +46,7 @@ public class NoteItemBuilder {
                             .withContent(getUnbindedContent(note, note.getContent()))
                             .withDate(note.getDate())
                             .withColourTag(getColour(note))
-                            // if type is paymentinfo
+                            // if type is card
                             .withCardIcon(getCardImage(note.getContent()))
             );
         }
@@ -70,7 +70,7 @@ public class NoteItemBuilder {
                 .withContent(getUnbindedContent(note, note.getContent()))
                 .withDate(note.getDate())
                 .withColourTag(getColour(note))
-                // if type is paymentinfo
+                // if type is card
                 .withCardIcon(getCardImage(note.getContent()));
     }
 

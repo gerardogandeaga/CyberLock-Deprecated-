@@ -45,7 +45,7 @@ public class Graphics {
         }
 
         public static int colourTagListView(Context context, String colour) {
-            return baseColourSearch(context, colour, false);
+            return baseColourSearch(context, colour, true);
         }
 
         private static int baseColourSearch(Context context, String colour, boolean darkDefault) {

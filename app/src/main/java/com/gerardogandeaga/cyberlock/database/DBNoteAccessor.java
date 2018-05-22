@@ -36,6 +36,12 @@ public class DBNoteAccessor implements DBNoteConstants {
     }
 
     // database interactions / mods
+    public void save(ArrayList<Note> notes) {
+        for (Note note : notes) {
+            save(note);
+        }
+    }
+
     public void save(Note note) {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -55,6 +61,12 @@ public class DBNoteAccessor implements DBNoteConstants {
         db.endTransaction();
     }
 
+    public void update(ArrayList<Note> notes) {
+        for (Note note : notes) {
+            update(note);
+        }
+    }
+
     public void update(Note note) {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -72,6 +84,12 @@ public class DBNoteAccessor implements DBNoteConstants {
         db.update(TABLE_NOTES, values, DATE_MODIFIED + " = ?", new String[]{date});
         db.setTransactionSuccessful();
         db.endTransaction();
+    }
+
+    public void delete(ArrayList<Note> notes) {
+        for (Note note : notes) {
+            delete(note);
+        }
     }
 
     public void delete(Note note) {

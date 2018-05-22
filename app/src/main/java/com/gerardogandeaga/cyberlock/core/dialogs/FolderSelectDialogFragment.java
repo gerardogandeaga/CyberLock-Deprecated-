@@ -139,7 +139,7 @@ public class FolderSelectDialogFragment extends DialogFragment {
 
         @Override
         public int getLayoutRes() {
-            return R.layout.folder_simple_list_item;
+            return R.layout.item_simple_folder;
         }
 
         @NonNull

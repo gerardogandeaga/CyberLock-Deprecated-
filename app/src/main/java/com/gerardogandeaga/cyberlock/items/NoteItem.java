@@ -11,12 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.utils.Views;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.database.objects.notes.CardNote;
 import com.gerardogandeaga.cyberlock.database.objects.notes.GenericNote;
 import com.gerardogandeaga.cyberlock.database.objects.notes.LoginNote;
 import com.gerardogandeaga.cyberlock.utils.Res;
+import com.gerardogandeaga.cyberlock.utils.Views;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.mikepenz.materialize.util.UIUtils;
@@ -25,7 +25,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * @author gerardogandeaga
@@ -50,6 +49,7 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
     public int getPosition() {
         return mPosition;
     }
+
     public Note getNote() {
         return mNote;
     }
@@ -132,15 +132,15 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
 
         @BindView(R.id.tvLabel)      TextView  Label;
         @BindView(R.id.tvSubTitle)   TextView  Date;
-        @BindView(R.id.imgColourTag) CircleImageView ColourTag;
+        @BindView(R.id.imgColourTag) ImageView ColourTag;
 
         // note
         @BindView(R.id.tvNotes)      TextView Notes;
-        // paymentinfo
+        // card
         @BindView(R.id.tvHolder)     TextView  Holder;
         @BindView(R.id.tvNumber)     TextView  Number;
         @BindView(R.id.imgCardIcon)  ImageView CardIcon;
-        // logininfo
+        // login
         @BindView(R.id.tvUrl)        TextView  Url;
         @BindView(R.id.tvEmail)      TextView  Email;
         @BindView(R.id.tvUsername)   TextView  Username;
@@ -158,12 +158,12 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
 
             // bind our data to the view
             Views.TextViews.setOrHideText(Label, item.mLabel);
-            Views.TextViews.setOrHideText(Date, "Modified on " + item.mDate);
+            Views.TextViews.setOrHideText(Date, "Modified, " + item.mDate);
             // set the content according to the note
             setContent(item);
 
             // images
-            Views.ImageViews.setOrHideImage(ColourTag, Res.getDrawable(R.drawable.ic_dot));
+            Views.ImageViews.setOrHideImage(ColourTag, Res.getDrawable(R.drawable.ic_colour_tag));
             ColourTag.setColorFilter(item.mColourTag, PorterDuff.Mode.SRC_ATOP);
         }
 
@@ -194,6 +194,7 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
             final Note note = item.getNote();
 
             switch(note.getType()) {
+                    // note
                 case com.gerardogandeaga.cyberlock.database.objects.Note.GENERIC:
                     GenericNote genericNote = new GenericNote(note);
                     Views.TextViews.setOrHideText(Notes, genericNote.getNotes());
@@ -202,6 +203,7 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
                     Views.setVisibility(Note, true);
                     break;
 
+                    // card
                 case com.gerardogandeaga.cyberlock.database.objects.Note.CARD:
                     CardNote cardNote = new CardNote(note);
                     Views.TextViews.setOrHideText(Holder, cardNote.getHolder());
@@ -212,6 +214,7 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
                     Views.setVisibility(Card, true);
                     break;
 
+                    // login
                 case com.gerardogandeaga.cyberlock.database.objects.Note.LOGIN:
                     LoginNote loginNote = new LoginNote(note);
                     Views.TextViews.setOrHideText(Url, loginNote.getUrl());

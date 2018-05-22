@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.database.objects.notes.GenericNote;
+import com.gerardogandeaga.cyberlock.utils.Views;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,11 +59,11 @@ public class NoteEditFragment extends EditFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // if is not null then we set our stored data onto
         if (!mNote.isNew()) {
-            mTvDate.setText(mGenericNote.getDate());
+            Views.TextViews.setOrHideText(mTvDate, mGenericNote.getDate());
             mEtLabel.setText(mGenericNote.getLabel());
             mEtNotes.setText(mGenericNote.getNotes());
         } else {
-            mTvDate.setText(null);
+            Views.TextViews.setOrHideText(mTvDate, null);
             mEtLabel.setText(null);
             mEtNotes.setText(null);
         }

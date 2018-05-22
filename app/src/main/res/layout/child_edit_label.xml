@@ -20,10 +20,27 @@
         android:hint="Label..."
         android:inputType="text|textPersonName"
         android:maxLines="1"
-        android:padding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
         android:scrollbars="none"
         android:textAppearance="@style/myText.Edit.Label"/>
 
-    <include layout="@layout/item_divider_horizontal"/>
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textAppearance="@style/myText.Edit.Date"/>
+
+    <include
+        layout="@layout/item_divider_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
 
 </LinearLayout>

@@ -35,7 +35,7 @@ import butterknife.ButterKnife;
 enum NoteType {
     NOTE, CARD, LOGIN
 }
-public class NoteEditActivity extends CoreActivity implements RequestResponder, ColourPaletteDialogFragment.ColourSelectionCallback, FolderSelectDialogFragment.FolderSelectionCallback {
+public class NoteEditActivity extends CoreActivity implements RequestResponder, ColourPaletteDialogFragment.ColourSelectionCallBack, FolderSelectDialogFragment.FolderSelectionCallback {
     private static final String TAG = "NoteEditActivity";
 
     private Menu mMenu;

@@ -118,10 +118,18 @@ public class FolderDrawer {
 
     private IDrawerItem[] mainDrawerItems() {
         return new IDrawerItem[] {
+                // all
                 new FolderDrawerItem(Folder.Constants.ALL_NOTES_FOLDER, false),
-                new FolderDrawerItem(Folder.Constants.TRASH_FOLDER, false).withIcon(R.drawable.ic_trash),
-                new FolderDrawerItem(Folder.Constants.ARCHIVE_FOLDER, false).withIcon(R.drawable.ic_archive),
-                new SectionDrawerItem().withDivider(true).withName("Folders")
+                // trash
+                new FolderDrawerItem(Folder.Constants.TRASH_FOLDER, false)
+                        .withIcon(R.drawable.ic_trash),
+                // archive
+                new FolderDrawerItem(Folder.Constants.ARCHIVE_FOLDER, false)
+                        .withIcon(R.drawable.ic_archive),
+                // divider
+                new SectionDrawerItem()
+                        .withDivider(true).
+                        withName(mFolders.size() > 0 ? "Folders" : null)
         };
     }
 
@@ -147,7 +155,7 @@ public class FolderDrawer {
      * drawer handler :
      * handlers interactions
      */
-    private class Handler implements ColourPaletteDialogFragment.ColourSelectionCallback {
+    private class Handler implements ColourPaletteDialogFragment.ColourSelectionCallBack {
         private static final String TAG = "Handler";
 
         private Activity mActivity;

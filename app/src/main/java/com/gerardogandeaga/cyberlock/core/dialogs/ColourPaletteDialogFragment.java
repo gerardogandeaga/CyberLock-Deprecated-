@@ -28,10 +28,10 @@ public class ColourPaletteDialogFragment extends DialogFragment {
     /**
      * interface that sends colour selection callbacks
      */
-    public interface ColourSelectionCallback {
+    public interface ColourSelectionCallBack {
         void onColorSelected(String colour);
     }
-    private ColourSelectionCallback mColourSelectionCallback;
+    private ColourSelectionCallBack mColourSelectionCallBack;
 
     private static final int ROWS = 4;
     private static final int COLUMNS = 4;
@@ -41,7 +41,7 @@ public class ColourPaletteDialogFragment extends DialogFragment {
         super.onStart();
         // callback listener
         try {
-            this.mColourSelectionCallback = (ColourSelectionCallback) getActivity();
+            this.mColourSelectionCallBack = (ColourSelectionCallBack) getActivity();
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
@@ -124,8 +124,8 @@ public class ColourPaletteDialogFragment extends DialogFragment {
     }
 
     private void onItemClick(String name) {
-        if (mColourSelectionCallback != null) {
-            mColourSelectionCallback.onColorSelected(name);
+        if (mColourSelectionCallBack != null) {
+            mColourSelectionCallBack.onColorSelected(name);
         } else {
             System.out.println("listener is null!!!");
         }

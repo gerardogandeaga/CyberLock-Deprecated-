@@ -1,0 +1,26 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".core.activities.NoteActivity"
+    tools:ignore="AlwaysShowAction">
+
+    <item
+        android:id="@+id/menu_undo"
+        android:icon="@drawable/ic_undo"
+        android:title="@string/str_menu_undo"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_archive"
+        android:icon="@drawable/ic_archive"
+        android:title="@string/str_menu_archive"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_delete"
+        android:icon="@drawable/ic_trash"
+        android:title="@string/str_menu_delete"
+        app:showAsAction="always"/>
+
+</menu>

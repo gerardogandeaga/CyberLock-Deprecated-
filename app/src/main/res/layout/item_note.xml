@@ -7,10 +7,11 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="5dp"
-    app:contentPadding="8dp"
-    app:cardElevation="2dp">
+    app:cardBackgroundColor="?attr/transparent"
+    app:cardElevation="0dp"
+    app:contentPaddingLeft="20dp"
+    app:contentPaddingRight="20dp"
+    app:contentPaddingTop="12dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,20 +22,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/imgColourTag"
                 android:layout_width="25dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="4dp"
-                android:layout_marginRight="4dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="5dp"
                 android:background="?attr/transparent"
-                android:src="@color/black"/>
+                android:src="@drawable/ic_colour_tag"/>
 
             <TextView
                 android:id="@+id/tvLabel"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:maxLines="1"
                 android:minLines="1"
@@ -141,10 +141,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_marginTop="5dp"
             android:maxLines="1"
             android:minLines="1"
             android:text="Date"
             android:textAppearance="@style/myText.List.Date"/>
+
+        <include
+            layout="@layout/item_divider_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"/>
 
     </LinearLayout>
 

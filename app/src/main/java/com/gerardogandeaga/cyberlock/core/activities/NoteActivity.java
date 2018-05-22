@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,9 @@ import android.widget.FrameLayout;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.core.dialogs.NotePreviewDialog;
 import com.gerardogandeaga.cyberlock.core.drawers.FolderDrawer;
+import com.gerardogandeaga.cyberlock.custom.CustomLoad;
+import com.gerardogandeaga.cyberlock.custom.decorations.NoteItemDecoration;
+import com.gerardogandeaga.cyberlock.database.DBNoteAccessor;
 import com.gerardogandeaga.cyberlock.database.loaders.NoteAdapterLoader;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
@@ -20,14 +24,13 @@ import com.gerardogandeaga.cyberlock.helpers.ActionModeManager;
 import com.gerardogandeaga.cyberlock.interfaces.AdapterLoaderCallback;
 import com.gerardogandeaga.cyberlock.items.NoteItem;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
-import com.gerardogandeaga.cyberlock.custom.CustomLoad;
-import com.gerardogandeaga.cyberlock.custom.CustomRecyclerView;
-import com.gerardogandeaga.cyberlock.custom.decorations.NoteItemDecoration;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.listeners.OnClickListener;
 import com.mikepenz.fastadapter.listeners.OnLongClickListener;
 import com.mikepenz.materialdrawer.Drawer;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +38,7 @@ import butterknife.ButterKnife;
 /**
  * @author gerardogandeaga on 2018-03-30.
  */
-public class NoteActivity extends CoreActivity implements AdapterLoaderCallback, NotePreviewDialog.EditSelectedPreview {
+public class NoteActivity extends CoreActivity implements AdapterLoaderCallback, ActionModeManager.ActionManagerCallBack, NotePreviewDialog.EditSelectedPreview {
     @Override
     public void onLoaded(Folder folder) {
         mLoad.dismiss();
@@ -45,6 +48,44 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
 
         // only change action bar when adapter is finished
         actionbarFolderTitle();
+    }
+
+    @Override
+    public void onRemoveSelections(ArrayList<Object> items) {
+        // cast to note items
+        ArrayList<NoteItem> noteItems = new ArrayList<>();
+        for (Object item : items) {
+            noteItems.add((NoteItem) item);
+        }
+
+        // handle trash
+        ArrayList<Note> notes = new ArrayList<>();
+        for (NoteItem noteItem : noteItems) {
+            Note note = noteItem.getNote();
+            // flag as trash
+            note.withTrashed(true);
+            // add to list
+            notes.add(note);
+        }
+
+        // handle db interactions based on the manager condition
+        switch (mActionModeManager.getCondition()) {
+            case ActionModeManager.NORMAL:
+                // update db
+                DBNoteAccessor accessor = DBNoteAccessor.getInstance();
+                accessor.update(notes);
+
+                // titles
+                mCurrentFolder.withSize(mCurrentFolder.getSize() - items.size());
+                reloadFolderTitle();
+                break;
+
+            case ActionModeManager.ARCHIVE:
+                break;
+
+            case ActionModeManager.TRASH:
+                break;
+        }
     }
 
     @Override
@@ -61,10 +102,11 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
     // views
     private View mView;
     private CustomLoad mLoad;
-    private CustomRecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView;
     private Drawer mDrawer;
 
-    @BindView(R.id.fragment_container) FrameLayout mContainer;
+    @BindView(R.id.fragment_container)
+    FrameLayout mContainer;
 
     // initial on create methods
     @Override
@@ -145,9 +187,11 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
             case R.id.menu_add_note:
                 onAddClicked(Note.GENERIC);
                 break;
+
             case R.id.menu_add_card:
                 onAddClicked(Note.CARD);
                 break;
+
             case R.id.menu_add_login:
                 onAddClicked(Note.LOGIN);
                 break;
@@ -163,7 +207,7 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
     }
 
     private void setupRecyclerView() {
-        this.mRecyclerView = new CustomRecyclerView(this);
+        this.mRecyclerView = new RecyclerView(this);
         mContainer.addView(mRecyclerView);
         mRecyclerView.setVisibility(View.GONE);
 
@@ -182,6 +226,10 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
     private void actionbarFolderTitle() {
         actionBarIcon(R.drawable.ic_drawer);
         actionBarTitle((mCurrentFolder.getName().equals("MAIN") ? "All Notes" : mCurrentFolder.getName()));
+        actionBarSubTitle(Integer.toString(mCurrentFolder.getSize()) + (mCurrentFolder.getSize() == 1 ? " Item" : " Items"));
+    }
+
+    private void reloadFolderTitle() {
         actionBarSubTitle(Integer.toString(mCurrentFolder.getSize()) + (mCurrentFolder.getSize() == 1 ? " Item" : " Items"));
     }
 

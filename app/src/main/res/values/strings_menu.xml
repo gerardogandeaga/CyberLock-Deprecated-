@@ -13,7 +13,8 @@
     <string name="str_menu_add_login">Login Credentials</string>
 
     <!-- options -->
-    <string name="str_menu_delete">Delete</string>
+    <string name="str_menu_delete">Send To Trash</string>
+    <string name="str_menu_undo">Recover From Trash</string>
     <string name="str_menu_options">Options</string>
     <string name="str_menu_import">Import</string>
 

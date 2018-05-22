@@ -50,7 +50,7 @@ public class LibItem extends AbstractItem<LibItem, LibItem.ViewHolder> {
     // the layout that will be used for item
     @Override
     public int getLayoutRes() {
-        return R.layout.lib_list_item;
+        return R.layout.item_lib;
     }
 
     @NonNull

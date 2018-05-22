@@ -115,6 +115,7 @@ public class LoginActivity extends SecureActivity {
                     // check if input field is empty
                     if (pass.isEmpty()) {
                         CustomToast.buildAndShowToast(App.getContext(), "No Input Detected", CustomToast.ERROR, CustomToast.LENGTH_SHORT);
+                        mEtPassword.getText().clear();
                         mButtonFlag = true;
                         return;
                     }

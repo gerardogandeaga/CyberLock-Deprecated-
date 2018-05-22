@@ -2,20 +2,22 @@
 <selector
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_selected="false">
-        <ripple android:color="@color/ct_default">
+        <ripple android:color="@color/c_gray_10">
 
             <item>
                 <shape>
-                    <solid android:color="@color/white"/>
+                    <solid android:color="?attr/transparent"/>
 
                 </shape>
 
             </item>
 
             <item android:id="@android:id/mask">
+
                 <shape>
-                    <solid android:color="@color/white"/>
-                    <stroke android:width="2dp" android:color="@color/black"/>
+
+                    <solid android:color="@color/c_gray_10"/>
+
                 </shape>
 
             </item>
@@ -25,9 +27,10 @@
     </item>
 
     <item android:state_selected="true">
+
         <shape>
-            <solid android:color="@color/white"/>
-            <stroke android:color="@color/black" android:width="2dp"/>
+
+            <solid android:color="@color/c_gray_10"/>
 
         </shape>
 

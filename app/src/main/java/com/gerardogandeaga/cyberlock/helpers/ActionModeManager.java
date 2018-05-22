@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -18,15 +19,16 @@ import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialize.util.UIUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Set;
 
 /**
  * @author gerardogandeaga
- *
+ * <p>
  * simple generic action mode for ItemAdapters
  */
 public class ActionModeManager<Item extends IItem> {
+    private static final String TAG = "ActionModeManager";
+
     private Activity mActivity;
 
     private boolean mIsActive;
@@ -34,6 +36,13 @@ public class ActionModeManager<Item extends IItem> {
     private FastItemAdapter<Item> mItemAdapter;
     private UndoHelper<Item> mUndoHelper;
     private ActionModeHelper mActionModeHelper;
+    // callback
+    private ActionManagerCallBack mActionManagerCallBack;
+    // conditions
+    public static final int NORMAL = 0;
+    public static final int ARCHIVE = 1;
+    public static final int TRASH = 2;
+    private int mCondition;
 
     public ActionModeManager(Activity activity, FastItemAdapter itemAdapter, Drawer drawer) {
         // content
@@ -53,12 +62,37 @@ public class ActionModeManager<Item extends IItem> {
             }
         });
 
-        this.mActionModeHelper = new ActionModeHelper(mItemAdapter, R.menu.menu_delete, new ActionBarCallBack());
+        this.mActionModeHelper = new ActionModeHelper(mItemAdapter, R.menu.menu_action_mode, new ActionBarCallBack());
+
+        // initialize the callback
+        try {
+            this.mActionManagerCallBack = (ActionManagerCallBack) activity;
+        } catch (ClassCastException e) {
+            Log.i(TAG, "ActionModeManager: could not cast activity to callback");
+        }
+
+        // set condition/state
+        this.mCondition = NORMAL;
+    }
+
+    /**
+     * we can configure how the manager will behave depending on the condition. we will always assume
+     * that the manager will be used for the same general purposes.
+     *
+     * @param condition NORMAL, ARCHIVE, TRASH
+     */
+    public void setCondition(int condition) {
+        this.mCondition = condition;
+    }
+
+    public int getCondition() {
+        return mCondition;
     }
 
     /**
      * handles click events resulting either ignoring the event or processing the request
      * if action mode is active
+     *
      * @param item adapter list item
      * @return if action was processed
      */
@@ -69,6 +103,7 @@ public class ActionModeManager<Item extends IItem> {
 
     /**
      * begins the action mode or just selects the item if action mode is already active
+     *
      * @param position position of long clicked list item
      * @return if action mode was successfully started or not
      */
@@ -92,8 +127,25 @@ public class ActionModeManager<Item extends IItem> {
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            mUndoHelper.remove(mActivity.findViewById(android.R.id.content), "Item removed", "Undo", Snackbar.LENGTH_LONG, Collections.singleton(mItemAdapter.getSelectedItems().size()));
-            mode.finish();
+            switch (item.getItemId()) {
+                case R.id.menu_delete:
+                    // get items
+                    ArrayList<Object> items = new ArrayList<>();
+                    Set<Item> selectedItems = mItemAdapter.getSelectedItems();
+                    items.addAll(selectedItems);
+                    // remove from adapter
+                    mUndoHelper.remove(mActivity.findViewById(android.R.id.content), "Item removed", "Undo", Snackbar.LENGTH_LONG, mItemAdapter.getSelections());
+                    mode.finish();
+                    // send removed items to the main activity
+                    mActionManagerCallBack.onRemoveSelections(items);
+                    return true;
+
+                case R.id.menu_archive:
+                    return true;
+
+                case R.id.menu_undo:
+                    return true;
+            }
             return false;
         }
 
@@ -124,5 +176,16 @@ public class ActionModeManager<Item extends IItem> {
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             return false;
         }
+    }
+
+    public interface ActionManagerCallBack {
+
+        /**
+         * sends list of removed items, since this is a static function, we need to use and object array
+         * and convert it back for a weak reference to the data
+         *
+         * @param items Item list
+         */
+        void onRemoveSelections(ArrayList<Object> items);
     }
 }

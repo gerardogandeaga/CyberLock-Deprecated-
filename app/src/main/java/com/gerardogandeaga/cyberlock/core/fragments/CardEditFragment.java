@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 /**
  * @author gerardogandeaga
  */
-public class CardEditFragment extends EditFragment implements View.OnClickListener {
+public class CardEditFragment extends EditFragment implements View.OnClickListener, View.OnLongClickListener {
     private static final String TAG = "CardEditFragment";
 
     private Note mNote;
@@ -54,6 +54,7 @@ public class CardEditFragment extends EditFragment implements View.OnClickListen
     @BindView(R.id.rbMasterCard) RadioButton mRbMastercard;
     @BindView(R.id.rbAmex)       RadioButton mRbAmex;
     @BindView(R.id.rbDiscover)   RadioButton mRbDiscover;
+    // custom radio button grouper
     private RadioGroupSelector mRadioSelector;
 
     @Override
@@ -85,6 +86,13 @@ public class CardEditFragment extends EditFragment implements View.OnClickListen
         mMastercard.setOnClickListener(this);
         mAmex.setOnClickListener(this);
         mDiscover.setOnClickListener(this);
+        // long clicks
+        mDefault.setOnLongClickListener(this);
+        mVisa.setOnLongClickListener(this);
+        mMastercard.setOnLongClickListener(this);
+        mAmex.setOnLongClickListener(this);
+        mDiscover.setOnLongClickListener(this);
+
 
         // bundle radio buttons into a group for easy selection
         this.mRadioSelector = new RadioGroupSelector();
@@ -199,13 +207,13 @@ public class CardEditFragment extends EditFragment implements View.OnClickListen
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
         // get card type to string
-        this.mCardType = (String) v.getTag();
+        this.mCardType = (String) view.getTag();
         CustomToast.buildAndShowToast(getActivity(), mCardType + " Selected", CustomToast.INFORMATION, CustomToast.LENGTH_SHORT);
 
         // radio button toggle
-        switch (v.getId()) {
+        switch (view.getId()) {
             case R.id.Default:
                 mRadioSelector.clicked(mRbDefault);
                 break;
@@ -224,7 +232,16 @@ public class CardEditFragment extends EditFragment implements View.OnClickListen
         }
     }
 
-    private class RadioGroupSelector {
+    @Override
+    public boolean onLongClick(View view) {
+        if (view.getTag() != null) {
+            CustomToast.buildAndShowToast(getActivity(), view.getTag().toString());
+            return true;
+        }
+        return false;
+    }
+
+    private static class RadioGroupSelector {
         private ArrayList<RadioButton> mRadioButtons;
 
         RadioGroupSelector() {
