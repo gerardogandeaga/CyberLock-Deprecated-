@@ -85,6 +85,9 @@ public class ActionModeManager<Item extends IItem> {
         this.mCondition = condition;
     }
 
+    /**
+     * get manager condition/state
+     */
     public int getCondition() {
         return mCondition;
     }
