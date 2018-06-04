@@ -6,6 +6,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
@@ -28,6 +29,7 @@ public abstract class CoreActivity extends SecureActivity {
 
     // we bind the tool bar view in the sub class activity
     @BindView(R.id.toolbar) Toolbar mToolbar;
+    @BindView(R.id.root_view) View mRootView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

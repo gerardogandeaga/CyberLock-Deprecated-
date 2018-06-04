@@ -70,4 +70,7 @@ dependencies {
 
     // SQLCipher
     implementation "net.zetetic:android-database-sqlcipher:3.5.9@aar"
+
+    // richeditor-android
+    implementation 'jp.wasabeef:richeditor-android:1.2.2'
 }
