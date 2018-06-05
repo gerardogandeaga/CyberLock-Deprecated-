@@ -1,128 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HorizontalScrollView
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:scrollbars="none"
-    tools:ignore="ContentDescription">
+    app:cardElevation="10dp">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <HorizontalScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="@color/white"
+        android:scrollbars="none"
+        tools:ignore="ContentDescription">
 
-        <ImageButton
-            android:id="@+id/btnBold"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bk_default_ripple"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/ic_editor_bold"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/btnItalic"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bk_default_ripple"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/ic_editor_italic"/>
+            <ImageButton
+                android:id="@+id/btnUndo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bk_default_ripple"
+                android:src="@drawable/ic_editor_undo"
+                android:tag="Undo"/>
 
-        <ImageButton
-            android:id="@+id/btnUnderline"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bk_default_ripple"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/ic_editor_underlined"/>
+            <ImageButton
+                android:id="@+id/btnRedo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bk_default_ripple"
+                android:scaleX="-1"
+                android:src="@drawable/ic_editor_undo"
+                android:tag="Redo"/>
 
-        <ImageButton
-            android:id="@+id/btnStrike"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bk_default_ripple"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/ic_editor_strike"/>
+            <ImageButton
+                android:id="@+id/btnBold"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bk_default_ripple"
+                android:src="@drawable/ic_editor_bold"
+                android:tag="Bold"/>
 
-        <ImageButton
-            android:id="@+id/btnIndent"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bk_default_ripple"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/ic_editor_indent"/>
+            <ImageButton
+                android:id="@+id/btnItalic"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bk_default_ripple"
+                android:src="@drawable/ic_editor_italic"
+                android:tag="Italic"/>
 
-        <ImageButton
-            android:id="@+id/btnOutdent"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bk_default_ripple"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/ic_editor_outdent"/>
+            <ImageButton
+                android:id="@+id/btnUnderline"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bk_default_ripple"
+                android:src="@drawable/ic_editor_underlined"
+                android:tag="Underline"/>
 
-        <ImageButton
-            android:id="@+id/btnUnOrderedList"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bk_default_ripple"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/ic_editor_unordered_list"/>
+            <ImageButton
+                android:id="@+id/btnStrike"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bk_default_ripple"
+                android:src="@drawable/ic_editor_strike"
+                android:tag="Strike Through"/>
 
-        <ImageButton
-            android:id="@+id/btnOrderedList"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bk_default_ripple"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/ic_editor_ordered_list"/>
+            <ImageButton
+                android:id="@+id/btnIndent"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bk_default_ripple"
+                android:src="@drawable/ic_editor_indent"
+                android:tag="Indent"/>
 
-        <ImageButton
-            android:id="@+id/btnLeft"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bk_default_ripple"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/ic_editor_left"/>
+            <ImageButton
+                android:id="@+id/btnOutdent"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bk_default_ripple"
+                android:src="@drawable/ic_editor_outdent"
+                android:tag="Outdent"/>
 
-        <ImageButton
-            android:id="@+id/btnCenter"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bk_default_ripple"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/ic_editor_center"/>
+            <ImageButton
+                android:id="@+id/btnUnOrderedList"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bk_default_ripple"
+                android:src="@drawable/ic_editor_unordered_list"
+                android:tag="Bullet List"/>
 
-        <ImageButton
-            android:id="@+id/btnRight"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bk_default_ripple"
-            android:clickable="false"
-            android:focusable="false"
-            android:src="@drawable/ic_editor_right"/>
+            <ImageButton
+                android:id="@+id/btnOrderedList"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bk_default_ripple"
+                android:src="@drawable/ic_editor_ordered_list"
+                android:tag="Numbered List"/>
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/btnLeft"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bk_default_ripple"
+                android:src="@drawable/ic_editor_left"
+                android:tag="Align To Left"/>
 
-</HorizontalScrollView>
+            <ImageButton
+                android:id="@+id/btnCenter"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bk_default_ripple"
+                android:src="@drawable/ic_editor_center"
+                android:tag="Align To Center"/>
+
+            <ImageButton
+                android:id="@+id/btnRight"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bk_default_ripple"
+                android:rotation="180"
+                android:src="@drawable/ic_editor_left"
+                android:tag="Align To Right"/>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+</android.support.v7.widget.CardView>

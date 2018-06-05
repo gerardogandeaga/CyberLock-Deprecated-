@@ -144,7 +144,9 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
             public boolean onClick(@Nullable View view, @NonNull IAdapter<NoteItem> adapter, @NonNull NoteItem item, int position) {
                 // try to select the item, it will be false if nothing was selected
                 if (!mActionModeManager.isActive()) {
-                    new NotePreviewDialog(mContext, item.getNote()).initializeDialog();
+                    newIntent(NoteEditActivity.class);
+                    getNewIntent().putExtra("data", item.getNote());
+                    newIntentGoTo();
                 }
                 return mActionModeManager.onClick(item);
             }

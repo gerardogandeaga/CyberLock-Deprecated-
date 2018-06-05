@@ -58,22 +58,22 @@
 
     <!-- colour tags -->
     <color name="ct_default">#d5d5d5</color>
-    <color name="ct_red_2">#c3171f</color>
-    <color name="ct_red_1">#f50258</color>
-    <color name="ct_purple_1">#d502f9</color>
-    <color name="ct_purple_2">#550ef4</color>
-    <color name="ct_blue_4">#3e5bfe</color>
-    <color name="ct_blue_3">#2b7aff</color>
-    <color name="ct_blue_2">#02b1ff</color>
-    <color name="ct_blue_1">#00acc0</color>
-    <color name="ct_green_3">#1fe9b7</color>
-    <color name="ct_green_2">#00c062</color>
-    <color name="ct_green_1">#40c000</color>
-    <color name="ct_yellow_2">#c6ff02</color>
-    <color name="ct_yellow_1">#ffea02</color>
-    <color name="ct_orange_1">#ffc402</color>
-    <color name="ct_orange_2">#ff9202</color>
-    <color name="ct_orange_3">#ff3f02</color>
+    <color name="ct_red_2">#f44438</color>
+    <color name="ct_red_1">#e92064</color>
+    <color name="ct_purple_1">#9d29b1</color>
+    <color name="ct_purple_2">#683cb8</color>
+    <color name="ct_blue_4">#4152b6</color>
+    <color name="ct_blue_3">#2397f3</color>
+    <color name="ct_blue_2">#02bdd4</color>
+    <color name="ct_blue_1">#029789</color>
+    <color name="ct_green_3">#4db051</color>
+    <color name="ct_green_2">#8cc34b</color>
+    <color name="ct_green_1">#cddc3b</color>
+    <color name="ct_orange_3">#ffeb3d</color>
+    <color name="ct_yellow_2">#ffc109</color>
+    <color name="ct_yellow_1">#ff9902</color>
+    <color name="ct_orange_1">#7a5649</color>
+    <color name="ct_orange_2">#617e8c</color>
 
     <array name="arr_tag_colours">
         <item>@color/ct_red_2</item>
@@ -87,10 +87,10 @@
         <item>@color/ct_green_3</item>
         <item>@color/ct_green_2</item>
         <item>@color/ct_green_1</item>
+        <item>@color/ct_orange_3</item>
         <item>@color/ct_yellow_1</item>
         <item>@color/ct_orange_1</item>
         <item>@color/ct_orange_2</item>
-        <item>@color/ct_orange_3</item>
         <item>@color/ct_default</item>
     </array>
 
@@ -104,15 +104,13 @@
         <item>ct_7</item>
         <item>ct_8</item>
         <item>ct_9</item>
+        <item>ct_14</item>
         <item>ct_10</item>
         <item>ct_11</item>
         <item>ct_12</item>
         <item>ct_13</item>
-        <item>ct_14</item>
         <item>ct_15</item>
         <item>ct_16</item>
     </string-array>
-
-
 
 </resources>

@@ -73,4 +73,7 @@ dependencies {
 
     // richeditor-android
     implementation 'jp.wasabeef:richeditor-android:1.2.2'
+
+    // Jsoup
+    implementation 'org.jsoup:jsoup:1.11.3'
 }

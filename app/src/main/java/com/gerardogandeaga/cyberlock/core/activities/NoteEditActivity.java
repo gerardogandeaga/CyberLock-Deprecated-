@@ -38,7 +38,7 @@ enum NoteType {
 public class NoteEditActivity extends CoreActivity implements RequestResponder, ColourPaletteDialogFragment.ColourSelectionCallBack, FolderSelectDialogFragment.FolderSelectionCallback {
     private static final String TAG = "NoteEditActivity";
 
-    private Menu mMenu;
+    private NoteType enum_type;
 
     // fragments
     private FragmentManager mFragmentManager;
@@ -50,12 +50,14 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
     // edit
     private boolean mSaveFlag;
     private boolean mIsAutoSave;
-    private NoteType enum_type;
     private Note mNote;
 
     // note object
     private String mCurrentFolder;
     private String mColourTag;
+
+    // quick and dirty mode switch var
+    private Menu mMenu;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,7 +77,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
 
         initializeNoteObject();
 
-        // launch the fragment
+        // launch a fragment
         startEditor();
 
         setupActionBar(null, null, NO_ICON);
@@ -89,8 +91,8 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_edit, menu);
-        this.mMenu = menu;
+        getMenuInflater().inflate(R.menu.menu_note_edit, menu);
+        mMenu = menu;
 
         // change colour filter of icons
         Graphics.BasicFilter.mutateMenuItems(menu);
@@ -128,6 +130,20 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
             bundle.remove("data");
             bundle.remove("type");
             bundle.remove("folder");
+
+            switch (mNote.getType()) {
+                case Note.GENERIC:
+                    this.enum_type = NoteType.NOTE;
+                    break;
+
+                case Note.CARD:
+                    this.enum_type = NoteType.CARD;
+                    break;
+
+                case Note.LOGIN:
+                    this.enum_type = NoteType.LOGIN;
+                    break;
+            }
         }
     }
 
@@ -139,17 +155,16 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
         Bundle noteBundle = new Bundle();
         noteBundle.putSerializable("data", mNote);
 
-        switch (mNote.getType()) {
-            case Note.GENERIC:
-                this.enum_type = NoteType.NOTE;
+        switch (enum_type) {
+            case NOTE:
                 fragmentTransaction.add(R.id.fragment_container, newFragment(mNoteEditFragment, noteBundle));
                 break;
-            case Note.CARD:
-                this.enum_type = NoteType.CARD;
+
+            case CARD:
                 fragmentTransaction.add(R.id.fragment_container, newFragment(mCardEditFragment, noteBundle));
                 break;
-            case Note.LOGIN:
-                this.enum_type = NoteType.LOGIN;
+
+            case LOGIN:
                 fragmentTransaction.add(R.id.fragment_container, newFragment(mLoginEditFragment, noteBundle));
                 break;
         }
@@ -175,16 +190,20 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
             case R.id.menu_trash:
                 trashNote();
                 break;
+
             case R.id.menu_folder:
                 FolderSelectDialogFragment.show(this, mCurrentFolder);
                 break;
+
             case R.id.menu_colour_tag:
                 ColourPaletteDialogFragment.show(this);
                 break;
+
             // send save request to fragment
             case R.id.menu_save:
                 requestSave();
                 break;
+
             case R.id.menu_cancel:
                 cancelNote();
                 break;

@@ -151,9 +151,11 @@ public class LoginActivity extends SecureActivity {
                                 beginLogin();
                             }
                         });
+                        // start login
                         return;
                     }
 
+                    // login into cyber lock
                     setIsAppLoggedIn(true);
                     loginIntent();
                 } catch (Exception e) {
@@ -172,6 +174,7 @@ public class LoginActivity extends SecureActivity {
             }
         }).start();
     }
+    
     /**
     this function tries to pull the last edit data package that was opened and being edited
     immediately before the system auto logged out

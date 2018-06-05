@@ -19,6 +19,8 @@
     <string name="str_menu_import">Import</string>
 
     <!-- edit -->
+    <string name="str_menu_edit">Edit</string>
+    <string name="str_menu_readonly">Read Only</string>
     <string name="str_menu_archive">Archive</string>
     <string name="str_menu_trash">Send To Trash</string>
     <string name="str_menu_details">Details</string>

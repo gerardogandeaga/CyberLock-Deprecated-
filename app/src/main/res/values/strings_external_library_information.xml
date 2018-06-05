@@ -7,6 +7,7 @@
         <item>FastAdapter</item>
         <item>MaterialDrawer</item>
         <item>SQLCipher</item>
+        <item>Jsoup</item>
     </string-array>
 
     <!-- author -->
@@ -16,6 +17,7 @@
         <item>Mike Penz</item>
         <item>Mike Penz</item>
         <item>Zetetic, LLC</item>
+        <item>Jonathan Hedley</item>
     </string-array>
 
     <!-- descriptions -->
@@ -25,6 +27,7 @@
         <item>@string/str_lib_fast_adapter</item>
         <item>@string/str_lib_material_drawer</item>
         <item>@string/str_lib_sqlcipher</item>
+        <item>@string/str_lib_jsoup</item>
     </string-array>
 
     <!-- urls -->
@@ -34,6 +37,7 @@
         <item>https://github.com/mikepenz/FastAdapter</item>
         <item>https://github.com/mikepenz/MaterialDrawer</item>
         <item>https://www.zetetic.net/sqlcipher</item>
+        <item>https://github.com/jhy/jsoup</item>
     </string-array>
 
     <!-- lib descriptions -->
@@ -58,5 +62,9 @@
             periodically integrates stable SQLite release features.
 
             SQLCipher is maintained by Zetetic, LLC, the official site can be found below</string>
+    <string name="str_lib_jsoup">
+            jsoup is a Java library for working with real-world HTML. It provides a very convenient API for
+            extracting and manipulating data, using the best of DOM, CSS, and jquery-like methods.
+    </string>
 
 </resources>

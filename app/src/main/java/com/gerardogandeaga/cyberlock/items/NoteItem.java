@@ -21,6 +21,8 @@ import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.mikepenz.materialize.util.UIUtils;
 
+import org.jsoup.Jsoup;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -197,7 +199,7 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
                     // note
                 case com.gerardogandeaga.cyberlock.database.objects.Note.GENERIC:
                     GenericNote genericNote = new GenericNote(note);
-                    Views.TextViews.setOrHideText(Notes, genericNote.getNotes());
+                    Views.TextViews.setOrHideText(Notes, shortNote(genericNote.getNotes()));
                     // expand the parent view
                     Views.setVisibility(false, Card, Login);
                     Views.setVisibility(Note, true);
@@ -226,6 +228,35 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
                     break;
             }
         }
+    }
+
+    private String shortNote(String markedNote) {
+        if (markedNote == null || markedNote.isEmpty()) {
+            return null;
+        }
+
+        // filter out html markup
+        String note = Jsoup.parse(markedNote).body().text();
+
+        final int max = 100;
+        StringBuilder builder = new StringBuilder();
+
+        if (note.length() <= max) {
+            return note;
+        }
+
+        for (int i = 0; i < max; i++) {
+            builder.append(note.charAt(i));
+
+            if ((i == (max - 1)) && (note.charAt(i + 1) != ' ')) {
+                do {
+                    builder.append(note.charAt(i));
+                } while ((note.charAt(i) != ' '));
+            }
+        }
+
+        builder.append("...");
+        return builder.toString();
     }
 
     private String formatCardNumber(String number) {

@@ -57,7 +57,7 @@ public class NotePreviewDialog {
 
     // Create dialog
     private void constructPreviewNote() {
-        View view = View.inflate(mContext, R.layout.preview_note, null);
+        View view = View.inflate(mContext, R.layout.fragment_preview_note, null);
         GenericNote genericNote = mNote.getGenericNote();
         //
         TextView note = view.findViewById(R.id.tvNotes);
