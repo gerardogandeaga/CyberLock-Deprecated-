@@ -2,6 +2,7 @@ package com.gerardogandeaga.cyberlock.core.dialogs;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,11 +16,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.custom.CustomDialog;
 import com.gerardogandeaga.cyberlock.database.DBFolderAccessor;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
 import com.gerardogandeaga.cyberlock.utils.Res;
-import com.gerardogandeaga.cyberlock.custom.CustomDialog;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
@@ -93,18 +94,16 @@ public class FolderSelectDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // build the dialog
-        final CustomDialog customDialog = new CustomDialog(getActivity());
-        customDialog.setTitle("Select Folder");
-        customDialog.setContentView(mRecyclerView);
-        customDialog.setNegativeButton("Cancel", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-
-        return customDialog.createDialog();
+        return new CustomDialog(getActivity())
+                .setTitle("Select Folder")
+                .setView(mRecyclerView)
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dismiss();
+                    }
+                })
+                .show();
     }
 
     public static void show(AppCompatActivity activity, String folder) {
@@ -165,7 +164,7 @@ public class FolderSelectDialogFragment extends DialogFragment {
             public void bindView(@NonNull Item item, @NonNull List<Object> payloads) {
                 if (item.mIsCurrentFolder) {
                     SelectedIcon.setVisibility(android.view.View.VISIBLE);
-                    SelectedIcon.setImageDrawable(Res.getDrawable(R.drawable.ic_check));
+                    SelectedIcon.setImageDrawable(Res.getDrawable(R.drawable.ic_circe_check));
                 } else {
                     SelectedIcon.setVisibility(android.view.View.GONE);
                     SelectedIcon.setImageDrawable(null);

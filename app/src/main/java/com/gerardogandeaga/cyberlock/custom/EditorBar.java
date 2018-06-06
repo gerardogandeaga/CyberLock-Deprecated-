@@ -2,7 +2,9 @@ package com.gerardogandeaga.cyberlock.custom;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.gerardogandeaga.cyberlock.R;
@@ -47,6 +49,9 @@ public class EditorBar implements View.OnLongClickListener {
     }
 
     public EditorBar withRootView(Activity activity) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        mView.setLayoutParams(params);
         // seek the root view through the activity
         ((LinearLayout) activity.findViewById(R.id.root_view)).addView(mView);
         return this;

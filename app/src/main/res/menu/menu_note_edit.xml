@@ -31,12 +31,12 @@
 
         <menu>
 
-            <item
-                android:id="@+id/menu_readonly"
-                android:checkable="true"
-                android:icon="@drawable/ic_readonly"
-                android:title="@string/str_menu_readonly"
-                app:showAsAction="withText"/>
+            <!--<item-->
+                <!--android:id="@+id/menu_view_mode"-->
+                <!--android:checkable="true"-->
+                <!--android:icon="@drawable/ic_readonly"-->
+                <!--android:title="@string/str_menu_readonly"-->
+                <!--app:showAsAction="withText"/>-->
 
             <item
                 android:id="@+id/menu_folder"

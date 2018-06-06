@@ -3,11 +3,13 @@ package com.gerardogandeaga.cyberlock.core.dialogs;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.custom.CustomDialog;
@@ -54,17 +56,17 @@ public class ColourPaletteDialogFragment extends DialogFragment {
     // fragment methods
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final CustomDialog customDialog = new CustomDialog(getActivity());
-        customDialog.setContentView(buildPaletteView());
-        customDialog.setTitle("Colour Palette");
-        customDialog.setNegativeButton("Cancel", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
-
-        return customDialog.createDialog();
+        return new CustomDialog(getActivity())
+                .setIcon(Res.getDrawable(R.drawable.ic_colour_palette))
+                .setTitle("Colour Palette")
+                .setView(buildPaletteView())
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dismiss();
+                    }
+                })
+                .show();
     }
 
     private View buildPaletteView() {
@@ -120,7 +122,11 @@ public class ColourPaletteDialogFragment extends DialogFragment {
             // increment offset for next round
             offset += 4;
         }
-        return container;
+
+        ScrollView finalView = new ScrollView(getActivity());
+        finalView.setLayoutParams(new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        finalView.addView(container);
+        return finalView;
     }
 
     private void onItemClick(String name) {

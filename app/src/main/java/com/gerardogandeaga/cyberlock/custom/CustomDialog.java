@@ -1,20 +1,18 @@
 package com.gerardogandeaga.cyberlock.custom;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.utils.Res;
+import com.gerardogandeaga.cyberlock.utils.Views;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,143 +20,92 @@ import butterknife.ButterKnife;
 /**
  * @author gerardogandeaga
  *
- * todo add final dialog object with respect to the dialog builder
+ * a dialog class with a custom title view, the any of these functions you want to use must be executed
+ * first before casting back to a AlertDialog.Builder.
+ *
+ * for ex:
+ *
+ * new CustomDialog(mActivity)
+ * .setIcon(drawable)
+ * .setTitle("title")
+ * .setView(view)
+ *
+ * *** the top functions must be declared first beacuse the bottom statement
+ * will cast to super class which cannot be undone with out a re-cast; ***
+ *
+ * .setNegativeButton("negative", new DialogInterface.OnClickListener() {})
+ * .setPositiveButton("positive", new DialogInterface.OnClickListener() {})
+ * .show();
  */
-public class CustomDialog {
-    private Context mContext;
-    private View mView;
-    private Dialog mDialog; // <-- to do goes here
+public class CustomDialog extends AlertDialog.Builder {
+    @BindView(R.id.imgIcon)     ImageView mIcon;
+    @BindView(R.id.imgMenuIcon) ImageView mMenuIcon;
+    @BindView(R.id.tvTitle)     TextView mTitle;
+    @BindView(R.id.tvSubTitle)  TextView mSubTitle;
 
-    // views
-    @BindView(R.id.lnTitleBackground) LinearLayout mTitleBackground;
-    // icons
-    @BindView(R.id.imgIcon)           ImageView mIcon;
-    @BindView(R.id.imgMenuIcon)       ImageView mMenuIcon;
-    // text views
-    @BindView(R.id.tvTitle)           TextView mTitle;
-    @BindView(R.id.tvSubTitle)        TextView mSubTitle;
-    // action buttons
-    @BindView(R.id.btnPositive)       Button mPositive;
-    @BindView(R.id.btnNegative)       Button mNegative;
-    @BindView(R.id.btnNeutral)        Button mNeutral;
-    // containers
-    @BindView(R.id.titleContainer)    LinearLayout mTitleContainer;
-    @BindView(R.id.buttonContainer)   LinearLayout mButtonContainer;
-    @BindView(R.id.container)         RelativeLayout mContainer;
-
-    public CustomDialog(Context context) {
-        this.mContext = context;
-        this.mView = View.inflate(context, R.layout.custom_dialog_view, null);
-        ButterKnife.bind(this, mView);
-
-        // on create
-        defaultViewVisibility();
+    public CustomDialog(@NonNull Context context) {
+        this(context, 0);
     }
 
-    public Dialog createDialog() {
-        checkAndSetContainerVisibility();
+    public CustomDialog(@NonNull Context context, int themeResId) {
+        super(context, themeResId);
 
-        // wrapper keeps the dimensions consistent in the dialog view
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        RelativeLayout wrapper = new RelativeLayout(mContext);
-        wrapper.setLayoutParams(params);
-        wrapper.addView(mView);
+        // custom title view
+        View titleView = View.inflate(context, R.layout.custom_dialog_title, null);
+        // attach the dialog
+        setCustomTitle(titleView);
 
-        return new AlertDialog.Builder(mContext)
-                .setView(wrapper)
-                .create();
+        ButterKnife.bind(this, titleView);
+
+        // assume title views are null
+        setIcon(null);
+        setMenuIcon(null);
+        setTitle(null);
+        setSubTitle(null);
     }
 
-    // views
-    public void setTitleBackgroundColour(int colour) {
-        mTitleBackground.setBackgroundColor(colour);
-    }
-
-    public void setTitleColour(int colour) {
-        mTitle.setTextColor(colour);
-        mSubTitle.setTextColor(colour);
-    }
-
+    // extended properties
     // icon
-    public void setIcon(Drawable drawable) {
-        imageviewSetProperties(mIcon, drawable);
+
+    public CustomDialog setIcon(@DrawableRes int drawableResId) {
+        return setIcon(Res.getDrawable(drawableResId));
+    }
+
+    public CustomDialog setIcon(Drawable icon) {
+        Views.ImageViews.setOrHideImage(mIcon, icon);
+        return this;
     }
 
     // menu icon
-    public void setMenuIcon(Drawable drawable, int colourId) {
-        mMenuIcon.setColorFilter(Res.getColour(colourId), PorterDuff.Mode.SRC_ATOP);
-        setMenuIcon(drawable);
-    }
-    public void setMenuIcon(Drawable drawable)  {
-        imageviewSetProperties(mMenuIcon, drawable);
+
+    public CustomDialog setMenuIcon(@DrawableRes int drawableResId) {
+        return setMenuIcon(Res.getDrawable(drawableResId));
     }
 
-    // text views
-    public void setTitle(String text) {
-        textviewSetProperties(mTitle, text);
+    public CustomDialog setMenuIcon(Drawable icon) {
+        Views.ImageViews.setOrHideImage(mMenuIcon, icon);
+        return this;
     }
 
-    public void setSubTitle(String text) {
-        textviewSetProperties(mSubTitle, text);
+    // title
+
+    public CustomDialog setTitle(@StringRes int stringResId) {
+        return setTitle(Res.getString(stringResId));
     }
 
-    // buttons
-    public void setPositiveButton(String text, View.OnClickListener listener) {
-        buttonSetProperties(mPositive, text, listener);
+    public CustomDialog setTitle(String title) {
+        Views.TextViews.setOrHideText(mTitle, title);
+        return this;
     }
 
-    public void setNegativeButton(String text, View.OnClickListener listener) {
-        buttonSetProperties(mNegative, text, listener);
+    // sub title
+
+    public CustomDialog setSubTitle(@StringRes int stringResId) {
+        return setSubTitle(Res.getString(stringResId));
     }
 
-    public void setNeutralButton(String text, View.OnClickListener listener) {
-        buttonSetProperties(mNeutral, text, listener);
-    }
-
-    // visibility managers
-    private void checkAndSetContainerVisibility() {
-        // title container
-        if (mIcon.getVisibility() == View.GONE && mTitle.getVisibility() == View.GONE && mSubTitle.getVisibility() == View.GONE) {
-            mTitleContainer.setVisibility(View.GONE);
-        }
-
-        // button container
-        if (mPositive.getVisibility() == View.GONE && mNegative.getVisibility() == View.GONE && mNeutral.getVisibility() == View.GONE) {
-            mButtonContainer.setVisibility(View.GONE);
-        }
-    }
-
-    // container
-    public void setContentView(View view) {
-        mContainer.addView(view);
-    }
-
-    private void defaultViewVisibility() {
-        // icons
-        mIcon.setVisibility(View.GONE);
-        mMenuIcon.setVisibility(View.GONE);
-        // text views
-        mTitle.setVisibility(View.GONE);
-        mSubTitle.setVisibility(View.GONE);
-        // button
-        mPositive.setVisibility(View.GONE);
-        mNegative.setVisibility(View.GONE);
-        mNeutral.setVisibility(View.GONE);
-    }
-
-    private void imageviewSetProperties(ImageView imageView, Drawable drawable) {
-        imageView.setVisibility(View.VISIBLE);
-        imageView.setImageDrawable(drawable);
-    }
-
-    private void textviewSetProperties(TextView textView, String text) {
-        textView.setVisibility(View.VISIBLE);
-        textView.setText(text);
-    }
-
-    private void buttonSetProperties(Button button, String text, View.OnClickListener listener) {
-        button.setVisibility(View.VISIBLE);
-        button.setText(text);
-        button.setOnClickListener(listener);
+    public CustomDialog setSubTitle(String subTitle) {
+        Views.TextViews.setOrHideText(mSubTitle, subTitle);
+        return this;
     }
 }

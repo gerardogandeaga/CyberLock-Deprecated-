@@ -5,9 +5,10 @@
         <item>Butter Knife</item>
         <item>CircleImageView</item>
         <item>FastAdapter</item>
-        <item>MaterialDrawer</item>
-        <item>SQLCipher</item>
         <item>Jsoup</item>
+        <item>MaterialDrawer</item>
+        <item>RichEditor (Android)</item>
+        <item>SQLCipher</item>
     </string-array>
 
     <!-- author -->
@@ -15,9 +16,10 @@
         <item>Jake Wharton</item>
         <item>Henning Dodenhof</item>
         <item>Mike Penz</item>
-        <item>Mike Penz</item>
-        <item>Zetetic, LLC</item>
         <item>Jonathan Hedley</item>
+        <item>Mike Penz</item>
+        <item>Daichi Furiya</item>
+        <item>Zetetic, LLC</item>
     </string-array>
 
     <!-- descriptions -->
@@ -25,9 +27,10 @@
         <item>@string/str_lib_butter_knife</item>
         <item>@string/str_lib_circle_imageview</item>
         <item>@string/str_lib_fast_adapter</item>
-        <item>@string/str_lib_material_drawer</item>
-        <item>@string/str_lib_sqlcipher</item>
         <item>@string/str_lib_jsoup</item>
+        <item>@string/str_lib_material_drawer</item>
+        <item>@string/str_lib_rich_editor_android</item>
+        <item>@string/str_lib_sqlcipher</item>
     </string-array>
 
     <!-- urls -->
@@ -35,9 +38,10 @@
         <item>https://github.com/JakeWharton/butterknife</item>
         <item>https://github.com/hdodenhof/CircleImageView</item>
         <item>https://github.com/mikepenz/FastAdapter</item>
-        <item>https://github.com/mikepenz/MaterialDrawer</item>
-        <item>https://www.zetetic.net/sqlcipher</item>
         <item>https://github.com/jhy/jsoup</item>
+        <item>https://github.com/mikepenz/MaterialDrawer</item>
+        <item>https://github.com/wasabeef/richeditor-android</item>
+        <item>https://www.zetetic.net/sqlcipher</item>
     </string-array>
 
     <!-- lib descriptions -->
@@ -52,9 +56,14 @@
             anymore. Just write the logic for how your view/item should look like,
             and you are done. This library has a fast and highly optimized core
             which provides core functionality, most apps require.</string>
+    <string name="str_lib_jsoup">
+            jsoup is a Java library for working with real-world HTML. It provides a very convenient API for
+            extracting and manipulating data, using the best of DOM, CSS, and jquery-like methods.</string>
     <string name="str_lib_material_drawer">The MaterialDrawer library provides you with the easiest possible
             implementation of a navigation drawer for your application. Just Provide custom DrawerItems, custom colors,
             custom themes, etc. No limits for customizations.</string>
+    <string name="str_lib_rich_editor_android">
+        RichEditor for Android is a beautiful Rich Text WYSIWYG Editor for Android</string>
     <string name="str_lib_sqlcipher">
             SQLCipher extends the SQLite database library to add security enhancements
             that make it more suitable for encrypted local data storage such as on-the-fly encryption, tamper evidence,
@@ -62,9 +71,5 @@
             periodically integrates stable SQLite release features.
 
             SQLCipher is maintained by Zetetic, LLC, the official site can be found below</string>
-    <string name="str_lib_jsoup">
-            jsoup is a Java library for working with real-world HTML. It provides a very convenient API for
-            extracting and manipulating data, using the best of DOM, CSS, and jquery-like methods.
-    </string>
 
 </resources>

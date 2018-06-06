@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.core.dialogs.NotePreviewDialog;
 import com.gerardogandeaga.cyberlock.core.drawers.FolderDrawer;
 import com.gerardogandeaga.cyberlock.custom.CustomLoad;
 import com.gerardogandeaga.cyberlock.custom.decorations.NoteItemDecoration;
@@ -38,7 +37,7 @@ import butterknife.ButterKnife;
 /**
  * @author gerardogandeaga on 2018-03-30.
  */
-public class NoteActivity extends CoreActivity implements AdapterLoaderCallback, ActionModeManager.ActionManagerCallBack, NotePreviewDialog.EditSelectedPreview {
+public class NoteActivity extends CoreActivity implements AdapterLoaderCallback, ActionModeManager.ActionManagerCallBack {
     @Override
     public void onLoaded(Folder folder) {
         mLoad.dismiss();
@@ -86,13 +85,6 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
             case ActionModeManager.TRASH:
                 break;
         }
-    }
-
-    @Override
-    public void onEdit(Note note) {
-        newIntent(NoteEditActivity.class);
-        getNewIntent().putExtra("data", note);
-        newIntentGoTo();
     }
 
     private Context mContext = this;

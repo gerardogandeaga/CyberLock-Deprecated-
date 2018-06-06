@@ -176,6 +176,12 @@ public class CardEditFragment extends EditFragment implements View.OnClickListen
     }
 
     @Override
+    public void toggleViewMode() {
+        setReadOnly(!isReadOnly());
+
+    }
+
+    @Override
     protected void compile() {
         Log.i(TAG, "compile: compiling note object...");
 

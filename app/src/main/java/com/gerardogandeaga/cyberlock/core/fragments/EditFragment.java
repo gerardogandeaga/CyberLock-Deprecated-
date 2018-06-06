@@ -15,6 +15,8 @@ public abstract class EditFragment extends Fragment {
 
     protected RequestResponder mRequestResponder;
 
+    private boolean mIsReadOnly;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +27,8 @@ public abstract class EditFragment extends Fragment {
         } catch (ClassCastException e) {
             Log.e(TAG, "onCreate: could not cast " + TAG + " to RequestResponder class");
         }
+
+        this.mIsReadOnly = false;
     }
 
     protected abstract void compile();
@@ -32,4 +36,14 @@ public abstract class EditFragment extends Fragment {
     public abstract void update();
 
     public abstract void save();
+
+    public abstract void toggleViewMode();
+
+    protected void setReadOnly(boolean isReadOnly) {
+        this.mIsReadOnly = isReadOnly;
+    }
+
+    public boolean isReadOnly() {
+        return mIsReadOnly;
+    }
 }

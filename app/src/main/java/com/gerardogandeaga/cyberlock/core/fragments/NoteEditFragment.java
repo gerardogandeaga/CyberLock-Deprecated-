@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -77,32 +75,15 @@ public class NoteEditFragment extends EditFragment {
             Views.TextViews.setOrHideText(mDate, mGenericNote.getDate());
             mLabel.setText(mGenericNote.getLabel());
             mEditor.setHtml(mGenericNote.getNotes());
-
-//            setActive(false);
         } else {
             Views.TextViews.setOrHideText(mDate, null);
             mLabel.setText(null);
             mEditor.setHtml(null);
-
-//            setActive(true);
-        }
-    }
-
-    private void setActive(boolean isActive) {
-        if (isActive) {
-            mLabel.setEnabled(true);
-            mEditor.setInputEnabled(true);
-            mEditor.setFocusable(true);
-        } else {
-            mLabel.setEnabled(false);
-            mEditor.setInputEnabled(false);
-            mEditor.setFocusable(false);
         }
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
+    public void toggleViewMode() {
     }
 
     @Override

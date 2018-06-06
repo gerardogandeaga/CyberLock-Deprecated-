@@ -1,7 +1,7 @@
 package com.gerardogandeaga.cyberlock.core.drawers;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.content.DialogInterface;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -162,7 +162,6 @@ public class FolderDrawer {
 
         private FolderDrawerItem mCurrentItem;
         private FastItemAdapter<NoteItem> mItemAdapter;
-        private Dialog mDialog;
 
         Handler(Activity activity, final FastItemAdapter<NoteItem> itemAdapter) {
             this.mActivity = activity;
@@ -204,9 +203,9 @@ public class FolderDrawer {
          */
         private void createFolder() {
             // name input field
-            final RelativeLayout wrapper = new RelativeLayout(mActivity);
+            final RelativeLayout container = new RelativeLayout(mActivity);
             final LinearLayout content = new LinearLayout(mActivity);
-            final EditText folderName = new EditText(mActivity);
+            final EditText folderName = new EditText(mActivity); // todo set a character limit
 
             LinearLayout.LayoutParams dialogParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -218,53 +217,54 @@ public class FolderDrawer {
                     Scale.dpFromPx(mActivity, 15),
                     Scale.dpFromPx(mActivity, 10)
             );
-            wrapper.setLayoutParams(dialogParams);
+            container.setLayoutParams(dialogParams);
             content.setOrientation(LinearLayout.VERTICAL);
             folderName.setLayoutParams(params);
+            folderName.setMaxLines(1);
 
             content.addView(folderName);
 
-            wrapper.addView(content);
+            container.addView(content);
 
             // name folder dialog prompt
-            final CustomDialog dialog = new CustomDialog(mActivity);
-            dialog.setIcon(Res.getDrawable(R.drawable.ic_folder));
-            dialog.setTitle("Folder Name");
-            dialog.setContentView(wrapper);
-            dialog.setNegativeButton("Cancel", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mDialog.dismiss();
-                }
-            });
-            dialog.setPositiveButton("Create", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!folderName.getText().toString().isEmpty()) {
-                        Folder folder = new Folder()
-                                .withColourTag("default")
-                                .withName(folderName.getText().toString());
-
-                        // now we try to save the folder and if it's successful the drawer item will be created
-                        if (saveFolder(folder)) {
-                            // saved!
-                            CustomToast.buildAndShowToast(mActivity, "\"" + folderName.getText().toString() + "\" Created", CustomToast.SUCCESS, CustomToast.LENGTH_SHORT);
-                        } else {
-                            // folder exists!
-                            CustomToast.buildAndShowToast(mActivity, "Folder Already Exists", CustomToast.WARNING, CustomToast.LENGTH_SHORT);
+            new CustomDialog(mActivity)
+                    .setIcon(Res.getDrawable(R.drawable.ic_folder))
+                    .setTitle("Folder Name")
+                    .setView(container)
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
                         }
-                    } else {
-                        // input field empty!
-                        CustomToast.buildAndShowToast(mActivity, "No Inputted Name, Folder Was Not Created", CustomToast.WARNING, CustomToast.LENGTH_SHORT);
-                    }
-                    mDialog.dismiss();
-                }
-            });
+                    })
+                    .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            final String name = folderName.getText().toString().trim();
+                            if (!name.isEmpty()) {
+                                Folder folder = new Folder()
+                                        .withColourTag("default")
+                                        .withName(name);
 
-            this.mDialog = dialog.createDialog();
-            mDialog.show();
+                                // now we try to save the folder and if it's successful the drawer item will be created
+                                if (saveFolder(folder)) {
+                                    // saved!
+                                    CustomToast.buildAndShowToast(mActivity, "\"" + name + "\" Created", CustomToast.SUCCESS, CustomToast.LENGTH_SHORT);
+                                } else {
+                                    // folder exists!
+                                    CustomToast.buildAndShowToast(mActivity, "Folder Already Exists", CustomToast.WARNING, CustomToast.LENGTH_SHORT);
+                                }
+                            } else {
+                                // input field empty!
+                                CustomToast.buildAndShowToast(mActivity, "Cannot Create A Folder Without A Valid Name", CustomToast.WARNING, CustomToast.LENGTH_SHORT);
+                            }
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
         }
 
+        // todo instead of reloading the adapter which fetches data from db over and over again, lets try using the fast adapter filter properties
         /**
          * switch to new folder
          */

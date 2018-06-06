@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.core.fragments.EditFragment;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.database.objects.notes.LoginNote;
 
@@ -78,6 +77,12 @@ public class LoginEditFragment extends EditFragment {
             mEtPassword.setText(null);
             mEtNotes.setText(null);
         }
+    }
+
+    @Override
+    public void toggleViewMode() {
+        setReadOnly(!isReadOnly());
+
     }
 
     @Override

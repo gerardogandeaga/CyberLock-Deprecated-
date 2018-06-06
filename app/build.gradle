@@ -56,10 +56,6 @@ dependencies {
     // Floating Action Button
     implementation 'com.github.clans:fab:1.6.4'
 
-    // Material Dialogs
-    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-    implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
-
     // Circle CardImages
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 

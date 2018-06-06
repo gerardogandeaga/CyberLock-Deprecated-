@@ -13,6 +13,7 @@ import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.core.dialogs.ColourPaletteDialogFragment;
 import com.gerardogandeaga.cyberlock.core.dialogs.FolderSelectDialogFragment;
 import com.gerardogandeaga.cyberlock.core.fragments.CardEditFragment;
+import com.gerardogandeaga.cyberlock.core.fragments.EditFragment;
 import com.gerardogandeaga.cyberlock.core.fragments.LoginEditFragment;
 import com.gerardogandeaga.cyberlock.core.fragments.NoteEditFragment;
 import com.gerardogandeaga.cyberlock.database.DBNoteAccessor;
@@ -43,6 +44,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
     // fragments
     private FragmentManager mFragmentManager;
 
+    private EditFragment mEditFragment;
     private NoteEditFragment mNoteEditFragment;
     private CardEditFragment mCardEditFragment;
     private LoginEditFragment mLoginEditFragment;
@@ -158,14 +160,17 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
         switch (enum_type) {
             case NOTE:
                 fragmentTransaction.add(R.id.fragment_container, newFragment(mNoteEditFragment, noteBundle));
+                this.mEditFragment = mNoteEditFragment;
                 break;
 
             case CARD:
                 fragmentTransaction.add(R.id.fragment_container, newFragment(mCardEditFragment, noteBundle));
+                this.mEditFragment = mCardEditFragment;
                 break;
 
             case LOGIN:
                 fragmentTransaction.add(R.id.fragment_container, newFragment(mLoginEditFragment, noteBundle));
+                this.mEditFragment = mLoginEditFragment;
                 break;
         }
 
@@ -198,6 +203,30 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
             case R.id.menu_colour_tag:
                 ColourPaletteDialogFragment.show(this);
                 break;
+
+            // toggle view mode between read only and edit modes
+//            case R.id.menu_view_mode:
+//                switch (enum_type) {
+//                    case NOTE:
+//                        mNoteEditFragment.toggleViewMode();
+//                        break;
+//
+//                    case CARD:
+//                        mCardEditFragment.toggleViewMode();
+//                        break;
+//
+//                    case LOGIN:
+//                        mLoginEditFragment.toggleViewMode();
+//                        break;
+//                }
+//                item.setChecked(mEditFragment.isReadOnly());
+//                CustomToast.buildAndShowToast(this,
+//                        (mEditFragment.isReadOnly() ?
+//                        "Read only mode active, Cannot edit"
+//                        :
+//                        "Edit mode active")
+//                );
+//                break;
 
             // send save request to fragment
             case R.id.menu_save:
