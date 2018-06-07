@@ -26,7 +26,7 @@ public class NoteItemBuilder {
         this.mContext = context;
     }
 
-    public List<NoteItem> getItems(List<Note> noteList) {
+    public List<NoteItem> buildItems(List<Note> noteList) {
         // recyclerViewItem list as an array
         List<NoteItem> noteItemList = new ArrayList<>();
 

@@ -1,6 +1,5 @@
 package com.gerardogandeaga.cyberlock.core.activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,12 +23,15 @@ import com.gerardogandeaga.cyberlock.interfaces.AdapterLoaderCallback;
 import com.gerardogandeaga.cyberlock.items.NoteItem;
 import com.gerardogandeaga.cyberlock.utils.Graphics;
 import com.mikepenz.fastadapter.IAdapter;
+import com.mikepenz.fastadapter.IItemAdapter;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
+import com.mikepenz.fastadapter.listeners.ItemFilterListener;
 import com.mikepenz.fastadapter.listeners.OnClickListener;
 import com.mikepenz.fastadapter.listeners.OnLongClickListener;
 import com.mikepenz.materialdrawer.Drawer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,16 +41,19 @@ import butterknife.ButterKnife;
  */
 public class NoteActivity extends CoreActivity implements AdapterLoaderCallback, ActionModeManager.ActionManagerCallBack {
     @Override
-    public void onLoaded(Folder folder) {
+    public void onNoteItemsLoaded(String folderName, int folderSize) {
         mLoad.dismiss();
         mRecyclerView.setVisibility(View.VISIBLE);
 
-        this.mCurrentFolder = folder;
 
-        // only change action bar when adapter is finished
-        actionbarFolderTitle();
+        actionBarTitle(folderName);
+        actionBarSubTitle(
+                folderSize == 0 ? "No items " :
+                        folderSize + " Item" + (folderSize == 1 ? "" : "s")
+        );
     }
 
+    // todo fix trashing mechanics
     @Override
     public void onRemoveSelections(ArrayList<Object> items) {
         // cast to note items
@@ -73,10 +78,6 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
                 // update db
                 DBNoteAccessor accessor = DBNoteAccessor.getInstance();
                 accessor.update(notes);
-
-                // titles
-                mCurrentFolder.withSize(mCurrentFolder.getSize() - items.size());
-                reloadFolderTitle();
                 break;
 
             case ActionModeManager.ARCHIVE:
@@ -87,18 +88,15 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
         }
     }
 
-    private Context mContext = this;
-
     private ActionModeManager<NoteItem> mActionModeManager;
-    private Folder mCurrentFolder;
+
     // views
     private View mView;
     private CustomLoad mLoad;
     private RecyclerView mRecyclerView;
     private Drawer mDrawer;
 
-    @BindView(R.id.fragment_container)
-    FrameLayout mContainer;
+    @BindView(R.id.fragment_container) FrameLayout mContainer;
 
     // initial on create methods
     @Override
@@ -129,7 +127,7 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
         // initialize action mode manager
         this.mActionModeManager = new ActionModeManager<>(this, itemAdapter, mDrawer);
 
-        // click listeners
+        // listeners
 
         itemAdapter.withOnPreClickListener(new OnClickListener<NoteItem>() {
             @Override
@@ -152,9 +150,48 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
             }
         });
 
+        // filter listener
+        itemAdapter.getItemFilter().withFilterPredicate(new IItemAdapter.Predicate<NoteItem>() {
+            @Override
+            public boolean filter(@NonNull NoteItem item, @Nullable CharSequence constraint) {
+                assert constraint != null;
+
+                String filter = constraint.toString();
+                switch (filter) {
+                    case Folder.Constants.ALL_NOTES:
+                        return true;
+
+                    case Folder.Constants.TRASH:
+                        return item.getNote().isTrashed();
+
+                    default:
+                        return (item.getNote().getFolder().equals(filter) && !item.getNote().isTrashed());
+                }
+            }
+        });
+
+        itemAdapter.getItemFilter().withItemFilterListener(new ItemFilterListener<NoteItem>() {
+            @Override
+            public void itemsFiltered(@Nullable CharSequence constraint, @Nullable List<NoteItem> results) {
+                // action bar titles
+                assert constraint != null && results != null;
+                actionBarTitle(constraint.toString());
+                actionBarSubTitle(
+                        results.size() == 0 ? "No items " :
+                        results.size() + " Item" + (results.size() == 1 ? "" : "s")
+                );
+            }
+
+            @Override
+            public void onReset() {
+
+            }
+        });
+
         // start fetching the notes
         new NoteAdapterLoader(this, itemAdapter).execute();
 
+        actionBarIcon(R.drawable.ic_drawer);
         super.onCreate(savedInstanceState);
     }
 
@@ -217,20 +254,10 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
         mLoad.show(mContainer);
     }
 
-    private void actionbarFolderTitle() {
-        actionBarIcon(R.drawable.ic_drawer);
-        actionBarTitle((mCurrentFolder.getName().equals("MAIN") ? "All Notes" : mCurrentFolder.getName()));
-        actionBarSubTitle(Integer.toString(mCurrentFolder.getSize()) + (mCurrentFolder.getSize() == 1 ? " Item" : " Items"));
-    }
-
-    private void reloadFolderTitle() {
-        actionBarSubTitle(Integer.toString(mCurrentFolder.getSize()) + (mCurrentFolder.getSize() == 1 ? " Item" : " Items"));
-    }
-
     public void onAddClicked(String noteType) {
         newIntent(NoteEditActivity.class);
         getNewIntent().putExtra("type", noteType);
-        getNewIntent().putExtra("folder", mCurrentFolder.getName());
+//        getNewIntent().putExtra("folder", mCurrentFolder.getName()); todo if in current folder then create note in that folder
         newIntentGoTo();
     }
 

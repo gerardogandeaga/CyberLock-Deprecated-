@@ -1,7 +1,5 @@
 package com.gerardogandeaga.cyberlock.interfaces;
 
-import com.gerardogandeaga.cyberlock.database.objects.Folder;
-
 /**
  * @author gerardogandeaga
  */
@@ -10,6 +8,9 @@ public interface AdapterLoaderCallback {
     /**
      * gets called when the adapter loader is finished loading the data and adding
      * items to the adapter
+     *
+     * @param folderName name of folder that has been loaded by the loader
+     * @param folderSize how many item will be displayed in the adapter
      */
-    void onLoaded(Folder folder);
+    void onNoteItemsLoaded(String folderName, int folderSize);
 }

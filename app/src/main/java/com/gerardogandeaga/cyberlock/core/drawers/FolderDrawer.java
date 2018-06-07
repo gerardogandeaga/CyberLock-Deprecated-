@@ -19,7 +19,6 @@ import com.gerardogandeaga.cyberlock.core.dialogs.ColourPaletteDialogFragment;
 import com.gerardogandeaga.cyberlock.custom.CustomDialog;
 import com.gerardogandeaga.cyberlock.custom.CustomToast;
 import com.gerardogandeaga.cyberlock.database.DBFolderAccessor;
-import com.gerardogandeaga.cyberlock.database.loaders.NoteAdapterLoader;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.gerardogandeaga.cyberlock.items.FolderDrawerItem;
 import com.gerardogandeaga.cyberlock.items.NoteItem;
@@ -155,7 +154,7 @@ public class FolderDrawer {
      * drawer handler :
      * handlers interactions
      */
-    private class Handler implements ColourPaletteDialogFragment.ColourSelectionCallBack {
+    public class Handler implements ColourPaletteDialogFragment.ColourSelectionCallBack {
         private static final String TAG = "Handler";
 
         private Activity mActivity;
@@ -269,11 +268,7 @@ public class FolderDrawer {
          * switch to new folder
          */
         private void switchFolder(FolderDrawerItem item) {
-            try {
-                new NoteAdapterLoader(mActivity, mItemAdapter, item.getFolder()).execute();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            mItemAdapter.filter(item.getFolder().getName());
         }
 
         /**

@@ -28,17 +28,10 @@ public class NoteAdapterLoader extends AsyncTask<Void, Void, Void> {
     @SuppressLint("StaticFieldLeak")
     private Context mContext;
 
-    private Folder mFolder;
     private DBNoteAccessor mNoteAccessor;
-    private List<Note> mNotes;
 
     private FastItemAdapter<NoteItem> mItemAdapter;
     private List<NoteItem> mNoteItems;
-
-    public NoteAdapterLoader(Context context, FastItemAdapter<NoteItem> itemAdapter, Folder folder) {
-        this(context, itemAdapter);
-        this.mFolder = folder;
-    }
 
     public NoteAdapterLoader(Context context, FastItemAdapter<NoteItem> itemAdapter) {
         this.mContext = context;
@@ -65,41 +58,11 @@ public class NoteAdapterLoader extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        // if folder is not null immediately then it must be trash, archive or all
-        if (mFolder == null || mFolder.equals(Folder.Constants.ALL_NOTES_FOLDER) || mFolder.equals(Folder.Constants.ARCHIVE_FOLDER) || mFolder.equals(Folder.Constants.TRASH_FOLDER)) {
-            // if no folder is selected we default it to all notes
-            if (mFolder == null) {
-                this.mFolder = Folder.Constants.ALL_NOTES_FOLDER;
-            }
-
-            switch (mFolder.getName()) {
-                case Folder.Constants.ALL_NOTES:
-                    this.mNotes = mNoteAccessor.getAllNotes();
-                    break;
-                case Folder.Constants.ARCHIVE:
-                    this.mNotes = mNoteAccessor.getAllNotes(mFolder);
-                    break;
-                case Folder.Constants.TRASH:
-                    this.mNotes = mNoteAccessor.getTrashedNotes();
-                    break;
-            }
-
-            // construct note items from notes list
-            if (mNotes != null) {
-                this.mNoteItems = new NoteItemBuilder(mContext).getItems(mNotes);
-            }
-            return null;
-        }
-
-        // if user loads adapter with a specific folder
-        if (mFolder != null) {
-            this.mNotes = mNoteAccessor.getAllNotes(mFolder);
-
-            if (mNotes != null) {
-                this.mNoteItems = new NoteItemBuilder(mContext).getItems(mNotes);
-            }
-
-            return null;
+        // lets load all notes
+        List<Note> notes = mNoteAccessor.getAllNotes();
+        // create items for recycler view
+        if (notes != null && notes.size() > 0) {
+            this.mNoteItems = new NoteItemBuilder(mContext).buildItems(notes);
         }
 
         return null;
@@ -113,13 +76,9 @@ public class NoteAdapterLoader extends AsyncTask<Void, Void, Void> {
             mItemAdapter.notifyAdapterDataSetChanged();
         }
 
-        // folder size
-        // if notes is null then size = 0 or else size = notes size
-        mFolder.withSize((mNotes == null ? 0 : mNotes.size()));
-
         // callback
         // send the folder to the note list activity
-        mAdapterLoaderCallback.onLoaded(mFolder);
+        mAdapterLoaderCallback.onNoteItemsLoaded(Folder.Constants.ALL_NOTES, mItemAdapter.getItemCount());
 
         super.onPostExecute(aVoid);
     }
