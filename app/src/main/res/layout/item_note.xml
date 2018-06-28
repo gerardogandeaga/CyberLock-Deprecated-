@@ -11,7 +11,7 @@
     app:cardElevation="0dp"
     app:contentPaddingLeft="20dp"
     app:contentPaddingRight="20dp"
-    app:contentPaddingTop="12dp">
+    app:contentPaddingTop="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -151,7 +151,7 @@
             layout="@layout/item_divider_horizontal"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="12dp"/>
+            android:layout_marginTop="10dp"/>
 
     </LinearLayout>
 

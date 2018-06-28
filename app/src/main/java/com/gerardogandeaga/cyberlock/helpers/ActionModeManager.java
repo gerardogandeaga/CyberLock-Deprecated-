@@ -1,7 +1,6 @@
 package com.gerardogandeaga.cyberlock.helpers;
 
 import android.app.Activity;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -10,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.gerardogandeaga.cyberlock.R;
+import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
@@ -132,15 +132,7 @@ public class ActionModeManager<Item extends IItem> {
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_delete:
-                    // get items
-                    ArrayList<Object> items = new ArrayList<>();
-                    Set<Item> selectedItems = mItemAdapter.getSelectedItems();
-                    items.addAll(selectedItems);
-                    // remove from adapter
-                    mUndoHelper.remove(mActivity.findViewById(android.R.id.content), "Item removed", "Undo", Snackbar.LENGTH_LONG, mItemAdapter.getSelections());
-                    mode.finish();
-                    // send removed items to the main activity
-                    mActionManagerCallBack.onRemoveSelections(items);
+                    mItemAdapter.filter(Folder.Constants.TRASH);
                     return true;
 
                 case R.id.menu_archive:
@@ -149,6 +141,7 @@ public class ActionModeManager<Item extends IItem> {
                 case R.id.menu_undo:
                     return true;
             }
+
             return false;
         }
 

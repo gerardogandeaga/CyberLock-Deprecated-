@@ -1,7 +1,10 @@
 package com.gerardogandeaga.cyberlock.core.activities;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -9,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.utils.Graphics;
 import com.gerardogandeaga.cyberlock.utils.Res;
 
 import butterknife.BindView;
@@ -95,13 +97,21 @@ public abstract class CoreActivity extends SecureActivity {
      * @param icon drawable Res to be passed in and turned into a drawable
      */
     protected void actionBarIcon(@DrawableRes int icon) {
+        actionBarIcon(icon, 0);
+    }
+
+    protected void actionBarIcon(@DrawableRes int icon, @ColorRes int colourFilter) {
         if (icon != NO_ICON) {
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setHomeButtonEnabled(true);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-                getSupportActionBar().setHomeAsUpIndicator(
-                        Graphics.BasicFilter.mutateHomeAsUpIndicatorDrawable(Res.getDrawable(icon)));
+                Drawable tmpIcon = Res.getDrawable(icon);
+                if (colourFilter != 0) {
+                    tmpIcon.setColorFilter(Res.getColour(colourFilter), PorterDuff.Mode.SRC_ATOP);
+                }
+
+                getSupportActionBar().setHomeAsUpIndicator(tmpIcon);
             }
         }
     }

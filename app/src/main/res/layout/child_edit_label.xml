@@ -17,6 +17,8 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/ic_label_outline"
+        android:drawablePadding="5dp"
         android:hint="Label..."
         android:inputType="text|textPersonName"
         android:maxLines="1"
@@ -39,8 +41,8 @@
         layout="@layout/item_divider_horizontal"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>

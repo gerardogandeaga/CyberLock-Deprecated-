@@ -21,11 +21,7 @@ public class Graphics {
     public static class ColourTags {
 
         public static int colourTagToolbar(Context context, String colour) {
-            int col = colourTagHeader(context, colour);
-            if (col == Res.getColour(R.color.black)) {
-                return Res.getColour(R.color.white);
-            }
-            return col;
+            return colourTagHeader(context, colour);
         }
 
         public static int colourTagHeader(Context context, String colour) {

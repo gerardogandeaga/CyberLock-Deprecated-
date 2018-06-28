@@ -13,7 +13,6 @@ import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.core.dialogs.ColourPaletteDialogFragment;
 import com.gerardogandeaga.cyberlock.core.dialogs.FolderSelectDialogFragment;
 import com.gerardogandeaga.cyberlock.core.fragments.CardEditFragment;
-import com.gerardogandeaga.cyberlock.core.fragments.EditFragment;
 import com.gerardogandeaga.cyberlock.core.fragments.LoginEditFragment;
 import com.gerardogandeaga.cyberlock.core.fragments.NoteEditFragment;
 import com.gerardogandeaga.cyberlock.database.DBNoteAccessor;
@@ -44,7 +43,6 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
     // fragments
     private FragmentManager mFragmentManager;
 
-    private EditFragment mEditFragment;
     private NoteEditFragment mNoteEditFragment;
     private CardEditFragment mCardEditFragment;
     private LoginEditFragment mLoginEditFragment;
@@ -82,7 +80,7 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
         // launch a fragment
         startEditor();
 
-        setupActionBar(null, null, NO_ICON);
+        setupActionBar(null, null, R.drawable.ic_cancel_edit);
         super.onCreate(savedInstanceState);
     }
 
@@ -106,9 +104,44 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_trash:
+                trashNote();
+                break;
+
+            case R.id.menu_folder:
+                FolderSelectDialogFragment.show(this, mCurrentFolder);
+                break;
+
+            case R.id.menu_colour_tag:
+                ColourPaletteDialogFragment.show(this);
+                break;
+
+            // send save request to fragment
+            case R.id.menu_save:
+                requestSave();
+                break;
+
+            case android.R.id.home:
+                cancelNote();
+                break;
+
+//            case R.id.menu_cancel:
+//                cancelNote();
+//                break;
+        }
+        return true;
+    }
+
     private void mutateMenuTagIcon() {
+        // menu items
+        Graphics.BasicFilter.mutateMenuItems(mMenu, mColourTag.equals("ct_default") ? R.color.black : R.color.white);
+        // action bar colour bar
         setActionBarBackgroundColour(Graphics.ColourTags.colourTagToolbar(this, mColourTag));
-        Graphics.BasicFilter.mutateMenuItems(mMenu, R.color.white);
+        // action bar icon
+        actionBarIcon(R.drawable.ic_cancel_edit, mColourTag.equals("ct_default") ? R.color.black : R.color.white);
     }
 
     private void initializeNoteObject() {
@@ -160,17 +193,14 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
         switch (enum_type) {
             case NOTE:
                 fragmentTransaction.add(R.id.fragment_container, newFragment(mNoteEditFragment, noteBundle));
-                this.mEditFragment = mNoteEditFragment;
                 break;
 
             case CARD:
                 fragmentTransaction.add(R.id.fragment_container, newFragment(mCardEditFragment, noteBundle));
-                this.mEditFragment = mCardEditFragment;
                 break;
 
             case LOGIN:
                 fragmentTransaction.add(R.id.fragment_container, newFragment(mLoginEditFragment, noteBundle));
-                this.mEditFragment = mLoginEditFragment;
                 break;
         }
 
@@ -187,57 +217,6 @@ public class NoteEditActivity extends CoreActivity implements RequestResponder, 
     private Fragment newFragment(Fragment fragment, Bundle bundle) {
         fragment.setArguments(bundle);
         return fragment;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_trash:
-                trashNote();
-                break;
-
-            case R.id.menu_folder:
-                FolderSelectDialogFragment.show(this, mCurrentFolder);
-                break;
-
-            case R.id.menu_colour_tag:
-                ColourPaletteDialogFragment.show(this);
-                break;
-
-            // toggle view mode between read only and edit modes
-//            case R.id.menu_view_mode:
-//                switch (enum_type) {
-//                    case NOTE:
-//                        mNoteEditFragment.toggleViewMode();
-//                        break;
-//
-//                    case CARD:
-//                        mCardEditFragment.toggleViewMode();
-//                        break;
-//
-//                    case LOGIN:
-//                        mLoginEditFragment.toggleViewMode();
-//                        break;
-//                }
-//                item.setChecked(mEditFragment.isReadOnly());
-//                CustomToast.buildAndShowToast(this,
-//                        (mEditFragment.isReadOnly() ?
-//                        "Read only mode active, Cannot edit"
-//                        :
-//                        "Edit mode active")
-//                );
-//                break;
-
-            // send save request to fragment
-            case R.id.menu_save:
-                requestSave();
-                break;
-
-            case R.id.menu_cancel:
-                cancelNote();
-                break;
-        }
-        return true;
     }
 
     /**

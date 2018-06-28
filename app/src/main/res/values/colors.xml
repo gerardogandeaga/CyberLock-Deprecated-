@@ -91,7 +91,7 @@
         <item>@color/ct_yellow_1</item>
         <item>@color/ct_orange_1</item>
         <item>@color/ct_orange_2</item>
-        <item>@color/ct_default</item>
+        <item>@color/white</item>
     </array>
 
     <string-array name="arr_tag_colours_names">
@@ -110,7 +110,7 @@
         <item>ct_12</item>
         <item>ct_13</item>
         <item>ct_15</item>
-        <item>ct_16</item>
+        <item>ct_default</item>
     </string-array>
 
 </resources>

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.database.objects.notes.LoginNote;
+import com.gerardogandeaga.cyberlock.utils.Views;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +62,7 @@ public class LoginEditFragment extends EditFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // if data is not null then we set our stored data onto
         if (!mNote.isNew()) {
-            mTvDate.setText(mLoginNote.getDate());
+            Views.TextViews.setOrHideText(mTvDate, mLoginNote.getDate());
             mEtLabel.setText(mLoginNote.getLabel());
             mEtUrl.setText(mLoginNote.getUrl());
             mEtEmail.setText(mLoginNote.getEmail());
@@ -69,7 +70,7 @@ public class LoginEditFragment extends EditFragment {
             mEtPassword.setText(mLoginNote.getPassword());
             mEtNotes.setText(mLoginNote.getNotes());
         } else {
-            mTvDate.setText(null);
+            Views.TextViews.setOrHideText(mTvDate, null);
             mEtLabel.setText(null);
             mEtUrl.setText(null);
             mEtEmail.setText(null);

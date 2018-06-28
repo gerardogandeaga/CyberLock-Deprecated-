@@ -14,7 +14,6 @@ import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.core.drawers.FolderDrawer;
 import com.gerardogandeaga.cyberlock.custom.CustomLoad;
 import com.gerardogandeaga.cyberlock.custom.decorations.NoteItemDecoration;
-import com.gerardogandeaga.cyberlock.database.DBNoteAccessor;
 import com.gerardogandeaga.cyberlock.database.loaders.NoteAdapterLoader;
 import com.gerardogandeaga.cyberlock.database.objects.Folder;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
@@ -45,47 +44,13 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
         mLoad.dismiss();
         mRecyclerView.setVisibility(View.VISIBLE);
 
-
-        actionBarTitle(folderName);
-        actionBarSubTitle(
-                folderSize == 0 ? "No items " :
-                        folderSize + " Item" + (folderSize == 1 ? "" : "s")
-        );
+        setCurrentWorkingFolder(folderName, folderSize);
     }
 
     // todo fix trashing mechanics
     @Override
     public void onRemoveSelections(ArrayList<Object> items) {
-        // cast to note items
-        ArrayList<NoteItem> noteItems = new ArrayList<>();
-        for (Object item : items) {
-            noteItems.add((NoteItem) item);
-        }
 
-        // handle trash
-        ArrayList<Note> notes = new ArrayList<>();
-        for (NoteItem noteItem : noteItems) {
-            Note note = noteItem.getNote();
-            // flag as trash
-            note.withTrashed(true);
-            // add to list
-            notes.add(note);
-        }
-
-        // handle db interactions based on the manager condition
-        switch (mActionModeManager.getCondition()) {
-            case ActionModeManager.NORMAL:
-                // update db
-                DBNoteAccessor accessor = DBNoteAccessor.getInstance();
-                accessor.update(notes);
-                break;
-
-            case ActionModeManager.ARCHIVE:
-                break;
-
-            case ActionModeManager.TRASH:
-                break;
-        }
     }
 
     private ActionModeManager<NoteItem> mActionModeManager;
@@ -95,6 +60,8 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
     private CustomLoad mLoad;
     private RecyclerView mRecyclerView;
     private Drawer mDrawer;
+
+    private String mCurrentFolderName;
 
     @BindView(R.id.fragment_container) FrameLayout mContainer;
 
@@ -175,11 +142,7 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
             public void itemsFiltered(@Nullable CharSequence constraint, @Nullable List<NoteItem> results) {
                 // action bar titles
                 assert constraint != null && results != null;
-                actionBarTitle(constraint.toString());
-                actionBarSubTitle(
-                        results.size() == 0 ? "No items " :
-                        results.size() + " Item" + (results.size() == 1 ? "" : "s")
-                );
+                setCurrentWorkingFolder(constraint.toString(), results.size());
             }
 
             @Override
@@ -254,10 +217,20 @@ public class NoteActivity extends CoreActivity implements AdapterLoaderCallback,
         mLoad.show(mContainer);
     }
 
+    private void setCurrentWorkingFolder(@NonNull String folderName, int folderSize) {
+        actionBarTitle(folderName);
+        actionBarSubTitle(
+                folderSize == 0 ? "No items " :
+                        folderSize + " Item" + (folderSize == 1 ? "" : "s")
+        );
+
+        this.mCurrentFolderName = folderName;
+    }
+
     public void onAddClicked(String noteType) {
         newIntent(NoteEditActivity.class);
         getNewIntent().putExtra("type", noteType);
-//        getNewIntent().putExtra("folder", mCurrentFolder.getName()); todo if in current folder then create note in that folder
+        getNewIntent().putExtra("folder", mCurrentFolderName);
         newIntentGoTo();
     }
 

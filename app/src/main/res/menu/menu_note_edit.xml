@@ -12,16 +12,22 @@
         app:showAsAction="always"/>
 
     <item
+        android:id="@+id/menu_folder"
+        android:icon="@drawable/ic_outline_folder"
+        android:title="@string/str_menu_note_folder"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/menu_save"
         android:icon="@drawable/ic_save"
         android:title="@string/str_menu_note_save"
         app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/menu_cancel"
-        android:icon="@drawable/ic_cancel_edit"
-        android:title="@string/str_menu_cancel"
-        app:showAsAction="always"/>
+    <!--<item-->
+        <!--android:id="@+id/menu_cancel"-->
+        <!--android:icon="@drawable/ic_cancel_edit"-->
+        <!--android:title="@string/str_menu_cancel"-->
+        <!--app:showAsAction="always"/>-->
 
     <item
         android:id="@+id/menu_options"
@@ -37,12 +43,6 @@
                 <!--android:icon="@drawable/ic_readonly"-->
                 <!--android:title="@string/str_menu_readonly"-->
                 <!--app:showAsAction="withText"/>-->
-
-            <item
-                android:id="@+id/menu_folder"
-                android:icon="@drawable/ic_folder"
-                android:title="@string/str_menu_note_folder"
-                app:showAsAction="withText"/>
 
             <item
                 android:id="@+id/menu_archive"

@@ -21,8 +21,6 @@ import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 import com.mikepenz.materialize.util.UIUtils;
 
-import org.jsoup.Jsoup;
-
 import java.util.List;
 
 import butterknife.BindView;
@@ -235,28 +233,12 @@ public class NoteItem extends AbstractItem<NoteItem, NoteItem.ViewHolder> {
             return null;
         }
 
-        // filter out html markup
-        String note = Jsoup.parse(markedNote).body().text();
-
-        final int max = 100;
-        StringBuilder builder = new StringBuilder();
-
-        if (note.length() <= max) {
-            return note;
+        final int max = 150;
+        if (markedNote.length() < max) {
+            return markedNote + "...";
         }
 
-        for (int i = 0; i < max; i++) {
-            builder.append(note.charAt(i));
-
-            if ((i == (max - 1)) && (note.charAt(i + 1) != ' ')) {
-                do {
-                    builder.append(note.charAt(i));
-                } while ((note.charAt(i) != ' '));
-            }
-        }
-
-        builder.append("...");
-        return builder.toString();
+        return markedNote.substring(0, max + 1) + "...";
     }
 
     private String formatCardNumber(String number) {

@@ -10,14 +10,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gerardogandeaga.cyberlock.R;
-import com.gerardogandeaga.cyberlock.custom.EditorBar;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.database.objects.notes.GenericNote;
 import com.gerardogandeaga.cyberlock.utils.Views;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.richeditor.RichEditor;
 
 /**
  * @author gerardogandeaga
@@ -29,9 +27,9 @@ public class NoteEditFragment extends EditFragment {
     private GenericNote mGenericNote;
 
     // view
-    @BindView(R.id.tvDate)  TextView mDate;
-    @BindView(R.id.etLabel) EditText mLabel;
-    @BindView(R.id.etNotes) RichEditor mEditor;
+    @BindView(R.id.tvDate)  TextView mTvDate;
+    @BindView(R.id.etLabel) EditText mEtLabel;
+    @BindView(R.id.etNotes) EditText mEtEditor;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,13 +55,13 @@ public class NoteEditFragment extends EditFragment {
         ButterKnife.bind(this, view);
 
         // configure the editor
-        mEditor.setEditorFontSize(18);
-        mEditor.setPlaceholder("Input text here...");
+//        mEtEditor.setEditorFontSize(18);
+//        mEtEditor.setPlaceholder("Input text here...");
 
         // start the editor bar
-        new EditorBar(getActivity())
-                .withRootView(getActivity())
-                .withEditField(mEditor);
+//        new EditorBar(getActivity())
+//                .withRootView(getActivity())
+//                .withEditField(mEtEditor);
 
         return view;
     }
@@ -72,13 +70,13 @@ public class NoteEditFragment extends EditFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // if is not null then we set our stored data onto
         if (!mNote.isNew()) {
-            Views.TextViews.setOrHideText(mDate, mGenericNote.getDate());
-            mLabel.setText(mGenericNote.getLabel());
-            mEditor.setHtml(mGenericNote.getNotes());
+            Views.TextViews.setOrHideText(mTvDate, mGenericNote.getDate());
+            mEtLabel.setText(mGenericNote.getLabel());
+            mEtEditor.setText(mGenericNote.getNotes());
         } else {
-            Views.TextViews.setOrHideText(mDate, null);
-            mLabel.setText(null);
-            mEditor.setHtml(null);
+            Views.TextViews.setOrHideText(mTvDate, null);
+            mEtLabel.setText(null);
+            mEtEditor.setText(null);
         }
     }
 
@@ -90,8 +88,8 @@ public class NoteEditFragment extends EditFragment {
     protected void compile() {
         Log.i(TAG, "compile: compiling note object...");
 
-        mGenericNote.withNotes(mEditor.getHtml());
-        mGenericNote.withLabel(mLabel.getText().toString());
+        mGenericNote.withNotes(mEtEditor.getText().toString());
+        mGenericNote.withLabel(mEtLabel.getText().toString());
         // create note
         this.mNote = mGenericNote.compile();
 

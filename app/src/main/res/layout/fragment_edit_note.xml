@@ -21,11 +21,20 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <jp.wasabeef.richeditor.RichEditor
-                android:id="@+id/etNotes"
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/Register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="top"/>
+                android:hint="Content">
+
+                <EditText
+                    android:id="@+id/etNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"/>
+
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 

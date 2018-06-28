@@ -106,6 +106,10 @@ public class ColourPaletteDialogFragment extends DialogFragment {
                 item.setLayoutParams(itemParams);
                 item.setImageDrawable(Res.getDrawable(R.drawable.ic_circle_filled));
                 item.setColorFilter(colours[finalOffset], PorterDuff.Mode.SRC_ATOP);
+                if (i == 3 && j == 3) {
+                    item.setBorderColor(Res.getColour(R.color.black));
+                    item.setBorderWidth(4);
+                }
                 item.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

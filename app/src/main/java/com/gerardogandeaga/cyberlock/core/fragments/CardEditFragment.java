@@ -17,6 +17,7 @@ import com.gerardogandeaga.cyberlock.R;
 import com.gerardogandeaga.cyberlock.database.objects.Note;
 import com.gerardogandeaga.cyberlock.database.objects.notes.CardNote;
 import com.gerardogandeaga.cyberlock.custom.CustomToast;
+import com.gerardogandeaga.cyberlock.utils.Views;
 
 import java.util.ArrayList;
 
@@ -155,7 +156,7 @@ public class CardEditFragment extends EditFragment implements View.OnClickListen
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // if data is not null then we set our stored data onto
         if (!mNote.isNew()) {
-            mTvDate.setText(mCardNote.getDate());
+            Views.TextViews.setOrHideText(mTvDate, mCardNote.getDate());
             mEtLabel.setText(mCardNote.getLabel());
             mEtCardHolder.setText(mCardNote.getHolder());
             mEtCardNumber.setText(mCardNote.getNumber());
@@ -164,7 +165,7 @@ public class CardEditFragment extends EditFragment implements View.OnClickListen
             mEtNotes.setText(mCardNote.getNotes());
             mRadioSelector.clicked(mRadioSelector.getTagged(mCardNote.getCardType()));
         } else {
-            mTvDate.setText(null);
+            Views.TextViews.setOrHideText(mTvDate, null);
             mEtLabel.setText(null);
             mEtCardHolder.setText(null);
             mEtCardNumber.setText(null);
